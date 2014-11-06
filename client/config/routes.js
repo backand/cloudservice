@@ -23,5 +23,10 @@ angular.module('app.routes', []).
         url: '',
         controller: 'AppsIndexController',
         templateUrl: 'views/apps/index.tpl.html'
+      })
+      .state('apps.edit', {
+        url: '/:id',
+        controller: 'AppsEditController',
+        templateUrl: 'views/apps/edit.tpl.html'
       });
     });
