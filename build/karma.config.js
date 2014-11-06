@@ -9,7 +9,10 @@ module.exports = {
     baseDir + '/vendor/angular/angular.js',
     baseDir + '/vendor/angular-mocks/angular-mocks.js',
     baseDir + '/vendor/angular-ui-router/release/angular-ui-router.js',
-    baseDir + '/src/**/*.js',
+    baseDir + '/client/config/**/*.js',
+    baseDir + '/client/common/**/*.js',
+    baseDir + '/client/views/**/*.js',
+    baseDir + '/client/app.js',
     'build/tmp/*.js',
     baseDir + '/test/unit/**/*.spec.js'
   ],
