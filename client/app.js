@@ -18,7 +18,7 @@
       'app.routes',
       'home',
       'common.services.data',
-      'common.directives.version',
+      'common.directives.custom_page',
       'common.filters.uppercase',
       'common.interceptors.http',
       'templates'

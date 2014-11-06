@@ -21,8 +21,13 @@
   <!-- endbuild -->
 </head>
 
-<body>
-  <div ui-view></div>
+<body id="app" class="app" custom-page>
+
+  <div class="main-container">
+    <div id="content" class="content-container">
+      <section ui-view class="view-container"></section>
+    </div>
+  </div>
 
   <!-- build:js assets/js/vendor.js -->
   <script type="text/javascript" src="vendor/angular/angular.js"></script>
@@ -36,7 +41,7 @@
 
   <script type="text/javascript" src="views/home/home.js"></script>
 
-  <script type="text/javascript" src="common/directives/version.js"></script>
+  <script type="text/javascript" src="common/directives/custom_page.js"></script>
   <script type="text/javascript" src="common/interceptors/httpInterceptor.js"></script>
   <script type="text/javascript" src="common/services/dataService.js"></script>
   <script type="text/javascript" src="common/filters/uppercase.js"></script>
