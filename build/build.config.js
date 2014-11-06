@@ -12,8 +12,7 @@ module.exports = {
   js: [
     'client/common/**/*.js',
     'client/views/**/*.js',
-    'client/src/**/*.js',
-    '!client/src/vendor/**/*.js',
+    '!client/vendor/**/*.js',
     'client/test/unit/**/*.js',
     'client/test/e2e/**/*.js'
   ],

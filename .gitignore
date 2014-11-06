@@ -6,7 +6,7 @@
 
 # package control
 node_modules
-client/src/vendor
+client/vendor
 
 # logs
 npm-debug.log
