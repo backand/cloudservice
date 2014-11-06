@@ -17,7 +17,6 @@
   angular.module('app', [
       'ui.router',
       'app.routes',
-      'home',
       'theme.directives',
       'common.services.data',
       'common.directives.custom_page',
