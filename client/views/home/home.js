@@ -10,16 +10,6 @@
       .state('root', {
         url: '',
         abstract: true,
-        views: {
-          'header': {
-            templateUrl: 'common/header.tpl.html',
-            controller: 'HeaderCtrl'
-          },
-          'footer': {
-            templateUrl: 'common/footer.tpl.html',
-            controller: 'FooterCtrl'
-          }
-        }
       })
       .state('root.home', {
         url: '/',

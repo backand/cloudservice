@@ -23,8 +23,6 @@
       'ui.router',
       'home',
       'getting-started',
-      'common.header',
-      'common.footer',
       'common.services.data',
       'common.directives.version',
       'common.filters.uppercase',
