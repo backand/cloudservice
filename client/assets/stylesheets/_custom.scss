@@ -1,0 +1,8 @@
+a.app-panel:hover {
+    &:hover {
+        text-decoration: none;
+        .panel {
+            border: 1px solid green;
+        }
+    }
+}
