@@ -68,7 +68,11 @@ gulp.task('templates', function() {
 //generate css files from scss sources
 gulp.task('sass', function() {
   return gulp.src(config.mainScss)
-    .pipe($.rubySass())
+    .pipe($.rubySass({
+      loadPath: [
+        process.cwd() + '/client/src/vendor/bootstrap-sass-official/assets/stylesheets'
+      ]
+    }))
     .on('error', function(err) {
       console.log(err.message);
     })
