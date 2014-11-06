@@ -12,11 +12,11 @@
         abstract: true,
         views: {
           'header': {
-            templateUrl: 'src/common/header.tpl.html',
+            templateUrl: 'common/header.tpl.html',
             controller: 'HeaderCtrl'
           },
           'footer': {
-            templateUrl: 'src/common/footer.tpl.html',
+            templateUrl: 'common/footer.tpl.html',
             controller: 'FooterCtrl'
           }
         }

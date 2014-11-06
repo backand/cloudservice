@@ -10,6 +10,8 @@ module.exports = {
   mainScss: 'client/assets/stylesheets/main.scss',
   scss: 'client/assets/stylesheets/**/*.scss',
   js: [
+    'client/common/**/*.js',
+    'client/views/**/*.js',
     'client/src/**/*.js',
     '!client/src/vendor/**/*.js',
     'client/test/unit/**/*.js',
