@@ -18,15 +18,5 @@ angular.module('app.routes', []).
         url: '/apps',
         abstract: true,
         template: '<div ui-view></div>'
-      })
-      .state('apps.index', {
-        url: '',
-        controller: 'AppsIndexController',
-        templateUrl: 'views/apps/index.tpl.html'
-      })
-      .state('apps.edit', {
-        url: '/:id',
-        controller: 'AppsEditController',
-        templateUrl: 'views/apps/edit.tpl.html'
       });
     });
