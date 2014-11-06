@@ -2,32 +2,6 @@
   'use strict';
 
   /**
-   * @name  config
-   * @description config block
-   */
-  function config($stateProvider) {
-    $stateProvider
-      .state('root', {
-        url: '',
-        abstract: true,
-      })
-      .state('root.home', {
-        url: '/',
-        views: {
-          '@': {
-            templateUrl: 'views/home/home.tpl.html',
-            controller: 'HomeCtrl as home',
-            resolve: {
-              data: function(DataService) {
-                return DataService.get();
-              }
-            }
-          }
-        }
-      });
-  }
-
-  /**
    * @name  HomeCtrl
    * @description Controller
    */
@@ -38,6 +12,5 @@
   }
 
   angular.module('home', [])
-    .config(config)
     .controller('HomeCtrl', HomeCtrl);
 })();

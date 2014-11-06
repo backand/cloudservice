@@ -11,6 +11,7 @@ module.exports = {
   scss: 'client/assets/stylesheets/**/*.scss',
   js: [
     'client/common/**/*.js',
+    'client/config/**/*.js',
     'client/views/**/*.js',
     '!client/vendor/**/*.js',
     'client/test/unit/**/*.js',

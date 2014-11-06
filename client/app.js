@@ -5,12 +5,6 @@
     angular.bootstrap(document, ['app']);
   });
 
-  function config($stateProvider, $urlRouterProvider, $logProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/');
-    $logProvider.debugEnabled(true);
-    $httpProvider.interceptors.push('httpInterceptor');
-  }
-
   function MainCtrl($log) {
     $log.debug('MainCtrl laoded!');
   }
@@ -21,6 +15,7 @@
 
   angular.module('app', [
       'ui.router',
+      'app.routes',
       'home',
       'common.services.data',
       'common.directives.version',
@@ -28,7 +23,6 @@
       'common.interceptors.http',
       'templates'
     ])
-    .config(config)
     .run(run)
     .controller('MainCtrl', MainCtrl)
     .value('version', '1.0.1');
