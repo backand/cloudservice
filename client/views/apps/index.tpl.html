@@ -1,16 +1,14 @@
 <div class="page ng-scope">
   <div class="panel-body">
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-2" ng-repeat="app in apps">
         <div class="panel panel-default ui-ribbon-container ui-ribbon-success">
           <div class="ui-ribbon-wrapper">
-            <div class="ui-ribbon">
-              Android
-            </div>
+            <div class="ui-ribbon">{{ app.os }}</div>
           </div>
-          <div class="panel-heading"><span class="glyphicon glyphicon-th"></span> Ribbon-success</div>
+          <div class="panel-heading"><span class="glyphicon glyphicon-th"></span>{{ app.name }}</div>
           <div class="panel-body">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti rerum reprehenderit ipsam natus saepe. Recusandae, itaque nulla in illum dolorum ea eveniet quaerat ipsa placeat magni commodi obcaecati mollitia necessitatibus?</p>
+            <p>App description</p>
           </div>
         </div>
       </div>
