@@ -13,6 +13,7 @@
   }
 
   angular.module('controllers', []);
+  angular.module('services', []);
 
   angular.module('app', [
       'ui.router',
@@ -23,7 +24,9 @@
       'common.filters.uppercase',
       'common.interceptors.http',
       'controllers',
-      'templates'
+      'templates',
+      'services',
+      'app.apps'
     ])
     .run(run)
     .controller('MainCtrl', MainCtrl)
