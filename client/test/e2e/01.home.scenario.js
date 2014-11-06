@@ -21,10 +21,5 @@
       expect(ptor.isElementPresent(by.css('body'))).toBe(true);
     });
 
-    it('should navigate to the docs page when clicking', function() {
-      element(by.css('a[ui-sref="root.getting-started"]')).click();
-      expect(ptor.getCurrentUrl()).toMatch(/\/getting-started/);
-    });
-
   });
 })();

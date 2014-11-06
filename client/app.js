@@ -22,7 +22,6 @@
   angular.module('app', [
       'ui.router',
       'home',
-      'getting-started',
       'common.services.data',
       'common.directives.version',
       'common.filters.uppercase',
