@@ -7,8 +7,8 @@ module.exports = {
   dist: 'build/dist',
   base: 'client',
   tpl: 'client/src/**/*.tpl.html',
-  mainScss: 'client/src/scss/main.scss',
-  scss: 'client/src/scss/**/*.scss',
+  mainScss: 'client/assets/stylesheets/main.scss',
+  scss: 'client/assets/stylesheets/**/*.scss',
   js: [
     'client/src/**/*.js',
     '!client/src/vendor/**/*.js',
