@@ -25,7 +25,7 @@
         url: '/getting-started',
         views: {
           '@': {
-            templateUrl: 'src/app/getting-started/getting-started.tpl.html',
+            templateUrl: 'views/getting-started/getting-started.tpl.html',
             controller: 'DocsCtrl as docs'
           }
         }
