@@ -8,25 +8,31 @@ function config($stateProvider) {
     .state('apps.index', {
       url: '',
       controller: 'AppsIndexController',
-      templateUrl: 'views/apps/index.tpl.html'
+      templateUrl: 'views/apps/index.tpl.html',
+      resolve:{
+        appsList: function(AppsService){
+          return AppsService.getAllApps();
+        }
+      }
     })
-    .state('apps.edit', {
-      url: '/:id',
-      controller: 'AppsEditController',
-      templateUrl: 'views/apps/edit.tpl.html'
-    });
+    .state('apps.show', {
+    url: '/:id',
+    controller: 'AppsShowController',
+    templateUrl: 'views/apps/show.tpl.html'
+    })
 }
 
-angular.module('app.apps').controller('AppsEditController',
+angular.module('app.apps').controller('AppsShowController',
   ['$scope', '$stateParams', 'AppsService',
   function($scope, $stateParams, AppsService) {
-    $scope.appId = $stateParams.id;
-    $scope.app = AppsService.get($scope.appId);
+    this.appUploadState = 'bg-danger';
+    this.appConnectedState = "bg-success";
+    this.appWarnState ='bg-warning';
   }
 ]);
 
 angular.module('app.apps').controller('AppsIndexController',
-  [ '$scope', 'AppsService',
-  function($scope, AppsService) {
-    $scope.apps = AppsService.all();
+  [ '$scope', 'AppsService','appsList',
+  function($scope, AppsService,appsList) {
+    $scope.apps = appsList.data;
 }]);

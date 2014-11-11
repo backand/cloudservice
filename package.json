@@ -53,5 +53,9 @@
   },
   "scripts": {
     "test": "gulp travis"
+  },
+  "dependencies": {
+    "gulp-filelog": "^0.4.1",
+    "proxy-middleware": "~0.5.1"
   }
 }

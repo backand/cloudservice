@@ -5,7 +5,15 @@
     angular.bootstrap(document, ['app']);
   });
 
-  function MainCtrl($log) {
+  function MainController(AuthService) {
+    this.getCurrentUser = function(){
+      return AuthService.currentUser;
+    }
+
+    this.logout = function(){
+      AuthService.ClearCredentials();
+    }
+
   }
 
   function run($log) {
@@ -19,7 +27,7 @@
       'ui.router',
       'app.routes',
       'theme.directives',
-      'common.services.data',
+      'common.services',
       'common.directives.custom_page',
       'common.filters.uppercase',
       'common.interceptors.http',
@@ -29,6 +37,6 @@
       'app.apps'
     ])
     .run(run)
-    .controller('MainCtrl', MainCtrl)
+    .controller('MainController', ["AuthService",MainController])
     .value('version', '1.0.1');
 })();

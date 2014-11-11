@@ -1,7 +1,7 @@
 <div class="page ng-scope">
   <div class="panel-body">
     <div class="row">
-      <a ui-sref="apps.edit({ id: app.id })" class="col-md-2 app-panel" ng-repeat="app in apps">
+      <a ui-sref="apps.show({ id: app.id })" class="col-md-2 app-panel" ng-repeat="app in apps">
         <div class="panel panel-default ui-ribbon-container ui-ribbon-success">
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">{{ app.os }}</div>

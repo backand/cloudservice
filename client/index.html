@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-controller="MainCtrl">
+<html lang="en" ng-controller="MainController as main">
 
 <head>
   <meta charset="utf-8" />
@@ -21,10 +21,9 @@
 
 <body id="app" class="app" custom-page>
 
-  <section data-ng-include=" 'views/shared/header.tpl.html' " id="header" class="header-container ng-scope header-fixed bg-white"> </section>
-
+  <section ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/header.tpl.html' " id="header" class="header-container ng-scope header-fixed bg-white"> </section>
   <div class="main-container">
-    <aside data-ng-include=" 'views/shared/nav.tpl.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
+    <aside ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/nav.tpl.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
     <div id="content" class="content-container">
       <section ui-view class="view-container"></section>
     </div>
@@ -33,25 +32,29 @@
   <!-- build:js assets/js/vendor.js -->
   <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="vendor/angular/angular.js"></script>
+  <script type="text/javascript" src="vendor/angular-cookies/angular-cookies.js"></script>
   <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
   <!-- endbuild -->
 
   <!-- build:js assets/js/main.js -->
+
   <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="common/services/auth_service.js"></script>
 
   <script type="text/javascript" src="common/services/apps_service.js"></script>
+
 
   <script type="text/javascript" src="config/routes.js"></script>
 
   <script type="text/javascript" src="views/shared/nav_controller.js"></script>
+  <script type="text/javascript" src="views/shared/header.controller.js"></script>
   <script type="text/javascript" src="views/apps/controllers.js"></script>
-
+  <script type="text/javascript" src="views/auth/sign_in.controller.js"></script>
   <script type="text/javascript" src="common/directives/custom_page.js"></script>
   <script type="text/javascript" src="common/directives/theme.js"></script>
 
 
   <script type="text/javascript" src="common/interceptors/httpInterceptor.js"></script>
-  <script type="text/javascript" src="common/services/dataService.js"></script>
   <script type="text/javascript" src="common/filters/uppercase.js"></script>
 
   <script type="text/javascript" src="tmp/templates.js"></script>

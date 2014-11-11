@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('controllers').controller('NavCtrl', [
-  '$scope', 'filterFilter',
-  function($scope, filterFilter) {
+  '$rootScope','$scope', 'filterFilter',
+  function($rootScope,$scope, filterFilter) {
     $scope.taskRemainingCount = 3
+
   }
 ]);

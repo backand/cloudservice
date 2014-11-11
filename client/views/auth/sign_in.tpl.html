@@ -1,5 +1,4 @@
 <div class="page-signin">
-
   <div class="signin-header">
     <section class="logo text-center">
       <h1><a href="#/">AutoDesk Configuration Manager</a></h1>
@@ -10,14 +9,20 @@
     <div class="container">
       <div class="form-container">
 
-        <form class="form-horizontal">
+        <form class="form-horizontal" name="form" ng-submit="sign.logIn()" role="form">
           <fieldset>
             <div class="form-group">
               <div class="input-group input-group-first">
                 <span class="input-group-addon">
                   <span class="ti-email"></span>
                 </span>
-                <input type="email" class="form-control input-lg" placeholder="Username">
+                <input type="email"
+                       class="form-control input-lg"
+                       placeholder="Username"
+                       ng-model = "sign.userName"
+                       ng-model-options="{debounce: 500}"
+                       required
+                  >
               </div>
             </div>
             <div class="form-group">
@@ -26,15 +31,19 @@
                   <span class="ti-lock"></span>
                 </span>
                 <input type="password"
-                class="form-control input-lg"
-                placeholder="Password"
-                >
+                       class="form-control input-lg"
+                       placeholder="Password"
+                       ng-model = "sign.userPassword"
+                       ng-model-options="{debounce: 500}"
+                       required
+                  >
               </div>
             </div>
-
+            <div ng-show="sign.error" class="alert alert-danger">{{sign.error}}</div>
             <div class="divider divider-xl"></div>
             <div class="form-group">
-              <a ui-sref='dashboard' class="btn btn-primary btn-lg btn-block text-center">Log in</a>
+              <button type="submit" ng-disabled="form.$invalid || sign.dataLoading" class="btn btn-primary btn-lg btn-block text-center">Log in</button>
+              <img src="../../assets/images/ajax-loader.gif" ng-if="sign.dataLoading" />
             </div>
           </fieldset>
         </form>

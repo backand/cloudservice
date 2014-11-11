@@ -11,6 +11,11 @@ var reload = browserSync.reload;
 var pkg = require('./package');
 var karma = require('karma').server;
 var del = require('del');
+var url = require('url');
+var proxy = require('proxy-middleware');
+var filelog = require('gulp-filelog');
+//var connect = require('gulp-connect');
+
 var _ = require('lodash');
 /* jshint camelcase:false*/
 var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
@@ -59,6 +64,7 @@ gulp.task('templates', function() {
       useStrict: true
     }))
     .pipe($.concat('templates.js'))
+    .pipe(filelog())
     .pipe(gulp.dest(config.tmp))
     .pipe($.size({
       title: 'templates'
@@ -117,6 +123,7 @@ gulp.task('html', function() {
       empty: true
     })))
     .pipe($.sourcemaps.write())
+    .pipe(filelog())
     .pipe(gulp.dest(config.dist))
     .pipe($.size({
       title: 'html'
@@ -192,11 +199,19 @@ gulp.task('serve:tdd', function(cb) {
 
 //run the server after having built generated files, and watch for changes
 gulp.task('serve', ['build'], function() {
+  var proxyOptions = url.parse('http://api.backand.info:8099');
+  proxyOptions.route = '/api';
   browserSync({
+    browser: ['google chrome'],
     notify: false,
+    port: 3001,
     logPrefix: pkg.name,
-    server: ['build', 'client']
+    server: {
+      baseDir: ['build', 'client'],
+      middleware: [proxy(proxyOptions)]
+    }
   });
+
 
   gulp.watch(config.html, reload);
   gulp.watch(config.scss, ['sass', reload]);
@@ -212,3 +227,18 @@ gulp.task('serve:dist', ['build:dist'], function() {
     server: [config.dist]
   });
 });
+
+//gulp.task('connect', function(){
+//  connect.server({
+//    //root: './client',
+//    middleware: function(connect, o) {
+//      return [ (function() {
+//        var url = require('url');
+//        var proxy = require('proxy-middleware');
+//        var options = url.parse('http://localhost:3000/api');
+//        options.route = 'api';
+//        return proxy(options);
+//      })()]
+//    }
+//  });
+//});
