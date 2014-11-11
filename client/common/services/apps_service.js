@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function appsService(AuthService,$http) {
+  function appsService($http) {
     var apps = [
       {
         id: '241',
@@ -24,15 +24,26 @@
     ];
 
     this.getAllApps = function(){
-      console.log(AuthService.currentUser.access_token);
+      //console.log(AuthService.currentUser.access_token);
       return $http({
           method: 'GET',
-          url: '/api/admin/myApps',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type' :'application/json',
-            Authorization : 'bearer'+ AuthService.currentUser.access_token}
+          url: '/api/admin/myApps'
         });
+    };
+
+    this.getSingleApp = function(appName){
+      return $http({
+        method: 'GET',
+        url: '/api/admin/myApps/'+appName
+      });
+    };
+
+    this.connect2DB = function(appName){
+      return $http({
+        method: 'PUT',
+        data: '',
+        url: '/api/admin/myApps/'+appName
+      });
     };
 
     this.get = function(id) {
@@ -46,6 +57,6 @@
   };
 
   angular.module('common.services')
-    .service('AppsService',['AuthService','$http', appsService]);
+    .service('AppsService',['$http', appsService]);
 
 })();

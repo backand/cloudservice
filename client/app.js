@@ -5,13 +5,14 @@
     angular.bootstrap(document, ['app']);
   });
 
-  function MainController(AuthService) {
+  function MainController(SessionService,$state) {
     this.getCurrentUser = function(){
-      return AuthService.currentUser;
+      return SessionService.currentUser;
     }
 
     this.logout = function(){
-      AuthService.ClearCredentials();
+      SessionService.ClearCredentials();
+      $state.go('sign_in');
     }
 
   }
@@ -37,6 +38,6 @@
       'app.apps'
     ])
     .run(run)
-    .controller('MainController', ["AuthService",MainController])
+    .controller('MainController', ["SessionService",'$state',MainController])
     .value('version', '1.0.1');
 })();

@@ -343,11 +343,11 @@
   <ul class="nav-right pull-right list-unstyled">
 
     <li class="dropdown text-normal nav-profile">
-      <button ng-click="main.logout()">log out</button>
       <a href="" class="dropdown-toggle" data-toggle="dropdown">
         <img src="/assets/images/g1.jpg" alt="" class="img-circle img30_30">
         <span class="hidden-xs">
           <span>{{main.getCurrentUser().username}}</span>
+          <button ng-click="main.logout()">log out</button>
         </span>
       </a>
       <ul class="dropdown-menu with-arrow pull-right">

@@ -1,10 +1,14 @@
 (function() {
   'use strict';
 
-  function httpInterceptor($q, $log) {
+  function httpInterceptor($q, $log,SessionService) {
     return {
-      request: function(config) {
-        return config;
+        request: function(config) {
+          if (SessionService.currentUser) {
+            config.headers['Authorization'] =
+              SessionService.getAuthHeader();
+          }
+          return config;
       },
       requestError: function(rejection) {
         $log.debug(rejection);
@@ -22,5 +26,5 @@
   }
 
   angular.module('common.interceptors.http', [])
-    .factory('httpInterceptor', httpInterceptor);
+    .factory('httpInterceptor', ['$q','$log','SessionService',httpInterceptor]);
 })();

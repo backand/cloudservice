@@ -12,7 +12,7 @@ angular.module('app.routes', []).
     $stateProvider
       .state('sign_in', {
         url: '/sign_in',
-        templateUrl:   'views/auth/sign_in.tpl.html',
+        templateUrl:   'views/sign_in/sign_in.tpl.html',
         controller : 'SignInController as sign'
 
 
@@ -25,9 +25,9 @@ angular.module('app.routes', []).
     })
   .run(run,['$state','AuthService','$rootScope']);
 
-function run($state,AuthService,$rootScope){
+function run($state,SessionService,$rootScope){
 
-  if(!AuthService.currentUser){
+  if(!SessionService.currentUser){
     //user not log in:
       $state.go('sign_in')
   }else{
@@ -38,7 +38,7 @@ function run($state,AuthService,$rootScope){
 
   // on every page load checking if the user sign in:
   $rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
-    if(!AuthService.currentUser) {
+    if(!SessionService.currentUser) {
       //user not log in:
       $state.go('sign_in')
     }

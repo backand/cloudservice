@@ -13,7 +13,7 @@
 
             var addBg = function(path) {
               // remove all the classes
-              $element.removeClass('body-wide body-err body-lock body-auth');
+              $element.removeClass('body-wide body-err body-lock body-sign_in');
 
               // add certain class based on path
               switch (path) {
@@ -24,7 +24,7 @@
                 case '/sign_in':
                 case '/sign_up':
                 case '/forgot-password':
-                  return $element.addClass('body-wide body-auth');
+                  return $element.addClass('body-wide body-sign_in');
                 case '/pages/lock-screen':
                   return $element.addClass('body-wide body-lock');
               }

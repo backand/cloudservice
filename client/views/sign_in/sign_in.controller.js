@@ -2,29 +2,25 @@
 (function  () {
 
   angular.module('app')
-    .controller('SignInController',["$scope",'AuthService','$state',SignInController]);
+    .controller('SignInController',["$scope",'AuthService','$state','SessionService',SignInController]);
 
-  function SignInController(scope,AuthService,$state){
+  function SignInController($scope,AuthService,$state,SessionService){
 
     var self = this;
-
     //this.error = "nop";
 
     this.userPassword = undefined;
 
     this.userName = undefined;
 
-    AuthService.ClearCredentials();
+    SessionService.ClearCredentials();
 
     this.logIn = function(){
-
       self.dataLoading = true;
-
-
       //console.log(self.userPassword +' '+ self.userName);
       AuthService.logIn(self.userName,self.userPassword)
         .success(function (data) {
-          AuthService.SetCredentials(self.userName, self.userPassword ,data);
+          SessionService.setCredentials(self.userName, self.userPassword ,data);
           self.dataLoading = false;
           $state.go('apps.index');
         })
@@ -33,11 +29,6 @@
           self.dataLoading = false;
           self.error = data.error_description;
         });
-
     }
-
   }
-
-
-
 }());
