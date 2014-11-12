@@ -12,10 +12,8 @@ angular.module('app.routes', []).
     $stateProvider
       .state('sign_in', {
         url: '/sign_in',
-        templateUrl:   'views/sign_in/sign_in.tpl.html',
+        templateUrl: 'views/sign_in/sign_in.tpl.html',
         controller : 'SignInController as sign'
-
-
       })
       .state('apps', {
         url: '/apps',
@@ -23,26 +21,20 @@ angular.module('app.routes', []).
         template: '<div ui-view></div>'
       });
     })
-  .run(run,['$state','AuthService','$rootScope']);
+  .run(run,['$state','AuthService', '$rootScope']);
 
-function run($state,SessionService,$rootScope){
+function run($state,SessionService, $rootScope){
 
-  if(!SessionService.currentUser){
-    //user not log in:
-      $state.go('sign_in')
-  }else{
-    //user logged in
-      $state.go('apps.index')
-    }
-
+  if (!SessionService.currentUser){
+    $state.go('sign_in')
+  } else {
+    $state.go('apps.index')
+  }
 
   // on every page load checking if the user sign in:
-  $rootScope.$on('$stateChangeSuccess',function(event, toState, toParams, fromState, fromParams){
-    if(!SessionService.currentUser) {
-      //user not log in:
+  $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+    if (!SessionService.currentUser) {
       $state.go('sign_in')
     }
   });
-
-
 }
