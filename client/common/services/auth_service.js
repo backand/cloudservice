@@ -5,7 +5,7 @@
 
     var self =this;
 
-    this.logIn = function(userName,password){
+    this.signIn = function(userName,password){
       return $http({
         method: 'POST',
         url: '/api/token',

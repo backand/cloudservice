@@ -12,7 +12,7 @@ angular.module('app.routes', []).
     $stateProvider
       .state('sign_in', {
         url: '/sign_in',
-        templateUrl: 'views/sign_in/sign_in.tpl.html',
+        templateUrl: 'views/auth/sign_in.tpl.html',
         controller : 'SignInController as sign'
       })
       .state('apps', {

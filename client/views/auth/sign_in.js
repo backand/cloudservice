@@ -15,10 +15,10 @@
 
     SessionService.ClearCredentials();
 
-    this.logIn = function(){
+    this.signIn = function(){
       self.dataLoading = true;
       //console.log(self.userPassword +' '+ self.userName);
-      AuthService.logIn(self.userName,self.userPassword)
+      AuthService.signIn(self.userName,self.userPassword)
         .success(function (data) {
           SessionService.setCredentials(self.userName, self.userPassword ,data);
           self.dataLoading = false;
