@@ -41,30 +41,3 @@ function config($stateProvider) {
       templateUrl: 'views/apps/data_base_exs_source.html'
     })
 }
-
-angular.module('app.apps').controller('AppsShowController',
-  ['appItem', function(appItem) {
-    this.appUploadState = 'bg-danger';
-    this.appConnectedState = "bg-success";
-    this.appWarnState ='bg-warning';
-
-
-    var appData = appItem.data;
-    this.appName = appData.Name;
-  }
-]);
-
-angular.module('app.apps').controller('AppsIndexController',
-  [ '$scope', 'AppsService','appsList',
-  function($scope, AppsService,appsList) {
-    $scope.apps = appsList.data.data;
-}]);
-
-angular.module('app.apps').controller('AppsDataController',
-  [ '$scope', 'AppsService','$stateParams',
-    function($scope, AppsService,$stateParams) {
-      //this.connectDB = AppsService.connect2DB($stateParams.name);
-
-      this.appName = $stateParams.name;
-    }]);
-
