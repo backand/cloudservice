@@ -11,7 +11,7 @@ function config($stateProvider) {
       templateUrl: 'views/apps/index.tpl.html',
       resolve:{
         appsList: ['AppsService',function(AppsService){
-          return AppsService.getAllApps();
+          return AppsService.all();
         }]
       }
     })
@@ -21,7 +21,7 @@ function config($stateProvider) {
       templateUrl: 'views/apps/show.tpl.html',
       resolve:{
         appItem: ['AppsService','$stateParams',function(AppsService,stateParams){
-          return AppsService.getSingleApp(stateParams.name);
+          return AppsService.find(stateParams.name);
         }]
       }
     })
