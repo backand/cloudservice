@@ -4,7 +4,6 @@
   function httpInterceptor($q, $log,SessionService,usSpinnerService) {
     return {
         request: function(config) {
-          debugger;
           usSpinnerService.spin("spinner-1");
           if (SessionService.currentUser) {
             config.headers['Authorization'] =
