@@ -30,10 +30,15 @@ function config($stateProvider) {
       controller: 'AppsDataController as data',
       templateUrl: 'views/apps/data_base.html'
     })
-    .state('apps.data.source', {
+    .state('apps.data.new-source', {
       url: '',
       //controller: 'AppsDataController as data',
-      templateUrl: 'views/apps/data_base_source.html'
+      templateUrl: 'views/apps/data_base_new_source.html'
+    })
+    .state('apps.data.exs-source', {
+      url: '',
+      //controller: 'AppsDataController as data',
+      templateUrl: 'views/apps/data_base_exs_source.html'
     })
 }
 
