@@ -24,9 +24,7 @@
         }
       }
       )};
-
   }
-
 
   angular.module('common.services')
     .service('AuthService',['$http',AuthService])
