@@ -40,4 +40,9 @@ function config($stateProvider) {
       //controller: 'AppsDataController as data',
       templateUrl: 'views/apps/data_base_exs_source.html'
     })
+    .state('apps.dash-board', {
+      url: '/:name/dash-board',
+      //controller: 'AppsDataController as data',
+      templateUrl: 'views/apps/dash_board.html'
+    })
 }
