@@ -1,7 +1,13 @@
-'use strict';
 
-angular.module('app.apps').controller('AppsDataController',
-  [ 'AppsService','$stateParams',
-    function(AppsService,$stateParams) {
-      this.appName = $stateParams.name;
-    }]);
+(function  () {
+    'use strict';
+  angular.module('app.apps')
+    .controller('AppsDataController',['AppsService','$stateParams',AppsDataController]);
+
+  function AppsDataController(AppsService,$stateParams){
+    var self = this;
+    this.appName = $stateParams.name;
+
+
+  }
+}());
