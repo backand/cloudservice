@@ -28,6 +28,8 @@
       'ui.router',
       'app.routes',
       'angularSpinner',
+      'ngAnimate',
+      'toaster',
       'theme.directives',
       'common.services',
       'common.directives.custom_page',

@@ -16,6 +16,8 @@
   <!-- build:css assets/css/main.css -->
   <link rel="stylesheet" type="text/css" href="/assets/stylesheets/themify-icons.min.css" />
   <link rel="stylesheet" type="text/css" href="tmp/main.css" />
+  <link rel="stylesheet" type="text/css" href="vendor/AngularJS-Toaster/toaster.css" />
+
   <!-- endbuild -->
 </head>
 
@@ -25,7 +27,10 @@
   <div class="main-container">
     <aside ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/nav.tpl.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
     <div id="content" class="content-container">
-      <section ui-view class="view-container"><span us-spinner spinner-key="spinner-1"></span></section>
+      <toaster-container></toaster-container>
+      <section ui-view class="view-container">
+        <span us-spinner spinner-key="spinner-1"></span>
+      </section>
     </div>
   </div>
 
@@ -36,6 +41,8 @@
   <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
   <script type="text/javascript" src="vendor/spin.js/spin.js"></script>
   <script type="text/javascript" src="vendor/angular-spinner/angular-spinner.js"></script>
+  <script type="text/javascript" src="vendor/AngularJS-Toaster/toaster.js"></script>
+  <script type="text/javascript" src="vendor/angular-animate/angular-animate.js"></script>
 
   <!-- endbuild -->
 
@@ -47,6 +54,7 @@
   <script type="text/javascript" src="app.js"></script>
   <script type="text/javascript" src="common/services/session.service.js"></script>
   <script type="text/javascript" src="common/services/auth_service.js"></script>
+  <script type="text/javascript" src="common/services/notification_service.js"></script>
 
   <script type="text/javascript" src="common/services/apps_service.js"></script>
 

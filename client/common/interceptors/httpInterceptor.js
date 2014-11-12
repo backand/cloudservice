@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function httpInterceptor($q, $log,SessionService,usSpinnerService) {
+  function httpInterceptor($q, $log,SessionService,usSpinnerService,NotificationService) {
     return {
         request: function(config) {
           usSpinnerService.spin("spinner-1");
@@ -21,11 +21,15 @@
       },
       responseError: function(rejection) {
         $log.debug(rejection);
+        //if not sign in screen :
+        if ((rejection.config.url+"").indexOf('token') === -1){
+          NotificationService.add(rejection);
+        }
         return $q.reject(rejection);
       }
     };
   }
 
   angular.module('common.interceptors.http', [])
-    .factory('httpInterceptor', ['$q','$log','SessionService','usSpinnerService',httpInterceptor]);
+    .factory('httpInterceptor', ['$q','$log','SessionService','usSpinnerService','NotificationService',httpInterceptor]);
 })();

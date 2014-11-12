@@ -10,9 +10,6 @@
     SessionService.ClearCredentials();
 
     this.signIn = function(){
-      // TODO: Add generic spinner
-      // TODO: Don't save user & pass
-      // TODO: Add error service
 
       AuthService.signIn(self.userName,self.userPassword)
         .success(function (data) {
