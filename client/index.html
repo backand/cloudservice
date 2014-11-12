@@ -25,7 +25,7 @@
   <div class="main-container">
     <aside ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/nav.tpl.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
     <div id="content" class="content-container">
-      <section ui-view class="view-container"></section>
+      <section ui-view class="view-container"><span us-spinner spinner-key="spinner-1"></span></section>
     </div>
   </div>
 

@@ -1,9 +1,11 @@
 (function() {
   'use strict';
 
-  function httpInterceptor($q, $log,SessionService) {
+  function httpInterceptor($q, $log,SessionService,usSpinnerService) {
     return {
         request: function(config) {
+          debugger;
+          usSpinnerService.spin("spinner-1");
           if (SessionService.currentUser) {
             config.headers['Authorization'] =
               SessionService.getAuthHeader();
@@ -26,5 +28,5 @@
   }
 
   angular.module('common.interceptors.http', [])
-    .factory('httpInterceptor', ['$q','$log','SessionService',httpInterceptor]);
+    .factory('httpInterceptor', ['$q','$log','SessionService','usSpinnerService',httpInterceptor]);
 })();
