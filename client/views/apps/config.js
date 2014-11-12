@@ -7,7 +7,7 @@ function config($stateProvider) {
   $stateProvider
     .state('apps.index', {
       url: '',
-      controller: 'AppsIndexController',
+      controller: 'AppsIndexController as index',
       templateUrl: 'views/apps/index.tpl.html',
       resolve:{
         appsList: ['AppsService',function(AppsService){
