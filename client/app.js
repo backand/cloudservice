@@ -27,6 +27,7 @@
   angular.module('app', [
       'ui.router',
       'app.routes',
+      'angularSpinner',
       'theme.directives',
       'common.services',
       'common.directives.custom_page',

@@ -42,8 +42,8 @@
             <div ng-show="sign.error" class="alert alert-danger">{{sign.error}}</div>
             <div class="divider divider-xl"></div>
             <div class="form-group">
-              <button type="submit" ng-disabled="form.$invalid || sign.dataLoading" class="btn btn-primary btn-lg btn-block text-center">Log in</button>
-              <img src="../../assets/images/ajax-loader.gif" ng-if="sign.dataLoading" />
+              <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary btn-lg btn-block text-center">Log in</button>
+              <span us-spinner spinner-key="logInSpinner"></span>
             </div>
           </fieldset>
         </form>

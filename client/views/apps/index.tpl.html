@@ -1,15 +1,16 @@
 <div class="page ng-scope">
   <div class="panel-body">
     <div class="row">
-      <a ui-sref="apps.show({ name: index.app.Name })" class="col-md-2 app-panel" ng-repeat="app in index.apps">
+
+      <a ui-sref="apps.show({ name: app.Name })" class="col-md-2 app-panel" ng-repeat="app in index.apps">
         <div class="panel panel-default ui-ribbon-container ui-ribbon-success">
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">good</div>
           </div>
-          <div class="panel-heading">{{ index.app.Title }}</div>
+          <div class="panel-heading">{{ app.Title }}</div>
           <div class="panel-body">
             <img ng-src="{{}}" alt=""/>
-            <p>{{ index.app.desc }}</p>
+            <p>{{ app.desc }}</p>
           </div>
         </div>
       </a>
