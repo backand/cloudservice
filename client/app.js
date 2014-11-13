@@ -27,6 +27,7 @@
   angular.module('app', [
       'ui.router',
       'app.routes',
+      'app.consts',
       'angularSpinner',
       'ngAnimate',
       'toaster',

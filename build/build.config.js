@@ -11,7 +11,7 @@ module.exports = {
   scss: 'client/assets/stylesheets/**/*.scss',
   js: [
     'client/common/**/*.js',
-    'client/config/**/*.js',
+    'client/config/*.js',
     'client/views/**/*.js',
     '!client/vendor/**/*.js',
     'client/test/unit/**/*.js',
@@ -27,5 +27,6 @@ module.exports = {
     ' * @license <%= pkg.license %>',
     ' */',
     ''
-  ].join('\n')
+  ].join('\n'),
+  consts: 'client/config'
 };

@@ -1,5 +1,6 @@
 'use strict';
 
+var fs = require('fs');
 var config = require('./build/build.config.js');
 var karmaConfig = require('./build/karma.config.js');
 var protractorConfig = require('./build/protractor.config.js');
@@ -14,6 +15,7 @@ var del = require('del');
 var url = require('url');
 var proxy = require('proxy-middleware');
 var filelog = require('gulp-filelog');
+var replace = require('gulp-replace-task');
 //var connect = require('gulp-connect');
 
 var _ = require('lodash');
@@ -90,7 +92,7 @@ gulp.task('sass', function() {
 
 //build files for creating a dist release
 gulp.task('build:dist', ['clean'], function(cb) {
-  runSequence(['jshint', 'build', 'copy', 'copy:assets', 'images', 'test:unit'], 'html', cb);
+  runSequence(['build', 'copy', 'copy:assets', 'images'], 'html', cb);
 });
 
 //build files for development
@@ -198,7 +200,7 @@ gulp.task('serve:tdd', function(cb) {
 });
 
 //run the server after having built generated files, and watch for changes
-gulp.task('serve', ['build'], function() {
+gulp.task('serve', ['env:dev', 'build'], function() {
   var proxyOptions = url.parse('http://api.backand.info:8099');
   proxyOptions.route = '/api';
   browserSync({
@@ -221,11 +223,33 @@ gulp.task('serve', ['build'], function() {
 });
 
 //run the app packed in the dist folder
-gulp.task('serve:dist', ['build:dist'], function() {
+gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
   browserSync({
     notify: false,
     server: [config.dist]
   });
+});
+
+function setEnv(env, dest) {
+  // Read the settings from the right file
+  var settings = JSON.parse(fs.readFileSync('./client/config/env/' + env + '.json', 'utf8'));
+
+  // Replace each placeholder with the correct value for the variable.
+  gulp.src('./client/config/env/consts.js')
+    .pipe(replace({
+      patterns: [
+        { match: 'apiUrl', replacement: settings.apiUrl }
+      ]
+    }))
+    .pipe(gulp.dest(dest));
+}
+
+gulp.task('env:dev', function () {
+  setEnv('dev', config.consts);
+});
+
+gulp.task('env:prod', function () {
+  setEnv('prod', config.consts);
 });
 
 //gulp.task('connect', function(){
