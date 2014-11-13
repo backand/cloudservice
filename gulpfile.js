@@ -16,7 +16,6 @@ var url = require('url');
 var proxy = require('proxy-middleware');
 var filelog = require('gulp-filelog');
 var replace = require('gulp-replace-task');
-//var connect = require('gulp-connect');
 
 var _ = require('lodash');
 /* jshint camelcase:false*/
@@ -214,7 +213,6 @@ gulp.task('serve', ['env:dev', 'build'], function() {
     }
   });
 
-
   gulp.watch(config.html, reload);
   gulp.watch(config.scss, ['sass', reload]);
   gulp.watch(config.js, ['jshint']);
@@ -251,18 +249,3 @@ gulp.task('env:dev', function () {
 gulp.task('env:prod', function () {
   setEnv('prod', config.consts);
 });
-
-//gulp.task('connect', function(){
-//  connect.server({
-//    //root: './client',
-//    middleware: function(connect, o) {
-//      return [ (function() {
-//        var url = require('url');
-//        var proxy = require('proxy-middleware');
-//        var options = url.parse('http://localhost:3000/api');
-//        options.route = 'api';
-//        return proxy(options);
-//      })()]
-//    }
-//  });
-//});
