@@ -15,6 +15,8 @@
     var appData = appItem.data;
     this.appName = appData.Name;
 
+    this.connectionStatus = "";
+
     //todo: fix update name with server
     //this.updateAppName = function(){
     //  AppsService.update(self.appName,self.appName)

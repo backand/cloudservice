@@ -9,10 +9,7 @@
           <div class="tl-body">
             <div class="tl-entry">
               <div class="tl-caption">
-                <span editable-text="show.appName" e-form="textBtnForm" onaftersave="show.updateAppName()">{{show.appName}}</span>
-                <button class="btn btn-default" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">
-                  edit
-                </button>
+                <a editable-text="show.appName"  onaftersave="show.updateAppName()" class="btn btn-default btn-block">{{show.appName}}</a>
               </div>
             </div>
           </div>
@@ -26,11 +23,13 @@
               <div class="tl-content">
                 <section class="panel panel-box" ui-sref="apps.data({name: show.appName})">
                   <div class="panel-top" ng-class="show.appUploadState">
-                    <i>dfdsf</i>
+                    <i>Data base connection</i>
                   </div>
                   <div class="panel-bottom bg-reverse">
-                    <p class="size-h1">369</p>
-                    <p class="text-muted">Sales</p>
+                    <img src="../../assets/images/g1.jpg" alt=""/>
+                    <p class="size-h1">{{show.connectionStatus}} status here</p>
+
+                    <p class="text-muted">state</p>
                   </div>
                 </section>
               </div>
