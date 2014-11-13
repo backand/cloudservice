@@ -14,7 +14,7 @@
           $state.go('apps.show',{ name: self.appName });
       })
         .error(function(data, status, headers, config) {
-            alert('bad')
+          NotificationService.add('error',data);
         })
     };
 

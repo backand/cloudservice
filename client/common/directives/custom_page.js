@@ -5,8 +5,8 @@
     .directive('customPage', function() {
       return {
         restrict: 'A',
-        controller: ['$scope', '$element', '$location',
-          function($scope, $element, $location) {
+        controller: ['$scope', '$element', '$location','$rootScope',
+          function($scope, $element, $location,$rootScope) {
             var path = function() {
               return $location.path();
             };
@@ -32,13 +32,11 @@
 
             addBg($location.path());
 
-            $scope.$watch(path, function(newVal, oldVal) {
-              if (newVal === oldVal) {
-                return;
+            $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+              if (toState != fromState) {
+                addBg($location.path());
               }
-              return addBg($location.path());
             });
-
           }]
       };
     });

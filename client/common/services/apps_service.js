@@ -26,7 +26,18 @@
                 Title: title
               }
       });
-    }
+    };
+
+    this.update= function(name,title){
+      return $http({
+        method: 'PUT',
+        url: '/api/admin/myApps/'+name,
+        data: {
+          Name: name,
+          Title: title
+        }
+      });
+    };
 
     this.connect2DB = function(appName){
       return $http({

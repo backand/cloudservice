@@ -1,9 +1,13 @@
-'use strict';
 
-// TODO: Clean up
-angular.module('controllers').controller('NavCtrl', [
-  '$rootScope','$scope', 'filterFilter',
-  function($rootScope,$scope, filterFilter) {
+(function  () {
+    'use strict';
+  angular.module('controllers')
+    .controller('NavCtrl',['$rootScope','$scope', 'filterFilter',NavCtrl]);
+
+  function NavCtrl($rootScope,$scope, filterFilter){
+    var self = this;
+
     $scope.taskRemainingCount = 3
+
   }
-]);
+}());

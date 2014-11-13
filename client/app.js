@@ -30,6 +30,7 @@
       'angularSpinner',
       'ngAnimate',
       'toaster',
+      'xeditable',
       'theme.directives',
       'common.services',
       'common.directives.custom_page',
