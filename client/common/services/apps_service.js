@@ -17,11 +17,22 @@
       });
     };
 
+    this.add = function(name ,title){
+      return $http({
+        method: 'POST',
+        url: '/api/admin/myApps/',
+        data: {
+                Name: name,
+                Title: title
+              }
+      });
+    }
+
     this.connect2DB = function(appName){
       return $http({
         method: 'PUT',
-        data: '',
-        url: '/api/admin/myApps/'+appName
+        url: '/api/admin/myApps/'+appName,
+        data: ''
       });
     };
   };

@@ -23,7 +23,7 @@
         $log.debug(rejection);
         //if not sign in screen :
         if ((rejection.config.url+"").indexOf('token') === -1){
-          NotificationService.add(rejection.data || rejection.data.error_description);
+          NotificationService.add("error",rejection.data || rejection.data.error_description);
         }
         return $q.reject(rejection);
       }

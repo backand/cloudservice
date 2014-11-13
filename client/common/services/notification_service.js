@@ -3,9 +3,13 @@
 
   function NotificationService(toaster) {
 
-
-    this.add = function(text){
-      toaster.pop('error', "Error", text);
+    /**
+     *
+     * @param type String : success, error,info,warning
+     * @param text String : toaster text
+     */
+    this.add = function(type,text){
+      toaster.pop(type, "", text);
     }
 
 
