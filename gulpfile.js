@@ -228,24 +228,20 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
   });
 });
 
-function setEnv(env, dest) {
+function setEnv(env) {
   // Read the settings from the right file
   var settings = JSON.parse(fs.readFileSync('./client/config/env/' + env + '.json', 'utf8'));
 
   // Replace each placeholder with the correct value for the variable.
   gulp.src('./client/config/env/consts.js')
-    .pipe(replace({
-      patterns: [
-        { match: 'apiUrl', replacement: settings.apiUrl }
-      ]
-    }))
-    .pipe(gulp.dest(dest));
+    .pipe(replace({ patterns: [{ match: 'consts', replacement: settings }] }))
+    .pipe(gulp.dest(config.consts));
 }
 
 gulp.task('env:dev', function () {
-  setEnv('dev', config.consts);
+  setEnv('dev');
 });
 
 gulp.task('env:prod', function () {
-  setEnv('prod', config.consts);
+  setEnv('prod');
 });
