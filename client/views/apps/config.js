@@ -28,17 +28,21 @@ function config($stateProvider) {
     .state('apps.data', {
       url: '/:name/data-base',
       controller: 'AppsDataController as data',
-      templateUrl: 'views/apps/data_base.html'
+      templateUrl: 'views/apps/data_base/data_base.html'
     })
     .state('apps.data.new-source', {
-      url: '',
-      //controller: 'AppsDataController as data',
-      templateUrl: 'views/apps/data_base_new_source.html'
+      url: '/new',
+      templateUrl: 'views/apps/data_base/data_base_new_source.html'
+    })
+    .state('apps.data.new-source.form', {
+      url: '/form/:data',
+      controller: 'dataBaseNewSource as nsource',
+      templateUrl: 'views/apps/data_base/data_base_new_source_form.html'
     })
     .state('apps.data.exs-source', {
-      url: '',
+      url: '/exiting',
       //controller: 'AppsDataController as data',
-      templateUrl: 'views/apps/data_base_exs_source.html'
+      templateUrl: 'views/apps/data_base/data_base_exs_source.html'
     })
     .state('apps.dash-board', {
       url: '/:name/dash-board',

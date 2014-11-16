@@ -1,0 +1,131 @@
+<form class="form-horizontal ng-pristine ng-valid" role="form" ng-submit="nsource.sumbitForm()">
+  <div class="form-group">
+
+  <div class="form-group">
+    <label for="DbName" class="col-sm-2 control-label">DB Name</label>
+
+    <div class="col-sm-10">
+      <div  id="DbName" class="form-control">{{nsource.dataName}}</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="server" class="col-sm-2 control-label">Server</label>
+
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="server" placeholder="server" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="UserName" class="col-sm-2 control-label">User Name</label>
+
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="UserName" placeholder="User Name" required>
+    </div>
+  </div>
+    <div class="form-group">
+      <label for="password" class="col-sm-2 control-label">Password</label>
+
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="password" placeholder="password" required>
+      </div>
+    </div>
+
+    <div ng-switch on="nsource.dataName">
+      <div class="form-group" ng-switch-when='Postgresql'>
+        <label for="usingSsh" class="col-sm-2 control-label">usingSsh</label>
+
+        <div class="col-sm-10">
+        <span class="ui-select" id="usingSsh" class="form-control" >
+            <select name="usingSsh" class="Sitedropdown"
+                    ng-model="nsource.usingSsh"
+                    required>
+              <option value="">Select Service</option>
+              <option value = true>true</option>
+              <option value = false>false</option>
+            </select>
+           </span>
+        </div>
+      </div>
+
+      <div class="form-group" ng-switch-when='Postgresql'>
+        <label for="usingSsl" class="col-sm-2 control-label">usingSsl</label>
+
+        <div class="col-sm-10">
+          <span class="ui-select" id="usingSsl" class="form-control" >
+            <select name="usingSsl" class="Sitedropdown"
+                    ng-model="nsource.usingSsl"
+                    required>
+              <option value="">Select Service</option>
+              <option value = true>true</option>
+              <option value = false>false</option>
+            </select>
+           </span>
+        </div>
+      </div>
+    </div>
+
+    <div ng-if="nsource.usingSsh === 'true'">
+
+    <div class="form-group" >
+      <label for="sshRemoteHost" class="col-sm-2 control-label">sshRemoteHost</label>
+
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="sshRemoteHost" placeholder="sshRemoteHost" required>
+      </div>
+    </div>
+
+      <div class="form-group" >
+        <label for="sshUser" class="col-sm-2 control-label">sshUser</label>
+
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="sshUser" placeholder="sshUser" required>
+        </div>
+      </div>
+
+      <div class="form-group" >
+        <label for="sshPassword" class="col-sm-2 control-label">sshPassword</label>
+
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="sshPassword" placeholder="sshPassword" required>
+        </div>
+      </div>
+
+
+
+      <div class="form-group" >
+        <label for="sshPrivateKey" class="col-sm-2 control-label">sshPrivateKey</label>
+
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="sshPrivateKey" placeholder="sshPrivateKey" required>
+        </div>
+      </div>
+
+
+
+
+      <div class="form-group" >
+        <label for="sshPort" class="col-sm-2 control-label">sshPort</label>
+
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="sshPort" placeholder="sshPort" required>
+        </div>
+      </div>
+
+
+
+</div>
+
+
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit"  ng-disabled="form.$invalid" class="btn btn-success btn-w-md">next</button>
+    </div>
+  </div>
+    </div>
+</form>
+
+
+
