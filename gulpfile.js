@@ -1,5 +1,6 @@
 'use strict';
 
+var fs = require('fs');
 var config = require('./build/build.config.js');
 var karmaConfig = require('./build/karma.config.js');
 var protractorConfig = require('./build/protractor.config.js');
@@ -14,7 +15,7 @@ var del = require('del');
 var url = require('url');
 var proxy = require('proxy-middleware');
 var filelog = require('gulp-filelog');
-//var connect = require('gulp-connect');
+var replace = require('gulp-replace-task');
 
 var _ = require('lodash');
 /* jshint camelcase:false*/
@@ -90,7 +91,7 @@ gulp.task('sass', function() {
 
 //build files for creating a dist release
 gulp.task('build:dist', ['clean'], function(cb) {
-  runSequence(['jshint', 'build', 'copy', 'copy:assets', 'images', 'test:unit'], 'html', cb);
+  runSequence(['build', 'copy', 'copy:assets', 'images'], 'html', cb);
 });
 
 //build files for development
@@ -198,7 +199,7 @@ gulp.task('serve:tdd', function(cb) {
 });
 
 //run the server after having built generated files, and watch for changes
-gulp.task('serve', ['build'], function() {
+gulp.task('serve', ['env:dev', 'build'], function() {
   var proxyOptions = url.parse('http://api.backand.info:8099');
   proxyOptions.route = '/api';
   browserSync({
@@ -212,7 +213,6 @@ gulp.task('serve', ['build'], function() {
     }
   });
 
-
   gulp.watch(config.html, reload);
   gulp.watch(config.scss, ['sass', reload]);
   gulp.watch(config.js, ['jshint']);
@@ -221,24 +221,27 @@ gulp.task('serve', ['build'], function() {
 });
 
 //run the app packed in the dist folder
-gulp.task('serve:dist', ['build:dist'], function() {
+gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
   browserSync({
     notify: false,
     server: [config.dist]
   });
 });
 
-//gulp.task('connect', function(){
-//  connect.server({
-//    //root: './client',
-//    middleware: function(connect, o) {
-//      return [ (function() {
-//        var url = require('url');
-//        var proxy = require('proxy-middleware');
-//        var options = url.parse('http://localhost:3000/api');
-//        options.route = 'api';
-//        return proxy(options);
-//      })()]
-//    }
-//  });
-//});
+function setEnv(env) {
+  // Read the settings from the right file
+  var settings = JSON.parse(fs.readFileSync('./client/config/env/' + env + '.json', 'utf8'));
+
+  // Replace each placeholder with the correct value for the variable.
+  gulp.src('./client/config/env/consts.js')
+    .pipe(replace({ patterns: [{ match: 'consts', replacement: settings }] }))
+    .pipe(gulp.dest(config.consts));
+}
+
+gulp.task('env:dev', function () {
+  setEnv('dev');
+});
+
+gulp.task('env:prod', function () {
+  setEnv('prod');
+});

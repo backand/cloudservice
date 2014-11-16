@@ -28,6 +28,7 @@
       'ui.router',
       'ui.bootstrap',
       'app.routes',
+      'app.consts',
       'angularSpinner',
       'ngAnimate',
       'toaster',

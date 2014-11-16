@@ -1,14 +1,14 @@
 (function() {
   'use strict';
 
-  function AuthService($http) {
+  function AuthService($http, CONSTS) {
 
     var self =this;
 
     this.signIn = function(userName,password){
       return $http({
         method: 'POST',
-        url: '/api/token',
+        url: CONSTS.appUrl + '/token',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         transformRequest: function(obj) {
           var str = [];
@@ -27,6 +27,6 @@
   }
 
   angular.module('common.services')
-    .service('AuthService',['$http',AuthService])
+    .service('AuthService', ['$http', 'CONSTS', AuthService])
 
 })();
