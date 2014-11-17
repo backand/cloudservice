@@ -22,17 +22,11 @@
               <div class="tl-time"></div>
               <div class="tl-icon btn-icon-round btn-icon btn-icon-thin btn-info"><i class="ti-shine"></i></div>
               <div class="tl-content">
-                <section class="panel panel-box" ui-sref="apps.data.exs-source.form({name: show.appName, data:'mysql'}) ">
+                <a class="panel panel-box" ui-sref="apps.data.exs-source.form({name: show.appName, data:'mysql'}) ">
                   <div class="panel-top" ng-class="show.appUploadState">
-                    <i>Data base connection</i>
+                    Data base connection
                   </div>
-                  <div class="panel-bottom bg-reverse">
-                    <img src="../../assets/images/g1.jpg" alt=""/>
-                    <p class="size-h1">{{show.connectionStatus}} status here</p>
-
-                    <p class="text-muted">state</p>
-                  </div>
-                </section>
+                </a>
               </div>
             </div>
           </div>
@@ -44,14 +38,11 @@
               <div class="tl-time"></div>
               <div class="tl-icon btn-icon-round btn-icon btn-icon-thin btn-info"><i class="ti-shine"></i></div>
               <div class="tl-content">
-                <section class="panel panel-box"  ui-sref="apps.dash-board({name: show.appName})">
+                <a class="panel panel-box"  ui-sref="apps.dash-board({name: show.appName})">
                   <div class="panel-top" ng-class="show.appWarnState">
-                    <i class="ti-shopping-cart text-large"></i>
+                    Admin Console
                   </div>
-                  <div class="panel-bottom bg-reverse">
-                    <p class="size-h1">369</p>
-                    <p class="text-muted">Sales</p>
-                  </div>
+                </a>
             </div>
           </div>
         </article>
@@ -62,15 +53,9 @@
               <div class="tl-time"></div>
               <div class="tl-icon btn-icon-round btn-icon btn-icon-thin btn-info"><i class="ti-shine"></i></div>
               <div class="tl-content">
-                <section class="panel panel-box">
-                  <div class="panel-top" ng-class="show.appUploadState">
-                    <i class="ti-shopping-cart text-large"></i>
-                  </div>
-                  <div class="panel-bottom bg-reverse">
-                    <p class="size-h1">369</p>
-                    <p class="text-muted">Sales</p>
-                  </div>
-                </section>
+                <a class="panel panel-box">
+                  <div class="panel-top" ng-class="show.appUploadState">API playground </div>
+                </a>
               </div>
             </div>
           </div>
@@ -81,5 +66,3 @@
 
   </div>
 </section>
-
-
