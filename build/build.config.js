@@ -6,7 +6,10 @@ module.exports = {
   tmp: 'build/tmp',
   dist: 'build/dist',
   base: 'client',
-  tpl: 'client/views/**/*.tpl.html',
+  tpl: [
+    'client/views/**/*.html',
+    '!client/index.html',
+  ],
   mainScss: 'client/assets/stylesheets/main.scss',
   scss: 'client/assets/stylesheets/**/*.scss',
   js: [
