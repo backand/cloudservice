@@ -6,3 +6,15 @@ a.app-panel:hover {
         }
     }
 }
+
+.icon-box .icon-container {
+  &.active {
+    border: solid lightgreen;
+  }
+  .error {
+
+  }
+  .info {
+
+  }
+}

@@ -8,8 +8,14 @@
             <div>
               <div>
                 <tabset justified="true" class="ui-tab">
-                  <tab heading="New Data Base"ui-sref="apps.data.new-source"><ui-view></ui-view></tab>
-                  <tab heading="Existing Data Base" ui-sref="apps.data.exs-source"><ui-view></ui-view></tab>
+                  <tab heading="Existing Data Base"
+                       ui-sref="apps.data.exs-source.form({data:'mysql'})"
+
+                    >
+                    <ui-view></ui-view>
+                  </tab>
+                  <tab heading="New Data Base"
+                       ui-sref="apps.data.new-source.form({data:'mysql'})"><ui-view></ui-view></tab>
                 </tabset>
               </div>
             </div>

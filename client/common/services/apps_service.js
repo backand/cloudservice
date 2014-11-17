@@ -39,14 +39,15 @@
       });
     };
 
-    this.connect2DB = function(appName){
+    this.connect2DB = function(appName,data){
       return $http({
-        method: 'PUT',
-        url: CONSTS.appUrl + '/admin/myApps/'+appName,
-        data: ''
+        method: 'POST',
+        url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
+        data: data
       });
     };
-  };
+
+  }
 
   angular.module('common.services')
     .service('AppsService',['$http', 'CONSTS', appsService]);
