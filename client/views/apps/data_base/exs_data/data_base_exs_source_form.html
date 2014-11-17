@@ -5,7 +5,7 @@
     <label for="DbName" class="col-sm-2 control-label">DB Name</label>
 
     <div class="col-sm-10">
-      <div  id="DbName" class="form-control">{{exsource.dataName}}</div>
+      <div  id="DbName" class="form-control" >{{exsource.dataName}}</div>
     </div>
   </div>
 
@@ -16,11 +16,19 @@
       <input type="text" class="form-control" ng-model="exsource.data.server" id="server" placeholder="server" required>
     </div>
   </div>
+    <div class="form-group">
+      <label for="database" class="col-sm-2 control-label">database</label>
+
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="exsource.data.database" id="database" placeholder="database" required>
+      </div>
+    </div>
+
   <div class="form-group">
     <label for="UserName" class="col-sm-2 control-label">User Name</label>
 
     <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="exsource.data.UserName" id="UserName" placeholder="User Name" required>
+      <input type="text" class="form-control" ng-model="exsource.data.username" id="UserName" placeholder="User Name" required>
     </div>
   </div>
     <div class="form-group">
@@ -48,7 +56,7 @@
         </div>
       </div>
 
-      <div class="form-group" ng-switch-when='Postgresql'>
+      <div class="form-group" ng-switch-when='postgresql'>
         <label for="usingSsl" class="col-sm-2 control-label">usingSsl</label>
 
         <div class="col-sm-10">
