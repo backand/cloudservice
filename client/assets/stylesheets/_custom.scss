@@ -1,10 +1,14 @@
+.app-panel-body {
+  height: 162px;
+}
+
 a.app-panel:hover {
-    &:hover {
-        text-decoration: none;
-        .panel {
-            border: 1px solid green;
-        }
+  &:hover {
+    text-decoration: none;
+    .panel {
+      border: 1px solid green;
     }
+  }
 }
 
 .icon-box .icon-container {
