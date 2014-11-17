@@ -13,7 +13,7 @@
 
             var addBg = function(path) {
               // remove all the classes
-              $element.removeClass('body-wide body-err body-lock body-sign_in');
+              $element.removeClass('body-wide body-auth body-err body-lock body-sign_in');
 
               // add certain class based on path
               switch (path) {
@@ -31,6 +31,7 @@
             };
 
             addBg($location.path());
+
 
             $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
               if (toState != fromState) {

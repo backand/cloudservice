@@ -7,6 +7,10 @@
   function AppsIndexController(AppsService,appsList,$state,NotificationService){
     var self = this;
 
+    console.log('all apps:');
+    console.log(appsList.data.data);
+
+
     this.addApp = function(){
       AppsService.add(self.appName,self.appTitle)
         .success(function(data, status, headers, config) {
