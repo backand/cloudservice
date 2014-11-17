@@ -9,7 +9,11 @@ a.app-panel:hover {
 
 .icon-box .icon-container {
   &.active {
-    border: solid lightgreen;
+    box-shadow: 0 0 0 7px rgba($brand-success, 0.1);
+    border: 1px solid rgba($brand-success, 0.7);
+  }
+  &:hover {
+    border: 1px solid rgba($gray-light, 0.6);
   }
   .error {
 
