@@ -12,7 +12,12 @@
       self.data.product = DataBaseNamesService.getNumber($state.params.data);
       console.log('data: ');
       console.log(self.data);
-      AppsService.connect2DB($state.params.name,self.data);
+      AppsService.connect2DB($state.params.name,self.data)
+        .success(function (data) {
+          console.log(data);
+          debugger;
+          $state.go('apps.show',{name : $state.params.name});
+        })
     }
 
 
