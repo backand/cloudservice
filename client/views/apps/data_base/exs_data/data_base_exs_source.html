@@ -1,10 +1,11 @@
+<br/>
 
 <div class="row">
   <div class="col-md-10 col-md-offset-2">
 
     <a class="icon-box col-md-2" ui-sref="apps.data.exs-source.form({data:'sqlserver'})">
       <div class="icon-container" ng-class="{active : data.currentTab() === 'sqlserver'}">
-        <img src="../../../../assets/images/sqlserver.png"/>
+        <img src="/assets/images/sqlserver.png"/>
       </div>
       <div class="desc-container">
         <h4></h4>
@@ -13,7 +14,7 @@
 
     <a class="icon-box col-md-2" ui-sref="apps.data.exs-source.form({data:'mysql'})">
       <div class="icon-container" ng-class="{active : data.currentTab() === 'mysql'}">
-        <img src="../../../../assets/images/mysql.png"/>
+        <img src="/assets/images/mysql.png"/>
       </div>
       <div class="desc-container">
         <h4></h4>
@@ -22,7 +23,7 @@
 
     <a class="icon-box col-md-2" ui-sref="apps.data.exs-source.form({data:'mongodb'})">
       <div class="icon-container" ng-class="{active : data.currentTab() === 'mongodb'}">
-        <img src="../../../../assets/images/mongodb.png"/>
+        <img src="/assets/images/mongodb.png"/>
       </div>
       <div class="desc-container">
         <h4></h4>
@@ -31,7 +32,7 @@
 
     <a class="icon-box col-md-2" ui-sref="apps.data.exs-source.form({data:'oracle'})">
       <div class="icon-container" ng-class="{active : data.currentTab() === 'oracle'}">
-        <img src="../../../../assets/images/oracle.jpg"/>
+        <img src="/assets/images/oracle.jpg"/>
       </div>
       <div class="desc-container">
         <h4></h4>
@@ -40,7 +41,7 @@
 
     <a class="icon-box col-md-2" ui-sref="apps.data.exs-source.form({data:'postgresql'})">
       <div class="icon-container" ng-class="{active : data.currentTab() === 'postgresql'}">
-        <img src="../../../../assets/images/postgresql.jpg"/>
+        <img src="/assets/images/postgresql.jpg"/>
       </div>
       <div class="desc-container">
         <h4></h4>
@@ -48,6 +49,13 @@
     </a>
 
   </div>
-  <ui-view></ui-view>
 </div>
 
+
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="divider divider-dashed divider-lg pull-in"></div>
+    <ui-view></ui-view>
+
+  </div>
+</div>
