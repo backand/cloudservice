@@ -5,15 +5,19 @@
     that = this;
     $scope.$on('$stateChangeSuccess', function(){
       that.currentState = $state.current.name;
+      that.currentName = $state.params.name;
       console.log(that.currentState);
     })
     this.apps = function(){
-      return AppsService.getAllApps();
+      return AppsService.getAppsNames();
     }
 
     this.redirectTo = function(appName){
       $state.go('apps.show',{ name: appName });
-    }
+    };
+
+    this.currentName = $state.params.name;
+
 
   }
 
