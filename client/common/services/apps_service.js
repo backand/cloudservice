@@ -72,6 +72,14 @@
       });
     };
 
+    this.createDB = function(appName,data){
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
+        data: {"product":"12"}
+      });
+    };
+
   }
 
   angular.module('common.services')

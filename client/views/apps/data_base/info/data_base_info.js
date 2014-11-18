@@ -26,7 +26,7 @@
     this.dataName = $state.params.data;
 
     this.edit = function(){
-      $state.go('apps.data.exs-source.form',({data:$state.params.data}));
+      $state.go('apps.data.exs-source.form',({name:$state.params.name, data:$state.params.data}));
     }
 
   }

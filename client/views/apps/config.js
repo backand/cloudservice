@@ -31,7 +31,7 @@ function config($stateProvider) {
       templateUrl: 'views/apps/data_base/data_base.html'
     })
     .state('apps.info', {
-      url: '/info/:data',
+      url: '/:name/info/:data',
       controller: 'DataBaseInfo as info',
       templateUrl: 'views/apps/data_base/info/data_base_info.html'
     })
