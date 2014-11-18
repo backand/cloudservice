@@ -7,7 +7,7 @@
   function NavCtrl($rootScope,$scope, filterFilter){
     var self = this;
 
-    $scope.taskRemainingCount = 3
+
 
   }
 }());

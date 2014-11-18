@@ -1,5 +1,5 @@
 <header class="top-header clearfix"
-        data-ng-controller="HeaderController as header">
+        ng-controller="HeaderController as header">
 
   <!-- Logo -->
 <div class="logo bg-dark">
@@ -15,7 +15,12 @@
   <span class="icon-bar"></span>
 </div>
 
+
+
 <div class="top-nav">
+  <div class="ui-select" ng-hide="header.currentState === 'apps.index'">
+      <select ng-options="app.Name as app.Name for app in header.apps()" ng-model="header.currentName" ng-change="header.redirectTo(header.currentName)"></select>
+  </div>
   <ul class="nav-right pull-right list-unstyled">
 
     <li class="dropdown text-normal nav-profile">
@@ -26,32 +31,6 @@
           <button class="btn btn-primary" ng-click="main.logout()">log out</button>
         </span>
       </a>
-      <ul class="dropdown-menu with-arrow pull-right">
-        <li>
-          <a href="#/pages/profile">
-            <i class="ti-user"></i>
-            <span>My Profile</span>
-          </a>
-        </li>
-        <li>
-          <a href="#/tasks/tasks">
-            <i class="ti-check-box"></i>
-            <span>My Tasks</span>
-          </a>
-        </li>
-        <li>
-          <a href="#/pages/lock-screen">
-            <i class="ti-lock"></i>
-            <span>Lock</span>
-          </a>
-        </li>
-        <li>
-          <a href="#/pages/signin">
-            <i class="ti-export"></i>
-            <span>Log Out</span>
-          </a>
-        </li>
-      </ul>
     </li>
   </ul>
 </div>

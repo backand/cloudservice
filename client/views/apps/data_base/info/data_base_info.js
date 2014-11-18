@@ -17,9 +17,7 @@
 
     checkDataBaseStatuse();
 
-    this.icons = [
-      {imgSrc: '', name: ''}
-    ]
+    this.dataSources = AppsService.getDataSources();
 
     this.currentTab = function (){
       return $state.params.data;

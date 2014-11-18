@@ -6,47 +6,10 @@
         <div class="col-md-12">
 
           <div class="row">
-            <div class="col-md-10 col-md-offset-2">
-
-              <a class="icon-box col-md-2" ng-show="info.dataName === 'sqlserver'">
-                <div class="icon-container" ng-class="{active : info.currentTab() === 'sqlserver'}">
-                  <img src="/assets/images/sqlserver.png"/>
-                </div>
-                <div class="desc-container">
-                  <h4></h4>
-                </div>
-              </a>
-
-              <a class="icon-box col-md-2" ng-show="info.dataName === 'mysql'">
-                <div class="icon-container" ng-class="{active : info.currentTab() === 'mysql'}">
-                  <img src="/assets/images/mysql.png"/>
-                </div>
-                <div class="desc-container">
-                  <h4></h4>
-                </div>
-              </a>
-
-              <a class="icon-box col-md-2" ng-show="info.dataName === 'mongodb'">
-                <div class="icon-container" ng-class="{active : info.currentTab() === 'mongodb'}">
-                  <img src="/assets/images/mongodb.png"/>
-                </div>
-                <div class="desc-container">
-                  <h4></h4>
-                </div>
-              </a>
-
-              <a class="icon-box col-md-2" ng-show="info.dataName === 'oracle'">
-                <div class="icon-container" ng-class="{active : info.currentTab() === 'oracle'}">
-                  <img src="/assets/images/oracle.jpg"/>
-                </div>
-                <div class="desc-container">
-                  <h4></h4>
-                </div>
-              </a>
-
-              <a class="icon-box col-md-2" ng-show="info.dataName === 'postgresql'">
-                <div class="icon-container" ng-class="{active : info.currentTab() === 'postgresql'}">
-                  <img src="/assets/images/postgresql.jpg"/>
+            <div class="col-md-10 col-md-offset-2" ng-repeat="dataSource in info.dataSources">
+              <a class="icon-box col-md-2" ng-show="info.dataName === dataSource.name">
+                <div class="icon-container" ng-class="{active : info.currentTab() === dataSource.name}">
+                  <img ng-src='dataSource.imgSrc'/>
                 </div>
                 <div class="desc-container">
                   <h4></h4>

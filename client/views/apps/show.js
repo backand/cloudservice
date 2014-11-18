@@ -3,9 +3,9 @@
 
   'use strict';
   angular.module('app.apps')
-    .controller('AppsShowController',["appItem",'AppsService',AppsShowController]);
+    .controller('AppsShowController',['$scope','appItem','AppsService',AppsShowController]);
 
-  function AppsShowController(appItem,AppsService){
+  function AppsShowController($scope,appItem,AppsService){
     var self = this;
 
     AppsService.currentApp = appItem.data;

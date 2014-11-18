@@ -27,6 +27,7 @@
     this.apps = appsList.data.data;
 
 
+    AppsService.setAllApps(appsList.data.data);
 
 
   }
