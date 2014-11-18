@@ -30,6 +30,11 @@ function config($stateProvider) {
       controller: 'AppsDataController as data',
       templateUrl: 'views/apps/data_base/data_base.html'
     })
+    .state('apps.info', {
+      url: '/info/:data',
+      controller: 'DataBaseInfo as info',
+      templateUrl: 'views/apps/data_base/info/data_base_info.html'
+    })
     .state('apps.data.new-source', {
       url: '/new',
       templateUrl: 'views/apps/data_base/new_data/data_base_new_source.html'
@@ -42,7 +47,7 @@ function config($stateProvider) {
     .state('apps.data.exs-source', {
       url: '/exiting',
       controller: 'dataBaseExsSource as ex',
-      templateUrl: 'views/apps/data_base/exs_data/data_base_exs_source.html'
+      templateUrl: 'views/apps/data_base/exs_data/data_base_exs_source.html',
     })
     .state('apps.data.exs-source.form', {
       url: '/form/:data',

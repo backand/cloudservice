@@ -1,0 +1,203 @@
+<section class="page-form-ele page ng-scope">
+
+  <section class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12">
+
+          <div class="row">
+            <div class="col-md-10 col-md-offset-2">
+
+              <a class="icon-box col-md-2" ng-show="info.dataName === 'sqlserver'">
+                <div class="icon-container" ng-class="{active : info.currentTab() === 'sqlserver'}">
+                  <img src="/assets/images/sqlserver.png"/>
+                </div>
+                <div class="desc-container">
+                  <h4></h4>
+                </div>
+              </a>
+
+              <a class="icon-box col-md-2" ng-show="info.dataName === 'mysql'">
+                <div class="icon-container" ng-class="{active : info.currentTab() === 'mysql'}">
+                  <img src="/assets/images/mysql.png"/>
+                </div>
+                <div class="desc-container">
+                  <h4></h4>
+                </div>
+              </a>
+
+              <a class="icon-box col-md-2" ng-show="info.dataName === 'mongodb'">
+                <div class="icon-container" ng-class="{active : info.currentTab() === 'mongodb'}">
+                  <img src="/assets/images/mongodb.png"/>
+                </div>
+                <div class="desc-container">
+                  <h4></h4>
+                </div>
+              </a>
+
+              <a class="icon-box col-md-2" ng-show="info.dataName === 'oracle'">
+                <div class="icon-container" ng-class="{active : info.currentTab() === 'oracle'}">
+                  <img src="/assets/images/oracle.jpg"/>
+                </div>
+                <div class="desc-container">
+                  <h4></h4>
+                </div>
+              </a>
+
+              <a class="icon-box col-md-2" ng-show="info.dataName === 'postgresql'">
+                <div class="icon-container" ng-class="{active : info.currentTab() === 'postgresql'}">
+                  <img src="/assets/images/postgresql.jpg"/>
+                </div>
+                <div class="desc-container">
+                  <h4></h4>
+                </div>
+              </a>
+
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="divider divider-dashed divider-lg pull-in"></div>
+              <form class="form-horizontal ng-pristine ng-valid">
+
+                <div class="form-group">
+                  <label for="DbName" class="col-sm-2 control-label">Database Type</label>
+
+                  <div class="col-sm-10">
+                    <div  id="DbName" class="form-control" >{{info.dataName}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="server" class="col-sm-2 control-label">Server</label>
+
+                  <div class="col-sm-10">
+                    <div  class="form-control"  id="server"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="database" class="col-sm-2 control-label">Database name</label>
+
+                  <div class="col-sm-10">
+                    <div type="text" class="form-control" id="database"></div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="UserName" class="col-sm-2 control-label">User Name</label>
+
+                  <div class="col-sm-10">
+                    <div class="form-control" id="UserName"></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="col-sm-2 control-label">Password</label>
+
+                  <div class="col-sm-10">
+                    <div  class="form-control" id="password"></div>
+                  </div>
+                </div>
+
+                <div ng-switch on="exsource.dataName">
+                  <div class="form-group" ng-switch-when='mysql'>
+                    <label for="usingSsh" class="col-sm-2 control-label">Use SSH</label>
+
+                    <div class="col-sm-10">
+        <span class="ui-select" id="usingSsh" class="form-control" >
+          <select name="usingSsh" class="Sitedropdown" ng-model="exsource.data.usingSsh" required>
+            <option value = true>Yes</option>
+            <option value = false>No</option>
+          </select>
+        </span>
+                    </div>
+                  </div>
+
+                  <div class="form-group" ng-switch-when='postgresql'>
+                    <label for="usingSsl" class="col-sm-2 control-label">Use SSL</label>
+
+                    <div class="col-sm-10">
+        <span class="ui-select" id="usingSsl" class="form-control" >
+          <select name="usingSsl" class="Sitedropdown" ng-model="exsource.data.usingSsl" required>
+            <option value = true>True</option>
+            <option value = false>False</option>
+          </select>
+        </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div ng-if="exsource.data.usingSsh === 'true'">
+
+                  <div class="divider divider-dashed divider-lg pull-in"></div>
+
+                  <div class="form-group" >
+                    <label for="sshRemoteHost" class="col-sm-2 control-label">SSH Remote Host</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control"  ng-model="exsource.data.sshRemoteHost" id="sshRemoteHost" placeholder="Address of your remote SSH host" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group" >
+                    <label for="sshUser" class="col-sm-2 control-label">SSH User Name</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" ng-model="exsource.data.sshUser" id="sshUser" placeholder="" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group" >
+                    <label for="sshPort" class="col-sm-2 control-label">SSH Port</label>
+
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" ng-model="exsource.data.sshPort" id="sshPort" placeholder="" required>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group" ng-if="exsource.data.usingSsh"  >
+                    <label for="sshPassword" class="col-sm-2 control-label">SSH Password</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" ng-model="exsource.data.sshPassword" ng-disabled="exsource.data.sshPrivateKey"
+                             id="sshPassword" placeholder="" required>
+                    </div>
+                  </div>
+
+
+
+                  <div class="form-group" ng-if="exsource.data.usingSsh">
+                    <label for="sshPrivateKey" class="col-sm-2 control-label">SSH Private Key</label>
+
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" ng-model="exsource.data.sshPrivateKey" ng-disabled="exsource.data.sshPassword"
+                             id="sshPrivateKey" placeholder="" required>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-success btn-w-md" ng-click="info.edit()">Edit</button>
+                    <button class="btn btn-danger btn-w-md">Cancel</button>
+                  </div>
+                </div>
+
+              </form>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+  </section>
+
+</section>
+
+
+
+
+

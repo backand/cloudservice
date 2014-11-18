@@ -25,7 +25,6 @@
       'newDummy': 12
     };
 
-
     this.getName = function(dataNumber){
        return numbers[dataNumber];
     };

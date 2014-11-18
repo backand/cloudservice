@@ -3,6 +3,9 @@
 
   function appsService($http, CONSTS) {
 
+    this.currentApp = undefined;
+
+
     this.all = function(){
       return $http({
           method: 'GET',

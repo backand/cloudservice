@@ -8,10 +8,6 @@
 
     this.dataName = $state.params.data;
 
-    this.sumbitForm = function(){
-      alert('dsfs');
-    }
-
 
 
   }

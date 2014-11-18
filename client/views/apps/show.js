@@ -8,6 +8,7 @@
   function AppsShowController(appItem,AppsService){
     var self = this;
 
+    AppsService.currentApp = appItem.data;
     this.appUploadState = 'bg-danger';
     this.appConnectedState = "bg-success";
     this.appWarnState ='bg-warning';
