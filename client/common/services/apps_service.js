@@ -41,7 +41,6 @@
       return appsNames;
     };
 
-
     this.all = function(){
       return $http({
           method: 'GET',
@@ -102,6 +101,14 @@
         data: {"product":"12"}
       });
     };
+
+    this.getDBInfo = function(appName){
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/admin/myAppConnection/'+appName
+      });
+    };
+
 
   }
 

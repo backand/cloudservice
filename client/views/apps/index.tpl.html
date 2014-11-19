@@ -35,9 +35,9 @@
       </div>
 
       <a ui-sref="apps.show({ name: app.Name })" class="col-md-2 app-panel" ng-repeat="app in index.apps">
-        <div class="panel panel-default ui-ribbon-container ui-ribbon-success">
+        <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
           <div class="ui-ribbon-wrapper">
-            <div class="ui-ribbon">good</div>
+            <div class="ui-ribbon">{{index.getRibboninfo(app).text}}</div>
           </div>
           <div class="panel-heading">{{ app.Title }}</div>
           <div class="panel-body app-panel-body">

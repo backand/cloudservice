@@ -26,8 +26,22 @@
 
     this.apps = appsList.data.data;
 
+    this.getRibboninfo = function(app){
+      debugger;
+      return convertStateNumber(app.DatabaseStatus);
+    };
 
-    AppsService.setAllApps(appsList.data.data);
+    function convertStateNumber(stateNumber){
+      switch(stateNumber){
+        case "0":
+          return {class:'ui-ribbon-danger', text:'not'};
+        case "1":
+          return {class:"ui-ribbon-warning", text:'process'};
+        case "2":
+          return {class:'ui-ribbon-success', text:'connected'};
+
+      }
+    }
 
 
   }
