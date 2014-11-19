@@ -9,11 +9,11 @@
     this.dataName = $state.params.data;
 
     this.create = function(){
-      AppsService.createDB($state.params.name,$state.params.data)
-        .success(function(data){
-          alert("all good");
-        })
-      ;
+      //AppsService.createDB($state.params.name,$state.params.data)
+      //  .success(function(data){
+      //    $state.go('apps.show',{name: $state.params.name});
+      //  });
+      $state.go('apps.show',{name: $state.params.name});
     }
 
 

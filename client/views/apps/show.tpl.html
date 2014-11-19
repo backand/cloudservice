@@ -23,10 +23,14 @@
               <div class="tl-icon btn-icon-round btn-icon btn-icon-thin btn-info"><i class="ti-shine"></i></div>
               <div class="tl-content">
                 <a class="panel panel-box" ui-sref="apps.info({name: show.appName, data:'mysql'}) ">
-                  <div class="panel-top" ng-class="show.appUploadState">
+                  <div class="panel-top" ng-class="show.connectionState.class">
                     Data base connection
                   </div>
+                  <div class="panel-bottom bg-reverse">
+                    <p class="size-h4">{{show.connectionState.text}}</p>
+                  </div>
                 </a>
+
               </div>
             </div>
           </div>
@@ -41,6 +45,10 @@
                 <a class="panel panel-box"  ui-sref="apps.dash-board({name: show.appName})">
                   <div class="panel-top" ng-class="show.appWarnState">
                     Admin Console
+                  </div>
+                  <div class="panel-bottom bg-reverse">
+                    <p class="size-h1">369</p>
+                    <p class="text-muted">Sales</p>
                   </div>
                 </a>
             </div>

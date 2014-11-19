@@ -56,7 +56,7 @@ function config($stateProvider) {
     })
     .state('apps.dash-board', {
       url: '/:name/dash-board',
-      //controller: 'AppsDataController as data',
-      templateUrl: 'views/apps/dash_board.html'
+      controller: 'Dashboard as dash',
+      templateUrl: 'views/apps/dashboard/dash_board.html'
     })
 }

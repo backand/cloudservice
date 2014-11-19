@@ -52,8 +52,7 @@
     this.find = function(appName){
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/admin/myApps/'+appName
-      });
+        url: CONSTS.appUrl + '/admin/myApps/'+appName+'?deep=true'});
     };
 
     this.add = function(name ,title){
@@ -74,6 +73,16 @@
         data: {
           Name: name,
           Title: title
+        }
+      });
+    };
+
+    this.updateTemplate = function(name, templateId){
+      return $http({
+        method: 'PUT',
+        url: CONSTS.appUrl + '/admin/myApps/'+name,
+        data: {
+          ThemeId : templateId
         }
       });
     };
