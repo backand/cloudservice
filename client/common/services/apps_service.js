@@ -3,60 +3,40 @@
 
   function appsService($http, $q, CONSTS) {
 
-    this.currentApp = undefined;
+    var apps = {
+      list: [],
+      names: []
+    };
 
-    var allApps;
+    apps.deferred = $q.defer();
 
-    var appsNames = [];
+    function updateAppNames() {
+      apps.names = [];
 
-    var dataSourcesArray = [
-      {imgSrc: "client/assets/images/mysql.png", name: 'sqlserver'},
-      {imgSrc: "client/assets/images/mysql.png", name: 'mysql'},
-      {imgSrc: 'client/assets/images/mongodb.png', name: 'mongodb'},
-      {imgSrc: 'client/assets/images/oracle.jpg', name: 'oracle'},
-      {imgSrc: 'client/assets/images/postgresql.jpg', name: 'postgresql'}
-    ];
-
-    function createAppNames(array) {
-      array.forEach(function(item) {
-        appsNames.push(item.Name)
+      apps.list.forEach(function(item) {
+        apps.names.push(item.Name)
       })
     }
 
-    this.getDataSources = function() {
-      return dataSourcesArray;
-    };
-
-    this.setAllApps = function(data) {
-      createAppNames(data);
-      allApps = data;
-
-    };
-
-    this.getAllApps = function() {
-      return allApps;
-    };
-
-    this.getAppsNames = function() {
-      return appsNames;
+    this.appNames = function() {
+      return apps.names;
     };
 
     this.all = function() {
-      var deferred = $q.defer();
-
       $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps'
       })
       .success(function (data) {
-        deferred.resolve(data.data);
-        createAppNames(data.data);
+        apps.list = data.data;
+        updateAppNames();
+        apps.deferred.resolve(apps);
       })
       .error(function (error) {
-        deferred.reject(error);
+        apps.deferred.reject(error);
       });
 
-      return deferred.promise;
+      return apps.deferred.promise;
     };
 
     this.find = function(appName) {
@@ -128,6 +108,18 @@
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myAppConnection/'+appName
       });
+    };
+
+    var dataSourcesArray = [
+      {imgSrc: "client/assets/images/mysql.png", name: 'sqlserver'},
+      {imgSrc: "client/assets/images/mysql.png", name: 'mysql'},
+      {imgSrc: 'client/assets/images/mongodb.png', name: 'mongodb'},
+      {imgSrc: 'client/assets/images/oracle.jpg', name: 'oracle'},
+      {imgSrc: 'client/assets/images/postgresql.jpg', name: 'postgresql'}
+    ];
+
+    this.getDataSources = function() {
+      return dataSourcesArray;
     };
   }
 

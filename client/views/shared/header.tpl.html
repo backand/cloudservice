@@ -15,8 +15,6 @@
     <span class="icon-bar"></span>
   </div>
 
-
-
   <div class="top-nav">
     <ul class="nav-left list-unstyled">
       <li>
@@ -26,7 +24,7 @@
         <div class="input-group">
           <span class="input-group-addon">App: &nbsp;</span>
           <div class="ui-select">
-            <select ng-options="app for app in header.apps()" ng-model="header.currentName" ng-change="header.redirectTo(header.currentName)"></select>
+            <select ng-options="app for app in header.apps()" ng-model="header.currAppName" ng-change="header.redirectTo(header.currAppName)"></select>
           </div>
         </div>
       </li>
@@ -35,7 +33,7 @@
     <ul class="nav-right pull-right list-unstyled">
       <li class="dropdown text-normal nav-profile">
         <a href="" class="dropdown-toggle" data-toggle="dropdown">
-          <img src="/assets/images/g1.jpg" alt="" class="img-circle img30_30">
+          <img src="/assets/images/g1.jpg" alt="" class="img-circle img30_30"/>
         <span class="hidden-xs">
           <span>{{main.getCurrentUser().username}}</span>
           <button class="btn btn-primary" ng-click="main.logout()">log out</button>

@@ -18,7 +18,7 @@
         })
     };
 
-    this.apps = appsList;
+    this.apps = appsList.list;
 
     this.getRibboninfo = function(app) {
       return convertStateNumber(app.DatabaseStatus);
