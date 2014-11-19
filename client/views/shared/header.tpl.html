@@ -2,35 +2,46 @@
         ng-controller="HeaderController as header">
 
   <!-- Logo -->
-<div class="logo bg-dark">
-  <a href="#/">
-    <span>Back&</span>
-  </a>
-</div>
-
-<!-- needs to be put after logo to make it work -->
-<div class="menu-button" toggle-off-canvas>
-  <span class="icon-bar"></span>
-  <span class="icon-bar"></span>
-  <span class="icon-bar"></span>
-</div>
-
-
-
-<div class="top-nav">
-  <div class="ui-select" ng-hide="header.currentState === 'apps.index'">
-      <select ng-options="app for app in header.apps()" ng-model="header.currentName" ng-change="header.redirectTo(header.currentName)"></select>
+  <div class="logo bg-dark">
+    <a href="#/">
+      <span>Back&</span>
+    </a>
   </div>
-  <ul class="nav-right pull-right list-unstyled">
-    <li class="dropdown text-normal nav-profile">
-      <a href="" class="dropdown-toggle" data-toggle="dropdown">
-        <img src="/assets/images/g1.jpg" alt="" class="img-circle img30_30">
+
+  <!-- needs to be put after logo to make it work -->
+  <div class="menu-button" toggle-off-canvas>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </div>
+
+
+
+  <div class="top-nav">
+    <ul class="nav-left list-unstyled">
+      <li>
+        <a href="#/" data-toggle-nav-collapsed-min="" class="toggle-min"><i class="ti-menu"></i></a>
+      </li>
+      <li class="search-box visible-md visible-lg">
+        <div class="input-group">
+          <span class="input-group-addon">App: &nbsp;</span>
+          <div class="ui-select">
+            <select ng-options="app for app in header.apps()" ng-model="header.currentName" ng-change="header.redirectTo(header.currentName)"></select>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="nav-right pull-right list-unstyled">
+      <li class="dropdown text-normal nav-profile">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+          <img src="/assets/images/g1.jpg" alt="" class="img-circle img30_30">
         <span class="hidden-xs">
           <span>{{main.getCurrentUser().username}}</span>
           <button class="btn btn-primary" ng-click="main.logout()">log out</button>
         </span>
-      </a>
-    </li>
-  </ul>
-</div>
+        </a>
+      </li>
+    </ul>
+  </div>
 </header>
