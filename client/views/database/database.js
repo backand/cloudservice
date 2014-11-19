@@ -2,9 +2,9 @@
 (function  () {
     'use strict';
   angular.module('app.apps')
-    .controller('AppsDataController',['$scope','AppsService','$stateParams','$state','DataBaseNamesService',AppsDataController]);
+    .controller('AppsDataController',['$scope','AppsService','$stateParams','$state','DatabaseNamesService',AppsDataController]);
 
-  function AppsDataController($scope,AppsService,$stateParams,$state,DataBaseNamesService){
+  function AppsDataController($scope,AppsService,$stateParams,$state,DatabaseNamesService){
 
     var self = this;
     this.appName = $stateParams.name;

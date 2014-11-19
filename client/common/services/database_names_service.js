@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function DataBaseNamesService() {
+  function DatabaseNamesService() {
 
     var numbers = {
       2 : 'sqlserver',
@@ -36,7 +36,7 @@
   }
 
   angular.module('common.services')
-    .service('DataBaseNamesService',[ DataBaseNamesService]);
+    .service('DatabaseNamesService',[ DatabaseNamesService]);
 
 })();
 
