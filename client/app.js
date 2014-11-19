@@ -41,7 +41,8 @@
       'controllers',
       'templates',
       'services',
-      'app.apps'
+      'app.apps',
+      'app.dashboard'
     ])
     .run(run)
     .controller('MainController', ["SessionService",'$state',MainController])

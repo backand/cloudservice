@@ -19,6 +19,11 @@ angular.module('app.routes', []).
         url: '/apps',
         abstract: true,
         template: '<div ui-view></div>'
+      })
+      .state('dashboard', {
+        url: '/dashboard',
+        abstract: true,
+        template: '<div ui-view></div>'
       });
     })
   .run(run,['$state','AuthService', '$rootScope']);

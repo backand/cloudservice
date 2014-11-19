@@ -9,8 +9,8 @@ function config($stateProvider) {
       url: '',
       controller: 'AppsIndexController as index',
       templateUrl: 'views/apps/index.tpl.html',
-      resolve:{
-        appsList: ['AppsService',function(AppsService){
+      resolve: {
+        appsList: ['AppsService', function (AppsService) {
           return AppsService.all();
         }]
       }
@@ -19,8 +19,8 @@ function config($stateProvider) {
       url: '/:name',
       controller: 'AppsShowController as show',
       templateUrl: 'views/apps/show.tpl.html',
-      resolve:{
-        appItem: ['AppsService','$stateParams',function(AppsService,stateParams){
+      resolve: {
+        appItem: ['AppsService', '$stateParams', function (AppsService, stateParams) {
           return AppsService.find(stateParams.name);
         }]
       }
@@ -54,9 +54,4 @@ function config($stateProvider) {
       controller: 'dataBaseExsSourceForm as exsource',
       templateUrl: 'views/database/exs_data/database_exs_source_form.html'
     })
-    .state('apps.dash-board', {
-      url: '/:name/dash-board',
-      controller: 'Dashboard as dash',
-      templateUrl: 'views/apps/dashboard/dash_board.html'
-    })
-}
+};
