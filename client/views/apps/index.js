@@ -8,7 +8,7 @@
     var self = this;
 
     this.addApp = function() {
-      AppsService.add(self.appName,self.appTitle)
+      AppsService.add(self.appName, self.appTitle)
         .success(function(data, status, headers, config) {
           NotificationService.add('success', 'App was added successfully');
           $state.go('apps.show', { name: self.appName });
@@ -18,7 +18,7 @@
         })
     };
 
-    this.apps = appsList.data.data;
+    this.apps = appsList;
 
     this.getRibboninfo = function(app) {
       return convertStateNumber(app.DatabaseStatus);
