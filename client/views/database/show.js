@@ -10,8 +10,7 @@
 
     function checkDatabaseStatuse(){
       //not connected to DB:
-      if (currentApp.DatabaseStatus === 2) { //todo : change into : !==
-        //var dataSource = DatabaseNamesService.getName(currentApp.Database_Source);
+      if (currentApp.DatabaseStatus !== 1) {
         $state.go('database.edit',{name: $state.params.name})
       } else {
         AppsService.getDBInfo($state.params.name)

@@ -2,6 +2,9 @@
 <section class="page-form-ele page ng-scope">
 
   <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Data base Information</strong>
+    </div>
     <div class="panel-body">
       <div class="row">
         <div class="col-md-12">
@@ -35,9 +38,9 @@
                   <label  class="col-sm-2 control-label">Password</label>
 
                   <div class="col-sm-10">
-                    <div type="text" class="form-control">{{dbshow.data.password}}
-                      <button class="btn-primary" ng-click="dbshow.getPassword()">get password</button></div>
-                  </div>
+                    <div ng-show="dbshow.data.password" type="text" class="form-control">{{dbshow.data.password}}</div>
+                    <button ng-hide="dbshow.data.password" class="btn-primary" ng-click="dbshow.getPassword()">get password</button></div>
+
                 </div>
 
                 <div ng-switch on="dbshow.data.databaseName">

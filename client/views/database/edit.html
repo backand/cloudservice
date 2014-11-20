@@ -8,7 +8,7 @@
             <tab heading="Existing Data Base">
               <ng-include src = " 'views/database/exs_data/exs_source.html' "></ng-include>
             </tab>
-            <tab heading="New Data Base">
+            <tab  heading="New Data Base" ng-hide="dbedit.dbConnected">
               <ng-include src = " 'views/database/new_data/new_source.html' "></ng-include>
             </tab>
           </tabset>

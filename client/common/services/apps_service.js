@@ -22,7 +22,8 @@
 
     this.setCurrentApp = function(data){
       currentApp = data;
-      currentApp.databaseName = DatabaseNamesService.getName(data.Database_Source.Id);
+      var Database_Source = data.Database_Source ? DatabaseNamesService.getName(data.Database_Source.Id) : 'none';
+      currentApp.databaseName = Database_Source;
     };
 
     this.getCurrentApp = function(){

@@ -9,12 +9,11 @@
 
     this.addApp = function() {
       AppsService.add(self.appName, self.appTitle)
-        .success(function(data, status, headers, config) {
+        .then(function(data){
           NotificationService.add('success', 'App was added successfully');
           $state.go('apps.show', { name: self.appName });
-        })
-        .error(function(data, status, headers, config) {
-          NotificationService.add('error', data);
+        },function(err){
+          NotificationService.add('error', err);
         })
     };
 
@@ -27,7 +26,7 @@
     function convertStateNumber(stateNumber) {
       switch(stateNumber) {
         case "0":
-          return { class: "ui-ribbon-danger", text: 'error'};
+          return { class: "ui-ribbon-warning", text: 'pending'};
         case "2":
           return { class: "ui-ribbon-warning", text: 'pending'};
         case "1":

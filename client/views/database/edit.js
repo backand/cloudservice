@@ -12,20 +12,15 @@
 
     var currentApp = AppsService.getCurrentApp();
 
+    this.dbConnected = currentApp.DatabaseStatus === 1;
+
     this.currentTab = function (){
       return self.dataName;
     };
 
     function checkDatabaseStatuse(){
-      //not connected to DB:
-      if (currentApp.DatabaseStatus === 2) { //todo : change into : !==
-        //var dataSource = DatabaseNamesService.getName(currentApp.Database_Source);
-        $state.go('database.edit',{name: $state.params.name})
-      } else {
         AppsService.getDBInfo($state.params.name)
           .success(function(data){
-            console.log('db info :');
-            console.log(data);
             self.data = data;
             self.data.databaseName = currentApp.databaseName;
             self.data.server = self.data.ServerName;
@@ -37,14 +32,13 @@
             self.data.sshPort  = self.data.SshPort;
             self.data.sshPassword  = self.data.SshPassword;
             self.data.sshPrivateKey  = self.data.SshPrivateKey;
-
           })
-      }
     }
 
-    //if (currentApp.DatabaseStatus === 1){
+    if (self.dbConnected){
+      //connected to data base
       checkDatabaseStatuse();
-    //}
+    }
 
 
     this.dataName = currentApp.databaseName;
@@ -68,9 +62,12 @@
       AppsService.connect2DB($state.params.name, self.data)
         .success(function (data) {
           console.log(data);
-          debugger;
           $state.go('apps.show, {name : $state.params.name}');
         })
+    };
+
+    this.back = function(){
+      $state.go('apps.show',({name:$state.params.name}));
     };
 
 

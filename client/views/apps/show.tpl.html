@@ -28,6 +28,7 @@
                   </div>
                   <div class="panel-bottom bg-reverse">
                     <p class="size-h4">{{show.connectionState.text}}</p>
+                    <p class="size-h5">{{show.connectionState.text}}</p>
                   </div>
                 </a>
 
@@ -43,7 +44,7 @@
               <div class="tl-icon btn-icon-round btn-icon btn-icon-thin btn-info"><i class="ti-shine"></i></div>
               <div class="tl-content">
                 <a class="panel panel-box"  ui-sref="dashboard.edit({name: show.appName})">
-                  <div class="panel-top" ng-class="show.appWarnState">
+                  <div class="panel-top" ng-class="show.connectionState.class">
                     Admin Console
                   </div>
                   <div class="panel-bottom bg-reverse">

@@ -5,58 +5,22 @@
     <div class="panel-heading"><strong> select template</strong></div>
     <div class="panel-body">
       <div class="row col-sm-10 col-sm-offset-1">
-        <div class="col-sm-5">
-          <div class="thumbnail">
-            <img src="/assets/images/templateDemo.jpeg">
-            <div class="caption">
-              <h5>Thumbnail label</h5>
-              <div class="divider divider-sm pull-in"></div>
-              <p>
-                <a ng-click="dash.updateTemplate('1')" class="btn btn-primary" role="button">select</a>
-                <a href="javascript:;" class="btn btn-default" role="button">preview</a>
-              </p>
+        <div ng-repeat="template in dash.templates">
+          <div class="col-sm-5">
+            <div class="thumbnail" ng-class="{'template-border' : template.Id === dash.templateId }">
+              <img ng-src="{{template.imgSrc}}">
+              <div class="caption">
+                <h5>Thumbnail label</h5>
+                <div class="divider divider-sm pull-in"></div>
+                <p>
+                  <a ng-click="dash.updateTemplate(template.Id)" class="btn btn-primary" role="button">select</a>
+                  <a class="btn btn-default" role="button">preview</a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-5">
-          <div class="thumbnail">
-            <img src="/assets/images/templateDemo.jpeg">
-            <div class="caption">
-              <h5>Thumbnail label</h5>
-              <div class="divider divider-sm pull-in"></div>
-              <p>
-                <a ng-click="dash.updateTemplate('1')" class="btn btn-primary" role="button">select</a>
-                <a href="javascript:;" class="btn btn-default" role="button">preview</a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-5">
-          <div class="thumbnail" style="background: #f3f3f3">
-            <img src="/assets/images/templateDemo.jpeg">
-            <div class="caption">
-              <h5>Thumbnail label</h5>
-              <div class="divider divider-sm pull-in"></div>
-              <p>
-                <a ng-click="dash.updateTemplate('1')" class="btn btn-primary" role="button">select</a>
-                <a href="javascript:;" class="btn btn-default" role="button">preview</a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-5">
-          <div class="thumbnail">
-            <img src="/assets/images/templateDemo.jpeg">
-            <div class="caption">
-              <h5>Thumbnail label</h5>
-              <div ng-click="dash.updateTemplate('1')" class="divider divider-sm pull-in"></div>
-              <p>
-                <a class="btn btn-primary" role="button">select</a>
-                <a href="javascript:;" class="btn btn-default" role="button">preview</a>
-              </p>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>

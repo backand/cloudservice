@@ -13,11 +13,13 @@
     function convertStateNumber(stateNumber){
       switch(stateNumber){
         case 0:
-              return {class:'bg-danger', text:'not connected yet'};
+              return {class:'bg-warning', text:'not connected yet'};
         case 2:
               return {class:'bg-warning', text:'connections in progress'};
         case 1:
               return {class:"bg-success", text:'connected'};
+        default:
+          return { class: 'bg-danger', text: 'error'};
       }
     }
 
