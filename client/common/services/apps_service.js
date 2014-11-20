@@ -1,12 +1,14 @@
 (function() {
   'use strict';
 
-  function appsService($http, $q, CONSTS) {
+  function appsService($http, $q, CONSTS,DatabaseNamesService) {
 
     var apps = {
       list: [],
       names: []
     };
+
+    var currentApp;
 
     apps.deferred = $q.defer();
 
@@ -17,6 +19,15 @@
         apps.names.push(item.Name)
       })
     }
+
+    this.setCurrentApp = function(data){
+      currentApp = data;
+      currentApp.databaseName = DatabaseNamesService.getName(data.Database_Source.Id);
+    };
+
+    this.getCurrentApp = function(){
+      return currentApp;
+    };
 
     this.appNames = function() {
       return apps.names;
@@ -110,6 +121,13 @@
       });
     };
 
+    this.getAppPassword = function(appName){
+        return $http({
+          method: 'GET',
+          url: CONSTS.appUrl + '/admin/myAppConnectionPassword/'+appName
+        });
+    };
+
     var dataSourcesArray = [
       {imgSrc: "client/assets/images/mysql.png", name: 'sqlserver'},
       {imgSrc: "client/assets/images/mysql.png", name: 'mysql'},
@@ -124,6 +142,6 @@
   }
 
   angular.module('common.services')
-    .service('AppsService',['$http', '$q', 'CONSTS', appsService]);
+    .service('AppsService',['$http', '$q', 'CONSTS','DatabaseNamesService', appsService]);
 
 })();

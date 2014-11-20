@@ -14,18 +14,15 @@
       switch(stateNumber){
         case 0:
               return {class:'bg-danger', text:'not connected yet'};
-        case 1:
-              return {class:'bg-warning', text:'connections in progress'};
         case 2:
-              return {class:"bg-success", text:'connections in progress'};
+              return {class:'bg-warning', text:'connections in progress'};
+        case 1:
+              return {class:"bg-success", text:'connected'};
       }
     }
 
-    AppsService.currentApp = appItem.data;
+    AppsService.setCurrentApp(appItem.data);
 
-    this.appUploadState = 'bg-danger';
-    this.appConnectedState = "bg-success";
-    this.appWarnState ='bg-warning';
     console.log('app item: ');
     console.log(appItem.data);
 

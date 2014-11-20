@@ -20,6 +20,11 @@ angular.module('app.routes', []).
         abstract: true,
         template: '<div ui-view></div>'
       })
+      .state('database', {
+        url: '/database',
+        abstract: true,
+        template: '<div ui-view></div>'
+      })
       .state('dashboard', {
         url: '/dashboard',
         abstract: true,

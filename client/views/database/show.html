@@ -1,0 +1,155 @@
+
+<section class="page-form-ele page ng-scope">
+
+  <section class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <form class="form-horizontal ng-pristine ng-valid" role="form" ng-submit="dbshow.sumbitForm()">
+
+                <div class="form-group">
+                  <label for="server" class="col-sm-2 control-label">Server</label>
+
+                  <div class="col-sm-10">
+                    <div class="form-control" id="server" placeholder="Remote database server hostname" >{{dbshow.data.ServerName}}</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="database" class="col-sm-2 control-label">Database name</label>
+
+                  <div class="col-sm-10">
+                    <div  class="form-control" id="database" placeholder="" >{{dbshow.data.databaseName}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="UserName" class="col-sm-2 control-label">User Name</label>
+
+                  <div class="col-sm-10">
+                    <div class="form-control" id="UserName" placeholder="" >{{dbshow.data.Username}}</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label  class="col-sm-2 control-label">Password</label>
+
+                  <div class="col-sm-10">
+                    <div type="text" class="form-control">{{dbshow.data.password}}
+                      <button class="btn-primary" ng-click="dbshow.getPassword()">get password</button></div>
+                  </div>
+                </div>
+
+                <div ng-switch on="dbshow.data.databaseName">
+                  <div class="form-group" ng-switch-when='mysql'>
+                    <div class="form-group" >
+                      <label  class="col-sm-2 control-label">Use Ssh</label>
+
+                      <div class="col-sm-10">
+                        <div class="form-group" >{{dbshow.data.SshUses}}</div>
+                    </div>
+                  </div>
+                    </div>
+                  </div>
+
+
+                <div ng-switch on="dbshow.data.databaseName">
+                  <div class="form-group" ng-switch-when='mysql'>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Use SSH</label>
+
+                      <div class="col-sm-10">
+                        <div class="form-control" >{{dbshow.data.SshUses}}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group" ng-switch-when='postgresql'>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Use SSL</label>
+
+                      <div class="col-sm-10">
+                        <div class="form-control" >{{dbshow.data.SslUses}}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div ng-if="dbedit.data.SshUses === 'true'">
+
+                  <div class="divider divider-dashed divider-lg pull-in"></div>
+
+                  <div class="form-group" >
+                    <label  class="col-sm-2 control-label">SSH Remote Host</label>
+
+                    <div class="col-sm-10">
+                      <div class="form-control" > {{dbshow.data.SshRemoteHost}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group" >
+                    <label  class="col-sm-2 control-label">SSH User Name</label>
+
+                    <div class="col-sm-10">
+                      <div class="form-control" > {{dbshow.data.SshUser}}</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group" >
+                    <label  class="col-sm-2 control-label">SSH Port</label>
+
+                    <div class="col-sm-10">
+                      <div class="form-control" > {{dbshow.data.SshPort}}</div>
+                    </div>
+                  </div>
+
+
+
+                    <label for="sshPassword" class="col-sm-2 control-label">SSH Password</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" ng-model="dbedit.data.sshPassword" ng-disabled="dbedit.data.sshPrivateKey"
+                             id="sshPassword" placeholder="" required>
+                    </div>
+
+
+
+
+
+                    <label for="sshPrivateKey" class="col-sm-2 control-label">SSH Private Key</label>
+
+                    <div class="col-sm-10">
+                      <input type="password" class="form-control" ng-model="dbedit.data.sshPrivateKey" ng-disabled="dbedit.data.sshPassword"
+                             id="sshPrivateKey" placeholder="" required>
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-success btn-w-md" ng-click="dbshow.edit()">Edit</button>
+                <button class="btn btn-danger btn-w-md" ng-click="dbshow.back()">Cancel</button>
+                </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+</section>
+
+
+
+
+
+
+
+
+

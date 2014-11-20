@@ -27,9 +27,10 @@
     function convertStateNumber(stateNumber) {
       switch(stateNumber) {
         case "0":
-        case "1":
-          return { class: "ui-ribbon-warning", text: 'pending'};
+          return { class: "ui-ribbon-danger", text: 'error'};
         case "2":
+          return { class: "ui-ribbon-warning", text: 'pending'};
+        case "1":
           return { class: 'ui-ribbon-success', text: 'connected'};
         default:
           return { class: 'ui-ribbon-danger', text: 'error'};

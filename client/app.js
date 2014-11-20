@@ -42,6 +42,7 @@
       'templates',
       'services',
       'app.apps',
+      'app.database',
       'app.dashboard'
     ])
     .run(run)
