@@ -40,7 +40,10 @@
     }
 
     stop = $interval(function() {
-      AppsService.refresh($state.params.name);
+      AppsService.all()
+        .then(function(apps){
+          self.apps = apps.list;
+        });
     }, 30000);
 
     function stopRefresh() {
