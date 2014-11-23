@@ -10,7 +10,7 @@
     var self = this;
     this.appName = $stateParams.name;
 
-    var currentApp = AppsService.getCurrentApp();
+    var currentApp = AppsService.getCurrentApp($state.params.name);
 
     this.dbConnected = currentApp.DatabaseStatus === 1;
 

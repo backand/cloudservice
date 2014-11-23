@@ -1,18 +1,17 @@
 (function  () {
     'use strict';
   angular.module('app.apps')
-    .controller('Dashboard',["$scope",'$state','AppsService','DatabaseService',Dashboard]);
+    .controller('Dashboard',["$scope",'$state','AppsService','DatabaseService','NotificationService',Dashboard]);
 
-  function Dashboard($scope,$state,AppsService,DatabaseService){
+  function Dashboard($scope,$state,AppsService,DatabaseService,NotificationService){
 
     var self = this;
 
-    debugger;
-    var currentApp = AppsService.getCurrentApp();
+    var currentApp = AppsService.getCurrentApp($state.params.name);
     console.log('getCurrentApp :');
     console.log(currentApp);
 
-    this.templateId = '1' ; // currentApp.TemplateFile ??
+    this.templateId = currentApp.durados_Theme.__metadata.id;
 
     this.templates = [
       { Id : "1" , imgSrc : "/assets/images/templateDemo.jpeg" },
@@ -22,9 +21,10 @@
     ]
 
     this.updateTemplate = function(templateId){
+      self.templateId = templateId;
       DatabaseService.updateTemplate($state.params.name,templateId)
         .success(function(data){
-          $state.go('apps.show',{name: $state.params.name});
+          NotificationService.add('success','template changed')
         });
     };
   }

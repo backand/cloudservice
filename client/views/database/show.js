@@ -1,24 +1,27 @@
 (function  () {
   'use strict';
   angular.module('app.database')
-    .controller('DatabaseShow',["$scope",'$state','AppsService',DatabaseShow]);
+    .controller('DatabaseShow',["$scope",'$state','AppsService','usSpinnerService',DatabaseShow]);
 
-  function DatabaseShow($scope,$state,AppsService){
+  function DatabaseShow($scope,$state,AppsService,usSpinnerService){
     var self = this;
 
-    var currentApp = AppsService.getCurrentApp();
+    var currentApp = AppsService.getCurrentApp($state.params.name);
 
     function checkDatabaseStatuse(){
+      usSpinnerService.spin("loading"); //todo:not working ?
       //not connected to DB:
       if (currentApp.DatabaseStatus !== 1) {
         $state.go('database.edit',{name: $state.params.name})
       } else {
+
         AppsService.getDBInfo($state.params.name)
           .success(function(data){
             console.log('db info :');
             console.log(data);
             self.data = data;
             self.data.databaseName = currentApp.databaseName;
+            //usSpinnerService.stop("spinner-loading");
           })
       }
     }

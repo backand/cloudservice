@@ -28,8 +28,22 @@
       currentApp.databaseName = Database_Source;
     };
 
-    this.getCurrentApp = function(){
-      return currentApp;
+    this.getCurrentApp = function(appName){
+      if ( currentApp && currentApp.Name === appName ){
+        return currentApp
+      }else {
+        self.find(appName)
+          .success(function (data){
+            self.setCurrentApp(data);
+            return currentApp
+        })
+          .error(function(err){
+            return false;
+          })
+
+
+      }
+
     };
 
     this.appNames = function() {

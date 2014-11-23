@@ -54,10 +54,8 @@
   });
 
 
-
-    //todo: fix update name with server
-    //this.updateAppName = function(){
-    //  AppsService.update(self.appName,self.appName)
-    //}
+    this.updateAppName = function(){
+      AppsService.update(self.appName)
+    }
   }
 }());
