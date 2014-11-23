@@ -2,10 +2,11 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['AppsService', 'appsList', '$state', 'NotificationService', AppsIndexController]);
+    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval', AppsIndexController]);
 
-  function AppsIndexController(AppsService, appsList, $state, NotificationService) {
+  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval) {
     var self = this;
+    var stop;
 
     this.addApp = function() {
       AppsService.add(self.appName, self.appTitle)
@@ -35,5 +36,23 @@
           return { class: 'ui-ribbon-danger', text: 'error'};
       }
     }
+
+    stop = $interval(function() {
+      AppsService.refresh($state.params.name);
+    }, 30000);
+
+    function stopRefresh() {
+      if (angular.isDefined(stop)) {
+        $interval.cancel(stop);
+        stop = undefined;
+      }
+    }
+
+    $scope.$on('$destroy', function() {
+      // Make sure that the interval is destroyed too
+      stopRefresh();
+    });
+
+
   }
 }());

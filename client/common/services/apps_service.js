@@ -3,6 +3,8 @@
 
   function appsService($http, $q, CONSTS,DatabaseNamesService) {
 
+    var self = this;
+
     var apps = {
       list: [],
       names: []
@@ -89,15 +91,13 @@
       });
     };
 
-    this.updateTemplate = function(name, templateId) {
-      return $http({
-        method: 'PUT',
-        url: CONSTS.appUrl + '/admin/myApps/'+name,
-        data: {
-          ThemeId : templateId
-        }
-      });
+    this.refresh = function(appName){
+      self.find(appName)
+        .success( function(appItem){
+          self.setCurrentApp(appItem)
+      })
     };
+
 
     this.connect2DB = function(appName, data) {
       return $http({

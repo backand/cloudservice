@@ -1,13 +1,16 @@
 (function  () {
     'use strict';
   angular.module('app.apps')
-    .controller('Dashboard',["$scope",'$state','AppsService',Dashboard]);
+    .controller('Dashboard',["$scope",'$state','AppsService','DatabaseService',Dashboard]);
 
-  function Dashboard($scope,$state,AppsService){
+  function Dashboard($scope,$state,AppsService,DatabaseService){
 
     var self = this;
 
+    debugger;
     var currentApp = AppsService.getCurrentApp();
+    console.log('getCurrentApp :');
+    console.log(currentApp);
 
     this.templateId = '1' ; // currentApp.TemplateFile ??
 
@@ -19,7 +22,7 @@
     ]
 
     this.updateTemplate = function(templateId){
-      AppsService.updateTemplate($state.params.name,templateId)
+      DatabaseService.updateTemplate($state.params.name,templateId)
         .success(function(data){
           $state.go('apps.show',{name: $state.params.name});
         });

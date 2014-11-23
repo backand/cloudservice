@@ -3,12 +3,13 @@
 
   'use strict';
   angular.module('app.apps')
-    .controller('AppsShowController',['$scope','appItem','AppsService',AppsShowController]);
+    .controller('AppsShowController',['$scope','appItem','AppsService','$interval','$state',AppsShowController]);
 
-  function AppsShowController($scope,appItem,AppsService){
+  function AppsShowController($scope,appItem,AppsService,$interval,$state){
     var self = this;
     var appData = appItem.data;
     var connectionStateClass = convertStateNumber(appItem.data.DatabaseStatus);
+    var stop;
 
     function convertStateNumber(stateNumber){
       switch(stateNumber){
@@ -34,6 +35,25 @@
     this.appName = appData.Name;
 
     this.connectionStatus = "";
+
+
+    stop = $interval(function() {
+      AppsService.refresh($state.params.name);
+    }, 30000);
+
+   function stopRefresh() {
+    if (angular.isDefined(stop)) {
+      $interval.cancel(stop);
+      stop = undefined;
+    }
+  }
+
+  $scope.$on('$destroy', function() {
+    // Make sure that the interval is destroyed too
+    stopRefresh();
+  });
+
+
 
     //todo: fix update name with server
     //this.updateAppName = function(){

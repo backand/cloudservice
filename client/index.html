@@ -24,9 +24,9 @@
 
 <body id="app" class="app" custom-page>
 
-  <section ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/header.tpl.html' " id="header" class="header-container ng-scope header-fixed bg-white"> </section>
+  <section ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/header.html' " id="header" class="header-container ng-scope header-fixed bg-white"> </section>
   <div class="main-container">
-    <aside ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/nav.tpl.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
+    <aside ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/nav.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
     <div id="content" class="content-container">
       <toaster-container></toaster-container>
       <section ui-view class="view-container">
@@ -55,6 +55,7 @@
   <script type="text/javascript" src="common/services/auth_service.js"></script>
   <script type="text/javascript" src="common/services/notification_service.js"></script>
   <script type="text/javascript" src="common/services/apps_service.js"></script>
+  <script type="text/javascript" src="common/services/database_service.js"></script>
   <script type="text/javascript" src="common/services/database_names_service.js"></script>
 
   <script type="text/javascript" src="config/routes.js"></script>
@@ -72,7 +73,6 @@
 
   <script type="text/javascript" src="views/dashboard/config.js"></script>
   <script type="text/javascript" src="views/dashboard/dashboard.js"></script>
-
 
 
 
