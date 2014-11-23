@@ -1,20 +1,9 @@
 <div class="nav-wrapper" ng-controller="NavCtrl as nav">
-  <ul id="nav" class="nav" data-ng-controller="NavCtrl" data-slim-scroll data-collapse-nav data-highlight-active>
-
+  <ul id="nav1" class="nav"
+      data-slim-scroll data-collapse-nav data-highlight-active
+      ng-show="nav.state === 'apps.index'">
     <li>
       <a ui-sref="apps.index"> <i class="ti-dashboard"></i><span>Dashboard</span> </a>
-    </li>
-
-    <li>
-      <a href="#/ui"><i class="ti-server"></i><span>Databases</span></a>
-    </li>
-
-    <li>
-      <a href="#/ui"><i class="ti-layout-width-default-alt"></i><span>Dataclips</span></a>
-    </li>
-
-    <li>
-      <a href="#/ui"><i class="ti-rocket"></i><span>Add-ons</span></a>
     </li>
 
     <li>
@@ -25,5 +14,48 @@
       <a href="#/ui"><i class="ti-support"></i><span>Support</span></a>
     </li>
 
+    <!--<li>-->
+      <!--<a href="#/ui"><i class="ti-server"></i><span>Databases</span></a>-->
+    <!--</li>-->
+
+    <!--<li>-->
+      <!--<a href="#/ui"><i class="ti-layout-width-default-alt"></i><span>Dataclips</span></a>-->
+    <!--</li>-->
+
+    <!--<li>-->
+      <!--<a href="#/ui"><i class="ti-rocket"></i><span>Add-ons</span></a>-->
+    <!--</li>-->
+  </ul>
+
+  <ul id="nav2" class="nav"
+      data-slim-scroll data-collapse-nav data-highlight-active
+      ng-show="nav.state != 'apps.index'">
+    <li>
+      <a ui-sref="apps.index"> <i class="ti-dashboard"></i><span>Dashboard</span> </a>
+    </li>
+
+    <li>
+      <a ui-sref="database.show({name: nav.appName})"><i class="ti-layout-media-overlay"></i><span>Database</span></a>
+    </li>
+
+    <li>
+      <a ui-sref="dashboard.edit({name: nav.appName})"><i class="ti-support"></i><span>Admin</span></a>
+    </li>
+
+    <li>
+      <a href="#/ui"><i class="ti-support"></i><span>API Playground</span></a>
+    </li>
+
+    <!--<li>-->
+    <!--<a href="#/ui"><i class="ti-server"></i><span>Databases</span></a>-->
+    <!--</li>-->
+
+    <!--<li>-->
+    <!--<a href="#/ui"><i class="ti-layout-width-default-alt"></i><span>Dataclips</span></a>-->
+    <!--</li>-->
+
+    <!--<li>-->
+    <!--<a href="#/ui"><i class="ti-rocket"></i><span>Add-ons</span></a>-->
+    <!--</li>-->
   </ul>
 </div>
