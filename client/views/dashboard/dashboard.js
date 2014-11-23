@@ -7,7 +7,14 @@
 
     var self = this;
 
-    var currentApp = AppsService.getCurrentApp($state.params.name);
+    var currentApp;
+    AppsService.getCurrentApp($state.params.name)
+      .then(function(data){
+        currentApp = data
+      },function(err){
+        NotificationService('error','cant get current app info');
+      });
+
     console.log('getCurrentApp :');
     console.log(currentApp);
 

@@ -11,6 +11,7 @@
     };
 
     var currentApp;
+    var appData = {};
 
     apps.deferred = $q.defer();
 
@@ -29,20 +30,20 @@
     };
 
     this.getCurrentApp = function(appName){
-      debugger;
+      appData.deferred = $q.defer();
       if ( currentApp && currentApp.Name === appName ){
-        return currentApp
+         appData.deferred.resolve(currentApp);
       }else {
         self.find(appName)
           .success(function (data){
             self.setCurrentApp(data);
-            return currentApp
+            return appData.deferred.resolve(currentApp)
         })
           .error(function(err){
-            return false;
+            return appData.deferred.reject(err);
           })
-
       }
+      return appData.deferred.promise;
 
     };
 

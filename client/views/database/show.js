@@ -1,15 +1,23 @@
 (function  () {
   'use strict';
   angular.module('app.database')
-    .controller('DatabaseShow',["$scope",'$state','AppsService','usSpinnerService',DatabaseShow]);
+    .controller('DatabaseShow',["$scope",'$state','AppsService','usSpinnerService','NotificationService',DatabaseShow]);
 
-  function DatabaseShow($scope,$state,AppsService,usSpinnerService){
+  function DatabaseShow($scope,$state,AppsService,usSpinnerService,NotificationService){
     var self = this;
 
-    var currentApp = AppsService.getCurrentApp($state.params.name);
+    var currentApp;
+    AppsService.getCurrentApp($state.params.name)
+      .then(function(data){
+        currentApp = data;
+        checkDatabaseStatuse();
+        self.dataName = currentApp.databaseName;
+      },function(err){
+        NotificationService('error','cant get current app info');
+      });
 
     function checkDatabaseStatuse(){
-      usSpinnerService.spin("loading"); //todo:not working ?
+      usSpinnerService.spin("loading");
       //not connected to DB:
       if (currentApp.DatabaseStatus !== 1) {
         $state.go('database.edit',{name: $state.params.name})
@@ -21,12 +29,11 @@
             console.log(data);
             self.data = data;
             self.data.databaseName = currentApp.databaseName;
-            //usSpinnerService.stop("spinner-loading");
+            usSpinnerService.stop("loading");
           })
       }
     }
 
-    checkDatabaseStatuse();
 
 
     this.dataSources = AppsService.getDataSources();
@@ -42,7 +49,6 @@
       return currentApp.databaseName;
     };
 
-    this.dataName = currentApp.databaseName;
 
     this.edit = function(){
       $state.go('database.edit',({name:$state.params.name}));

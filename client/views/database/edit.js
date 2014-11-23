@@ -3,14 +3,20 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseEdit',['$scope','AppsService','$stateParams','$state','DatabaseNamesService',DatabaseEdit]);
+    .controller('DatabaseEdit',['$scope','AppsService','$stateParams','$state','DatabaseNamesService','NotificationService',DatabaseEdit]);
 
-  function DatabaseEdit($scope,AppsService,$stateParams,$state,DatabaseNamesService){
+  function DatabaseEdit($scope,AppsService,$stateParams,$state,DatabaseNamesService,NotificationService){
 
     var self = this;
     this.appName = $stateParams.name;
 
-    var currentApp = AppsService.getCurrentApp($state.params.name);
+    var currentApp;
+    AppsService.getCurrentApp($state.params.name)
+      .then(function(data){
+        currentApp = data
+      },function(err){
+        NotificationService('error','cant get current app info');
+      });
 
     this.dbConnected = currentApp.DatabaseStatus === 1;
 
