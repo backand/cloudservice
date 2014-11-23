@@ -18,6 +18,8 @@
         })
     };
 
+    this.namePattern = /^\w+$/;
+
     this.apps = appsList.list;
 
     this.getRibboninfo = function(app) {
