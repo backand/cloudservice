@@ -32,6 +32,8 @@
     this.connectionState = connectionStateClass;
 
 
+    this.appTitle = appData.Title;
+
     this.appName = appData.Name;
 
     this.connectionStatus = "";
@@ -55,7 +57,7 @@
 
 
     this.updateAppName = function(){
-      AppsService.update(self.appName)
+      AppsService.update(self.appName, self.appTitle)
     }
   }
 }());

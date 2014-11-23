@@ -42,8 +42,7 @@
     <a class="icon-box col-md-2">
       <div class="icon-container"
            ng-class="{active : dbedit.currentTab() === 'postgresql'}"
-           ng-click ="dbedit.dataName = 'postgresql'"
-        >
+           ng-click ="dbedit.dataName = 'postgresql'">
         <img src="/assets/images/postgresql.jpg"/>
       </div>
       <div class="desc-container">
@@ -64,7 +63,7 @@
         <label for="DbName" class="col-sm-2 control-label">Database Type</label>
 
         <div class="col-sm-10">
-          <div  id="DbName" class="form-control" >{{dbedit.dataName}}</div>
+          <div  id="DbName" class="form-control" required>{{dbedit.dataName}}</div>
         </div>
       </div>
 

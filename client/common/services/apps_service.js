@@ -25,7 +25,7 @@
 
     this.setCurrentApp = function(data){
       currentApp = data;
-      var Database_Source = data.Database_Source ? DatabaseNamesService.getName(data.Database_Source.Id) : 'none';
+      var Database_Source = data.Database_Source ? DatabaseNamesService.getName(data.Database_Source.Id) : undefined;
       currentApp.databaseName = Database_Source;
     };
 
@@ -36,6 +36,7 @@
       }else {
         self.find(appName)
           .success(function (data){
+            debugger;
             self.setCurrentApp(data);
             return appData.deferred.resolve(currentApp)
         })
@@ -95,12 +96,11 @@
       return deferred.promise;
     };
 
-    this.update = function(name, title) {
+    this.update = function(name,title) {
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/admin/myApps/'+name,
         data: {
-          Name: name,
           Title: title
         }
       });
@@ -115,6 +115,7 @@
 
 
     this.connect2DB = function(appName, data) {
+      debugger;
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
@@ -140,7 +141,7 @@
     this.getAppPassword = function(appName){
         return $http({
           method: 'GET',
-          url: CONSTS.appUrl + '/admin/myAppConnectionPassword/'+appName
+          url: CONSTS.appUrl + '/admin/myAppConnection/getPassword/'+appName
         });
     };
 

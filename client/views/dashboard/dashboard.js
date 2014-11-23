@@ -10,15 +10,14 @@
     var currentApp;
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
-        currentApp = data
+        currentApp = data;
+        self.templateId = currentApp.durados_Theme.__metadata.id;
+        console.log('getCurrentApp :');
+        console.log(currentApp);
       },function(err){
         NotificationService('error','cant get current app info');
       });
 
-    console.log('getCurrentApp :');
-    console.log(currentApp);
-
-    this.templateId = currentApp.durados_Theme.__metadata.id;
 
     this.templates = [
       { Id : "1" , imgSrc : "/assets/images/templateDemo.jpeg" },

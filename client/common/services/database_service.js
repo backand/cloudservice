@@ -39,7 +39,7 @@
     this.getAppPassword = function(appName){
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/admin/myAppConnectionPassword/'+appName
+        url: CONSTS.appUrl + '/admin/myAppConnection/getPassword/'+appName
       });
     };
 

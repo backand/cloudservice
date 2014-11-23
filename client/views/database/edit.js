@@ -13,12 +13,19 @@
     var currentApp;
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
-        currentApp = data
+        currentApp = data;
+        self.dbConnected = currentApp.DatabaseStatus === 1;
+        //self.dataName = currentApp.databaseName;
+        self.dataName = currentApp.databaseName || 'sqlserver';
+        if (self.dbConnected){
+          //connected to data base
+          checkDatabaseStatuse();
+        }
       },function(err){
         NotificationService('error','cant get current app info');
       });
 
-    this.dbConnected = currentApp.DatabaseStatus === 1;
+
 
     this.currentTab = function (){
       return self.dataName;
@@ -41,13 +48,7 @@
           })
     }
 
-    if (self.dbConnected){
-      //connected to data base
-      checkDatabaseStatuse();
-    }
 
-
-    this.dataName = currentApp.databaseName;
 
     this.create = function(){
       //AppsService.createDB($state.params.name,$state.params.data)
@@ -59,10 +60,10 @@
 
     this.dataSources = AppsService.getDataSources();
 
-    this.dataName = currentApp.databaseName || undefined;
 
     this.sumbitForm = function(){
-      self.data.product = DatabaseNamesService.getNumber(currentApp.databaseName);
+      debugger;
+      self.data.product = DatabaseNamesService.getNumber(self.dataName);
       console.log('data: ');
       console.log(self.data);
       AppsService.connect2DB($state.params.name, self.data)
