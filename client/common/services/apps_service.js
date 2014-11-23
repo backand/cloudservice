@@ -29,6 +29,7 @@
     };
 
     this.getCurrentApp = function(appName){
+      debugger;
       if ( currentApp && currentApp.Name === appName ){
         return currentApp
       }else {
@@ -40,7 +41,6 @@
           .error(function(err){
             return false;
           })
-
 
       }
 
