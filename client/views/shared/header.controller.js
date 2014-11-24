@@ -6,16 +6,23 @@
 
     self.currAppName = '';
 
-    this.apps = function() {
-      return AppsService.appNames();
-    };
+    AppsService.all()
+      .then(function(data){
+        self.apps=AppsService.appNames();
+        self.currAppName = $state.params.name;
+      },function(err){
+
+      });
 
     this.redirectTo = function(appName) {
       $state.go('apps.show',{ name: appName });
     };
 
     $scope.$on('$stateChangeSuccess', function() {
-      self.currAppName = $state.params.name;
+      if (self.apps){
+        self.currAppName = $state.params.name;
+      }
+
     });
   }
 

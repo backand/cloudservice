@@ -24,7 +24,7 @@
         <div class="input-group">
           <span class="input-group-addon">App: &nbsp;</span>
           <div class="ui-select">
-            <select ng-options="app for app in header.apps()" ng-model="header.currAppName" ng-change="header.redirectTo(header.currAppName)"></select>
+            <select ng-options="app for app in header.apps" ng-model="header.currAppName" ng-change="header.redirectTo(header.currAppName)"></select>
           </div>
         </div>
       </li>
