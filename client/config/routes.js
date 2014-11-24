@@ -29,7 +29,12 @@ angular.module('app.routes', []).
         url: '/dashboard',
         abstract: true,
         template: '<div ui-view></div>'
-      });
+      })
+      .state('playground', {
+        url: '/playground',
+        abstract: true,
+        template: '<div ui-view></div>'
+    });
     })
   .run(run,['$state','AuthService', '$rootScope']);
 

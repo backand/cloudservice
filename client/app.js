@@ -43,7 +43,8 @@
       'services',
       'app.apps',
       'app.database',
-      'app.dashboard'
+      'app.dashboard',
+      'app.playground'
     ])
     .run(run)
     .controller('MainController', ["SessionService",'$state',MainController])
