@@ -23,8 +23,14 @@
           return { class: 'bg-danger', text: 'error'};
       }
     }
-
     AppsService.setCurrentApp(appItem.data);
+
+    //not connected to database :
+    if (appItem.data.DatabaseStatus !== 1) {
+      $state.go('database.edit',{name: $state.params.name})
+    }
+
+
 
     console.log('app item: ');
     console.log(appItem.data);
@@ -40,7 +46,7 @@
 
 
     stop = $interval(function() {
-      AppsService.refresh($state.params.name);
+      AppsService.refreshApp($state.params.name);
     }, 30000);
 
    function stopRefresh() {

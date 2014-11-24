@@ -12,7 +12,7 @@
       AppsService.add(self.appName, self.appTitle)
         .then(function(data){
           NotificationService.add('success', 'App was added successfully');
-          $state.go('apps.show', { name: self.appName });
+          $state.go('database.edit', { name: self.appName });
         },function(err){
           NotificationService.add('error', err);
         })

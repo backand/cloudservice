@@ -36,7 +36,6 @@
       }else {
         self.find(appName)
           .success(function (data){
-            debugger;
             self.setCurrentApp(data);
             return appData.deferred.resolve(currentApp)
         })
@@ -115,7 +114,6 @@
 
 
     this.connect2DB = function(appName, data) {
-      debugger;
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,

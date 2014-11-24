@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function httpInterceptor($q, $log,SessionService,usSpinnerService,NotificationService,$state) {
+  function httpInterceptor($q, $log,SessionService,usSpinnerService,NotificationService) {
     return {
         request: function(config) {
           usSpinnerService.spin("spinner-1");
@@ -27,7 +27,7 @@
           if(rejection.status === 401){
             //wrong user details:
             SessionService.ClearCredentials();
-            $state.go('sign_in');
+            //$state.go('sign_in');
           }
         }
         return $q.reject(rejection);
@@ -36,5 +36,5 @@
   }
 
   angular.module('common.interceptors.http', [])
-    .factory('httpInterceptor', ['$q','$log','SessionService','usSpinnerService','NotificationService','$state',httpInterceptor]);
+    .factory('httpInterceptor', ['$q','$log','SessionService','usSpinnerService','NotificationService',httpInterceptor]);
 })();

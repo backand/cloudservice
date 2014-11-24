@@ -19,10 +19,6 @@
     function checkDatabaseStatuse(){
       usSpinnerService.spin("loading");
       //not connected to DB:
-      if (currentApp.DatabaseStatus !== 1) {
-        $state.go('database.edit',{name: $state.params.name})
-      } else {
-
         AppsService.getDBInfo($state.params.name)
           .success(function(data){
             console.log('db info :');
@@ -31,7 +27,7 @@
             self.data.databaseName = currentApp.databaseName;
             usSpinnerService.stop("loading");
           })
-      }
+
     }
 
 
