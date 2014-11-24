@@ -16,7 +16,7 @@
         currentApp = data;
         self.dbConnected = currentApp.DatabaseStatus === 1;
         //self.dataName = currentApp.databaseName;
-        self.dataName = currentApp.databaseName || 'sqlserver';
+        self.dataName = currentApp.databaseName || 'mysql';
         if (self.dbConnected){
           //connected to data base
           checkDatabaseStatuse();
