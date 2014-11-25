@@ -75,6 +75,11 @@
           NotificationService.add('info','database switched into pending');
           $state.go('apps.index', {name : $state.params.name});
         })
+        .error(function(err){
+          self.loading = false;
+        })
+
+
     };
 
     this.back = function(){

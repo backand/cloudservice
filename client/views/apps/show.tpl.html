@@ -6,23 +6,13 @@
       <div class="row col-md-10 col-sm-offset-1">
 
         <div class="list-unstyled row">
-          <ul class="list-inline text-center stats">
-            <li class="col-md-3">
-              <h1>1,123</h1>
-              <p class="text-muted size-h5">Requests</p>
-            </li>
-            <li class="col-md-3">
-              <h1>43</h1>
-              <p class="text-muted size-h5">Updates</p>
-            </li>
-            <li class="col-md-3">
-              <h1>12</h1>
-              <p class="text-muted size-h5">Commits</p>
-            </li>
-            <li class="col-md-3">
-              <h1>40K</h1>
-              <p class="text-muted size-h5">Rows</p>
-            </li>
+          <ul class="list-inline text-center stats" >
+            <div ng-repeat="stat in show.statisticsArray">
+              <li class="col-md-3">
+                <h1>{{stat.Value}}</h1>
+                <p class="text-muted size-h5">{{stat.Name}}</p>
+              </li>
+            </div>
           </ul>
         </div>
 
@@ -35,8 +25,12 @@
 
               <ul class="row list-unstyled">
                 <li ng-repeat="log in show.appLogArray | limitTo:show.logLimit" class="row">
-                  <label class="col-md-3 col-md-offset-1 text-muted">{{ log.time | date }}</label>
-                  <span class="col-md-8">{{log.info}}</span>
+                  <label class="col-md-4 col-md-offset-1 text-muted">
+                    <span am-time-ago="log.time"></span>
+                  </label>
+                  <span class="col-md-7">
+                    {{log.info}}
+                  </span>
                 </li>
               </ul>
 

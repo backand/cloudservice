@@ -34,6 +34,7 @@
       'toaster',
       'xeditable',
       'angular-ladda',
+      'angularMoment',
       'theme.directives',
       'common.services',
       'common.directives.custom_page',
