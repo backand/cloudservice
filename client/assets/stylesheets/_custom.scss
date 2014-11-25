@@ -39,3 +39,87 @@ a.app-panel:hover {
 .template-border {
   border: solid #0084b9 1px;
 }
+
+.stats {
+  h1 {
+    font-size: 44px;
+    font-weight: 300;
+  }
+}
+
+.divider.divider-solid {
+  border: 1px solid #e9e9e9;
+}
+
+.vertical-border {
+  margin: 10% 50%;
+  border-left: 1px solid #e9e9e9;
+  height: 250px;
+}
+
+.dashboard {
+  h4 {
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 900;
+  }
+}
+
+.app-log {
+  li {
+    label {
+      text-transform: uppercase;
+      font-size: 12px;
+      text-align: center;
+      font-width: 500;
+    }
+    span {
+      margin-bottom: 9px;
+    }
+  }
+}
+
+.panel-item.panel-callout {
+  text-align: left;
+}
+
+.data-panel {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 10px;
+
+  border: 1px solid darken($well-bg, 10%);
+
+  & > div {
+    padding: 20px 30px;
+  }
+  .panel-icon {
+    float: left;
+    background-color: #7fabd2;
+    color: white;
+  }
+
+  .panel-data {
+    float: left;
+    h4 {
+      margin-bottom: 5px;
+      color: #7fabd2;
+
+    }
+  }
+}
+
+.data-panel.data-panel-success {
+  .panel-icon {
+    background-color: #a3be8c;
+  }
+
+  .panel-data {
+    h4 {
+      color: #a3be8c;
+    }
+  }
+}

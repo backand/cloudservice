@@ -2,9 +2,7 @@
   <div class="panel-body">
     <div class="row">
 
-
-
-      <div  class="col-md-2 col-sm-4 app-panel" >
+      <div  class="col-lg-3 col-md-4 col-sm-4 app-panel" >
         <div class="panel panel-default ui-ribbon-container ui-ribbon-primary">
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">New</div>
@@ -32,13 +30,11 @@
                 </form>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
 
-      <div class="col-md-2 col-sm-4 app-panel" ng-repeat="app in index.apps">
+      <div class="col-lg-3 col-md-4 col-sm-4 app-panel" ng-repeat="app in index.apps">
         <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">{{index.getRibboninfo(app).text}}</div>
@@ -50,7 +46,6 @@
               App Details
             </button>
           </div>
-
         </div>
       </div>
     </div>
