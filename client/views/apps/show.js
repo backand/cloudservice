@@ -3,9 +3,9 @@
 
   'use strict';
   angular.module('app.apps')
-    .controller('AppsShowController',['$scope','appItem','AppsService','$interval','$state',AppsShowController]);
+    .controller('AppsShowController',['$scope','appItem','AppsService','$interval','$state','AppLogService',AppsShowController]);
 
-  function AppsShowController($scope,appItem,AppsService,$interval,$state){
+  function AppsShowController($scope,appItem,AppsService,$interval,$state,AppLogService){
     var self = this;
     var appData = appItem.data;
 
@@ -20,22 +20,16 @@
     console.log(appItem.data);
 
     this.statisticsArray = appItem.data.durados_App_Stat;
-
+    AppLogService.getAppLog($state.params.name)
+      .success(function(data){
+        self.appLogArray = AppLogService.createLogMsg(data.data);
+      })
+      .error(function(err){
+        debugger;
+      });
 
     var time = new Date();
-    this.appLogArray = [
-      {time : time , info : "this is the log 1 info" },
-      {time : time , info : "this is the log 2 info" },
-      {time : time , info : "this is the log 3 info" },
-      {time : time , info : "this is the log 4info" },
-      {time : time , info : "this is the log 5 info" },
-      {time : time , info : "this is the log 6 info" },
-      {time : time , info : "this is the log 7 info" },
-      {time : time , info : "this is the log 8 info" },
-      {time : time , info : "this is the log 9 info" },
-      {time : time , info : "this is the log 99 info" },
-      {time : time , info : "this is the log 999 info" }
-    ];
+
 
     this.logLimit = 7;
 

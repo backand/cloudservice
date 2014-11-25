@@ -143,15 +143,7 @@
         });
     };
 
-    this.getAppLog = function(appName){
-      return $http({
-        method: 'GET',
-        url: CONSTS.appUrl + '/admin/myApps/'+appName,
-        data: {
 
-        }
-      });
-    };
 
     var dataSourcesArray = [
       {imgSrc: "client/assets/images/mysql.png", name: 'sqlserver'},
