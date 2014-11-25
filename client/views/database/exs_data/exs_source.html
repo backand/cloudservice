@@ -1,112 +1,87 @@
 <br/>
 
-
 <div class="row">
-  <div class="col-md-10 col-md-offset-2">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="row">
 
+      <a class="icon-box col-md-2 col-md-offset-1" >
+        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mysql'}" ng-click ="dbedit.dataName = 'mysql'">
+          <img src="/assets/images/mysql.png"/>
+        </div>
+        <div class="desc-container">
+          <h4></h4>
+        </div>
+      </a>
 
-    <a class="icon-box col-md-2" >
-      <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mysql'}" ng-click ="dbedit.dataName = 'mysql'">
-        <img src="/assets/images/mysql.png"/>
-      </div>
-      <div class="desc-container">
-        <h4></h4>
-      </div>
-    </a>
+      <a class="icon-box col-md-2">
+        <div class="icon-container"
+             ng-class="{active : dbedit.currentTab() === 'postgresql'}"
+             ng-click ="dbedit.dataName = 'postgresql'">
+          <img src="/assets/images/postgresql.jpg"/>
+        </div>
+        <div class="desc-container">
+          <h4></h4>
+        </div>
+      </a>
 
-    <a class="icon-box col-md-2">
-      <div class="icon-container"
-           ng-class="{active : dbedit.currentTab() === 'postgresql'}"
-           ng-click ="dbedit.dataName = 'postgresql'">
-        <img src="/assets/images/postgresql.jpg"/>
-      </div>
-      <div class="desc-container">
-        <h4></h4>
-      </div>
-    </a>
+      <a class="icon-box col-md-2" ng-click="">
+        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'sqlserver'}" ng-click ="dbedit.dataName = 'sqlserver'">
+          <img src="/assets/images/sqlserver.png"/>
+        </div>
+        <div class="desc-container">
+          <h4></h4>
+        </div>
+      </a>
 
+      <a class="icon-box col-md-2" >
+        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'oracle'}" ng-click ="dbedit.dataName = 'oracle'">
+          <img src="/assets/images/oracle.jpg"/>
+        </div>
+        <div class="desc-container">
+          <h4></h4>
+        </div>
+      </a>
 
-
-    <a class="icon-box col-md-2" ng-click="">
-      <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'sqlserver'}" ng-click ="dbedit.dataName = 'sqlserver'">
-        <img src="/assets/images/sqlserver.png"/>
-      </div>
-      <div class="desc-container">
-        <h4></h4>
-      </div>
-    </a>
-
-
-
-    <a class="icon-box col-md-2" >
-      <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'oracle'}" ng-click ="dbedit.dataName = 'oracle'">
-        <img src="/assets/images/oracle.jpg"/>
-      </div>
-      <div class="desc-container">
-        <h4></h4>
-      </div>
-    </a>
-
-    <a class="icon-box col-md-2" >
-      <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mongodb'}" ng-click ="dbedit.dataName = 'mongodb'">
-        <img src="/assets/images/mongodb.png"/>
-      </div>
-      <div class="desc-container">
-        <h4></h4>
-      </div>
-    </a>
-
+      <a class="icon-box col-md-2" >
+        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mongodb'}" ng-click ="dbedit.dataName = 'mongodb'">
+          <img src="/assets/images/mongodb.png"/>
+        </div>
+        <div class="desc-container">
+          <h4></h4>
+        </div>
+      </a>
+    </div>
   </div>
 </div>
 
+<div class="divider divider-dashed divider-lg pull-in"></div>
 
+<form class="form-horizontal" role="form" ng-submit="dbedit.sumbitForm()">
 
-<div class="row">
-  <div class="col-md-10 col-md-offset-1">
-    <div class="divider divider-dashed divider-lg pull-in"></div>
+  <div class="row">
+    <div class="col-md-5 col-md-offset-1">
 
-    <form class="form-horizontal ng-pristine ng-valid" role="form" ng-submit="dbedit.sumbitForm()">
-      <div class="row">
+      <div class="form-group">
+        <label for="database" class="col-sm-4 control-label">Database name</label>
 
-        <div class="form-group col-md-5">
-        <label for="database" class="col-sm-2 control-label">Database name</label>
-
-        <div class="col-sm-10">
-        <input type="text" class="form-control" ng-model="dbedit.data.database" id="database" placeholder="" required>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="dbedit.data.database" id="database" placeholder="" required>
         </div>
-        </div>
-          <div class="form-group col-md-5">
-            <label for="server" class="col-sm-2 control-label">Server</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" ng-model="dbedit.data.server" id="server" placeholder="Remote dbeditbase server hostname" required>
-            </div>
-          </div>
+      </div>
 
+      <div class="form-group">
+        <label for="server" class="col-sm-4 control-label">Server</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="dbedit.data.server" id="server" placeholder="Remote dbeditbase server hostname" required>
+        </div>
       </div>
 
 
-
-      <div class="row">
-        <div class="form-group col-md-5">
-          <label for="UserName" class="col-sm-2 control-label">User Name</label>
-
-          <div class="col-sm-10">
-            <input type="text" class="form-control" ng-model="dbedit.data.username" id="UserName" placeholder="" required>
-          </div>
-        </div>
-        <div class="form-group col-md-5">
-          <label for="password" class="col-sm-2 control-label">Password</label>
-
-          <div class="col-sm-10">
-            <input type="text" class="form-control" ng-model="dbedit.data.password" id="password" placeholder="" required>
-          </div>
-        </div>
-      </div>
       <div ng-switch on="dbedit.dataName">
         <div class="form-group row" ng-switch-when='mysql'>
-          <label for="usingSsh" class="col-sm-1 control-label">Use SSH</label>
+          <label for="usingSsh" class="col-sm-4 control-label">Use SSH</label>
 
-          <div class="col-sm-10">
+          <div class="col-sm-8">
         <span class="ui-select" id="usingSsh" class="form-control" >
           <select name="usingSsh" class="Sitedropdown" ng-model="dbedit.data.usingSsh" required>
             <option value = true>Yes</option>
@@ -117,60 +92,88 @@
         </div>
 
         <div class="form-group" ng-switch-when='postgresql'>
-          <label for="usingSsl" class="col-sm-2 control-label">Use SSL</label>
+          <label for="usingSsl" class="col-sm-4 control-label">Use SSL</label>
 
-          <div class="col-sm-10">
-        <span class="ui-select" id="usingSsl" class="form-control" >
-          <select name="usingSsl" class="Sitedropdown" ng-model="dbedit.data.usingSsl" required>
-            <option value = true>Yes</option>
-            <option value = false>No</option>
-          </select>
-        </span>
+          <div class="col-sm-8">
+          <span class="ui-select" id="usingSsl" class="form-control" >
+            <select name="usingSsl" class="Sitedropdown" ng-model="dbedit.data.usingSsl" required>
+              <option value = true>Yes</option>
+              <option value = false>No</option>
+            </select>
+          </span>
           </div>
         </div>
       </div>
+    </div>
 
-      <div ng-if="dbedit.data.usingSsh === 'true'">
+    <div class="col-md-5 col-md-offset-0">
+      <div class="form-group">
+        <label for="UserName" class="col-sm-4 control-label">User Name</label>
 
-        <div class="divider divider-dashed divider-lg pull-in"></div>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="dbedit.data.username" id="UserName" placeholder="" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="col-sm-4 control-label">Password</label>
+
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="dbedit.data.password" id="password" placeholder="" required>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div ng-if="dbedit.data.usingSsh === 'true'">
+
+    <div class="divider divider-dashed divider-lg pull-in"></div>
+
+    <div class="row">
+      <div class="col-md-5 col-md-offset-1">
 
         <div class="form-group" >
-          <label for="sshRemoteHost" class="col-sm-2 control-label">SSH Remote Host</label>
+          <label for="sshRemoteHost" class="col-sm-4 control-label">SSH Remote Host</label>
 
-          <div class="col-sm-10">
+          <div class="col-sm-8">
             <input type="text" class="form-control"  ng-model="dbedit.data.sshRemoteHost" id="sshRemoteHost" placeholder="Address of your remote SSH host" required>
           </div>
         </div>
 
         <div class="form-group" >
-          <label for="sshUser" class="col-sm-2 control-label">SSH User Name</label>
+          <label for="sshUser" class="col-sm-4 control-label">SSH User Name</label>
 
-          <div class="col-sm-10">
+          <div class="col-sm-8">
             <input type="text" class="form-control" ng-model="dbedit.data.sshUser" id="sshUser" placeholder="" required>
           </div>
         </div>
+      </div>
 
+      <div class="col-md-5 col-md-offset-0">
         <div class="form-group" >
-          <label for="sshPort" class="col-sm-2 control-label">SSH Port</label>
+          <label for="sshPort" class="col-sm-4 control-label">SSH Port</label>
 
-          <div class="col-sm-10">
+          <div class="col-sm-8">
             <input type="number" class="form-control" ng-model="dbedit.data.sshPort" id="sshPort" placeholder="" required>
           </div>
         </div>
 
-
         <div class="form-group" ng-if="!dbedit.data.sshPrivateKey" >
-          <label for="sshPassword" class="col-sm-2 control-label">SSH Password</label>
+          <label for="sshPassword" class="col-sm-4 control-label">SSH Password</label>
 
-          <div class="col-sm-10">
+          <div class="col-sm-8">
             <input type="text" class="form-control" ng-model="dbedit.data.sshPassword" ng-disabled="dbedit.data.sshPrivateKey"
                    id="sshPassword" placeholder="" required>
           </div>
         </div>
+      </div>
+    </div>
 
+    <div class="form-group" ng-if="!dbedit.data.usingSsh">
+      <div class="row">
+        <div class="col-md-5 col-md-offset-1">
 
-
-        <div class="form-group" ng-if="!dbedit.data.usingSsh">
           <label for="sshPrivateKey" class="col-sm-2 control-label">SSH Private Key</label>
 
           <div class="col-sm-10">
@@ -178,19 +181,25 @@
                    id="sshPrivateKey" placeholder="" required>
           </div>
         </div>
-
       </div>
+    </div>
+  </div>
 
-      <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-9">
-          <button type="submit"  ng-disabled="form.$invalid"
-                  class="btn btn-success btn-w-md" ladda="dbedit.loading" data-style="expand-right">
-            Create
-          </button>
-          <button  ng-click="dbedit.back()" class="btn btn-danger btn-w-md">Cancel</button>
-        </div>
+  <div class="divider divider-dashed divider-lg pull-in"></div>
+
+  <div class="row">
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-5">
+        <button type="submit"  ng-disabled="form.$invalid"
+                class="btn btn-success btn-w-md" ladda="dbedit.loading" data-style="expand-right">
+          Create
+        </button>
+
+        <button  ng-click="dbedit.back()" class="btn btn-danger btn-w-md">Cancel</button>
       </div>
-    </form>
+    </div>
 
   </div>
-</div>
+
+</form>
+
