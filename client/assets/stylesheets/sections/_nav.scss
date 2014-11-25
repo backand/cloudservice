@@ -62,10 +62,30 @@
                     top: 16px;
                     right: 5px;
                 }
+
+                .status {
+                  position: absolute;
+                  top: 21px;
+                  right: 12px;
+                  border: 4px solid #aaa;
+                  border-radius: 4px;
+
+                  &.status-error {
+                    border-color: $brand-danger;
+                  }
+
+                  &.status-warning {
+                    border-color: $brand-warning;
+                  }
+
+                  &.status-success {
+                    border-color: $brand-success;
+                  }
+                }
             }
 
             > .icon-has-ul-h { // icon for horizontal nav
-                display: none; 
+                display: none;
             }
 
             > .icon-has-ul { // icon for default vertical nav

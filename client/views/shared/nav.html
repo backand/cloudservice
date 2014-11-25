@@ -24,7 +24,11 @@
     </li>
 
     <li>
-      <a ui-sref="database.show({name: nav.appName})"><i class="ti-layout-media-overlay"></i><span>Database</span></a>
+      <a ui-sref="database.show({name: nav.appName})">
+        <i class="ti-layout-media-overlay"></i>
+        <span>Database</span>
+        <span class="status status-{{nav.getDBStatus()}}"></span>
+      </a>
     </li>
 
     <li>
