@@ -33,6 +33,7 @@
       'ngAnimate',
       'toaster',
       'xeditable',
+      'angular-ladda',
       'theme.directives',
       'common.services',
       'common.directives.custom_page',

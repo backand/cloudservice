@@ -10,6 +10,8 @@
     var self = this;
     this.appName = $stateParams.name;
 
+    this.loading = false;
+
     var currentApp;
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
@@ -36,6 +38,7 @@
           .success(function(data){
             self.data = data;
             self.data.databaseName = currentApp.databaseName;
+            self.data.database = self.data.Catalog;
             self.data.server = self.data.ServerName;
             self.data.username = self.data.Username;
             self.data.usingSsh  = self.data.SshUses;
@@ -43,8 +46,8 @@
             self.data.sshRemoteHost  = self.data.SshRemoteHost;
             self.data.sshUser  = self.data.SshUser;
             self.data.sshPort  = self.data.SshPort;
-            self.data.sshPassword  = self.data.SshPassword;
-            self.data.sshPrivateKey  = self.data.SshPrivateKey;
+            //self.data.sshPassword  = self.data.SshPassword;
+            //self.data.sshPrivateKey  = self.data.SshPrivateKey;
           })
     }
 
@@ -62,14 +65,15 @@
 
 
     this.sumbitForm = function(){
-      debugger;
+      self.loading = true;
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
       console.log('data: ');
       console.log(self.data);
       AppsService.connect2DB($state.params.name, self.data)
         .success(function (data) {
           console.log(data);
-          $state.go('apps.show, {name : $state.params.name}');
+          NotificationService.add('info','database switched into pending');
+          $state.go('apps.index', {name : $state.params.name});
         })
     };
 

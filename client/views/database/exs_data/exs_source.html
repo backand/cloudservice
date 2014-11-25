@@ -68,12 +68,13 @@
     <form class="form-horizontal ng-pristine ng-valid" role="form" ng-submit="dbedit.sumbitForm()">
       <div class="row">
 
-          <div class="form-group col-md-5">
-            <label for="DbName" class="col-sm-2 control-label">Database Type</label>
-            <div class="col-sm-10">
-              <div  id="DbName" class="form-control" required>{{dbedit.dataName}}</div>
-            </div>
-          </div>
+        <div class="form-group col-md-5">
+        <label for="database" class="col-sm-2 control-label">Database name</label>
+
+        <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="dbedit.data.database" id="database" placeholder="" required>
+        </div>
+        </div>
           <div class="form-group col-md-5">
             <label for="server" class="col-sm-2 control-label">Server</label>
             <div class="col-sm-10">
@@ -84,13 +85,7 @@
       </div>
 
 
-      <!--<div class="form-group">-->
-        <!--<label for="database" class="col-sm-2 control-label">Database name</label>-->
 
-        <!--<div class="col-sm-10">-->
-          <!--<input type="text" class="form-control" ng-model="dbedit.data.database" id="database" placeholder="" required>-->
-        <!--</div>-->
-      <!--</div>-->
       <div class="row">
         <div class="form-group col-md-5">
           <label for="UserName" class="col-sm-2 control-label">User Name</label>
@@ -188,7 +183,10 @@
 
       <div class="form-group">
         <div class="col-sm-offset-3 col-sm-9">
-          <button type="submit"  ng-disabled="form.$invalid" class="btn btn-success btn-w-md">Create</button>
+          <button type="submit"  ng-disabled="form.$invalid"
+                  class="btn btn-success btn-w-md" ladda="dbedit.loading" data-style="expand-right">
+            Create
+          </button>
           <button  ng-click="dbedit.back()" class="btn btn-danger btn-w-md">Cancel</button>
         </div>
       </div>

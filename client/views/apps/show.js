@@ -36,7 +36,22 @@
     console.log(appItem.data);
 
     this.connectionState = connectionStateClass;
+    var time = new Date();
+    this.appLogArray = [
+      {time : time , info : "this is the log 1 info" },
+      {time : time , info : "this is the log 2 info" },
+      {time : time , info : "this is the log 3 info" },
+      {time : time , info : "this is the log 4info" },
+      {time : time , info : "this is the log 5 info" },
+      {time : time , info : "this is the log 6 info" },
+      {time : time , info : "this is the log 7 info" },
+      {time : time , info : "this is the log 8 info" },
+      {time : time , info : "this is the log 9 info" },
+      {time : time , info : "this is the log 99 info" },
+      {time : time , info : "this is the log 999 info" }
+    ];
 
+    this.logLimit = 7;
 
     this.appTitle = appData.Title;
 

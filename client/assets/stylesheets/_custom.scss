@@ -14,6 +14,12 @@ a.app-panel:hover {
   }
 }
 
+.list-justified{
+  li{
+    vertical-align: top;
+  }
+}
+
 .icon-box .icon-container {
   &.active {
     box-shadow: 0 0 0 7px rgba($brand-success, 0.1);

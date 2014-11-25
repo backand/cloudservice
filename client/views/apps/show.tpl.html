@@ -1,30 +1,26 @@
-<div class="panel panel-default">
+<div class="panel panel-default" xmlns="http://www.w3.org/1999/html">
   <div class="panel-heading"><strong> Dashborad</strong></div>
   <div class="panel-body">
     <div class="row col-md-10 col-sm-offset-1">
 
 
       <div class="list-unstyled row">
-        <ul class="list-inline col-md-10 col-md-offset-2">
-          <li class="col-md-3">
+        <ul class="list-inline col-md-10 col-md-offset-2 text-center">
+          <li class="col-md-2">
             <p class="size-h1">1,123</p>
-
-            <p class="text-muted size-h4">Requests</p>
+            <p class="text-muted size-h5">Requests</p>
           </li>
-          <li class="col-md-3">
+          <li class="col-md-2">
             <p class="size-h1">43</p>
-
-            <p class="text-muted size-h4">Updates</p>
+            <p class="text-muted size-h5">Updates</p>
           </li>
-          <li class="col-md-3">
+          <li class="col-md-2">
             <p class="size-h1">12</p>
-
-            <p class="text-muted size-h4">Commits</p>
+            <p class="text-muted size-h5">Commits</p>
           </li>
-          <li class="col-md-3">
+          <li class="col-md-2">
             <p class="size-h1">40K</p>
-
-            <p class="text-muted size-h4">Rows</p>
+            <p class="text-muted size-h5">Rows</p>
           </li>
         </ul>
       </div>
@@ -40,49 +36,56 @@
               <div class="row col-md-12">
                 <div class="size-h3 col-md-3">App Log</div>
               </div>
-              <div class="divider divider-xl"></div>
-              <div class="row col-md-12">
-                <div class="size-h3 col-md-4 text-muted"> 4 hours ago</div>
-                <div class="size-h3 col-md-8"> removes user name by idan</div>
+              <div class=" row col-md-12 divider divider-sm"></div>
+              <div ng-repeat="log in show.appLogArray | limitTo:show.logLimit">
+                <div class="row col-md-12">
+                  <div class="size-h3 col-md-4 text-muted">{{log.time | date}}</div>
+                  <div class="size-h3 col-md-8"> {{log.info}} </div>
+                </div>
               </div>
-              <div class="row col-md-12">
-                <div class="size-h3 col-md-4 text-muted"> 4 hours ago</div>
-                <div class="size-h3 col-md-8"> removes user name by idan</div>
-              </div>
-              <div class="row col-md-12">
-                <div class="size-h3 col-md-4 text-muted"> 4 hours ago</div>
-                <div class="size-h3 col-md-8"> removes user name by idan</div>
-              </div>
+              <div class=" row col-md-12 divider divider-sm"></div>
+              <button class="btn btn-default btn-w-lg">SHOW MORE</button>
             </li>
             <li>
               <div class="row col-md-12">
                 <div class="size-h3 col-md-7"> TOOLS AND KNOWLAGEBSE</div>
               </div>
-
               <div class="divider divider-xl"></div>
-              <div class="row col-md-11 col-md-offset-1">
-                <section class="panel panel-box">
+              <div class="row col-md-11 ">
+                <button class="panel panel-box" ui-sref="playground.show({name: nav.appName})">
                   <div class="panel-left panel-item bg-info">
-                    <i class="ti-layout text-huge"></i>
+                    <i class="ti-more-alt text-huge"></i>
                   </div>
-                  <div class="panel-right panel-item">
+                  <div class="panel-right panel-item" >
                     <p class="size-h3 text-info">REAT api simulation</p>
                     <p class="">""</p>
                     <p class="">dsfdsfsd</p>
                   </div>
-                </section>
+                </button>
               </div>
-              <div class="row col-md-11 col-md-offset-1">
-                <section class="panel panel-box">
+              <div class="row col-md-11 ">
+                <button class="panel panel-box" ui-sref="dashboard.edit({name: nav.appName})">
                   <div class="panel-left panel-item bg-success">
-                    <i class="ti-agenda text-huge"></i>
+                    <i class="ti-more-alt text-huge"></i>
                   </div>
-                  <div class="panel-right panel-item bg-reverse">
+                  <div class="panel-right panel-item" >
+                    <p class="size-h3 text-info">REAT api simulation</p>
+                    <p class="">""</p>
+                    <p class="">dsfdsfsd</p>
+                  </div>
+                </button>
+              </div>
+              <div class="row col-md-11 ">
+                <button class="panel panel-box" ui-sref="dashboard.edit({name: nav.appName})">
+                  <div class="panel-left panel-item bg-success">
+                    <i class="ti-layers-alt text-huge"></i>
+                  </div>
+                  <div class="panel-right panel-item">
                     <p class="size-h3 text-success">ORM</p>
                     <p class="">""</p>
                     <p class="text-muted">Another Sunny Day</p>
                   </div>
-                </section>
+                </button>
               </div>
             </li>
           </ul>
