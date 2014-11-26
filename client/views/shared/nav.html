@@ -24,19 +24,22 @@
     </li>
 
     <li>
-      <a ui-sref="database.show({name: nav.appName})">
+      <a  ng-show="nav.app.DatabaseStatus === 1" ui-sref="database.show({name: nav.appName})">
         <i class="ti-layout-media-overlay"></i>
         <span>Database</span>
         <span class="status status-{{nav.getDBStatus()}}"></span>
       </a>
+      <a  ng-show="nav.app.DatabaseStatus !== 1"><i class="ti-layout-media-overlay"></i><span>Database</span></a>
     </li>
 
     <li>
-      <a ui-sref="dashboard.edit({name: nav.appName})"><i class="ti-support"></i><span>Admin</span></a>
+      <a  ng-show="nav.app.DatabaseStatus === 1"  ui-sref="dashboard.edit({name: nav.appName})"><i class="ti-support"></i><span>Admin</span></a>
+      <a  ng-show="nav.app.DatabaseStatus !== 1"  ><i class="ti-support"></i><span>Admin</span></a>
     </li>
 
     <li>
-      <a ui-sref="playground.show({name: nav.appName})"><i class="ti-support"></i><span>API Playground</span></a>
+      <a ng-show="nav.app.DatabaseStatus === 1" ui-sref="playground.show({name: nav.appName})"><i class="ti-support"></i><span>API Playground</span></a>
+      <a ng-show="nav.app.DatabaseStatus !== 1" ><i class="ti-support"></i><span>API Playground</span></a>
     </li>
 
   </ul>
