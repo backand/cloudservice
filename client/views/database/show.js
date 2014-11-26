@@ -1,9 +1,9 @@
 (function  () {
   'use strict';
   angular.module('app.database')
-    .controller('DatabaseShow',["$scope",'$state','AppsService','usSpinnerService','NotificationService',DatabaseShow]);
+    .controller('DatabaseShow',["$scope",'$state','AppsService','usSpinnerService','NotificationService','DatabaseService',DatabaseShow]);
 
-  function DatabaseShow($scope,$state,AppsService,usSpinnerService,NotificationService){
+  function DatabaseShow($scope,$state,AppsService,usSpinnerService,NotificationService,DatabaseService){
     var self = this;
 
     var currentApp;
@@ -19,7 +19,7 @@
     function checkDatabaseStatuse(){
       usSpinnerService.spin("loading");
       //not connected to DB:
-        AppsService.getDBInfo($state.params.name)
+        DatabaseService.getDBInfo($state.params.name)
           .success(function(data){
             console.log('db info :');
             console.log(data);
@@ -32,10 +32,10 @@
 
 
 
-    this.dataSources = AppsService.getDataSources();
+    this.dataSources = DatabaseService.getDataSources();
 
     this.getPassword = function(){
-      AppsService.getAppPassword($state.params.name)
+      DatabaseService.getAppPassword($state.params.name)
         .success(function(data){
           self.data.password = data;
         });
