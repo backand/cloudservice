@@ -13,7 +13,7 @@
     $scope.$on('$stateChangeSuccess', function() {
       AppsService.all()
         .then(function(data){
-          self.apps = AppsService.appNames();
+          self.apps = AppsService.appNames($state.params.name);
           self.currAppName = $state.params.name;
         });
 

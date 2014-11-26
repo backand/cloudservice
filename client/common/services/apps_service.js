@@ -47,7 +47,18 @@
 
     };
 
-    this.appNames = function() {
+    function searchStringInArray (str, strArray) {
+      for (var j=0; j<strArray.length; j++) {
+        if (strArray[j].match(str)) return j;
+      }
+      return -1;
+    }
+
+
+    this.appNames = function(appName) {
+      if (searchStringInArray(appName, apps.names) === -1){
+        apps.names.push(appName);
+      }
       return apps.names;
     };
 
