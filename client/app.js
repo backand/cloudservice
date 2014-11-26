@@ -8,7 +8,7 @@
   function MainController(SessionService,$state) {
     this.getCurrentUser = function(){
       return SessionService.currentUser;
-    }
+    };
 
     this.logout = function(){
       SessionService.ClearCredentials();
