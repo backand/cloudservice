@@ -8,10 +8,13 @@
         <div ng-repeat="template in dash.templates">
           <div class="col-sm-5">
             <div class="thumbnail" ng-class="{'template-border' : template.Id === dash.templateId }">
-              <img  ng-click="dash.updateTemplate(template.Id)" ng-src="{{template.imgSrc}}">
+              <img ng-src="{{template.imgSrc}}">
               <div class="caption">
                 <h5>Thumbnail label</h5>
                 <div class="divider divider-sm pull-in"></div>
+                <p>
+                  <button ng-click="dash.updateTemplate(template.Id)" class="btn btn-primary" role="button">select</button>
+                </p>
               </div>
             </div>
           </div>
