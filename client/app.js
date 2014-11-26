@@ -35,6 +35,7 @@
       'xeditable',
       'angular-ladda',
       'angularMoment',
+      'common.directives',
       'theme.directives',
       'common.services',
       'common.directives.custom_page',
