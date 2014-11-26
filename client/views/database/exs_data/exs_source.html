@@ -16,7 +16,7 @@
       <a class="icon-box col-md-2">
         <div class="icon-container"
              ng-class="{active : dbedit.currentTab() === 'postgresql'}"
-             ng-click ="dbedit.dataName = 'postgresql'">
+             ng-click ="[dbedit.dataName = 'postgresql',dbedit.data.usingSsh = false]">
           <img src="/assets/images/postgresql.jpg"/>
         </div>
         <div class="desc-container">
@@ -25,7 +25,7 @@
       </a>
 
       <a class="icon-box col-md-2" ng-click="">
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'sqlserver'}" ng-click ="dbedit.dataName = 'sqlserver'">
+        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'sqlserver'}" ng-click ="[dbedit.dataName = 'sqlserver',dbedit.data.usingSsh = false]">
           <img src="/assets/images/sqlserver.png"/>
         </div>
         <div class="desc-container">
@@ -34,7 +34,7 @@
       </a>
 
       <a class="icon-box col-md-2" >
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'oracle'}" ng-click ="dbedit.dataName = 'oracle'">
+        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'oracle'}" ng-click ="[dbedit.dataName = 'oracle',dbedit.data.usingSsh = false]">
           <img src="/assets/images/oracle.jpg"/>
         </div>
         <div class="desc-container">
@@ -43,7 +43,7 @@
       </a>
 
       <a class="icon-box col-md-2" >
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mongodb'}" ng-click ="dbedit.dataName = 'mongodb'">
+        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mongodb'}" ng-click ="[dbedit.dataName = 'mongodb',dbedit.data.usingSsh = false]">
           <img src="/assets/images/mongodb.png"/>
         </div>
         <div class="desc-container">
