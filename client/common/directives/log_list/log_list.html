@@ -1,0 +1,18 @@
+<div class="app-log">
+  <h4 class="row col-md-11 col-md-offset-1">APP LOG</h4>
+
+  <ul class="row list-unstyled">
+    <li ng-repeat="log in appLogArray | limitTo:logLimit" class="row">
+      <label class="col-md-3 col-md-offset-1 text-muted">
+        <span am-time-ago="log.time"></span>
+      </label>
+      <span class="col-md-6">
+        {{log.info}}
+      </span>
+    </li>
+  </ul>
+
+  <button type="button" class="btn btn-w-lg btn-default center-block">Show More</button>
+</div>
+
+
