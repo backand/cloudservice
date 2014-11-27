@@ -23,9 +23,6 @@
     AppLogService.getAppLog($state.params.name)
       .success(function(data){
         self.appLogArray = AppLogService.createLogMsg(data.data);
-      })
-      .error(function(err){
-        debugger;
       });
 
     var time = new Date();

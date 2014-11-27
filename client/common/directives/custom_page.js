@@ -17,15 +17,15 @@
 
               // add certain class based on path
               switch (path) {
-                case '/404':
-                case '/pages/404':
-                case '/pages/500':
+                case '404':
+                case 'pages/404':
+                case 'pages/500':
                   return $element.addClass('body-wide body-err');
-                case '/sign_in':
-                case '/sign_up':
-                case '/forgot-password':
+                case 'sign_in':
+                case 'sign_up':
+                case 'forgot-password':
                   return $element.addClass('body-wide body-auth');
-                case '/pages/lock-screen':
+                case 'pages/lock-screen':
                   return $element.addClass('body-wide body-lock');
               }
             };
@@ -35,7 +35,7 @@
 
             $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
               if (toState != fromState) {
-                addBg($location.path());
+                addBg(toState.name);
               }
             });
           }]
