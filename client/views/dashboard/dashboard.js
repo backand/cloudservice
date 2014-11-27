@@ -24,7 +24,7 @@
       { Id : "2" , imgSrc : "/assets/images/templateDemo.jpeg" },
       { Id : "3" , imgSrc : "/assets/images/templateDemo.jpeg" },
       { Id : "4" , imgSrc : "/assets/images/templateDemo.jpeg" }
-    ]
+    ];
 
     this.updateTemplate = function(templateId){
       self.templateId = templateId;

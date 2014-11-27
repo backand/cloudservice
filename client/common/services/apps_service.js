@@ -37,6 +37,7 @@
         self.find(appName)
           .success(function (data){
             self.setCurrentApp(data);
+            currentApp.myStatus = {status : data.DatabaseStatus};
             return appData.deferred.resolve(currentApp)
         })
           .error(function(err){
