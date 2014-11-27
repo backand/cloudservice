@@ -12,7 +12,7 @@
 
     this.logout = function(){
       SessionService.ClearCredentials();
-      $state.go('sign_in');
+      //$state.go('sign_in');
     }
 
   }

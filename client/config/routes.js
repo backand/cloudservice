@@ -39,17 +39,10 @@ angular.module('app.routes', []).
   .run(run,['$state','AuthService', '$rootScope']);
 
 function run($state,SessionService, $rootScope){
-
   if (!SessionService.currentUser){
     $state.go('sign_in')
   } else {
     $state.go('apps.index')
   }
 
-  // on every page load checking if the user sign in:
-  $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-    if (!SessionService.currentUser) {
-      $state.go('sign_in')
-    }
-  });
 }
