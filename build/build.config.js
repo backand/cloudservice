@@ -8,6 +8,7 @@ module.exports = {
   base: 'client',
   tpl: [
     'client/views/**/*.html',
+    'client/common/**/*.html',
     '!client/index.html',
   ],
   mainScss: 'client/assets/stylesheets/main.scss',
