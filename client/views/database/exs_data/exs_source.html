@@ -61,33 +61,31 @@
   <div class="row">
     <div class="col-md-5 col-md-offset-1">
 
-      <div class="form-group">
-        <label for="database" class="col-sm-4 control-label">Database name</label>
-
+    <div class="form-group">
+        <label for="server" class="col-sm-4 control-label">Endpoint</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" ng-model="dbedit.data.database" id="database" placeholder="" required>
+            <input type="text" class="form-control" ng-model="dbedit.data.server" id="server" placeholder="Remote database server hostname" required>
+        </div>
+    </div>
+
+      <div class="form-group">
+        <label for="database" class="col-sm-4 control-label">DB Name</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" ng-model="dbedit.data.database" id="database" placeholder="Database name" required>
         </div>
       </div>
-
-      <div class="form-group">
-        <label for="server" class="col-sm-4 control-label">Server</label>
-        <div class="col-sm-8">
-          <input type="text" class="form-control" ng-model="dbedit.data.server" id="server" placeholder="Remote database server hostname" required>
-        </div>
-      </div>
-
 
       <div ng-switch on="dbedit.dataName">
         <div class="form-group row" ng-switch-when='mysql'>
           <label for="usingSsh" class="col-sm-4 control-label">Use SSH</label>
 
           <div class="col-sm-8">
-        <span class="ui-select" id="usingSsh" class="form-control" >
-          <select name="usingSsh" class="Sitedropdown" ng-model="dbedit.data.usingSsh" required>
-            <option value = true>Yes</option>
-            <option value = false>No</option>
-          </select>
-        </span>
+              <span class="ui-select" id="usingSsh">
+                  <select name="usingSsh" class="Sitedropdown" ng-model="dbedit.data.usingSsh" required>
+                      <option value=true>Yes</option>
+                      <option value=false selected>No</option>
+                  </select>
+              </span>
           </div>
         </div>
 
@@ -95,12 +93,12 @@
           <label for="usingSsl" class="col-sm-4 control-label">Use SSL</label>
 
           <div class="col-sm-8">
-          <span class="ui-select" id="usingSsl" class="form-control" >
-            <select name="usingSsl" class="Sitedropdown" ng-model="dbedit.data.usingSsl" required>
-              <option value = true>Yes</option>
-              <option value = false>No</option>
-            </select>
-          </span>
+              <span class="ui-select" id="usingSsl">
+                  <select name="usingSsl" class="Sitedropdown" ng-model="dbedit.data.usingSsl" required>
+                      <option value=true>Yes</option>
+                      <option value=false selected>No</option>
+                  </select>
+              </span>
           </div>
         </div>
       </div>
@@ -108,10 +106,10 @@
 
     <div class="col-md-5 col-md-offset-0">
       <div class="form-group">
-        <label for="UserName" class="col-sm-4 control-label">User Name</label>
+        <label for="UserName" class="col-sm-4 control-label">Username</label>
 
         <div class="col-sm-8">
-          <input type="text" class="form-control" ng-model="dbedit.data.username" id="UserName" placeholder="" required>
+            <input type="text" class="form-control" ng-model="dbedit.data.username" id="UserName" placeholder="Name of user for your DB Instance" required>
         </div>
       </div>
 
@@ -119,7 +117,7 @@
         <label for="password" class="col-sm-4 control-label">Password</label>
 
         <div class="col-sm-8">
-          <input type="text" class="form-control" ng-model="dbedit.data.password" id="password" placeholder="" required>
+          <input type="password" class="form-control" ng-model="dbedit.data.password" id="password" placeholder="" required>
         </div>
       </div>
     </div>
@@ -163,8 +161,8 @@
           <label for="sshPassword" class="col-sm-4 control-label">SSH Password</label>
 
           <div class="col-sm-8">
-            <input type="text" class="form-control" ng-model="dbedit.data.sshPassword" ng-disabled="dbedit.data.sshPrivateKey"
-                   id="sshPassword" placeholder="" required>
+              <input type="password" class="form-control" ng-model="dbedit.data.sshPassword" ng-disabled="dbedit.data.sshPrivateKey"
+                     id="sshPassword" placeholder="" required>
           </div>
         </div>
       </div>
