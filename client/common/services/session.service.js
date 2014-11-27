@@ -13,6 +13,14 @@
       return 'bearer ' + self.currentUser.access_token;
     };
 
+    this.getToken = function() {
+      if (!self.currentUser) {
+        return false
+      }
+      return self.currentUser.access_token;
+    };
+
+
     this.setCredentials = function (serverData) {
       var user = {
         currentUser: {
@@ -21,7 +29,7 @@
       };
 
       self.currentUser = user.currentUser;
-      
+
       $cookieStore.put('globals', user);
     };
 

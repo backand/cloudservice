@@ -8,7 +8,7 @@
   function MainController(SessionService,$state) {
     this.getCurrentUser = function(){
       return SessionService.currentUser;
-    }
+    };
 
     this.logout = function(){
       SessionService.ClearCredentials();
@@ -35,6 +35,7 @@
       'xeditable',
       'angular-ladda',
       'angularMoment',
+      'common.directives',
       'theme.directives',
       'common.services',
       'common.directives.custom_page',

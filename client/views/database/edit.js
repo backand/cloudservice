@@ -3,9 +3,9 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseEdit',['$scope','AppsService','$stateParams','$state','DatabaseNamesService','NotificationService',DatabaseEdit]);
+    .controller('DatabaseEdit',['$scope','AppsService','$stateParams','$state','DatabaseNamesService','NotificationService','DatabaseService',DatabaseEdit]);
 
-  function DatabaseEdit($scope,AppsService,$stateParams,$state,DatabaseNamesService,NotificationService){
+  function DatabaseEdit($scope,AppsService,$stateParams,$state,DatabaseNamesService,NotificationService,DatabaseService){
 
     var self = this;
     this.appName = $stateParams.name;
@@ -34,7 +34,7 @@
     };
 
     function checkDatabaseStatuse(){
-        AppsService.getDBInfo($state.params.name)
+        DatabaseService.getDBInfo($state.params.name)
           .success(function(data){
             self.data = data;
             self.data.databaseName = currentApp.databaseName;
@@ -54,14 +54,14 @@
 
 
     this.create = function(){
-      //AppsService.createDB($state.params.name,$state.params.data)
+      //DatabaseService.createDB($state.params.name,$state.params.data)
       //  .success(function(data){
       //    $state.go('apps.show',{name: $state.params.name});
       //  });
       $state.go('apps.show',{name: $state.params.name});
     };
 
-    this.dataSources = AppsService.getDataSources();
+    this.dataSources = DatabaseService.getDataSources();
 
 
     this.sumbitForm = function(){
@@ -69,7 +69,7 @@
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
       console.log('data: ');
       console.log(self.data);
-      AppsService.connect2DB($state.params.name, self.data)
+      DatabaseService.connect2DB($state.params.name, self.data)
         .success(function (data) {
           console.log(data);
           NotificationService.add('info','database switched into pending');

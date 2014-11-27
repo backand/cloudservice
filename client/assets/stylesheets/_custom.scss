@@ -1,3 +1,7 @@
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
 .app-panel-body {
   height: 175px;
   .body-height{
@@ -123,3 +127,5 @@ a.app-panel:hover {
     }
   }
 }
+
+
