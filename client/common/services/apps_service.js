@@ -65,7 +65,7 @@
     this.all = function() {
       $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/admin/myApps'
+        url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
       })
       .success(function (data) {
         apps.list = data.data;

@@ -83,7 +83,7 @@
               <span class="ui-select" id="usingSsh">
                   <select name="usingSsh" class="Sitedropdown" ng-model="dbedit.data.usingSsh" required>
                       <option value=true>Yes</option>
-                      <option value=false selected>No</option>
+                      <option value=false>No</option>
                   </select>
               </span>
           </div>
@@ -94,9 +94,9 @@
 
           <div class="col-sm-8">
               <span class="ui-select" id="usingSsl">
-                  <select name="usingSsl" class="Sitedropdown" ng-model="dbedit.data.usingSsl" required>
+                  <select name="usingSsl" class="Sitedropdown" ng-model="dbedit.data.usingSsl" require>
                       <option value=true>Yes</option>
-                      <option value=false selected>No</option>
+                      <option value=false>No</option>
                   </select>
               </span>
           </div>
@@ -187,13 +187,11 @@
 
   <div class="row">
     <div class="form-group">
-      <div class="col-sm-offset-4 col-sm-4 ">
+      <div class="col-sm-offset-6 col-lg-4">
         <button type="submit"  ng-disabled="form.$invalid"
-                class="btn btn-success btn-w-md" ladda="dbedit.loading" data-style="expand-right">
-          Create
+                class="btn btn-success btn-lg btn-w-lg" ladda="dbedit.loading" data-style="expand-right">
+          Connect
         </button>
-
-        <button  ng-click="dbedit.back()" class="btn btn-danger btn-w-md">Cancel</button>
       </div>
     </div>
 

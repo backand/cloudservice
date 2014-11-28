@@ -14,9 +14,12 @@
                 <form class="form-horizontal" name="form" role="form">
                   <fieldset>
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Application name"
-                             ng-model = "index.appName" ng-model-options="{debounce: 500}"
-                             ng-pattern="index.namePattern" name="appName" required >
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Application name"
+                                 ng-model = "index.appName" ng-model-options="{debounce: 500}"
+                                 ng-pattern="index.namePattern" name="appName" required >
+                            <div class="input-group-addon">.backand.net</div>
+                        </div>
                       <div ng-show="form.appName.$error.pattern">no spaces or %$#@^&* allowed</div>
                     </div>
                     <div class="form-group">

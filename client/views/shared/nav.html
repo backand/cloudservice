@@ -3,7 +3,7 @@
       data-slim-scroll data-collapse-nav data-highlight-active
       ng-show="nav.state === 'apps.index'">
     <li>
-      <a ui-sref="apps.index"> <i class="ti-dashboard"></i><span>Dashboard</span> </a>
+      <a ui-sref="apps.index"> <i class="ti-dashboard"></i><span>My Apps</span> </a>
     </li>
 
     <li>
@@ -20,7 +20,7 @@
       data-slim-scroll data-collapse-nav data-highlight-active
       ng-show="nav.state != 'apps.index'">
     <li>
-      <a ui-sref="apps.index"> <i class="ti-dashboard"></i><span>Dashboard</span> </a>
+      <a ui-sref="apps.show({ name: nav.appName })"> <i class="ti-dashboard"></i><span>Dashboard</span> </a>
     </li>
 
     <li>

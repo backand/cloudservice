@@ -20,7 +20,7 @@
           grant_type : 'password',
           username : userName,
           password : password,
-          appname : 'northwindqa55sql'
+          appname : 'www'
         }
       }
       )};

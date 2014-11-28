@@ -15,31 +15,31 @@
               <form class="form-horizontal ng-pristine ng-valid" role="form" ng-submit="dbshow.sumbitForm()">
 
                 <div class="form-group">
-                  <label for="server" class="col-sm-2 control-label">Server</label>
+                  <label for="server" class="col-sm-2 control-label">Endpoint</label>
 
                   <div class="col-sm-10">
-                    <div class="form-control" id="server" placeholder="Remote database server hostname" >{{dbshow.data.ServerName}}</div>
+                    <div class="form-control-static" id="server" placeholder="Remote database server hostname" >{{dbshow.data.ServerName}}</div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="database" class="col-sm-2 control-label">Database name</label>
 
                   <div class="col-sm-10">
-                    <div  class="form-control" id="database" placeholder="" >{{dbshow.data.databaseName}}</div>
+                    <div  class="form-control-static" id="database" placeholder="" >{{dbshow.data.databaseName}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="UserName" class="col-sm-2 control-label">User Name</label>
+                  <label for="UserName" class="col-sm-2 control-label">Username</label>
 
                   <div class="col-sm-10">
-                    <div class="form-control" id="UserName" placeholder="" >{{dbshow.data.Username}}</div>
+                    <div class="form-control-static" id="UserName" placeholder="" >{{dbshow.data.Username}}</div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label  class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
-                    <div ng-show="dbshow.data.password" type="text" class="form-control">{{dbshow.data.password}}</div>
+                    <div ng-show="dbshow.data.password" type="text" class="form-control-static">{{dbshow.data.password}}</div>
                     <button ng-hide="dbshow.data.password" class="btn-primary" ng-click="dbshow.getPassword()">get password</button></div>
 
                 </div>
@@ -135,8 +135,7 @@
 
                 <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-success btn-w-md" ng-click="dbshow.edit()">Edit</button>
-                <button class="btn btn-danger btn-w-md" ng-click="dbshow.back()">Cancel</button>
+                <button class="btn btn-success btn-w-lg" ng-click="dbshow.edit()">Edit</button>
                 </div>
                 </div>
               </form>
