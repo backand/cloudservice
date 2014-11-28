@@ -9,14 +9,17 @@
 
     SessionService.ClearCredentials();
 
-    this.signIn = function(){
+    this.loading = false;
 
+    this.signIn = function(){
+      self.loading = true;
       AuthService.signIn(self.userName,self.userPassword)
         .success(function (data) {
           SessionService.setCredentials(data);
           $state.go('apps.index');
         })
         .error(function (data) {
+          self.loading = false;
           console.log(data.error_description);
           self.error = data.error_description;
           $timeout(function() {

@@ -31,18 +31,16 @@
 
     this.getCurrentApp = function(appName){
       appData.deferred = $q.defer();
-      if ( currentApp && currentApp.Name === appName ){
-         appData.deferred.resolve(currentApp);
-      }else {
-        self.find(appName)
-          .success(function (data){
-            self.setCurrentApp(data);
-            return appData.deferred.resolve(currentApp)
+      self.find(appName)
+        .success(function (data){
+          self.setCurrentApp(data);
+          currentApp.myStatus = {status : data.DatabaseStatus};
+          return appData.deferred.resolve(currentApp)
         })
-          .error(function(err){
-            return appData.deferred.reject(err);
-          })
-      }
+        .error(function(err){
+          return appData.deferred.reject(err);
+        });
+
       return appData.deferred.promise;
 
     };
