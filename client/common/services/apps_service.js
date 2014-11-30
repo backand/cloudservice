@@ -11,9 +11,6 @@
     };
 
     var currentApp;
-    var appData = {
-      deferred: $q.defer()
-    };
 
     apps.deferred = $q.defer();
 
@@ -32,17 +29,18 @@
     };
 
     this.getCurrentApp = function(appName){
+      var deferred = $q.defer();
       self.find(appName)
         .success(function (data){
           self.setCurrentApp(data);
           currentApp.myStatus = {status : data.DatabaseStatus};
-          return appData.deferred.resolve(currentApp);
+          deferred.resolve(currentApp);
         })
         .error(function(err){
-          return appData.deferred.reject(err);
+          deferred.reject(err);
         });
 
-      return appData.deferred.promise;
+      return deferred.promise;
 
     };
 

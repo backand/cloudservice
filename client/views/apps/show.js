@@ -13,7 +13,7 @@
 
     //not connected to database :
     if (appItem.data.DatabaseStatus !== 1) {
-      $state.go('database.edit',{name: $state.params.name})
+      return $state.go('database.edit',{name: $state.params.name})
     }
 
     this.statisticsArray = appItem.data.durados_App_Stat;

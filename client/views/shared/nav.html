@@ -17,32 +17,35 @@
   </ul>
 
   <ul id="nav2" class="nav"
-      data-slim-scroll data-collapse-nav data-highlight-active
+      data-slim-scroll data-collapse-nav
       ng-show="nav.state != 'apps.index'">
     <li>
-      <a ui-sref="apps.show({ name: nav.appName })"> <i class="ti-dashboard"></i><span>Dashboard</span> </a>
+      <a ui-sref="apps.show({ name: nav.appName })">
+        <i class="ti-dashboard"></i>
+        <span>Dashboard</span>
+      </a>
     </li>
 
-    <li>
-      <a ng-show="nav.app.DatabaseStatus === 1" ui-sref="database.show({name: nav.appName})">
+    <li ng-class="{active: nav.state == 'database.show'}">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('database.show')">
         <i class="ti-layout-media-overlay"></i>
         <span>Database</span>
         <span class="status status-{{nav.getDBStatus()}}"></span>
       </a>
-      <a  ng-show="nav.app.DatabaseStatus !== 1"><i class="ti-layout-media-overlay"></i>
-        <span>Database</span>
-        <span class="status status-{{nav.getDBStatus()}}"></span>
+    </li>
+
+    <li ng-class="{active: nav.state == 'database.edit'}">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('database.edit')" href="">
+        <i class="ti-support"></i>
+        <span>Admin</span>
       </a>
     </li>
 
-    <li>
-      <a ng-cloak ng-show="nav.app.DatabaseStatus === 1"  ui-sref="dashboard.edit({name: nav.appName})"><i class="ti-support"></i><span>Admin</span></a>
-      <a  ng-cloak ng-hide="nav.app.DatabaseStatus === 1"  ><i class="ti-support"></i><span>Admin</span></a>
-    </li>
-
-    <li>
-      <a  ng-show="nav.app.DatabaseStatus === 1" ui-sref="playground.show({name: nav.appName})"><i class="ti-support"></i><span>API Playground</span></a>
-      <a  ng-show="nav.app.DatabaseStatus !== 1" ><i class="ti-support"></i><span>API Playground</span></a>
+    <li ng-class="{active: nav.state == 'playground.show'}">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.show')" href="">
+        <i class="ti-support"></i>
+        <span>API Playground</span>
+      </a>
     </li>
 
   </ul>

@@ -11,6 +11,12 @@
     this.appName = $state.params.name;
     this.app = null;
 
+    this.goTo = function(state) {
+      if (this.app.DatabaseStatus === 1) {
+        $state.go(state, {name: this.appName});
+      }
+    };
+
     function loadApp() {
       if (typeof self.appName !== 'undefined') {
 
