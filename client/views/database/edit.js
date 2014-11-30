@@ -67,11 +67,8 @@
     this.sumbitForm = function(){
       self.loading = true;
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
-      console.log('data: ');
-      console.log(self.data);
       DatabaseService.connect2DB($state.params.name, self.data)
         .success(function (data) {
-          console.log(data);
           NotificationService.add('info','database switched into pending');
           $state.go('apps.index', {name : $state.params.name});
         })

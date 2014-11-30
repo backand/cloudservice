@@ -12,8 +12,6 @@
       .then(function(data){
         currentApp = data;
         self.templateId = currentApp.durados_Theme.__metadata.id;
-        console.log('getCurrentApp :');
-        console.log(currentApp);
       },function(err){
         NotificationService('error','cant get current app info');
       });

@@ -7,7 +7,7 @@
   function config($stateProvider) {
     $stateProvider
       .state('database.show', {
-        url: '/:name/',
+        url: '/:name',
         controller: 'DatabaseShow as dbshow',
         templateUrl: 'views/database/show.html'
       })

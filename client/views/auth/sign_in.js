@@ -20,7 +20,6 @@
         })
         .error(function (data) {
           self.loading = false;
-          console.log(data.error_description);
           self.error = data.error_description;
           $timeout(function() {
             self.error = undefined;

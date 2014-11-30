@@ -16,9 +16,6 @@
       $state.go('database.edit',{name: $state.params.name})
     }
 
-    console.log('app item: ');
-    console.log(appItem.data);
-
     this.statisticsArray = appItem.data.durados_App_Stat;
     AppLogService.getAppLog($state.params.name)
       .success(function(data){
