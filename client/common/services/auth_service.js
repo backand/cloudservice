@@ -24,6 +24,21 @@
         }
       }
       )};
+
+    this.signUp = function(firstName, lastName, email, appName, password){
+      return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/api/account/register',
+          data: {
+            firstName : firstName,
+            lastName : lastName,
+            email : email,
+            appName : appName,
+            password : password,
+            confirmPassword : password
+          }
+        }
+      )};
   }
 
   angular.module('common.services')

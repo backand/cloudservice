@@ -15,6 +15,11 @@ angular.module('app.routes', []).
         templateUrl: 'views/auth/sign_in.tpl.html',
         controller : 'SignInController as sign'
       })
+      .state('sign_up', {
+        url: '/sign_up',
+        templateUrl: 'views/auth/sign_up.html',
+        controller : 'SignUpController as signup'
+      })
       .state('apps', {
         url: '/apps',
         abstract: true,
