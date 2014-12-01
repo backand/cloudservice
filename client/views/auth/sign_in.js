@@ -2,9 +2,9 @@
 (function  () {
 
   angular.module('app')
-    .controller('SignInController', ["$scope", 'AuthService', '$state', 'SessionService', '$timeout','$modal', SignInController]);
+    .controller('SignInController', ["$scope", 'AuthService', '$state', 'SessionService', '$timeout','$modal','NotificationService', SignInController]);
 
-  function SignInController($scope, AuthService, $state, SessionService, $timeout,$modal) {
+  function SignInController($scope, AuthService, $state, SessionService, $timeout, $modal, NotificationService) {
     var self = this;
 
     SessionService.ClearCredentials();
@@ -42,6 +42,7 @@
 
       modalInstance.result.then(function (userEmail) {
         self.modalOn = false;
+        NotificationService.add('success', "Please check your mailbox - we've sent you an email with a link to reset your password.");
       },function(){
         self.modalOn = false;
       });
