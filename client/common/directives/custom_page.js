@@ -24,6 +24,7 @@
                 case 'sign_in':
                 case 'sign_up':
                 case 'forgot-password':
+                case 'change_password':
                   return $element.addClass('body-wide body-auth');
                 case 'pages/lock-screen':
                   return $element.addClass('body-wide body-lock');

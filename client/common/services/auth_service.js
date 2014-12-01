@@ -37,6 +37,29 @@
           }
         }
       )};
+
+    this.forgot = function(email){
+      return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/api/account/forgot',//todo : update url
+          data: {
+            email : email
+          }
+        }
+      )};
+
+    this.resetPassword = function(password, id){
+      return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/api/account/forgot',//todo : update url
+          data: {
+            confirmPassword: password,
+            newPassword: password,
+            userSysGuid: id
+          }
+        });
+    };
+
   }
 
   angular.module('common.services')
