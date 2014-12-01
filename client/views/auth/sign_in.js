@@ -29,6 +29,7 @@
     };
 
     this.open = function () {
+      self.modalOn = true;
       var modalInstance = $modal.open({
         templateUrl: 'views/auth/forgot.html',
         controller: 'ForgotController as forgot',
@@ -40,7 +41,9 @@
       });
 
       modalInstance.result.then(function (userEmail) {
-
+        self.modalOn = false;
+      },function(){
+        self.modalOn = false;
       });
 
     };
