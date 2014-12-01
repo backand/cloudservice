@@ -2,10 +2,11 @@
 (function  () {
 
   angular.module('app')
-    .controller('SignUpController',["$scope",'AuthService','$state','SessionService','$timeout','NotificationService', SignUpController]);
+    .controller('SignUpController',["$scope",'AuthService','$state','SessionService','$timeout', SignUpController]);
 
-  function SignUpController($scope,AuthService,$state,SessionService,$timeout,NotificationService){
+  function SignUpController($scope,AuthService,$state,SessionService,$timeout){
     var self = this;
+
 
     SessionService.ClearCredentials();
 
@@ -15,8 +16,6 @@
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
         .success(function (data) {
-          //NotificationService.add('success','a confirmation Email was send to '+self.email);
-          //do login
           AuthService.signIn(self.email,self.password)
               .success(function (data) {
                   SessionService.setCredentials(data);
@@ -30,8 +29,6 @@
                   }, 3000);
 
               });
-
-
         })
         .error(function (data) {
           debugger;

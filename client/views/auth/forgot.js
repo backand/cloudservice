@@ -13,6 +13,9 @@
         .success(function(data){
           $modalInstance.close(self.email);
         })
+        .error(function(err){
+
+        })
     };
 
     this.cancel = function () {

@@ -41,8 +41,6 @@
 
       modalInstance.result.then(function (userEmail) {
 
-      }, function (err) {
-        $log.info('Modal error: ' + err);
       });
 
     };
