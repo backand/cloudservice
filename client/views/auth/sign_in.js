@@ -31,7 +31,7 @@
     this.open = function () {
       self.modalOn = true;
       var modalInstance = $modal.open({
-        templateUrl: 'views/auth/forgot.html',
+        templateUrl: 'views/auth/forgot_modal.html',
         controller: 'ForgotController as forgot',
         resolve: {
           Uemail: function () {
