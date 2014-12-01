@@ -2,7 +2,7 @@
 
   <div class="signin-header">
     <section class="logo text-center">
-      <h1><a href="#/" class="ng-binding">Backand Services</a></h1>
+      <h1><a href="#/" class="ng-binding">Sign up for Backand</a></h1>
     </section>
   </div>
 
@@ -19,24 +19,9 @@
                                 </span>
                 <input type="text"
                        class="form-control input-lg"
-                       placeholder="First Name"
-                       name="uUserFirst"
-                       ng-model="signup.firstName"
-                       ng-model-options="{debounce: 500}"
-                       required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="input-group input-group-first">
-                                <span class="input-group-addon">
-                                    <span class="ti-user"></span>
-                                </span>
-                <input type="text"
-                       class="form-control input-lg"
-                       placeholder="Last Name"
-                       name="uUserLast"
-                       ng-model="signup.lastName"
+                       placeholder="Full Name"
+                       name = "uFullFirst"
+                       ng-model = "signup.fullName"
                        ng-model-options="{debounce: 500}"
                        required>
               </div>
@@ -49,32 +34,16 @@
                                 </span>
                 <input type="email"
                        class="form-control input-lg"
-                       placeholder="Email"
-                       name="uEmail"
-                       ng-model="signup.email"
+                       placeholder="Email (Username)"
+                       name = "uEmail"
+                       ng-model = "signup.email"
                        ng-model-options="{debounce: 500}"
                        required>
 
               </div>
-              <div class="text-danger" ng-show="form.uEmail.$error.email">This is not a valid email.</div>
+              <div class="text-danger" ng-show="form.uEmail.$error.email">This is not a valid email</div>
             </div>
 
-
-            <div class="form-group">
-              <div class="input-group">
-                                <span class="input-group-addon">
-                                    <span class="ti-agenda"></span>
-                                </span>
-                <input type="text"
-                       class="form-control input-lg"
-                       placeholder="App Name"
-                       name="appName"
-                       ng-model="signup.appName"
-                       ng-model-options="{debounce: 500}"
-                       required>
-
-              </div>
-            </div>
 
             <div class="form-group">
               <div class="input-group">
@@ -87,13 +56,13 @@
                        name="Upassword"
                        ng-model="signup.password"
                        ng-model-options="{debounce: 500}"
-                       ng-minlength="6"
+
+                       ng-minlength = "6"
+                       ng-maxlength="20"
                        required>
               </div>
-              <div class="text-danger" ng-show="form.Upassword.$error.minlength">Password must be at least 6
-                characters
-              </div>
-              <div class="text-danger" ng-show="form.Upassword.$error.email">This is not a valid Password.</div>
+              <div class="text-danger" ng-show="form.Upassword.$error.minlength">Password must be at least 6 characters</div>
+              <div class="text-danger" ng-show="form.Upassword.$error.email">This is not a valid password</div>
             </div>
 
 
@@ -112,14 +81,13 @@
                        required>
               </div>
 
-              <div class="text-danger" ng-show="form.confirm_password.$error.match"> Password don't match.</div>
+              <div class="text-danger" ng-show="form.confirm_password.$error.match">Please re-enter the same password as above</div>
             </div>
 
             <div class="divider divider-lg"></div>
             <div class="form-group">
-              <p class="additional-info text-small">By clicking on sign up, you agree to <a href="javascript:;">terms
-                &amp; conditions</a> and <a href="javascript:;">privacy policy</a></p>
 
+              <p class="additional-info text-small">By clicking on sign up, you agree to <a href="https://www.backand.com/terms-of-use" target="_blank">terms &amp; conditions</a> and <a href="https://www.backand.com/privacy-policy" target="_blank">privacy policy</a></p>
               <div class="divider"></div>
               <button type="submit"
                       ng-disabled="form.$invalid"
