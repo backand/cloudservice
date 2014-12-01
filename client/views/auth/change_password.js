@@ -8,7 +8,7 @@
 
 
     this.sumbit = function(){
-      AuthService.resetPassword(self.password)
+      AuthService.resetPassword(self.password, $state.params.id)
         .success(function(data){
           NotificationService.add('success', 'password changed');
           $state.go('sign_in');
