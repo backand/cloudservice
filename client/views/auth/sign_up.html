@@ -20,8 +20,8 @@
                 <input type="text"
                        class="form-control input-lg"
                        placeholder="First Name"
-                       name = "uUserFirst"
-                       ng-model = "signup.firstName"
+                       name="uUserFirst"
+                       ng-model="signup.firstName"
                        ng-model-options="{debounce: 500}"
                        required>
               </div>
@@ -35,13 +35,12 @@
                 <input type="text"
                        class="form-control input-lg"
                        placeholder="Last Name"
-                       name = "uUserLast"
-                       ng-model = "signup.lastName"
+                       name="uUserLast"
+                       ng-model="signup.lastName"
                        ng-model-options="{debounce: 500}"
                        required>
               </div>
             </div>
-
 
             <div class="form-group">
               <div class="input-group">
@@ -51,8 +50,8 @@
                 <input type="email"
                        class="form-control input-lg"
                        placeholder="Email"
-                       name = "uEmail"
-                       ng-model = "signup.email"
+                       name="uEmail"
+                       ng-model="signup.email"
                        ng-model-options="{debounce: 500}"
                        required>
 
@@ -69,8 +68,8 @@
                 <input type="text"
                        class="form-control input-lg"
                        placeholder="App Name"
-                       name = "appName"
-                       ng-model = "signup.appName"
+                       name="appName"
+                       ng-model="signup.appName"
                        ng-model-options="{debounce: 500}"
                        required>
 
@@ -85,13 +84,15 @@
                 <input type="password"
                        class="form-control input-lg"
                        placeholder="Password"
-                       name = "Upassword"
-                       ng-model = "signup.password"
+                       name="Upassword"
+                       ng-model="signup.password"
                        ng-model-options="{debounce: 500}"
-                       ng-minlength = "6"
+                       ng-minlength="6"
                        required>
               </div>
-              <div class="text-danger" ng-show="form.Upassword.$error.minlength">Password must be at least 6 characters</div>
+              <div class="text-danger" ng-show="form.Upassword.$error.minlength">Password must be at least 6
+                characters
+              </div>
               <div class="text-danger" ng-show="form.Upassword.$error.email">This is not a valid Password.</div>
             </div>
 
@@ -106,7 +107,7 @@
                        placeholder="re-type Password"
                        name="confirm_password"
                        match="signup.password"
-                       ng-model = "signup.repassword"
+                       ng-model="signup.repassword"
                        ng-model-options="{debounce: 500}"
                        required>
               </div>
@@ -116,12 +117,15 @@
 
             <div class="divider divider-lg"></div>
             <div class="form-group">
-              <p class="additional-info text-small">By clicking on sign up, you agree to <a href="javascript:;">terms &amp; conditions</a> and <a href="javascript:;">privacy policy</a></p>
+              <p class="additional-info text-small">By clicking on sign up, you agree to <a href="javascript:;">terms
+                &amp; conditions</a> and <a href="javascript:;">privacy policy</a></p>
+
               <div class="divider"></div>
-              <button  type="submit"
-                       ng-disabled="form.$invalid"
-                       class="btn btn-primary btn-block btn-lg"
-                       ladda="signup.loading" data-style="expand-right">Sign up</button>
+              <button type="submit"
+                      ng-disabled="form.$invalid"
+                      class="btn btn-primary btn-block btn-lg"
+                      ladda="signup.loading" data-style="expand-right">Sign up
+              </button>
             </div>
 
           </form>

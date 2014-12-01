@@ -39,6 +39,27 @@
           }
         }
       )};
+
+    this.forgot = function(email){
+      return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/api/account/forgot',
+          data: {
+            email : email
+          }
+        }
+      )};
+
+    this.resetPassword = function(password){
+      return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/api/account/forgot',
+          data: {
+            password : password
+          }
+        });
+    };
+
   }
 
   angular.module('common.services')
