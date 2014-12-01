@@ -19,14 +19,14 @@
   <ul id="nav2" class="nav"
       data-slim-scroll data-collapse-nav
       ng-show="nav.state != 'apps.index'">
-    <li>
+    <li ng-class="{active: nav.state == 'apps.show'}">
       <a ui-sref="apps.show({ name: nav.appName })">
         <i class="ti-dashboard"></i>
         <span>Dashboard</span>
       </a>
     </li>
 
-    <li ng-class="{active: nav.state == 'database.show'}">
+    <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('database.show')">
         <i class="ti-layout-media-overlay"></i>
         <span>Database</span>
@@ -34,8 +34,8 @@
       </a>
     </li>
 
-    <li ng-class="{active: nav.state == 'database.edit'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('database.edit')" href="">
+    <li ng-class="{active: nav.state == 'dashboard.edit'}">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('dashboard.edit')" href="">
         <i class="ti-support"></i>
         <span>Admin</span>
       </a>

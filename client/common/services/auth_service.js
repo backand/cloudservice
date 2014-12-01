@@ -25,15 +25,13 @@
       }
       )};
 
-    this.signUp = function(firstName, lastName, email, appName, password){
+    this.signUp = function(fullName, email, password){
       return $http({
           method: 'POST',
-          url: CONSTS.appUrl + '/api/account/register',
+          url: CONSTS.appUrl + '/api/account/signUp',
           data: {
-            firstName : firstName,
-            lastName : lastName,
+            fullName : fullName,
             email : email,
-            appName : appName,
             password : password,
             confirmPassword : password
           }
