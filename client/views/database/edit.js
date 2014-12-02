@@ -16,15 +16,16 @@
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
         currentApp = data;
+        self.DatabaseStatus = currentApp.DatabaseStatus;
         self.dbConnected = currentApp.DatabaseStatus === 1;
         //self.dataName = currentApp.databaseName;
         self.dataName = currentApp.databaseName || 'mysql';
-        if (self.dbConnected){
+        if (currentApp.DatabaseStatus !== 0){
           //connected to data base
           checkDatabaseStatuse();
         }
       },function(err){
-        NotificationService('error','cant get current app info');
+        NotificationService('error','can not get current app info');
       });
 
 
@@ -37,7 +38,7 @@
         DatabaseService.getDBInfo($state.params.name)
           .success(function(data){
             self.data = data;
-            self.data.databaseName = currentApp.databaseName;
+            self.data.databaseName = DatabaseNamesService.getDBSource(self.data.Database_Source);
             self.data.database = self.data.Catalog;
             self.data.server = self.data.ServerName;
             self.data.username = self.data.Username;
@@ -54,11 +55,18 @@
 
 
     this.create = function(){
-      //DatabaseService.createDB($state.params.name,$state.params.data)
-      //  .success(function(data){
-      //    $state.go('apps.show',{name: $state.params.name});
-      //  });
-      $state.go('apps.show',{name: $state.params.name});
+        self.loading = true;
+        var product = DatabaseNamesService.getNumber(self.dataName);
+
+        DatabaseService.createDB($state.params.name,product)
+        .success(function(data){
+          NotificationService.add('info','Creating new database');
+          checkDatabaseStatuse();
+          $state.go('apps.index',{name: $state.params.name});
+        })
+        .error(function(err){
+            self.loading = false;
+        })
     };
 
     this.dataSources = DatabaseService.getDataSources();
@@ -69,7 +77,7 @@
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
       DatabaseService.connect2DB($state.params.name, self.data)
         .success(function (data) {
-          NotificationService.add('info','database switched into pending');
+          NotificationService.add('info','App connecting to database');
           $state.go('apps.index', {name : $state.params.name});
         })
         .error(function(err){

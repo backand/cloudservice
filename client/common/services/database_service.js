@@ -21,11 +21,11 @@
       });
     };
 
-    this.createDB = function(appName, data) {
+    this.createDB = function(appName, product) {
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
-        data: {"product":"12"}
+        data: {"product": product}
       });
     };
 

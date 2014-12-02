@@ -20,7 +20,7 @@
 
         <div class="row">
           <div class="col-md-5 col-sm-6">
-            <div log-list app-name="mememe" log-limit="5"></div>
+            <div log-list app-name="{{appName}}" log-limit="5"></div>
           </div>
 
           <div class="col-md-1 col-sm-0">
@@ -41,13 +41,14 @@
                 </div>
               </section>
 
-              <section ui-sref="dashboard.edit({name: show.appName})" class="data-panel data-panel-success">
+              <!--<section ui-sref="dashboard.edit({name: show.appName})" class="data-panel data-panel-success">-->
+              <section class="data-panel data-panel-success">
                 <div class="panel-icon">
                   <i class="ti-layers-alt text-huge"></i>
                 </div>
                 <div class="panel-data">
                   <h4>ORM</h4>
-                  <p>Access the auto generated ORM</p>
+                  <p>Access the auto generated ORM - Coming soon...</p>
                 </div>
               </section>
             </div>

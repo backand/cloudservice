@@ -5,10 +5,10 @@
       <div class="row">
         <div class="col-md-12">
           <tabset justified="true" class="ui-tab ui-tab-horizontal ui-tab-container">
-            <tab heading="Existing Data Base">
+            <tab heading="Existing Data Base" ng-click ="dbedit.dataName = 'mysql'">
               <ng-include src = " 'views/database/exs_data/exs_source.html' "></ng-include>
             </tab>
-            <tab  heading="New Data Base" ng-hide="dbedit.dbConnected">
+            <tab  heading="New Data Base" ng-hide="dbedit.DatabaseStatus != 0" ng-click ="dbedit.dataName = 'newMysql'">
               <ng-include src = " 'views/database/new_data/new_source.html' "></ng-include>
             </tab>
           </tabset>

@@ -8,6 +8,7 @@
   function AppsShowController($scope,appItem,AppsService,$interval,$state,AppLogService){
     var self = this;
     var appData = appItem.data;
+    $scope.appName = appData.Name;
 
     AppsService.setCurrentApp(appItem.data);
 

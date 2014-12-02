@@ -5,7 +5,7 @@
   <div class="modal-body">
     <ng-form name="forgotDialog" novalidate role="form">
       <div class="form-group input-group-lg"><label
-        class="control-label">User Name:</label>
+        class="control-label">Username:</label>
         <input type="email"
                class="form-control"
                name="uEmail"
@@ -14,7 +14,7 @@
                placeholder = "Enter your Email"
                required>
       </div>
-      <div class="text-danger" ng-show="forgotDialog.uEmail.$error.email">This is not a valid email.</div>
+      <div class="text-danger" ng-show="forgotDialog.uEmail.$error.email">This is not a valid email</div>
     </ng-form>
   </div>
   <div class="modal-footer">
