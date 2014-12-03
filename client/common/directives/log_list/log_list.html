@@ -3,10 +3,10 @@
 
   <ul class="row list-unstyled">
     <li ng-repeat="log in appLogArray | limitTo:logLimit" class="row">
-      <label class="col-md-3 col-md-offset-1 text-muted">
+      <label class="col-md-3 col-sm-3 col-md-offset-1 text-muted">
         <span am-time-ago="log.time"></span>
       </label>
-      <span class="col-md-6">
+      <span class="col-md-8 col-sm-8">
         {{log.info}}
       </span>
     </li>

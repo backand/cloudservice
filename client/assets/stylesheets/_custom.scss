@@ -84,48 +84,4 @@ a.app-panel:hover {
   }
 }
 
-.panel-item.panel-callout {
-  text-align: left;
-}
-
-.data-panel {
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  cursor: pointer;
-  margin-bottom: 10px;
-
-  border: 1px solid darken($well-bg, 10%);
-
-  & > div {
-    padding: 20px 30px;
-  }
-  .panel-icon {
-    float: left;
-    background-color: #7fabd2;
-    color: white;
-  }
-
-  .panel-data {
-    float: left;
-    h4 {
-      margin-bottom: 5px;
-      color: #7fabd2;
-
-    }
-  }
-}
-
-.data-panel.data-panel-success {
-  .panel-icon {
-    background-color: #a3be8c;
-  }
-
-  .panel-data {
-    h4 {
-      color: #a3be8c;
-    }
-  }
-}
-
 
