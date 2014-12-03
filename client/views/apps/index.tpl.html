@@ -2,7 +2,7 @@
   <div class="panel-body">
     <div class="row">
 
-      <div  class="col-lg-4 col-md-4 col-sm-4 app-panel" >
+      <div  class="col-lg-4 col-md-4 col-sm-6 app-panel" >
         <div class="panel panel-default ui-ribbon-container ui-ribbon-primary">
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">New</div>
@@ -10,7 +10,7 @@
           <div class="panel-heading">Add a new App</div>
           <div class="panel-body app-panel-body">
             <div class="row">
-              <div class="col-md-10 col-md-offset-1">
+              <div class="col-md-10 col-sm-10 col-sm-offset-1 col-md-offset-1">
                 <form class="form-horizontal" name="form" role="form">
                   <fieldset>
                     <div class="form-group">
@@ -26,9 +26,12 @@
                       <input type="text" class="form-control" placeholder="Application title"
                              ng-model = "index.appTitle" ng-model-options="{debounce: 500}" required >
                     </div>
+                    <div class="form-group">
+
                     <div ng-click="index.addApp()" ng-disabled="form.$invalid" class="btn btn-primary btn-w-md btn-block">
                       Create
                     </div>
+                      </div>
                   </fieldset>
                 </form>
               </div>
@@ -37,7 +40,7 @@
         </div>
       </div>
 
-      <div class="col-lg-4 col-md-4 col-sm-4 app-panel" ng-repeat="app in index.apps">
+      <div class="col-lg-4 col-md-4 col-sm-6 app-panel" ng-repeat="app in index.apps">
         <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">{{index.getRibboninfo(app).text}}</div>
