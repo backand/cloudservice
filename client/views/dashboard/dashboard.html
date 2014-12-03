@@ -5,18 +5,16 @@
     <div class="panel-heading"><strong> select admin template</strong></div>
     <div class="panel-body">
       <div class="row col-sm-10 col-sm-offset-1">
-        <div ng-repeat="template in dash.templates">
-          <div class="col-sm-5">
-            <div class="thumbnail" ng-class="{'template-border' : template.Id === dash.templateId }">
-                <h4>{{template.label}}</h4>
-                <img ng-src="{{template.imgSrc}}">
-                <div class="caption">
-                    <div class="divider divider-sm pull-in"></div>
-                    <p>
-                    <button ng-click="dash.updateTemplate(template.Id)" class="btn btn-primary" ng-show="template.Id != dash.templateId" role="button">select</button>
-                    <div style="height:35px;" ng-show="template.Id == dash.templateId"></div>
-                    </p>
-              </div>
+        <div class='col-sm-5' ng-repeat="template in dash.templates">
+          <div class="thumbnail themer" ng-class="{'template-border' : template.Id === dash.templateId }">
+            <h4>{{template.label}}</h4>
+            <img ng-src="{{template.imgSrc}}">
+            <div class="caption">
+              <div class="divider divider-sm pull-in"></div>
+              <p>
+                <button ng-click="dash.updateTemplate(template.Id)" class="btn btn-primary" ng-show="template.Id != dash.templateId" role="button">select</button>
+                <div ng-show="template.Id == dash.templateId"></div>
+              </p>
             </div>
           </div>
         </div>
