@@ -20,7 +20,7 @@
                                  ng-pattern="index.namePattern" name="appName" required >
                             <div class="input-group-addon">.backand.net</div>
                         </div>
-                      <div ng-show="form.appName.$error.pattern">no spaces or %$#@^&* allowed</div>
+                      <div ng-show="form.appName.$error.pattern" class="input-error">no spaces or %$#@^&* allowed</div>
                     </div>
                     <div class="form-group">
                       <input type="text" class="form-control" placeholder="Application title"
