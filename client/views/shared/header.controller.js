@@ -7,7 +7,7 @@
     self.currAppName = '';
 
     this.redirectTo = function(appName) {
-      $state.go('apps.show',{ name: appName });
+      $state.go($state.current.name, { name: appName });
     };
 
     $scope.$on('$stateChangeSuccess', function() {
