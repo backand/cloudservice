@@ -1,0 +1,28 @@
+<div class="modal-content" >
+  <div class="modal-header">
+    <h3 class="modal-title">Forgot password</h3>
+  </div>
+  <div class="modal-body">
+    <ng-form name="forgotDialog" novalidate role="form">
+      <div class="form-group input-group-lg"><label
+        class="control-label">User Name:</label>
+        <input type="email"
+               class="form-control"
+               name="uEmail"
+               ng-model="forgot.email"
+               ng-model-options="{debounce: 500}"
+               placeholder = "Enter your Email"
+               required>
+      </div>
+      <div class="text-danger" ng-show="forgotDialog.uEmail.$error.email">This is not a valid email.</div>
+    </ng-form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="forgot.ok()" ng-disabled="forgotDialog.$invalid">OK</button>
+    <button class="btn btn-danger" ng-click="forgot.cancel()">Cancel</button>
+  </div>
+</div>
+
+
+
+

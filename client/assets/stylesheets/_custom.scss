@@ -84,4 +84,14 @@ a.app-panel:hover {
   }
 }
 
-
+.dumbBoxOverlay {
+  /* Shades out background when selector is active */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: .5;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE transparency */
+  filter: alpha(opacity=50); /* More IE transparency */
+  z-index: 40001;
+}

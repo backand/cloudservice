@@ -24,6 +24,42 @@
         }
       }
       )};
+
+    this.signUp = function(fullName, email, password){
+      return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/api/account/signUp',
+          data: {
+            fullName : fullName,
+            email : email,
+            password : password,
+            confirmPassword : password
+          }
+        }
+      )};
+
+    this.forgot = function(email){
+      return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/api/account/forgot',//todo : update url
+          data: {
+            email : email
+          }
+        }
+      )};
+
+    this.resetPassword = function(password, id){
+      return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/api/account/forgot',//todo : update url
+          data: {
+            confirmPassword: password,
+            newPassword: password,
+            userSysGuid: id
+          }
+        });
+    };
+
   }
 
   angular.module('common.services')

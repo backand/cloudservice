@@ -15,6 +15,16 @@ angular.module('app.routes', []).
         templateUrl: 'views/auth/sign_in.tpl.html',
         controller : 'SignInController as sign'
       })
+      .state('sign_up', {
+        url: '/sign_up',
+        templateUrl: 'views/auth/sign_up.html',
+        controller : 'SignUpController as signup'
+      })
+      .state('change_password', {
+        url: '/change_password',
+        templateUrl: 'views/auth/change_password.html',
+        controller : 'changePasswordController as change'
+      })
       .state('apps', {
         url: '/apps',
         abstract: true,

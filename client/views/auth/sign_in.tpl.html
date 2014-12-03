@@ -1,7 +1,8 @@
-<div class="page-signin">
+<div class="page-signin" ng-class="{'dumbBoxOverlay': sign.modalOn}" >
+
   <div class="signin-header">
     <section class="logo text-center">
-      <h1>Backand Services</h1>
+      <h1>Log in to Backand</h1>
     </section>
   </div>
 
@@ -56,12 +57,15 @@
         <div class="divider"></div>
         <section class="additional-info">
           <p class="text-right">
-            <a href="#/pages/forgot-password">Forgot your password?</a>
+            <a ng-click="sign.open()" href="">Forgot your password?</a>
+            <!------todo: remove-------------->
             <span> | </span>
-            <a href="#/pages/signup">Sign up</a>
+            <a  ui-sref="change_password">change_password</a>
+            <!-------------------------->
+            <span> | </span>
+            <a ui-sref="sign_up">Sign up</a>
           </p>
         </section>
-
       </div>
     </div>
   </div>
