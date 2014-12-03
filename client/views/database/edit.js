@@ -1,88 +1,76 @@
-
-
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseEdit',['$scope','AppsService','$stateParams','$state','DatabaseNamesService','NotificationService','DatabaseService',DatabaseEdit]);
+    .controller('DatabaseEdit', ['$scope', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', DatabaseEdit]);
 
-  function DatabaseEdit($scope,AppsService,$stateParams,$state,DatabaseNamesService,NotificationService,DatabaseService){
+  function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService) {
 
     var self = this;
-    this.appName = $stateParams.name;
+    var currentApp;
 
+    this.appName = $stateParams.name;
     this.loading = false;
 
-    var currentApp;
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
         currentApp = data;
         self.dbConnected = currentApp.DatabaseStatus === 1;
-        //self.dataName = currentApp.databaseName;
         self.dataName = currentApp.databaseName || 'mysql';
-        if (self.dbConnected){
-          //connected to data base
-          checkDatabaseStatuse();
+        self.data = {
+          usingSsl: 'true',
+          usingSsh: 'false'
+        };
+
+        if (self.dbConnected) {
+          checkDatabaseStatus();
         }
-      },function(err){
+      }, function(err) {
         NotificationService('error','cant get current app info');
       });
 
-
-
-    this.currentTab = function (){
+    this.currentTab = function () {
       return self.dataName;
     };
 
-    function checkDatabaseStatuse(){
+    function checkDatabaseStatus() {
         DatabaseService.getDBInfo($state.params.name)
-          .success(function(data){
+          .success(function(data) {
             self.data = data;
             self.data.databaseName = currentApp.databaseName;
-            self.data.database = self.data.Catalog;
-            self.data.server = self.data.ServerName;
-            self.data.username = self.data.Username;
+            self.data.database  = self.data.Catalog;
+            self.data.server    = self.data.ServerName;
+            self.data.username  = self.data.Username;
             self.data.usingSsh  = self.data.SshUses;
             self.data.usingSsl  = self.data.SslUses;
             self.data.sshRemoteHost  = self.data.SshRemoteHost;
-            self.data.sshUser  = self.data.SshUser;
-            self.data.sshPort  = self.data.SshPort;
-            //self.data.sshPassword  = self.data.SshPassword;
-            //self.data.sshPrivateKey  = self.data.SshPrivateKey;
+            self.data.sshUser   = self.data.SshUser;
+            self.data.sshPort   = self.data.SshPort;
           })
     }
 
-
-
-    this.create = function(){
-      //DatabaseService.createDB($state.params.name,$state.params.data)
-      //  .success(function(data){
-      //    $state.go('apps.show',{name: $state.params.name});
-      //  });
-      $state.go('apps.show',{name: $state.params.name});
+    this.create = function() {
+      $state.go('apps.show', { name: $state.params.name });
     };
 
     this.dataSources = DatabaseService.getDataSources();
 
-
-    this.sumbitForm = function(){
+    this.sumbitForm = function() {
       self.loading = true;
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
+
       DatabaseService.connect2DB($state.params.name, self.data)
         .success(function (data) {
           NotificationService.add('info','database switched into pending');
-          $state.go('apps.index', {name : $state.params.name});
+          $state.go('apps.index', { name : $state.params.name });
         })
         .error(function(err){
           self.loading = false;
         })
-
-
     };
 
     this.back = function(){
       $state.go('apps.show',({name:$state.params.name}));
     };
-
 
   }
 }());
