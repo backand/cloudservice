@@ -26,7 +26,7 @@ angular.module('app.routes', []).
         controller : 'changePasswordController as change'
       })
       .state('apps', {
-        url: '/apps',
+        url: '/',
         abstract: true,
         template: '<div ui-view></div>'
       })

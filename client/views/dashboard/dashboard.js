@@ -18,9 +18,9 @@
 
 
     this.templates = [
-      { Id : "1" , imgSrc : "/assets/images/template_lte.jpg", label: "AdminLTE" },
-      { Id : "2" , imgSrc : "/assets/images/template_devoops.png", label: "Devoops" },
-      { Id : "3" , imgSrc : "/assets/images/template_dashgum.png", label: "Dashgum" }
+      { Id : "1" , imgSrc : "assets/images/template_lte.jpg", label: "AdminLTE" },
+      { Id : "2" , imgSrc : "assets/images/template_devoops.png", label: "Devoops" },
+      { Id : "3" , imgSrc : "assets/images/template_dashgum.png", label: "Dashgum" }
     ]
 
     this.updateTemplate = function(templateId){

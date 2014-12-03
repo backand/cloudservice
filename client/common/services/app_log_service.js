@@ -10,7 +10,7 @@
         method: 'GET',
         url: CONSTS.appUrl + '/1/view/data/durados_v_ChangeHistory',
         headers: {
-          'AppName': '' //appName
+          'AppName': appName
         },
         params: {
           'filter' : '[{fieldName:"Admin", operator:"equals", value:"true"}]',

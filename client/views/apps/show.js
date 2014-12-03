@@ -18,10 +18,11 @@
     }
 
     this.statisticsArray = appItem.data.durados_App_Stat;
-    AppLogService.getAppLog($state.params.name)
-      .success(function(data){
-        self.appLogArray = AppLogService.createLogMsg(data.data);
-      });
+      self.appLogArray = [];// todo: remove
+//    AppLogService.getAppLog($state.params.name)
+//      .success(function(data){
+//        self.appLogArray = AppLogService.createLogMsg(data.data);
+//      });
 
     var time = new Date();
 
