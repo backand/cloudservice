@@ -1,9 +1,9 @@
 (function  () {
   'use strict';
   angular.module('app.database')
-    .controller('DatabaseShow',["$scope",'$state','AppsService','usSpinnerService','NotificationService','DatabaseService',DatabaseShow]);
+    .controller('DatabaseShow',["$scope",'$state','AppsService','usSpinnerService','NotificationService','DatabaseService','DatabaseNamesService',DatabaseShow]);
 
-  function DatabaseShow($scope,$state,AppsService,usSpinnerService,NotificationService,DatabaseService){
+  function DatabaseShow($scope,$state,AppsService,usSpinnerService,NotificationService,DatabaseService,DatabaseNamesService){
     var self = this;
 
     var currentApp;
@@ -11,7 +11,7 @@
       .then(function(data) {
         currentApp = data;
         checkDatabaseStatuse();
-        self.dataName = currentApp.databaseName;
+        //self.dataName = currentApp.databaseName;
       },function(err) {
         NotificationService('error','cant get current app info');
       });
@@ -22,7 +22,7 @@
         DatabaseService.getDBInfo($state.params.name)
           .success(function(data){
             self.data = data;
-            self.data.databaseName = currentApp.databaseName;
+            self.data.databaseName = DatabaseNamesService.getDBSource(self.data.Database_Source);
             usSpinnerService.stop("loading");
           })
     }

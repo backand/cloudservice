@@ -6,7 +6,7 @@
 
       <a class="icon-box col-md-2 col-md-offset-1" >
         <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mysql'}" ng-click ="dbedit.dataName = 'mysql'">
-          <img src="/assets/images/mysql.png"/>
+          <img src="assets/images/mysql.png"/>
         </div>
         <div class="desc-container">
           <h4></h4>
@@ -17,7 +17,7 @@
         <div class="icon-container"
              ng-class="{active : dbedit.currentTab() === 'postgresql'}"
              ng-click ="[dbedit.dataName = 'postgresql',dbedit.data.usingSsh = false]">
-          <img src="/assets/images/postgresql.jpg"/>
+          <img src="assets/images/postgresql.jpg"/>
         </div>
         <div class="desc-container">
           <h4></h4>
@@ -26,7 +26,7 @@
 
       <a class="icon-box col-md-2" ng-click="">
         <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'sqlserver'}" ng-click ="[dbedit.dataName = 'sqlserver',dbedit.data.usingSsh = false]">
-          <img src="/assets/images/sqlserver.png"/>
+          <img src="assets/images/sqlserver.png"/>
         </div>
         <div class="desc-container">
           <h4></h4>
@@ -35,7 +35,7 @@
 
       <a class="icon-box col-md-2" >
         <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'oracle'}" ng-click ="[dbedit.dataName = 'oracle',dbedit.data.usingSsh = false]">
-          <img src="/assets/images/oracle.jpg"/>
+          <img src="assets/images/oracle.jpg"/>
         </div>
         <div class="desc-container">
           <h4></h4>
@@ -44,7 +44,7 @@
 
       <a class="icon-box col-md-2" >
         <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mongodb'}" ng-click ="[dbedit.dataName = 'mongodb',dbedit.data.usingSsh = false]">
-          <img src="/assets/images/mongodb.png"/>
+          <img src="assets/images/mongodb.png"/>
         </div>
         <div class="desc-container">
           <h4></h4>
@@ -188,7 +188,7 @@
   <div class="row">
     <div class="form-group">
       <div class="col-sm-offset-6 col-lg-4">
-        <button type="submit"  ng-disabled="form.$invalid"
+        <button type="submit"  ng-disabled="form.$invalid || dbedit.DatabaseStatus == 2"
                 class="btn btn-success btn-lg btn-w-lg" ladda="dbedit.loading" data-style="expand-right">
           Connect
         </button>

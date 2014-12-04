@@ -25,12 +25,24 @@
       'newDummy': 12
     };
 
+    var database_source = {
+        1: 'sqlserver',
+        2: 'SQL Azure',
+        3: 'mysql',
+        4: 'postgresql',
+        5: 'oracle'
+    }
+
     this.getName = function(dataNumber){
        return numbers[dataNumber];
     };
 
     this.getNumber = function (dataName){
       return names[dataName];
+    };
+
+    this.getDBSource = function (dataName){
+      return database_source[dataName];
     };
 
   }

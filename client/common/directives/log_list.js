@@ -14,13 +14,14 @@
         link: function(scope, element, attrs) {
 
           scope.logLimit = parseInt(scope.logLimit);
-          AppLogService.getAppLog(scope.appName)
-            .success(function(data){
-              scope.appLogArray = AppLogService.createLogMsg(data.data);
-            })
-            .error(function(err){
-
-            });
+          scope.appLogArray = []; //todo: remove this
+//          AppLogService.getAppLog(scope.appName)
+//            .success(function(data){
+//              scope.appLogArray = AppLogService.createLogMsg(data.data);
+//            })
+//            .error(function(err){
+//
+//            });
         }
       };
     }

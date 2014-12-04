@@ -21,11 +21,11 @@
       });
     };
 
-    this.createDB = function(appName, data) {
+    this.createDB = function(appName, product) {
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
-        data: {"product":"12"}
+        data: {"product": product}
       });
     };
 
@@ -44,11 +44,11 @@
     };
 
     var dataSourcesArray = [
-      {imgSrc: "client/assets/images/mysql.png", name: 'sqlserver'},
-      {imgSrc: "client/assets/images/mysql.png", name: 'mysql'},
-      {imgSrc: 'client/assets/images/mongodb.png', name: 'mongodb'},
-      {imgSrc: 'client/assets/images/oracle.jpg', name: 'oracle'},
-      {imgSrc: 'client/assets/images/postgresql.jpg', name: 'postgresql'}
+      {imgSrc: "assets/images/mysql.png", name: 'sqlserver'},
+      {imgSrc: "assets/images/mysql.png", name: 'mysql'},
+      {imgSrc: 'assets/images/mongodb.png', name: 'mongodb'},
+      {imgSrc: 'assets/images/oracle.jpg', name: 'oracle'},
+      {imgSrc: 'assets/images/postgresql.jpg', name: 'postgresql'}
     ];
 
     this.getDataSources = function() {

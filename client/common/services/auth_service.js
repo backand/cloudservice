@@ -41,9 +41,9 @@
     this.forgot = function(email){
       return $http({
           method: 'POST',
-          url: CONSTS.appUrl + '/api/account/forgot',//todo : update url
+          url: CONSTS.appUrl + '/api/account/SendChangePasswordLink',
           data: {
-            email : email
+              username : email
           }
         }
       )};
@@ -51,11 +51,11 @@
     this.resetPassword = function(password, id){
       return $http({
           method: 'POST',
-          url: CONSTS.appUrl + '/api/account/forgot',//todo : update url
+          url: CONSTS.appUrl + '/api/account/changePassword',
           data: {
             confirmPassword: password,
-            newPassword: password,
-            userSysGuid: id
+            password: password,
+            token: id
           }
         });
     };

@@ -13,9 +13,14 @@
         .success(function(data){
           $modalInstance.close(self.email);
         })
-        .error(function(err){
+          .error(function (data) {
+              self.loading = false;
+              self.error = data.error_description;
+              $timeout(function() {
+                  self.error = undefined;
+              }, 3000);
 
-        })
+          });
     };
 
     this.cancel = function () {
