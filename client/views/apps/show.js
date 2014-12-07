@@ -18,28 +18,28 @@
     }
 
     this.statisticsArray = appItem.data.durados_App_Stat;
-      self.appLogArray = [];// todo: remove
-//    AppLogService.getAppLog($state.params.name)
-//      .success(function(data){
-//        self.appLogArray = AppLogService.createLogMsg(data.data);
-//      });
+    self.appLogArray = [];// todo: remove
+    AppLogService.getAppLog($state.params.name)
+      .success(function(data){
+        self.appLogArray = AppLogService.createLogMsg(data.data);
+      })
+      .error(function (error) {
+            self.loading = false;
+      });
 
     var time = new Date();
-
-
     this.logLimit = 7;
-
     this.appTitle = appData.Title;
-
     this.appName = appData.Name;
-
     this.connectionStatus = "";
 
+    this.goToLocation = function(href) {
+        window.open(href,'_blank');
+    }
 
+    $scope.$on('$destroy', function() {
 
-  $scope.$on('$destroy', function() {
-
-  });
+    });
 
 
     this.updateAppName = function(){

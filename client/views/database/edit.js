@@ -70,14 +70,27 @@
       self.loading = true;
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
 
-      DatabaseService.connect2DB($state.params.name, self.data)
-        .success(function (data) {
-          NotificationService.add('info','App connecting to database');
-          $state.go('apps.index', {name : $state.params.name});
-        })
-        .error(function(err){
-          self.loading = false;
-        })
+      if(self.dbConnected) //connected
+      {
+          DatabaseService.reConnect2DB($state.params.name, self.data)
+              .success(function (data) {
+                  NotificationService.add('info', 'Update App connection to database');
+                  $state.go('apps.index', {name: $state.params.name});
+              })
+              .error(function (err) {
+                  self.loading = false;
+              })
+      }
+      else {
+          DatabaseService.connect2DB($state.params.name, self.data)
+              .success(function (data) {
+                  NotificationService.add('info', 'App connecting to database');
+                  $state.go('apps.index', {name: $state.params.name})
+              })
+              .error(function (err) {
+                  self.loading = false;
+              })
+      }
     };
 
     this.back = function(){

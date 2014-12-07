@@ -21,6 +21,14 @@
       });
     };
 
+    this.reConnect2DB = function(appName, data) {
+        return $http({
+          method: 'PUT',
+          url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
+          data: data
+        });
+    };
+
     this.createDB = function(appName, product) {
       return $http({
         method: 'POST',

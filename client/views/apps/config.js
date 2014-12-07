@@ -16,7 +16,7 @@ function config($stateProvider) {
       }
     })
     .state('apps.show', {
-      url: '/:name',
+      url: ':name',
       controller: 'AppsShowController as show',
       templateUrl: 'views/apps/show.tpl.html',
       resolve: {

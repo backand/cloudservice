@@ -10,15 +10,15 @@ angular.module('app.routes', []).
     $httpProvider.interceptors.push('httpInterceptor');
 
     $stateProvider
+      .state('sign_up', {
+            url: '/sign_up',
+            templateUrl: 'views/auth/sign_up.html',
+            controller : 'SignUpController as signup'
+      })
       .state('sign_in', {
         url: '/sign_in',
         templateUrl: 'views/auth/sign_in.tpl.html',
         controller : 'SignInController as sign'
-      })
-      .state('sign_up', {
-        url: '/sign_up',
-        templateUrl: 'views/auth/sign_up.html',
-        controller : 'SignUpController as signup'
       })
       .state('change_password', {
         url: '/change_password',
@@ -44,13 +44,14 @@ angular.module('app.routes', []).
         url: '/playground',
         abstract: true,
         template: '<div ui-view></div>'
-    });
+      });
     })
   .run(run,['$state','AuthService', '$rootScope']);
 
-function run($state,SessionService, $rootScope){
-  if (!SessionService.currentUser){
-    $state.go('sign_in')
+function run($state,SessionService, $location){
+  if (!SessionService.currentUser )  {
+      if($location.path() != '/sign_up')
+        $state.go('sign_in')
   } else {
     $state.go('apps.index')
   }

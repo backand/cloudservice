@@ -7,6 +7,8 @@
     self.currAppName = '';
 
     this.redirectTo = function(appName) {
+      if($state.current.name == 'apps.index')
+          $state.current.name = 'apps.show';
       $state.go($state.current.name, { name: appName });
     };
 

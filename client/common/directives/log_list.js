@@ -15,13 +15,13 @@
 
           scope.logLimit = parseInt(scope.logLimit);
           scope.appLogArray = []; //todo: remove this
-//          AppLogService.getAppLog(scope.appName)
-//            .success(function(data){
-//              scope.appLogArray = AppLogService.createLogMsg(data.data);
-//            })
-//            .error(function(err){
-//
-//            });
+          AppLogService.getAppLog(scope.appName)
+            .success(function(data){
+              scope.appLogArray = AppLogService.createLogMsg(data.data);
+            })
+            .error(function(err){
+
+            });
         }
       };
     }

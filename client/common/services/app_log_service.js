@@ -23,13 +23,13 @@
       var log = '';
       switch(item.Action){
         case 'Update' :
-              log = item.Action +" "+ item.FieldName +' from '+item.OldValue+" to "+item.NewValue+" by ";
+              log = item.Action +" "+ item.FieldName +' from '+item.OldValue+" to "+item.NewValue+" by " + item.Username;
               break;
         case 'Insert' :
-          log = item.Action +" "+ item.FieldName +" "+item.NewValue+" by ";
+          log = item.Action +" "+ item.FieldName +" "+item.NewValue+" by " + item.Username;
           break;
         case 'Delete' :
-          log = item.Action +" "+ item.FieldName +" "+item.OldValue+" by ";
+          log = item.Action +" "+ item.FieldName +" "+item.OldValue+" by " + item.Username;
           break;
       }
       return log;

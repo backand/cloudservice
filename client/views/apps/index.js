@@ -2,9 +2,9 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval', AppsIndexController]);
+    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','$filter', AppsIndexController]);
 
-  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval) {
+  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval,$filter) {
     var self = this;
     var stop;
 
@@ -17,6 +17,15 @@
           NotificationService.add('error', err);
         })
     };
+
+    this.appDetails = function (appName) {
+        //check app status
+        var myApp = $filter('filter')(self.apps, {Name: appName}, false);
+        if(myApp[0].DatabaseStatus == 1)
+            $state.go('apps.show', { name: appName });
+        else
+            $state.go('database.edit', { name: appName });
+    }
 
     this.namePattern = /^\w+$/;
 
@@ -44,7 +53,7 @@
         .then(function(apps){
           self.apps = apps.list;
         });
-    }, 30000);
+    }, 10000);
 
     function stopRefresh() {
       if (angular.isDefined(stop)) {

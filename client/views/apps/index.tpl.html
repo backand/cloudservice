@@ -48,7 +48,7 @@
           <div class="panel-heading">{{ app.Name }}</div>
           <div class="panel-body app-panel-body">
             <p class="body-height">{{ app.Title }}</p>
-            <button ui-sref="apps.show({ name: app.Name })" class="btn btn-default btn-w-md btn-block">
+            <button ng-click="index.appDetails(app.Name)" class="btn btn-default btn-w-md btn-block">
               App Details
             </button>
           </div>
