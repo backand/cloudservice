@@ -16,6 +16,7 @@ var url = require('url');
 var proxy = require('proxy-middleware');
 var filelog = require('gulp-filelog');
 var replace = require('gulp-replace-task');
+var minifyCSS = require('gulp-minify-css');
 
 var _ = require('lodash');
 /* jshint camelcase:false*/
@@ -127,6 +128,7 @@ gulp.task('html', function() {
     .pipe($.if(currEnv != 'prod', $.sourcemaps.write()))
     .pipe(filelog())
     .pipe($.if('*.js', $.if(currEnv == 'prod', $.gzip())))
+    .pipe($.if('*.css', $.if(currEnv == 'prod', minifyCSS())))
     .pipe(gulp.dest(config.dist))
     .pipe($.size({
       title: 'html'
