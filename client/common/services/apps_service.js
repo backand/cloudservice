@@ -112,14 +112,6 @@
         }
       });
     };
-
-    this.refreshApp = function(appName){
-      self.find(appName)
-        .success( function(appItem){
-          self.setCurrentApp(appItem)
-      })
-    };
-
   }
 
   angular.module('common.services')
