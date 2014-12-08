@@ -18,25 +18,38 @@
     };
 
     function loadApp() {
-      if (typeof self.appName !== 'undefined') {
+      var oldStatus = null;
 
-        AppsService.getCurrentApp(self.appName)
-          .then(function(data) {
-            self.app = data;
-          })
+      if (typeof self.appName === 'undefined') {
+        return
       }
+
+      if (self.app !== null) {
+        oldStatus = self.app.myStatus.status;
+      }
+
+      AppsService.getCurrentApp(self.appName)
+        .then(function(data) {
+          self.app = data;
+
+          if (oldStatus !== null) {
+            checkChanges(oldStatus);
+          }
+        });
     }
 
     $scope.$on('$stateChangeSuccess', function(){
       self.state = $state.current.name;
       self.appName = $state.params.name;
+
+      stopRefresh();
+
       loadApp();
+
       if (typeof self.appName !== 'undefined') {
-        setIntarval()
+        stop = $interval(loadApp, 30 * 1000);
       }
     });
-
-
 
     this.getDBStatus = function() {
       if (self.app === null) {
@@ -51,34 +64,28 @@
           return 'success';
         default:
           return 'error';
-
       }
     };
 
+    function checkChanges(oldStatus) {
+      var newStatus = parseInt(self.app.myStatus.status);
 
-    function setIntarval() {
-      stop = $interval(function () {
-        var oldValue = self.app.myStatus.status;
-        var newValue;
+      if (newStatus === oldStatus) {
+        return;
+      }
 
-        loadApp();
-        newValue = parseInt(self.app.myStatus.status);
-        if (newValue !== oldValue) {
-          switch (newValue) {
-            case 0 :
-              NotificationService.add('error', 'data base is not connected');
-              break;
-            case 1 :
-              NotificationService.add('success', 'data base connected');
-              break;
-            case 2 :
-              NotificationService.add('info', 'data base is pending');
-              break;
-          }
-        }
-      }, 30000);
+      switch (newStatus) {
+        case 0 :
+          NotificationService.add('error', 'Database became disconnected');
+          break;
+        case 1 :
+          NotificationService.add('success', 'Database connected');
+          break;
+        case 2 :
+          NotificationService.add('info', 'Database connection became pending');
+          break;
+      }
     }
-
 
     function stopRefresh() {
       if (angular.isDefined(stop)) {
@@ -88,10 +95,7 @@
     }
 
     $scope.$on('$destroy', function() {
-      // Make sure that the interval is destroyed too
       stopRefresh();
     });
-
-
   }
 }());
