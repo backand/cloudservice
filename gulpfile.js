@@ -21,6 +21,7 @@ var _ = require('lodash');
 /* jshint camelcase:false*/
 var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
 var webdriverUpdate = require('gulp-protractor').webdriver_update;
+var currEnv = 'dev';
 
 //update webdriver if necessary, this task will be used by e2e task
 gulp.task('webdriver:update', webdriverUpdate);
@@ -107,7 +108,7 @@ gulp.task('html', function() {
 
   return gulp.src(config.index)
     .pipe(assets)
-    .pipe($.sourcemaps.init())
+    .pipe($.if(currEnv != 'prod', $.sourcemaps.init()))
     .pipe($.if('**/*main.js', $.ngAnnotate()))
     .pipe($.if('*.js', $.uglify({
       mangle: false,
@@ -123,8 +124,9 @@ gulp.task('html', function() {
     .pipe($.if('*.html', $.minifyHtml({
       empty: true
     })))
-    .pipe($.sourcemaps.write())
+    .pipe($.if(currEnv != 'prod', $.sourcemaps.write()))
     .pipe(filelog())
+    .pipe($.if('*.js', $.if(currEnv == 'prod', $.gzip())))
     .pipe(gulp.dest(config.dist))
     .pipe($.size({
       title: 'html'
@@ -236,6 +238,8 @@ function setEnv(env) {
   gulp.src('./client/config/env/consts.js')
     .pipe(replace({ patterns: [{ match: 'consts', replacement: settings }] }))
     .pipe(gulp.dest(config.consts));
+
+  currEnv = env;
 }
 
 gulp.task('env:dev', function () {
