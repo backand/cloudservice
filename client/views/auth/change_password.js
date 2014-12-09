@@ -1,13 +1,14 @@
 (function  () {
     'use strict';
   angular.module('app')
-    .controller('changePasswordController',["$scope",'AuthService','$state','$location','NotificationService',changePasswordController]);
+    .controller('changePasswordController',["$scope",'AuthService','$state','$location','NotificationService','$timeout',changePasswordController]);
 
-  function changePasswordController($scope,AuthService,$state,$location,NotificationService){
+  function changePasswordController($scope,AuthService,$state,$location,NotificationService,$timeout){
     var self = this;
-
+    this.loading = false;
 
     this.submit = function(){
+      this.loading = true;
       AuthService.resetPassword(self.password, $location.search().id)
         .success(function(data){
           NotificationService.add('success', 'password changed');

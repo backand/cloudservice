@@ -6,23 +6,22 @@
   function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService) {
 
     var self = this;
-    var currentApp;
 
     this.appName = $stateParams.name;
     this.loading = false;
 
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
-        currentApp = data;
-        self.DatabaseStatus = currentApp.DatabaseStatus;
-        self.dbConnected = currentApp.DatabaseStatus === 1;
-        self.dataName = currentApp.databaseName || 'mysql';
+        //currentApp = data;
+        self.databaseStatus = data.DatabaseStatus;
+        self.dbConnected = data.DatabaseStatus === 1;
+        self.dataName = data.databaseName || 'mysql';
         self.data = {
           usingSsl: 'true',
           usingSsh: 'false'
         };
 
-        if (currentApp.DatabaseStatus !== 0){
+        if (self.databaseStatus !== 0){
           checkDatabaseStatus();
         }
       }, function(err) {
@@ -35,17 +34,20 @@
 
     function checkDatabaseStatus() {
         DatabaseService.getDBInfo($state.params.name)
-          .success(function(data) {
-            self.data = data;
-            self.data.databaseName = DatabaseNamesService.getDBSource(self.data.Database_Source);
-            self.data.database = self.data.Catalog;
-            self.data.server = self.data.ServerName;
-            self.data.username = self.data.Username;
-            self.data.usingSsh  = self.data.SshUses;
-            self.data.usingSsl  = self.data.SslUses;
-            self.data.sshRemoteHost  = self.data.SshRemoteHost;
-            self.data.sshUser   = self.data.SshUser;
-            self.data.sshPort   = self.data.SshPort;
+          .success(function(dataIn) {
+            self.data = {};
+            self.data.Database_Source = dataIn.Database_Source;
+            self.data.databaseName = DatabaseNamesService.getDBSource(dataIn.Database_Source);
+            self.data.database = dataIn.Catalog;
+            self.data.server = dataIn.ServerName;
+            self.data.username = dataIn.Username;
+            self.data.usingSsh  = String(dataIn.SshUses);
+            self.data.usingSsl  = String(dataIn.SslUses);
+            self.data.sshRemoteHost  = dataIn.SshRemoteHost;
+            self.data.sshUser   = dataIn.SshUser;
+            self.data.sshPort   = dataIn.SshPort;
+            self.data.sshPassword   = dataIn.SshPassword;
+            self.data.sshPrivateKey   = dataIn.SshPrivateKey;
           })
     }
 

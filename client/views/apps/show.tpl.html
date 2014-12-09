@@ -1,7 +1,7 @@
 <div class="page">
 
   <div class="panel panel-default dashboard">
-    <div class="panel-heading"><strong>Dashborad</strong></div>
+    <div class="panel-heading"><strong>Dashboard</strong></div>
     <div class="panel-body">
       <div class="row col-md-10 col-sm-offset-1">
 
@@ -36,13 +36,23 @@
                   <i class="icon-rest-api-icon text-huge"></i>
                 </div>
                 <div class="panel-data">
-                  <h4>REST API Simulator</h4>
-                  <p>Test the Back& APIs</p>
+                  <h4>REST API Playground</h4>
+                  <p>Test your app with Backand's REST APIs</p>
                 </div>
               </section>
 
+                <section  class="data-panel data-panel-success" ng-click="show.goToLocation('http://' + show.appName + '.backand.net')">
+                    <div class="panel-icon">
+                        <i class="icon-backoffice-icon text-huge"></i>
+                    </div>
+                    <div class="panel-data">
+                        <h4>Back Office</h4>
+                        <p>Work with Backand's automatic Back Office</p>
+                    </div>
+                </section>
+
               <!--<section ui-sref="dashboard.edit({name: show.appName})" class="data-panel data-panel-success">-->
-              <section class="data-panel data-panel-success">
+              <section class="data-panel">
                 <div class="panel-icon">
                   <i class="icon-orm-icon text-huge"></i>
                 </div>
@@ -52,15 +62,7 @@
                 </div>
               </section>
 
-              <section  class="data-panel" ng-click="show.goToLocation('http://' + show.appName + '.backand.net')">
-                    <div class="panel-icon">
-                        <i class="icon-backoffice-icon text-huge"></i>
-                    </div>
-                    <div class="panel-data">
-                        <h4>Back-Office</h4>
-                        <p>Work with Back& automatic Back-Office</p>
-                    </div>
-              </section>
+
             </div>
           </div>
         </div>

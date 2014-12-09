@@ -18,23 +18,18 @@
     };
 
     function loadApp() {
-      var oldStatus = null;
 
       if (typeof self.appName === 'undefined') {
         return
-      }
-
-      if (self.app !== null) {
-        oldStatus = self.app.myStatus.status;
       }
 
       AppsService.getCurrentApp(self.appName)
         .then(function(data) {
           self.app = data;
 
-          if (oldStatus !== null) {
-            checkChanges(oldStatus);
-          }
+          var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
+
+          checkChanges(oldStatus);
         });
     }
 
@@ -66,9 +61,15 @@
           return 'error';
       }
     };
+    this.goToLocation = function(href) {
+        if (this.app.DatabaseStatus === 1) {
+            window.open(href, '_blank');
+        }
+    }
 
     function checkChanges(oldStatus) {
       var newStatus = parseInt(self.app.myStatus.status);
+      oldStatus = parseInt(oldStatus);
 
       if (newStatus === oldStatus) {
         return;

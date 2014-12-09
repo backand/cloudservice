@@ -20,9 +20,20 @@
       usSpinnerService.spin("loading");
       //not connected to DB:
         DatabaseService.getDBInfo($state.params.name)
-          .success(function(data){
-            self.data = data;
-            self.data.databaseName = DatabaseNamesService.getDBSource(self.data.Database_Source);
+          .success(function(dataIn){
+            self.data = {};
+            self.data.Database_Source = dataIn.Database_Source;
+            self.data.databaseName = DatabaseNamesService.getDBSource(dataIn.Database_Source);
+            self.data.database = dataIn.Catalog;
+            self.data.server = dataIn.ServerName;
+            self.data.username = dataIn.Username;
+            self.data.usingSsh  = dataIn.SshUses;
+            self.data.usingSsl  = dataIn.SslUses;
+            self.data.sshRemoteHost  = dataIn.SshRemoteHost;
+            self.data.sshUser   = dataIn.SshUser;
+            self.data.sshPort   = dataIn.SshPort;
+            self.data.sshPassword   = dataIn.SshPassword;
+            self.data.sshPrivateKey   = dataIn.SshPrivateKey;
             usSpinnerService.stop("loading");
           })
     }

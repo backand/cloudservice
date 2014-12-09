@@ -50,9 +50,10 @@ angular.module('app.routes', []).
 
 function run($state,SessionService, $location){
   if (!SessionService.currentUser )  {
-      if($location.path() != '/sign_up')
+      if($location.path() != '/sign_up' && $location.path() != '/change_password')
         $state.go('sign_in')
-  } else {
+  }
+  else {
     $state.go('apps.index')
   }
 

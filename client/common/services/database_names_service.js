@@ -27,7 +27,7 @@
 
     var database_source = {
         1: 'sqlserver',
-        2: 'SQL Azure',
+        2: 'sqlazure',
         3: 'mysql',
         4: 'postgresql',
         5: 'oracle'

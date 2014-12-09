@@ -1,14 +1,16 @@
 (function  () {
     'use strict';
   angular.module('app')
-    .controller('ForgotController',["$scope", '$modalInstance','Uemail','AuthService',ForgotController]);
+    .controller('ForgotController',["$scope", '$modalInstance','Uemail','AuthService','$timeout',ForgotController]);
 
-  function ForgotController($scope, $modalInstance,Uemail,AuthService){
+  function ForgotController($scope, $modalInstance,Uemail,AuthService,$timeout){
     var self = this;
 
     this.email = Uemail;
+    this.loading = false;
 
     this.ok = function () {
+      this.loading = true;
       AuthService.forgot(self.email)
         .success(function(data){
           $modalInstance.close(self.email);

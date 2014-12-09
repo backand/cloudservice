@@ -7,7 +7,8 @@
 
     var apps = {
       list: [],
-      names: []
+      names: [],
+      status: {}
     };
 
     var currentApp;
@@ -18,7 +19,8 @@
       apps.names = [];
 
       apps.list.forEach(function(item) {
-        apps.names.push(item.Name)
+        apps.names.push(item.Name);
+        apps.status[item.Name] = item.DatabaseStatus;
       })
     }
 
@@ -33,7 +35,7 @@
       self.find(appName)
         .success(function (data){
           self.setCurrentApp(data);
-          currentApp.myStatus = {status : data.DatabaseStatus};
+          currentApp.myStatus = {status : data.DatabaseStatus, oldStatus: apps.status[appName]};
           deferred.resolve(currentApp);
         })
         .error(function(err){

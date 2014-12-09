@@ -9,6 +9,8 @@
     var stop;
 
     this.addApp = function() {
+      if(self.appTitle === '')
+          self.appTitle = self.appName;
       AppsService.add(self.appName, self.appTitle)
         .then(function(data){
           NotificationService.add('success', 'App was added successfully');
