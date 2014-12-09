@@ -42,8 +42,8 @@
         </div>
       </a>
 
-      <a class="icon-box col-md-2" >
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mongodb'}" ng-click ="[dbedit.dataName = 'mongodb',dbedit.data.usingSsh = false]">
+      <a class="icon-box col-md-2"  >
+        <div class="icon-container" ng-class="{active : false}" style="border: none;" >
           <img src="assets/images/mongodb.png"/>
         </div>
         <div class="desc-container">
@@ -109,7 +109,7 @@
         <label for="UserName" class="col-sm-4 control-label">Username</label>
 
         <div class="col-sm-8">
-            <input type="text" class="form-control" ng-model="dbedit.data.username" id="UserName" placeholder="Name of user for your DB Instance" required>
+            <input type="text" class="form-control" ng-model="dbedit.data.username" id="UserName" placeholder="Name of user for your DB instance" required>
         </div>
       </div>
 
