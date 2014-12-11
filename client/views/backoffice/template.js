@@ -1,9 +1,9 @@
 (function  () {
     'use strict';
-  angular.module('app.apps')
-    .controller('Dashboard',["$scope",'$state','AppsService','DatabaseService','NotificationService',Dashboard]);
+  angular.module('app.backoffice')
+    .controller('BackofficeTemplate',["$scope",'$state','AppsService','DatabaseService','NotificationService',BackofficeTemplate]);
 
-  function Dashboard($scope,$state,AppsService,DatabaseService,NotificationService){
+  function BackofficeTemplate($scope,$state,AppsService,DatabaseService,NotificationService){
 
     var self = this;
 

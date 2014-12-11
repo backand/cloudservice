@@ -35,8 +35,8 @@ angular.module('app.routes', []).
         abstract: true,
         template: '<div ui-view></div>'
       })
-      .state('dashboard', {
-        url: '/dashboard',
+      .state('backoffice', {
+        url: '/backoffice',
         abstract: true,
         template: '<div ui-view></div>'
       })

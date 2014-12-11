@@ -46,7 +46,7 @@
       'services',
       'app.apps',
       'app.database',
-      'app.dashboard',
+      'app.backoffice',
       'app.playground'
     ])
     .run(run)

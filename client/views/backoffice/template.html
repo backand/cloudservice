@@ -1,19 +1,17 @@
 
 <section class="page-form-ele page ng-scope">
-
   <div class="panel panel-default">
     <div class="panel-heading"><strong>select back office template</strong></div>
     <div class="panel-body">
       <div class="row col-sm-10 col-sm-offset-1">
-        <div class='col-sm-5' ng-repeat="template in dash.templates">
-          <div class="thumbnail themer" ng-class="{'template-border' : template.Id === dash.templateId }">
+        <div class='col-sm-5' ng-repeat="template in backT.templates">
+          <div class="thumbnail themer" ng-class="{'template-border' : template.Id === template.templateId }">
             <h4>{{template.label}}</h4>
             <img ng-src="{{template.imgSrc}}">
             <div>
               <div class="divider divider-sm pull-in"></div>
               <p>
-                <button ng-click="dash.updateTemplate(template.Id)" class="btn btn-primary" ng-disabled="template.Id == dash.templateId" role="button">select</button>
-                <div ng-show="template.Id == dash.templateId"></div>
+                <button ng-click="backT.updateTemplate(template.Id)" class="btn btn-primary" ng-disabled="template.Id === backT.templateId" role="button">Select</button>
               </p>
             </div>
           </div>
