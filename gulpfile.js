@@ -127,7 +127,6 @@ gulp.task('html', function() {
     })))
     .pipe($.if(currEnv != 'prod', $.sourcemaps.write()))
     .pipe(filelog())
-    .pipe($.if('*.js', $.if(currEnv == 'prod', $.gzip())))
     .pipe($.if('*.css', $.if(currEnv == 'prod', minifyCSS())))
     .pipe(gulp.dest(config.dist))
     .pipe($.size({

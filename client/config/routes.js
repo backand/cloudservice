@@ -44,6 +44,11 @@ angular.module('app.routes', []).
         url: '/playground',
         abstract: true,
         template: '<div ui-view></div>'
+      })
+      .state('tables', {
+        url: '/tables',
+        abstract: true,
+        template: '<div ui-view></div>'
       });
     })
   .run(run,['$state','AuthService', '$rootScope']);
