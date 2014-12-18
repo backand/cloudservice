@@ -42,25 +42,25 @@
 
     <li ng-class="{active: nav.state == 'backoffice.edit'}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.edit')" href="">
-        <i class="icon-backoffice-icon"></i>
+        <i class="ti-angle-right"></i>
         <span>Back Office</span>
       </a>
         <ul>
-            <li ng-class="{active: nav.state == 'backoffice.edit'}" ng-show="false">
+            <li ng-class="{active: nav.state == 'backoffice.edit'}">
                 <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goToLocation('http://' + nav.appName + '.backand.net')" href="">
                     <i class="ti-cloud"></i>
                     <span>Hosted Back Office</span>
                 </a>
             </li>
 
-            <li ng-class="{active: nav.state == 'backoffice.cust'}" ng-show="false">
+            <li ng-class="{active: nav.state == 'backoffice.cust'}">
                 <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.cust')" href="">
                     <i class="ti-github"></i>
                     <span>Customization</span>
                 </a>
             </li>
 
-            <li ng-class="{active: nav.state == 'backoffice.code'}" ng-show="false">
+            <li ng-class="{active: nav.state == 'backoffice.code'}">
                 <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.code')" href="">
                     <i class="ti-cloud"></i>
                     <span>Code Example</span>
