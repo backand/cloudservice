@@ -9,6 +9,7 @@
 
     this.appName = $stateParams.name;
     this.loading = false;
+    this.showHelp = false;
 
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
@@ -58,7 +59,7 @@
         DatabaseService.createDB($state.params.name,product)
         .success(function(data){
           NotificationService.add('info','Creating new database');
-          checkDatabaseStatuse();
+          checkDatabaseStatus();
           $state.go('apps.index',{name: $state.params.name});
         })
         .error(function(err){
@@ -91,6 +92,7 @@
               })
               .error(function (err) {
                   self.loading = false;
+                  self.showHelp = true;
               })
       }
     };

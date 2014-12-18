@@ -47,7 +47,7 @@
       'app.apps',
       'app.database',
       'app.backoffice',
-      'app.playground'
+      'app.playground',
     ])
     .run(run)
     .controller('MainController', ["SessionService",'$state',MainController])

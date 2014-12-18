@@ -21,10 +21,11 @@
     };
 
 
-    this.setCredentials = function (serverData) {
+    this.setCredentials = function (serverData, username) {
       var user = {
         currentUser: {
-          access_token : serverData.access_token
+          access_token : serverData.access_token,
+          username: username
         }
       };
 

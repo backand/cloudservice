@@ -6,6 +6,7 @@
   function DatabaseShow($scope,$state,AppsService,usSpinnerService,NotificationService,DatabaseService,DatabaseNamesService){
     var self = this;
 
+    this.appName = $state.params.name;
     var currentApp;
     AppsService.getCurrentApp($state.params.name)
       .then(function(data) {
