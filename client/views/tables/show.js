@@ -24,7 +24,7 @@
           self.tables = data.data.data;
         }, function(err) {
           usSpinnerService.stop("loading");
-          NotificationService('error', 'Can not get tables list');
+          NotificationService.add('error', 'Can not get tables list');
       });
     }
 
