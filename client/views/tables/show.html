@@ -3,21 +3,14 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> Database Tables</strong>
+      <strong> Database Tables
+        <button type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary pull-right btn-xs" ng-click="tables.sync()" ladda="tables.syncing" data-style="expand-right">Sync Tables</button>
+      </strong>
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
-      <div class="well well-sm" ng-repeat="table in tables.tables">{{ table.name }}</div>
+      <div class="well well-sm" ng-repeat="table in tables.tables">{{ table.databaseName }}</div>
     </div>
   </section>
 
 </section>
-
-
-
-
-
-
-
-
-

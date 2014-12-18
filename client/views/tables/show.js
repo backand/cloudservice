@@ -9,21 +9,36 @@
 
     AppsService.getCurrentApp($state.params.name)
       .then(function(data) {
-        currentApp = data;
-
-        TablesService.get()
-          .then(function (data) {
-            self.tables = data.data;
-            console.log("Tables");
-            console.log(self.tables);
-          });
-
+        self.currentApp = data;
+        self.reloadTables();
       }, function(err) {
         NotificationService('error', 'Can not get current app info');
       });
 
-    this.back = function() {
-      $state.go('apps.show', ({ name:$state.params.name }));
-    };
+    this.reloadTables = function() {
+      usSpinnerService.spin("loading");
+
+      TablesService.get(self.currentApp)
+        .then(function (data) {
+          usSpinnerService.stop("loading");
+          self.tables = data.data.data;
+        }, function(err) {
+          usSpinnerService.stop("loading");
+          NotificationService('error', 'Can not get tables list');
+      });
+    }
+
+    this.sync = function() {
+      self.syncing = true;
+
+      TablesService.sync(self.currentApp)
+        .then(function (data) {
+          self.syncing = false;
+          NotificationService.add('info', 'Synchronized tables');
+        }, function(err) {
+          self.syncing = false;
+          NotificationService.add('error', 'Can not sync tables');
+        });
+    }
   }
 }());
