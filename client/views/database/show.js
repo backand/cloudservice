@@ -60,5 +60,8 @@
       $state.go('apps.show', ({name:$state.params.name}));
     };
 
+    this.sync = function(toSync) {
+      $state.go('tables.show', ({name:$state.params.name, sync: toSync}));
+    };
   }
 }());

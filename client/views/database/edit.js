@@ -1,9 +1,9 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseEdit', ['$scope', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', DatabaseEdit]);
+    .controller('DatabaseEdit', ['$scope', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService', DatabaseEdit]);
 
-  function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService) {
+  function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService) {
 
     var self = this;
 
@@ -13,6 +13,7 @@
 
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
+        usSpinnerService.spin("loading");
         //currentApp = data;
         self.databaseStatus = data.DatabaseStatus;
         self.dbConnected = data.DatabaseStatus === 1;
@@ -49,6 +50,7 @@
             self.data.sshPort   = dataIn.SshPort;
             self.data.sshPassword   = dataIn.SshPassword;
             self.data.sshPrivateKey   = dataIn.SshPrivateKey;
+            usSpinnerService.stop("loading");
           })
     }
 

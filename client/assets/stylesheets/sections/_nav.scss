@@ -21,6 +21,7 @@
         padding: 0;
         -webkit-overflow-scrolling: touch;
         -webkit-overflow-scrolling: -blackberry-touch;
+        vertical-align: middle;
 
         >li>a>i,
         >li>a>.nav-icon {
@@ -29,8 +30,9 @@
             width: 20px;
             line-height: 1;
             text-align: center;
-            font-size: 15px;
+            font-size: 25px;
             @include transition(all .2s ease-in-out);
+
         }
 
         a {

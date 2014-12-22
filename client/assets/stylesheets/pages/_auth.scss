@@ -1,6 +1,7 @@
 .body-auth {
     #content {
         background: url('../images/background/1.jpg') no-repeat center center fixed;
+        background: url('/assets/images/background/1.jpg') no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         background-size: cover;        
@@ -83,11 +84,12 @@
     }
 
     .additional-info {
-        color: #ccc;
-        color: rgba(255,255,255,.6);
+        color: #1a5169;
         a {
-            color: #ccc;
-            color: rgba(255,255,255,.6);
+            color: #1a5169;
+        }
+        span{
+          color: #1a5169;
         }
     }
 }

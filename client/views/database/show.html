@@ -138,8 +138,8 @@
                         <li><a href="//www.sequelpro.com/" target="_blank">Sequel Pro</a></li>
                         <li><a href="//www.heidisql.com/" target="_blank">HeidiSQL</a></li>
                     </ul>
-                    <br/>
-                    After you update your schema click <b><a target="_blank" href="{{'https://'+ dbshow.appName +'.backand.com/Admin/IndexPage/View'}}">here</a></b> to sync your changes into Backand (just click "Add Views" on the toolbar).
+                    <br/>Go to <a ng-click="dbshow.sync(0)" href="">Database Table</a> and click <button type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary" ng-click="dbshow.sync(1)">Sync Tables</button>
+                    after you update your schema to sync your changes into Backand.
                 </p>
             </div>
         </div>

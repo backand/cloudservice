@@ -7,7 +7,7 @@
   function config($stateProvider) {
     $stateProvider
       .state('tables.show', {
-        url: '/:name',
+        url: '/:name?:sync',
         controller: 'TablesShow as tables',
         templateUrl: 'views/tables/show.html'
       })
