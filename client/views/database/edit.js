@@ -13,7 +13,6 @@
 
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){
-        usSpinnerService.spin("loading");
         //currentApp = data;
         self.databaseStatus = data.DatabaseStatus;
         self.dbConnected = data.DatabaseStatus === 1;
@@ -35,6 +34,7 @@
     };
 
     function checkDatabaseStatus() {
+        usSpinnerService.spin("loading");
         DatabaseService.getDBInfo($state.params.name)
           .success(function(dataIn) {
             self.data = {};
@@ -50,8 +50,8 @@
             self.data.sshPort   = dataIn.SshPort;
             self.data.sshPassword   = dataIn.SshPassword;
             self.data.sshPrivateKey   = dataIn.SshPrivateKey;
-            usSpinnerService.stop("loading");
           })
+        usSpinnerService.stop("loading");
     }
 
     this.create = function(){

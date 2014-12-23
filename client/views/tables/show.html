@@ -27,13 +27,17 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Database Name</th>
+                <th>Descriptive Field</th>
+                <th>Pre-Filter Rule</th>
+                <th>Default Sort Order</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="table in tables.tables">
                 <td>{{ table.name }}</td>
-                <td>{{ table.databaseName }}</td>
+                <td>{{table.columnDisplayinTitle}}</td>
+                <td>{{table.permanentFilter}}</td>
+                <td>{{table.defaultSort}}</td>
             </tr>
             </tbody>
         </table>

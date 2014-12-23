@@ -1,6 +1,8 @@
 <div class="nav-wrapper" ng-controller="NavCtrl as nav">
   <ul id="nav1" class="nav"
-      data-slim-scroll data-collapse-nav data-highlight-active
+      data-slim-scroll
+      data-collapse-nav
+      data-highlight-active
       ng-show="nav.state === 'apps.index'">
     <li>
       <a ui-sref="apps.index"> <i class="ti-layers-alt"></i><span>My Apps</span> </a>
@@ -16,7 +18,8 @@
   </ul>
 
   <ul id="nav2" class="nav"
-      data-slim-scroll data-collapse-nav
+      data-slim-scroll
+      data-collapse-nav
       ng-show="nav.state != 'apps.index'">
     <li ng-class="{active: nav.state == 'apps.show'}" >
       <a ui-sref="apps.show({ name: nav.appName })">
