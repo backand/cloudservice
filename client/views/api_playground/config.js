@@ -9,9 +9,15 @@
     $stateProvider
       .state('playground.show', {
         parent: 'playground',
-        url: '/:name',
+        url: '/rest/:name',
         controller: 'Playground as play',
         templateUrl: 'views/api_playground/show.html'
+      })
+      .state('playground.orm', {
+        parent: 'playground',
+        url: '/orm/:name',
+        controller: 'Playground as play',
+        templateUrl: 'views/api_playground/orm.html'
       })
   }
 

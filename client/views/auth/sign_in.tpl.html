@@ -2,7 +2,7 @@
 
   <div class="signin-header">
     <section class="logo text-center">
-        <h1><a href="https://www.backand.com" class="ng-binding">Log in to Backand</a></h1>
+        <h1><a href="https://www.backand.com" class="ng-binding"><img src="assets/images/logo-white.png"></a></h1>
     </section>
   </div>
 
@@ -43,10 +43,12 @@
               </div>
               <div class="text-danger" ng-show="form.uPassword.$error.email">This is not a valid Password.</div>
             </div>
+              <br/>
+            <div class="text-right additional-info"><a ng-click="sign.open()" href="">Forgot your password?</a></div>
             <div class="divider divider-xl"></div>
             <div class="form-group">
               <button type="submit" ng-disabled="form.$invalid"
-                      class="btn btn-primary btn-lg btn-block text-center"
+                      class="blue-button btn btn-lg"
                       ladda="sign.loading" data-style="expand-right">
                 Log in
               </button>
@@ -56,10 +58,9 @@
         <div ng-show="sign.error" class="alert alert-danger">{{sign.error}}</div>
         <div class="divider"></div>
         <section class="additional-info">
-          <p class="text-right">
-            <a ng-click="sign.open()" href="">Forgot your password?</a>
-            <span> | </span>
-            <a ui-sref="sign_up">Sign up</a>
+          <p class="text-center">
+            <span>Don't have an account? </span>
+            <strong><a ui-sref="sign_up">Sign up</a></strong>
           </p>
         </section>
       </div>

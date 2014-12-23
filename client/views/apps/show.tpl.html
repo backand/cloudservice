@@ -41,7 +41,17 @@
                 </div>
               </section>
 
-                <section  class="data-panel data-panel-success" ng-click="show.goToLocation('http://' + show.appName + '.backand.net')">
+                <section ui-sref="playground.orm({name: show.appName})" class="data-panel data-panel-success">
+                    <div class="panel-icon">
+                        <i class="icon-orm-icon text-huge"></i>
+                    </div>
+                    <div class="panel-data">
+                        <h4>ORM Playground</h4>
+                        <p>Test your app with Backand's ORM</p>
+                    </div>
+                </section>
+
+                <section  class="data-panel" ng-click="show.goToLocation('http://' + show.appName + '.backand.net')">
                     <div class="panel-icon">
                         <i class="icon-backoffice-icon text-huge"></i>
                     </div>
@@ -50,17 +60,6 @@
                         <p>Work with Backand's automatic Back Office</p>
                     </div>
                 </section>
-
-              <!--<section ui-sref="dashboard.edit({name: show.appName})" class="data-panel data-panel-success">-->
-              <section class="data-panel">
-                <div class="panel-icon">
-                  <i class="icon-orm-icon text-huge"></i>
-                </div>
-                <div class="panel-data">
-                  <h4>ORM</h4>
-                  <p>Access the auto generated ORM - Coming soon...</p>
-                </div>
-              </section>
 
 
             </div>

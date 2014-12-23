@@ -22,6 +22,7 @@
         -webkit-overflow-scrolling: touch;
         -webkit-overflow-scrolling: -blackberry-touch;
 
+
         >li>a>i,
         >li>a>.nav-icon {
             display: inline-block;
@@ -29,8 +30,9 @@
             width: 20px;
             line-height: 1;
             text-align: center;
-            font-size: 15px;
+            font-size: 25px;
             @include transition(all .2s ease-in-out);
+            vertical-align: middle;
         }
 
         a {
@@ -65,7 +67,7 @@
 
                 .status {
                   position: absolute;
-                  top: 28px;
+                  top: 22px;
                   right: 16px;
                   border: 6px solid #aaa;
                   border-radius: 6px;
