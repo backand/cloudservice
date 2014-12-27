@@ -1,9 +1,10 @@
-
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-        <strong> Database Tables
-        <li class="btn btn-gap-v btn-xs dropdown tables-alert" ng-class="tables.alertClass">
+        <strong> Database Tables  </strong>
+        <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="tables.sync()" ladda="tables.syncing" data-style="expand-right" style="margin-left: 50px;">Sync Tables</button>
+
+        <li class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="tables.alertClass" style="margin-left: 10px;">
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="ti-bell" ></i>
             </a>
@@ -12,16 +13,15 @@
                     Sync Status
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="message in tables.getMessages()">
+                    <li class="list-group-item" ng-repeat="message in tables.getMessages()" style="text-transform: none;">
                         {{message}}
                     </li>
                 </ul>
             </div>
         </li>
-        <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary pull-right btn-md" ng-click="tables.sync()" ladda="tables.syncing" data-style="expand-right">Sync Tables</button>
-        </strong>
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
+
     <div class="panel-body">
         <table class="table table-striped">
             <thead>

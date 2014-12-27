@@ -10,6 +10,7 @@
     this.appName = $stateParams.name;
     this.loading = false;
     this.showHelp = false;
+    this.showND = true;
 
     AppsService.getCurrentApp($state.params.name)
       .then(function(data){

@@ -53,10 +53,13 @@
 }
 
 .tables-alert{
-  margin-bottom: 0px;
-  margin-left: 30px;
   font-size: 18px;
+  margin: 0px;
 }
+.tables-alert a:hover, a:focus {
+  text-decoration: none;
+}
+
 .tables-alert-with-errors i
 {
   color: red !important;
