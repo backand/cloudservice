@@ -23,25 +23,27 @@
     </div>
 
     <div class="panel-body">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Descriptive Field</th>
-                <th>Pre-Filter Rule</th>
-                <th>Default Sort Order</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="table in tables.tables">
-                <td>{{ table.name }}</td>
-                <td>{{table.columnDisplayinTitle}}</td>
-                <td>{{table.permanentFilter}}</td>
-                <td>{{table.defaultSort}}</td>
-            </tr>
-            </tbody>
-        </table>
-        <div ng-show="tables.tables.length == 0" class="label-info col-xs-2">No Tables</div>
+        <div class="row col-sm-10 col-sm-offset-1">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Descriptive Field</th>
+                    <th>Pre-Filter Rule</th>
+                    <th>Default Sort Order</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="table in tables.tables">
+                    <td>{{ table.name }}</td>
+                    <td>{{table.columnDisplayinTitle}}</td>
+                    <td>{{table.permanentFilter}}</td>
+                    <td>{{table.defaultSort}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div ng-show="tables.tables.length == 0" class="label-info col-xs-2">No Tables</div>
+        </div>
     </div>
   </section>
 

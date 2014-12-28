@@ -19,6 +19,17 @@
         controller: 'Playground as play',
         templateUrl: 'views/api_playground/orm.html'
       })
+      .state('playground.orm-config', {
+        parent: 'playground',
+        url: '/orm/config/:name',
+        templateUrl: 'views/api_playground/orm-config.html'
+      })
+      .state('playground.orm-usage', {
+        parent: 'playground',
+        url: '/orm/usage/:name',
+        templateUrl: 'views/api_playground/orm-usage.html'
+      })
+
   }
 
 })();

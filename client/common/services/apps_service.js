@@ -67,9 +67,11 @@
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
       })
       .success(function (data) {
-        apps.list = data.data;
-        updateAppNames();
-        apps.deferred.resolve(apps);
+      if (data) {
+          apps.list = data.data;
+          updateAppNames();
+          apps.deferred.resolve(apps);
+      }
       })
       .error(function (error) {
         apps.deferred.reject(error);
