@@ -55,6 +55,7 @@
         <span>Back Office</span>
       </a>
         <ul>
+
             <li ng-class="{active: nav.state == 'backoffice.edit'}">
                 <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goToLocation('http://' + nav.appName + '.backand.net')" href="">
                     <i class="ti-cloud"></i>
@@ -75,14 +76,23 @@
                     <span>Code Example</span>
                 </a>
             </li>
+
         </ul>
     </li>
 
     <li ng-class="{active: nav.state == 'tables.show'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('tables.show')" href="">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="fetchTables()" href="">
         <i class="ti-view-grid"></i>
         <span>Database Tables</span>
       </a>
+      <ul class="tables-list" style="">
+        <li ng-class="{active: false }" ng-repeat="table in tables">
+            <a ng-class="{disabled: false}"  ng-click="showTable(table)" href="">
+                <i class="ti-cloud"></i>
+                <span>{{table.name}}</span>
+            </a>
+        </li>
+      </ul>
     </li>
 
 

@@ -2,13 +2,14 @@
 (function  () {
     'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$rootScope', '$scope', '$state', 'AppsService','$interval','NotificationService', NavCtrl]);
+    .controller('NavCtrl', ['$rootScope', '$scope', '$state', 'AppsService','$interval', '$log', 'NotificationService', 'TablesService', NavCtrl]);
 
-  function NavCtrl($rootScope, $scope, $state, AppsService,$interval,NotificationService){
+  function NavCtrl($rootScope, $scope, $state, AppsService, $interval, $log, NotificationService, TablesService){
     var self = this;
     var stop;
 
     this.appName = $state.params.name;
+    $log.debug("NavCtrl", this.appName);
     this.app = null;
 
     this.goTo = function(state) {
@@ -98,5 +99,75 @@
     $scope.$on('$destroy', function() {
       stopRefresh();
     });
+
+    $scope.tables = [];
+    // [
+    //   { name: "A1" },
+    //   { name: "A2" },
+    //   { name: "A3" },
+    //   { name: "A4" },
+    //   { name: "A5" },
+    //   { name: "A6" },
+    //   { name: "A7" },
+    //   { name: "A1" },
+    //   { name: "A2" },
+    //   { name: "A3" },
+    //   { name: "A4" },
+    //   { name: "A5" },
+    //   { name: "A6" },
+    //   { name: "A7" },
+    //   { name: "A1" },
+    //   { name: "A2" },
+    //   { name: "A3" },
+    //   { name: "A4" },
+    //   { name: "A5" },
+    //   { name: "A6" },
+    //   { name: "A7" },
+    //   { name: "A1" },
+    //   { name: "A2" },
+    //   { name: "A3" },
+    //   { name: "A4" },
+    //   { name: "A5" },
+    //   { name: "A6" },
+    //   { name: "A7" },
+    //   { name: "A1" },
+    //   { name: "A2" },
+    //   { name: "A3" },
+    //   { name: "A4" },
+    //   { name: "A5" },
+    //   { name: "A6" },
+    //   { name: "A7" }
+    // ];
+
+    $scope.fetchTables = function(){
+      $log.debug("appName", $state.params.name);
+      AppsService.getCurrentApp($state.params.name).then(
+        function(data) {
+          $log.debug(data);
+          self.currentApp = data;
+          TablesService.get(self.currentApp.Name).then(
+            function(data) {
+              $log.debug("TablesService success", data);
+              $scope.tables = data.data.data;
+            },
+            function(data) {
+              $log.debug("TablesService failure", data);
+            }
+          );
+          
+        }, 
+        function(err) {
+          NotificationService.add('error', 'Can not get current app info');
+        }
+      );
+
+    };
+
+    $scope.showTable = function(table) {
+      $log.debug(table);
+      $state.go('tables.columns', { appName: self.appName, tableName: table.name });
+    };
+
+    
   }
 }());
