@@ -19,21 +19,24 @@
                     <div class="panel panel-default">
                       <div class="panel-heading">Name</div>
                       <div class="panel-body">
-                        {{ selectedField.name }}
+                        <input ng-model="selectedField.name"></input>
                       </div>
                     </div>
 
                     <div class="panel panel-default">
                       <div class="panel-heading">Type</div>
                       <div class="panel-body">
-                        {{ selectedField.type }}
+
+                        <select class="select-column-type"  ng-model="selectedField.type" ng-options="type for type in fieldTypesRange">                 
+                        </select>
+
                       </div>
                     </div>
 
                     <div class="panel panel-default">
                       <div class="panel-heading">Default Value</div>
                       <div class="panel-body">
-                        {{ selectedField.advanceLayout.defaultValue }}
+                        <input ng-model="selectedField.advanceLayout.defaultValue"></input>
                       </div>
                     </div>
                 </div>

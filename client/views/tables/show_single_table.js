@@ -13,6 +13,7 @@
     self.messages = ["no stats yet..."];
     self.alertClass = "";
     $scope.fields = [];
+    $scope.fieldTypesRange = ["String", "DateTime", "Integer"];
     
 
     $scope.switchTab = function(tab) {
