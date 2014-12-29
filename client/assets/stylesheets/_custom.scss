@@ -138,3 +138,16 @@ a.app-panel:hover {
   height: 200px; 
   overflow:scroll;
 }
+
+.fields-list {
+  height: 100%;
+  // width: 20%;
+  overflow: scroll;
+  list-style-type: none;
+}
+
+.column-details {
+  height: 100%;
+  // width: 80%;
+  overflow: scroll;
+}

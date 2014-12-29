@@ -1,8 +1,47 @@
 <section class="page-form-ele page ng-scope">
-    <tabset>
-        <tab heading="Columns">Here come the columns</tab>
-        <tab heading="Rules">Here come the rules</tab>
-        <tab heading="Securiry">Here come the security</tab>
-        <tab heading="Settings">Here come the settings</tab>
+    <tabset >
+        <tab heading="Columns" select="switchTab('columns')">
+            <div class="row">
+                <div class="col-lg-3">
+                    <ul class="fields-list" style="">
+                        <li ng-class="{active: false }" ng-repeat="field in fields">
+                            <a ng-class="{disabled: false}"  ng-click="showField(field)" href="">
+                                <!-- <i class="ti-cloud"></i> -->
+                                <span>{{field.name}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9">
+                   <!--  <div class="well well-lg column-details">{{ selectedField.name }}</div>
+                    <div class="well well-lg column-details">{{ selectedField.type }}</div> -->
+                    <!-- <div class="well well-lg column-details">{{ selectedField.advanceLayout.defaultValue }}</div> -->
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Name</div>
+                      <div class="panel-body">
+                        {{ selectedField.name }}
+                      </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Type</div>
+                      <div class="panel-body">
+                        {{ selectedField.type }}
+                      </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Default Value</div>
+                      <div class="panel-body">
+                        {{ selectedField.advanceLayout.defaultValue }}
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+        </tab>
+        <tab heading="Rules" select="switchTab('rules')">Here come the rules</tab>
+        <tab heading="Securiry" select="switchTab('security')">Here come the security</tab>
+        <tab heading="Settings" select="switchTab('settings')">Here come the settings</tab>
     </tabset>
 </section>
