@@ -14,9 +14,9 @@
         NotificationService('error', 'Can not get current app info');
       });
     //explaign that the order of the table , dependencies should be first
-    /*[{name:"tbl1",fields:[{name:"name",type:"SortText"}]},{name:"tbl2",fields:[{name:"name",type:"SingleSelect",relatedTable:"tbl1"}]}]*/
-    this.tableTemplate1 =
-      [
+
+    this.tableTemplate1 =[{name:"tbl1",fields:[{name:"name",type:"SortText"}]},{name:"tbl2",fields:[{name:"name",type:"SingleSelect",relatedTable:"tbl1"}]}]
+    /*  [
       {
       name: "user",
       fields: [{name: "username", type: "ShortText"}, {name: "password", type: "ShortText"}, {
@@ -54,7 +54,7 @@
           relatedTable: "product"
         }]
       }
-    ];
+    ];*/
     this.tableTemplate2 = [
       {
         name: "email_campaign"
