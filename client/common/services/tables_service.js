@@ -22,6 +22,14 @@
         }
       });
     };
+    this.add = function (appName,table) {
+        return $http({
+            method: 'POST',
+            url: CONSTS.appUrl + '/1/table/config',
+            headers: { AppName: appName },
+            data:table
+        });
+    };
   }
 
   angular.module('common.services')

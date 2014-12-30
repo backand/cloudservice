@@ -1,0 +1,65 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Create Template Schema</strong>
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+
+    <div class="panel-body">
+      <div class="row col-md-10 col-sm-offset-1">
+        <div class="divider divider-solid"></div>
+        <div class="row"></div>
+        <div class="col-md-7">
+
+          <h3>JSON</h3>
+          <br>
+          select Templates:
+          <ul class="nav nav-tabs" ng-class="{'nav-stacked': vertical, 'nav-justified': justified}" >
+            <li ><a ng-click="dbadd.tableTemplate =dbadd.stringfy(dbadd.tableTemplate1);dbadd.activeTemplate=1;" href="">Game Shop</a>&nbsp;&nbsp;</li>
+            <li><a ng-click="dbadd.tableTemplate =dbadd.stringfy(dbadd.tableTemplate2);dbadd.activeTemplate=2;"  href="">E-commerce Campaign</a>&nbsp;&nbsp;</li>
+            <li ><a ng-click="dbadd.tableTemplate =dbadd.stringfy(dbadd.tableTemplate3);dbadd.activeTemplate=3;"  href="">Advertising System</a></li>
+          </ul>
+            <textarea class="form-control ng-pristine ng-invalid ng-invalid-required" ng-model="dbadd.tableTemplate"  rows="20"></textarea>
+
+          <br><button ng-disabled="!dbadd.isEmptyDb" class="btn btn-success btn-lg btn-w-md btn-block ladda-button" ladda="dbadd.processing" ng-click="dbadd.add()">
+           <span class="ladda-label"><span class="ng-scope">
+          Create
+
+              </span></span><span class="ladda-spinner"></span></button>
+<br>
+          <div ng-show="!dbadd.isEmptyDb" class="alert ng-isolate-scope alert-danger alert-dismissable">Your database is not empty, this template can be applied only on an empty database.</div>
+
+          <br>
+
+        </div>
+        <div class="col-md-1">
+          <div class="vertical-border" style="height:400px;"></div>
+        </div>
+        <div class="row col-md-4  col-sm-offset-0">
+          <div class="ui-bullet">
+            <div class="ui-bullet-content">
+              <h4>
+              <i class="ti-comment-alt"></i><strong> Tips</strong>
+              </h4>
+
+        <ul>
+              <li> The JSON on the left represents a database schema, which you can change as appropriate for you project.</li>
+              <li> A JSON table object has a name and columns properties, you do not need to specify a primary key as we generate it for you.</li>
+              <li> The allowed types for a column are ShortText, LongText,DateTime, Numeric,SingleSelect, MultiSelect. For SingleSelect and MultiSelect you need to specify the relatedTable property.</li>
+              <li> The code below it the POST request to Backand REST server,.</li>
+        </ul>
+              <br>
+              <h3> <i class="ti-shortcode"></i> <strong>Code</strong></h3>
+          <pre>//need to set request header with auth token<br>$http({<br>  method: 'POST',<br>  url: https://api.backand.com:8080/1/table/config',<br>  headers: { AppName: appName },<br>  data:schema //  JSON.stringify of the table object;<br>});
+          </pre>
+            </div>
+          </div>
+
+        </div>
+        </div>
+
+
+    </div>
+  </section>
+
+</section>
