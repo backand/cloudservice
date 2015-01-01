@@ -30,6 +30,14 @@
             data:table
         });
     };
+    this.addSchema = function (appName,schema) {
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/table/config/template',
+        headers: { AppName: appName },
+        data:schema
+      });
+    };
   }
 
   angular.module('common.services')

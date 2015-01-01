@@ -203,7 +203,8 @@ gulp.task('serve:tdd', function(cb) {
 
 //run the server after having built generated files, and watch for changes
 gulp.task('serve', ['env:dev', 'build'], function() {
-  var proxyOptions = url.parse('http://api.backand.info:8099');
+  //var proxyOptions = url.parse('http://api.backand.info:8099');
+  var proxyOptions = url.parse('http://www.backand.loc:8080');
   proxyOptions.route = '/api';
   browserSync({
     browser: ['google chrome'],

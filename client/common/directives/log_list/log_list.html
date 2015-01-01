@@ -7,7 +7,9 @@
         <span am-time-ago="log.time"></span>
       </label>
       <span class="col-md-8 col-sm-8">
-        {{log.info}}
+         <div ng-show="!log.long">{{log.info}}</div>
+         <div ng-show="log.long && !log.open">{{log.info}} <a ng-click="log.open=!log.open" href="">more...</a></div>
+         <div ng-show="log.long && log.open">{{log.infoLong}} <a ng-click="log.open=!log.open" href="">close</a></div>
       </span>
     </li>
   </ul>
