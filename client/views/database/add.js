@@ -6,14 +6,14 @@
   function TablesAdd($scope, $state, AppsService, usSpinnerService, NotificationService, TablesService) {
     var self = this;
     var currentApp;
-    self.activeTemplate=1;
+
     AppsService.getCurrentApp($state.params.name)
       .then(function (data) {
         self.currentApp = data;
       }, function (err) {
         NotificationService('error', 'Can not get current app info');
       });
-    //explaign that the order of the table , dependencies should be first
+    //explain that the order of the table , dependencies should be first
 
     this.tableTemplate1 =[{name:"tbl1",fields:[{name:"name",type:"SortText"}]},{name:"tbl2",fields:[{name:"name",type:"SingleSelect",relatedTable:"tbl1"}]}]
     /*  [
@@ -220,6 +220,13 @@
         ]
       }
     ];
+
+    self.activeTemplate=1;
+
+    this.templates = [{name: "Game Shop", template: this.tableTemplate1, active:1},
+                      {name: "E-commerce Campaign", template: this.tableTemplate2, active:2},
+                      {name: "Advertising System", template: this.tableTemplate3, active:3}]
+
     this.stringfy = function (obj) {
       return angular.toJson(obj, true);
     }
