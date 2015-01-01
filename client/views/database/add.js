@@ -14,9 +14,9 @@
           }, function (err) {
             NotificationService('error', 'Can not get current app info');
           });
-        /*[{name:"tbl11",fields:[{name:"name",type:"ShortText"}]},{name:"tbl2",fields:[{name:"name",type:"SingleSelect",relatedTable:"tbl11"}]}]*/
-          this.tableTemplate1 =
-            [
+
+          this.tableTemplate1 =[{name:"tbl11",fields:[{name:"name",type:"sorttext"}]},{name:"tbl2",fields:[{name:"name",type:"singleselect",relatedtable:"tbl11"}]}]
+           /* [
             {
             name: "user",
             fields: [{name: "username", type: "ShortText"}, {name: "password", type: "ShortText"}, {
@@ -54,7 +54,7 @@
                 relatedTable: "product"
               }]
             }
-          ];
+          ];*/
           this.tableTemplate2 = [
             {
               name: "email_campaign"
@@ -251,7 +251,7 @@
               try {
                 NotificationService.add('info', 'The process takes 5-7 minutes');
                 this.processing = true;
-                  $timeout(function(){self.processing = false;}, 2000);
+                  /*$timeout(function(){self.processing = false;}, 2000);*/
                 TablesService.addSchema($state.params.name, this.tableTemplate)(this.tableTemplate)
                   .then(function(data){
                     NotificationService.add('success', 'Congratulation, Your template database is ready! ');
