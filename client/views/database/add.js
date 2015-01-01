@@ -14,9 +14,9 @@
           }, function (err) {
             NotificationService('error', 'Can not get current app info');
           });
-
-          this.tableTemplate1 =[{name:"tbl11",fields:[{name:"name",type:"sorttext"}]},{name:"tbl2",fields:[{name:"name",type:"singleselect",relatedtable:"tbl11"}]}]
-           /* [
+        /*[{name:"tbl11",fields:[{name:"name",type:"sorttext"}]},{name:"tbl2",fields:[{name:"name",type:"singleselect",relatedtable:"tbl11"}]}]*/
+          this.tableTemplate1 =
+            [
             {
             name: "user",
             fields: [{name: "username", type: "ShortText"}, {name: "password", type: "ShortText"}, {
@@ -54,7 +54,7 @@
                 relatedTable: "product"
               }]
             }
-          ];*/
+          ];
           this.tableTemplate2 = [
             {
               name: "email_campaign"
