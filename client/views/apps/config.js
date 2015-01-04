@@ -25,4 +25,14 @@ function config($stateProvider) {
         }]
       }
     })
+    .state('apps.edit', {
+      url: ':name/edit',
+      controller: 'AppSettings as settings',
+      templateUrl: 'views/apps/settings.html',
+      resolve: {
+        appItem: ['AppsService', '$stateParams', function (AppsService, stateParams) {
+          return AppsService.find(stateParams.name);
+        }]
+      }
+    })
 }

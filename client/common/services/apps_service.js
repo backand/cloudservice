@@ -105,6 +105,14 @@
       return deferred.promise;
     };
 
+    this.appDbStat = function(appName) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/app/dbStat',
+        headers: {AppName: appName}
+      });
+    };
+
     this.update = function(name,title) {
       return $http({
         method: 'PUT',

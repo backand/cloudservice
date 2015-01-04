@@ -26,6 +26,14 @@
         <i class="icon-dashboard-icon"></i>
         <span>Dashboard</span>
       </a>
+      <ul>
+        <li>
+          <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goTo('apps.edit')" href="">
+            <i class="ti-settings"></i>
+            <span>App Settings</span>
+          </a>
+        </li>
+      </ul>
     </li>
 
     <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
@@ -81,13 +89,13 @@
     </li>
 
     <li ng-class="{active: nav.state == 'tables.show'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="fetchTables()" href="">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.fetchTables()" href="">
         <i class="ti-view-grid"></i>
         <span>Database Tables</span>
       </a>
-      <ul class="tables-list" style="">
-        <li ng-class="{active: false }" ng-repeat="table in tables">
-            <a ng-class="{disabled: false}"  ng-click="showTable(table)" href="">
+      <ul class="tables-list">
+        <li ng-class="{active: false }" ng-repeat="table in nav.tables">
+            <a ng-class="{disabled: false}"  ng-click="nav.showTable(table)" href="">
                 <i class="ti-cloud"></i>
                 <span>{{table.name}}</span>
             </a>

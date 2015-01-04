@@ -100,35 +100,21 @@
       stopRefresh();
     });
 
-    $scope.tables = [];
-  
-    $scope.fetchTables = function(){
-      $log.debug("appName", self.appName);
-      AppsService.getCurrentApp(self.appName).then(
-        function(data) {
-          $log.debug(data);
-          self.currentApp = data;
-          TablesService.get(self.currentApp.Name).then(
-            function(data) {
-              $log.debug("TablesService success", data);
-              $scope.tables = data.data.data;
-            },
-            function(data) {
-              $log.debug("TablesService failure", data);
-            }
+    self.tables = [];
+
+      this.fetchTables = function() {
+          TablesService.get($state.params.name).then(
+              function(data) {
+                  self.tables = data.data.data;
+              },
+              function(data) {
+                  $log.debug("TablesService failure", data);
+              }
           );
-          
-        }, 
-        function(err) {
-          NotificationService.add('error', 'Can not get current app info');
-        }
-      );
+      }
 
-    };
-
-    $scope.showTable = function(table) {
-      $log.debug(table);
-      $state.go('tables.columns', { appName: self.appName, tableName: table.name });
+    this.showTable = function(table) {
+      $state.go('tables.columns', { name: $state.params.name, tableName: table.name });
     };
 
     

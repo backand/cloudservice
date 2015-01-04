@@ -1,0 +1,54 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> App Settings</strong>
+      <a href="javascript:;" class="btn btn-lg pull-right" style="margin-top: -10px;"><i class="ti-trash"></i></a>
+    </div>
+    <div class="panel-body">
+      <form role="form" role="form" ng-submit="settings.sumbitForm()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" ng-model="settings.appName" required>
+        </div>
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" ng-model="settings.appTitle" required>
+        </div>
+        <dl class="form-group">
+          <dt>Default Date Format</dt>
+          <dd>
+            <label class="ui-radio" ng-repeat="dates in settings.datesFormar">
+              <input name="dateFormat" type="radio" ng-value="dates" ng-model="settings.dateFormat" ><span>{{dates}}</span>
+            </label>
+          </dd>
+        </dl>
+        <div class="form-group">
+          <label for="rows">Default List Page Rows</label>
+          <input type="number" class="form-control" id="rows" data-ng-model="settings.defaultPageSize" data-min=5 data-max=1000 required>
+        </div>
+        <br/>
+        <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg" ladda="settings.loading" data-style="expand-right">Save</button>
+      </form>
+    </div>
+  </section>
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Images Storage Configuration</strong>
+      <a href="javascript:;" class="btn btn-lg " ><i class="ti-plus"></i></a>
+    </div>
+    <div class="panel-body">
+      <div class="ui-tab-container ui-tab-vertical" style="height:200px; overflow:auto">
+        <tabset class="ui-tab">
+          <tab heading="S3 Storage">
+            <form role="form" role="form" ng-submit="settings.sumbitForm()">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" value="s3 example" required>
+              </div>
+            </form>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </section>
+</section>
