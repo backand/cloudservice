@@ -35,7 +35,8 @@
         method: 'POST',
         url: CONSTS.appUrl + '/1/table/config/template',
         headers: { AppName: appName },
-        data:schema
+        data:schema,
+        dataType: 'json'
       });
     };
   }

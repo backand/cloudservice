@@ -45,7 +45,7 @@
     AppsService.appDbStat($state.params.name)
       .then(function(data){
         if (data.data.tableCount == 0) {
-          var msg = 'Your database has no tables! go to <a href="#/database/template/' + $state.params.name + '">Database Templates</a> to build the database or use any Admin tool like Workbench or phpMyAdmin';
+          var msg = 'Your database has no tables! go to <a href="#/database/template/' + $state.params.name + '">Database Templates</a> to populate the database or use any DB admin tool like Workbench or phpMyAdmin';
           self.alertMsg = $sce.trustAsHtml(msg);
           AppsService.setAlert($state.params.name,msg)
         }
