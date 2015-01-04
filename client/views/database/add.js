@@ -238,7 +238,7 @@
           {
             return TablesService.addSchema($state.params.name, this.tableTemplate);
           }
-
+        self.isReady = false;
           this.add = function () {
             var table = null;
             try {
@@ -251,12 +251,12 @@
               try {
                 NotificationService.add('info', 'The process takes 5-7 minutes');
                 this.processing = true;
-                  /*$timeout(function(){self.processing = false;}, 2000);*/
-                TablesService.addSchema($state.params.name, this.tableTemplate)(this.tableTemplate)
+                 /* $timeout(function(){self.processing = false;}, 2000);*/
+                TablesService.addSchema($state.params.name, this.tableTemplate)
                   .then(function(data){
                     NotificationService.add('success', 'Congratulation, Your template database is ready! ');
                     self.processing = false;
-                    self.isEmptyDb =false;
+                    self.isReady =true;
                 }, function (err) {
                     self.processing = false;
                     NotificationService.add('error', 'Can not create table ' + table.name);
