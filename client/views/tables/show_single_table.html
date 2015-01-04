@@ -6,27 +6,27 @@
     <div class="panel-body">
       <div class="">
         <div class="ui-tab-container ui-tab-horizontal">
-          <!--horizontal tabs-->
+
           <tabset justified="false" class="ui-tab">
 
             <tab heading="Fields" select="singleTable.switchTab('fields')">
-              <vertical-tabs></vertical-tabs>
+              <ng-include src="'views/tables/tabs/fields.html'"></ng-include>
             </tab>
 
             <tab heading="Rules" select="singleTable.switchTab('rules')">
-              <vertical-tabs></vertical-tabs>
+              <ng-include src="'views/tables/tabs/rules.html'"></ng-include>
             </tab>
 
             <tab heading="Security" select="singleTable.switchTab('security')">
-              <vertical-tabs></vertical-tabs>
+
             </tab>
 
             <tab heading="Settings" select="singleTable.switchTab('settings')">
-              <vertical-tabs></vertical-tabs>
+
             </tab>
 
             <tab heading="Data" select="singleTable.switchTab('data')">
-              <vertical-tabs></vertical-tabs>
+
             </tab>
 
           </tabset>

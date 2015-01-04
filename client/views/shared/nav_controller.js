@@ -111,12 +111,16 @@
                   $log.debug("TablesService failure", data);
               }
           );
-      }
+      };
 
     this.showTable = function(table) {
-      $state.go('tables.columns', { name: $state.params.name, tableName: table.name });
+      $state.go('tables.columns', {
+        name: $state.params.name,
+        tableName: table.name,
+        tableId: table.__metadata.id
+      });
     };
 
-    
+
   }
 }());

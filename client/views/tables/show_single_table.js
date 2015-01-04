@@ -1,54 +1,66 @@
-(function  () {
-  'use strict';
-  angular.module('app')
-    .controller('SingleTableShow', [
-      '$scope',
-      '$state',
-      'AppsService',
-      'usSpinnerService',
-      'NotificationService',
-      'ColumnsService',
-      '$timeout',
-      '$log',
-      SingleTableShow]);
+/**
+ * Refactored by nirkaufman on 1/4/15.
+ */
+(function () {
 
-  function SingleTableShow($scope,
-                           $state,
-                           AppsService,
-                           usSpinnerService,
+
+  function SingleTableShow($stateParams,
+                           $log,
                            NotificationService,
                            ColumnsService,
-                           $timeout,
-                           $log)
-  {
+                           RulesService) {
 
     var self = this;
 
-    self.tableName = $state.params.tableName;
-    self.messages = ["no stats yet..."];
-    self.alertClass = "";
-
+    self.tableName = $stateParams.tableName;
+    self.tableId = $stateParams.tableId;
+    self.messages = [];
     self.fields = [];
     self.fieldTypesRange = ["String", "DateTime", "Integer"];
-
-
-    self.switchTab = function(tab) {
-
-      ColumnsService.get($state.params.name, $state.params.tableName)
-      .then(function(data) {
-        self.fields = data.data.fields;
-      },
-
-      function() {
-        NotificationService.add('error', 'Can not get table info');
-      }
-    );
-    };
-
     self.selectedField = null;
-    $scope.showField = function(field) {
-      self.selectedField = field;
+
+
+    self.switchTab = function (tab) {
+
+      switch (tab) {
+
+        case 'fields':
+          ColumnsService.get($stateParams.name, self.tableName)
+            .then(succsessHandler, errorHandler);
+          break;
+
+        case 'rules':
+          RulesService.get($stateParams.name, self.tableId)
+            .then(rulesSuccsessHandler, errorHandler);
+          break;
+      }
+
     };
+
+    function rulesSuccsessHandler(data) {
+      $log.debug(data);
+      self.fields = data.data.data;
+    }
+
+    function succsessHandler(data) {
+      self.fields = data.data.fields;
+    }
+
+    function errorHandler(error, message) {
+      NotificationService.add('error', message);
+      $log.debug(error);
+    }
 
   }
+
+  angular.module('app')
+    .controller('SingleTableShow', [
+      '$stateParams',
+      '$log',
+      'NotificationService',
+      'ColumnsService',
+      'RulesService',
+      SingleTableShow
+    ]);
+
 }());

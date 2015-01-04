@@ -1,19 +1,23 @@
-<!--inner vertical tabs-->
 <div class="ui-tab-container ui-tab-vertical" style="height:500px; overflow:auto">
   <tabset class="ui-tab">
     <tab ng-repeat="field in singleTable.fields"
          heading="{{ field.name }}">
+
       <form role="form" style="height:450px;">
+
         <div class="form-group">
           <label for="exampleInputEmail1">Name</label>
           <input type="text" class="form-control" id="exampleInputEmail1" ng-model="field.name">
         </div>
+
         <div class="checkbox">
           <label>
             <input type="checkbox" ng-model="field.required"> Required
           </label>
         </div>
+
       </form>
+
     </tab>
   </tabset>
 </div>
