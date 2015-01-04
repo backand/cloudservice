@@ -43,7 +43,7 @@
       loadApp();
 
       if (typeof self.appName !== 'undefined') {
-        stop = $interval(loadApp, 30 * 1000);
+        stop = $interval(loadApp, 10 * 1000);
       }
     });
 

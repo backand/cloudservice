@@ -1,0 +1,165 @@
+<section class="page-form-ele page ng-scope">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>ORM Usage</strong></div>
+        <div class="panel-body">
+            <div class="row col-sm-10 col-sm-offset-1">
+            <h1>
+                <a id="user-content-short-description" class="anchor" href="#short-description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Short Description
+            </h1>
+
+            <p>restangularbknd-orm has three services:</p>
+
+            <ul class="task-list">
+                <li><p>Auth (authentication)</p></li>
+                <li><p>Session</p></li>
+                <li><p>restangularbknd (Restangular Backand Configuration)</p></li>
+            </ul>
+
+            <p>
+                The Auth service handles the OAuth2 authentication with Backand. It uses a POST verb and sends a username, password and appname (application name) and receives an authentication token that is used for all further communication with Backand.<br/>
+                By using a cookie to persist the authentication token, the Session enables you to remain signed-in after the page is reloaded. The restangularbknd handles the Restangular Configuration by enabling you to use Restangular in your app.
+            </p>
+
+            <h2>
+                <a id="user-content-using-backand-orm-with-restangular" class="anchor" href="#using-backand-orm-with-restangular" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using Backand ORM with Restangular
+            </h2>
+
+            <p>If you aren't familiar with Restangular, click <a href="https://github.com/mgonto/restangular" target="_blank">here</a> to learn more. </p>
+
+            <p>With the authentication and Restangular configurations settled you can perform all the CRUD operations:</p>
+
+            <h3>
+                <a id="user-content-list" class="anchor" href="#list" aria-hidden="true"><span class="octicon octicon-link"></span></a>List
+            </h3>
+
+            <p>Call Restangular getList with the following parameters to get a list:</p>
+
+            <ul class="task-list">
+                <li><p><strong>pageSize</strong> The number of returned items in each getList call, default 20.</p></li>
+                <li><p><strong>pageNumber</strong> The page number starting with 1, default 1.</p></li>
+                <li><p><strong>filter</strong> A stringified array where each item has the properties fieldName, operator and value. The operator options depend on the field type.</p></li>
+                <li><p><strong>sort</strong> A stringified array where each item has the properties fieldName and order. The order options are "asc" or "desc".</p></li>
+                <li><p><strong>search</strong> Free text search.</p></li>
+                <li><p><strong>deep</strong> When set to true, brings the related parent rows in the relatedTables property.</p></li>
+                <li>
+                    <strong>withSelectOptions</strong> When set to true, get a text value collection to load select options according to parent relations.
+                </li>
+            </ul>
+
+
+            <pre>var getListParameters = {
+    pageSize: 5,
+    pageNumber: 1,
+    filter: JSON.stringify([{ fieldName: "Name", operator: "contains", value: "j" }, { fieldName: "Amount", operator: "greaterThan", value: "6" }]),
+    sort: JSON.stringify([{ fieldName: "Name", order: "asc" }]),
+    search: "",
+    deep: false,
+    withSelectOptions: false 
+}
+Restangular.all('Some table').getList(getListParameters).then(function (list) {
+    // handle the list
+    }, function (response) {
+    // handle errors
+});
+</pre>
+
+
+            <h3>
+                <a id="user-content-one-item" class="anchor" href="#one-item" aria-hidden="true"><span class="octicon octicon-link"></span></a>One Item
+            </h3>
+
+            <p>Call Restangular with a specific id and with the following parameters to get a specific item:</p>
+
+            <ul class="task-list">
+                <li><p><strong>id</strong> The id is the primary kay value of a table row </p></li>
+                <li><p><strong>deep</strong> When set to true, brings the related parent and child rows</p></li>
+            </ul>
+
+            <pre>
+var id = 3012;
+var getParameters = {
+    deep: false
+}
+Restangular.one('Some table', id).get(getParameters).then(function (item) {
+    // handle the item
+    }, function (response) {
+    // handle errors
+})</pre>
+
+            <h3>
+                <a id="user-content-create" class="anchor" href="#create" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create
+            </h3>
+
+            <p>Call Restangular post with a new object to create, with the following parameters:</p>
+
+            <ul class="task-list">
+                <li>
+                    <strong>returnObject</strong> Set this to true when you have server side business rules that causes additional changes to the object. In that case this request will return the created object:
+                </li>
+            </ul>
+
+            <pre>
+var objectToCreate = {
+    name: "John",
+    Amount: 15
+};
+var postParameters = {
+    returnObject: true
+};
+Restangular.all('Some table').post(objectToCreate, postParameters).then(function (item) {
+    // handle the item
+    }, function (response) {
+    // handle errors
+});</pre>
+
+            <h3>
+                <a id="user-content-update" class="anchor" href="#update" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update
+            </h3>
+
+            <p>Call Restangular put to update an existing object with the following parameters:</p>
+
+            <ul class="task-list">
+                <li>
+                    <strong>returnObject</strong> Set this to true when you have server side business rules, causing additional changes to the object. In this case the request will return the created object:
+                </li>
+            </ul>
+
+            <pre>
+var id = 3012;
+var putParameters = {
+    returnObject: true
+};
+// get an existing item, you can use getList to get an array an well
+Restangular.one('Some table', id).get().then(function (item) {
+    item.Amount = 17;
+    // save the changes
+    item.put(putParameters).then(function (item) {
+    // handle the item
+    }, function (response) {
+    // handle errors
+    });
+    }, function (response) {
+    // handle errors
+});</pre>
+
+            <h3>
+                <a id="user-content-delete" class="anchor" href="#delete" aria-hidden="true"><span class="octicon octicon-link"></span></a>Delete
+            </h3>
+
+            <p>Call Restangular remove to delete an item from a list:</p>
+
+            <pre>
+Restangular.all('Some table').getList().then(function (list) {
+    // delete the last item in the list
+    list[list.length - 1].remove().then(function (response) {
+    // handle success
+    }, function (response) {
+    // handle errors
+    });
+    }, function (response) {
+    // handle errors
+});</pre>
+            </div>
+        </div>
+</div>
+</section>

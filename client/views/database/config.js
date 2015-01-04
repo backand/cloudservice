@@ -16,6 +16,11 @@
         controller: 'DatabaseEdit as dbedit',
         templateUrl: 'views/database/edit.html'
       })
+      .state('database.add-tables', {
+        url: '/template/:name',
+        controller: 'TablesAdd as dbadd',
+        templateUrl: 'views/database/add.html'
+      })
   }
 
 })();

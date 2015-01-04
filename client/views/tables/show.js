@@ -6,7 +6,7 @@
   function TablesShow($scope, $state, AppsService, usSpinnerService, NotificationService, TablesService,$timeout) {
     var self = this;
     var currentApp;
-    self.messages = ["no stats yet..."];
+    self.messages = ["To see status click Sync Tables"];
     self.alertClass = "";
 
     AppsService.getCurrentApp($state.params.name)

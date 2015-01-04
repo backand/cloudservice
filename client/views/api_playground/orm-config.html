@@ -1,0 +1,169 @@
+<section class="page-form-ele page ng-scope">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>ORM Configuration</strong>
+        </div>
+        <div class="panel-body">
+            <div class="row col-sm-10 col-sm-offset-1">
+            <h1>
+                <a id="user-content-how-do-i-add-this-to-my-project" class="anchor" href="#how-do-i-add-this-to-my-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do I add RestangularBknd-orm to my project?
+            </h1>
+
+            <p>You can download this by:</p>
+
+            <ul class="task-list">
+                <li><p>Using bower and running <code>bower install restangularbknd-orm</code></p></li>
+                <li><p>Using npm and running <code>npm install restangularbknd-orm</code></p></li>
+                <li><p>Downloading it manually by clicking <a href="https://github.com/backand/restangularbknd-orm/blob/master/dist/restangularbknd-orm.debug.js" target="_blank">development unminified version</a> or <a href="https://github.com/backand/restangularbknd-orm/blob/master/dist/restangularbknd-orm.min.js">minified production version</a></p></li>
+            </ul>
+            <br/>
+            <p>The github sources: <a href="https://github.com/backand/restangularbknd-orm" target="_blank">https://github.com/backand/restangularbknd-orm</a></p>
+            <p>The Plunker demo of the example: <a href="http://plnkr.co/edit/Himh9XP2tNn07VJDFtF8?p=preview" target="_blank">http://plnkr.co/edit/Himh9XP2tNn07VJDFtF8?p=preview</a></p>
+
+            <h2>
+                <a id="user-content-dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies
+            </h2>
+
+            <p>restangularbknd-orm depends on AngularJS, Restangular and angular-cookies.js</p>
+
+            <h2>
+                <a id="user-content-configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration
+            </h2>
+
+
+            <pre>
+// Add Restangular as a dependency to your app
+angular.module('your-app', ['restangularbknd-orm']);
+// Inject restangularbknd-orm services into your authorization controller
+angular.module('your-app').controller('Your Authorization Controller', function($scope, AuthService, SessionService, RestangularBknd) {
+    // ...
+});
+// Inject Restangular into your controllers that require data
+angular.module('your-app').controller('Your Controller', function($scope, Restangular) {
+    // ...
+});
+</pre>
+
+
+            <h3>
+                <a id="user-content-authentication" class="anchor" href="#authentication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication
+            </h3>
+
+            <p>
+                Use the Authentication service in the controller that is responsible for sign-in and sign-out.
+                Call the sign-in with username, password and appname, and in the success callback set the credentials, which are basically the auth token, into the session and restangularbknd services.
+            </p>
+
+
+            <pre>
+.controller('authorizationCtrl', ['$scope', 'AuthService', 'SessionService', 'RestangularBknd', function ($scope, AuthService, SessionService, RestangularBknd) {
+    $scope.signIn = function () {
+        // send the username, password and appname to get an OAuth2 authentication token
+        /****** Authentication Service Usage ********/
+        AuthService.signIn($scope.username, $scope.password, $scope.appname)
+        /********************************************/
+        .success(function (data, status, headers, config) {
+            // handle success
+            SessionService.setCredentials(data);
+            RestangularBknd.setCredentials(SessionService.getAuthHeader());
+        })
+        .error(function (data, status, headers, config) {
+            // handle error
+        });
+    };
+}]);
+</pre>
+
+
+            <h3>
+                <a id="user-content-session" class="anchor" href="#session" aria-hidden="true"><span class="octicon octicon-link"></span></a>Session
+            </h3>
+
+            <p>
+                Use the session service in the controller that is responsible for sign-in and sign-out.
+                Set the credentials in the sign-in success callback and rRemove them to sign out.
+            </p>
+
+
+            <pre>
+.controller('authorizationCtrl', ['$scope', 'AuthService', 'SessionService', 'RestangularBknd', function ($scope, AuthService, SessionService, RestangularBknd) {
+    $scope.signIn = function () {
+        // send the username, password and appname to get an OAuth2 authentication token
+        AuthService.signIn($scope.username, $scope.password, $scope.appname)
+        .success(function (data, status, headers, config) {
+            // handle success
+            /****** Session Service Usage ********/
+            SessionService.setCredentials(data);
+            /*************************************/
+            RestangularBknd.setCredentials(SessionService.getAuthHeader());
+        })
+            .error(function (data, status, headers, config) {
+            // handle error
+        });
+    };
+    $scope.signOut = function () {
+        /****** Session Service Usage ********/
+        SessionService.clearCredentials();
+        /*************************************/
+        RestangularBknd.clearCredentials();
+    };
+}]);
+</pre>
+            <p>When the application starts, call them to set them into Restangular.</p>
+            <pre>
+myApp.run(<span class="pl-st">function</span> (<span class="pl-vpf">RestangularBknd</span>, <span class="pl-vpf">SessionService</span>) {
+    RestangularBknd.config();
+    <span class="pl-c">/****** Session Service Usage ********/</span>
+    <span class="pl-s">var</span> authHeader <span class="pl-k">=</span> SessionService.getAuthHeader();
+    <span class="pl-c">/*************************************/</span>
+    RestangularBknd.setCredentials(authHeader);
+});</pre>
+
+
+            <h3>
+                <a id="user-content-restangular-backand-configuration" class="anchor" href="#restangular-backand-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Restangular Backand Configuration
+            </h3>
+
+            <p>
+                Configure the Restangular when the application starts
+                and set the credentials from the session (cookie) if there are any.
+            </p>
+
+
+            <pre>
+myApp.run(function (RestangularBknd, SessionService) {
+    /****** RestangularBknd Service Usage ********/
+    RestangularBknd.config();
+    /*********************************************/
+    var authHeader = SessionService.getAuthHeader();
+    /****** RestangularBknd Service Usage ********/
+    RestangularBknd.setCredentials(authHeader);
+    /*********************************************/
+});</pre>
+
+
+            <p>Set the credentials after authentication.</p>
+
+
+            <pre>
+.controller('authorizationCtrl', ['$scope', 'AuthService', 'SessionService', 'RestangularBknd', function ($scope, AuthService, SessionService, RestangularBknd) {
+    $scope.signIn = function () {
+        // send the username, password and appname to get an OAuth2 authentication token
+        AuthService.signIn($scope.username, $scope.password, $scope.appname)
+        .success(function (data, status, headers, config) {
+            // handle success
+            SessionService.setCredentials(data);
+            /****** RestangularBknd Service Usage ********/
+            RestangularBknd.setCredentials(SessionService.getAuthHeader());
+            /*********************************************/
+        })
+            .error(function (data, status, headers, config) {
+            // handle error
+        });
+    };
+}]);
+</pre>
+            </div>
+        </div>
+    </div>
+</section>

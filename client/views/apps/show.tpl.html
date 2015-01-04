@@ -1,18 +1,32 @@
 <div class="page">
-
+  <alert type="warning" close="show.setAlertStatus()" ng-show="show.alertMsg != ''"><div ng-bind-html="show.alertMsg"></div></alert>
   <div class="panel panel-default dashboard">
     <div class="panel-heading"><strong>Dashboard</strong></div>
     <div class="panel-body">
       <div class="row col-md-10 col-sm-offset-1">
 
-        <div class="list-unstyled row">
+        <div class="list-unstyled row col-sm-offset-1">
           <ul class="list-inline text-center stats" >
-            <div ng-repeat="stat in show.statisticsArray">
               <li class="col-md-3">
-                <h1>{{stat.Value}}</h1>
-                <p class="text-muted size-h5">{{stat.Name}}</p>
+                <h1>{{show.statisticsArray['last24hours'] | number:0}}</h1>
+                <p class="text-muted size-h5">Requests in 24h</p>
               </li>
-            </div>
+              <li class="col-md-3">
+                  <h1>{{show.statisticsArray['diffLastDaytoYesterday']==null ? 0:show.statisticsArray['diffLastDaytoYesterday'] | number:0}}%</h1>
+                  <p class="text-muted size-h5">Diff in last 24h</p>
+              </li>
+              <li class="col-md-3">
+                  <h1>{{show.statisticsArray['last30days'] | number:0}}</h1>
+                  <p class="text-muted size-h5">Requests in 30d</p>
+              </li>
+              <li class="col-md-3">
+                  <h1>{{show.statisticsArray['diffLast30DaysToPrev']==null ? 0:show.statisticsArray['diffLast30DaysToPrev'] | number:0}}%</h1>
+                  <p class="text-muted size-h5">Diff in last 30d</p>
+              </li>
+              <!--<li class="col-md-2">-->
+                  <!--<h1>{{show.statisticsArray['sizeInMb']==null ? 0:show.statisticsArray['sizeInMb'] | number:0}}MB</h1>-->
+                  <!--<p class="text-muted size-h5">Database Size</p>-->
+              <!--</li>-->
           </ul>
         </div>
 
@@ -20,7 +34,7 @@
 
         <div class="row">
           <div class="col-md-5 col-sm-6">
-            <div log-list app-name="{{appName}}" log-limit="5"></div>
+            <div log-list app-name="{{appName}}" log-limit="10"></div>
           </div>
 
           <div class="col-md-1 col-sm-0">

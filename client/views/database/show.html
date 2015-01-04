@@ -1,65 +1,65 @@
-
 <section class="page-form-ele page ng-scope">
-
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> Database Information</strong>
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
+      <div class="row col-md-10 col-sm-offset-1">
+        <div class="list-unstyled row"><br/></div>
+        <div class="divider divider-solid"></div>
+        <div class="row">
+            <div class="col-md-7">
 
-            <div class="col-md-10 col-md-offset-1">
+
+
               <form class="form-horizontal ng-pristine ng-valid" role="form" ng-submit="dbshow.sumbitForm()">
 
                   <div class="form-group">
-                      <label for="server" class="col-sm-2 control-label">Database Type:</label>
-                      <div class="col-sm-10">
+                      <label for="server" class="col-sm-3 control-label">Database Type:</label>
+                      <div class="col-sm-9">
                           <div class="form-control-static" id="dbtype" placeholder="" >{{dbshow.data.databaseName}}</div>
                       </div>
                   </div>
 
                   <div class="form-group">
-                  <label for="server" class="col-sm-2 control-label">Endpoint:</label>
-                  <div class="col-sm-10">
+                  <label for="server" class="col-sm-3 control-label">Endpoint:</label>
+                  <div class="col-sm-9">
                     <div class="form-control-static" id="server" placeholder="" >{{dbshow.data.server}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="database" class="col-sm-2 control-label">Database name:</label>
-                  <div class="col-sm-10">
+                  <label for="database" class="col-sm-3 control-label">Database name:</label>
+                  <div class="col-sm-9">
                     <div  class="form-control-static" id="database" placeholder="" >{{dbshow.data.database}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="UserName" class="col-sm-2 control-label">Username:</label>
-                  <div class="col-sm-10">
+                  <label for="UserName" class="col-sm-3 control-label">Username:</label>
+                  <div class="col-sm-9">
                     <div class="form-control-static" id="UserName" placeholder="" >{{dbshow.data.username}}</div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label  class="col-sm-2 control-label">Password:</label>
-                  <div class="col-sm-10">
+                  <label  class="col-sm-3 control-label">Password:</label>
+                  <div class="col-sm-9">
                     <div ng-show="dbshow.data.password" type="text" class="form-control-static">{{dbshow.data.password}}</div>
-                    <button ng-hide="dbshow.data.password" class="btn-primary" ng-click="dbshow.getPassword()">get password</button></div>
-
+                    <div class="form-control-static"><a ng-hide="dbshow.data.password" href="" ng-click="dbshow.getPassword()">Get password</a></div></div>
                 </div>
 
                 <div ng-switch on="dbshow.data.databaseName">
                   <div class="form-group" ng-switch-when='mysql'>
-                  <label for="usessh" class="col-sm-2 control-label">Use SSH:</label>
-                    <div class="col-sm-10">
+                  <label for="usessh" class="col-sm-3 control-label">Use SSH:</label>
+                    <div class="col-sm-9">
                         <div class="form-control-static" id="usessh">{{dbshow.data.usingSsh}}</div>
                     </div>
                   </div>
 
                   <div class="form-group" ng-switch-when='postgresql'>
-                      <label for="usessl" class="col-sm-2 control-label">Use SSL:</label>
-                      <div class="col-sm-10">
+                      <label for="usessl" class="col-sm-3 control-label">Use SSL:</label>
+                      <div class="col-sm-9">
                         <div class="form-control-static" id="usessl" >{{dbshow.data.usingSsl}}</div>
                       </div>
                   </div>
@@ -71,37 +71,37 @@
                   <div class="divider divider-dashed divider-lg pull-in"></div>
 
                   <div class="form-group" >
-                    <label  class="col-sm-2 control-label">SSH Remote Host</label>
+                    <label  class="col-sm-3 control-label">SSH Remote Host</label>
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-9">
                       <div class="form-control" > {{dbshow.data.sshRemoteHost}}</div>
                     </div>
                   </div>
 
                   <div class="form-group" >
-                    <label  class="col-sm-2 control-label">SSH User Name</label>
+                    <label  class="col-sm-3 control-label">SSH User Name</label>
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-9">
                       <div class="form-control" > {{dbshow.data.sshUser}}</div>
                     </div>
                   </div>
 
                   <div class="form-group" >
-                    <label  class="col-sm-2 control-label">SSH Port</label>
+                    <label  class="col-sm-3 control-label">SSH Port</label>
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-9">
                       <div class="form-control" > {{dbshow.data.sshPort}}</div>
                     </div>
                   </div>
 
-                    <label for="sshPassword" class="col-sm-2 control-label">SSH Password</label>
-                    <div class="col-sm-10">
+                    <label for="sshPassword" class="col-sm-3 control-label">SSH Password</label>
+                    <div class="col-sm-9">
                       <input type="text" class="form-control" ng-model="dbedit.data.sshPassword" ng-disabled="dbedit.data.sshPassword"
                              id="sshPassword" placeholder="" required>
                     </div>
 
-                    <label for="sshPrivateKey" class="col-sm-2 control-label">SSH Private Key</label>
-                    <div class="col-sm-10">
+                    <label for="sshPrivateKey" class="col-sm-3 control-label">SSH Private Key</label>
+                    <div class="col-sm-9">
                       <input type="password" class="form-control" ng-model="dbedit.data.sshPrivateKey" ng-disabled="dbedit.data.sshPrivateKey"
                              id="sshPrivateKey" placeholder="" required>
                     </div>
@@ -115,38 +115,33 @@
                 </div>
               </form>
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="panel panel-default">
 
-    <div class="panel-body">
-        <div class="ui-bullet">
-            <div class="btn-icon btn-icon-round btn-icon-lg bg-info">
-                <i class="ti-pencil-alt"></i>
             </div>
-            <div class="ui-bullet-content">
-                <h3>Admin your Database</h3>
-                <p><br/>Your Backand MySql is available!<br/>
-                    To manage the database schema like adding new tables or modified columns, use one of the following tools:<br/>
+            <div class="col-md-1">
+                <div class="vertical-border" style="height:400px;"></div>
+            </div>
+            <div class="col-md-4">
+              <div class="ui-bullet">
+                <div class="ui-bullet-content">
+                    <h4><i class="ti-comment-alt"></i>  <strong> Database Admin</strong></h4>
+                    <p>To administrate your database schema, like adding new tables or modifying columns, use one of the following tools:<br/>
                     <ul>
                         <li><a href="//www.mysql.com/products/workbench" target="_blank">Workbench</a></li>
                         <li><a href="//www.phpmyadmin.net/home_page/index.php" target="_blank">phpMyAdmin</a></li>
                         <li><a href="//www.sequelpro.com/" target="_blank">Sequel Pro</a></li>
                         <li><a href="//www.heidisql.com/" target="_blank">HeidiSQL</a></li>
                     </ul>
-                    <br/>Go to <a ng-click="dbshow.sync(0)" href="">Database Table</a> and click <button type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary" ng-click="dbshow.sync(1)">Sync Tables</button>
-                    after you update your schema to sync your changes into Backand.
-                </p>
-            </div>
+                    <br/>In order to sync your database schema changes into Backand, go to <b><a ng-click="dbshow.sync(0)" href="">Database Tables</a></b> and click<br/> <b>"Sync Tables"</b>.
+                    <!--<br/>Go to <a ng-click="dbshow.sync(0)" href="">Database Table</a> and click <button type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary" ng-click="dbshow.sync(1)">Sync Tables</button>-->
+                    <!--after you update your schema to sync your changes into Backand.-->
+                    </p>
+                </div>
+              </div>
+          </div>
         </div>
+      </div>
     </div>
-
   </section>
-
 </section>
 
 

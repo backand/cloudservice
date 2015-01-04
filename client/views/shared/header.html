@@ -3,7 +3,7 @@
 
   <!-- Logo -->
   <div class="logo bg-dark">
-    <a ui-sref="apps.index">
+    <a ng-click="header.goTo('apps.index');" href="">
       <span>Backand</span>
     </a>
   </div>
@@ -18,7 +18,7 @@
   <div class="top-nav">
     <ul class="nav-left list-unstyled">
       <li>
-        <a ui-sref="apps.index"><i class="ti-layers-alt" style="font-size: 25px;"></i></a>
+        <a ng-click="header.goTo('apps.index');" href=""><i class="ti-layers-alt" style="font-size: 25px;"></i></a>
       </li>
       <li class="search-box visible-md visible-lg">
         <div class="input-group">

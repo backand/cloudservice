@@ -7,9 +7,13 @@
     self.currAppName = '';
 
     this.redirectTo = function(appName) {
-      if($state.current.name == 'apps.index')
-          $state.current.name = 'apps.show';
-      $state.go($state.current.name, { name: appName });
+      //if($state.current.name == 'apps.index')
+      //    $state.current.name = 'apps.show';
+      $state.go('apps.show', { name: appName });
+    };
+
+    this.goTo = function(state) {
+        $state.go(state, {name: ''});
     };
 
     $scope.$on('$stateChangeSuccess', function() {

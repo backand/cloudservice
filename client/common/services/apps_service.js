@@ -8,7 +8,8 @@
     var apps = {
       list: [],
       names: [],
-      status: {}
+      status: {},
+      alerts: {}
     };
 
     var currentApp;
@@ -16,9 +17,9 @@
     apps.deferred = $q.defer();
 
     function updateAppNames() {
-      apps.names = [];
+        apps.names = [];
 
-      apps.list.forEach(function(item) {
+        apps.list.forEach(function(item) {
         apps.names.push(item.Name);
         apps.status[item.Name] = item.DatabaseStatus;
       })
@@ -46,6 +47,24 @@
 
     };
 
+    this.getAlert  = function(appName) {
+      if (apps.alerts[appName] == null) {
+        this.appDbStat(appName)
+          .success(function (data) {
+            if (data.tableCount == 0)
+              apps.alerts[appName] = "Your database has no tables! go to <a href=''>Database Create</a> and run our existing schemas or use any Admin tool to add tables";
+              return apps.alerts[appName];
+          })
+      }
+
+      return apps.alerts[appName];
+
+    }
+
+    this.setAlert  = function(appName, msg) {
+          apps.alerts[appName] = msg;
+    }
+
     function searchStringInArray (str, strArray) {
       for (var j=0; j<strArray.length; j++) {
         if (strArray[j].match(str)) return j;
@@ -67,9 +86,11 @@
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
       })
       .success(function (data) {
-        apps.list = data.data;
-        updateAppNames();
-        apps.deferred.resolve(apps);
+      if (data) {
+          apps.list = data.data;
+          updateAppNames();
+          apps.deferred.resolve(apps);
+      }
       })
       .error(function (error) {
         apps.deferred.reject(error);
