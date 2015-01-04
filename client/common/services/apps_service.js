@@ -27,8 +27,7 @@
 
     this.setCurrentApp = function(data){
       currentApp = data;
-      var Database_Source = data.Database_Source ? DatabaseNamesService.getDBSource(data.Database_Connection.Database_Source) : undefined;
-      currentApp.databaseName = Database_Source;
+      currentApp.databaseName = data.Database_Source ? DatabaseNamesService.getDBSource(data.Database_Connection.Database_Source) : undefined;
     };
 
     this.getCurrentApp = function(appName){
@@ -59,11 +58,11 @@
 
       return apps.alerts[appName];
 
-    }
+    };
 
     this.setAlert  = function(appName, msg) {
           apps.alerts[appName] = msg;
-    }
+    };
 
     function searchStringInArray (str, strArray) {
       for (var j=0; j<strArray.length; j++) {
