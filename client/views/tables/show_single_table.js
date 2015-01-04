@@ -1,33 +1,53 @@
 (function  () {
   'use strict';
   angular.module('app')
-    .controller('SingleTableShow', ['$scope', '$state', 'AppsService', 'usSpinnerService', 'NotificationService', 'ColumnsService','$timeout', '$log', SingleTableShow]);
+    .controller('SingleTableShow', [
+      '$scope',
+      '$state',
+      'AppsService',
+      'usSpinnerService',
+      'NotificationService',
+      'ColumnsService',
+      '$timeout',
+      '$log',
+      SingleTableShow]);
 
-  function SingleTableShow($scope, $state, AppsService, usSpinnerService, NotificationService, ColumnsService, $timeout, $log) {
+  function SingleTableShow($scope,
+                           $state,
+                           AppsService,
+                           usSpinnerService,
+                           NotificationService,
+                           ColumnsService,
+                           $timeout,
+                           $log)
+  {
 
     var self = this;
-    var currentApp;
+
     self.tableName = $state.params.tableName;
     self.messages = ["no stats yet..."];
     self.alertClass = "";
-    $scope.fields = [];
-    $scope.fieldTypesRange = ["String", "DateTime", "Integer"];
+
+    self.fields = [];
+    self.fieldTypesRange = ["String", "DateTime", "Integer"];
 
 
-    $scope.switchTab = function(tab) {
+    self.switchTab = function(tab) {
+
       ColumnsService.get($state.params.name, $state.params.tableName)
       .then(function(data) {
-        $scope.fields = data.data.fields;
+        self.fields = data.data.fields;
       },
-      function(err) {
+
+      function() {
         NotificationService.add('error', 'Can not get table info');
       }
     );
     };
 
-    $scope.selectedField = null;
+    self.selectedField = null;
     $scope.showField = function(field) {
-      $scope.selectedField = field;
+      self.selectedField = field;
     };
 
   }

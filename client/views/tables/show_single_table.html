@@ -8,34 +8,32 @@
         <div class="ui-tab-container ui-tab-horizontal">
           <!--horizontal tabs-->
           <tabset justified="false" class="ui-tab">
-            <tab heading="Fields" select="switchTab('fields')">
 
-              <!--inner vertical tabs-->
-              <div class="ui-tab-container ui-tab-vertical" style="height:500px; overflow:auto">
-                <tabset class="ui-tab">
-                  <tab ng-repeat="field in fields" heading="{{ field.name }}">
-                    <form role="form" style="height:450px;">
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">Name</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" ng-model="field.name">
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox" ng-model="field.required"> Required
-                        </label>
-                      </div>
-                    </form>
-                  </tab>
-                </tabset>
-              </div>
+            <tab heading="Fields" select="singleTable.switchTab('fields')">
+              <vertical-tabs></vertical-tabs>
             </tab>
-            <tab heading="Rules" select="switchTab('rules')">Here come the Rules</tab>
-            <tab heading="Security" select="switchTab('security')">Here come the Security</tab>
-            <tab heading="Settings" select="switchTab('settings')">Here come the Settings</tab>
-            <tab heading="Data" select="switchTab('data')">Data Grid</tab>
+
+            <tab heading="Rules" select="singleTable.switchTab('rules')">
+              <vertical-tabs></vertical-tabs>
+            </tab>
+
+            <tab heading="Security" select="singleTable.switchTab('security')">
+              <vertical-tabs></vertical-tabs>
+            </tab>
+
+            <tab heading="Settings" select="singleTable.switchTab('settings')">
+              <vertical-tabs></vertical-tabs>
+            </tab>
+
+            <tab heading="Data" select="singleTable.switchTab('data')">
+              <vertical-tabs></vertical-tabs>
+            </tab>
+
           </tabset>
+
           <br/>
-          <button type="submit" class="btn btn-success btn-lg btn-w-lg center-block">Save</button>
+          <button type="submit"
+                  class="btn btn-success btn-lg btn-w-lg center-block">Save</button>
           <br/>
 
         </div>
