@@ -1,7 +1,6 @@
 (function() {
-  'use strict';
 
-  function ColumnsService($http, $q, CONSTS, NotificationService, $log) {
+  function ColumnsService($http, CONSTS, $log) {
 
     this.sync = function(appName) {
         return $http({
@@ -16,15 +15,11 @@
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/1/table/config/' + tableName,
-        headers: { AppName: appName },
-        params: {
-            filter: null,
-            sort: null
-        }
+        headers: { AppName: appName }
       });
     };
   }
 
   angular.module('common.services')
-    .service('ColumnsService', ['$http', '$q', 'CONSTS', 'NotificationService', '$log', ColumnsService]);
+    .service('ColumnsService', ['$http', 'CONSTS', '$log', ColumnsService]);
 })();
