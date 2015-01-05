@@ -26,7 +26,7 @@
 
         case 'fields':
           ColumnsService.get($stateParams.name, self.tableName)
-            .then(succsessHandler, errorHandler);
+            .then(columnSeccessHandler, errorHandler);
           break;
 
         case 'rules':
@@ -38,12 +38,11 @@
     };
 
     function rulesSuccsessHandler(data) {
-      $log.debug(data);
-      self.fields = data.data.data;
+      self.items = data.data.data;
     }
 
-    function succsessHandler(data) {
-      self.fields = data.data.fields;
+    function columnSeccessHandler(data) {
+      self.items = data.data.fields;
     }
 
     function errorHandler(error, message) {

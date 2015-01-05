@@ -1,6 +1,6 @@
-<div class="ui-tab-container ui-tab-vertical" style="height:500px; overflow:auto">
+<div ng-controller="FieldsController as fields" class="ui-tab-container ui-tab-vertical" style="height:500px; overflow:auto">
   <tabset class="ui-tab">
-    <tab ng-repeat="field in singleTable.fields"
+    <tab ng-repeat="field in singleTable.items"
          heading="{{ field.name }}">
 
       <form role="form" style="height:450px;">
