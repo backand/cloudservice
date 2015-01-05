@@ -11,6 +11,7 @@
     self.tableId = $stateParams.tableId;
     self.messages = [];
     self.fields = [];
+    self.view = {};
     self.fieldTypesRange = ["String", "DateTime", "Integer"];
     self.selectedField = null;
 
@@ -28,8 +29,14 @@
           break;
 
         case 'rules':
-          RulesService.get($stateParams.name, self.tableId)
-            .then(rulesSuccsessHandler, errorHandler);
+        RulesService.get($stateParams.name, self.tableId)
+          .then(rulesSuccsessHandler, errorHandler);
+        break;
+
+        case 'settings':
+          if(angular.isUndefined(self.view) || angular.isUndefined(self.view.name) || self.view.name == ''   )
+            ColumnsService.get($stateParams.name, self.tableId)
+              .then(columnSeccessHandler, errorHandler);
           break;
       }
 
@@ -40,8 +47,10 @@
     }
 
     function columnSeccessHandler(data) {
-      self.items = data.data.fields;
+      self.view = data.data;
+      self.fields = data.data.fields;
     }
+
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
