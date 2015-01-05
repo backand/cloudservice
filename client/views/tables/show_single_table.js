@@ -17,7 +17,7 @@
 
     self.update = function()
     {
-      TablesService.update($stateParams.tableName,self.view).then(upadateSuccessHandler,errorHandler);
+      TablesService.update($stateParams.name, self.tableName,self.view).then(upadateSuccessHandler,errorHandler);
     }
     self.newAction = function () {
       $scope.$broadcast('newButtonEvent');
@@ -60,7 +60,8 @@
       NotificationService.add('error', message);
       $log.debug(error);
     }
-    function upadateSuccessHandler(message) {
+    function upadateSuccessHandler(data) {
+      columnSeccessHandler(data);
       NotificationService.add('success', "View configuration was saved");
 
     }

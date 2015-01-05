@@ -30,10 +30,11 @@
             data:table
         });
     };
-    this.update = function (viewName,table) {
+    this.update = function (appName,viewName,table) {
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/1/table/config/'+viewName,
+        headers: { AppName: appName },
         data:table
       });
     };
