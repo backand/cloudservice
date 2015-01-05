@@ -41,10 +41,10 @@
           <label  for="Searchable">Searchable</label>
           <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.advancedLayout.delete" id="Searchable" type="checkbox" ng-model="field.design.hideFilter" checked=""><i></i></label>
         </div>
-        <div class="form-group">
+<!--        <div class="form-group">
           <label c for="Audit">Audit</label>
           <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="Audit" type="checkbox"  ng-model="field.required" checked=""><i></i></label>
-        </div>
+        </div>-->
         <div class="row">
           <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
             <label for="minVal">Min Value</label>
@@ -57,7 +57,7 @@
                    ng-model="field.advancedLayout.maximumValue">
           </div>
         </div>
-        <div class="row">
+        <!--<div class="row">
           <div class="form-group col-md-6" ng-show="field.type=='ShortText' || field.type=='LongText'">
             <label for="minLen">Min Length</label>
             <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="minLen"
@@ -68,7 +68,7 @@
             <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="maxLen"
                    ng-model="field.advancedLayout.minimumLength">
           </div>
-        </div>
+        </div>-->
         <div class="form-group" ng-show="">
           <label for="Format">Format</label>
           <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="Format"
