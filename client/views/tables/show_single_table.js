@@ -1,52 +1,63 @@
-(function  () {
-  'use strict';
-  angular.module('app')
-    .controller('SingleTableShow', ['$scope', '$state', 'AppsService', 'usSpinnerService', 'NotificationService', 'ColumnsService','$timeout', '$log', SingleTableShow]);
+/**
+ * Refactored by nirkaufman on 1/4/15.
+ */
+(function () {
 
-  function SingleTableShow($scope, $state, AppsService, usSpinnerService, NotificationService, ColumnsService, $timeout, $log) {
+  function SingleTableShow($stateParams, $log, NotificationService, ColumnsService, RulesService, $scope) {
 
     var self = this;
-    var currentApp;
-    self.tableName = $state.params.tableName;
-    self.messages = ["no stats yet..."];
-    self.alertClass = "";
-    $scope.excluded=true;
-    $scope.fields = [];
-    $scope.fieldTypesRange = ["String", "DateTime", "Integer"];
 
+    self.tableName = $stateParams.tableName;
+    self.tableId = $stateParams.tableId;
+    self.messages = [];
+    self.fields = [];
+    self.fieldTypesRange = ["String", "DateTime", "Integer"];
+    self.selectedField = null;
 
-    $scope.switchTab = function (tab) {
-      ColumnsService.get($state.params.name, $state.params.tableName)
-        .then(function (data) {
-          $scope.fields = data.data.fields;
-        },
-        function (err) {
-          NotificationService.add('error', 'Can not get table info');
-        }
-      );
+    self.newAction = function () {
+      $scope.$broadcast('newButtonEvent');
     };
 
-    $scope.selectedField = null;
-    $scope.showField = function (field) {
-      $scope.selectedField = field;
-    };
-    self.sumbitForm = function () {
-      self.loading = true;
-      try {
-        ColumnsService.update(self.appName, self.appTitle)
-          .success(function (data) {
-            NotificationService.add('success', 'Application settings updated successfully');
-            self.loading = false;
-          })
-          .error(function (err) {
-            NotificationService.add('Error', 'waiting for Relly Rivlin');
-            self.loading = false;
-          })
+    self.switchTab = function (tab) {
 
+      switch (tab) {
+
+        case 'fields':
+          ColumnsService.get($stateParams.name, self.tableName)
+            .then(columnSeccessHandler, errorHandler);
+          break;
+
+        case 'rules':
+          RulesService.get($stateParams.name, self.tableId)
+            .then(rulesSuccsessHandler, errorHandler);
+          break;
       }
-      catch (ex) {
-        NotificationService.add('Error', 'waiting for Relly Rivlin');
-      }
+
+    };
+
+    function rulesSuccsessHandler(data) {
+      self.items = data.data.data;
     }
+
+    function columnSeccessHandler(data) {
+      self.items = data.data.fields;
+    }
+
+    function errorHandler(error, message) {
+      NotificationService.add('error', message);
+      $log.debug(error);
+    }
+
   }
+
+  angular.module('app')
+    .controller('SingleTableShow', [
+      '$stateParams',
+      '$log',
+      'NotificationService',
+      'ColumnsService',
+      'RulesService',
+      SingleTableShow
+    ]);
+
 }());

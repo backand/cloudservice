@@ -3,123 +3,39 @@
     <div class="panel-heading">
       <strong> Database Table - {{singleTable.tableName}}</strong>
     </div>
+
     <div class="panel-body">
-      <div class="">
+      <div>
+
         <div class="ui-tab-container ui-tab-horizontal">
-          <!--horizontal tabs-->
           <tabset justified="false" class="ui-tab">
-            <tab heading="Fields" select="switchTab('fields')">
 
-              <!--inner vertical tabs-->
-              <div class="ui-tab-container ui-tab-vertical" style="height:500px; overflow:auto">
-                <tabset class="ui-tab">
-                  <tab ng-repeat="field in fields" heading="{{ field.name }}">
-                    <form role="form"  >
+            <tab heading="Fields" select="singleTable.switchTab('fields')">
+              <ng-include src="'views/tables/fields/fields.html'"></ng-include>
+            </tab>
 
-                      <div class="form-group center-block">
-                        <label class="col-lg-2 col-lg-offset-3" for="excluded">Ignore this field</label>
-                        <label class="ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.excluded" checked="field.excluded=true"><i></i></label>
-                      </div>
-                      <div class="form-group" >
-                        <label for="jsonName">Name</label>
-                        <input ng-disabled="field.excluded" type="text" class="form-control ui-switch ui-switch-success" id="jsonName"
-                               ng-model="field.name">
-                      </div>
-                      <div class="form-group">
-                        <label for="dbName">Database Name</label>
-                        <input  ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" disabled id="dbName"
-                               ng-model="field.databaseName">
-                      </div>
-                      <div class="form-group">
-                        <label for="DatabaseType">Database Type</label>
-                        <input  ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" disabled id="DatabaseType"
-                               ng-model="field.type">
-                      </div>
-                      <div class="form-group">
-                        <label  for="Required">Required</label>
-                        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.excluded"  id="Required" type="checkbox" ng-model="field.advancedLayout.required" checked=""><i></i></label>
-                      </div>
-                      <div class="form-group">
-                        <label for="DefaultValue">Default Value</label>
-                        <input  ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="DefaultValue"
-                               ng-model="field.advancedLayout.defaultValue">
-                      </div>
-                      <div class="form-group">
-                        <label  for="Searchable">Searchable</label>
-                        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.excluded" id="Searchable" type="checkbox" ng-model="field.design.hideFilter" checked=""><i></i></label>
-                      </div>
-                      <div class="form-group">
-                        <label c for="Audit">Audit</label>
-                        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.excluded"  id="Audit" type="checkbox"  ng-model="field.required" checked=""><i></i></label>
-                      </div>
-                      <div class="row">
-                      <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
-                        <label for="minVal">Min Value</label>
-                        <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="minVal"
-                               ng-model="field.advancedLayout.minimumValue">
-                      </div>
-                      <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
-                        <label for="maxVal">Max Value</label>
-                        <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="maxVal"
-                               ng-model="field.advancedLayout.maximumValue">
-                      </div>
-                      </div>
-                      <div class="row">
-                      <div class="form-group col-md-6" ng-show="field.type=='ShortText' || field.type=='LongText'">
-                        <label for="minLen">Min Length</label>
-                        <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="minLen"
-                               ng-model="field.name">
-                      </div>
-                      <div class="form-group col-md-6" ng-show="field.type=='ShortText' || field.type=='LongText'">
-                        <label for="maxLen">Max Length</label>
-                        <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="maxLen"
-                               ng-model="field.name">
-                      </div>
-                      </div>
-                      <div class="form-group" ng-show="">
-                        <label for="Format">Format</label>
-                        <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="Format"
-                               ng-model="field.advancedLayout.format">
-                      </div>
+            <tab heading="Rules" select="singleTable.switchTab('rules')">
+              <ng-include src="'views/tables/rules/rules.html'"></ng-include>
+            </tab>
 
+            <tab heading="Security" select="singleTable.switchTab('security')">
 
+            </tab>
 
+            <tab heading="Settings" select="singleTable.switchTab('settings')">
 
+            </tab>
 
-                      <div class="form-group">
-                        <label  for="ExcludeUpdate">Exclude in Update</label>
-                        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.excluded"  id="ExcludeUpdate" type="checkbox" ng-model="field.required" checked=""><i></i></label>
-                      </div>
-                      <div class="form-group">
-                        <label  for="ExcludeInsert">Exclude in Insert</label>
-                        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.excluded"  id="ExcludeInsert" type="checkbox" ng-model="field.required" checked=""><i></i></label>
-                      </div>
-                      <div class="form-group">
-                        <label  for="EnableUpload">Enable Upload</label>
-                        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.excluded"  id="EnableUpload" type="checkbox" ng-model="field.EnableUpload" checked=""><i></i></label>
-                      </div>
+            <tab heading="Data" select="singleTable.switchTab('data')">
 
+            </tab>
 
+            <tab></tab>
 
+          </tabset>
 
-
-        </form>
-        </tab>
-        </tabset>
+        </div>
       </div>
-      </tab>
-      <tab heading="Rules" select="switchTab('rules')">Here come the Rules</tab>
-      <tab heading="Security" select="switchTab('security')">Here come the Security</tab>
-      <tab heading="Settings" select="switchTab('settings')">Here come the Settings</tab>
-      <tab heading="Data" select="switchTab('data')">Data Grid</tab>
-      </tabset>
-      <br/>
-      <button type="submit" class="btn btn-success btn-lg btn-w-lg center-block" ng-click="singleTable.sumbitForm()">Save</button>
-      <br/>
-
-    </div>
-    </div>
     </div>
   </section>
-</section>
 </section>
