@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SingleTableShow($stateParams, $log, NotificationService, ColumnsService, RulesService, $scope) {
+  function SingleTableShow($stateParams, $log, NotificationService, ColumnsService, RulesService,TablesService, $scope) {
 
     var self = this;
 
@@ -15,6 +15,10 @@
     self.fieldTypesRange = ["String", "DateTime", "Integer"];
     self.selectedField = null;
 
+    self.update = function()
+    {
+      TablesService.update($stateParams.tableName,self.view).then(upadateSuccessHandler,errorHandler);
+    }
     self.newAction = function () {
       $scope.$broadcast('newButtonEvent');
     };
@@ -56,6 +60,11 @@
       NotificationService.add('error', message);
       $log.debug(error);
     }
+    function upadateSuccessHandler(message) {
+      NotificationService.add('success', "View configuration was saved");
+
+    }
+    upadateSuccessHandler
 
   }
 
@@ -66,6 +75,7 @@
       'NotificationService',
       'ColumnsService',
       'RulesService',
+      'TablesService',
       SingleTableShow
     ]);
 

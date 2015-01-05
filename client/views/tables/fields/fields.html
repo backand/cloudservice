@@ -4,7 +4,7 @@
 
   <tabset class="ui-tab">
 
-    <tab ng-repeat="field in singleTable.items"
+    <tab ng-repeat="field in singleTable.fields"
          heading="{{ field.name }}">
 
       <form role="form"  >
@@ -15,17 +15,17 @@
         </div>
         <div class="form-group" >
           <label for="jsonName">Name</label>
-          <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control ui-switch ui-switch-success" id="jsonName"
+          <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" id="jsonName"
                  ng-model="field.name">
         </div>
         <div class="form-group">
           <label for="dbName">Database Name</label>
-          <input    type="text" class="form-control ui-switch ui-switch-success" disabled id="dbName"
+          <input    type="text" class="form-control" disabled id="dbName"
                   ng-model="field.databaseName">
         </div>
         <div class="form-group">
           <label for="DatabaseType">Database Type</label>
-          <input  type="text" class="form-control ui-switch ui-switch-success" disabled id="DatabaseType"
+          <input  type="text" class="form-control" disabled id="DatabaseType"
                   ng-model="field.type">
         </div>
         <div class="form-group">
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group">
           <label for="DefaultValue">Default Value</label>
-          <input  ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="DefaultValue"
+          <input  ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="DefaultValue"
                   ng-model="field.advancedLayout.defaultValue">
         </div>
         <div class="form-group">
@@ -48,12 +48,12 @@
         <div class="row">
           <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
             <label for="minVal">Min Value</label>
-            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="minVal"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="minVal"
                    ng-model="field.advancedLayout.minimumValue">
           </div>
           <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
             <label for="maxVal">Max Value</label>
-            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="maxVal"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="maxVal"
                    ng-model="field.advancedLayout.maximumValue">
           </div>
         </div>
@@ -65,13 +65,13 @@
           </div>
           <div class="form-group col-md-6" ng-show="field.type=='ShortText' || field.type=='LongText'">
             <label for="maxLen">Max Length</label>
-            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="maxLen"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="maxLen"
                    ng-model="field.advancedLayout.minimumLength">
           </div>
         </div>-->
         <div class="form-group" ng-show="">
           <label for="Format">Format</label>
-          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="Format"
+          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="Format"
                  ng-model="field.advancedLayout.format">
         </div>
 
