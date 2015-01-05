@@ -3,12 +3,7 @@
  */
 (function () {
 
-
-  function SingleTableShow($stateParams,
-                           $log,
-                           NotificationService,
-                           ColumnsService,
-                           RulesService) {
+  function SingleTableShow($stateParams, $log, NotificationService, ColumnsService, RulesService, $scope) {
 
     var self = this;
 
@@ -19,6 +14,9 @@
     self.fieldTypesRange = ["String", "DateTime", "Integer"];
     self.selectedField = null;
 
+    self.newAction = function () {
+      $scope.$broadcast('newButtonEvent');
+    };
 
     self.switchTab = function (tab) {
 

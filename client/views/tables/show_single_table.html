@@ -3,10 +3,11 @@
     <div class="panel-heading">
       <strong> Database Table - {{singleTable.tableName}}</strong>
     </div>
-    <div class="panel-body">
-      <div class="">
-        <div class="ui-tab-container ui-tab-horizontal">
 
+    <div class="panel-body">
+      <div>
+
+        <div class="ui-tab-container ui-tab-horizontal">
           <tabset justified="false" class="ui-tab">
 
             <tab heading="Fields" select="singleTable.switchTab('fields')">
@@ -29,16 +30,12 @@
 
             </tab>
 
-          </tabset>
+            <tab></tab>
 
-          <br/>
-          <button type="submit"
-                  class="btn btn-success btn-lg btn-w-lg center-block">Save</button>
-          <br/>
+          </tabset>
 
         </div>
       </div>
     </div>
   </section>
-</section>
 </section>
