@@ -11,11 +11,11 @@
 
         <div class="form-group center-block">
           <label class="col-lg-2 col-lg-offset-3" for="excluded">Ignore this field</label>
-          <label class="ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.excluded" checked="field.excluded=true"><i></i></label>
+          <label class="ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.advancedLayout.delete" checked=""><i></i></label>
         </div>
         <div class="form-group" >
           <label for="jsonName">Name</label>
-          <input ng-disabled="field.excluded" type="text" class="form-control ui-switch ui-switch-success" id="jsonName"
+          <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control ui-switch ui-switch-success" id="jsonName"
                  ng-model="field.name">
         </div>
         <div class="form-group">
@@ -30,48 +30,48 @@
         </div>
         <div class="form-group">
           <label  for="Required">Required</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.excluded"  id="Required" type="checkbox" ng-model="field.advancedLayout.required" checked=""><i></i></label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.advancedLayout.delete"  id="Required" type="checkbox" ng-model="field.advancedLayout.required" checked=""><i></i></label>
         </div>
         <div class="form-group">
           <label for="DefaultValue">Default Value</label>
-          <input  ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="DefaultValue"
+          <input  ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="DefaultValue"
                   ng-model="field.advancedLayout.defaultValue">
         </div>
         <div class="form-group">
           <label  for="Searchable">Searchable</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.excluded" id="Searchable" type="checkbox" ng-model="field.design.hideFilter" checked=""><i></i></label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.advancedLayout.delete" id="Searchable" type="checkbox" ng-model="field.design.hideFilter" checked=""><i></i></label>
         </div>
         <div class="form-group">
           <label c for="Audit">Audit</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.excluded"  id="Audit" type="checkbox"  ng-model="field.required" checked=""><i></i></label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="Audit" type="checkbox"  ng-model="field.required" checked=""><i></i></label>
         </div>
         <div class="row">
           <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
             <label for="minVal">Min Value</label>
-            <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="minVal"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="minVal"
                    ng-model="field.advancedLayout.minimumValue">
           </div>
           <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
             <label for="maxVal">Max Value</label>
-            <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="maxVal"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="maxVal"
                    ng-model="field.advancedLayout.maximumValue">
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-6" ng-show="field.type=='ShortText' || field.type=='LongText'">
             <label for="minLen">Min Length</label>
-            <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="minLen"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="minLen"
                    ng-model="field.advancedLayout.maximumLength">
           </div>
           <div class="form-group col-md-6" ng-show="field.type=='ShortText' || field.type=='LongText'">
             <label for="maxLen">Max Length</label>
-            <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="maxLen"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="maxLen"
                    ng-model="field.advancedLayout.minimumLength">
           </div>
         </div>
         <div class="form-group" ng-show="">
           <label for="Format">Format</label>
-          <input ng-disabled="field.excluded"  type="text" class="form-control ui-switch ui-switch-success" id="Format"
+          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control ui-switch ui-switch-success" id="Format"
                  ng-model="field.advancedLayout.format">
         </div>
 
@@ -81,15 +81,15 @@
 
         <div class="form-group">
           <label  for="ExcludeUpdate">Exclude in Update</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.excluded"  id="ExcludeUpdate" type="checkbox" ng-model="field.required" checked=""><i></i></label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeUpdate" type="checkbox" ng-model="field.advancedLayout.excludeInUpdate" checked=""><i></i></label>
         </div>
         <div class="form-group">
           <label  for="ExcludeInsert">Exclude in Insert</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.excluded"  id="ExcludeInsert" type="checkbox" ng-model="field.required" checked=""><i></i></label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeInsert" type="checkbox" ng-model="field.advancedLayout.excludeInInsert" checked=""><i></i></label>
         </div>
         <div class="form-group">
           <label  for="EnableUpload">Enable Upload</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.excluded"  id="EnableUpload" type="checkbox" ng-model="field.EnableUpload" checked=""><i></i></label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="EnableUpload" type="checkbox" ng-model="field.EnableUpload" checked=""><i></i></label>
         </div>
 
 
