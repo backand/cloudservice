@@ -30,6 +30,14 @@
             data:table
         });
     };
+    this.update = function (appName,viewName,table) {
+      return $http({
+        method: 'PUT',
+        url: CONSTS.appUrl + '/1/table/config/'+viewName,
+        headers: { AppName: appName },
+        data:table
+      });
+    };
     this.addSchema = function (appName,schema) {
       return $http({
         method: 'POST',
@@ -39,6 +47,7 @@
         dataType: 'json'
       });
     };
+
   }
 
   angular.module('common.services')

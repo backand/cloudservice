@@ -23,7 +23,7 @@
             </tab>
 
             <tab heading="Settings" select="singleTable.switchTab('settings')">
-
+              <ng-include src="'views/tables/view/view.html'"></ng-include>
             </tab>
 
             <tab heading="Data" select="singleTable.switchTab('data')">
@@ -35,6 +35,8 @@
           </tabset>
 
         </div>
+        <br/>
+        <button class="btn btn-success btn-lg btn-w-lg  center-block" ng-click="singleTable.update()">Edit</button>
       </div>
     </div>
   </section>
