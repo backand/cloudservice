@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SingleTableShow($stateParams, $log, NotificationService, ColumnsService, RulesService, $scope) {
+  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService) {
 
     var self = this;
 
@@ -13,6 +13,14 @@
     self.fields = [];
     self.fieldTypesRange = ["String", "DateTime", "Integer"];
     self.selectedField = null;
+    self.appName = $stateParams.name;
+
+    RulesService.appName = self.appName;
+    RulesService.tableId = self.tableId;
+
+    ColumnsService.appName = self.appName;
+    ColumnsService.tableName = self.tableName;
+
 
     self.newAction = function () {
       $scope.$broadcast('newButtonEvent');
@@ -23,39 +31,21 @@
       switch (tab) {
 
         case 'fields':
-          ColumnsService.get($stateParams.name, self.tableName)
-            .then(columnSeccessHandler, errorHandler);
+          $scope.$broadcast('tabs:fields');
           break;
 
         case 'rules':
-          RulesService.get($stateParams.name, self.tableId)
-            .then(rulesSuccsessHandler, errorHandler);
+          $scope.$broadcast('tabs:rules');
           break;
       }
-
     };
-
-    function rulesSuccsessHandler(data) {
-      self.items = data.data.data;
-    }
-
-    function columnSeccessHandler(data) {
-      self.items = data.data.fields;
-    }
-
-    function errorHandler(error, message) {
-      NotificationService.add('error', message);
-      $log.debug(error);
-    }
-
   }
 
   angular.module('app')
     .controller('SingleTableShow', [
       '$stateParams',
-      '$log',
-      'NotificationService',
       'ColumnsService',
+      '$scope',
       'RulesService',
       SingleTableShow
     ]);

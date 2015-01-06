@@ -10,6 +10,7 @@
       <label>Rule name</label>
       <input type="text"
              class="form-control"
+             ng-model="rule.name"
              placeholder="Name..">
     </div>
 
@@ -17,7 +18,7 @@
       <label>Data action</label>
       <select class="form-control"
               ng-options="dataAction for dataAction in modal.dataActions"
-              ng-model="action.dataAction">
+              ng-model="rule.dataAction">
         <option value="">Select action...</option>
       </select>
     </div>
@@ -26,44 +27,64 @@
       <label>Workflow action</label>
       <select class="form-control"
               ng-options="workflowAction for workflowAction in modal.workflowActions"
-              ng-model="action.workflowAction">
+              ng-model="rule.workflowAction"
+              ng-change="modal.resetRule()">
         <option value="">Select action...</option>
       </select>
     </div>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12">
       <label>Where condition</label>
-      <textarea class="form-control" style="resize: vertical"></textarea>
+      <textarea class="form-control"
+                ng-model="rule.whereCondition"
+                style="resize: vertical"></textarea>
     </div>
 
-    <div ng-switch="action.workflowAction">
+    <div ng-switch="rule.workflowAction">
 
       <!-- notify options -->
       <div ng-switch-when="notify">
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>To:</label>
-          <input type="text" class="form-control"/>
+          <input type="text"
+                 ng-model="rule.to"
+                 class="form-control"/>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>cc:</label>
-          <input type="text" class="form-control"/>
+          <input type="text"
+                 ng-model="rule.cc"
+                 class="form-control"/>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>bcc:</label>
-          <input type="text" class="form-control"/>
+          <input type="text"
+                 ng-model="rule.bcc"
+                 class="form-control"/>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>from:</label>
-          <input type="text" class="form-control"/>
+          <input type="text"
+                 ng-model="rule.from"
+                 class="form-control"/>
+        </div>
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+          <label>subject:</label>
+          <input type="text"
+                 ng-model="rule.subject"
+                 class="form-control"/>
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12">
           <label>Message:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.message"
+                    style="resize: vertical"></textarea>
         </div>
 
       </div><!--./notify -->
@@ -72,42 +93,58 @@
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Expression:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="validateCommand1"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Non valid message:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.validateMessage1"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Expression:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="validateCommand2"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Non valid message:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.validateMessage2"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Expression:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="validateCommand3"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Non valid message:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.validateMessage3"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Expression:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.validateCommand4"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Non valid message:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.validateMessage4"
+                    style="resize: vertical"></textarea>
         </div>
 
       </div><!--./validate-->
@@ -116,22 +153,30 @@
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12">
           <label>Command:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.command"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12">
           <label>Message:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.message"
+                    style="resize: vertical"></textarea>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>In parameters:</label>
-          <input type="text" class="form-control"/>
+          <input type="text"
+                 ng-model="rule.inparameters"
+                 class="form-control"/>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Out parameters:</label>
-          <input type="text" class="form-control"/>
+          <input type="text"
+                 ng-model="rule.outParameters"
+                 class="form-control"/>
         </div>
 
       </div><!-- ./execute -->
@@ -140,7 +185,9 @@
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12">
           <label>Web Service Url:</label>
-          <textarea class="form-control" style="resize: vertical"></textarea>
+          <textarea class="form-control"
+                    ng-model="rule.webServiceUrl"
+                    style="resize: vertical"></textarea>
         </div>
 
 
@@ -155,6 +202,6 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="close()" ng-bind="modal.okButtonText"></button>
+  <button class="btn btn-primary" ng-click="close(rule)" ng-bind="modal.okButtonText"></button>
   <button class="btn btn-default" ng-click="cancel()" ng-bind="modal.cancelButtonText"></button>
 </div>
