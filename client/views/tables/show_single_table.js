@@ -66,7 +66,6 @@
       NotificationService.add('success', "View configuration was saved");
 
     }
-    upadateSuccessHandler
 
   }
 
