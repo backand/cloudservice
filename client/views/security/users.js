@@ -7,12 +7,23 @@
 
     var self = this;
     self.myData = [];
-
+    self.gridOptions= {
+      data:{},
+      columnDefs: [
+        { name: 'FirstName' },
+        { name: 'LastName' },
+        { name: 'Username' },
+        { name: 'Email' },
+        { name: 'durados_User_Role',displayName:'Role' },
+        { name: 'IsApproved' }
+      ]
+    };
+    var columnDefs = [{name:'field1'}, {name:'field2'}];
     SecurityService.getUsers($stateParams.name, 20)
       .then(usersSuccsessHandler, errorHandler);
 
     function usersSuccsessHandler(data) {
-      self.myData = data.data.data;
+      self.gridOptions.data = data.data.data;
     }
 
     //this.myData = [
