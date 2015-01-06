@@ -23,12 +23,8 @@
     ColumnsService.tableName = self.tableName;
 
 
-    self.update = function()
-    {
-      TablesService.update($stateParams.name, self.tableName,self.view).then(upadateSuccessHandler,errorHandler);
-    }
-    self.newAction = function () {
-      $scope.$broadcast('newButtonEvent');
+    self.update = function () {
+      TablesService.update($stateParams.name, self.tableName, self.view).then(upadateSuccessHandler, errorHandler);
     };
 
     self.switchTab = function (tab) {
@@ -40,16 +36,15 @@
 
         case 'rules':
           $scope.$broadcast('tabs:rules');
-        break;
+          break;
 
         case 'settings':
-          if(angular.isUndefined(self.view) || angular.isUndefined(self.view.name) || self.view.name == ''   )
+          if (angular.isUndefined(self.view) || angular.isUndefined(self.view.name) || self.view.name == '')
             ColumnsService.get($stateParams.name, self.tableId)
               .then(columnSeccessHandler, errorHandler);
           break;
       }
     };
-
 
     function columnSeccessHandler(data) {
       self.view = data.data;
@@ -61,6 +56,7 @@
       NotificationService.add('error', message);
       $log.debug(error);
     }
+
     function upadateSuccessHandler(data) {
       columnSeccessHandler(data);
       NotificationService.add('success', "View configuration was saved");

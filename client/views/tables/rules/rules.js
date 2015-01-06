@@ -14,10 +14,9 @@
      */
     (function init() {
       self.items = [];
-      $scope.$on('tabs:rules', getRules);
-
       self.open = newRule;
       self.edit = editRule;
+      $scope.$on('tabs:rules', getRules);
     }());
 
     $scope.modal = {
@@ -36,6 +35,7 @@
      */
     function newRule() {
       $scope.modal.mode = 'new';
+      resetCurrentRule();
       launchModal();
     }
 

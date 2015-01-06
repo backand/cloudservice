@@ -20,17 +20,16 @@
      * call to populate the items array and
      * register an event listener on scope
      */
-    (function init () {
+    (function init() {
       self.items = [];
       getFields();
       $scope.$on('tabs:fields', getFields);
-
     }());
 
     /**
      * ajax call to get the fields items
      */
-    function getFields () {
+    function getFields() {
       ColumnsService.get().then(successHandler, errorHandler)
     }
 
@@ -53,5 +52,5 @@
   }
 
   angular.module('app')
-    .controller('FieldsController', ['$scope','ColumnsService','NotificationService', FieldsController]);
+    .controller('FieldsController', ['$scope', 'ColumnsService', 'NotificationService', FieldsController]);
 }());
