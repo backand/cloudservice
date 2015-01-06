@@ -34,7 +34,6 @@
     self.switchTab = function (tab) {
 
       switch (tab) {
-
         case 'fields':
           $scope.$broadcast('tabs:fields');
           break;
