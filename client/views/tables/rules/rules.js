@@ -97,7 +97,7 @@
        * @param rule
        */
       function updateRule(rule) {
-        RulesService.post(rule).then(getRules);
+        RulesService.update(rule).then(getRules);
         modalInstance.close();
       }
 

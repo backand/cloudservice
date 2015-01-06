@@ -11,6 +11,7 @@
       <input type="text"
              class="form-control"
              ng-model="rule.name"
+             ng-model-options="{debounce:{default:400}}"
              required
              placeholder="you can change me later">
     </div>
@@ -19,7 +20,8 @@
       <label>Data action</label>
       <select class="form-control"
               ng-options="dataAction for dataAction in modal.dataActions"
-              ng-model="rule.dataAction">
+              ng-model="rule.dataAction"
+              ng-model-options="{debounce:{default:400}}">
         <option value="">Select action...</option>
       </select>
     </div>
@@ -29,6 +31,7 @@
       <textarea class="form-control"
                 placeholder="always..."
                 ng-model="rule.whereCondition"
+                ng-model-options="{debounce:{default:400}}"
                 style="resize: vertical"></textarea>
     </div>
 
