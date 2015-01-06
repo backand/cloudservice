@@ -20,15 +20,21 @@
         modalInstance.close()
       };
 
-      $scope.cancel= function () {
+      $scope.cancel = function () {
         modalInstance.dismiss()
       };
 
       $scope.modal = {
-        title: 'New Application Rule',
-        okButtonText : 'Save Rule',
-        cancelButtonText : 'Cancel'
+        title: 'Application Rule',
+        okButtonText: 'Save',
+        cancelButtonText: 'Cancel',
+        dataActions: ['before create', 'before edit', 'before delete'],
+        workflowActions: ['notify', 'validate', 'execute', 'web service']
       };
+
+      $scope.currentRule = {
+
+      }
 
     };
 

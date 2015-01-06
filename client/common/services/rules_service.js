@@ -9,8 +9,7 @@
       $log.debug("rules get", appName, tableId);
       return $http({
         method: 'GET',
-        //url: CONSTS.appUrl + '/1/businessRule?filter=[{fieldName:"viewTable", operator:"in", value:'+tableId+'}]&sort=[{fieldName:"name", order:"asc"}]',
-        url: CONSTS.appUrl + '/1/businessRule?filter=[{fieldName:"viewTable", operator:"in", value:"20"}]&sort=[{fieldName:"name", order:"asc"}]',
+        url: CONSTS.appUrl + '/1/businessRule?filter=[{fieldName:"viewTable", operator:"in", value:'+tableId+'}]&sort=[{fieldName:"name", order:"asc"}]',
         headers: {AppName: appName}
       });
     };
