@@ -16,6 +16,7 @@
       self.items = [];
       self.open = newRule;
       self.edit = editRule;
+      self.clearRule = deleteRule;
       $scope.$on('tabs:rules', getRules);
     }());
 
@@ -48,6 +49,10 @@
       $scope.rule = angular.copy(rule);
       $scope.modal.mode = 'update';
       launchModal();
+    }
+
+    function deleteRule (rule) {
+      RulesService.remove(rule).then(getRules)
     }
 
     /**

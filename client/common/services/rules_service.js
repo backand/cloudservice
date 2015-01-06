@@ -1,6 +1,3 @@
-/**
- * Created by nirkaufman on 1/4/15.
- */
 (function () {
 
   function RulesService($http, CONSTS) {
@@ -35,11 +32,17 @@
         data: rule,
         headers: {AppName: self.appName}
       })
+    };
+
+    self.remove = function (rule) {
+      return $http({
+        method: 'DELETE',
+        url : CONSTS.appUrl + baseUrl+ '/' + rule.__metadata.id,
+        data: rule,
+        headers: {AppName: self.appName}
+      })
     }
-
-
   }
-
 
   angular.module('app')
     .service('RulesService', ['$http', 'CONSTS', RulesService]);

@@ -11,7 +11,8 @@
 
     <pre>{{ item | json}} </pre>
 
-    <button ng-click="rules.edit(item)">Edit</button>
+    <button class="btn btn-primary" ng-click="rules.edit(item)">Edit</button>
+    <button class="btn btn-danger" ng-click="rules.clearRule(item)">Delete</button>
 
     </tab>
   </tabset>

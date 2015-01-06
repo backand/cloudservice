@@ -1,27 +1,26 @@
-/**
- * Refactored by nirkaufman on 1/4/15.
- */
 (function () {
 
   function SingleTableShow($stateParams, ColumnsService, $scope, RulesService) {
 
     var self = this;
 
-    self.tableName = $stateParams.tableName;
-    self.tableId = $stateParams.tableId;
-    self.messages = [];
-    self.fields = [];
-    self.view = {};
-    self.fieldTypesRange = ["String", "DateTime", "Integer"];
-    self.selectedField = null;
-    self.appName = $stateParams.name;
+    (function init() {
+      self.tableName = $stateParams.tableName;
+      self.tableId = $stateParams.tableId;
+      self.messages = [];
+      self.fields = [];
+      self.view = {};
+      self.fieldTypesRange = ["String", "DateTime", "Integer"];
+      self.selectedField = null;
+      self.appName = $stateParams.name;
 
-    RulesService.appName = self.appName;
-    RulesService.tableId = self.tableId;
+      RulesService.appName = self.appName;
+      RulesService.tableId = self.tableId;
 
-    ColumnsService.appName = self.appName;
-    ColumnsService.tableName = self.tableName;
+      ColumnsService.appName = self.appName;
+      ColumnsService.tableName = self.tableName;
 
+    }());
 
     self.update = function () {
       TablesService.update($stateParams.name, self.tableName, self.view).then(upadateSuccessHandler, errorHandler);
@@ -51,7 +50,6 @@
       self.fields = data.data.fields;
     }
 
-
     function errorHandler(error, message) {
       NotificationService.add('error', message);
       $log.debug(error);
@@ -60,7 +58,6 @@
     function upadateSuccessHandler(data) {
       columnSeccessHandler(data);
       NotificationService.add('success', "View configuration was saved");
-
     }
 
   }
