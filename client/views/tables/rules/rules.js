@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function RulesController($modal, $scope, $window,RulesService, NotificationService) {
+  function RulesController($modal, $scope, $window, RulesService, NotificationService) {
 
     var self = this;
 
@@ -25,8 +25,7 @@
       cancelButtonText: 'Cancel',
       dataActions: ['before create', 'before edit', 'before delete'],
       workflowActions: ['notify', 'validate', 'execute', 'web service'],
-      resetRule: resetCurrentRule,
-      mode: ''
+      resetRule: resetCurrentRule
     };
 
     /**
@@ -70,7 +69,7 @@
         "useSqlParser": false
       };
 
-      $scope.close = function (rule) {
+      $scope.closeModal = function (rule) {
         switch ($scope.modal.mode) {
           case 'new':
             postNewRule(rule);
@@ -98,7 +97,7 @@
        * @param rule
        */
       function updateRule(rule) {
-        RulesService.update(rule).then(getRules);
+        RulesService.post(rule).then(getRules);
         modalInstance.close();
       }
 
@@ -110,14 +109,6 @@
         result ? modalInstance.dismiss() : false;
       };
 
-      $scope.modal = {
-        title: 'Application Rule',
-        okButtonText: 'Save',
-        cancelButtonText: 'Cancel',
-        dataActions: ['before create', 'before edit', 'before delete'],
-        workflowActions: ['notify', 'validate', 'execute', 'web service'],
-        resetRule: resetCurrentRule
-      };
     }
 
     /**

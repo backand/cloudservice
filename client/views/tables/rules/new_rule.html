@@ -4,17 +4,18 @@
 
 <div class="modal-body clearfix">
 
-  <form>
+  <form novalidate>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12">
       <label>Rule name</label>
       <input type="text"
              class="form-control"
              ng-model="rule.name"
-             placeholder="Name..">
+             required
+             placeholder="you can change me later">
     </div>
 
-    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-if="rule.name">
       <label>Data action</label>
       <select class="form-control"
               ng-options="dataAction for dataAction in modal.dataActions"
@@ -23,7 +24,15 @@
       </select>
     </div>
 
-    <div class="form-group col-lg-6 col-md-6 col-sm-6">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.dataAction">
+      <label>Where condition</label>
+      <textarea class="form-control"
+                placeholder="always..."
+                ng-model="rule.whereCondition"
+                style="resize: vertical"></textarea>
+    </div>
+
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition">
       <label>Workflow action</label>
       <select class="form-control"
               ng-options="workflowAction for workflowAction in modal.workflowActions"
@@ -31,13 +40,6 @@
               ng-change="modal.resetRule()">
         <option value="">Select action...</option>
       </select>
-    </div>
-
-    <div class="form-group col-lg-12 col-md-12 col-sm-12">
-      <label>Where condition</label>
-      <textarea class="form-control"
-                ng-model="rule.whereCondition"
-                style="resize: vertical"></textarea>
     </div>
 
     <div ng-switch="rule.workflowAction">
@@ -202,6 +204,6 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="close(rule)" ng-bind="modal.okButtonText"></button>
+  <button class="btn btn-primary" ng-click="closeModal(rule)" ng-bind="modal.okButtonText"></button>
   <button class="btn btn-default" ng-click="cancel()" ng-bind="modal.cancelButtonText"></button>
 </div>

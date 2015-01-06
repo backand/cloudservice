@@ -21,13 +21,12 @@
 
     self.post = function (rule) {
       return $http({
-        method: 'POST',
-        url : CONSTS.appUrl + baseUrl,
+        method: 'PUT',
+        url : CONSTS.appUrl + baseUrl +'/'+rule.__metadata.id,
         data: rule,
         headers: {AppName: self.appName}
       })
     }
-
   }
 
 
