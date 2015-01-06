@@ -49,6 +49,11 @@ angular.module('app.routes', []).
         url: '/tables',
         abstract: true,
         template: '<div ui-view></div>'
+      })
+      .state('security', {
+        url: '/security',
+        abstract: true,
+        template: '<div ui-view></div>'
       });
     })
   .run(run,['$state','AuthService', '$rootScope']);

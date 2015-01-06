@@ -27,6 +27,7 @@
   angular.module('app', [
       'ui.router',
       'ui.bootstrap',
+      'ui.grid',
       'app.routes',
       'app.consts',
       'angularSpinner',

@@ -130,5 +130,19 @@
     </li>
 
 
+    <li ng-class="{active: nav.state == 'security.users'}">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
+        <i class="ti-alert"></i>
+        <span>Security</span>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.state == 'security.users'}">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('security.users')" href="">
+            <i class="ti-new-window"></i>
+            <span>Users</span>
+          </a>
+        </li>
+      </ul>
+    </li>
   </ul>
 </div>
