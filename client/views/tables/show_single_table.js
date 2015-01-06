@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SingleTableShow($stateParams, $log, NotificationService, ColumnsService, RulesService, $scope) {
+  function SingleTableShow($stateParams, $log, NotificationService, ColumnsService, RulesService,TablesService, $scope) {
 
     var self = this;
 
@@ -11,9 +11,14 @@
     self.tableId = $stateParams.tableId;
     self.messages = [];
     self.fields = [];
+    self.view = {};
     self.fieldTypesRange = ["String", "DateTime", "Integer"];
     self.selectedField = null;
 
+    self.update = function()
+    {
+      TablesService.update($stateParams.name, self.tableName,self.view).then(upadateSuccessHandler,errorHandler);
+    }
     self.newAction = function () {
       $scope.$broadcast('newButtonEvent');
     };
@@ -28,8 +33,14 @@
           break;
 
         case 'rules':
-          RulesService.get($stateParams.name, self.tableId)
-            .then(rulesSuccsessHandler, errorHandler);
+        RulesService.get($stateParams.name, self.tableId)
+          .then(rulesSuccsessHandler, errorHandler);
+        break;
+
+        case 'settings':
+          if(angular.isUndefined(self.view) || angular.isUndefined(self.view.name) || self.view.name == ''   )
+            ColumnsService.get($stateParams.name, self.tableId)
+              .then(columnSeccessHandler, errorHandler);
           break;
       }
 
@@ -40,13 +51,21 @@
     }
 
     function columnSeccessHandler(data) {
-      self.items = data.data.fields;
+      self.view = data.data;
+      self.fields = data.data.fields;
     }
+
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
       $log.debug(error);
     }
+    function upadateSuccessHandler(data) {
+      columnSeccessHandler(data);
+      NotificationService.add('success', "View configuration was saved");
+
+    }
+    upadateSuccessHandler
 
   }
 
@@ -57,6 +76,7 @@
       'NotificationService',
       'ColumnsService',
       'RulesService',
+      'TablesService',
       SingleTableShow
     ]);
 
