@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function RulesController($modal, $scope, $window, RulesService, NotificationService) {
+  function RulesController($modal, $scope, $window, RulesService, NotificationService, DictionaryService) {
 
     var self = this;
 
@@ -17,8 +17,13 @@
       self.open = newRule;
       self.edit = editRule;
       self.clearRule = deleteRule;
+
       $scope.$on('tabs:rules', getRules);
+
+      DictionaryService.get().then(populateDictionaryItems);
+
     }());
+
 
     $scope.modal = {
       title: 'Application Rule',
@@ -27,10 +32,26 @@
       dataActions: ['before create', 'before edit', 'before delete'],
       workflowActions: ['notify', 'validate', 'execute', 'web service'],
       dictionaryState : false,
+      dictionaryKeys : null,
+      dictionaryItems: null,
       resetRule: resetCurrentRule,
       toggleOptions : toggleDictionary
     };
 
+    /**
+     * success handle for getting dictionary items
+     * @param data
+     */
+    function populateDictionaryItems (data) {
+      var raw = data.data;
+
+      $scope.modal.dictionaryKeys = Object.keys(raw);
+      $scope.modal.dictionaryItems = data.data;
+    }
+
+    /**
+     * switch the state of the dictionary window
+     */
     function toggleDictionary () {
         $scope.modal.dictionaryState = !$scope.modal.dictionaryState
     }
@@ -155,5 +176,5 @@
   }
 
   angular.module('app')
-    .controller('RulesController', ['$modal', '$scope', '$window', 'RulesService', 'NotificationService', RulesController]);
+    .controller('RulesController', ['$modal', '$scope', '$window', 'RulesService', 'NotificationService','DictionaryService', RulesController]);
 }());

@@ -18,7 +18,6 @@
 
     function updateAppNames() {
         apps.names = [];
-
         apps.list.forEach(function(item) {
         apps.names.push(item.Name);
         apps.status[item.Name] = item.DatabaseStatus;
@@ -70,7 +69,6 @@
       }
       return -1;
     }
-
 
     this.appNames = function(appName) {
       if (searchStringInArray(appName, apps.names) === -1){
