@@ -26,12 +26,13 @@
       cancelButtonText: 'Cancel',
       dataActions: ['before create', 'before edit', 'before delete'],
       workflowActions: ['notify', 'validate', 'execute', 'web service'],
+      dictionaryState : false,
       resetRule: resetCurrentRule,
-      showOptions : launchDictionary
+      toggleOptions : toggleDictionary
     };
 
-    function launchDictionary () {
-      launchModal()
+    function toggleDictionary () {
+        $scope.modal.dictionaryState = !$scope.modal.dictionaryState
     }
 
     /**

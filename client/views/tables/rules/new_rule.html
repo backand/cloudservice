@@ -31,8 +31,17 @@
       <label>Where condition</label>
 
       <div class="pull-right">
-        <span class="glyphicon glyphicon-edit" ng-click="modal.showOptions()"></span>
+        <span class="glyphicon glyphicon-edit" ng-click="modal.toggleOptions()"></span>
       </div>
+
+      <angled-window ng-show="modal.dictionaryState"
+                     id="{{winId}}"
+                     title="Columns"
+                     status="statusMsg"
+                     grouping="w"
+                     style="left: 550px; top: -50px;">
+
+      </angled-window>
 
       <textarea class="form-control"
                 placeholder="always..."
