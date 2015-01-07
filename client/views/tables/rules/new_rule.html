@@ -37,17 +37,18 @@
       <angled-window ng-show="modal.dictionaryState"
                      id="{{winId}}"
                      title="Columns"
-                     status="statusMsg"
                      grouping="w"
                      style="left: 550px; top: -50px;">
-
+        <div ng-include="'views/tables/rules/dictionary_window.html'"></div>
       </angled-window>
 
-      <textarea class="form-control"
+      <textarea id="whereCondition"
+                class="form-control"
                 placeholder="always..."
                 ng-model="rule.whereCondition"
                 ng-model-options="{debounce:{default:400}}"
-                style="resize: vertical"></textarea>
+                style="resize: vertical"
+                insert-at-caret></textarea>
     </div>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition">

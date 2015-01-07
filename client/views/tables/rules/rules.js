@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function RulesController($modal, $scope, $window, RulesService, NotificationService) {
+  function RulesController($modal, $scope, $window, RulesService, NotificationService, DictionaryService) {
 
     var self = this;
 
@@ -17,8 +17,13 @@
       self.open = newRule;
       self.edit = editRule;
       self.clearRule = deleteRule;
+
       $scope.$on('tabs:rules', getRules);
+
+      DictionaryService.get().then(populateDictionaryItems);
+
     }());
+
 
     $scope.modal = {
       title: 'Application Rule',
@@ -26,13 +31,45 @@
       cancelButtonText: 'Cancel',
       dataActions: ['before create', 'before edit', 'before delete'],
       workflowActions: ['notify', 'validate', 'execute', 'web service'],
-      dictionaryState : false,
+      dictionaryState: false,
+      dictionaryItems: {},
+      insertAtChar : insertTokenAtChar,
       resetRule: resetCurrentRule,
-      toggleOptions : toggleDictionary
+      toggleOptions: toggleDictionary
     };
 
-    function toggleDictionary () {
-        $scope.modal.dictionaryState = !$scope.modal.dictionaryState
+
+    function insertTokenAtChar (elementId, token) {
+      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
+    }
+
+    /**
+     * success handle for getting dictionary items
+     * @param data
+     */
+    function populateDictionaryItems(data) {
+      var raw = data.data;
+      var keys = Object.keys(raw);
+      $scope.modal.dictionaryItems = {
+        headings : {
+          tokens : keys[0],
+          props : keys[1]
+        },
+        data : {
+          tokens : raw[keys[0]],
+          props : raw[keys[1]]
+        }
+      };
+
+
+
+    }
+
+    /**
+     * switch the state of the dictionary window
+     */
+    function toggleDictionary() {
+      $scope.modal.dictionaryState = !$scope.modal.dictionaryState
     }
 
     /**
@@ -57,7 +94,7 @@
       launchModal();
     }
 
-    function deleteRule (rule) {
+    function deleteRule(rule) {
       RulesService.remove(rule).then(getRules)
     }
 
@@ -155,5 +192,5 @@
   }
 
   angular.module('app')
-    .controller('RulesController', ['$modal', '$scope', '$window', 'RulesService', 'NotificationService', RulesController]);
+    .controller('RulesController', ['$modal', '$scope', '$window', 'RulesService', 'NotificationService', 'DictionaryService', RulesController]);
 }());

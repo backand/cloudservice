@@ -1,6 +1,6 @@
 (function () {
 
-  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService) {
+  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService) {
 
     var self = this;
 
@@ -14,11 +14,9 @@
       self.selectedField = null;
       self.appName = $stateParams.name;
 
-      RulesService.appName = self.appName;
+      RulesService.appName = ColumnsService.appName = DictionaryService.appName  = self.appName;
       RulesService.tableId = self.tableId;
-
-      ColumnsService.appName = self.appName;
-      ColumnsService.tableName = self.tableName;
+      ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
 
     }());
 
@@ -67,6 +65,7 @@
       'ColumnsService',
       '$scope',
       'RulesService',
+      'DictionaryService',
       SingleTableShow
     ]);
 
