@@ -1,2 +1,20 @@
-<!-- dictionary window -->
-{{ modal.dictionaryItems }}
+<strong ng-bind="modal.dictionaryItems.headings.tokens"></strong>
+<hr/>
+
+<ul class="list-unstyled">
+  <li ng-repeat="token in modal.dictionaryItems.data.tokens"
+      ng-click="modal.insertAtChar(token.token)">
+
+    {{token.label}}
+  </li>
+</ul>
+
+<strong ng-bind="modal.dictionaryItems.headings.props"></strong>
+<hr/>
+
+<ul class="list-unstyled">
+  <li ng-repeat="prop in modal.dictionaryItems.data.props"
+      ng-click="modal.insertAtChar(prop.token)">
+    {{prop.label}}
+  </li>
+</ul>
