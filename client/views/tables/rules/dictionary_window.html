@@ -3,9 +3,9 @@
 
 <ul class="list-unstyled">
   <li ng-repeat="token in modal.dictionaryItems.data.tokens"
-      ng-click="modal.insertAtChar(token.token)">
-
-    {{token.label}}
+      ng-click="modal.insertAtChar('whereCondition',token.token)"
+      ng-bind="token.label"
+      style="cursor:pointer;">
   </li>
 </ul>
 
@@ -14,7 +14,9 @@
 
 <ul class="list-unstyled">
   <li ng-repeat="prop in modal.dictionaryItems.data.props"
-      ng-click="modal.insertAtChar(prop.token)">
-    {{prop.label}}
+      ng-click="modal.insertAtChar('whereCondition',prop.token)"
+      ng-bind="prop.label"
+      style="cursor:pointer;"
+    >
   </li>
 </ul>
