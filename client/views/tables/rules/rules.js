@@ -26,8 +26,13 @@
       cancelButtonText: 'Cancel',
       dataActions: ['before create', 'before edit', 'before delete'],
       workflowActions: ['notify', 'validate', 'execute', 'web service'],
-      resetRule: resetCurrentRule
+      resetRule: resetCurrentRule,
+      showOptions : launchDictionary
     };
+
+    function launchDictionary () {
+      launchModal()
+    }
 
     /**
      * set the scope to update mode

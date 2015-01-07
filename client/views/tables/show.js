@@ -28,7 +28,7 @@
           usSpinnerService.stop("loading");
           NotificationService.add('error', 'Can not get tables list');
       });
-    }
+    };
 
     this.sync = function() {
       self.syncing = true;

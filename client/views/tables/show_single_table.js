@@ -59,7 +59,6 @@
       columnSeccessHandler(data);
       NotificationService.add('success', "View configuration was saved");
     }
-
   }
 
   angular.module('app')
