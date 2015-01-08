@@ -3,10 +3,11 @@
  */
 (function () {
 
-  function SecurityUsers($stateParams, $log, NotificationService, SecurityService, $scope) {
+  function SecurityUsers($window,$modal,$stateParams, $log, NotificationService, SecurityService, $scope) {
 
     var self = this;
     self.tableName='v_durados_user';
+    self.open = newUser;
     self.roles = [];
     self.gridOptions= {};
     self.gridOptions.columnDefs= [
@@ -14,23 +15,49 @@
         { name: 'LastName' },
         { name: 'Username',enableCellEdit: false },
         { name: 'Email' },
-        { name: 'durados_User_Role',displayName:'Role' ,editDropdownOptionsArray:self.roles},
+        { name: 'durados_User_Role',displayName:'Role', editableCellTemplate :'ui-grid/dropdownEditor',editDropdownOptionsArray:self.roles},
         { name: 'IsApproved',displayName:'Approved',type: 'boolean' }
       ];
     //self.gridOptions.rowEditWaitInterval =750;
-self.addData = function(){
+    self.addUser = function(){
 
-  $scope.gridOpts.data.push({
+     /* $scope.gridOpts.data.push({
     "FirstName": "New " + n,
     "LastName": "Person " + n,
     "Username": "abc",
     "Email": true,
     "durados_User_Role" :"",
     IsApproved:false
-  });}
-    SecurityService.getUsers($stateParams.name, 20)
-      .then(usersSuccsessHandler, errorHandler);
+  });*/
+  }
+    $scope.modal = {
+      title: 'Application User',
+      okButtonText: 'Save',
+      cancelButtonText: 'Cancel',
+      roles: self.roles
 
+    };
+    function newUser(){
+      $scope.modal.mode = 'new';
+      //resetCurrentRule();
+      launchModal();
+    }
+    function getUsers() {
+      SecurityService.getUsers($stateParams.name, 20)
+        .then(usersSuccsessHandler, errorHandler);
+    };
+    getUsers();
+    var defaultUser = {
+      Email: "",
+      IsApproved: true,
+      durados_User_Role: "User",
+      FirstName:"",
+      LastName:"",
+      Email:""
+
+
+
+    };
     function usersSuccsessHandler(data) {
 
       self.gridOptions.data =data.data.data;
@@ -39,7 +66,11 @@ self.addData = function(){
 
     }
     function rolesSuccsessHandler(data){
-      self.roles= data.data.data;
+      angular.forEach(data.data.data,function(item){
+        var entry ={'id':item.Name,value:item.Name}
+        self.roles.push(entry);
+      });
+      //self.roles.push()= data.data.data;
     }
     $scope.saveRow = function( rowEntity ) {
       // create a fake promise - normally you'd use the promise returned by $http or $resource
@@ -58,10 +89,72 @@ self.addData = function(){
       $log.debug(error);
     }
 
-  }
 
+  /**
+   * init and launch modal window and
+   * pass it a scope
+   */
+  function launchModal() {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'views/security/new_user.html',
+      backdrop: 'static',
+      scope: $scope
+    });
+
+
+
+    $scope.closeModal = function (user) {
+      switch ($scope.modal.mode) {
+        case 'new':
+          postNewUser(user);
+          break;
+        /*case 'update':
+          updateRule(rule);
+          break;*/
+      }
+    };
+
+    /**
+     * extend the default rule object and
+     * delegate to rulesService post method
+     * @param rule
+     */
+    function postNewUser(user) {
+      defaultUser.Username =user.Email;
+      var data = angular.extend(defaultUser, user);
+      SecurityService.post($stateParams.name,self.tableName,data).then(getUsers);
+      modalInstance.close()
+    }
+
+    /**
+     * delegate to the update method on
+     * rules service
+     * @param rule
+     */
+    /*function updateRule(rule) {
+      RulesService.update(rule).then(getRules);
+      modalInstance.close();
+    }*/
+
+    /**
+     * close the modal window if user confirm
+     */
+    $scope.cancel = function () {
+      var result = $window.confirm('Changes will be lost. are sure you want to close this window?');
+      result ? modalInstance.dismiss() : false;
+    };
+
+  }
+    $scope.cancel = function () {
+      var result = $window.confirm('Changes will be lost. are sure you want to close this window?');
+      result ? modalInstance.dismiss() : false;
+    };
+  }
   angular.module('app')
     .controller('SecurityUsers', [
+      '$window',
+      '$modal',
       '$stateParams',
       '$log',
       'NotificationService',

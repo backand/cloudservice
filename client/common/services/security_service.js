@@ -34,7 +34,16 @@
         data:rowData
       });
     };
-
+    this.post = function(appName, tableName ,rowData){
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/table/data/'+tableName+'/',
+        headers: {
+          'AppName': appName
+        },
+        data:rowData
+      });
+    };
 
   }
 

@@ -5,7 +5,7 @@
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body"  ng-controller="SecurityUsers as users">
-      <button type="button" id="addData" class="btn btn-success" ng-click="users.addData()">Add User</button>
+      <button type="button" id="addData" class="btn btn-success" ng-click="users.open()">Add User</button>
       <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit  ui-grid-row-edit ui-grid-cellNav  class="grid"></div>
     </div>
   </section>
