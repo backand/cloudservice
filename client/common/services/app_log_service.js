@@ -31,15 +31,15 @@
 
     function arrangeMsg(item){
       var log = '';
-      switch(item.Action){
+      switch(item.__metadata.descriptives.Action.label){
         case 'Update' :
-              log = item.Action +" "+ item.FieldName +' from '+item.OldValue+" to "+item.NewValue;
-              break;
+          log = item.__metadata.descriptives.Action.label +" "+ item.FieldName +' from '+item.OldValue+" to "+item.NewValue;
+          break;
         case 'Insert' :
-          log = item.Action +" "+ item.FieldName +" "+item.NewValue;
+          log = item.__metadata.descriptives.Action.label +" "+ item.FieldName +" "+item.NewValue;
           break;
         case 'Delete' :
-          log = item.Action +" "+ item.FieldName +" "+item.OldValue;
+          log = item.__metadata.descriptives.Action.label +" "+ item.FieldName +" "+item.OldValue;
           break;
       }
       return log;
@@ -49,10 +49,10 @@
       var logMsgs = [];
       array.forEach(function(item){
         var msg = arrangeMsg(item);
-        var info = msg.substr(0,100) + " by " + item.Username;
-        var infoLong = msg + + " by " + item.Username;
+        var info = msg.substr(0,100) + " by " + item.__metadata.descriptives.Username.label;
+        var infoLong = msg + + " by " + item.__metadata.descriptives.Username.label;
         var long = (msg.length>100);
-        logMsgs.push({info : info, infoLong: infoLong ,long: long, open: false, time: item.UpdateDate, user: item.Username});
+        logMsgs.push({info : info, infoLong: infoLong ,long: long, open: false, time: item.UpdateDate, user: item.__metadata.descriptives.Username.label});
       });
       return logMsgs;
     }
