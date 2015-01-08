@@ -17,11 +17,8 @@
       self.open = newRule;
       self.edit = editRule;
       self.clearRule = deleteRule;
-
       $scope.$on('tabs:rules', getRules);
-
       DictionaryService.get().then(populateDictionaryItems);
-
     }());
 
 
@@ -206,11 +203,8 @@
             {
               title: 'After',
               items: [{name: 'a rule name'},{name: 'a rule name'},{name: 'a rule name'}]
-            }
-          ]
-        }
-
-      ]
+            }]
+        }]
     }
 
     /**
