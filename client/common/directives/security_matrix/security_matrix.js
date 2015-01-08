@@ -2,10 +2,10 @@
 
     function SecurityMatrixDirective () {
         return {
-            templateUrl: 'security_matrix.html'
+            templateUrl: 'common/directives/security_matrix/security_matrix.html'
         }
     }
 
-    angular.module('')
-        .directive('SecurityMatrix',SecurityMatrixDirective);
+    angular.module('app')
+        .directive('securityMatrix',SecurityMatrixDirective);
 }());
