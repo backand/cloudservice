@@ -5,12 +5,12 @@
     angular.bootstrap(document, ['app']);
   });
 
-  function MainController(SessionService, $state, $location) {
-    this.getCurrentUser = function () {
+  function MainController(SessionService,$state,$location) {
+    this.getCurrentUser = function(){
       return SessionService.currentUser;
     };
 
-    this.logout = function () {
+    this.logout = function(){
       SessionService.ClearCredentials();
       $location.path("/sign_in")
     }
@@ -28,6 +28,9 @@
     'ui.bootstrap',
     'ui.grid',
     'ui.tree',
+    'ui.grid.edit',
+    'ui.grid.rowEdit',
+    'ui.grid.cellNav',
     'angled-windows',
     'app.routes',
     'app.consts',
@@ -50,8 +53,8 @@
     'app.database',
     'app.backoffice',
     'app.playground',
-  ])
+    ])
     .run(run)
-    .controller('MainController', ["SessionService", '$state', '$location', MainController])
+    .controller('MainController', ["SessionService",'$state','$location',MainController])
     .value('version', '1.0.1');
 })();

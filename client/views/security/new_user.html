@@ -1,0 +1,245 @@
+<div class="modal-header">
+  <h3 class="modal-title" ng-bind="modal.title"></h3>
+</div>
+
+<div class="modal-body clearfix">
+
+  <form novalidate>
+
+    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <label>Email</label>
+    <input type="text"
+           class="form-control"
+           ng-model="user.Email"
+           ng-model-options="{debounce:{default:400}}"
+           required
+           placeholder="This will be your username">
+  </div>
+    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+      <label>First name</label>
+      <input type="text"
+             class="form-control"
+             ng-model="user.FirstName"
+             ng-model-options="{debounce:{default:400}}"
+             required>
+    </div>
+    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+      <label>Last name</label>
+      <input type="text"
+             class="form-control"
+             ng-model="user.LastName"
+             ng-model-options="{debounce:{default:400}}"
+             required>
+    </div>
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" >
+      <label>User Role</label>
+      <select class="form-control"
+
+              ng-model="user.durados_User_Role"
+              ng-model-options="{debounce:{default:400}}"
+              required>
+        <option ng-repeat="role in modal.roles" value="{{role.id}}">{{role.id}}</option>
+       <!-- <option value="">Select action...</option>-->
+      </select>
+    </div>
+
+ <!--   <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.dataAction">
+
+      <label>Where condition</label>
+
+      <div class="pull-right">
+        <span class="glyphicon glyphicon-edit" ng-click="modal.toggleOptions()"></span>
+      </div>
+
+      <angled-window ng-show="modal.dictionaryState"
+                     id="{{winId}}"
+                     title="Columns"
+                     grouping="w"
+                     style="left: 550px; top: -50px;">
+        <div ng-include="'views/tables/rules/dictionary_window.html'"></div>
+      </angled-window>
+
+      <textarea id="whereCondition"
+                class="form-control"
+                placeholder="always..."
+                ng-model="rule.whereCondition"
+                ng-model-options="{debounce:{default:400}}"
+                style="resize: vertical"
+                insert-at-caret></textarea>
+    </div>
+
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition">
+      <label>Workflow action</label>
+      <select class="form-control"
+              ng-options="workflowAction for workflowAction in modal.workflowActions"
+              ng-model="rule.workflowAction"
+              ng-change="modal.resetRule()">
+        <option value="">Select action...</option>
+      </select>
+    </div>
+
+    <div ng-switch="rule.workflowAction">
+
+      &lt;!&ndash; notify options &ndash;&gt;
+      <div ng-switch-when="notify">
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>To:</label>
+          <input type="text"
+                 ng-model="rule.to"
+                 class="form-control"/>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>cc:</label>
+          <input type="text"
+                 ng-model="rule.cc"
+                 class="form-control"/>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>bcc:</label>
+          <input type="text"
+                 ng-model="rule.bcc"
+                 class="form-control"/>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>from:</label>
+          <input type="text"
+                 ng-model="rule.from"
+                 class="form-control"/>
+        </div>
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+          <label>subject:</label>
+          <input type="text"
+                 ng-model="rule.subject"
+                 class="form-control"/>
+        </div>
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+          <label>Message:</label>
+          <textarea class="form-control"
+                    ng-model="rule.message"
+                    style="resize: vertical"></textarea>
+        </div>
+
+      </div>&lt;!&ndash;./notify &ndash;&gt;
+
+      <div ng-switch-when="validate">
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Expression:</label>
+          <textarea class="form-control"
+                    ng-model="validateCommand1"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Non valid message:</label>
+          <textarea class="form-control"
+                    ng-model="rule.validateMessage1"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Expression:</label>
+          <textarea class="form-control"
+                    ng-model="validateCommand2"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Non valid message:</label>
+          <textarea class="form-control"
+                    ng-model="rule.validateMessage2"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Expression:</label>
+          <textarea class="form-control"
+                    ng-model="validateCommand3"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Non valid message:</label>
+          <textarea class="form-control"
+                    ng-model="rule.validateMessage3"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Expression:</label>
+          <textarea class="form-control"
+                    ng-model="rule.validateCommand4"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Non valid message:</label>
+          <textarea class="form-control"
+                    ng-model="rule.validateMessage4"
+                    style="resize: vertical"></textarea>
+        </div>
+
+      </div>&lt;!&ndash;./validate&ndash;&gt;
+
+      <div ng-switch-when="execute">
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+          <label>Command:</label>
+          <textarea class="form-control"
+                    ng-model="rule.command"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+          <label>Message:</label>
+          <textarea class="form-control"
+                    ng-model="rule.message"
+                    style="resize: vertical"></textarea>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>In parameters:</label>
+          <input type="text"
+                 ng-model="rule.inparameters"
+                 class="form-control"/>
+        </div>
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>Out parameters:</label>
+          <input type="text"
+                 ng-model="rule.outParameters"
+                 class="form-control"/>
+        </div>
+
+      </div>&lt;!&ndash; ./execute &ndash;&gt;
+
+      <div ng-switch-when="web service">
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+          <label>Web Service Url:</label>
+          <textarea class="form-control"
+                    ng-model="rule.webServiceUrl"
+                    style="resize: vertical"></textarea>
+        </div>
+
+
+      </div>
+
+    </div>-->
+    <!-- end switch -->
+
+
+  </form>
+
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="closeModal(user)" ng-bind="modal.okButtonText"></button>
+  <button class="btn btn-default" ng-click="cancel()" ng-bind="modal.cancelButtonText"></button>
+</div>
