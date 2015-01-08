@@ -1,7 +1,7 @@
-(function() {
+(function () {
   'use strict';
 
-  angular.element(document).ready(function() {
+  angular.element(document).ready(function () {
     angular.bootstrap(document, ['app']);
   });
 
@@ -14,7 +14,6 @@
       SessionService.ClearCredentials();
       $location.path("/sign_in")
     }
-
   }
 
   function run($log) {

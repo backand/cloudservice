@@ -20,6 +20,7 @@
   <link rel="stylesheet" type="text/css" href="vendor/angular-xeditable/dist/css/xeditable.css" >
   <link rel="stylesheet" type="text/css" href="vendor/ladda/dist/ladda-themeless.min.css">
   <link rel="stylesheet" type="text/css" href="vendor/angular-ui-grid/ui-grid.min.css" />
+  <link rel="stylesheet" href="vendor/angled/Modules/css/angled-windows.css"/>
   <!-- endbuild -->
 </head>
 
@@ -38,7 +39,9 @@
 
   <!-- build:js assets/js/vendor.js -->
   <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+  <script src="common/plugins/insertAtCaret_plugin.js"></script>
   <script type="text/javascript" src="vendor/angular/angular.js"></script>
+  <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
   <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap.js"></script>
   <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script type="text/javascript" src="vendor/angular-cookies/angular-cookies.js"></script>
@@ -54,11 +57,17 @@
   <script type="text/javascript" src="vendor/moment/moment.js"></script>
   <script type="text/javascript" src="vendor/angular-moment/angular-moment.js"></script>
   <script type="text/javascript" src="vendor/angular-ui-grid/ui-grid.min.js"></script>
+  <script src="vendor/jquery-ui/jquery-ui.js"></script>
+  <script src="vendor/angled/jQueryUI/angled-dragndrop.js"></script>
+  <script src="vendor/angled/jQueryUI/angled-resizeit.js"></script>
+  <script src="vendor/angled/angled-filters.js"></script>
+  <script src="vendor/angled/Services/angled-helper.js"></script>
+  <script src="vendor/angled/Modules/angled-windows.js"></script>
   <!-- endbuild -->
-
 
   <!-- build:js assets/js/main.js -->
   <script type="text/javascript" src="app.js"></script>
+  <script src="common/directives/place_at_char.js"></script>
   <script type="text/javascript" src="common/services/session.service.js"></script>
   <script type="text/javascript" src="common/services/auth_service.js"></script>
   <script type="text/javascript" src="common/services/notification_service.js"></script>
@@ -70,6 +79,7 @@
   <script type="text/javascript" src="common/services/columns_service.js"></script>
   <script type="text/javascript" src="common/services/rules_service.js"></script>
   <script type="text/javascript" src="common/services/security_service.js"></script>
+  <script type="text/javascript" src="common/services/dictionary_service.js"></script>
 
   <script type="text/javascript" src="config/routes.js"></script>
   <script type="text/javascript" src="config/consts.js"></script>
@@ -81,10 +91,7 @@
   <script type="text/javascript" src="views/auth/forgot_modal.js"></script>
   <script type="text/javascript" src="views/auth/change_password.js"></script>
   <script type="text/javascript" src="views/tables/fields/fields.js"></script>
-  <script type="text/javascript" src="views/tables/view/view.js"></script>
   <script type="text/javascript" src="views/tables/rules/rules.js"></script>
-
-
 
   <script type="text/javascript" src="views/apps/config.js"></script>
   <script type="text/javascript" src="views/apps/index.js"></script>
@@ -97,6 +104,9 @@
 
   <script type="text/javascript" src="views/api_playground/config.js"></script>
   <script type="text/javascript" src="views/api_playground/show.js"></script>
+
+  <script type="text/javascript" src="views/log/config.js"></script>
+  <script type="text/javascript" src="views/log/log.js"></script>
 
   <script type="text/javascript" src="views/security/config.js"></script>
   <script type="text/javascript" src="views/security/users.js"></script>

@@ -1,82 +1,71 @@
-/**
- * Refactored by nirkaufman on 1/4/15.
- */
 (function () {
 
-  function SingleTableShow($stateParams, $log, NotificationService, ColumnsService, RulesService,TablesService, $scope) {
+  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService) {
 
     var self = this;
 
-    self.tableName = $stateParams.tableName;
-    self.tableId = $stateParams.tableId;
-    self.messages = [];
-    self.fields = [];
-    self.view = {};
-    self.fieldTypesRange = ["String", "DateTime", "Integer"];
-    self.selectedField = null;
+    (function init() {
+      self.tableName = $stateParams.tableName;
+      self.tableId = $stateParams.tableId;
+      self.messages = [];
+      self.fields = [];
+      self.view = {};
+      self.fieldTypesRange = ["String", "DateTime", "Integer"];
+      self.selectedField = null;
+      self.appName = $stateParams.name;
 
-    self.update = function()
-    {
-      TablesService.update($stateParams.name, self.tableName,self.view).then(upadateSuccessHandler,errorHandler);
-    }
-    self.newAction = function () {
-      $scope.$broadcast('newButtonEvent');
+      RulesService.appName = ColumnsService.appName = DictionaryService.appName  = self.appName;
+      RulesService.tableId = self.tableId;
+      ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
+
+    }());
+
+    self.update = function () {
+      TablesService.update($stateParams.name, self.tableName, self.view).then(upadateSuccessHandler, errorHandler);
     };
 
     self.switchTab = function (tab) {
 
       switch (tab) {
-
         case 'fields':
-          ColumnsService.get($stateParams.name, self.tableName)
-            .then(columnSeccessHandler, errorHandler);
+          $scope.$broadcast('tabs:fields');
           break;
 
         case 'rules':
-        RulesService.get($stateParams.name, self.tableId)
-          .then(rulesSuccsessHandler, errorHandler);
-        break;
+          $scope.$broadcast('tabs:rules');
+          break;
 
         case 'settings':
-          if(angular.isUndefined(self.view) || angular.isUndefined(self.view.name) || self.view.name == ''   )
+          if (angular.isUndefined(self.view) || angular.isUndefined(self.view.name) || self.view.name == '')
             ColumnsService.get($stateParams.name, self.tableId)
               .then(columnSeccessHandler, errorHandler);
           break;
       }
-
     };
-
-    function rulesSuccsessHandler(data) {
-      self.items = data.data.data;
-    }
 
     function columnSeccessHandler(data) {
       self.view = data.data;
       self.fields = data.data.fields;
     }
 
-
     function errorHandler(error, message) {
       NotificationService.add('error', message);
       $log.debug(error);
     }
+
     function upadateSuccessHandler(data) {
       columnSeccessHandler(data);
       NotificationService.add('success', "View configuration was saved");
-
     }
-    upadateSuccessHandler
-
   }
 
   angular.module('app')
     .controller('SingleTableShow', [
       '$stateParams',
-      '$log',
-      'NotificationService',
       'ColumnsService',
+      '$scope',
       'RulesService',
-      'TablesService',
+      'DictionaryService',
       SingleTableShow
     ]);
 

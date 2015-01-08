@@ -4,7 +4,7 @@
 
   <tabset class="ui-tab">
 
-    <tab ng-repeat="field in singleTable.fields"
+    <tab ng-repeat="field in fields.items"
          heading="{{ field.name }}">
 
       <form role="form"  >
@@ -91,10 +91,6 @@
           <label  for="EnableUpload">Enable Upload</label>
           <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="EnableUpload" type="checkbox" ng-model="field.EnableUpload" checked=""><i></i></label>
         </div>
-
-
-
-
 
       </form>
 

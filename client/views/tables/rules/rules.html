@@ -2,26 +2,17 @@
      class="ui-tab-container ui-tab-vertical"
      style="height:500px; overflow:auto">
 
+  <button class="btn btn-sm btn-primary" ng-click="rules.open()">new</button>
+
   <tabset class="ui-tab">
 
-    <tab ng-repeat="field in singleTable.items"
-         heading="{{ field.name }}">
+    <tab ng-repeat="item in rules.items" heading="{{ item.name }}">
       <br/>
 
-      <form role="form" style="height:450px;">
+    <pre>{{ item | json}} </pre>
 
-        <div class="form-group">
-          <label for="exampleInputEmail1">Name</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" ng-model="field.name">
-        </div>
-
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" ng-model="field.required"> Required
-          </label>
-        </div>
-
-      </form>
+    <button class="btn btn-primary" ng-click="rules.edit(item)">Edit</button>
+    <button class="btn btn-danger" ng-click="rules.clearRule(item)">Delete</button>
 
     </tab>
   </tabset>
