@@ -38,7 +38,12 @@
       toggleOptions: toggleDictionary
     };
 
-
+    /**
+     * broadcast insert event from the parent scope
+     * element id used by jquery to locate the element
+     * @param elementId
+     * @param token
+     */
     function insertTokenAtChar(elementId, token) {
       $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
     }
