@@ -50,6 +50,11 @@ angular.module('app.routes', []).
         abstract: true,
         template: '<div ui-view></div>'
       })
+      .state('log', {
+        url: '/log',
+        abstract: true,
+        template: '<div ui-view></div>'
+      })
       .state('security', {
         url: '/security',
         abstract: true,

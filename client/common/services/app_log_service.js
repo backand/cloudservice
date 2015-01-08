@@ -5,16 +5,26 @@
 
     var self = this;
 
-    this.getAppLog = function(appName, limit){
+    this.getAppLog = function(appName, size, page, isAdmin, sort){
+      var filterParam = '';
+      if(isAdmin)
+        filterParam = '[{fieldName:"Admin", operator:"equals", value:"true"}]';
+      else
+        filterParam = '[{fieldName:"Admin", operator:"equals", value:"false"}]';
+      var sortParam = '[{fieldName:"id", order:"desc"}]';
+      if(sort)
+        sortParam = sort;
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/table/data/durados_v_ChangeHistory?pageSize='+String(limit),
+        url: CONSTS.appUrl + '/1/table/data/durados_v_ChangeHistory',
         headers: {
           'AppName': appName
         },
         params: {
-          'filter' : '[{fieldName:"Admin", operator:"equals", value:"true"}]',
-          'sort' : '[{fieldName:"id", order:"desc"}]'
+          'pageSize': String(size),
+          'pageNumber': String(page),
+          'filter' : filterParam,
+          'sort' : sortParam
         }
       });
     };

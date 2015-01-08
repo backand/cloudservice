@@ -14,7 +14,7 @@
         link: function(scope, element, attrs) {
 
           scope.logLimit = parseInt(scope.logLimit);
-          AppLogService.getAppLog(scope.appName, scope.logLimit)
+          AppLogService.getAppLog(scope.appName, scope.logLimit,1,true)
             .success(function(data){
               scope.appLogArray = AppLogService.createLogMsg(data.data);
             })
