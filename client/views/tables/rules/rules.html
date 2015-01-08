@@ -20,7 +20,7 @@
             <ol ui-tree-nodes="" ng-model="subItem.items">
               <li ng-repeat="item in subItem.items" ui-tree-node>
                 <div ui-tree-handle>
-                  {{item.name}}
+                  <a href="" ng-click="rules.edit(item)">{{item.name}}</a>
                   <div class="btn-group btn-group-xs pull-right">
                     <button ng-click="rules.clearRule(item)"
                             class="btn btn-danger btn-default">X</button>
