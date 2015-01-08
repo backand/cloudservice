@@ -19,7 +19,7 @@
             </tab>
 
             <tab heading="Security" select="singleTable.switchTab('security')">
-
+              <ng-include src="'views/tables/security/security.html'"></ng-include>
             </tab>
 
             <tab heading="Settings" select="singleTable.switchTab('settings')">
@@ -36,7 +36,6 @@
 
         </div>
         <br/>
-        <button class="btn btn-success btn-lg btn-w-lg  center-block" ng-click="singleTable.update()">Save</button>
       </div>
     </div>
   </section>

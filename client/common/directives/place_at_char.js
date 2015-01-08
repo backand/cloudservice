@@ -10,7 +10,6 @@
     function insertAtCaretDirective () {
         return function (scope) {
           scope.$on('insert:placeAtCaret', function (evt, data){
-
             $('#' + data[0]).insertAtCaret("{{" +data[1]+ "}}");
           });
         }

@@ -1,5 +1,11 @@
 (function () {
 
+  /**
+   * pull dictionary items from the server
+   * @param $http
+   * @param CONSTS
+   * @constructor
+   */
   function DictionaryService($http, CONSTS) {
 
     var self = this;

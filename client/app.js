@@ -27,6 +27,7 @@
     'ui.router',
     'ui.bootstrap',
     'ui.grid',
+    'ui.tree',
     'ui.grid.edit',
     'ui.grid.rowEdit',
     'ui.grid.cellNav',

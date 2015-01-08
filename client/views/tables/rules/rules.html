@@ -1,19 +1,38 @@
-<div ng-controller="RulesController as rules"
-     class="ui-tab-container ui-tab-vertical"
-     style="height:500px; overflow:auto">
+<div ng-controller="RulesController as rules">
 
-  <button class="btn btn-sm btn-primary" ng-click="rules.open()">new</button>
+  <button ng-click="rules.open()"
+          class="btn btn-success">+ new</button>
 
-  <tabset class="ui-tab">
+  <div ui-tree data-drag-enabled="false">
 
-    <tab ng-repeat="item in rules.items" heading="{{ item.name }}">
-      <br/>
+    <ol ui-tree-nodes="" ng-model="rules.items">
+      <li ng-repeat="item in rules.items" ui-tree-node>
+        <div ui-tree-handle>
+          {{item.title}}
+        </div>
 
-    <pre>{{ item | json}} </pre>
+        <ol ui-tree-nodes="" ng-model="item.items">
+          <li ng-repeat="subItem in item.items" ui-tree-node>
+            <div ui-tree-handle>
+              {{subItem.title}}
+            </div>
 
-    <button class="btn btn-primary" ng-click="rules.edit(item)">Edit</button>
-    <button class="btn btn-danger" ng-click="rules.clearRule(item)">Delete</button>
-
-    </tab>
-  </tabset>
+            <ol ui-tree-nodes="" ng-model="subItem.items">
+              <li ng-repeat="item in subItem.items" ui-tree-node>
+                <div ui-tree-handle>
+                  {{item.name}}
+                  <div class="btn-group btn-group-xs pull-right">
+                    <button ng-click="rules.clearRule(item)"
+                            class="btn btn-danger btn-default">X</button>
+                    <button ng-click="rules.edit(item)"
+                            class="btn btn-primary btn-default">V</button>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </div>
 </div>
