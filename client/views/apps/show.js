@@ -19,15 +19,6 @@
 
     this.statisticsArray = appItem.data.stat;
 
-    self.appLogArray = [];
-    AppLogService.getAppLog($state.params.name)
-      .success(function(data){
-        self.appLogArray = AppLogService.createLogMsg(data.data);
-      })
-      .error(function (error) {
-            self.loading = false;
-      });
-
     var time = new Date();
     this.logLimit = 7;
     this.appTitle = appData.Title;

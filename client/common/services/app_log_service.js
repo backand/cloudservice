@@ -5,31 +5,41 @@
 
     var self = this;
 
-    this.getAppLog = function(appName, limit){
+    this.getAppLog = function(appName, size, page, isAdmin, sort){
+      var filterParam = '';
+      if(isAdmin)
+        filterParam = '[{fieldName:"Admin", operator:"equals", value:"true"}]';
+      else
+        filterParam = '[{fieldName:"Admin", operator:"equals", value:"false"}]';
+      var sortParam = '[{fieldName:"id", order:"desc"}]';
+      if(sort)
+        sortParam = sort;
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/table/data/durados_v_ChangeHistory?pageSize='+String(limit),
+        url: CONSTS.appUrl + '/1/table/data/durados_v_ChangeHistory',
         headers: {
           'AppName': appName
         },
         params: {
-          'filter' : '[{fieldName:"Admin", operator:"equals", value:"true"}]',
-          'sort' : '[{fieldName:"id", order:"desc"}]'
+          'pageSize': String(size),
+          'pageNumber': String(page),
+          'filter' : filterParam,
+          'sort' : sortParam
         }
       });
     };
 
     function arrangeMsg(item){
       var log = '';
-      switch(item.Action){
+      switch(item.__metadata.descriptives.Action.label){
         case 'Update' :
-              log = item.Action +" "+ item.FieldName +' from '+item.OldValue+" to "+item.NewValue;
-              break;
+          log = item.__metadata.descriptives.Action.label +" "+ item.FieldName +' from '+item.OldValue+" to "+item.NewValue;
+          break;
         case 'Insert' :
-          log = item.Action +" "+ item.FieldName +" "+item.NewValue;
+          log = item.__metadata.descriptives.Action.label +" "+ item.FieldName +" "+item.NewValue;
           break;
         case 'Delete' :
-          log = item.Action +" "+ item.FieldName +" "+item.OldValue;
+          log = item.__metadata.descriptives.Action.label +" "+ item.FieldName +" "+item.OldValue;
           break;
       }
       return log;
@@ -39,10 +49,10 @@
       var logMsgs = [];
       array.forEach(function(item){
         var msg = arrangeMsg(item);
-        var info = msg.substr(0,100) + " by " + item.Username;
-        var infoLong = msg + + " by " + item.Username;
+        var info = msg.substr(0,100) + " by " + item.__metadata.descriptives.Username.label;
+        var infoLong = msg + + " by " + item.__metadata.descriptives.Username.label;
         var long = (msg.length>100);
-        logMsgs.push({info : info, infoLong: infoLong ,long: long, open: false, time: item.UpdateDate, user: item.Username});
+        logMsgs.push({info : info, infoLong: infoLong ,long: long, open: false, time: item.UpdateDate, user: item.__metadata.descriptives.Username.label});
       });
       return logMsgs;
     }

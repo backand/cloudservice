@@ -1,0 +1,28 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> {{log.title}} </strong>
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+    <div class="panel-body">
+      <div id="logGrid" ui-grid="log.gridOptions" class="grid" ng-show="log.gridOptions.totalItems > 0"></div>
+      <div ng-show="log.gridOptions.totalItems == 0">
+        <h3>No {{log.title}}</h3>
+      </div>
+      <div ng-show="log.gridOptions.totalItems > 0" class="row">
+        <div class="col-md-5">
+          <pagination total-items="log.gridOptions.totalItems" ng-model="log.paginationOptions.pageNumber" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" items-per-page="log.paginationOptions.pageSize" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+        </div>
+        <div class="col-md-2" style="margin-top:20px;">
+          Page size:
+          <select class="ui-select" ng-model="log.paginationOptions.pageSize" >
+            <option ng-repeat="size in log.paginationOptions.pageSizes">{{size}}</option>
+          </select>
+        </div>
+        <div class="col-md-5" style="margin-top:20px;">
+          <span class="pull-right">Showing {{log.paginationOptions.pageSize * (log.paginationOptions.pageNumber-1) +1}} to {{log.pageMax(log.paginationOptions.pageSize, log.paginationOptions.pageNumber, log.gridOptions.totalItems)}} of {{log.gridOptions.totalItems}} rows</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

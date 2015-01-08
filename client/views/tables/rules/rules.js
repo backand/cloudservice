@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function RulesController($modal, $scope, $window, RulesService, NotificationService, DictionaryService) {
+  function RulesController($modal, $scope, $window, $filter, RulesService, NotificationService, DictionaryService) {
 
     var self = this;
 
@@ -26,8 +26,23 @@
       title: 'Application Rule',
       okButtonText: 'Save',
       cancelButtonText: 'Cancel',
-      dataActions: ['before create', 'before edit', 'before delete', 'after create', 'after edit', 'after create or edit', 'after delete'],
-      workflowActions: ['notify', 'validate', 'execute', 'web service'],
+      dataActions: [{value: 'BeforeCreate', label:'Create - Before adding data', level1: 0, level2: 0},
+                    {value: 'AfterCreateBeforeCommit', label:'Create - After data saved before it committed', level1: 0, level2: 1},
+                    {value: 'AfterCreate', label:'Create - After data saved and committed', level1: 0, level2: 2},
+                    {value: 'BeforeEdit', label:'Update - Before update data', level1: 1, level2: 0},
+                    {value: 'AfterEditBeforeCommit', label:'Update - After data saved before it committed', level1: 1, level2: 1},
+                    {value: 'AfterEdit', label:'Update - After data saved and committed', level1: 1, level2: 2},
+                    {value: 'BeforeDelete', label:'Delete - Before delete', level1: 2, level2: 0},
+                    {value: 'AfterDeleteBeforeCommit', label:'Delete - After record deleted but before it committed', level1: 2, level2: 1},
+                    {value: 'AfterDelete', label:'Delete - After record deleted and committed', level1: 2, level2: 2},
+                    {value: 'BeforeViewOpen', label:'Read - Before reading data from database', level1: 3, level2: 0},
+                    {value: 'Open', label:'Read - After reading from database but before send to client', level1: 3, level2: 1}
+      ],
+      workflowActions:[{value: 'Notify', label:'Send Email'},
+         {value: 'Validate', label:'Advanced Data Validation'},
+         {value: 'Execute', label:'Run additional database script'},
+         {value: 'WebService', label:'Make HTTP call'}
+      ],
       dictionaryState: false,
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
@@ -88,7 +103,12 @@
      * @param rule
      */
     function editRule(rule) {
-      $scope.rule = angular.copy(rule);
+      //fund the rule object based on the rule name in the tree
+      $scope.rule = angular.copy($filter('filter')($scope.rules.data, function (f) {
+        return f.name === rule.name;
+      })[0]);
+
+      //$scope.rule = angular.copy(rule);
       $scope.modal.mode = 'update';
       launchModal();
     }
@@ -187,24 +207,80 @@
      * @param data
      */
     function buildTree(data) {
-      console.log(data.data.data);
+      self.data = data.data.data;
       self.items = [
         {
           title: 'Create',
           items: [
             {
               title: 'Before',
-              items: [{name: 'a rule name'}]
+              items: []
             },
             {
               title: 'During',
-              items: [{name: 'a rule name'}, {name: 'a rule name'}]
+              items: []
             },
             {
               title: 'After',
-              items: [{name: 'a rule name'},{name: 'a rule name'},{name: 'a rule name'}]
+              items: []
             }]
-        }]
+        },
+        {
+          title: 'Edit',
+          items: [
+            {
+              title: 'Before',
+              items: []
+            },
+            {
+              title: 'During',
+              items: []
+            },
+            {
+              title: 'After',
+              items: []
+            }]
+        },
+        {
+          title: 'Delete',
+          items: [
+            {
+              title: 'Before',
+              items: []
+            },
+            {
+              title: 'During',
+              items: []
+            },
+            {
+              title: 'After',
+              items: []
+            }]
+        },
+        {
+          title: 'Open',
+          items: [
+            {
+              title: 'Before',
+              items: []
+            },
+            {
+              title: 'After',
+              items: []
+            }]
+        }
+      ]
+
+      //build the tree
+      angular.forEach(data.data.data, function(value, key) {
+        var obj = {name: value.name};
+        var da = $filter('filter')($scope.modal.dataActions, function (f) {
+          return f.value === value.dataAction;
+        })[0];
+        if(da)
+          self.items[da.level1].items[da.level2].items.push(obj);
+      });
+
     }
 
     /**
@@ -218,5 +294,5 @@
   }
 
   angular.module('app')
-    .controller('RulesController', ['$modal', '$scope', '$window', 'RulesService', 'NotificationService', 'DictionaryService', RulesController]);
+    .controller('RulesController', ['$modal', '$scope', '$window', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', RulesController]);
 }());

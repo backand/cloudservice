@@ -17,12 +17,12 @@
     </div>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-if="rule.name">
-      <label>Data action</label>
+      <label>Event Trigger</label>
       <select class="form-control"
-              ng-options="dataAction for dataAction in modal.dataActions"
+              ng-options="dataAction.label for dataAction in modal.dataActions track by dataAction.value"
               ng-model="rule.dataAction"
               ng-model-options="{debounce:{default:400}}">
-        <option value="">Select action...</option>
+        <option value="">Select trigger...</option>
       </select>
     </div>
 
@@ -44,7 +44,7 @@
 
       <textarea id="whereCondition"
                 class="form-control"
-                placeholder="always..."
+                placeholder="enter value true to run always or build new condition"
                 ng-model="rule.whereCondition"
                 ng-model-options="{debounce:{default:400}}"
                 style="resize: vertical"
@@ -52,19 +52,19 @@
     </div>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition">
-      <label>Workflow action</label>
+      <label>Action</label>
       <select class="form-control"
-              ng-options="workflowAction for workflowAction in modal.workflowActions"
+              ng-options="workflowAction.label for workflowAction in modal.workflowActions track by workflowAction.value"
               ng-model="rule.workflowAction"
               ng-change="modal.resetRule()">
         <option value="">Select action...</option>
       </select>
     </div>
 
-    <div ng-switch="rule.workflowAction">
+    <div ng-switch="rule.workflowAction.value">
 
       <!-- notify options -->
-      <div ng-switch-when="notify">
+      <div ng-switch-when="Notify">
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>To:</label>
@@ -110,7 +110,7 @@
 
       </div><!--./notify -->
 
-      <div ng-switch-when="validate">
+      <div ng-switch-when="Validate">
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
           <label>Expression:</label>
@@ -170,7 +170,7 @@
 
       </div><!--./validate-->
 
-      <div ng-switch-when="execute">
+      <div ng-switch-when="Execute">
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12">
           <label>Command:</label>
@@ -202,7 +202,7 @@
 
       </div><!-- ./execute -->
 
-      <div ng-switch-when="web service">
+      <div ng-switch-when="WebService">
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12">
           <label>Web Service Url:</label>
