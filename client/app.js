@@ -27,6 +27,7 @@
     'ui.router',
     'ui.bootstrap',
     'ui.grid',
+    'ui.tree',
     'angled-windows',
     'app.routes',
     'app.consts',

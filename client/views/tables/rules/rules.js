@@ -29,17 +29,17 @@
       title: 'Application Rule',
       okButtonText: 'Save',
       cancelButtonText: 'Cancel',
-      dataActions: ['before create', 'before edit', 'before delete'],
+      dataActions: ['before create', 'before edit', 'before delete', 'after create', 'after edit', 'after create or edit', 'after delete'],
       workflowActions: ['notify', 'validate', 'execute', 'web service'],
       dictionaryState: false,
       dictionaryItems: {},
-      insertAtChar : insertTokenAtChar,
+      insertAtChar: insertTokenAtChar,
       resetRule: resetCurrentRule,
       toggleOptions: toggleDictionary
     };
 
 
-    function insertTokenAtChar (elementId, token) {
+    function insertTokenAtChar(elementId, token) {
       $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
     }
 
@@ -51,18 +51,15 @@
       var raw = data.data;
       var keys = Object.keys(raw);
       $scope.modal.dictionaryItems = {
-        headings : {
-          tokens : keys[0],
-          props : keys[1]
+        headings: {
+          tokens: keys[0],
+          props: keys[1]
         },
-        data : {
-          tokens : raw[keys[0]],
-          props : raw[keys[1]]
+        data: {
+          tokens: raw[keys[0]],
+          props: raw[keys[1]]
         }
       };
-
-
-
     }
 
     /**
@@ -117,6 +114,12 @@
         "useSqlParser": false
       };
 
+      /**
+       * choose the close method depend on
+       * modal mode
+       *
+       * @param rule
+       */
       $scope.closeModal = function (rule) {
         switch ($scope.modal.mode) {
           case 'new':
@@ -131,6 +134,7 @@
       /**
        * extend the default rule object and
        * delegate to rulesService post method
+       *
        * @param rule
        */
       function postNewRule(rule) {
@@ -142,6 +146,7 @@
       /**
        * delegate to the update method on
        * rules service
+       *
        * @param rule
        */
       function updateRule(rule) {
@@ -170,15 +175,37 @@
      * ajax call to get the rules list
      */
     function getRules() {
-      RulesService.get().then(successHandler, errorHandler)
+      RulesService.get().then(buildTree, errorHandler)
     }
 
     /**
-     * extract and bind the data to the scope
+     * parse the raw data object to a tree
+     * and bind it to self
+     *
      * @param data
      */
-    function successHandler(data) {
-      self.items = data.data.data;
+    function buildTree(data) {
+      console.log(data.data.data);
+      self.items = [
+        {
+          title: 'Create',
+          items: [
+            {
+              title: 'Before',
+              items: [{name: 'a rule name'}]
+            },
+            {
+              title: 'During',
+              items: [{name: 'a rule name'}, {name: 'a rule name'}]
+            },
+            {
+              title: 'After',
+              items: [{name: 'a rule name'},{name: 'a rule name'},{name: 'a rule name'}]
+            }
+          ]
+        }
+
+      ]
     }
 
     /**
