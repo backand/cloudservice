@@ -1,0 +1,13 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Users  </strong>
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+    <div class="panel-body"  ng-controller="SecurityUsers as users">
+      <button type="button" id="addUser" class="btn btn-success" ng-click="users.open()">Add User</button>
+      <button type="button" id="delUser" class="btn btn-success" ng-click="users.delete()">Delete User</button>
+      <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit  ui-grid-row-edit ui-grid-cellNav  ui-grid-selection  class="grid" ></div>
+    </div>
+  </section>
+</section>

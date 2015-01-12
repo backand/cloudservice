@@ -34,11 +34,12 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12" >
       <label>User Role</label>
       <select class="form-control"
+              ng-options="role.Name for role in modal.roles track by role.Name"
 
               ng-model="user.durados_User_Role"
               ng-model-options="{debounce:{default:400}}"
               required>
-        <option ng-repeat="role in modal.roles" value="{{role.id}}">{{role.id}}</option>
+
        <!-- <option value="">Select action...</option>-->
       </select>
     </div>

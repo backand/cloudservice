@@ -1,0 +1,13 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Roles  </strong>
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+    <div class="panel-body"  ng-controller="SecurityRoles as roles">
+      <button type="button" id="addUser" class="btn btn-success" ng-click="roles.open()">Add role</button>
+      <button type="button" id="delUser" class="btn btn-success" ng-click="roles.delete()">Delete role</button>
+      <div id="rolessGrid" ui-grid="roles.gridOptions" ui-grid-edit  ui-grid-row-edit ui-grid-cellNav  ui-grid-selection  class="grid" ></div>
+    </div>
+  </section>
+</section>
