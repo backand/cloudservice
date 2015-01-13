@@ -8,13 +8,20 @@
     self.rolesTableName = 'durados_UserRole';
     self.pageSize = 20;
 
-    self.getData = function (tableName) {
+    self.getData = function (tableName,size, page,  sort) {
+      var sortParam = '[{fieldName:"id", order:"desc"}]';
+      var def_size = !size? 20 : size;
+      var page = !page ? 1 : page;
+      if(sort)
+        sortParam = sort;
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/1/table/data/' + tableName + '?pageSize=' + String(self.pageSize),
         headers: {AppName: self.appName},
         params: {
-          'sort': '[{fieldName:"id", order:"desc"}]'
+          'pageSize': String(size),
+          'pageNumber': String(page),
+          'sort' : sortParam
         }
       });
     };
@@ -46,8 +53,9 @@
       });
     };
 
-    self.getUsers = function () {
-      return self.getData(self.usersTableName)
+    self.getUsers = function ( size, page,  sort) {
+
+      return self.getData(self.usersTableName,size, page,  sort)
     };
 
     self.getRoles = function () {

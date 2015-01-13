@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers($window, $modal, $stateParams, $log, NotificationService, SecurityService, $scope) {
+  function SecurityUsers($window, $modal, $stateParams, $log, usSpinnerService,NotificationService, SecurityService, $scope) {
 
     var self = this;
 
@@ -15,9 +15,16 @@
 
     self.invitedUsers = '';
     self.invitedAdmins = '';
+    self.sort = '[{fieldName:"Username", order:"desc"}]';
     self.processingInviteUsers=false;
     self.processingInviteAdmins=false;
     self.gridOptions.rowEditWaitInterval = 200;
+    self.paginationOptions = {
+      pageNumber: 1,
+      pageSize: 20,
+      pageSizes: [20, 50, 100, 1000]
+    };
+
     /*self.gridOptions.afterSelectionChange= function(rowItem, event) {
      $scope.rowId = rowItem.rowIndex;
      //$scope.item_id = rowItem.entity.item_id;
@@ -27,7 +34,8 @@
      $scope.arrayIdx = $scope.gridOptions.ngGrid.rowMap.indexOf(rowItem.rowIndex);
      };*/
     function getUsers() {
-      SecurityService.getUsers()
+      usSpinnerService.spin('loading');
+      SecurityService.getUsers(self.paginationOptions.pageSize, self.paginationOptions.pageNumber,  self.sort)
         .then(usersSuccessHandler, errorHandler);
 
     }
@@ -36,11 +44,13 @@
       self.roles = data.data.data;
       self.gridOptions.columnDefs[4].editDropdownOptionsArray = self.roles;
       $scope.modal.roles = self.roles;
+      usSpinnerService.stop('loading');
 
     }
 
     function usersSuccessHandler(data) {
       self.gridOptions.data = data.data.data;
+      self.gridOptions.totalItems = data.data.totalRows;
       SecurityService.getRoles()
         .then(rolesSuccessHandler, errorHandler);
     }
@@ -51,25 +61,31 @@
       getUsers();
     }
 
-
+    $scope.$watch('users.paginationOptions.pageNumber',getUsers);
     getUsers();
-    self.gridOptions.multiSelect = false;
-    self.gridOptions.enableSelectAll = false;
-    self.gridOptions.columnDefs = [
-      {name: 'FirstName'},
-      {name: 'LastName'},
-      {name: 'Username', enableCellEdit: false},
-      {name: 'Email'},
-      {
-        name: 'durados_User_Role',
-        displayName: 'Role',
-        editableCellTemplate: 'ui-grid/dropdownEditor',
-        editDropdownOptionsArray: [],
-        editDropdownIdLabel: 'Name',
-        editDropdownValueLabel: 'Name'
-      },
-      {name: 'IsApproved', displayName: 'Approved', type: 'boolean'}
-    ];
+
+    self.gridOptions = {
+      enableColumnResize: true,
+      enablePaginationControls: false,
+      useExternalSorting: true,
+      multiSelect : false,
+      enableSelectAll : false,
+      columnDefs : [
+        {name: 'FirstName'},
+        {name: 'LastName'},
+        {name: 'Username', enableCellEdit: false, sort:{direction: 'desc', priority:0}},
+        {name: 'Email'},
+        {
+          name: 'durados_User_Role',
+          displayName: 'Role',
+          editableCellTemplate: 'ui-grid/dropdownEditor',
+          editDropdownOptionsArray: [],
+          editDropdownIdLabel: 'Name',
+          editDropdownValueLabel: 'Name'
+        },
+        {name: 'IsApproved', displayName: 'Approved', type: 'boolean'}
+      ]
+      };
     function newUser() {
       $scope.modal.mode = 'new';
       launchModal();
@@ -115,12 +131,21 @@
       //set gridApi on scope
       $scope.gridApi = gridApi;
       $scope.gridApi.rowEdit.on.saveRow($scope, $scope.saveRow);
+      $scope.gridApi.core.on.sortChanged( $scope, function( grid, sortColumns ) {
+       /* if(sortColumns[0].name != 'Username')
+          self.gridOptions.columnDefs[0].sort.direction = '';*/
+        self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
+        getUsers();
+      });
+
     };
     function errorHandler(error, message) {
       NotificationService.add('error', message);
-      self.gridOptions;
-      $log.debug(error);
+     $log.debug(error);
     }
+    self.pageMax = function (pageSize, currentPage, max) {
+      return Math.min((pageSize * currentPage), max);
+    };
     /**
      * extend the default user object and
      * delegate to SecurityService post method
@@ -236,6 +261,7 @@
       '$modal',
       '$stateParams',
       '$log',
+      'usSpinnerService',
       'NotificationService',
       'SecurityService',
       '$scope',
