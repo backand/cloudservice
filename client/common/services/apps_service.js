@@ -141,6 +141,13 @@
         }
       });
     };
+
+    this.delete = function(name) {
+      return $http({
+        method: 'DELETE',
+        url: CONSTS.appUrl + '/admin/myApps/'+name
+      });
+    };
   }
 
   angular.module('common.services')

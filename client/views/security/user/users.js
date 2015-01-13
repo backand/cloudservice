@@ -173,7 +173,7 @@
         return;
       }
       if(email_array.length>20){
-        NotificationService.add('error', 'The maximun emails allowed is 20.')
+        NotificationService.add('error', 'The maximum emails allowed is 20.')
         return;
       }
       for (var i = 0; i < email_array.length; i++) {
