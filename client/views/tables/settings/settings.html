@@ -1,0 +1,33 @@
+<div ng-controller="ViewSettingsController as settings">
+      <form role="form"  >
+        <div class="form-group" >
+          <label for="jsonName">Name</label>
+          <input  type="text" class="form-control" id="jsonName"
+                 ng-model="settings.view.name">
+        </div>
+        <div class="form-group" >
+          <label for="dbName">Database Name</label>
+          <input disabled type="text" class="form-control" id="dbName"
+                  ng-model="settings.view.databaseName">
+        </div>
+        <div class="form-group" >
+          <label for="dbName">Descriptive Column</label><!--settings.view.columnDisplayinTitle-->
+          <select  class="form-control"  ng-model="settings.view.columnDisplayinTitle">
+            <option ng-repeat="field in settings.fields" value="{{field.name}}">{{field.name}}</option>
+          </select>
+
+        </div>
+        <div class="form-group">
+          <label  for="History">History</label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  id="History" type="checkbox" ng-model="settings.view.toolbarSettings.saveHistory" checked=""><i></i></label>
+        </div>
+        <div class="form-group">
+          <label  for="PermanentFilter">Permanent Filter</label>
+          <textarea  id="PermanentFilter" ng-model="settings.view.dataEditing.permanentFilter" class="form-control" ></textarea>
+        </div>
+        <div class="form-group">
+          <label  for="DefaultSort">Default Sort</label>
+         <input  id="DefaultSort" ng-model="settings.view.dataEditing.defaultSort" class="form-control"/>
+        </div>
+      </form>
+</div>
