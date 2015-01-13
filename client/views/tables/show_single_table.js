@@ -36,25 +36,12 @@
           break;
 
         case 'settings':
-          if (angular.isUndefined(self.view) || angular.isUndefined(self.view.name) || self.view.name == '')
-            ColumnsService.get($stateParams.name, self.tableId)
-              .then(columnSeccessHandler, errorHandler);
+          $scope.$broadcast('tabs:settings');
           break;
       }
     };
 
-    function columnSeccessHandler(data) {
-      self.view = data.data;
-      self.fields = data.data.fields;
-    }
-
-    function errorHandler(error, message) {
-      NotificationService.add('error', message);
-      $log.debug(error);
-    }
-
     function upadateSuccessHandler(data) {
-      columnSeccessHandler(data);
       NotificationService.add('success', "View configuration was saved");
     }
   }
