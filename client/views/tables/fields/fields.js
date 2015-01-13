@@ -30,7 +30,8 @@
      * ajax call to get the fields items
      */
     function getFields() {
-      ColumnsService.get().then(successHandler, errorHandler)
+      if(self.view == null)
+        ColumnsService.get().then(successHandler, errorHandler)
     }
 
     /**
@@ -39,6 +40,7 @@
      */
     function successHandler(data) {
       self.items = data.data.fields;
+      self.view = data.data;
     }
 
     /**

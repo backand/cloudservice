@@ -14,8 +14,9 @@
 
     AppsService.setCurrentApp(appItem.data);
 
-    this.appTitle = appData.Title;
+    this.globalAppName = appData.Name;
     this.appName = appData.Name;
+    this.appTitle = appData.Title;
     this.dateFormat = 'MM/dd/yyyy';
     this.datesFormar = ['MM/dd/yyyy','dd/MM/yyyy'];
     this.defaultPageSize = 20;
@@ -23,7 +24,7 @@
 
     this.sumbitForm = function(){
       self.loading = true;
-      AppsService.update(self.appName, self.appTitle)
+      AppsService.update(self.globalAppName, self.appName, self.appTitle)
         .success(function (data) {
           NotificationService.add('success', 'Application settings updated successfully');
           self.loading = false;

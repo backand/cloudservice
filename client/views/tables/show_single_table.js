@@ -25,20 +25,8 @@
     };
 
     self.switchTab = function (tab) {
-
-      switch (tab) {
-        case 'fields':
-          $scope.$broadcast('tabs:fields');
-          break;
-
-        case 'rules':
-          $scope.$broadcast('tabs:rules');
-          break;
-
-        case 'settings':
-          $scope.$broadcast('tabs:settings');
-          break;
-      }
+      //the tab's events are based on the tab name
+      $scope.$broadcast('tabs:' + tab);
     };
 
     function upadateSuccessHandler(data) {

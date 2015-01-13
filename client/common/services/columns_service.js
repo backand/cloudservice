@@ -22,6 +22,23 @@
         headers: { AppName: self.appName }
       });
     };
+
+    this.getData = function(size, page, sort){
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/table/data/' + self.tableName,
+        headers: {
+          'AppName': self.appName
+        },
+        params: {
+          'pageSize': String(size),
+          'pageNumber': String(page),
+          'filter' : '',
+          'sort' : sort
+        }
+      });
+    };
+
   }
 
   angular.module('common.services')
