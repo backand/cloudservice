@@ -8,6 +8,10 @@
     var self = this;
     var stop;
 
+    (function () {
+      self.apps = appsList.list;
+    }());
+
     this.addApp = function() {
       if(self.appTitle === '')
           self.appTitle = self.appName;
@@ -31,7 +35,7 @@
 
     this.namePattern = /^\w+$/;
 
-    this.apps = appsList.list;
+
 
     this.getRibboninfo = function(app) {
       return convertStateNumber(app.DatabaseStatus);
