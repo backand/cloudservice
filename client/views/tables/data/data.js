@@ -6,8 +6,9 @@
   function ViewData($log, NotificationService, ColumnsService, $scope) {
 
     var self = this;
-    this.title= '';
-    this.sort = '';
+    self.title = '';
+    self.sort = '';
+    self.refreshOnce = false;
 
     this.paginationOptions = {
       pageNumber: 1,
@@ -22,24 +23,41 @@
       $scope.$on('tabs:data', getData);
     }());
 
-    this.gridOptions = {
+    self.gridOptions = {
       enableColumnResize: true,
       enablePaginationControls: false,
       useExternalSorting: true,
-      onRegisterApi: function( gridApi ) {
+      onRegisterApi: function (gridApi) {
         $scope.gridApi = gridApi;
         //declare the events
-        $scope.gridApi.core.on.sortChanged( $scope, function( grid, sortColumns ) {
+
+        $scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
           self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
           getData();
         });
       }
     };
 
-    $scope.$watch('data.paginationOptions.pageNumber',getData)
+    $scope.$on('grid:init', function () {
+      //self.gridOptions.columnDefs[0].visible = false;
+    });
+
+    $scope.$watch('data.paginationOptions.pageNumber', getData)
 
     function getData() {
-      ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successHandler, errorHandler)
+      if (self.gridOptions.data.length == 0) {
+        ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successHandler, errorHandler);
+        self.refreshOnce = false;
+      }
+      else
+      {
+        if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
+          $scope.gridApi.grid.options.columnDefs.splice(0,1);
+        if(!self.refreshOnce){
+          setTimeout("$('#grid-container').trigger('resize')", 1); //resize the tab to fix the width issue with UI grid
+          self.refreshOnce = true;
+        }
+      }
     }
 
     function successHandler(data) {
@@ -57,7 +75,19 @@
     }
   }
 
+
+  function onCompile() {
+    return {
+      priority: 9009,
+      link: function (scope) {
+        scope.$root.$broadcast('grid:init')
+      }
+    }
+  }
+
+
   angular.module('app')
+    .directive('onCompile', onCompile)
     .controller('ViewData', [
       '$log',
       'NotificationService',
