@@ -21,7 +21,6 @@
       DictionaryService.get().then(populateDictionaryItems);
     }());
 
-
     $scope.modal = {
       title: 'Application Rule',
       okButtonText: 'Save',
@@ -278,7 +277,7 @@
               items: []
             }]
         }
-      ]
+      ];
 
       //build the tree
       angular.forEach(data.data.data, function(value, key) {
