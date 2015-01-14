@@ -74,7 +74,21 @@
           <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="Format"
                  ng-model="field.advancedLayout.format">
         </div>
-
+        <div class="form-group col-sm-4" >
+          <label for="allowCreate">Allow Create</label>
+          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="allowCreate"
+                 ng-model="field.permissions.allowCreate">
+        </div>
+        <div class="form-group col-sm-4" >
+          <label for="allowEdit">Allow Edit</label>
+          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="allowEdit"
+                 ng-model="field.permissions.allowEdit">
+        </div>
+        <div class="form-group col-sm-4" >
+          <label for="allowRead">Allow Read</label>
+          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="allowRead"
+                 ng-model="field.permissions.allowRead">
+        </div>
 
 
 

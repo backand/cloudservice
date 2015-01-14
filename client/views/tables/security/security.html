@@ -1,3 +1,23 @@
-<div ng-controller="SecurityController as security">
+<div ng-controller="FieldsController as security">
   <h1>Security page</h1>
+  <div class="form-group" >
+  <label for="allowRead">Allow Read</label>
+  <input   type="text" class="form-control" id="allowRead"
+           ng-model="security.view.permissions.allowRead">
+</div>
+  <div class="form-group" >
+    <label for="allowCreate">Allow Create</label>
+    <input   type="text" class="form-control" id="allowCreate"
+             ng-model="security.view.permissions.allowCreate">
+  </div>
+  <div class="form-group" >
+  <label for="allowEdit">Allow Edit</label>
+  <input   type="text" class="form-control" id="allowEdit"
+           ng-model="security.view.permissions.allowEdit">
+</div>
+  <div class="form-group" >
+    <label for="allowDelete">Allow Delete</label>
+    <input   type="text" class="form-control" id="allowDelete"
+             ng-model="security.view.permissions.allowDelete">
+  </div>
 </div>
