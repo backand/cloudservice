@@ -17,14 +17,22 @@
     this.globalAppName = appData.Name;
     this.appName = appData.Name;
     this.appTitle = appData.Title;
-    this.dateFormat = 'MM/dd/yyyy';
+    this.dateFormat = appData.settings.defaultDateFormat;
     this.datesFormar = ['MM/dd/yyyy','dd/MM/yyyy'];
-    this.defaultPageSize = 20;
+    this.defaultPageSize = appData.settings.defaultPageSize;;
 
 
     this.sumbitForm = function(){
       self.loading = true;
-      AppsService.update(self.globalAppName, self.appName, self.appTitle).then(submitSuccess, errorHandler);
+      var data= {
+        Name:self.appName,
+        Title:self.appTitle,
+        settings : {
+          defaultDateFormat: self.dateFormat,
+          defaultPageSize: self.defaultPageSize
+        }
+      }
+      AppsService.update(self.globalAppName,data).then(submitSuccess, errorHandler);
     }
 
     function submitSuccess(error, message) {

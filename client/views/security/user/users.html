@@ -13,7 +13,7 @@
           <input type="text" class="form-control col-sm-7" id="inviteAdminEmails" ng-model="users.invitedAdmins"
                  placeholder="Admin Email Address -  Use for multiple users"/></div>
         <div class="col-sm-3">
-          <button type="button" id="addAdminInvites" class="btn btn-default btn-success "
+          <button type="button" ng-disabled="!users.invitedAdmins" id="addAdminInvites" class="btn btn-default btn-success "
                   ng-click="users.inviteAdmins()">Invite Admin User(s)
           </button>
         </div>
@@ -29,10 +29,10 @@
 
         <div class=" form-group col-sm-7">
 
-          <input type="text" class="form-control  col-sm-7" id="inviteUsersEmails" ng-model="users.invitedUsers"
+          <input type="text"  class="form-control  col-sm-7" id="inviteUsersEmails" ng-model="users.invitedUsers"
                  placeholder="Email Address -  Use for multiple users"/></div>
         <div class="col-sm-3">
-          <button  type="button" id="addUserInvites" class="btn btn-success" ng-click="users.inviteUsers()">Invite
+          <button  type="button" ng-disabled="!users.invitedUsers" id="addUserInvites" class="btn btn-success" ng-click="users.inviteUsers()">Invite
             User(s)
           </button>
         </div>

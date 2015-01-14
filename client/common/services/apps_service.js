@@ -131,14 +131,12 @@
       });
     };
 
-    this.update = function(name, newName, title) {
+    this.update = function(name,data) {
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/admin/myApps/'+name,
-        data: {
-          Title: title,
-          Name: newName
-        }
+        data: data
+
       });
     };
 
