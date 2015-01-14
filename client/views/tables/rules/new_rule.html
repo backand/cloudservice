@@ -34,16 +34,19 @@
         <span class="glyphicon glyphicon-edit" ng-click="modal.toggleOptions()"></span>
       </div>
 
+<div ng-if="flag">
       <angled-window ng-show="modal.dictionaryState"
                      id="{{winId}}"
                      title="Columns"
                      grouping="w"
                      style="left: 550px; top: -50px;">
         <div ng-include="'views/tables/rules/dictionary_window.html'"></div>
+</div>
       </angled-window>
 
       <textarea id="whereCondition"
                 class="form-control"
+                ng-focus="flag = true"
                 placeholder="enter value true to run always or build new condition"
                 ng-model="rule.whereCondition"
                 ng-model-options="{debounce:{default:400}}"
@@ -55,8 +58,7 @@
       <label>Action</label>
       <select class="form-control"
               ng-options="workflowAction.label for workflowAction in modal.workflowActions track by workflowAction.value"
-              ng-model="rule.workflowAction"
-              ng-change="modal.resetRule()">
+              ng-model="rule.workflowAction">
         <option value="">Select action...</option>
       </select>
     </div>

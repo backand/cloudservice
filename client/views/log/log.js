@@ -1,6 +1,3 @@
-/**
- * Refactored by nirkaufman on 1/4/15.
- */
 (function () {
 
   function LogConfig($stateParams, $state, $log, NotificationService, AppLogService, $scope) {
@@ -22,7 +19,7 @@
     (function init() {
       isAdmin = ($state.$current.url.prefix.indexOf('/history/') == -1);
       if(isAdmin)
-        self.title ='Log Configuration'
+        self.title ='Log Configuration';
       else
         self.title ='Data History'
     }());
