@@ -1,1 +1,40 @@
-<div>security matrix directive template</div>
+<table class="table table-striped" style="table-layout: fixed">
+
+  <thead>
+  <tr>
+    <th class="text-center">ROLE</th>
+    <th class="text-center">READ</th>
+    <th class="text-center">WRITE</th>
+    <th class="text-center">EDIT</th>
+    <th class="text-center">DELETE</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr ng-repeat="role in template" ng-dblclick="removeRole(role)">
+      <td class="text-center">{{ role.title }}</td>
+      <td class="text-center">
+        <input ng-checked="role.permissions.read"
+               ng-disabled="!override"
+               type="checkbox"/>
+      </td>
+      <td class="text-center">
+        <input ng-checked="role.permissions.write"
+               ng-disabled="!override"
+               type="checkbox"/>
+      </td>
+      <td class="text-center">
+        <input ng-checked="role.permissions.edit"
+               ng-disabled="!override"
+               type="checkbox"/>
+      </td>
+      <td class="text-center">
+        <input ng-checked="role.permissions.delete"
+               ng-disabled="!override"
+               type="checkbox"/>
+      </td>
+  </tr>
+  </tbody>
+
+</table>
+
