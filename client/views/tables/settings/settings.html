@@ -1,0 +1,36 @@
+<div ng-controller="FieldsController as settings">
+      <form role="form"  >
+        <div class="form-group" >
+          <label for="jsonName">Name</label>
+          <input  type="text" class="form-control" id="jsonName"
+                 ng-model="settings.view.name">
+        </div>
+        <div class="form-group" >
+          <label for="dbName">Database Name</label>
+          <input disabled type="text" class="form-control" id="dbName"
+                  ng-model="settings.view.databaseName">
+        </div>
+        <div class="form-group" >
+          <label for="dbName">Descriptive Column</label>
+          <!--<select  class="form-control"  ng-model="settings.view.columnDisplayinTitle">-->
+            <!--<option ng-repeat="field in settings.fields" value="{{field.name}}">{{field.name}}</option>-->
+          <!--</select>-->
+          <select class="form-control"
+                  ng-options="field.name for field in settings.items"
+                  ng-model="field.name">
+          </select>
+        </div>
+        <div class="form-group">
+          <label  for="History">History</label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  id="History" type="checkbox" ng-model="settings.view.toolbarSettings.saveHistory" checked=""><i></i></label>
+        </div>
+        <div class="form-group">
+          <label for="PermanentFilter">Permanent Filter</label>
+          <textarea  id="PermanentFilter" ng-model="settings.view.dataEditing.permanentFilter" class="form-control" ></textarea>
+        </div>
+        <div class="form-group">
+          <label  for="DefaultSort">Default Sort</label>
+         <input  id="DefaultSort" ng-model="settings.view.dataEditing.defaultSort" class="form-control"/>
+        </div>
+      </form>
+</div>

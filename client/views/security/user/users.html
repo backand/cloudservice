@@ -1,0 +1,67 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Users </strong>
+
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+    <div class="panel-body" ng-controller="SecurityUsers as users">
+      <br>
+
+      <div class="row">
+        <div class="form-group col-sm-7">
+          <input type="text" class="form-control col-sm-7" id="inviteAdminEmails" ng-model="users.invitedAdmins"
+                 placeholder="Admin Email Address -  Use for multiple users"/></div>
+        <div class="col-sm-3">
+          <button type="button" id="addAdminInvites" class="btn btn-default btn-success "
+                  ng-click="users.inviteAdmins()">Invite Admin User(s)
+          </button>
+        </div>
+
+        <br>
+
+        <br>
+
+        <div class=" form-group col-sm-7">
+          <label for="inviteUsersEmails"></label> Invite users to access the applixation with role {{Role}}. If "Allow
+          only invited users to register is On then this is the only way to add users to the app.</lable>
+        </div>
+
+        <div class=" form-group col-sm-7">
+
+          <input type="text" class="form-control  col-sm-7" id="inviteUsersEmails" ng-model="users.invitedUsers"
+                 placeholder="Email Address -  Use for multiple users"/></div>
+        <div class="col-sm-3">
+          <button  type="button" id="addUserInvites" class="btn btn-success" ng-click="users.inviteUsers()">Invite
+            User(s)
+          </button>
+        </div>
+
+        <br>
+      </div>
+      <button type="button" id="addUser" class="btn btn-success" ng-click="users.open()">Add User</button>
+      <button type="button" id="delUser" class="btn btn-success" ng-click="users.delete()">Delete User</button>
+      <div us-spinner spinner-key="loading" ></div>
+      <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection
+           class="grid"></div>
+      <!--pagination-->
+      <div ng-show="users.gridOptions.totalItems == 0">
+        <h3>No {{users.title}}</h3>
+      </div>
+      <div ng-show="users.gridOptions.totalItems > 0" class="row">
+        <div class="col-md-5">
+          <pagination total-items="users.gridOptions.totalItems" ng-model="users.paginationOptions.pageNumber" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" items-per-page="users.paginationOptions.pageSize" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+        </div>
+        <div class="col-md-2" style="margin-top:20px;">
+          Page size:
+          <select class="ui-select" ng-model="users.paginationOptions.pageSize" >
+            <option ng-repeat="size in users.paginationOptions.pageSizes">{{size}}</option>
+          </select>
+        </div>
+        <div class="col-md-5" style="margin-top:20px;">
+          <span class="pull-right">Showing {{users.paginationOptions.pageSize * (users.paginationOptions.pageNumber-1) +1}} to {{users.pageMax(users.paginationOptions.pageSize, users.paginationOptions.pageNumber, users.gridOptions.totalItems)}} of {{users.gridOptions.totalItems}} rows</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

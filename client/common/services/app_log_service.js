@@ -57,6 +57,26 @@
       return logMsgs;
     }
 
+    this.getAppActivity = function(appName, size, page, isException, sort){
+      var filterParam = '';
+      if(isException)
+        filterParam = '[{fieldName:"LogType", operator:"equals", value:"1"}]';
+      else
+        filterParam = '[{fieldName:"LogType", operator:"equals", value:"3"}]';
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/table/data/Durados_Log',
+        headers: {
+          'AppName': appName
+        },
+        params: {
+          'pageSize': String(size),
+          'pageNumber': String(page),
+          'filter' : filterParam,
+          'sort' : sort
+        }
+      });
+    };
 
   }
 

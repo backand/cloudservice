@@ -9,7 +9,12 @@
       .state('security.users', {
         url: '/users/:name',
         controller: 'SecurityUsers as users',
-        templateUrl: 'views/security/users.html'
+        templateUrl: 'views/security/user/users.html'
+      })
+      .state('security.roles', {
+        url: '/users/:name',
+        controller: 'SecurityRoles as roles',
+        templateUrl: 'views/security/role/roles.html'
       })
   }
 

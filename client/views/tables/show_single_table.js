@@ -25,36 +25,11 @@
     };
 
     self.switchTab = function (tab) {
-
-      switch (tab) {
-        case 'fields':
-          $scope.$broadcast('tabs:fields');
-          break;
-
-        case 'rules':
-          $scope.$broadcast('tabs:rules');
-          break;
-
-        case 'settings':
-          if (angular.isUndefined(self.view) || angular.isUndefined(self.view.name) || self.view.name == '')
-            ColumnsService.get($stateParams.name, self.tableId)
-              .then(columnSeccessHandler, errorHandler);
-          break;
-      }
+      //the tab's events are based on the tab name
+      $scope.$broadcast('tabs:' + tab);
     };
 
-    function columnSeccessHandler(data) {
-      self.view = data.data;
-      self.fields = data.data.fields;
-    }
-
-    function errorHandler(error, message) {
-      NotificationService.add('error', message);
-      $log.debug(error);
-    }
-
     function upadateSuccessHandler(data) {
-      columnSeccessHandler(data);
       NotificationService.add('success', "View configuration was saved");
     }
   }

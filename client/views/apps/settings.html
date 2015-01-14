@@ -2,13 +2,13 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> App Settings</strong>
-      <a href="javascript:;" class="btn btn-lg pull-right" style="margin-top: -10px;"><i class="ti-trash"></i></a>
+      <a href="javascript:;" class="btn btn-lg pull-right" style="margin-top: -10px;" ng-click="settings.delete()"><i class="ti-trash"></i></a>
     </div>
     <div class="panel-body">
       <form role="form" role="form" ng-submit="settings.sumbitForm()">
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" ng-model="settings.appName" required>
+          <input type="text" class="form-control" id="name" ng-model="settings.appName" required ng-disabled="false">
         </div>
         <div class="form-group">
           <label for="title">Title</label>
@@ -31,24 +31,24 @@
       </form>
     </div>
   </section>
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <strong> Images Storage Configuration</strong>
-      <a href="javascript:;" class="btn btn-lg " ><i class="ti-plus"></i></a>
-    </div>
-    <div class="panel-body">
-      <div class="ui-tab-container ui-tab-vertical" style="height:200px; overflow:auto">
-        <tabset class="ui-tab">
-          <tab heading="S3 Storage">
-            <form role="form" role="form" ng-submit="settings.sumbitForm()">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" value="s3 example" required>
-              </div>
-            </form>
-          </tab>
-        </tabset>
-      </div>
-    </div>
-  </section>
+  <!--<section class="panel panel-default">-->
+    <!--<div class="panel-heading">-->
+      <!--<strong> Images Storage Configuration</strong>-->
+      <!--<a href="javascript:;" class="btn btn-lg " ><i class="ti-plus"></i></a>-->
+    <!--</div>-->
+    <!--<div class="panel-body">-->
+      <!--<div class="ui-tab-container ui-tab-vertical" style="height:200px; overflow:auto">-->
+        <!--<tabset class="ui-tab">-->
+          <!--<tab heading="S3 Storage">-->
+            <!--<form role="form" role="form" ng-submit="settings.sumbitForm()">-->
+              <!--<div class="form-group">-->
+                <!--<label for="name">Name</label>-->
+                <!--<input type="text" class="form-control" id="name" value="s3 example" required>-->
+              <!--</div>-->
+            <!--</form>-->
+          <!--</tab>-->
+        <!--</tabset>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</section>-->
 </section>

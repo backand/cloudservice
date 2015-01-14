@@ -16,6 +16,11 @@
         controller: 'LogConfig as log',
         templateUrl: 'views/log/log.html'
       })
+      .state('log.exception', {
+        url: '/exception/:name',
+        controller: 'LogActivity as log',
+        templateUrl: 'views/log/activity.html'
+      })
   }
 
 })();

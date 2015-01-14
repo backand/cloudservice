@@ -31,6 +31,8 @@
     'ui.grid.edit',
     'ui.grid.rowEdit',
     'ui.grid.cellNav',
+    'ui.grid.selection',
+    'ui.grid.resizeColumns',
     'angled-windows',
     'app.routes',
     'app.consts',
