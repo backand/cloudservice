@@ -97,16 +97,25 @@
     }
 
     /**
+     * return the rule object by
+     * the provided name     *
+     * @param rulname
+     * @returns {*|XMLList|XML}
+     */
+    function getRuleByName (rulname) {
+     return angular.copy($filter('filter')($scope.rules.data, function (f) {
+        return f.name === rulname;
+      })[0])
+    }
+
+    /**
      * put an existing rule on the scope,
      * set the scope mode to new,
      * and lunch the modal
      * @param rule
      */
     function editRule(rule) {
-      //fund the rule object based on the rule name in the tree
-      $scope.rule = angular.copy($filter('filter')($scope.rules.data, function (f) {
-        return f.name === rule.name;
-      })[0]);
+      $scope.rule = getRuleByName(rule);
 
       //$scope.rule = angular.copy(rule);
       $scope.modal.mode = 'update';
@@ -114,7 +123,7 @@
     }
 
     function deleteRule(rule) {
-      RulesService.remove(rule).then(getRules)
+      RulesService.remove(getRuleByName(rule)).then(getRules)
     }
 
     /**
