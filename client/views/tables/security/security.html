@@ -1,6 +1,19 @@
 <div ng-controller="SecurityController as security">
-  <h1>Security page</h1>
 
-  <security-matrix></security-matrix>
+  <div class="row">
+    <div class="col-lg-2">
+      <select class="form-control">
+        <option value="">select template..</option>
+      </select>
+    </div>
+
+    <label>
+      <input type="checkbox" ng-model="permissions.override"/>
+      override
+    </label>
+
+  </div>
+
+  <security-matrix template="security.sTemplate" override="permissions.override"></security-matrix>
 
 </div>
