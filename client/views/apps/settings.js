@@ -38,7 +38,7 @@
     function submitSuccess(error, message) {
       NotificationService.add('success', 'Application settings updated successfully');
       self.loading = false;
-      //emit
+
       if(self.globalAppName !=self.appName)
         $rootScope.$broadcast('appsListUpdated');
       $state.go('apps.index', {name: ''});

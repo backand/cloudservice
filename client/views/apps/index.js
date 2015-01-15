@@ -2,14 +2,14 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['$rootScope','$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','$filter', AppsIndexController]);
+    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','$filter', AppsIndexController]);
 
-  function AppsIndexController($rootScope,$scope,AppsService, appsList, $state, NotificationService,$interval,$filter) {
+  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval,$filter) {
     var self = this;
     var stop;
 
     (function () {
-      self.apps = appsList.list;
+      self.apps = appsList.data.data;
     }());
 
     this.addApp = function() {
@@ -54,17 +54,17 @@
       }
     }
 
-    $rootScope.$on('appsListUpdated' ,function(){
+   /* $rootScope.$on('appsListUpdated' ,function(){
       AppsService.refresh()
         .then(function(apps){
           self.apps = apps.data.data;
         });
 
-    });
+    });*/
     stop =   $interval(function() {
       AppsService.all()
         .then(function(apps){
-          self.apps = apps.list;
+          self.apps = apps.data.data;
         });
     }, 10000);
 
