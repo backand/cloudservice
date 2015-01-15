@@ -1,6 +1,6 @@
 (function () {
 
-  function SecurityController($scope,$state,SecurityMatrixService,NotificationService) {
+  function SecurityController($scope,$state,SecurityMatrixService,NotificationService,ColumnsService) {
 
     var self = this;
 
@@ -11,17 +11,23 @@
   $scope.getPermissions = function(){
     var p= SecurityMatrixService.getPermission(self.sTemplate);
   };
+    function permissionsSuccessHandler(data){
+      permissions =data.permissions;
+      if(self.sTemplate.length==0)
+        SecurityMatrixService.loadMatrix(self.sTemplate,permissions,errorHandler);
+    }
     function buildTemplate(){
       self.appName = SecurityMatrixService.appName = $state.params.name;
-     var  permissions = {
+
+       ColumnsService.get()
+         .then(permissionsSuccessHandler,errorHandler);
+
+/*      var  permissions = {
         allowCreate: "Admin,Developer",
         allowEdit: "Admin,Developer,User",
         allowDelete: "Admin,Developer",
         allowRead: "Admin,Developer,User"
-      };
-     if(self.sTemplate.length==0)
-      SecurityMatrixService.loadMatrix(self.sTemplate,permissions,errorHandler);
-
+      };*/
 
     /*  self.sTemplate = [
         {
@@ -53,5 +59,5 @@
   }
 
   angular.module('app')
-    .controller('SecurityController',['$scope','$state','SecurityMatrixService','NotificationService', SecurityController] );
+    .controller('SecurityController',['$scope','$state','SecurityMatrixService','NotificationService','ColumnsService', SecurityController] );
 }());
