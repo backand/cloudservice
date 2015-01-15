@@ -88,9 +88,8 @@
             updateAppNames();
         })
         .error(function (error) {
-          NotificationService.add();
+          NotificationService.add()
         });
-
 
     };
 
