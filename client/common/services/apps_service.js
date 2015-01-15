@@ -95,7 +95,13 @@
 
       return apps.deferred.promise;
     };
+    this.refresh = function() {
+     return  $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
+      });
 
+    };
     this.find = function(appName) {
       return $http({
         method: 'GET',

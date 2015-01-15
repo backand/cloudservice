@@ -16,6 +16,11 @@
         controller: 'SecurityRoles as roles',
         templateUrl: 'views/security/role/roles.html'
       })
+      .state('security.auth', {
+        url: '/users/:name',
+        controller: 'SecurityAuth as auth',
+        templateUrl: 'views/security/auth/auth.html'
+      })
   }
 
 })();

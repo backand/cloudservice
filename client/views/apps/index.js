@@ -2,9 +2,9 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','$filter', AppsIndexController]);
+    .controller('AppsIndexController',['$rootScope','$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','$filter', AppsIndexController]);
 
-  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval,$filter) {
+  function AppsIndexController($rootScope,$scope,AppsService, appsList, $state, NotificationService,$interval,$filter) {
     var self = this;
     var stop;
 
@@ -53,14 +53,28 @@
           return { class: 'ui-ribbon-danger', text: 'Error'};
       }
     }
+    $rootScope.$on('appsListUpdated' ,function(){
+      AppsService.refresh()
+        .then(function(apps){
+          self.apps = apps.data.data;
+        });
 
-    stop = $interval(function() {
+    });
+    stop =   $interval(function() {
       AppsService.all()
         .then(function(apps){
           self.apps = apps.list;
         });
     }, 10000);
 
+   /* $scope.$on('appsListUpdated' ,function(){
+      AppsService.refresh()
+        .then(function(apps){
+          self.apps = apps.list;
+
+        });
+      $state.go('apps.index', {name: ''});
+    });*/
     function stopRefresh() {
       if (angular.isDefined(stop)) {
         $interval.cancel(stop);
