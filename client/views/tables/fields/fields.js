@@ -44,6 +44,14 @@
     }
 
     /**
+     * watch for changes in view object
+     */
+    $scope.$watch('fields.view', function (newVal){
+      console.log('watch!!!');
+      console.log(newVal)
+    }, true);
+
+    /**
      * delegate any error to notification service
      * @param error
      * @param message
