@@ -18,8 +18,8 @@
           title: 'Admin',
           permissions: {
             read: true,
-            write: false,
-            edit: true,
+            create: false,
+            update: true,
             delete: false
           }
         },
@@ -28,8 +28,8 @@
           title: 'User',
           permissions: {
             read: true,
-            write: false,
-            edit: false,
+            create: false,
+            update: true,
             delete: false
           }
         }
