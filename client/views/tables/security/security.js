@@ -7,6 +7,9 @@
     (function init() {
       self.sTemplate = [];
       $scope.$on('tabs:security', buildTemplate);
+      $scope.$watch(self.sTemplate,function(){
+        var p= SecurityMatrixService.getPermission(self.sTemplate);
+      },true);
     }());
   $scope.getPermissions = function(){
     var p= SecurityMatrixService.getPermission(self.sTemplate);
