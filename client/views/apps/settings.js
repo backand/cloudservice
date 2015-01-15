@@ -3,9 +3,9 @@
 
   'use strict';
   angular.module('app.apps')
-    .controller('AppSettings',['$rootScope','$scope','$window','appItem','AppsService','$state','NotificationService',AppSettings]);
+    .controller('AppSettings',['$scope','$window','appItem','AppsService','$state','NotificationService',AppSettings]);
 
-  function AppSettings($rootScope,$scope,$window,appItem,AppsService,$state,NotificationService){
+  function AppSettings($scope,$window,appItem,AppsService,$state,NotificationService){
     var self = this;
     this.loading = false;
 
@@ -40,8 +40,7 @@
       self.loading = false;
 
       if(self.globalAppName !=self.appName)
-        $rootScope.$broadcast('appsListUpdated');
-      $state.go('apps.index', {name: ''});
+        $state.go('apps.index', {name: ''});
     }
 
     this.delete = function(){

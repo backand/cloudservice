@@ -1,7 +1,7 @@
 (function  () {
   'use strict';
 
-  function HeaderController($scope, $rootScope, AppsService, $state, $stateParams) {
+  function HeaderController($scope, AppsService, $state, $stateParams) {
     var self = this;
 
     self.currAppName = '';
@@ -22,13 +22,12 @@
           self.apps = AppsService.appNames($state.params.name);
           self.currAppName = $state.params.name;
         });
-
     });
   }
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", '$rootScope', 'AppsService', '$state', '$stateParams', HeaderController]);
+    ["$scope", 'AppsService', '$state', '$stateParams', HeaderController]);
 
 }());
 
