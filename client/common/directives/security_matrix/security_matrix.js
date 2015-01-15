@@ -1,6 +1,6 @@
 (function () {
 
-  function SecurityMatrixDirective() {
+  function SecurityMatrixDirective(NotificationService) {
     return {
       restrict: 'E',
       scope: {
@@ -8,40 +8,43 @@
         override: '='
       },
       templateUrl: 'common/directives/security_matrix/security_matrix.html',
-      link: securityMatrixLink
+      link: function securityMatrixLink($scope) {
+
+        /**
+         * locate and remove the given role from the template
+         * @param role
+         */
+        $scope.removeRole = function (role) {
+          var result = window.confirm('Remove this role?');
+          if (result) {
+            $scope.template.splice($scope.template.indexOf(role), 1)
+          }
+        };
+
+
+        /**
+         * push a new role to the template
+         */
+        $scope.addRole = function () {
+
+          var role = {
+            title: "New Role...",
+            permissions: {
+              read: false,
+              write: false,
+              edit: false,
+              delete: false
+            }
+          };
+
+          $scope.template.push(role);
+        };
+      }
     }
   }
 
 
-  function securityMatrixLink($scope) {
-
-    $scope.removeRole = function (role) {
-      var result = window.confirm('Remove this role?');
-      if (result) {
-        $scope.template.splice($scope.template.indexOf(role), 1)
-      }
-    };
-
-
-
-    $scope.addRole = function () {
-
-      var role = {
-        title: "New Role...",
-        permissions: {
-          read: false,
-          write: false,
-          edit: false,
-          delete: false
-        }
-      };
-
-      $scope.template.push(role);
-      //$scope.override = true;
-    };
-
-  }
 
   angular.module('app')
-    .directive('securityMatrix', SecurityMatrixDirective)
+    .directive('securityMatrix', ['NotificationService',SecurityMatrixDirective])
 }());
