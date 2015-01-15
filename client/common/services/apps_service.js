@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function appsService($http, $q, CONSTS, DatabaseNamesService) {
+  function appsService($http, $q, CONSTS, DatabaseNamesService, NotificationService) {
 
     var self = this;
 
@@ -88,9 +88,8 @@
             updateAppNames();
         })
         .error(function (error) {
-          //apps.deferred.reject(error);
+          NotificationService.add()
         });
-
 
     };
 
@@ -155,6 +154,6 @@
   }
 
   angular.module('common.services')
-    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', appsService]);
+    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService','NotificationService', appsService]);
 
 })();

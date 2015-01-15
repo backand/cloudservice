@@ -1,24 +1,28 @@
 <br/>
-<button class="btn btn-success"
-        ng-click="addRole()">+</button>
+<button class="btn btn-primary"
+        ng-if="override"
+        ng-click="addRole()">+ Add Role</button>
 
 <table class="table table-striped" style="table-layout: fixed">
 
   <thead>
   <tr>
-    <th class="text-center">ROLE</th>
+    <th>ROLE</th>
     <th class="text-center">READ</th>
-    <th class="text-center">WRITE</th>
-    <th class="text-center">EDIT</th>
+    <th class="text-center">CREATE</th>
+    <th class="text-center">UPDATE</th>
     <th class="text-center">DELETE</th>
+    <th></th>
   </tr>
   </thead>
 
   <tbody>
   <tr ng-repeat="role in template">
 
-        <td ng-if="!role.editMode"
-            class="text-center" editable-text="role.title">{{ role.title }}</td>
+        <td ng-if="override"
+            editable-text="role.title">{{ role.title }}</td>
+
+        <td ng-if="!override">{{ role.title }}</td>
 
       <td class="text-center">
         <input ng-checked="role.permissions.read"
@@ -26,12 +30,12 @@
                type="checkbox"/>
       </td>
       <td class="text-center">
-        <input ng-checked="role.permissions.write"
+        <input ng-checked="role.permissions.create"
                ng-disabled="!override"
                type="checkbox"/>
       </td>
       <td class="text-center">
-        <input ng-checked="role.permissions.edit"
+        <input ng-checked="role.permissions.update"
                ng-disabled="!override"
                type="checkbox"/>
       </td>
@@ -40,6 +44,16 @@
                ng-disabled="!override"
                type="checkbox"/>
       </td>
+
+      <td class="text-center">
+        <input type="button"
+               ng-if="override"
+               class="btn btn-danger"
+               ng-click="removeRole(role)"
+               value=" - Remove"/>
+      </td>
+
+
   </tr>
   </tbody>
 
