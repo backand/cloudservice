@@ -13,7 +13,7 @@
     this.showND = true;
 
     AppsService.getCurrentApp($state.params.name)
-      .then(function(data){
+      .then(function (data) {
         //currentApp = data;
         self.databaseStatus = data.DatabaseStatus;
         self.dbConnected = data.DatabaseStatus === 1;
@@ -23,11 +23,11 @@
           usingSsh: 'false'
         };
 
-        if (self.databaseStatus !== 0){
+        if (self.databaseStatus !== 0) {
           checkDatabaseStatus();
         }
-      }, function(err) {
-        NotificationService('error','can not get current app info');
+      }, function (err) {
+        NotificationService('error', 'can not get current app info');
       });
 
     this.currentTab = function () {

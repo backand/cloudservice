@@ -1,11 +1,13 @@
 (function() {
 
-  function ColumnsService($http, CONSTS, $log) {
+  function ColumnsService($http, CONSTS, $q) {
 
     var self = this;
 
     self.appName = null;
     self.tableName = null;
+    self._tableConfig = null;
+    self._preTableName = null;
 
     this.sync = function() {
         return $http({
@@ -15,7 +17,30 @@
         });
     };
 
-    this.get = function() {
+    this.get = function (force) {
+      var deferred = $q.defer();
+      if (self._tableConfig == null || self._preTableName == null || self._preTableName != self.tableName) {
+        self._get()
+          .success(function (data) {
+            self._tableConfig = data;
+            self._preTableName = self.tableName;
+            deferred.resolve(self._tableConfig);
+          })
+          .error(function (err) {
+            self._tableConfig = null;
+            deferred.reject(err);
+          });
+
+        return deferred.promise;
+      }
+      else
+      {
+        deferred.resolve(self._tableConfig);
+        return deferred.promise;
+      }
+    };
+
+    this._get = function() {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/1/table/config/' + self.tableName,
@@ -42,5 +67,5 @@
   }
 
   angular.module('common.services')
-    .service('ColumnsService', ['$http', 'CONSTS', '$log', ColumnsService]);
+    .service('ColumnsService', ['$http', 'CONSTS', '$q', ColumnsService]);
 })();
