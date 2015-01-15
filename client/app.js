@@ -16,8 +16,9 @@
     }
   }
 
-  function run($log) {
+  function run($log, editableOptions) {
     $log.debug('App is running!');
+    editableOptions.theme = 'bs3';
   }
 
   angular.module('controllers', []);
@@ -34,6 +35,7 @@
     'ui.grid.selection',
     'ui.grid.resizeColumns',
     'angled-windows',
+    'xeditable',
     'app.routes',
     'app.consts',
     'angularSpinner',

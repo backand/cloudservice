@@ -20,7 +20,26 @@
       if (result) {
         $scope.template.splice($scope.template.indexOf(role), 1)
       }
-    }
+    };
+
+
+
+    $scope.addRole = function () {
+
+      var role = {
+        title: "New Role...",
+        permissions: {
+          read: false,
+          write: false,
+          edit: false,
+          delete: false
+        }
+      };
+
+      $scope.template.push(role);
+      //$scope.override = true;
+    };
+
   }
 
   angular.module('app')

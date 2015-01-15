@@ -1,3 +1,7 @@
+<br/>
+<button class="btn btn-success"
+        ng-click="addRole()">+</button>
+
 <table class="table table-striped" style="table-layout: fixed">
 
   <thead>
@@ -11,8 +15,11 @@
   </thead>
 
   <tbody>
-  <tr ng-repeat="role in template" ng-dblclick="removeRole(role)">
-      <td class="text-center">{{ role.title }}</td>
+  <tr ng-repeat="role in template">
+
+        <td ng-if="!role.editMode"
+            class="text-center" editable-text="role.title">{{ role.title }}</td>
+
       <td class="text-center">
         <input ng-checked="role.permissions.read"
                ng-disabled="!override"

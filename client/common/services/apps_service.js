@@ -78,7 +78,8 @@
     };
 
     this.all = function() {
-      $http({
+
+      return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
       })
@@ -93,8 +94,9 @@
         apps.deferred.reject(error);
       });
 
-      return apps.deferred.promise;
+
     };
+
     this.refresh = function() {
      return  $http({
         method: 'GET',

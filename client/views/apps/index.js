@@ -31,7 +31,7 @@
             $state.go('apps.show', { name: appName });
         else
             $state.go('database.edit', { name: appName });
-    }
+    };
 
     this.namePattern = /^\w+$/;
 
@@ -53,6 +53,7 @@
           return { class: 'ui-ribbon-danger', text: 'Error'};
       }
     }
+
     $rootScope.$on('appsListUpdated' ,function(){
       AppsService.refresh()
         .then(function(apps){

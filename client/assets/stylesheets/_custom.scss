@@ -164,3 +164,15 @@ a.app-panel:hover {
   height: 650px;
   width: 80%;
 }
+
+/* edit in place overrides (nir kaufman)
+------------------------------------*/
+.editable-buttons button {
+  display: none !important;
+}
+
+.editable-click, a.editable-click {
+  text-decoration: none !important;
+  color: black !important;
+  border-bottom: none !important;
+}
