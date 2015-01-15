@@ -39,8 +39,8 @@
      * @param data
      */
     function successHandler(data) {
-      self.items = data.data.fields;
-      self.view = data.data;
+      self.items = data.fields;
+      self.view = data;
     }
 
     /**

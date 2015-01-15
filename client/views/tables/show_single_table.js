@@ -18,6 +18,8 @@
       RulesService.tableId = self.tableId;
       ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
 
+      ColumnsService.get(); //populate the view configuration data
+
     }());
 
     self.update = function () {
