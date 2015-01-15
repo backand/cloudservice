@@ -2,10 +2,11 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','$filter', AppsIndexController]);
+    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','$filter','usSpinnerService', AppsIndexController]);
 
-  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval,$filter) {
+  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval,$filter,usSpinnerService) {
     var self = this;
+    self.loading = false;
     var stop;
 
     (function () {
@@ -13,6 +14,7 @@
     }());
 
     this.addApp = function() {
+      self.loading = true;
       if(self.appTitle === '')
           self.appTitle = self.appName;
       AppsService.add(self.appName, self.appTitle)
@@ -20,22 +22,22 @@
           NotificationService.add('success', 'App was added successfully');
           $state.go('database.edit', { name: self.appName });
         },function(err){
+          self.loading = false;
           NotificationService.add('error', err);
         })
     };
 
     this.appDetails = function (appName) {
-        //check app status
-        var myApp = $filter('filter')(self.apps, {Name: appName}, false);
-        if(myApp[0].DatabaseStatus == 1)
-            $state.go('apps.show', { name: appName });
-        else
-            $state.go('database.edit', { name: appName });
+      usSpinnerService.spin("loading");
+      //check app status
+      var myApp = $filter('filter')(self.apps, {Name: appName}, false);
+      if (myApp[0].DatabaseStatus == 1)
+        $state.go('apps.show', {name: appName});
+      else
+        $state.go('database.edit', {name: appName});
     };
 
     this.namePattern = /^\w+$/;
-
-
 
     this.getRibboninfo = function(app) {
       return convertStateNumber(app.DatabaseStatus);
@@ -54,13 +56,6 @@
       }
     }
 
-   /* $rootScope.$on('appsListUpdated' ,function(){
-      AppsService.refresh()
-        .then(function(apps){
-          self.apps = apps.data.data;
-        });
-
-    });*/
     stop =   $interval(function() {
       AppsService.all()
         .then(function(apps){
@@ -68,14 +63,6 @@
         });
     }, 10000);
 
-   /* $scope.$on('appsListUpdated' ,function(){
-      AppsService.refresh()
-        .then(function(apps){
-          self.apps = apps.list;
-
-        });
-      $state.go('apps.index', {name: ''});
-    });*/
     function stopRefresh() {
       if (angular.isDefined(stop)) {
         $interval.cancel(stop);

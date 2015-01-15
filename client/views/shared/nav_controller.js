@@ -2,9 +2,9 @@
 (function  () {
     'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$rootScope', '$scope', '$state', 'AppsService','$interval', '$log', 'NotificationService', 'TablesService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService','$interval', '$log', 'NotificationService', 'TablesService', NavCtrl]);
 
-  function NavCtrl($rootScope, $scope, $state, AppsService, $interval, $log, NotificationService, TablesService){
+  function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService){
     var self = this;
     var stop;
 
