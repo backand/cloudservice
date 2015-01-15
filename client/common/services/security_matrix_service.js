@@ -3,7 +3,7 @@
  */
 (function () {
   'use strict';
-  function SecurityMatrixService($filter, SecurityService) {
+  function SecurityMatrixService( SecurityService) {
     var self = this;
     self.appName = null;
 
@@ -30,7 +30,7 @@
           self.loadPermission(template, permissions, errorHandler);
         }, errorHandler);
 
-    }
+    };
     Array.prototype.contains = function (obj) {
       var i = this.length;
       while (i--) {
@@ -39,8 +39,9 @@
         }
       }
       return false;
-    }
-    this.loadPermission = function (template, permissions, errorHandler) {
+    };
+
+    this.loadPermission = function (template, permissions,errorHandler) {
 
       var createPermission = permissions.allowCreate.split(',');
       var editPermission = permissions.allowEdit.split(',');
@@ -60,7 +61,7 @@
         if (readPermission.contains(role.title)) {
           role.permissions.read = true;
         }
-      })
+      });
       /*angular.forEach(createPermission, function (permission) {
        var role = $filter('filter')(template, function (d) {
        return d.title === permission;
@@ -70,13 +71,41 @@
        });
        */
 
-    }
-    this.getPermission = function (template, errorHandler) {
+    };
+    this.getPermission = function (template) {
+      var permissions= {
+        allowCreate:'',
+        allowEdit:'',
+        allowDelete:'',
+        allowRead:''
+      };
+      var createPermission =[];
+      var editPermission = [];
+      var deletePermission = [];
+      var readPermission = [];
 
-
+      angular.forEach(template, function (role) {
+        if (role.permissions.create) {
+          createPermission.push(role.title) ;
+        }
+        if (role.permissions.update) {
+          editPermission.push(role.title);
+        }
+        if (role.permissions.delete) {
+          deletePermission.push(role.title);
+        }
+        if (role.permissions.read) {
+          readPermission.push(role.title);
+        }
+      });
+      permissions.allowCreate = createPermission.join(',');
+      permissions.allowEdit = editPermission.join(',');
+      permissions.allowDelete = deletePermission.join(',');
+      permissions.allowRead = readPermission.join(',');
+      return permissions;
     }
   }
 
   angular.module('common.services')
-    .service('SecurityMatrixService', ['$filter', 'SecurityService', SecurityMatrixService]);
+    .service('SecurityMatrixService', [ 'SecurityService', SecurityMatrixService]);
 })();

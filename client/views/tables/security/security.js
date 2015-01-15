@@ -8,7 +8,9 @@
       self.sTemplate = [];
       $scope.$on('tabs:security', buildTemplate);
     }());
-
+  $scope.getPermissions = function(){
+    var p= SecurityMatrixService.getPermission(self.sTemplate);
+  };
     function buildTemplate(){
       self.appName = SecurityMatrixService.appName = $state.params.name;
      var  permissions = {
@@ -17,6 +19,7 @@
         allowDelete: "Admin,Developer",
         allowRead: "Admin,Developer,User"
       };
+     if(self.sTemplate.length==0)
       SecurityMatrixService.loadMatrix(self.sTemplate,permissions,errorHandler);
 
 
