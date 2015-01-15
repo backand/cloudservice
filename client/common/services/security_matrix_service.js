@@ -31,7 +31,15 @@
         }, errorHandler);
 
     }
-
+    Array.prototype.contains = function (obj) {
+      var i = this.length;
+      while (i--) {
+        if (this[i] === obj) {
+          return true;
+        }
+      }
+      return false;
+    }
     this.loadPermission = function (template, permissions, errorHandler) {
 
       var createPermission = permissions.allowCreate.split(',');
@@ -39,40 +47,32 @@
       var deletePermission = permissions.allowDelete.split(',');
       var readPermission = permissions.allowRead.split(',');
 
-      angular.forEach(createPermission, function (permission) {
-        var role = $filter('filter')(template, function (d) {
-          return d.title === permission;
-        })[0];
-        if (role)
-          role.permissions.write = true;
-      });
-
-
-      angular.forEach(editPermission, function (permission) {
-        var role = $filter('filter')(template, function (d) {
-          return d.title === permission;
-        })[0];
-        if (role)
-          role.permissions.edit = true;
-      });
-
-
-      angular.forEach(deletePermission, function (permission) {
-        var role = $filter('filter')(template, function (d) {
-          return d.title === permission;
-        })[0];
-        if (role)
+      angular.forEach(template, function (role) {
+        if (createPermission.contains(role.title)) {
+          role.permissions.create = true;
+        }
+        if (editPermission.contains(role.title)) {
+          role.permissions.update = true;
+        }
+        if (deletePermission.contains(role.title)) {
           role.permissions.delete = true;
-      });
-
-
-      angular.forEach(readPermission, function (permission) {
-        var role = $filter('filter')(template, function (d) {
-          return d.title === permission;
-        })[0];
-        if (role)
+        }
+        if (readPermission.contains(role.title)) {
           role.permissions.read = true;
-      });
+        }
+      })
+      /*angular.forEach(createPermission, function (permission) {
+       var role = $filter('filter')(template, function (d) {
+       return d.title === permission;
+       });
+       if (role)
+       role.permissions.create = true;
+       });
+       */
+
+    }
+    this.getPermission = function (template, errorHandler) {
+
 
     }
   }
