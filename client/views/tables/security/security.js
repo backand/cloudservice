@@ -1,6 +1,6 @@
 (function () {
 
-  function SecurityController($scope) {
+  function SecurityController($scope,$state,SecurityMatrixService,NotificationService) {
 
     var self = this;
 
@@ -10,9 +10,17 @@
     }());
 
     function buildTemplate(){
+      self.appName = SecurityMatrixService.appName = $state.params.name;
+     var  permissions = {
+        allowCreate: "Admin,Developer",
+        allowEdit: "Admin,Developer,User",
+        allowDelete: "Admin,Developer",
+        allowRead: "Admin,Developer,User"
+      };
+      SecurityMatrixService.loadMatrix(self.sTemplate,permissions,errorHandler);
 
 
-      self.sTemplate = [
+    /*  self.sTemplate = [
         {
           title: 'Admin',
           permissions: {
@@ -32,11 +40,15 @@
             delete: false
           }
         }
-      ]
+      ]*/
     }
+    function errorHandler(error, message) {
+      NotificationService.add('error', message);
+    }
+
 
   }
 
   angular.module('app')
-    .controller('SecurityController',['$scope', SecurityController] );
+    .controller('SecurityController',['$scope','$state','SecurityMatrixService','NotificationService', SecurityController] );
 }());
