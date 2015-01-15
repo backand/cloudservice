@@ -1,6 +1,6 @@
 (function () {
 
-  function SecurityMatrixDirective(NotificationService) {
+  function SecurityMatrixDirective(ConfirmationPopup) {
     return {
       restrict: 'E',
       scope: {
@@ -15,10 +15,13 @@
          * @param role
          */
         $scope.removeRole = function (role) {
-          var result = window.confirm('Remove this role?');
-          if (result) {
-            $scope.template.splice($scope.template.indexOf(role), 1)
-          }
+
+          ConfirmationPopup.confirm('Are sure you want to remove this rule?', 'Remove')
+            .then(function(value){
+            if (value) {
+              $scope.template.splice($scope.template.indexOf(role), 1)
+            }
+          })
         };
 
 
@@ -43,8 +46,6 @@
     }
   }
 
-
-
   angular.module('app')
-    .directive('securityMatrix', ['NotificationService',SecurityMatrixDirective])
+    .directive('securityMatrix',['ConfirmationPopup', SecurityMatrixDirective]);
 }());

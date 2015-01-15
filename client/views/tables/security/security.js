@@ -46,6 +46,7 @@
       NotificationService.add('error', message);
     }
 
+
   }
 
   angular.module('app')
