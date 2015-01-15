@@ -1,58 +1,57 @@
 (function () {
 
-  function SecurityController($scope,$state,SecurityMatrixService,NotificationService,ColumnsService) {
+  function SecurityController($scope, $state, SecurityMatrixService, NotificationService, ColumnsService) {
 
     var self = this;
 
     (function init() {
       self.sTemplate = [];
       $scope.$on('tabs:security', buildTemplate);
-      $scope.$watch(self.sTemplate,function(){
-        var p= SecurityMatrixService.getPermission(self.sTemplate);
-      },true);
     }());
-  $scope.getPermissions = function(){
-    var p= SecurityMatrixService.getPermission(self.sTemplate);
-  };
-    function permissionsSuccessHandler(data){
-      permissions =data.permissions;
-      if(self.sTemplate.length==0)
-        SecurityMatrixService.loadMatrix(self.sTemplate,permissions,errorHandler);
+    $scope.getPermissions = function () {
+      var p = SecurityMatrixService.getPermission(self.sTemplate);
+    };
+    function permissionsSuccessHandler(data) {
+      permissions = data.permissions;
+      if (self.sTemplate.length == 0) {
+        SecurityMatrixService.loadMatrix(self.sTemplate, permissions, errorHandler);
+      }
     }
-    function buildTemplate(){
+
+    function buildTemplate() {
       self.appName = SecurityMatrixService.appName = $state.params.name;
 
-       ColumnsService.get()
-         .then(permissionsSuccessHandler,errorHandler);
+      ColumnsService.get()
+        .then(permissionsSuccessHandler, errorHandler);
 
-/*      var  permissions = {
-        allowCreate: "Admin,Developer",
-        allowEdit: "Admin,Developer,User",
-        allowDelete: "Admin,Developer",
-        allowRead: "Admin,Developer,User"
-      };*/
+      /*      var  permissions = {
+       allowCreate: "Admin,Developer",
+       allowEdit: "Admin,Developer,User",
+       allowDelete: "Admin,Developer",
+       allowRead: "Admin,Developer,User"
+       };*/
 
-    /*  self.sTemplate = [
-        {
-          title: 'Admin',
-          permissions: {
-            read: true,
-            create: false,
-            update: true,
-            delete: false
-          }
-        },
+      /*  self.sTemplate = [
+       {
+       title: 'Admin',
+       permissions: {
+       read: true,
+       create: false,
+       update: true,
+       delete: false
+       }
+       },
 
-        {
-          title: 'User',
-          permissions: {
-            read: true,
-            create: false,
-            update: true,
-            delete: false
-          }
-        }
-      ]*/
+       {
+       title: 'User',
+       permissions: {
+       read: true,
+       create: false,
+       update: true,
+       delete: false
+       }
+       }
+       ]*/
     }
     function errorHandler(error, message) {
       NotificationService.add('error', message);
@@ -62,5 +61,5 @@
   }
 
   angular.module('app')
-    .controller('SecurityController',['$scope','$state','SecurityMatrixService','NotificationService','ColumnsService', SecurityController] );
+    .controller('SecurityController', ['$scope', '$state', 'SecurityMatrixService', 'NotificationService', 'ColumnsService', SecurityController]);
 }());

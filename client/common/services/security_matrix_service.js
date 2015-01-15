@@ -19,8 +19,8 @@
                 title: role.Name,
                 permissions: {
                   read: false,
-                  write: false,
-                  edit: false,
+                  create: false,
+                  update: false,
                   delete: false
                 }
               }
