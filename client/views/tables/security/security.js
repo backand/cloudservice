@@ -12,7 +12,6 @@
     function buildTemplate(){
 
 
-
       self.sTemplate = [
         {
           title: 'Admin',
@@ -35,8 +34,6 @@
         }
       ]
     }
-
-
 
   }
 

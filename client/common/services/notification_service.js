@@ -11,8 +11,6 @@
     this.add = function(type,text){
       toaster.pop(type, "", text);
     }
-
-
   }
 
   angular.module('common.services')
