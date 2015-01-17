@@ -64,6 +64,15 @@
       });
     };
 
+    this.update = function (table) {
+      return $http({
+        method: 'PUT',
+        url: CONSTS.appUrl + '/1/table/config/' + self.tableName,
+        headers: { AppName: self.appName },
+        data: self._tableConfig
+      });
+    };
+
   }
 
   angular.module('common.services')

@@ -2,20 +2,18 @@
 
   <div class="row">
     <div class="col-lg-2">
-      <select class="form-control">
-        <option value="">select template..</option>
+      <select class="form-control"
+              ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
+              ng-model="security.view.permissions.securityWorkspace"
+              ng-disabled="security.override">
       </select>
     </div>
-
     <label>
-      <input type="checkbox" ng-model="permissions.override"/>
+      <input type="checkbox" ng-model="security.override"/>
       override
     </label>
 
   </div>
-  <button class="btn btn-primary"
-
-          ng-click="getPermissions()">S</button>
-  <security-matrix template="security.sTemplate" override="permissions.override"></security-matrix>
+  <security-matrix template="security.sTemplate" override="security.override"></security-matrix>
 
 </div>

@@ -38,31 +38,34 @@
       }
     };
 
-    $scope.$on('grid:init', function () {
-      //self.gridOptions.columnDefs[0].visible = false;
-    });
-
-    $scope.$watch('data.paginationOptions.pageNumber', getData)
+    $scope.$watch('data.paginationOptions.pageNumber', function (newVal,oldValue){
+        if(newVal != null && newVal !== oldValue)
+          getData();
+      });
 
     function getData() {
       if (self.gridOptions.data.length == 0) {
         ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successHandler, errorHandler);
         self.refreshOnce = false;
       }
-      else
-      {
-        if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
-          $scope.gridApi.grid.options.columnDefs.splice(0,1);
-        if(!self.refreshOnce){
-          setTimeout("$('#grid-container').trigger('resize')", 1); //resize the tab to fix the width issue with UI grid
-          self.refreshOnce = true;
-        }
-      }
     }
 
     function successHandler(data) {
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
+
+      setTimeout(refreshGridDisplay(),1); //fix bug with bootstrap tab and ui grid
+    }
+
+    function refreshGridDisplay()
+    {
+      //if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
+      //  $scope.gridApi.grid.options.columnDefs.splice(0,1);
+      if(!self.refreshOnce){
+        setTimeout("$('#grid-container').trigger('resize')", 1); //resize the tab to fix the width issue with UI grid
+        self.refreshOnce = true;
+      }
+
     }
 
     this.pageMax = function (pageSize, currentPage, max) {
@@ -75,19 +78,7 @@
     }
   }
 
-
-  function onCompile() {
-    return {
-      priority: 9009,
-      link: function (scope) {
-        scope.$root.$broadcast('grid:init')
-      }
-    }
-  }
-
-
   angular.module('app')
-    .directive('onCompile', onCompile)
     .controller('ViewData', [
       '$log',
       'NotificationService',

@@ -1,8 +1,3 @@
-<br/>
-<button class="btn btn-primary"
-        ng-if="override"
-        ng-click="addRole()">+ Add Role</button>
-
 <table class="table table-striped" style="table-layout: fixed">
 
   <thead>
@@ -46,11 +41,7 @@
       </td>
 
       <td class="text-center">
-        <input type="button"
-               ng-if="override"
-               class="btn btn-danger"
-               ng-click="removeRole(role)"
-               value=" - Remove"/>
+        <a ng-if="override" ng-click="removeRole(role)" href=""><i class="ti-trash"></i></a>
       </td>
 
 
@@ -58,4 +49,6 @@
   </tbody>
 
 </table>
-
+<button class="btn btn-primary"
+        ng-if="override"
+        ng-click="addRole()">+ Add Role</button>

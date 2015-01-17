@@ -6,17 +6,16 @@
     self.appName = null;
     self.usersTableName = 'v_durados_user';
     self.rolesTableName = 'durados_UserRole';
-    self.pageSize = 20;
 
-    self.getData = function (tableName,size, page,  sort) {
+    self.getData = function (tableName, size, page,  sort) {
       var sortParam = '[{fieldName:"id", order:"desc"}]';
-      var def_size = !size? 20 : size;
-      var page = !page ? 1 : page;
+      size = !size? 20 : size;
+      page = !page ? 1 : page;
       if(sort)
         sortParam = sort;
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/table/data/' + tableName + '?pageSize=' + String(self.pageSize),
+        url: CONSTS.appUrl + '/1/table/data/' + tableName,
         headers: {AppName: self.appName},
         params: {
           'pageSize': String(size),
@@ -83,6 +82,24 @@
     };
     self.deleteRole = function (Id) {
       return self.deleteData(self.rolesTableName, Id);
+    };
+
+    self.getWorkspace = function (size, page, sort) {
+      var sortParam = '[{fieldName:"name", order:"asc"}]';
+      size = !size? 20 : size;
+      page = !page ? 1 : page;
+      if(sort)
+        sortParam = sort;
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/workspace',
+        headers: {AppName: self.appName},
+        params: {
+          'pageSize': String(size),
+          'pageNumber': String(page),
+          'sort' : sortParam
+        }
+      });
     };
   }
 
