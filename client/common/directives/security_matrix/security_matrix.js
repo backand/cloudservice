@@ -9,7 +9,9 @@
       },
       templateUrl: 'common/directives/security_matrix/security_matrix.html',
       link: function securityMatrixLink($scope) {
-
+        $scope.$watch('template', function (newVal) {
+          var d = newVal;
+        },true);
         /**
          * locate and remove the given role from the template
          * @param role
@@ -17,11 +19,11 @@
         $scope.removeRole = function (role) {
 
           ConfirmationPopup.confirm('Are sure you want to remove this rule?', 'Remove')
-            .then(function(value){
-            if (value) {
-              $scope.template.splice($scope.template.indexOf(role), 1)
-            }
-          })
+            .then(function (value) {
+              if (value) {
+                $scope.template.splice($scope.template.indexOf(role), 1)
+              }
+            })
         };
 
 
@@ -47,5 +49,5 @@
   }
 
   angular.module('app')
-    .directive('securityMatrix',['ConfirmationPopup', SecurityMatrixDirective]);
+    .directive('securityMatrix', ['ConfirmationPopup', SecurityMatrixDirective]);
 }());

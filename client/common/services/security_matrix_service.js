@@ -3,7 +3,7 @@
  */
 (function () {
   'use strict';
-  function SecurityMatrixService( SecurityService) {
+  function SecurityMatrixService(SecurityService) {
     var self = this;
     self.appName = null;
 
@@ -19,8 +19,8 @@
                 title: role.Name,
                 permissions: {
                   read: false,
-                  write: false,
-                  edit: false,
+                  create: false,
+                  update: false,
                   delete: false
                 }
               }
@@ -41,7 +41,7 @@
       return false;
     };
 
-    this.loadPermission = function (template, permissions,errorHandler) {
+    this.loadPermission = function (template, permissions, errorHandler) {
 
       var createPermission = permissions.allowCreate.split(',');
       var editPermission = permissions.allowEdit.split(',');
@@ -73,20 +73,20 @@
 
     };
     this.getPermission = function (template) {
-      var permissions= {
-        allowCreate:'',
-        allowEdit:'',
-        allowDelete:'',
-        allowRead:''
+      var permissions = {
+        allowCreate: '',
+        allowEdit: '',
+        allowDelete: '',
+        allowRead: ''
       };
-      var createPermission =[];
+      var createPermission = [];
       var editPermission = [];
       var deletePermission = [];
       var readPermission = [];
 
       angular.forEach(template, function (role) {
         if (role.permissions.create) {
-          createPermission.push(role.title) ;
+          createPermission.push(role.title);
         }
         if (role.permissions.update) {
           editPermission.push(role.title);
@@ -107,5 +107,5 @@
   }
 
   angular.module('common.services')
-    .service('SecurityMatrixService', [ 'SecurityService', SecurityMatrixService]);
+    .service('SecurityMatrixService', ['SecurityService', SecurityMatrixService]);
 })();
