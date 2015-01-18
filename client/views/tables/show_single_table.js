@@ -10,6 +10,7 @@
       self.messages = [];
       self.fields = [];
       self.view = {};
+      self.switchTab = switchTab;
       self.fieldTypesRange = ["String", "DateTime", "Integer"];
       self.selectedField = null;
       self.appName = $stateParams.name;
@@ -26,11 +27,10 @@
       TablesService.update($stateParams.name, self.tableName, self.view).then(upadateSuccessHandler, errorHandler);
     };
 
-    self.switchTab = function (tab) {
-      //the tab's events are based on the tab name
+    function switchTab (tab) {
       debugger;
       $scope.$broadcast('tabs:' + tab);
-    };
+    }
 
     function upadateSuccessHandler(data) {
       NotificationService.add('success', "View configuration was saved");

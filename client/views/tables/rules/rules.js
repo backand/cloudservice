@@ -74,7 +74,7 @@
      */
     function insertTokenAtChar(elementId, token) {
       $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
-    };
+    }
 
     /**
      * success handle for getting dictionary items
@@ -308,8 +308,7 @@
               title: 'After',
               items: []
             }]
-        }
-      ];
+        }];
 
       //build the tree
       angular.forEach(data.data.data, function (value, key) {
