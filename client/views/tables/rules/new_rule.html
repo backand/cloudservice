@@ -19,12 +19,14 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-if="rule.name">
       <label>Event Trigger</label>
       <select class="form-control"
-              ng-options="dataAction.label for dataAction in modal.dataActions track by dataAction.value"
+              ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions track by dataAction.value"
               ng-model="rule.dataAction"
               ng-model-options="{debounce:{default:400}}">
         <option value="">Select trigger...</option>
       </select>
     </div>
+
+    {{ rule.dataAction }}
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.dataAction">
 
@@ -57,13 +59,13 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition">
       <label>Action</label>
       <select class="form-control"
-              ng-options="workflowAction.label for workflowAction in modal.workflowActions track by workflowAction.value"
+              ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions track by workflowAction.value"
               ng-model="rule.workflowAction">
         <option value="">Select action...</option>
       </select>
     </div>
 
-    <div ng-switch="rule.workflowAction.value">
+    <div ng-switch="rule.workflowAction">
 
       <!-- notify options -->
       <div ng-switch-when="Notify">

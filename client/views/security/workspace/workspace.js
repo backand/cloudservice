@@ -17,7 +17,6 @@
      */
     function getWorkspaces() {
       if (self.workspaces == null) {
-
         SecurityService.getWorkspace().then(WorksapceSuccessHandler, errorHandler);
       }
     }
@@ -34,6 +33,11 @@
         SecurityMatrixService.loadMatrix(workspace.template, workspace, errorHandler);
       });
     }
+
+    //todo: (yariv)
+    $scope.$watch('workspace.workspace.template', function (template){
+      // save the template
+    }, true);
 
     /* function buildTemplate() {
      self.sTemplate = [];

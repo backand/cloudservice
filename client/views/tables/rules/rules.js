@@ -14,9 +14,11 @@
      */
     (function init() {
       self.items = [];
+      self.groupVisiable = true;
       self.open = newRule;
       self.edit = editRule;
       self.clearRule = deleteRule;
+      self.toggleGroup = toggleGroup;
       $scope.$on('tabs:rules', getRules);
       DictionaryService.get().then(populateDictionaryItems);
     }());
@@ -25,22 +27,32 @@
       title: 'Application Rule',
       okButtonText: 'Save',
       cancelButtonText: 'Cancel',
-      dataActions: [{value: 'BeforeCreate', label:'Create - Before adding data', level1: 0, level2: 0},
-                    {value: 'AfterCreateBeforeCommit', label:'Create - After data saved before it committed', level1: 0, level2: 1},
-                    {value: 'AfterCreate', label:'Create - After data saved and committed', level1: 0, level2: 2},
-                    {value: 'BeforeEdit', label:'Update - Before update data', level1: 1, level2: 0},
-                    {value: 'AfterEditBeforeCommit', label:'Update - After data saved before it committed', level1: 1, level2: 1},
-                    {value: 'AfterEdit', label:'Update - After data saved and committed', level1: 1, level2: 2},
-                    {value: 'BeforeDelete', label:'Delete - Before delete', level1: 2, level2: 0},
-                    {value: 'AfterDeleteBeforeCommit', label:'Delete - After record deleted but before it committed', level1: 2, level2: 1},
-                    {value: 'AfterDelete', label:'Delete - After record deleted and committed', level1: 2, level2: 2},
-                    {value: 'BeforeViewOpen', label:'Read - Before reading data from database', level1: 3, level2: 0},
-                    {value: 'Open', label:'Read - After reading from database but before send to client', level1: 3, level2: 1}
+      dataActions: [{value: 'BeforeCreate', label: 'Create - Before adding data', level1: 0, level2: 0},
+        {
+          value: 'AfterCreateBeforeCommit',
+          label: 'Create - After data saved before it committed',
+          level1: 0,
+          level2: 1
+        },
+        {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 0, level2: 2},
+        {value: 'BeforeEdit', label: 'Update - Before update data', level1: 1, level2: 0},
+        {value: 'AfterEditBeforeCommit', label: 'Update - After data saved before it committed', level1: 1, level2: 1},
+        {value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 1, level2: 2},
+        {value: 'BeforeDelete', label: 'Delete - Before delete', level1: 2, level2: 0},
+        {
+          value: 'AfterDeleteBeforeCommit',
+          label: 'Delete - After record deleted but before it committed',
+          level1: 2,
+          level2: 1
+        },
+        {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 2, level2: 2},
+        {value: 'BeforeViewOpen', label: 'Read - Before reading data from database', level1: 3, level2: 0},
+        {value: 'Open', label: 'Read - After reading from database but before send to client', level1: 3, level2: 1}
       ],
-      workflowActions:[{value: 'Notify', label:'Send Email'},
-         {value: 'Validate', label:'Advanced Data Validation'},
-         {value: 'Execute', label:'Run additional database script'},
-         {value: 'WebService', label:'Make HTTP call'}
+      workflowActions: [{value: 'Notify', label: 'Send Email'},
+        {value: 'Validate', label: 'Advanced Data Validation'},
+        {value: 'Execute', label: 'Run additional database script'},
+        {value: 'WebService', label: 'Make HTTP call'}
       ],
       dictionaryState: false,
       dictionaryItems: {},
@@ -48,6 +60,11 @@
       resetRule: resetCurrentRule,
       toggleOptions: toggleDictionary
     };
+
+    function toggleGroup() {
+      debugger;
+      self.groupVisiable = !self.groupVisiable;
+    }
 
     /**
      * broadcast insert event from the parent scope
@@ -57,7 +74,7 @@
      */
     function insertTokenAtChar(elementId, token) {
       $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
-    }
+    };
 
     /**
      * success handle for getting dictionary items
@@ -82,7 +99,7 @@
      * switch the state of the dictionary window
      */
     function toggleDictionary() {
-      $scope.modal.dictionaryState = !$scope.modal.dictionaryState
+      $scope.modal.dictionaryState = !$scope.modal.dictionaryState;
     }
 
     /**
@@ -101,11 +118,11 @@
      * @param rulname
      * @returns {*|XMLList|XML}
      */
-    function getRuleByName (rulname) {
-     return angular.copy($filter('filter')($scope.rules.data, function (f) {
+    function getRuleByName(rulname) {
+      return angular.copy($filter('filter')($scope.rules.data, function (f) {
         return f.name === rulname;
       })[0])
-    }
+    };
 
     /**
      * put an existing rule on the scope,
@@ -138,10 +155,10 @@
       });
 
       var defaultRule = {
-        "viewTable": RulesService.tableId,
-        "additionalView": "",
-        "databaseViewName": "",
-        "useSqlParser": false
+        'viewTable': RulesService.tableId,
+        'additionalView': "",
+        'databaseViewName': "",
+        'useSqlParser': false
       };
 
       /**
@@ -170,8 +187,8 @@
       function postNewRule(rule) {
         var data = angular.extend(defaultRule, rule);
         RulesService.post(data).then(getRules);
-        modalInstance.close()
-      }
+        modalInstance.close();
+      };
 
       /**
        * delegate to the update method on
@@ -205,8 +222,8 @@
      * ajax call to get the rules list
      */
     function getRules() {
-      RulesService.get().then(buildTree, errorHandler)
-    }
+      RulesService.get().then(buildTree, errorHandler);
+    };
 
     /**
      * parse the raw data object to a tree
@@ -219,60 +236,75 @@
       self.items = [
         {
           title: 'Create',
+          visible: true,
           items: [
             {
+              visible: true,
               title: 'Before',
               items: []
             },
             {
+              visible: true,
               title: 'During',
               items: []
             },
             {
+              visible: true,
               title: 'After',
               items: []
             }]
         },
         {
           title: 'Edit',
+          visible: true,
           items: [
             {
+              visible: true,
               title: 'Before',
               items: []
             },
             {
+              visible: true,
               title: 'During',
               items: []
             },
             {
+              visible: true,
               title: 'After',
               items: []
             }]
         },
         {
           title: 'Delete',
+          visible: true,
           items: [
             {
+              visible: true,
               title: 'Before',
               items: []
             },
             {
+              visible: true,
               title: 'During',
               items: []
             },
             {
+              visible: true,
               title: 'After',
               items: []
             }]
         },
         {
           title: 'Open',
+          visible: true,
           items: [
             {
+              visible: true,
               title: 'Before',
               items: []
             },
             {
+              visible: true,
               title: 'After',
               items: []
             }]
@@ -280,13 +312,15 @@
       ];
 
       //build the tree
-      angular.forEach(data.data.data, function(value, key) {
+      angular.forEach(data.data.data, function (value, key) {
         var obj = {name: value.name};
         var da = $filter('filter')($scope.modal.dataActions, function (f) {
           return f.value === value.dataAction;
         })[0];
-        if(da)
+        if (da) {
+          self.items[da.level1].items[da.level2].visible = true;
           self.items[da.level1].items[da.level2].items.push(obj);
+        }
       });
 
     }

@@ -1,38 +1,54 @@
 <div ng-controller="RulesController as rules">
 
-  <button ng-click="rules.open()"
-          class="btn btn-success">+ new</button>
+  <div id="rules-header" class="page-header clearfix">
 
-  <div ui-tree data-drag-enabled="false">
+    <h2>Rules</h2>
 
-    <ol ui-tree-nodes="" ng-model="rules.items">
-      <li ng-repeat="item in rules.items" ui-tree-node>
-        <div ui-tree-handle>
-          {{item.title}}
-        </div>
+    <p class="lead pull-left">short description of what rules are and how to use them</p>
 
-        <ol ui-tree-nodes="" ng-model="item.items">
-          <li ng-repeat="subItem in item.items" ui-tree-node>
-            <div ui-tree-handle>
-              {{subItem.title}}
-            </div>
-
-            <ol ui-tree-nodes="" ng-model="subItem.items">
-              <li ng-repeat="item in subItem.items" ui-tree-node>
-                <div ui-tree-handle>
-                  <a href="" ng-click="rules.edit(item)">{{item.name}}</a>
-                  <div class="btn-group btn-group-xs pull-right">
-                    <button ng-click="rules.clearRule(item)"
-                            class="btn btn-danger btn-default">X</button>
-                    <button ng-click="rules.edit(item)"
-                            class="btn btn-primary btn-default">V</button>
-                  </div>
-                </div>
-              </li>
-            </ol>
-          </li>
-        </ol>
-      </li>
-    </ol>
+    <button ng-click="rules.open()"
+            id="new-rule-btn"
+            class="btn btn-lg btn-success pull-right">
+      + new rule
+    </button>
   </div>
+
+
+  <ul id="rules" class="list-unstyled">
+
+    <li ng-repeat="item in rules.items">
+      <h3 class="rule-group-title">{{ item.title | uppercase}}</h3>
+
+      <div class="pull-right toggle-mark" ng-click="item.visible = !item.visible">V</div>
+
+      <p class="rule-group-description">These rules fires on {{ item.title }} action</p>
+
+      <ul class="rules-sub-items-list" ng-show="item.visible">
+
+        <li ng-repeat="subItem in item.items">
+          <h4 class="rule-sub-title">{{subItem.title}}</h4>
+
+          <div class="pull-right toggle-mark" ng-click="subitem.visible = !subitem.visible">V</div>
+
+          <p class="rule-sub-description">
+            These rules fire {{ subitem.title }} an object is created
+          </p>
+
+          <ul class="rules-names-list" ng-show="subitem.visible">
+            <li ng-repeat="rule in subItem.items">
+              <h5 class="rule-name text-primary"
+                  ng-click="rules.edit(rule.name)">
+                {{rule.name}}</h5>
+
+              <p class="rule-description">
+                some description about the action should be here
+              </p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </div>
+
+

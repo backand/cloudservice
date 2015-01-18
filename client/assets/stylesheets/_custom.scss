@@ -4,7 +4,7 @@
 
 .app-panel-body {
   height: 175px;
-  .body-height{
+  .body-height {
     height: 90px;
   }
 }
@@ -18,8 +18,8 @@ a.app-panel:hover {
   }
 }
 
-.list-justified{
-  li{
+.list-justified {
+  li {
     vertical-align: top;
   }
 }
@@ -106,28 +106,28 @@ a.app-panel:hover {
 }
 
 .blue-button {
-  width:100%;
-  background:#4f95bf;
-  color:white;
-  text-decoration:none;
-  padding:10px;
-  display:block;
-  text-align:center;
-  font-family:"Open Sans", arial, sans-serfi;
-  font-weight:bold;
-  text-shadow:1px solid draken(#4f95bf, 20%);
-  box-shadow:0px 4px 0px darken(#4f95bf , 20%);
-  border-radius:5px;
+  width: 100%;
+  background: #4f95bf;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+  text-align: center;
+  font-family: "Open Sans", arial, sans-serfi;
+  font-weight: bold;
+  text-shadow: 1px solid draken(#4f95bf, 20%);
+  box-shadow: 0px 4px 0px darken(#4f95bf, 20%);
+  border-radius: 5px;
   @include transition(200ms);
   &:hover {
     //    box-shadow:none;
     -webkit-transform: translateY(-3px);
-    box-shadow: 0px 7px 0px darken(#4f95bf , 20%);
+    box-shadow: 0px 7px 0px darken(#4f95bf, 20%);
 
   }
   &:active {
 
-    box-shadow:none;
+    box-shadow: none;
     -webkit-transform: translateY(5px);
 
   }
@@ -175,3 +175,65 @@ a.app-panel:hover {
   color: black !important;
   border-bottom: none !important;
 }
+
+/* Rules custom style
+-----------------------------------------*/
+
+#rules-header {
+  padding-bottom: 0px;
+  margin: -25px 0 20px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+#new-rule-btn {
+  margin-top: -15px;
+}
+
+#rules {
+  list-style: none;
+  .toggle-mark {
+    font-size: 30px;
+    margin-top: -20px;
+    cursor: pointer;
+  }
+
+  h3.rule-group-title {
+    font-weight: bold;
+  }
+  p.rule-group-description {
+    border-bottom: 1px solid #d3d3d3;
+    padding-bottom: 10px;
+  }
+
+  .rules-sub-items-list {
+    list-style: none;
+    h4.rule-sub-title {
+      font-size: 20px;
+      margin-bottom: 0;
+    }
+    p.rule-sub-description {
+    }
+
+  }
+
+  .rules-names-list {
+    list-style: none;
+    li {
+      border: 1px solid #d3d3d3;
+      margin: 10px 0 10px -40px;
+      padding: 5px;
+
+      h5.rule-name {
+        margin: 5px;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      p.rule-description {
+      }
+
+    }
+  }
+
+}
+
+

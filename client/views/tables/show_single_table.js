@@ -28,6 +28,7 @@
 
     self.switchTab = function (tab) {
       //the tab's events are based on the tab name
+      debugger;
       $scope.$broadcast('tabs:' + tab);
     };
 
