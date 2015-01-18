@@ -10,7 +10,18 @@
 
     self.workspaces = null;
     getWorkspaces();
+    $scope.savews = function (){
+      var role = $('div.workspace ul li.active').attr('id');
+      var wsName=$('div.workspace ul li.active').attr('heading');
+      var ws = {
+        __metadata: {id: String(role)},
+         workspaceName: wsName
+      }
 
+      var permissions = SecurityMatrixService.getPermission(self.workspaces[2].template);
+      ws = angular.extend(ws,permissions);
+      SecurityService.updateWorkspace(ws);
+    }
 
     /**
      * Read the list of workspaces
@@ -20,7 +31,11 @@
         SecurityService.getWorkspace().then(WorksapceSuccessHandler, errorHandler);
       }
     }
-
+    $scope.active = function() {
+      return $scope.tabs.filter(function(pane){
+        return pane.active;
+      })[0];
+    };
    /* self.getTemplate = function (workspace) {
       var template = [];
       SecurityMatrixService.loadMatrix(template, workspace, errorHandler);

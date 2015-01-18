@@ -6,16 +6,20 @@
     self.appName = null;
     self.usersTableName = 'v_durados_user';
     self.rolesTableName = 'durados_UserRole';
+    self.workspaceTableName ='/1/workspace';
+    self.dbDataUrl ='/1/table/data/';
 
-    self.getData = function (tableName, size, page,  sort) {
+
+    self.getData = function (tableName, size, page,  sort,isConfig) {
       var sortParam = '[{fieldName:"id", order:"desc"}]';
+     var url =(isConfig)?'':self.dbDataUrl;
       size = !size? 20 : size;
       page = !page ? 1 : page;
       if(sort)
         sortParam = sort;
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/table/data/' + tableName,
+        url: CONSTS.appUrl + url + tableName,
         headers: {AppName: self.appName},
         params: {
           'pageSize': String(size),
@@ -25,28 +29,32 @@
       });
     };
 
-    self.updateData = function (tableName, rowData) {
+    self.updateData = function (tableName, rowData,pk,isConfig ) {
+      var url =(isConfig)?'':self.dbDataUrl;
+      var id=(!pk)?rowData.ID:pk;
       return $http({
         method: 'PUT',
-        url: CONSTS.appUrl + '/1/table/data/' + tableName + '/' + rowData.ID,
+        url: CONSTS.appUrl +url + tableName + '/' + id ,
         headers: {AppName: self.appName},
         data: rowData
       });
     };
 
-    self.postData = function (tableName, rowData) {
+    self.postData = function (tableName, rowData,isConfig) {
+      var url =(isConfig)?'':self.dbDataUrl;
       return $http({
         method: 'POST',
-        url: CONSTS.appUrl + '/1/table/data/' + tableName + '/',
+        url: CONSTS.appUrl +url + tableName + '/',
         headers: {AppName: self.appName},
         data: rowData
       });
     };
 
-    self.deleteData = function (tableName, Id) {
+    self.deleteData = function (tableName, Id,isConfig) {
+      var url =(isConfig)?'':self.dbDataUrl;
       return $http({
         method: 'DELETE',
-        url: CONSTS.appUrl + '/1/table/data/' + tableName + '/' + Id,
+        url: CONSTS.appUrl + url + tableName + '/' + Id,
         headers: {AppName: self.appName}
 
       });
@@ -85,21 +93,17 @@
     };
 
     self.getWorkspace = function (size, page, sort) {
-      var sortParam = '[{fieldName:"name", order:"asc"}]';
-      size = !size? 20 : size;
-      page = !page ? 1 : page;
-      if(sort)
-        sortParam = sort;
-      return $http({
-        method: 'GET',
-        url: CONSTS.appUrl + '/1/workspace',
-        headers: {AppName: self.appName},
-        params: {
-          'pageSize': String(size),
-          'pageNumber': String(page),
-          'sort' : sortParam
-        }
-      });
+      return self.getData(self.workspaceTableName,null,null,'[{fieldName:"name", order:"asc"}]',true);
+
+    };
+    self.postWorkspace = function (workspace) {
+      return self.postData(self.workspaceTableName,workspace,true);
+
+    };
+
+    self.updateWorkspace = function (workspace) {
+      return self.updateData(self.workspaceTableName,workspace,workspace.__metadata.id,true);
+
     };
   }
 
