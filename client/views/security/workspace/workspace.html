@@ -1,0 +1,29 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Security templates </strong>
+
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+    <div class="panel-body" >
+     <div  class="ui-tab-container ui-tab-vertical"
+      style="height:500px; overflow:auto">
+      <tabset class="ui-tab">
+        <tab ng-repeat="workspace in workspaces.workspaces"
+             heading="{{ workspace.workspaceName }}">
+          <form role="form"  >
+            <security-matrix template="workspace.template" override="workspace.overridepermissions"></security-matrix>
+
+          </form>
+
+        </tab>
+      </tabset>
+
+
+    </div>
+
+
+
+    </div>
+  </section>
+</section>

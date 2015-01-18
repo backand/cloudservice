@@ -11,13 +11,13 @@
         controller: 'SecurityUsers as users',
         templateUrl: 'views/security/user/users.html'
       })
-      .state('security.roles', {
-        url: '/users/:name',
-        controller: 'SecurityRoles as roles',
-        templateUrl: 'views/security/role/roles.html'
+      .state('security.workspace', {
+        url: '/workspaces/:name',
+        controller: 'SecurityWorkspace as workspaces',
+        templateUrl: 'views/security/workspace/workspace.html'
       })
       .state('security.auth', {
-        url: '/users/:name',
+        url: '/auth/:name',
         controller: 'SecurityAuth as auth',
         templateUrl: 'views/security/auth/auth.html'
       })
