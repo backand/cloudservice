@@ -49,10 +49,6 @@
       });
     }
 
-    //todo: (yariv)
-    $scope.$watch('workspaces.workspaces', function (aaa){
-      var b=1;
-    }, true);
 
     /* function buildTemplate() {
      self.sTemplate = [];

@@ -12,7 +12,8 @@
   </thead>
 
   <tbody>
-  <tr ng-repeat="role in template">
+
+  <tr ng-repeat="role in securityTemplate">
 
         <td ng-if="override"
             editable-text="role.title">{{ role.title }}</td>
@@ -22,20 +23,24 @@
       <td class="text-center">
         <input ng-checked="role.permissions.read"
                ng-disabled="!override"
+               ng-model="role.permissions.read"
                type="checkbox"/>
       </td>
       <td class="text-center">
         <input ng-checked="role.permissions.create"
+               ng-model="role.permissions.create"
                ng-disabled="!override"
                type="checkbox"/>
       </td>
       <td class="text-center">
         <input ng-checked="role.permissions.update"
+               ng-model="role.permissions.update"
                ng-disabled="!override"
                type="checkbox"/>
       </td>
       <td class="text-center">
         <input ng-checked="role.permissions.delete"
+               ng-model="role.permissions.delete"
                ng-disabled="!override"
                type="checkbox"/>
       </td>
@@ -52,3 +57,7 @@
 <button class="btn btn-primary"
         ng-if="override"
         ng-click="addRole()">+ Add Role</button>
+
+<button class="btn btn-success"
+        ng-if="override"
+        ng-click="saveChanges()">Save Changes</button>
