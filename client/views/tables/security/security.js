@@ -15,6 +15,7 @@
     //todo: (yariv): save the template to the server
     function templateChanged (template) {
       console.log('callback function, template changed: ', template);
+      var p = SecurityMatrixService.getPermission(self.sTemplate);
     }
 
     /**
@@ -49,7 +50,7 @@
     }
 
     $scope.$watch('security.view.permissions.securityWorkspace', function (newVal, oldValue) {
-      if (newVal != null && newVal !== oldValue)
+      if (newVal != null && oldValue != null && newVal !== oldValue)
         buildTemplate();
     });
 
@@ -86,45 +87,14 @@
 
       }
       //if no, read the permissions from the User
-      if (self.sTemplate.length == 0)
-         SecurityMatrixService.loadMatrix(permissions, errorHandler).then(function (data) {
-           self.sTemplate = data;
-        })
-
-
-
-
-      /*  self.sTemplate = [
-       {
-       title: 'Admin',
-       permissions: {
-       read: true,
-       create: false,
-       update: true,
-       delete: false
-       }
-       },
-
-       {
-       title: 'User',
-       permissions: {
-       read: true,
-       create: false,
-       update: true,
-       delete: false
-       }
-       }
-       ]*/
+      SecurityMatrixService.loadMatrix(permissions).then(function (data) {
+        self.sTemplate = data;
+      })
     }
-
-    $scope.getPermissions = function () {
-      var p = SecurityMatrixService.getPermission(self.sTemplate);
-    };
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
     }
-
 
   }
 

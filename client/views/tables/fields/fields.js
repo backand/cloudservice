@@ -46,10 +46,10 @@
     /**
      * watch for changes in view object
      */
-    //$scope.$watch('fields.view', function (newVal,oldValue){
-    //  if(newVal != null && newVal !== oldValue)
-    //    ColumnsService.update();
-    //}, true);
+    $scope.$watch('fields.view', function (newVal,oldValue){
+      if(newVal != null && oldValue != null && newVal !== oldValue)
+        ColumnsService.update();
+    }, true);
 
     /**
      * delegate any error to notification service

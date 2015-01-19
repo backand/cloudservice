@@ -87,8 +87,8 @@
             apps.list = data.data;
             updateAppNames();
         })
-        .error(function (error) {
-          NotificationService.add()
+        .error(function (error, message) {
+          NotificationService.add('error', message);
         });
 
     };
