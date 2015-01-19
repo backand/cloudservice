@@ -57,8 +57,9 @@
   },
   "dependencies": {
     "gulp-filelog": "^0.4.1",
-    "proxy-middleware": "~0.5.1",
+    "gulp-gzip": "0.0.8",
+    "gulp-install": "^0.2.0",
     "gulp-replace-task": "~0.1.0",
-    "gulp-gzip": "0.0.8"
+    "proxy-middleware": "~0.5.1"
   }
 }

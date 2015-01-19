@@ -237,3 +237,81 @@ a.app-panel:hover {
 }
 
 
+
+
+
+
+/**************************************************************************************************/
+/*                                            Fields                                        */
+/**************************************************************************************************/
+
+.field-group {
+  .group-label {
+    text-transform: uppercase;
+    font-size:16px;
+    font-weight:600;
+  }
+  .group-inner {
+    padding:10px;
+    padding-bottom:0px;
+    border:1px solid #ccc;
+    margin-bottom:10px;  
+    margin-top:10px;
+    margin-bottom:10px;
+    &:after {
+      content:"";
+      clear:both;
+      display:block;
+    }
+  }
+  
+}
+.form-group {
+  label {
+    font-weight:normal;
+    &.strong {
+      font-weight:bold;
+    }
+  }
+  &.border-bottom {
+    border-bottom:1px solid #ccc;
+    margin-bottom:10px;
+    padding-bottom:10px;
+  }
+  &.form-group-half {
+    float:left;
+    width:49%;
+    margin-left:1%;
+    &:nth-child(odd) {
+      clear:both;
+      margin-left:0%;
+      margin-right:1%;
+
+    }
+  }
+  .field-description {
+    font-size:12px;
+    margin-top:3px;
+  }
+
+
+}
+
+
+.security-header {
+  border-bottom:1px solid #ccc;
+  margin-bottom:20px;
+  padding-bottom:10px;
+  .override-template {
+    margin-top:25px;
+    label {
+      font-weight:normal;
+      text-transform: uppercase;
+    }
+    .ui-switch {
+      vertical-align: middle;
+      margin-left:20px;
+      margin-bottom: 0;
+    }
+  }  
+}
