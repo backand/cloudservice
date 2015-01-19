@@ -1,6 +1,6 @@
 (function () {
 
-  function SecurityController($scope,$state,$filter,SecurityMatrixService,NotificationService, SecurityService, ColumnsService) {
+  function SecurityController($scope, $state, $filter, SecurityMatrixService, NotificationService, SecurityService, ColumnsService) {
 
     var self = this;
 
@@ -8,26 +8,36 @@
 
     (function init() {
       self.view = null;
+      self.templateChanged = templateChanged;
       $scope.$on('tabs:security', getWorkspaces);
     }());
+
+    //todo: (yariv): save the template to the server
+    function templateChanged (template) {
+      console.log('callback function, template changed: ', template);
+    }
 
     /**
      * Read the list of workspaces
      */
     function getWorkspaces() {
-      if(self.workspaces == null){
+      if (self.workspaces == null) {
         SecurityService.appName =
-        SecurityService.getWorkspace().then(WorksapceSuccessHandler, errorHandler)
+          SecurityService.getWorkspace().then(WorksapceSuccessHandler, errorHandler)
       }
     }
 
+    /**
+     *
+     * @param data
+     * @constructor
+     */
     function WorksapceSuccessHandler(data) {
       self.workspaces = data.data.data;
 
-      if(self.view == null)
+      if (self.view == null)
         ColumnsService.get().then(successHandler, errorHandler)
     }
-
 
     /**
      * extract and bind the data to the scope
@@ -38,8 +48,8 @@
       buildTemplate();
     }
 
-    $scope.$watch('security.view.permissions.securityWorkspace', function (newVal,oldValue){
-      if(newVal != null && newVal !== oldValue)
+    $scope.$watch('security.view.permissions.securityWorkspace', function (newVal, oldValue) {
+      if (newVal != null && newVal !== oldValue)
         buildTemplate();
     });
 
@@ -50,15 +60,13 @@
 
       //check if override is on - if yes read the permissions from the workspace (security group)
       //self.view.override
-      if(!self.view.permissions.overrideinheritable)
-      {
+      if (!self.view.permissions.overrideinheritable) {
         //read the permission from the workspace
         var ws = $filter('filter')(self.workspaces, function (f) {
           return f.__metadata.id == String(self.view.permissions.securityWorkspace);
         });
 
-        if(!ws)
-        {
+        if (!ws) {
           NotificationService.add('error', "Can't find security template");
           return;
         }
@@ -69,7 +77,7 @@
         permissions.allowRead = ws[0].allowRead;
 
       }
-      else{
+      else {
 
         permissions.allowCreate = self.view.permissions.allowCreate;
         permissions.allowEdit = self.view.permissions.allowEdit;
@@ -78,31 +86,35 @@
 
       }
       //if no, read the permissions from the User
-     if(self.sTemplate.length==0)
-       SecurityMatrixService.loadMatrix(self.sTemplate,permissions,errorHandler);
+      if (self.sTemplate.length == 0)
+         SecurityMatrixService.loadMatrix(permissions, errorHandler).then(function (data) {
+           self.sTemplate = data;
+        })
 
 
-    /*  self.sTemplate = [
-        {
-          title: 'Admin',
-          permissions: {
-            read: true,
-            create: false,
-            update: true,
-            delete: false
-          }
-        },
 
-        {
-          title: 'User',
-          permissions: {
-            read: true,
-            create: false,
-            update: true,
-            delete: false
-          }
-        }
-      ]*/
+
+      /*  self.sTemplate = [
+       {
+       title: 'Admin',
+       permissions: {
+       read: true,
+       create: false,
+       update: true,
+       delete: false
+       }
+       },
+
+       {
+       title: 'User',
+       permissions: {
+       read: true,
+       create: false,
+       update: true,
+       delete: false
+       }
+       }
+       ]*/
     }
 
     $scope.getPermissions = function () {
@@ -117,5 +129,5 @@
   }
 
   angular.module('app')
-    .controller('SecurityController',['$scope','$state','$filter','SecurityMatrixService','NotificationService','SecurityService','ColumnsService', SecurityController] );
+    .controller('SecurityController', ['$scope', '$state', '$filter', 'SecurityMatrixService', 'NotificationService', 'SecurityService', 'ColumnsService', SecurityController]);
 }());

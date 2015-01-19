@@ -3,18 +3,24 @@
  */
 (function () {
   'use strict';
-  function SecurityMatrixService(SecurityService) {
+  function SecurityMatrixService(SecurityService, $q) {
+
     var self = this;
     self.appName = null;
+    self.tempTemplate = [];
 
-    this.loadMatrix = function (template, permissions, errorHandler) {
+    this.loadMatrix = function (permissions) {
+
       SecurityService.appName = self.appName;
-      SecurityService.getRoles()
+
+      return SecurityService.getRoles()
         .then(function (data) {
+
           var roles = data.data.data;
+
           angular.forEach(roles, function (role) {
 
-            template.push(
+            self.tempTemplate.push(
               {
                 title: role.Name,
                 permissions: {
@@ -27,10 +33,15 @@
             )
           });
 
-          self.loadPermission(template, permissions, errorHandler);
-        }, errorHandler);
-
+          /**
+           * Populate of tem template with permissions
+           */
+          loadPermission(permissions)
+          return self.tempTemplate;
+        });
     };
+
+    //todo: (yariv) don't change array prototype
     Array.prototype.contains = function (obj) {
       var i = this.length;
       while (i--) {
@@ -41,14 +52,18 @@
       return false;
     };
 
-    this.loadPermission = function (template, permissions, errorHandler) {
+    /**
+     *
+     * @param permissions
+     */
+    function loadPermission(permissions) {
 
       var createPermission = permissions.allowCreate.split(',');
       var editPermission = permissions.allowEdit.split(',');
       var deletePermission = permissions.allowDelete.split(',');
       var readPermission = permissions.allowRead.split(',');
 
-      angular.forEach(template, function (role) {
+      angular.forEach(self.tempTemplate, function (role) {
         if (createPermission.contains(role.title)) {
           role.permissions.create = true;
         }
@@ -62,29 +77,24 @@
           role.permissions.read = true;
         }
       });
-      /*angular.forEach(createPermission, function (permission) {
-       var role = $filter('filter')(template, function (d) {
-       return d.title === permission;
-       });
-       if (role)
-       role.permissions.create = true;
-       });
-       */
-
     };
-    this.getPermission = function (template) {
+
+    self.getPermission = function (template) {
+
+      var createPermission = [];
+      var editPermission = [];
+      var deletePermission = [];
+      var readPermission = [];
+
       var permissions = {
         allowCreate: '',
         allowEdit: '',
         allowDelete: '',
         allowRead: ''
       };
-      var createPermission = [];
-      var editPermission = [];
-      var deletePermission = [];
-      var readPermission = [];
 
       angular.forEach(template, function (role) {
+
         if (role.permissions.create) {
           createPermission.push(role.title);
         }
@@ -98,14 +108,16 @@
           readPermission.push(role.title);
         }
       });
+
       permissions.allowCreate = createPermission.join(',');
       permissions.allowEdit = editPermission.join(',');
       permissions.allowDelete = deletePermission.join(',');
       permissions.allowRead = readPermission.join(',');
+
       return permissions;
     }
   }
 
   angular.module('common.services')
-    .service('SecurityMatrixService', ['SecurityService', SecurityMatrixService]);
+    .service('SecurityMatrixService', ['SecurityService', '$q', SecurityMatrixService]);
 })();
