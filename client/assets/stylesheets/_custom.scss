@@ -253,6 +253,7 @@ a.app-panel:hover {
   }
   .group-inner {
     padding:10px;
+    padding-bottom:0px;
     border:1px solid #ccc;
     margin-bottom:10px;  
     margin-top:10px;
@@ -294,4 +295,23 @@ a.app-panel:hover {
   }
 
 
+}
+
+
+.security-header {
+  border-bottom:1px solid #ccc;
+  margin-bottom:20px;
+  padding-bottom:10px;
+  .override-template {
+    margin-top:25px;
+    label {
+      font-weight:normal;
+      text-transform: uppercase;
+    }
+    .ui-switch {
+      vertical-align: middle;
+      margin-left:20px;
+      margin-bottom: 0;
+    }
+  }  
 }

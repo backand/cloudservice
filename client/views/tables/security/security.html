@@ -1,18 +1,22 @@
 <div ng-controller="SecurityController as security">
 
-  <div class="row">
+  <div class="row security-header">
     <div class="col-lg-2">
+    <label class="strong" for="">Security Template</label>
       <select class="form-control"
               ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
               ng-model="security.view.permissions.securityWorkspace"
               ng-disabled="security.override">
       </select>
     </div>
-
-    <label>
-      <input type="checkbox" ng-model="security.override"/>
-      override
-    </label>
+    <div class="col-lg-2">
+      
+      <div class="override-template"><label> override</label>
+      <label for="" class="ui-switch ui-switch-success ui-switch-sm"><input type="checkbox" ng-model="security.override"/><i></i></label>
+    </div>
+    </div>
+    
+     
 
   </div>
   <security-matrix template="security.sTemplate" override="security.override"></security-matrix>
