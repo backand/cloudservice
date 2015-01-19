@@ -26,7 +26,7 @@
       </select>
     </div>
 
-    <pre>{{ rule | json}}</pre>
+
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.dataAction">
 
@@ -228,5 +228,6 @@
 
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="closeModal(rule)" ng-bind="modal.okButtonText"></button>
+  <button class="btn btn-danger" ng-click="delete(rule)" ng-bind="modal.deleteButtonText"></button>
   <button class="btn btn-default" ng-click="cancel()" ng-bind="modal.cancelButtonText"></button>
 </div>

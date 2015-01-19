@@ -27,6 +27,7 @@
       title: 'Application Rule',
       okButtonText: 'Save',
       cancelButtonText: 'Cancel',
+      deleteButtonText: 'Delete',
       dataActions: [{value: 'BeforeCreate', label: 'Create - Before adding data', level1: 0, level2: 0},
         {
           value: 'AfterCreateBeforeCommit',
@@ -162,6 +163,16 @@
       };
 
       /**
+       * delete the provided rule
+       * @param rule
+       */
+      $scope.delete = function (rule) {
+        console.log('delete rule', rule);
+        RulesService.remove(rule).then(getRules);
+        modalInstance.close();
+      }
+
+      /**
        * choose the close method depend on
        * modal mode
        *
@@ -175,6 +186,7 @@
           case 'update':
             updateRule(rule);
             break;
+
         }
       };
 
