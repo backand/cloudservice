@@ -31,6 +31,20 @@
         SecurityService.getWorkspace().then(WorksapceSuccessHandler, errorHandler);
       }
     }
+    $scope.addWorkspace = function(){
+      self.workspaces.push(
+        {
+
+          allowCreate: "Developer,Admin,User",
+          allowDelete: "Developer,Admin,User",
+          allowEdit: "Developer,Admin,User",
+          allowRead: "Developer,Admin,User,ReadOnly",
+          overridepermissions: true,
+          workspaceName: "New Workspace"
+        }
+      )
+
+    }
     $scope.active = function() {
       return $scope.tabs.filter(function(pane){
         return pane.active;

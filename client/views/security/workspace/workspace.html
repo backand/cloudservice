@@ -6,21 +6,32 @@
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body" >
-      <button class="btn btn-info" ng-click="savews()">S</button>
+      <!--<button class="btn btn-info" ng-click="savews()">S</button>-->
      <div  class="ui-tab-container ui-tab-vertical"
-      style="height:500px; overflow:auto">
+      style="height:350px; overflow:auto">
       <tabset class="ui-tab workspace">
-        <tab ng-repeat="workspace in workspaces.workspaces" id="{{+workspace.__metadata.id}}"
-             heading="{{ workspace.workspaceName }}" >
+        <tab ng-repeat="workspace in workspaces.workspaces" id="{{workspace.__metadata.id}}">
+
+          <tab-heading>{{ workspace.workspaceName }}
+            <span class="right">
+            <a ng-if="workspace.workspaceName!='Admin'" ng-click="removeWorkspace(workspace.__metadata.id)" href="" class="ng-scope"><i class="ti-trash"></i></a>
+            </span>
+          </tab-heading>
 
             <security-matrix template="workspace.template" override="workspace.overridepermissions"></security-matrix>
 
 
         </tab>
+        <tab>
+          <tab-heading> <button class="btn btn-primary ng-scope"  ng-click="addWorkspace()">+ Add Workspace</button></tab-heading>
+
+       </tab>
       </tabset>
 
 
     </div>
+      <br>
+
 
 
 
