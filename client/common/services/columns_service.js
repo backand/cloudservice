@@ -64,12 +64,18 @@
       });
     };
 
+    //Keep hash with the objects to save.
+    //Run interval every x seconds to save the objects that are in the cache.
+    //After save remove from hash
+
+    self.hashCommit = {};
+
     this.update = function (table) {
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/1/table/config/' + self.tableName,
         headers: { AppName: self.appName },
-        data: self._tableConfig
+        data: table
       });
     };
 

@@ -28,7 +28,6 @@
     };
 
     function switchTab (tab) {
-      debugger;
       $scope.$broadcast('tabs:' + tab);
     }
 

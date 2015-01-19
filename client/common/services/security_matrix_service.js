@@ -7,10 +7,10 @@
 
     var self = this;
     self.appName = null;
-    self.tempTemplate = [];
 
     this.loadMatrix = function (permissions) {
 
+      self.tempTemplate = [];
       SecurityService.appName = self.appName;
 
       return SecurityService.getRoles()
