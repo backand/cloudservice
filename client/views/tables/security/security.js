@@ -46,12 +46,16 @@
      */
     function successHandler(data) {
       self.view = data;
+      self.currentST = String(self.view.permissions.securityWorkspace);
       buildTemplate();
     }
 
-    $scope.$watch('security.view.permissions.securityWorkspace', function (newVal, oldValue) {
+    $scope.$watch('security.currentST', function (newVal, oldValue) {
       if (newVal != null && oldValue != null && newVal !== oldValue)
+      {
+        self.view.permissions.securityWorkspace = Number(self.currentST);
         buildTemplate();
+      }
     });
 
     function buildTemplate() {
@@ -80,10 +84,10 @@
       }
       else {
 
-        permissions.allowCreate = self.view.permissions.allowCreate;
-        permissions.allowEdit = self.view.permissions.allowEdit;
-        permissions.allowDelete = self.view.permissions.allowDelete;
-        permissions.allowRead = self.view.permissions.allowRead;
+        permissions.allowCreate = self.view.permissions.allowCreateRoles;
+        permissions.allowEdit = self.view.permissions.allowEditRoles;
+        permissions.allowDelete = self.view.permissions.allowDeleteRoles;
+        permissions.allowRead = self.view.permissions.allowReadRoles;
 
       }
       //if no, read the permissions from the User

@@ -2,27 +2,26 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> Security templates </strong>
-
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
-    <div class="panel-body" >
-      <button class="btn btn-info" ng-click="savews()">S</button>
-     <div  class="ui-tab-container ui-tab-vertical"
-      style="height:500px; overflow:auto">
-      <tabset class="ui-tab workspace">
-        <tab ng-repeat="workspace in workspaces.workspaces" id="{{+workspace.__metadata.id}}"
-             heading="{{ workspace.workspaceName }}" >
-
-            <security-matrix security-template="workspace.template" override="workspace.overridepermissions"></security-matrix>
-
-        </tab>
-      </tabset>
-
-
-    </div>
-
-
-
+    <div class="panel-body">
+      <div class="ui-tab-container ui-tab-vertical"
+           style="height:500px; overflow:auto">
+        <tabset class="ui-tab workspace">
+          <tab ng-repeat="workspace in securityws.workspaces"
+               heading="{{ workspace.workspaceName }}">
+            <div class="form-group">
+              <label for="wsName">Security Template Name</label>
+              <input type="text" class="form-control" id="wsName"
+                     ng-model="workspace.workspaceName">
+            </div>
+            <br/>
+            <security-matrix security-template="workspace.template"
+                             override="workspace.overridepermissions"
+                             on-update="securityws.templateChanged(workspace.template,workspace.__metadata.id)"></security-matrix>
+          </tab>
+        </tabset>
+      </div>
     </div>
   </section>
 </section>

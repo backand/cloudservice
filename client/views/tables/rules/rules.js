@@ -159,7 +159,7 @@
         'viewTable': RulesService.tableId,
         'additionalView': "",
         'databaseViewName': "",
-        'useSqlParser': false
+        'useSqlParser': true
       };
 
       /**

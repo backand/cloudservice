@@ -7,20 +7,21 @@
 
     var self = this;
     self.appName = null;
+    var _tempTemplate;
 
-    this.loadMatrix = function (permissions) {
+    self.loadMatrix = function (permissions) {
 
-      self.tempTemplate = [];
       SecurityService.appName = self.appName;
 
       return SecurityService.getRoles()
         .then(function (data) {
 
           var roles = data.data.data;
+          _tempTemplate = [];
 
           angular.forEach(roles, function (role) {
 
-            self.tempTemplate.push(
+            _tempTemplate.push(
               {
                 title: role.Name,
                 permissions: {
@@ -37,7 +38,7 @@
            * Populate of tem template with permissions
            */
           loadPermission(permissions)
-          return self.tempTemplate;
+          return _tempTemplate;
         });
     };
 
@@ -58,22 +59,23 @@
      */
     function loadPermission(permissions) {
 
+      var EVERYONE = 'everyone';
       var createPermission = permissions.allowCreate.split(',');
       var editPermission = permissions.allowEdit.split(',');
       var deletePermission = permissions.allowDelete.split(',');
       var readPermission = permissions.allowRead.split(',');
 
-      angular.forEach(self.tempTemplate, function (role) {
-        if (createPermission.contains(role.title)) {
+      angular.forEach(_tempTemplate, function (role) {
+        if (createPermission.contains(role.title) || createPermission.contains(EVERYONE)) {
           role.permissions.create = true;
         }
-        if (editPermission.contains(role.title)) {
+        if (editPermission.contains(role.title) || editPermission.contains(EVERYONE)) {
           role.permissions.update = true;
         }
-        if (deletePermission.contains(role.title)) {
+        if (deletePermission.contains(role.title) || deletePermission.contains(EVERYONE)) {
           role.permissions.delete = true;
         }
-        if (readPermission.contains(role.title)) {
+        if (readPermission.contains(role.title) || readPermission.contains(EVERYONE)) {
           role.permissions.read = true;
         }
       });

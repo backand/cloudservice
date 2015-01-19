@@ -11,9 +11,9 @@
         controller: 'SecurityUsers as users',
         templateUrl: 'views/security/user/users.html'
       })
-      .state('security.workspace', {
-        url: '/workspaces/:name',
-        controller: 'SecurityWorkspace as workspaces',
+      .state('security.templates', {
+        url: '/templates/:name',
+        controller: 'SecurityWorkspace as securityws',
         templateUrl: 'views/security/workspace/workspace.html'
       })
       .state('security.auth', {

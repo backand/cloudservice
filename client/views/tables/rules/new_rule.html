@@ -19,7 +19,7 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-if="rule.name">
       <label>Event Trigger</label>
       <select class="form-control"
-              ng-options="dataAction.value as dataAction.value for dataAction in modal.dataActions track by dataAction.value"
+              ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
               ng-model="rule.dataAction"
               ng-model-options="{debounce:{default:400}}">
         <option value="">Select trigger...</option>
@@ -33,7 +33,7 @@
       <label>Where condition</label>
 
       <div class="pull-right">
-        <span class="glyphicon glyphicon-edit" ng-click="modal.toggleOptions()"></span>
+        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.toggleOptions()"></span>
       </div>
 
 <div ng-if="flag">
@@ -43,8 +43,8 @@
                      grouping="w"
                      style="left: 550px; top: -50px;">
         <div ng-include="'views/tables/rules/dictionary_window.html'"></div>
-</div>
       </angled-window>
+</div>
 
       <textarea id="whereCondition"
                 class="form-control"
@@ -59,7 +59,7 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition">
       <label>Action</label>
       <select class="form-control"
-              ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions track by workflowAction.value"
+              ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
               ng-model="rule.workflowAction">
         <option value="">Select action...</option>
       </select>
@@ -228,6 +228,6 @@
 
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="closeModal(rule)" ng-bind="modal.okButtonText"></button>
-  <button class="btn btn-danger" ng-click="delete(rule)" ng-bind="modal.deleteButtonText"></button>
+  <button class="btn btn-danger pull-left" ng-click="delete(rule)" ng-bind="modal.deleteButtonText" ng-if="modal.mode == 'update'"></button>
   <button class="btn btn-default" ng-click="cancel()" ng-bind="modal.cancelButtonText"></button>
 </div>
