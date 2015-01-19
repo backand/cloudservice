@@ -13,7 +13,7 @@
         <tab ng-repeat="workspace in workspaces.workspaces" id="{{+workspace.__metadata.id}}"
              heading="{{ workspace.workspaceName }}" >
 
-            <security-matrix template="workspace.template" override="workspace.overridepermissions"></security-matrix>
+            <security-matrix security-template="workspace.template" override="workspace.overridepermissions"></security-matrix>
 
         </tab>
       </tabset>

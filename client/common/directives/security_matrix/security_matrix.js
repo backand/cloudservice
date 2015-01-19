@@ -10,7 +10,8 @@
       restrict: 'E',
       scope: {
         securityTemplate: '=',
-        override: '='
+        override: '=',
+        onUpdate: '&'
       },
       templateUrl: 'common/directives/security_matrix/security_matrix.html',
 
@@ -21,9 +22,7 @@
          */
         scope.$watch('securityTemplate', function (template) {
           $log.debug('template have been changed: ', template)
-
-          // instead of broadcast, you can update a service
-          $rootScope.$broadcast('changed:securityTemplate', template);
+          scope.onUpdate({template: template});
         }, true)
 
 

@@ -8,8 +8,14 @@
 
     (function init() {
       self.view = null;
+      self.templateChanged = templateChanged;
       $scope.$on('tabs:security', getWorkspaces);
     }());
+
+    //todo: (yariv): save the template to the server
+    function templateChanged (template) {
+      console.log('callback function, template changed: ', template);
+    }
 
     /**
      * Read the list of workspaces
