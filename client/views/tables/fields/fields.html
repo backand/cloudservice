@@ -7,38 +7,51 @@
          heading="{{ field.name }}">
       <form role="form"  >
 
-        <div class="form-group center-block">
-          <label class="col-lg-2 col-lg-offset-3" for="excluded">Ignore this field</label>
-          <label class="ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.advancedLayout.delete" checked=""><i></i></label>
+        
+        <div class="form-group border-bottom">
+        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.advancedLayout.delete" checked=""><i></i></label>
+          <label class="strong" for="excluded">Ignore this field</label>
+          <div class="field-description">Short description about this field</div>
+          
         </div>
-        <div class="form-group" >
-          <label for="jsonName">Name</label>
-          <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" id="jsonName"
-                 ng-model="field.name">
-        </div>
-        <div class="form-group">
-          <label for="dbName">Database Name</label>
-          <input    type="text" class="form-control" disabled id="dbName"
-                  ng-model="field.databaseName">
-        </div>
-        <div class="form-group">
-          <label for="DatabaseType">Database Type</label>
-          <input  type="text" class="form-control" disabled id="DatabaseType"
-                  ng-model="field.type">
-        </div>
-        <div class="form-group">
-          <label  for="Required">Required</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.advancedLayout.delete"  id="Required" type="checkbox" ng-model="field.advancedLayout.required" checked=""><i></i></label>
-        </div>
-        <div class="form-group">
-          <label for="DefaultValue">Default Value</label>
-          <input  ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="DefaultValue"
-                  ng-model="field.advancedLayout.defaultValue">
-        </div>
-        <div class="form-group">
-          <label  for="Searchable">Searchable</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.advancedLayout.delete" id="Searchable" type="checkbox" ng-model="field.design.hideFilter" checked=""><i></i></label>
-        </div>
+        
+        <div class="field-group">
+          <h4 class="group-label">General Info</h4>
+          <div class="group-inner">
+             <div class="form-group form-group-half" >
+                    <label for="jsonName">Name</label>
+                    <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" id="jsonName"
+                           ng-model="field.name">
+                           <div class="field-description">Description text here</div>
+                  </div>
+                  <div class="form-group form-group-half">
+                    <label for="DefaultValue">Default Value</label>
+                    <input  ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="DefaultValue"
+                            ng-model="field.advancedLayout.defaultValue">
+                  </div>
+                  <div class="form-group  form-group-half">
+                    <label for="dbName">Database Name</label>
+                    <input    type="text" class="form-control" disabled id="dbName"
+                            ng-model="field.databaseName">
+                  </div>
+                  <div class="form-group form-group-half">
+                    <label for="DatabaseType">Database Type</label>
+                    <input  type="text" class="form-control" disabled id="DatabaseType"
+                            ng-model="field.type">
+                  </div>
+                  <div class="form-group form-group-half">
+                    <label  for="Required">Required</label>
+                    <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.advancedLayout.delete"  id="Required" type="checkbox" ng-model="field.advancedLayout.required" checked=""><i></i></label>
+                  </div>
+                  
+                  <div class="form-group form-group-half">
+                    <label  for="Searchable">Searchable</label>
+                    <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  ng-disabled="field.advancedLayout.delete" id="Searchable" type="checkbox" ng-model="field.design.hideFilter" checked=""><i></i></label>
+                  </div>
+          </div><!--group inner-->
+          
+        </div><!--field-group-->
+        
 <!--        <div class="form-group">
           <label c for="Audit">Audit</label>
           <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="Audit" type="checkbox"  ng-model="field.required" checked=""><i></i></label>
