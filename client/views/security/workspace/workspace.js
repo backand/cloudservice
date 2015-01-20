@@ -71,7 +71,7 @@
       };
 
       self.defaultWorkspaceName = newWorkspaceName;
-      SecurityService.postWorkspace(newWS).then(getWorkspaces);
+      SecurityService.postWorkspace(newWS).then(getWorkspaces,errorHandler);
 
     };
 
@@ -127,6 +127,7 @@
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
+      self.processingNewWS=false;
     }
   }
 
