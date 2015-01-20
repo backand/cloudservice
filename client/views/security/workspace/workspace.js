@@ -14,15 +14,17 @@
       self.appName = SecurityMatrixService.appName = SecurityService.appName = $stateParams.name;
       self.workspaces = null;
       self.templateChanged = templateChanged;
-
+      self.processingNewWS = false;
       self.defaultWorkspaceName = 'Public';
       getWorkspaces();
     }());
 
-    self.changeName = function(newName,wsId) {
-        SecurityService.updateWorkspace(
-          {__metadata: {id: wsId},
-            workspaceName: newName}
+    self.changeName = function (newName, wsId) {
+      SecurityService.updateWorkspace(
+        {
+          __metadata: {id: wsId},
+          workspaceName: newName
+        }
       )
     };
 
@@ -41,7 +43,7 @@
         workspace.allowDelete = permissions.allowDelete;
         workspace.allowRead = permissions.allowRead;
 
-          SecurityService.updateWorkspace(workspace);
+        SecurityService.updateWorkspace(workspace);
       }
     }
 
@@ -56,6 +58,7 @@
      *
      */
     self.addWorkspace = function () {
+      self.processingNewWS =true;
       var newWorkspaceName = getNewWorkspaceName();
       var newWS = {
 
@@ -80,7 +83,7 @@
      */
     function WorkspaceSuccessHandler(data) {
       self.workspaces = data.data.data;
-      loading =true;
+      loading = true;
       angular.forEach(self.workspaces, function (workspace) {
         var permissions = {};
         permissions.allowCreate = workspace.allowCreate;
@@ -92,8 +95,8 @@
           workspace.template = data;
         });
       });
-      /*self.defaultWorkspaceName = self.workspaces[0].workspaceName;*/
-      return data;
+      self.processingNewWS=false;
+
     }
 
     function getNewWorkspaceName() {

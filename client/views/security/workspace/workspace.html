@@ -5,7 +5,7 @@
     <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
-      <button class="btn btn-primary ng-scope"  ng-click="securityws.addWorkspace()">+ Add Security Group</button>
+      <button class="btn btn-primary ng-scope ladda-button" ladda="securityws.processingNewWS" data-style="expand-right"  ng-click="securityws.addWorkspace()">+ Add Security Group</button>
       <div class="ui-tab-container ui-tab-vertical"
            style="height:500px; overflow:auto">
         <tabset class="ui-tab workspace">
