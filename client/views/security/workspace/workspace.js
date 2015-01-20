@@ -19,6 +19,12 @@
       getWorkspaces();
     }());
 
+    self.changeName = function(newName,wsId) {
+        SecurityService.updateWorkspace(
+          {__metadata: {id: wsId},
+            workspaceName: newName}
+      )
+    };
 
     function templateChanged(template, wsId) {
       if (template) {
@@ -64,7 +70,7 @@
       self.defaultWorkspaceName = newWorkspaceName;
       SecurityService.postWorkspace(newWS).then(getWorkspaces);
 
-    }
+    };
 
     /**
      *

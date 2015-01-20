@@ -14,7 +14,7 @@
             <div class="form-group">
               <label for="wsName">Security Template Name</label>
               <input type="text" class="form-control" id="wsName"
-                     ng-model="workspace.workspaceName">
+                     ng-model="workspace.workspaceName" ng-change="securityws.changeName(workspace.workspaceName,workspace.__metadata.id)">
             </div>
             <br/>
             <security-matrix security-template="workspace.template"
