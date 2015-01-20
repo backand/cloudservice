@@ -7,20 +7,21 @@
 
     var self = this;
     self.appName = null;
+    var _tempTemplate;
 
-    this.loadMatrix = function (permissions) {
+    self.loadMatrix = function (permissions) {
 
-      self.tempTemplate = [];
       SecurityService.appName = self.appName;
 
       return SecurityService.getRoles()
         .then(function (data) {
 
           var roles = data.data.data;
+          _tempTemplate = [];
 
           angular.forEach(roles, function (role) {
 
-            self.tempTemplate.push(
+            _tempTemplate.push(
               {
                 title: role.Name,
                 permissions: {
@@ -37,7 +38,7 @@
            * Populate of tem template with permissions
            */
           loadPermission(permissions)
-          return self.tempTemplate;
+          return _tempTemplate;
         });
     };
 
@@ -58,6 +59,7 @@
      */
     function loadPermission(permissions) {
 
+      var EVERYONE = 'everyone';
       var createPermission = permissions.allowCreate.split(',');
       var editPermission = permissions.allowEdit.split(',');
       var deletePermission = permissions.allowDelete.split(',');

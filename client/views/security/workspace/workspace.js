@@ -3,24 +3,25 @@
  */
 (function () {
 
-  function SecurityWorkspace($modal, $stateParams, SecurityService, ColumnsService, SecurityMatrixService, NotificationService, $scope) {
+  function SecurityWorkspace($stateParams, SecurityService, SecurityMatrixService, NotificationService, $scope) {
 
     var self = this;
-    self.appName = SecurityMatrixService.appName = SecurityService.appName = $stateParams.name;
+    /**
+     * Init the workspaces = security templates page
+     */
+    (function init() {
+      self.appName = SecurityMatrixService.appName = SecurityService.appName = $stateParams.name;
+      self.workspaces = null;
+      self.templateChanged = templateChanged;
+      getWorkspaces();
+    }());
 
-    self.workspaces = null;
-    getWorkspaces();
-    $scope.savews = function () {
-      var role = $('div.workspace ul li.active').attr('id');
-      var wsName = $('div.workspace ul li.active').attr('heading');
-      var ws = {
-        __metadata: {id: String(role)},
-        workspaceName: wsName
+    //todo: (yariv): save the template to the server
+    function templateChanged (template,wsId) {
+      if(template){
+        console.log('callback function, template changed: ', template);
+        //var p = SecurityMatrixService.getPermission(template);
       }
-
-      var permissions = SecurityMatrixService.getPermission(self.workspaces[2].template);
-      ws = angular.extend(ws, permissions);
-      SecurityService.updateWorkspace(ws);
     }
 
     /**
@@ -31,6 +32,7 @@
         SecurityService.getWorkspace().then(WorksapceSuccessHandler, errorHandler);
       }
     }
+
 
     $scope.addWorkspace = function () {
       var newWS ={
@@ -50,18 +52,16 @@
     function WorksapceSuccessHandler(data) {
       self.workspaces = data.data.data;
       angular.forEach(self.workspaces, function (workspace) {
-        workspace.template = [];
-        SecurityMatrixService.loadMatrix(workspace).then(function (data) {
+        var permissions = {};
+        permissions.allowCreate = workspace.allowCreate;
+        permissions.allowEdit = workspace.allowEdit;
+        permissions.allowDelete =workspace.allowDelete;
+        permissions.allowRead = workspace.allowRead;
+        SecurityMatrixService.loadMatrix(permissions).then(function (data){
           workspace.template = data;
-        });
+        })
       });
     }
-
-    $scope.$watch('workspaces.workspaces', function (newVal, oldValue) {
-      if (newVal != null && newVal !== oldValue)
-        var a = 1;
-    }, true);
-
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
@@ -70,10 +70,8 @@
 
   angular.module('app')
     .controller('SecurityWorkspace', [
-      '$modal',
       '$stateParams',
       'SecurityService',
-      'ColumnsService',
       'SecurityMatrixService',
       'NotificationService',
       '$scope',
