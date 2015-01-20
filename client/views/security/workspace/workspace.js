@@ -3,9 +3,10 @@
  */
 (function () {
 
-  function SecurityWorkspace($stateParams, SecurityService, SecurityMatrixService, NotificationService, $scope) {
+  function SecurityWorkspace($stateParams, SecurityService, SecurityMatrixService, NotificationService, $filter, $scope) {
 
     var self = this;
+
     /**
      * Init the workspaces = security templates page
      */
@@ -13,14 +14,28 @@
       self.appName = SecurityMatrixService.appName = SecurityService.appName = $stateParams.name;
       self.workspaces = null;
       self.templateChanged = templateChanged;
+
+      self.defaultWorkspaceName = 'Public';
       getWorkspaces();
     }());
 
-    //todo: (yariv): save the template to the server
-    function templateChanged (template,wsId) {
-      if(template){
-        console.log('callback function, template changed: ', template);
-        //var p = SecurityMatrixService.getPermission(template);
+
+    function templateChanged(template, wsId) {
+      if (template) {
+
+        //console.log('callback function, template changed: ', template);
+        var permissions = SecurityMatrixService.getPermission(template);
+
+        var workspace = $filter('filter')(self.workspaces, function (w) {
+          return w.__metadata.id === wsId;
+        })[0];
+
+        workspace.allowCreate = permissions.allowCreate;
+        workspace.allowEdit = permissions.allowEdit;
+        workspace.allowDelete = permissions.allowDelete;
+        workspace.allowRead = permissions.allowRead;
+
+          SecurityService.updateWorkspace(workspace);
       }
     }
 
@@ -28,39 +43,77 @@
      * Read the list of workspaces
      */
     function getWorkspaces() {
-      if (self.workspaces == null) {
-        SecurityService.getWorkspace().then(WorksapceSuccessHandler, errorHandler);
-      }
+      SecurityService.getWorkspace().then(WorkspaceSuccessHandler, errorHandler);
     }
 
+    /**
+     *
+     */
+    self.addWorkspace = function () {
+      var newWorkspaceName = getNewWorkspaceName();
+      var newWS = {
 
-    $scope.addWorkspace = function () {
-      var newWS ={
-
-        allowCreate: "Developer,Admin,User",
-          allowDelete: "Developer,Admin,User",
-        allowEdit: "Developer,Admin,User",
-        allowRead: "Developer,Admin,User,ReadOnly",
+        allowCreate: "Developer,Admin",
+        allowDelete: "Developer,Admin",
+        allowEdit: "Developer,Admin",
+        allowRead: "Developer,Admin",
         overridepermissions: true,
-        workspaceName: "New Workspace"
+        workspaceName: newWorkspaceName
       };
-      self.workspaces.push( newWS  );
-      SecurityService.postWorkspace(newWS);
+
+      self.defaultWorkspaceName = newWorkspaceName;
+      SecurityService.postWorkspace(newWS).then(getWorkspaces);
+
     }
 
-
-    function WorksapceSuccessHandler(data) {
+    /**
+     *
+     * @param data
+     * @returns {*}
+     * @constructor
+     */
+    function WorkspaceSuccessHandler(data) {
       self.workspaces = data.data.data;
+      loading =true;
       angular.forEach(self.workspaces, function (workspace) {
         var permissions = {};
         permissions.allowCreate = workspace.allowCreate;
         permissions.allowEdit = workspace.allowEdit;
-        permissions.allowDelete =workspace.allowDelete;
+        permissions.allowDelete = workspace.allowDelete;
         permissions.allowRead = workspace.allowRead;
-        SecurityMatrixService.loadMatrix(permissions).then(function (data){
+        workspace.tabActive = (workspace.workspaceName == self.defaultWorkspaceName);
+        SecurityMatrixService.loadMatrix(permissions).then(function (data) {
           workspace.template = data;
-        })
+        });
       });
+      /*self.defaultWorkspaceName = self.workspaces[0].workspaceName;*/
+      return data;
+    }
+
+    function getNewWorkspaceName() {
+      var notFound = true;
+      var exits = false;
+      var counter = 0;
+      var newWorkspaceName = "Security Template";
+
+      if (self.workspaces && self.workspaces.length) {
+        while (notFound) {
+          exits = false;
+          angular.forEach(self.workspaces, function (workspace) {
+            if (workspace.workspaceName == newWorkspaceName + (counter == 0 ? "" : " " + String(counter))) {
+              exits = true;
+            }
+          });
+          if (exits) {
+
+            counter++;
+          }
+          else {
+            notFound = false;
+          }
+        }
+      }
+      return newWorkspaceName + (counter == 0 ? "" : " " + String(counter));
     }
 
     function errorHandler(error, message) {
@@ -74,6 +127,7 @@
       'SecurityService',
       'SecurityMatrixService',
       'NotificationService',
+      '$filter',
       '$scope',
       SecurityWorkspace
     ]);

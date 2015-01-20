@@ -20,10 +20,13 @@
         /**
          * register a watcher on the template object
          */
-        scope.$watch('securityTemplate', function (template) {
-          $log.debug('template have been changed: ', template)
-          scope.onUpdate({template: template});
-        }, true)
+        scope.$watch('securityTemplate', function (template, oldTemplate) {
+          //$log.debug('template have been changed: ', template)
+          if(template != null && oldTemplate != null && template != oldTemplate)
+          {
+            scope.onUpdate({template: template});
+          }
+        }, true);
 
 
         /**
