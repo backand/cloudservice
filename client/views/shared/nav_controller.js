@@ -8,28 +8,26 @@
     var self = this;
     var stop;
 
-    this.appName = $state.params.name;
-    $log.debug("NavCtrl", this.appName);
-    this.app = null;
+    (function init() {
+      self.appName = $state.params.name;
+      self.app = null;
+      $scope.$on('tables.update', loadApp);
+    }());
 
-    this.goTo = function(state) {
+    self.goTo = function(state) {
       if (this.app.DatabaseStatus === 1) {
         $state.go(state, {name: this.appName});
       }
     };
 
     function loadApp() {
-
       if (typeof self.appName === 'undefined') {
         return
       }
-
       AppsService.getCurrentApp(self.appName)
-        .then(function(data) {
+        .then(function (data) {
           self.app = data;
-
           var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
-
           checkChanges(oldStatus);
         });
     }
@@ -47,7 +45,7 @@
       }
     });
 
-    this.getDBStatus = function() {
+    self.getDBStatus = function() {
       if (self.app === null) {
         return 'unknown';
       }
@@ -62,7 +60,8 @@
           return 'error';
       }
     };
-    this.goToLocation = function(href) {
+
+    self.goToLocation = function(href) {
         if (this.app.DatabaseStatus === 1) {
             window.open(href, '_blank');
         }
@@ -102,18 +101,18 @@
 
     self.tables = [];
 
-      this.fetchTables = function() {
-          TablesService.get($state.params.name).then(
-              function(data) {
-                  self.tables = data.data.data;
-              },
-              function(data) {
-                  $log.debug("TablesService failure", data);
-              }
-          );
-      };
+    self.fetchTables = function () {
+      TablesService.get($state.params.name).then(
+        function (data) {
+          self.tables = data.data.data;
+        },
+        function (data) {
+          $log.debug("TablesService failure", data);
+        }
+      );
+    };
 
-    this.showTable = function(table) {
+    self.showTable = function(table) {
       $state.go('tables.columns', {
         name: $state.params.name,
         tableName: table.name,

@@ -52,7 +52,7 @@
         var permissions = {};
         permissions.allowCreate = workspace.allowCreate;
         permissions.allowEdit = workspace.allowEdit;
-        permissions.allowDelete =workspace.allowDelete;
+        permissions.allowDelete = workspace.allowDelete;
         permissions.allowRead = workspace.allowRead;
         SecurityMatrixService.loadMatrix(permissions).then(function (data){
           workspace.template = data;

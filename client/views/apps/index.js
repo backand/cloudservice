@@ -56,7 +56,7 @@
       }
     }
 
-    stop =   $interval(function() {
+    stop = $interval(function() {
       AppsService.all()
         .then(function(apps){
           self.apps = apps.data.data;

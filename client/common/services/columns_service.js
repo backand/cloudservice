@@ -17,7 +17,7 @@
         });
     };
 
-    this.get = function (force) {
+    this.get = function () {
       var deferred = $q.defer();
       if (self._tableConfig == null || self._preTableName == null || self._preTableName != self.tableName) {
         self._get()

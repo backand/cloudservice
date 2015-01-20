@@ -99,8 +99,8 @@
     self.delete = function () {
       var item = $scope.gridApi.selection.getSelectedRows();
 
-      if (!item) {
-        NotificationService.add('error', 'no user was selected, please select a row');
+      if (!item || item.length == 0) {
+        NotificationService.add('error', 'No user was selected, please select a row');
         return;
       }
 
