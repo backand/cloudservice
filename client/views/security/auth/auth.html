@@ -5,7 +5,7 @@
 
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
-    <div class="panel-body" >
+    <div class="panel-body"  >
       <br>
 
       <div class="form-group">
@@ -17,11 +17,11 @@
       </div>
       <div class="row">
         <div class="form-group col-md-4">
-          <label>Anonymous users assigned roles:</label>
+          <label for="AnonymousUserRole">Anonymous users assigned roles:</label>
 
           <select class="form-control"
                   ng-options="role.Name for role in auth.roles track by role.Name"
-
+                  id="AnonymousUserRole"
                   ng-model="auth.durados_User_Role"
                   ng-model-options="{debounce:{default:400}}"
                   required>
@@ -36,19 +36,19 @@
       <div class="form-group">
         <label for="allowAnonymousPrivate">Private App -Only invited users can access. Set Private App to Off will Allow any user to register the app.</label>
         <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-          <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.allowAnonymous" checked=""><i></i>
+          <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.settings.privateApp" checked=""><i></i>
         </label>
       </div>
 
 
       <div class="row">
         <div class="form-group col-md-4">
-          <label>Anonymous users assigned roles:</label>
+          <label for="PrivateAppRole">Anonymous users assigned roles:</label>
 
           <select class="form-control"
                   ng-options="role.Name for role in auth.roles track by role.Name"
-
-                  ng-model="auth.durados_User_Role"
+                  id="PrivateAppRole"
+                  ng-model="auth.settings.anonymousRole"
                   ng-model-options="{debounce:{default:400}}"
                   required>
 
@@ -80,6 +80,6 @@
     <br>
 
 
-    </div>
+
   </section>
 </section>
