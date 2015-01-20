@@ -26,14 +26,6 @@
         <i class="icon-dashboard-icon"></i>
         <span>Dashboard</span>
       </a>
-      <ul>
-        <li>
-          <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goTo('apps.edit')" href="">
-            <i class="ti-settings"></i>
-            <span>App Settings</span>
-          </a>
-        </li>
-      </ul>
     </li>
 
     <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
@@ -54,19 +46,25 @@
       </ul>
     </li>
 
-    <li ng-class="{active: nav.state == 'playground.show'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.show')" href="">
-        <i class="icon-rest-api-icon"></i>
-        <span>REST API Playground</span>
-      </a>
-    </li>
     <li ng-class="{active: nav.state == 'playground.orm'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.orm')" href="">
-          <i class="icon-orm-icon"></i>
-          <span>ORM Playground</span>
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}" href="">
+          <i class="icon-rest-api-icon"></i>
+          <span>Playground</span>
           <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
         <ul>
+            <li ng-class="{active: nav.state == 'playground.show'}">
+              <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.show')" href="">
+                <i class="icon-rest-api-icon"></i>
+                <span>REST API Playground</span>
+              </a>
+            </li>
+            <li ng-class="{active: nav.state == 'playground.orm'}">
+              <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.orm')" href="">
+                <i class="icon-orm-icon"></i>
+                <span>ORM Playground</span>
+              </a>
+            </li>
             <li ng-class="{active: nav.state == 'playground.orm-usage'}">
                 <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.orm-usage')" href="">
                     <i class="ti-shortcode"></i>
@@ -82,42 +80,13 @@
         </ul>
     </li>
 
-    <li ng-class="{active: nav.state == 'backoffice.edit'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.edit')" href="">
-        <i class="icon-backoffice-icon"></i>
-        <span>Back Office</span>
-        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
-      </a>
-        <ul>
 
-            <li ng-class="{active: nav.state == 'backoffice.edit'}">
-                <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goToLocation('http://' + nav.appName + '.backand.net')" href="">
-                    <i class="ti-new-window"></i>
-                    <span>Hosted Back Office</span>
-                </a>
-            </li>
-
-            <li ng-class="{active: nav.state == 'backoffice.cust'}">
-                <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.cust')" href="">
-                    <i class="ti-github"></i>
-                    <span>Customization</span>
-                </a>
-            </li>
-
-            <li ng-class="{active: nav.state == 'backoffice.code'}">
-                <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.code')" href="">
-                    <i class="ti-shortcode"></i>
-                    <span>Code Example</span>
-                </a>
-            </li>
-
-        </ul>
-    </li>
 
     <li ng-class="{active: nav.state == 'tables.show'}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.fetchTables()" href="">
         <i class="ti-view-grid"></i>
         <span>Database Tables</span>
+        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
       <ul class="tables-list">
         <li ng-class="{active: false }" ng-repeat="table in nav.tables">
@@ -133,9 +102,16 @@
     <li ng-class="{active: nav.state == 'security.users'}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
         <i class="ti-alert"></i>
-        <span>Security</span>
+        <span>Security & Auth</span>
+        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
       <ul>
+        <li ng-class="{active: nav.state == 'security.auth'}">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('security.auth')" href="">
+            <i class="ti-new-window"></i>
+            <span>Configuration</span>
+          </a>
+        </li>
         <li ng-class="{active: nav.state == 'security.templates'}">
           <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('security.templates')" href="">
             <i class="ti-new-window"></i>
@@ -154,6 +130,7 @@
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
         <i class="ti-alert"></i>
         <span>Log</span>
+        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
       <ul>
         <li ng-class="{active: nav.state == 'log.config'}">
@@ -171,9 +148,52 @@
         <li ng-class="{active: nav.state == 'log.exception'}">
           <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('log.exception')" href="">
             <i class="ti-new-window"></i>
-            <span>APP Exceptions</span>
+            <span>Server Side Exceptions</span>
           </a>
         </li>
+      </ul>
+    </li>
+    <li>
+      <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goTo('apps.edit')" href="">
+        <i class="ti-settings"></i>
+        <span>App Settings</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.state == 'backoffice.edit'}">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
+        <i class="icon-backoffice-icon"></i>
+        <span>Back Office</span>
+        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.state == 'backoffice.edit'}">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.edit')" href="">
+            <i class="icon-backoffice-icon"></i>
+            <span>Templates</span>
+          </a>
+        </li>
+
+        <li ng-class="{active: nav.state == 'backoffice.edit'}">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goToLocation('http://' + nav.appName + '.backand.net')" href="">
+            <i class="ti-new-window"></i>
+            <span>Hosted Back Office</span>
+          </a>
+        </li>
+
+        <li ng-class="{active: nav.state == 'backoffice.cust'}">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.cust')" href="">
+            <i class="ti-github"></i>
+            <span>Customization</span>
+          </a>
+        </li>
+
+        <li ng-class="{active: nav.state == 'backoffice.code'}">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.code')" href="">
+            <i class="ti-shortcode"></i>
+            <span>Code Example</span>
+          </a>
+        </li>
+
       </ul>
     </li>
   </ul>

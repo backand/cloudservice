@@ -45,10 +45,10 @@
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">{{index.getRibboninfo(app).text}}</div>
           </div>
-          <div class="panel-heading">{{ app.Name }}</div>
+          <div class="panel-heading text-center"><a ng-if="app.DatabaseStatus == 1" href="" class="pull-left" ng-click="index.appSettings(app.Name)" class="pull-in"><i class="ti-settings"></i></a>{{ app.Name }}</div>
           <div class="panel-body app-panel-body">
             <p class="body-height">{{ app.Title }}</p>
-            <button ng-click="index.appDetails(app.Name)" class="btn btn-default btn-w-md btn-block">
+            <button ng-click="index.appDetails(app.Name, app.DatabaseStatus)" class="btn btn-default btn-w-md btn-block">
               App Details
             </button>
           </div>

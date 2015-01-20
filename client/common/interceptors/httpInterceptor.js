@@ -20,6 +20,7 @@
       },
       responseError: function(rejection) {
         //if not sign in screen :
+        usSpinnerService.stop("loading");
         if ((rejection.config.url+"").indexOf('token') === -1){
           NotificationService.add("error",rejection.data || rejection.data.error_description);
           if(rejection.status === 401){

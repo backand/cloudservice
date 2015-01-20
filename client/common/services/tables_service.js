@@ -3,13 +3,7 @@
 
   function TablesService($http, $q, CONSTS) {
 
-    this.sync = function(appName) {
-        return $http({
-            method: 'GET',
-            url: CONSTS.appUrl + '/1/app/sync',
-            headers: { AppName: appName }
-        });
-    };
+
 
     this.get = function(appName) {
       return $http({

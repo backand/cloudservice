@@ -17,11 +17,8 @@
                   ng-click="users.inviteAdmins()">Invite Admin User(s)
           </button>
         </div>
-
         <br>
-
         <br>
-
         <div class=" form-group col-sm-7">
           <label for="inviteUsersEmails"></label> Invite users to access the applixation with role {{Role}}. If "Allow
           only invited users to register is On then this is the only way to add users to the app.</lable>
@@ -39,8 +36,8 @@
 
         <br>
       </div>
-      <button type="button" id="addUser" class="btn btn-success" ng-click="users.open()">Add User</button>
-      <button type="button" id="delUser" class="btn btn-success" ng-click="users.delete()">Delete User</button>
+      <!--<button type="button" id="addUser" class="btn btn-success" ng-click="users.open()">Add User</button>-->
+      <a id="delUser" href="" ng-click="users.delete()">Delete User</a>
       <div us-spinner spinner-key="loading" ></div>
       <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection
            class="grid"></div>
