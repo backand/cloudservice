@@ -13,7 +13,7 @@
       self.apps = appsList.data.data;
     }());
 
-    this.addApp = function() {
+    self.addApp = function() {
       self.loading = true;
       if(self.appTitle === '')
           self.appTitle = self.appName;
@@ -27,19 +27,30 @@
         })
     };
 
-    this.appDetails = function (appName) {
+    /**
+     *
+     * @param appName
+     */
+    self.appDetails = function (appName,status ) {
       usSpinnerService.spin("loading");
       //check app status
-      var myApp = $filter('filter')(self.apps, {Name: appName}, false);
-      if (myApp[0].DatabaseStatus == 1)
+      if (status == 1)
         $state.go('apps.show', {name: appName});
       else
         $state.go('database.edit', {name: appName});
     };
 
-    this.namePattern = /^\w+$/;
+    /**
+     *
+     * @param appName
+     */
+    self.appSettings = function (appName) {
+      $state.go('apps.edit', {name: appName});
+    }
 
-    this.getRibboninfo = function(app) {
+    self.namePattern = /^\w+$/;
+
+    self.getRibboninfo = function(app) {
       return convertStateNumber(app.DatabaseStatus);
     };
 
