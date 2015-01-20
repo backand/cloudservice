@@ -42,10 +42,10 @@
     };
 
     //todo: (yariv) don't change array prototype
-    Array.prototype.contains = function (obj) {
-      var i = this.length;
+    self.contains = function (arr,obj) {
+      var i = arr.length;
       while (i--) {
-        if (this[i] === obj) {
+        if (arr[i] === obj) {
           return true;
         }
       }
@@ -64,16 +64,16 @@
       var readPermission = permissions.allowRead.split(',');
 
       angular.forEach(self.tempTemplate, function (role) {
-        if (createPermission.contains(role.title)) {
+        if (self.contains(createPermission,role.title)) {
           role.permissions.create = true;
         }
-        if (editPermission.contains(role.title)) {
+        if (self.contains(editPermission,role.title)) {
           role.permissions.update = true;
         }
-        if (deletePermission.contains(role.title)) {
+        if (self.contains(deletePermission,role.title)) {
           role.permissions.delete = true;
         }
-        if (readPermission.contains(role.title)) {
+        if (self.contains(readPermission,role.title)) {
           role.permissions.read = true;
         }
       });

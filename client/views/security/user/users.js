@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers($window, $modal, $stateParams, $log, usSpinnerService, NotificationService, SecurityService, $scope) {
+  function SecurityUsers(ConfirmationPopup, $modal, $stateParams, $log, usSpinnerService, NotificationService, SecurityService, $scope) {
 
     var self = this;
 
@@ -104,11 +104,15 @@
         return;
       }
 
-      var result = $window.confirm('You are going to delete ' + item[0].Username + '. are sure you want to continue?');
-      if (!result)
-        return;
-      SecurityService.deleteUser(item[0].ID)
-        .then(usersDeleteSuccessHandler, errorHandler);
+      var result = ConfirmationPopup.confirm('You are going to delete ' + item[0].Username + '. are sure you want to continue?')
+        .then(function (result) {
+          if (!result)
+            return;
+          SecurityService.deleteUser(item[0].ID)
+            .then(usersDeleteSuccessHandler, errorHandler);
+
+        })
+
     };
     var defaultUser = {
       Email: "",
@@ -153,8 +157,8 @@
       return Math.min((pageSize * currentPage), max);
     };
     /*
-    * Legacy support for old Role json name( the new is durados_User_Role and the old is Role
-    * */
+     * Legacy support for old Role json name( the new is durados_User_Role and the old is Role
+     * */
     function SetDataUserRole(data, role) {
       if (self.roleFieldName == 'Role')
         data.Role = role;
@@ -221,7 +225,7 @@
           FirstName: name[0],
           LastName: name[1]
         };
-        SetDataUserRole(user,userRole);
+        SetDataUserRole(user, userRole);
         SecurityService.postUser(user)
           .then(getUsers, errorHandler);
         ;
@@ -257,8 +261,11 @@
        * close the modal window if user confirm
        */
       $scope.cancel = function () {
-        var result = $window.confirm('Changes will be lost. are sure you want to close this window?');
-        result ? modalInstance.dismiss() : false;
+        var result = ConfirmationPopup.confirm('Changes will be lost. are sure you want to close this window?')
+          .then(function (result) {
+            result ? modalInstance.dismiss() : false;
+          })
+
       };
       function postNewUser(user) {
         var data = {
@@ -266,7 +273,7 @@
           IsApproved: true,
           FirstName: user.FirstName,
           LastName: user.LastName,
-          Username:  user.Email
+          Username: user.Email
 
         };
         SetDataUserRole(data, user.durados_User_Role.Name);
@@ -279,7 +286,7 @@
 
   angular.module('app')
     .controller('SecurityUsers', [
-      '$window',
+      'ConfirmationPopup',
       '$modal',
       '$stateParams',
       '$log',

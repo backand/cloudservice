@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function RulesController($modal, $scope, $window, $filter, RulesService, NotificationService, DictionaryService) {
+  function RulesController($modal, $scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService) {
 
     var self = this;
 
@@ -217,8 +217,11 @@
        * close the modal window if user confirm
        */
       $scope.cancel = function () {
-        var result = $window.confirm('Changes will be lost. are sure you want to close this window?');
-        result ? modalInstance.dismiss() : false;
+        ConfirmationPopup.confirm('Changes will be lost. are sure you want to close this window?')
+          .then(function(result){
+            result ? modalInstance.dismiss() : false;
+          });
+
       };
 
     }
@@ -347,5 +350,5 @@
   }
 
   angular.module('app')
-    .controller('RulesController', ['$modal', '$scope', '$window', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', RulesController]);
+    .controller('RulesController', ['$modal', '$scope', 'ConfirmationPopup', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', RulesController]);
 }());

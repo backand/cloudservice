@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers($window,$modal,$stateParams, $log, NotificationService, SecurityService, $scope) {
+  function SecurityUsers(ConfirmationPopup,$modal,$stateParams, $log, NotificationService, SecurityService, $scope) {
 
     var self = this;
 
@@ -58,11 +58,14 @@
         return;
       }
 
-      var result = $window.confirm('You are going to delete '+item[0].Name+ '. are sure you want to continue?');
-      if(!result)
-        return;
-      SecurityService.deleteRole($stateParams.name,item[0].ID)
-        .then(roleDeleteSuccessHandler, errorHandler);
+      ConfirmationPopup.confirm('You are going to delete '+item[0].Name+ '. are sure you want to continue?')
+      then(function( result ){
+        if(!result)
+          return;
+        SecurityService.deleteRole($stateParams.name,item[0].ID)
+          .then(roleDeleteSuccessHandler, errorHandler);
+      });
+
     };
 
     $scope.modal = {
@@ -131,19 +134,24 @@
      * close the modal window if user confirm
      */
     $scope.cancel = function () {
-      var result = $window.confirm('Changes will be lost. are sure you want to close this window?');
-      result ? modalInstance.dismiss() : false;
+       ConfirmationPopup.confirm('Changes will be lost. are sure you want to close this window?')
+        .then(function(result){
+          result ? modalInstance.dismiss() : false;
+
+        });
+
     };
 
   }
-    $scope.cancel = function () {
-      var result = $window.confirm('Changes will be lost. are sure you want to close this window?');
-      result ? modalInstance.dismiss() : false;
-    };
+
+    /*  $scope.cancel = function () {
+     var result = ConfirmationPopup.confirm('Changes will be lost. are sure you want to close this window?');
+     result ? modalInstance.dismiss() : false;
+     };*/
   }
   angular.module('app')
     .controller('SecurityUsers', [
-      '$window',
+      'ConfirmationPopup',
       '$modal',
       '$stateParams',
       '$log',
