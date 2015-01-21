@@ -17,25 +17,34 @@
   <ul id="rules" class="list-unstyled">
 
     <li ng-repeat="item in rules.items">
+
       <h3 class="rule-group-title">{{ item.title | uppercase}}</h3>
 
-      <div class="pull-right toggle-mark" ng-click="item.visible = !item.visible">V</div>
+      <div class="pull-right" ng-click="item.visible = !item.visible">
+        <i ng-class="{'ti-arrow-up' : item.visible, 'ti-arrow-down' : !item.visible}"></i>
+      </div>
 
       <p class="rule-group-description">These rules fires on {{ item.title }} action</p>
 
-      <ul class="rules-sub-items-list" ng-show="item.visible">
+      <ul class="rules-sub-items-list"
+          ng-show="item.visible">
 
-        <li ng-repeat="subItem in item.items">
-          <h4 class="rule-sub-title">{{subItem.title}}</h4>
+        <li ng-repeat="subitem in item.items">
 
-          <div class="pull-right toggle-mark" ng-click="subitem.visible = !subitem.visible">V</div>
+          <h4 class="rule-sub-title"
+              ng-click="subitem.visible = !subitem.visible">{{subitem.title}}</h4>
+
+          <div class="pull-right" ng-click="subitem.visible = !subitem.visible">
+            <i ng-class="{'ti-arrow-up' : subitem.visible, 'ti-arrow-down' : !subitem.visible   }"></i></div>
 
           <p class="rule-sub-description">
             These rules fire {{ subitem.title }} an object is created
           </p>
 
           <ul class="rules-names-list" ng-show="subitem.visible">
-            <li ng-repeat="rule in subItem.items">
+
+            <li ng-repeat="rule in subitem.items">
+
               <h5 class="rule-name text-primary"
                   ng-click="rules.edit(rule.name)">
                 {{rule.name}}</h5>
@@ -44,6 +53,9 @@
                 some description about the action should be here
               </p>
             </li>
+
+            <li class="add-new-rule text-primary" ng-click="rules.open()">Add new rule</li>
+
           </ul>
         </li>
       </ul>

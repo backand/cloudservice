@@ -207,15 +207,27 @@ a.app-panel:hover {
 
   .rules-sub-items-list {
     list-style: none;
+
     h4.rule-sub-title {
       font-size: 20px;
       margin-bottom: 0;
     }
+
+    h4.rule-sub-title:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
     p.rule-sub-description {
     }
 
   }
 
+  .add-new-rule {
+    border: 1px dashed darkgray;
+    cursor: pointer;
+    background-color: rgba(220,220,220, 0.2);
+  }
   .rules-names-list {
     list-style: none;
     li {
@@ -255,7 +267,7 @@ a.app-panel:hover {
     padding:10px;
     padding-bottom:0px;
     border:1px solid #ccc;
-    margin-bottom:10px;  
+    margin-bottom:10px;
     margin-top:10px;
     margin-bottom:10px;
     &:after {
@@ -264,7 +276,7 @@ a.app-panel:hover {
       display:block;
     }
   }
-  
+
 }
 .form-group {
   label {
@@ -313,5 +325,5 @@ a.app-panel:hover {
       margin-left:20px;
       margin-bottom: 0;
     }
-  }  
+  }
 }

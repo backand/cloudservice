@@ -7,15 +7,25 @@
    *
    * @returns {Function}
    */
-    function insertAtCaretDirective () {
-        return function (scope) {
-          scope.$on('insert:placeAtCaret', function (evt, data){
-            $('#' + data[0]).insertAtCaret("{{" +data[1]+ "}}");
-          });
-        }
-    }
+  function insertAtCaretDirective() {
+    var watcher = null;
+    return {
+      scope: {
+        elementId: '@insertAtCaret'
+      },
+      link: function (scope) {
 
-    angular.module('app')
-        .directive('insertAtCaret',insertAtCaretDirective);
+        if(watcher) {
+          watcher();
+        }
+        watcher = scope.$on('insert:placeAtCaret', function (evt, token) {
+          $('#' + scope.elementId).insertAtCaret("{{" + token + "}}");
+        });
+      }
+    }
+  }
+
+  angular.module('app')
+    .directive('insertAtCaret', insertAtCaretDirective);
 }());
 

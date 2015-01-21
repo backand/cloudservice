@@ -9,10 +9,10 @@ module.exports = {
     baseDir + '/vendor/angular/angular.js',
     baseDir + '/vendor/angular-mocks/angular-mocks.js',
     baseDir + '/vendor/angular-ui-router/release/angular-ui-router.js',
-    baseDir + '/client/config/**/*.js',
-    baseDir + '/client/common/**/*.js',
-    baseDir + '/client/views/**/*.js',
-    baseDir + '/client/app.js',
+    baseDir + '/config/**/*.js',
+    baseDir + '/common/**/*.js',
+    baseDir + '/views/**/*.js',
+    baseDir + '/app.js',
     'build/tmp/*.js',
     baseDir + '/test/unit/**/*.spec.js'
   ],
@@ -29,21 +29,21 @@ module.exports = {
     'karma-mocha-reporter'
   ],
 
-  preprocessors: {
-    '**/client/**/*.js': 'coverage'
-  },
+  //preprocessors: {
+  //  '**/client/**/*.js': 'coverage'
+  //},
 
-  reporters: ['mocha', 'html', 'coverage'],
+  //reporters: ['mocha', 'html'],
 
-  coverageReporter: {
-    type: 'html',
-    dir: baseDir + '/test/unit-results/coverage',
-    file: 'coverage.html'
-  },
+  //coverageReporter: {
+  //  type: 'html',
+  //  dir: baseDir + '/test/unit-results/coverage',
+  //  file: 'coverage.html'
+  //},
 
-  htmlReporter: {
-    outputDir: baseDir + '//test/unit-results/html'
-  },
+  //htmlReporter: {
+  //  outputDir: baseDir + '//test/unit-results/html'
+  //},
 
   logLevel: 'info',
 

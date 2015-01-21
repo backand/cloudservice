@@ -36,7 +36,7 @@
         <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.toggleOptions()"></span>
       </div>
 
-<div ng-if="flag">
+<div ng-cloak>
       <angled-window ng-show="modal.dictionaryState"
                      id="{{winId}}"
                      title="Columns"
@@ -53,7 +53,7 @@
                 ng-model="rule.whereCondition"
                 ng-model-options="{debounce:{default:400}}"
                 style="resize: vertical"
-                insert-at-caret></textarea>
+                insert-at-caret="whereCondition"></textarea>
     </div>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition">
@@ -106,10 +106,16 @@
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12">
+          <div class="pull-right">
+            <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.toggleOptions()"></span>
+          </div>
           <label>Message:</label>
           <textarea class="form-control"
+                    id="message"
                     ng-model="rule.message"
-                    style="resize: vertical"></textarea>
+                    style="resize: vertical"
+                    insert-at-caret="message"
+            ></textarea>
         </div>
 
       </div><!--./notify -->
