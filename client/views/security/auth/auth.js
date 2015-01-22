@@ -8,20 +8,23 @@
     var self = this;
     (function init() {
       self.appName = SecurityService.appName = AppsService.appName = $stateParams.name;
-      self.settings ={
-        privateApp:false,
-        anonymous:true,
-        anonymousRole:"Admin"
-      };
+      self.data={settings:{},privateApp:false};
+      self.updateAppAuth = updateAppAuth;
      //secureLevel= "RegisteredUsers";
       loadConfigurationData();
     }());
 
-    $scope.$watch("auth.settings", updateAppAuth,true);
-
+    $scope.$watch('auth',updateAppAuth,true);
     function updateAppAuth(newVal,oldVal,scope)
     {
+      if(oldVal.data.settings.__metadata) {
+       if(self.data.privateApp)
+         self.data.settings.secureLevel ="RegisteredUsers";
+        else
+         self.data.settings.secureLevel ="AllUsers";
 
+        AppsService.update( self.appName, newVal.data);
+      }
     }
     function loadConfigurationData() {
       AppsService.getCurrentApp(self.appName).then(setDbInfo,errorHandler);
@@ -38,8 +41,10 @@
      }
 
     function setDbInfo(data){
-      self.settings.privateApp =data.settings.secureLevel =="RegisteredUsers";
-      self.anonymous =true;
+      self.data.settings =data.settings;
+
+      self.data.privateApp =self.data.settings.secureLevel =="RegisteredUsers";
+
     }
   }
 

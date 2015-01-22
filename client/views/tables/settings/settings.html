@@ -16,8 +16,8 @@
             <!--<option ng-repeat="field in settings.fields" value="{{field.name}}">{{field.name}}</option>-->
           <!--</select>-->
           <select class="form-control"
-                  ng-options="field.name for field in settings.items"
-                  ng-model="field.name">
+                  ng-options="field.name as field.name for field in settings.items"
+                  ng-model="settings.view.columnDisplayinTitle">
           </select>
         </div>
         <div class="form-group">

@@ -12,7 +12,7 @@
         <label for="allowAnonymousPublic">Allow anonymous users to access without registration in addition to registered
           users</label>
         <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-          <input id="allowAnonymousPublic" type="checkbox" ng-model="auth.data.allowAnonymous" checked=""><i></i>
+          <input id="allowAnonymousPublic" type="checkbox"  ng-model="auth.data.privateApp" checked=""><i></i>
         </label>
       </div>
       <div class="row">
@@ -20,11 +20,13 @@
           <label for="AnonymousUserRole">Anonymous users assigned roles:</label>
 
           <select class="form-control"
-                  ng-options="role.Name for role in auth.roles track by role.Name"
+
+                  ng-options="role.Name as role.Name for role in auth.roles "
                   id="AnonymousUserRole"
-                  ng-model="auth.durados_User_Role"
+                  ng-model="auth.data.settings.defaultGuestRole"
                   ng-model-options="{debounce:{default:400}}"
-                  required>
+            required>
+
 
             <!-- <option value="">Select action...</option>-->
           </select>
@@ -36,20 +38,21 @@
       <div class="form-group">
         <label for="allowAnonymousPrivate">Private App -Only invited users can access. Set Private App to Off will Allow any user to register the app.</label>
         <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-          <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.settings.privateApp" checked=""><i></i>
+          <input id="allowAnonymousPrivate" type="checkbox"   ng-model="auth.data.settings.enableUserRegistration" checked=""><i></i>
         </label>
       </div>
 
 
       <div class="row">
-        <div class="form-group col-md-4">
-          <label for="PrivateAppRole">Anonymous users assigned roles:</label>
+        <div class="form-group col-md-4">{{auth.data.settings.newUserDefaultRole}}
+          <label for="PrivateAppRole">Invited users assigned roles:</label>
 
           <select class="form-control"
-                  ng-options="role.Name for role in auth.roles track by role.Name"
+                  ng-options="role.Name as role.Name for role in auth.roles "
                   id="PrivateAppRole"
-                  ng-model="auth.settings.anonymousRole"
+                  ng-model="auth.data.settings.newUserDefaultRole"
                   ng-model-options="{debounce:{default:400}}"
+
                   required>
 
             <!-- <option value="">Select action...</option>-->
@@ -63,14 +66,14 @@
         <div class="form-group">
           <label for="inputUrl1" class="col-sm-4 control-label">Custom register page URL - register after user verified</label>
           <div class="col-sm-5">
-            <input type="url" class="form-control" id="inputUrl1" placeholder="/app/sighn-up.html">
+            <input type="text" class="form-control" id="inputUrl1" placeholder="/app/sighn-up.html"  ng-model-options="{ updateOn: 'blur',debounce: 2000 }" ng-keyup="cancel($event)"  ng-model="auth.data.settings.registrationRedirectUrl" >
           </div>
         </div>
         <br><br><br>
         <div class="form-group">
           <label for="inputUrl2" class="col-sm-4 control-label">Custom verified email page URL - Redirect after user reset password</label>
           <div class="col-sm-5">
-            <input type="url" class="form-control" id="inputUrl2" placeholder="/app/sighn-in.html">
+            <input type="text" class="form-control" id="inputUrl2"  ng-model-options="{ updateOn: 'blur',debounce: 2000}"   ng-keyup="cancel($event)"  ng-model="auth.data.settings.signInRedirectUrl">
           </div>
         </div>
 
