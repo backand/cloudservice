@@ -7,7 +7,6 @@
     <th class="text-center">CREATE</th>
     <th class="text-center">UPDATE</th>
     <th class="text-center">DELETE</th>
-    <th></th>
   </tr>
   </thead>
 
@@ -15,10 +14,10 @@
 
   <tr ng-repeat="role in securityTemplate">
 
-        <td ng-if="override"
-            editable-text="role.title">{{ role.title }}</td>
-
-        <td ng-if="!override">{{ role.title }}</td>
+        <!--<td ng-if="override"-->
+            <!--editable-text="role.title">{{ role.title }}</td>-->
+      <td ng-if="override && !role.readonly"><a  href="" ng-click="OpenRole(role.title, 'update')" ng-bind="role.title"></a></td>
+      <td ng-if="!override || role.readonly" ng-bind="role.title"></td>
 
       <td class="text-center">
         <input ng-checked="role.permissions.read"
@@ -45,16 +44,11 @@
                type="checkbox"/>
       </td>
 
-      <td class="text-center">
-        <a ng-if="override" ng-click="removeRole(role)" href=""><i class="ti-trash"></i></a>
-      </td>
-
-
   </tr>
   </tbody>
 
 </table>
 <button class="btn btn-primary"
         ng-if="override"
-        ng-click="addRole()">+ Add Role</button>
+        ng-click="OpenRole(role.name, 'new')">+ Add Role</button>
 

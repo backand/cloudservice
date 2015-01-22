@@ -3,7 +3,7 @@
  */
 (function () {
   'use strict';
-  function SecurityMatrixService(SecurityService, $q) {
+  function SecurityMatrixService(SecurityService) {
 
     var self = this;
     self.appName = null;
@@ -24,6 +24,7 @@
             _tempTemplate.push(
               {
                 title: role.Name,
+                readonly: role.Name == 'Admin' || role.Name == 'User' || role.Name == 'Public',
                 permissions: {
                   read: false,
                   create: false,
@@ -121,5 +122,5 @@
   }
 
   angular.module('common.services')
-    .service('SecurityMatrixService', ['SecurityService', '$q', SecurityMatrixService]);
+    .service('SecurityMatrixService', ['SecurityService', SecurityMatrixService]);
 })();

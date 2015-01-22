@@ -1,15 +1,17 @@
 (function() {
 
-  function ColumnsService($http, CONSTS, $q) {
+  function ColumnsService($http, CONSTS, $q, NotificationService, $interval) {
 
     var self = this;
 
+    var _tableConfig = null;
+    var _preTableName = null;
+    var stop;
+
     self.appName = null;
     self.tableName = null;
-    self._tableConfig = null;
-    self._preTableName = null;
 
-    this.sync = function() {
+    self.sync = function() {
         return $http({
             method: 'GET',
             url: CONSTS.appUrl + '/1/app/sync',
@@ -17,17 +19,17 @@
         });
     };
 
-    this.get = function () {
+    self.get = function () {
       var deferred = $q.defer();
-      if (self._tableConfig == null || self._preTableName == null || self._preTableName != self.tableName) {
-        self._get()
+      if (_tableConfig == null || _preTableName == null || _preTableName != self.tableName) {
+          _get()
           .success(function (data) {
-            self._tableConfig = data;
-            self._preTableName = self.tableName;
-            deferred.resolve(self._tableConfig);
+            _tableConfig = data;
+            _preTableName = self.tableName;
+            deferred.resolve(_tableConfig);
           })
           .error(function (err) {
-            self._tableConfig = null;
+            _tableConfig = null;
             deferred.reject(err);
           });
 
@@ -35,12 +37,12 @@
       }
       else
       {
-        deferred.resolve(self._tableConfig);
+        deferred.resolve(_tableConfig);
         return deferred.promise;
       }
     };
 
-    this._get = function() {
+    function _get() {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/1/table/config/' + self.tableName,
@@ -48,7 +50,7 @@
       });
     };
 
-    this.getData = function(size, page, sort){
+    self.getData = function(size, page, sort){
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/1/table/data/' + self.tableName,
@@ -68,19 +70,61 @@
     //Run interval every x seconds to save the objects that are in the cache.
     //After save remove from hash
 
-    self.hashCommit = {};
+    var _hashCommit = [];
+    var saveData = false;
 
-    this.update = function (table) {
+    self.update = function () {
+      _hashCommit.push(_tableConfig);
+      //return _update(table).then(function (data){
+      //  NotificationService.add('success', 'Data saved');
+      //  return data;
+      //});
+    }
+
+    function _update (table) {
       return $http({
         method: 'PUT',
-        url: CONSTS.appUrl + '/1/table/config/' + self.tableName,
+        url: CONSTS.appUrl + '/1/table/config/' + table.name,
         headers: { AppName: self.appName },
         data: table
       });
     };
 
+    stop = $interval(function () {
+      //don't get into the loop while saving = semafore
+      if (saveData)
+        return;
+
+      saveData = true;
+
+      angular.forEach(_hashCommit, function (table1) {
+        _update(table1).then(function (data) {
+          _hashCommit.splice(_hashCommit.indexOf(table1), 1)
+          if(_hashCommit.length == 0)
+          {
+            saveData = false;
+            NotificationService.add('success', 'Data saved');
+          }
+        });
+      })
+      if(_hashCommit.length == 0)
+        saveData = false;
+
+    }, 10000);
+
+    function stopRefresh() {
+      if (angular.isDefined(stop)) {
+        $interval.cancel(stop);
+        stop = undefined;
+      }
+    }
+
+    //$scope.$on('$destroy', function() {
+    //  stopRefresh();
+    //});
+
   }
 
   angular.module('common.services')
-    .service('ColumnsService', ['$http', 'CONSTS', '$q', ColumnsService]);
+    .service('ColumnsService', ['$http', 'CONSTS', '$q','NotificationService','$interval', ColumnsService]);
 })();

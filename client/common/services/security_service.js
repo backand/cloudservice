@@ -34,7 +34,7 @@
       var id=(!pk)?rowData.ID:pk;
       return $http({
         method: 'PUT',
-        url: CONSTS.appUrl +url + tableName + '/' + id ,
+        url: CONSTS.appUrl + url + tableName + '/' + id ,
         headers: {AppName: self.appName},
         data: rowData
       });
@@ -44,7 +44,7 @@
       var url =(isConfig)?'':self.dbDataUrl;
       return $http({
         method: 'POST',
-        url: CONSTS.appUrl +url + tableName + '/',
+        url: CONSTS.appUrl + url + tableName + '/',
         headers: {AppName: self.appName},
         data: rowData
       });
@@ -72,9 +72,9 @@
     self.updateUser = function (user) {
       return self.updateData(self.usersTableName, user);
     };
-    self.updateRole = function (role) {
+    self.updateRole = function (role, pk) {
 
-       return self.updateData(self.rolesTableName, role);
+       return self.updateData(self.rolesTableName, role, pk);
     };
 
     self.postUser = function (user) {

@@ -9,6 +9,9 @@
     (function init() {
       self.view = null;
       self.templateChanged = templateChanged;
+      self.templateRoleAdd = templateRoleAdd;
+      self.templateRoleRename = templateRoleRename;
+      self.templateRoleRemove = templateRoleRemove;
       $scope.$on('tabs:security', getWorkspaces);
     }());
 
@@ -18,6 +21,22 @@
       var p = SecurityMatrixService.getPermission(self.sTemplate);
     }
 
+    /**
+     * Add new role
+     * @param roleName
+     * @returns {*}
+     */
+    function templateRoleAdd (roleName){
+      return SecurityService.postRole({Name: roleName, Description: roleName});
+    }
+
+    function  templateRoleRename(roleName, newName){
+      return SecurityService.updateRole({Name: newName, Description: newName}, roleName);
+    }
+
+    function templateRoleRemove(roleName){
+      return SecurityService.deleteRole(roleName);
+    }
     /**
      * Read the list of workspaces
      */

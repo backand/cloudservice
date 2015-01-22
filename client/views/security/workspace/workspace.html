@@ -17,9 +17,15 @@
                      ng-model="workspace.workspaceName" ng-change="securityws.changeName(workspace.workspaceName,workspace.__metadata.id)">
             </div>
             <br/>
+
             <security-matrix security-template="workspace.template"
                              override="workspace.overridepermissions"
-                             on-update="securityws.templateChanged(workspace.template,workspace.__metadata.id)"></security-matrix>
+                             on-update="securityws.templateChanged(workspace.template,workspace.__metadata.id)"
+                             on-role-add="securityws.templateRoleAdd(role)"
+                             on-role-rename="securityws.templateRoleRename(role, newRole)"
+                             on-role-remove="securityws.templateRoleRemove(role)"
+              ></security-matrix>
+
           </tab>
 
         </tabset>

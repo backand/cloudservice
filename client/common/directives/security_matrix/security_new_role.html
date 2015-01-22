@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="modal-title" ng-bind="modal.title"></h3>
+  <h5>Any change to this Role will effect other Security Templates</h5>
+</div>
+<div class="modal-body clearfix">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <label>Role Name</label>
+    <input type="text"
+           class="form-control"
+           ng-model="modal.roleName"
+           placeholder="Role name">
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="modal.closeModal()" ng-bind="modal.okButtonText" ng-disabled="!modal.roleName"></button>
+  <button class="btn btn-default" ng-click="modal.cancel()" ng-bind="modal.cancelButtonText"></button>
+  <button class="btn btn-danger pull-left" ng-click="modal.removeRole()" ng-bind="modal.deleteButtonText" ng-if="modal.mode == 'update'"></button>
+</div>

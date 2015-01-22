@@ -17,6 +17,12 @@
       </div>
     </div>
   </div>
-  <security-matrix security-template="security.sTemplate" override="security.override" on-update="security.templateChanged(template)"></security-matrix>
+  <security-matrix security-template="security.sTemplate"
+                   override="security.override"
+                   on-update="security.templateChanged(template)"
+                   on-role-add="security.templateRoleAdd(role)"
+                   on-role-rename="security.templateRoleRename(role, newRole)"
+                   on-role-remove="security.templateRoleRemove(role)"
+    ></security-matrix>
 
 </div>

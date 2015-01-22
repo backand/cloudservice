@@ -14,6 +14,9 @@
       self.appName = SecurityMatrixService.appName = SecurityService.appName = $stateParams.name;
       self.workspaces = null;
       self.templateChanged = templateChanged;
+      self.templateRoleAdd = templateRoleAdd;
+      self.templateRoleRename = templateRoleRename;
+      self.templateRoleRemove = templateRoleRemove;
       self.processingNewWS = false;
       self.defaultWorkspaceName = 'Public';
       getWorkspaces();
@@ -27,6 +30,26 @@
         }
       )
     };
+    function templateRoleAdd (roleName){
+      return SecurityService.postRole({Name: roleName, Description: roleName}).then(function (data) {
+        getWorkspaces();
+        return data;
+      })
+    }
+
+    function  templateRoleRename(roleName, newName){
+      return SecurityService.updateRole({Name: newName, Description: newName}, roleName).then(function (data) {
+        getWorkspaces();
+        return data;
+      })
+    }
+
+    function templateRoleRemove(roleName){
+      return SecurityService.deleteRole(roleName).then(function (data) {
+        getWorkspaces();
+        return data;
+      })
+    }
 
     function templateChanged(template, wsId) {
       if (template) {
@@ -51,7 +74,7 @@
      * Read the list of workspaces
      */
     function getWorkspaces() {
-      SecurityService.getWorkspace().then(WorkspaceSuccessHandler, errorHandler);
+      SecurityService.getWorkspace().then(workspaceSuccessHandler, errorHandler);
     }
 
     /**
@@ -81,9 +104,9 @@
      * @returns {*}
      * @constructor
      */
-    function WorkspaceSuccessHandler(data) {
+    function workspaceSuccessHandler(data) {
       self.workspaces = data.data.data;
-      loading = true;
+      self.loading = true;
       angular.forEach(self.workspaces, function (workspace) {
         var permissions = {};
         permissions.allowCreate = workspace.allowCreate;

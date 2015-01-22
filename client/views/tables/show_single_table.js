@@ -27,6 +27,9 @@
       $scope.$broadcast('tabs:' + tab);
     }
 
+    /**
+     * Sync the database into Backand - add all the tables and sync
+     */
     self.sync = function () {
       self.syncing = true;
       NotificationService.add('info', 'Sync takes 1-2 minutes');
