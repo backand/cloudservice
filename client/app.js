@@ -1,10 +1,6 @@
 (function () {
   'use strict';
 
-  angular.element(document).ready(function () {
-    angular.bootstrap(document, ['app']);
-  });
-
   function MainController(SessionService, $state, $location) {
     this.getCurrentUser = function () {
       return SessionService.currentUser;
@@ -61,4 +57,10 @@
     .run(run)
     .controller('MainController', ["SessionService", '$state', '$location', MainController])
     .value('version', '1.0.1');
+
+  angular.element(document).ready(function () {
+    angular.bootstrap(document, ['app']);
+  });
+
+
 })();

@@ -73,8 +73,8 @@
      * @param elementId
      * @param token
      */
-    function insertTokenAtChar(elementId, token) {
-      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
+    function insertTokenAtChar(token) {
+      $scope.$parent.$broadcast('insert:placeAtCaret', token);
     }
 
     /**
@@ -101,6 +101,7 @@
      */
     function toggleDictionary() {
       $scope.modal.dictionaryState = !$scope.modal.dictionaryState;
+      $scope.$broadcast('insert:windowClosed');
     }
 
     /**
@@ -254,17 +255,17 @@
           visible: true,
           items: [
             {
-              visible: true,
+              visible: false,
               title: 'Before',
               items: []
             },
             {
-              visible: true,
+              visible: false,
               title: 'During',
               items: []
             },
             {
-              visible: true,
+              visible: false,
               title: 'After',
               items: []
             }]
@@ -274,17 +275,17 @@
           visible: true,
           items: [
             {
-              visible: true,
+              visible: false,
               title: 'Before',
               items: []
             },
             {
-              visible: true,
+              visible: false,
               title: 'During',
               items: []
             },
             {
-              visible: true,
+              visible: false,
               title: 'After',
               items: []
             }]
@@ -294,17 +295,17 @@
           visible: true,
           items: [
             {
-              visible: true,
+              visible: false,
               title: 'Before',
               items: []
             },
             {
-              visible: true,
+              visible: false,
               title: 'During',
               items: []
             },
             {
-              visible: true,
+              visible: false,
               title: 'After',
               items: []
             }]
@@ -314,12 +315,12 @@
           visible: true,
           items: [
             {
-              visible: true,
+              visible: false,
               title: 'Before',
               items: []
             },
             {
-              visible: true,
+              visible: false,
               title: 'After',
               items: []
             }]

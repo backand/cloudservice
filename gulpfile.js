@@ -17,8 +17,8 @@ var proxy = require('proxy-middleware');
 var filelog = require('gulp-filelog');
 var replace = require('gulp-replace-task');
 var minifyCSS = require('gulp-minify-css');
-
 var _ = require('lodash');
+
 /* jshint camelcase:false*/
 var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
 var webdriverUpdate = require('gulp-protractor').webdriver_update;
@@ -32,7 +32,6 @@ gulp.task('tdd', function(cb) {
   karma.start(_.assign({}, karmaConfig, {
     singleRun: false,
     action: 'watch',
-    browsers: ['PhantomJS']
   }), cb);
 });
 
