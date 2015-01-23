@@ -23,30 +23,72 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-clipboard:before {
+    content: "\e609";
+}
+
+.icon-warning:before {
+    content: "\e60a";
+}
+
+.icon-cloud:before {
+    content: "\e60b";
+}
+
+.icon-security:before {
+    content: "\e60c";
+}
+
+.icon-style:before {
+    content: "\e60d";
+}
+
+.icon-magic:before {
+    content: "\ca";
+}
+
+.icon-file-code-o:before {
+    content: "\cde";
+}
+
+.icon-files-empty:before {
+    content: "\e925";
+}
+
 .icon-backoffice-icon:before {
     content: "\e600";
 }
+
 .icon-dashboard-icon:before {
     content: "\e601";
 }
+
 .icon-databsase-icon:before {
     content: "\e602";
 }
+
 .icon-fields-icon:before {
     content: "\e603";
 }
+
 .icon-hosting-icon:before {
     content: "\e604";
 }
+
 .icon-orm-icon:before {
     content: "\e605";
 }
+
 .icon-rest-api-icon:before {
     content: "\e606";
 }
+
 .icon-security-icon:before {
     content: "\e607";
 }
+
 .icon-upload-icon:before {
     content: "\e608";
 }
+
