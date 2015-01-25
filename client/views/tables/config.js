@@ -15,7 +15,7 @@
       .state('tables.columns', {
         url: '/:name/:tableName/:tableId',
         controller: 'SingleTableShow as singleTable',
-        templateUrl: 'views/tables/show_single_table.html',
+        templateUrl: 'views/tables/show_single_table.html'
 
 
       })

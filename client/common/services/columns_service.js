@@ -3,7 +3,7 @@
   function ColumnsService($http, CONSTS, $q, NotificationService, $interval) {
 
     var self = this;
-
+    self.commit=_update;
     var _tableConfig = null;
     var _preTableName = null;
     var stop;
@@ -48,7 +48,7 @@
         url: CONSTS.appUrl + '/1/table/config/' + self.tableName,
         headers: { AppName: self.appName }
       });
-    };
+    }
 
     self.getData = function(size, page, sort){
       return $http({
@@ -79,7 +79,7 @@
         NotificationService.add('success', 'Data saved');
         return data;
       });
-    }
+    };
 
     function _update (table) {
       return $http({
@@ -99,14 +99,14 @@
 
       angular.forEach(_hashCommit, function (table1) {
         _update(table1).then(function (data) {
-          _hashCommit.splice(_hashCommit.indexOf(table1), 1)
+          _hashCommit.splice(_hashCommit.indexOf(table1), 1);
           if(_hashCommit.length == 0)
           {
             saveData = false;
             NotificationService.add('success', 'Data saved');
           }
         });
-      })
+      });
       if(_hashCommit.length == 0)
         saveData = false;
 

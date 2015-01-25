@@ -27,7 +27,7 @@
             </div>
             <div class="form-group form-group-half">
               <label for="DefaultValue">Default Value</label>
-              <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" id="DefaultValue"
+              <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" ng-model-options="{ updateOn: 'blur'}" id="DefaultValue"
                      ng-model="field.advancedLayout.defaultValue">
             </div>
             <div class="form-group  form-group-half">
@@ -51,7 +51,7 @@
               <label for="Searchable">Searchable</label>
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
                 ng-disabled="field.advancedLayout.delete" id="Searchable" type="checkbox"
-                ng-model="field.design.hideFilter" checked=""><i></i></label>
+                ng-model="field.grid.hideFilter" checked=""><i></i></label>
             </div>
           </div><!--group inner-->
 
@@ -64,12 +64,12 @@
         <div class="row">
           <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
             <label for="minVal">Min Value</label>
-            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="minVal"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="minVal" ng-model-options="{ updateOn: 'blur'}"
                    ng-model="field.advancedLayout.minimumValue">
           </div>
           <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
             <label for="maxVal">Max Value</label>
-            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="maxVal"
+            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="maxVal" ng-model-options="{ updateOn: 'blur'}"
                    ng-model="field.advancedLayout.maximumValue">
           </div>
         </div>
@@ -87,10 +87,10 @@
         </div>-->
         <div class="form-group" ng-show="">
           <label for="Format">Format</label>
-          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="Format"
+          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="Format" ng-model-options="{ updateOn: 'blur'}"
                  ng-model="field.advancedLayout.format">
         </div>
-        <div class="form-group col-sm-4" >
+    <!--    <div class="form-group col-sm-4" >
           <label for="allowCreate">Allow Create</label>
           <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="allowCreate"
                  ng-model="field.permissions.allowCreate">
@@ -104,7 +104,7 @@
           <label for="allowRead">Allow Read</label>
           <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="allowRead"
                  ng-model="field.permissions.allowRead">
-        </div>
+        </div>-->
 
 
 

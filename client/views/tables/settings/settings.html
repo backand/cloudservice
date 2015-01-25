@@ -2,7 +2,7 @@
       <form role="form"  >
         <div class="form-group" >
           <label for="jsonName">Name</label>
-          <input  type="text" class="form-control" id="jsonName"
+          <input  type="text" class="form-control" id="jsonName"  ng-model-options="{ updateOn: 'blur'}"
                  ng-model="fields.view.name">
         </div>
         <div class="form-group" >
@@ -21,16 +21,16 @@
           </select>
         </div>
         <div class="form-group">
-          <label  for="History">History</label>
+          <label for="History" for="History">History</label>
           <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  id="History" type="checkbox" ng-model="fields.view.toolbarSettings.saveHistory" checked=""><i></i></label>
         </div>
         <div class="form-group">
           <label for="PermanentFilter">Permanent Filter</label>
-          <textarea  id="PermanentFilter" ng-model="fields.view.dataEditing.permanentFilter" class="form-control" ></textarea>
+          <textarea  id="PermanentFilter" ng-model="fields.view.dataEditing.permanentFilter"  ng-model-options="{ updateOn: 'blur'}" class="form-control" ></textarea>
         </div>
         <div class="form-group">
           <label  for="DefaultSort">Default Sort</label>
-         <input  id="DefaultSort" ng-model="fields.view.dataEditing.defaultSort" class="form-control"/>
+         <input  id="DefaultSort" ng-model="fields.view.dataEditing.defaultSort"  ng-model-options="{ updateOn: 'blur'}" class="form-control"/>
         </div>
       </form>
 </div>

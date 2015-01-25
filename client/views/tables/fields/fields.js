@@ -48,7 +48,7 @@
      */
     $scope.$watch('fields.view', function (newVal,oldValue){
       if(newVal != null && oldValue != null && newVal !== oldValue)
-        ColumnsService.update(self.view);
+        ColumnsService.commit(self.view);
     }, true);
 
     /**
