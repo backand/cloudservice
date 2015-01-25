@@ -1,18 +1,19 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> Auth </strong>
+      <strong> Authentication  </strong>
 
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
-    <div class="panel-body"  >
+    <div class="panel-body">
       <br>
-
+      <div class="field-group">
+      <div class="group-inner">
       <div class="form-group">
         <label for="allowAnonymousPublic">Allow anonymous users to access without registration in addition to registered
           users</label>
         <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-          <input id="allowAnonymousPublic" type="checkbox"  ng-model="auth.data.privateApp" checked=""><i></i>
+          <input id="allowAnonymousPublic" type="checkbox" ng-model="auth.data.privateApp" checked=""><i></i>
         </label>
       </div>
       <div class="row">
@@ -25,20 +26,25 @@
                   id="AnonymousUserRole"
                   ng-model="auth.data.settings.defaultGuestRole"
                   ng-model-options="{debounce:{default:400}}"
-            required>
+                  required>
 
 
             <!-- <option value="">Select action...</option>-->
           </select>
         </div>
-        <p class="col-sm-6"><br>* The role can be changed any time after the registration vip API or from user page </p>
+       <p></p> <p class="col-sm-6"><br>* The role can be changed any time after the registration vip API or from user page </p>
       </div>
       <br><br>
-
+</div>
+      </div>
+      <div class="field-group">
+      <div class="group-inner">
       <div class="form-group">
-        <label for="allowAnonymousPrivate">Private App -Only invited users can access. Set Private App to Off will Allow any user to register the app.</label>
+        <label for="allowAnonymousPrivate">Private App -Only invited users can access. Set Private App to Off will Allow
+          any user to register the app.</label>
         <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-          <input id="allowAnonymousPrivate" type="checkbox"   ng-model="auth.data.settings.enableUserRegistration" checked=""><i></i>
+          <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.settings.enableUserRegistration"
+                 checked=""><i></i>
         </label>
       </div>
 
@@ -58,22 +64,31 @@
             <!-- <option value="">Select action...</option>-->
           </select>
         </div>
-        <label class="col-sm-6"><br>* The role can be changed any time after the registration vip API or from user page</label>
+       <p></p><p class="col-sm-6"><br>* The role can be changed any time after the registration vip API or from user page</p>
       </div>
       <br>
       <br>
+      </div></div>
       <form class="" role="form">
         <div class="form-group">
-          <label for="inputUrl1" class="col-sm-4 control-label">Custom register page URL - register after user verified</label>
+          <label for="inputUrl1" class="col-sm-4 control-label">Custom register page URL - register after user
+            verified</label>
+
           <div class="col-sm-5">
-            <input type="text" class="form-control" id="inputUrl1" placeholder="/app/sighn-up.html"  ng-model-options="{ updateOn: 'blur',debounce: 2000 }" ng-keyup="cancel($event)"  ng-model="auth.data.settings.registrationRedirectUrl" >
+            <input type="text" class="form-control" id="inputUrl1" placeholder="/app/sighn-up.html"
+                   ng-model-options="{ updateOn: 'blur',debounce: 2000 }" ng-keyup="cancel($event)"
+                   ng-model="auth.data.settings.registrationRedirectUrl">
           </div>
         </div>
         <br><br><br>
+
         <div class="form-group">
-          <label for="inputUrl2" class="col-sm-4 control-label">Custom verified email page URL - Redirect after user reset password</label>
+          <label for="inputUrl2" class="col-sm-4 control-label">Custom verified email page URL - Redirect after user
+            reset password</label>
+
           <div class="col-sm-5">
-            <input type="text" class="form-control" id="inputUrl2"  ng-model-options="{ updateOn: 'blur',debounce: 2000}"   ng-keyup="cancel($event)"  ng-model="auth.data.settings.signInRedirectUrl">
+            <input type="text" class="form-control" id="inputUrl2" ng-model-options="{ updateOn: 'blur'}"
+                   ng-keyup="cancel($event)" ng-model="auth.data.settings.signInRedirectUrl">
           </div>
         </div>
 
@@ -81,7 +96,6 @@
 
     </div>
     <br>
-
 
 
   </section>
