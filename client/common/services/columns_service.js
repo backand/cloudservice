@@ -73,12 +73,12 @@
     var _hashCommit = [];
     var saveData = false;
 
-    self.update = function () {
-      _hashCommit.push(_tableConfig);
-      //return _update(table).then(function (data){
-      //  NotificationService.add('success', 'Data saved');
-      //  return data;
-      //});
+    self.update = function (table) {
+      //_hashCommit.push(table);
+      return _update(table).then(function (data){
+        NotificationService.add('success', 'Data saved');
+        return data;
+      });
     }
 
     function _update (table) {
