@@ -63,7 +63,6 @@
     };
 
     function toggleGroup() {
-      debugger;
       self.groupVisiable = !self.groupVisiable;
     }
 
@@ -73,8 +72,8 @@
      * @param elementId
      * @param token
      */
-    function insertTokenAtChar(token) {
-      $scope.$parent.$broadcast('insert:placeAtCaret', token);
+    function insertTokenAtChar(elementId, token) {
+      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
     }
 
     /**

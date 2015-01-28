@@ -6,49 +6,51 @@
 
   <form name="newRuleForm">
 
-    <div  class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newRuleForm.ruleName.$invalid &&  newRuleForm.ruleName.$dirty}">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12"
+         ng-class="{ 'has-error': newRuleForm.ruleName.$invalid &&  newRuleForm.ruleName.$dirty}">
+
       <label>Rule name</label>
       <input type="text"
              name="ruleName"
              class="form-control"
              ng-model="rule.name"
              ng-model-options="{debounce:{default:400}}"
-            required
-
+             required
              placeholder="you can change me later">
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-if="rule.name" ng-class="{ 'has-error': newRuleForm.eventTrigger.$invalid && newRuleForm.eventTrigger.$dirty}">
-      <label for="eventTrigger">Event Trigger</label>
-      <select class="form-control"
-              name="eventTrigger"
-              id="eventTrigger"
-              ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
-              ng-model="rule.dataAction"
-              required
-              ng-model-options="{debounce:{default:400}}">
-        <option value="">Select trigger...</option>
-      </select>
+    <div ng-if="rule.name">
+      <div class="form-group col-lg-12 col-md-12 col-sm-12"
+           ng-class="{ 'has-error': newRuleForm.eventTrigger.$invalid && newRuleForm.eventTrigger.$dirty}">
+
+        <label for="eventTrigger">Event Trigger</label>
+
+        <select class="form-control"
+                ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
+                ng-model="rule.dataAction"
+                ng-model-options="{debounce:{default:400}}">
+          <option value="">Select trigger...</option>
+        </select>
+
+      </div>
     </div>
 
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.dataAction" ng-class="{ 'has-error': newRuleForm.whereCondition.$invalid && newRuleForm.whereCondition.$dirty }">
+    <label>Where condition</label>
 
-      <label>Where condition</label>
+    <div class="pull-right">
+      <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.dictionaryState = !modal.dictionaryState"></span>
+    </div>
 
-      <div class="pull-right">
-        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.toggleOptions()"></span>
-      </div>
-
-      <div ng-cloak>
-        <angled-window ng-show="modal.dictionaryState"
-                       id="{{winId}}"
-                       title="Columns"
-                       grouping="w"
-                       style="left: 550px; top: -50px;">
-          <div ng-include="'views/tables/rules/dictionary_window.html'"></div>
-        </angled-window>
-      </div>
+    <div ng-cloak>
+      <angled-window ng-show="modal.dictionaryState"
+                     id="{{winId}}"
+                     title="Columns"
+                     grouping="w"
+                     style="left: 550px; top: -50px;">
+        <div ng-include="'views/tables/rules/where_condition_window.html'"></div>
+      </angled-window>
+    </div>
 
       <textarea id="whereCondition"
                 required
@@ -59,10 +61,11 @@
                 ng-model="rule.whereCondition"
                 ng-model-options="{debounce:{default:400}}"
                 style="resize: vertical"
-                insert-at-caret="whereCondition"></textarea>
-    </div>
+                insert-at-caret></textarea>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition"  ng-class="{ 'has-error': newRuleForm.action.$invalid &&  newRuleForm.action.$dirty }">
+
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition"
+         ng-class="{ 'has-error': newRuleForm.action.$invalid &&  newRuleForm.action.$dirty }">
       <label>Action</label>
       <select class="form-control"
               name="action"
@@ -78,19 +81,17 @@
       <!-- notify options -->
       <div ng-switch-when="Notify">
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6"  ng-class="{ 'has-error': newRuleForm.to.$invalid  }">
-          <label for="to">To:</label>
+        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+          <label>To:</label>
           <input type="text"
                  name="to"
                  id="to"
                  ng-model="rule.to"
-                 class="form-control"
-                  required
-            />
+                 class="form-control"/>
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="cc">cc:</label>
+          <label>cc:</label>
           <input type="text"
                  id="cc"
                  ng-model="rule.cc"
@@ -98,7 +99,7 @@
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for ="bcc">bcc:</label>
+          <label for="bcc">bcc:</label>
           <input type="text"
                  id="bcc"
                  ng-model="rule.bcc"
@@ -106,14 +107,14 @@
         </div>
 
         <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for ="from">from:</label>
+          <label for="from">from:</label>
           <input type="text"
                  id="from"
                  ng-model="rule.from"
                  class="form-control"/>
         </div>
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"  ng-class="{ 'has-error': newRuleForm.subject.$invalid }">
+        <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newRuleForm.subject.$invalid }">
           <label>subject:</label>
           <input type="text"
                  required
@@ -122,9 +123,24 @@
                  class="form-control"/>
         </div>
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"  ng-class="{ 'has-error': newRuleForm.message.$invalid }">
+
+        <div ng-cloak>
+          <angled-window ng-show="modal.messege.window"
+                         id="{{winId}}"
+                         title="Columns"
+                         grouping="w"
+                         style="left: 650px; top: -50px;">
+            <div ng-include="'views/tables/rules/send_email_window.html'"></div>
+          </angled-window>
+        </div>
+
+        <div class="form-group col-lg-12 col-md-12 col-sm-12"
+             ng-class="{ 'has-error': newRuleForm.message.$invalid }">
+
           <div class="pull-right">
-            <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.toggleOptions()"></span>
+            <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
+                  ng-click="modal.messege.window = !modal.messege.window"></span>
+
           </div>
           <label for="message">Message:</label>
           <textarea class="form-control" name="message"
@@ -141,7 +157,8 @@
 
       <div ng-switch-when="Validate">
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6" ng-class="{ 'has-error': newRuleForm.validateExp1.$invalid }">
+        <div class="form-group col-lg-6 col-md-6 col-sm-6"
+             ng-class="{ 'has-error': newRuleForm.validateExp1.$invalid }">
           <label>Expression:</label>
           <textarea class="form-control"
                     required
@@ -204,7 +221,8 @@
 
       <div ng-switch-when="Execute">
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"  ng-class="{ 'has-error': newRuleForm.command1.$invalid  }">
+        <div class="form-group col-lg-12 col-md-12 col-sm-12"
+             ng-class="{ 'has-error': newRuleForm.command1.$invalid  }">
           <label>Command:</label>
           <textarea class="form-control"
                     name="command1"
@@ -220,26 +238,27 @@
                     style="resize: vertical"></textarea>
         </div>
 
-     <!--   <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label>In parameters:</label>
-          <input type="text"
-                 ng-model="rule.inparameters"
-                 class="form-control"/>
-        </div>
+        <!--   <div class="form-group col-lg-6 col-md-6 col-sm-6">
+             <label>In parameters:</label>
+             <input type="text"
+                    ng-model="rule.inparameters"
+                    class="form-control"/>
+           </div>
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label>Out parameters:</label>
-          <input type="text"
-                 ng-model="rule.outParameters"
-                 class="form-control"/>
-        </div>-->
+           <div class="form-group col-lg-6 col-md-6 col-sm-6">
+             <label>Out parameters:</label>
+             <input type="text"
+                    ng-model="rule.outParameters"
+                    class="form-control"/>
+           </div>-->
 
       </div>
       <!-- ./execute -->
 
       <div ng-switch-when="WebService">
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"  ng-class="{ 'has-error': newRuleForm.webService.$invalid }">
+        <div class="form-group col-lg-12 col-md-12 col-sm-12"
+             ng-class="{ 'has-error': newRuleForm.webService.$invalid }">
           <label>Web Service Url:</label>
           <textarea class="form-control"
                     name="webService"
@@ -256,7 +275,8 @@
 
 
     <div class="modal-footer">
-      <button class="btn btn-primary" ng-disabled="newRuleForm.$invalid " ng-click="closeModal(rule)" ng-bind="modal.okButtonText"></button>
+      <button class="btn btn-primary" ng-disabled="newRuleForm.$invalid " ng-click="closeModal(rule)"
+              ng-bind="modal.okButtonText"></button>
       <button class="btn btn-danger pull-left" ng-click="delete(rule)" ng-bind="modal.deleteButtonText"
               ng-if="modal.mode == 'update'"></button>
       <button class="btn btn-default" ng-click="cancel()" ng-bind="modal.cancelButtonText"></button>

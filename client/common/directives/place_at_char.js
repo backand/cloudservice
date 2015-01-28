@@ -8,24 +8,22 @@
    * @returns {Function}
    */
   function insertAtCaretDirective() {
-    var watcher = null;
+    var listener = null;
     return {
-      scope: {
-        elementId: '@insertAtCaret'
-      },
       link: function (scope) {
 
-        if(watcher) {
-          watcher();
-        }
-        watcher = scope.$on('insert:placeAtCaret', function (evt, token) {
-          $('#' + scope.elementId).insertAtCaret("{{" + token + "}}");
+        if(listener) {listener();}
+
+        listener = scope.$on('insert:placeAtCaret', function (evt, data) {
+          $('#' + data[0]).insertAtCaret("{{" + data[1] + "}}");
         });
+
       }
     }
   }
 
   angular.module('app')
     .directive('insertAtCaret', insertAtCaretDirective);
+
 }());
 

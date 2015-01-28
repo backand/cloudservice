@@ -1,0 +1,25 @@
+<button class="btn btn-danger btn-xs pull-right" ng-click="modal.toggleOptions()">X</button>
+
+<strong ng-bind="modal.dictionaryItems.headings.tokens"></strong>
+
+<hr/>
+
+<ul class="list-unstyled">
+  <li ng-repeat="token in modal.dictionaryItems.data.tokens"
+      ng-click="modal.insertAtChar('message' ,token.token)"
+      ng-bind="token.label"
+      style="cursor:pointer;">
+  </li>
+</ul>
+
+<strong ng-bind="modal.dictionaryItems.headings.props"></strong>
+<hr/>
+
+<ul class="list-unstyled">
+  <li ng-repeat="prop in modal.dictionaryItems.data.props"
+      ng-click="modal.insertAtChar('message',prop.token)"
+      ng-bind="prop.label"
+      style="cursor:pointer;"
+    >
+  </li>
+</ul>
