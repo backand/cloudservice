@@ -1,21 +1,11 @@
 
 <div ng-controller="FieldsController as fields"
-     class="slimScrollDiv panel-body panel-body-custom ui-tab-container ui-tab-vertical"
-     style="height:500px; overflow:auto">
+     class="ui-tab-container ui-tab-vertical"
+     style="height:600px; overflow:auto">
   <tabset class="ui-tab">
     <tab ng-repeat="field in fields.items"
          heading="{{ field.name }}">
-
-        
       <form role="form"  >
-
-
-        <div class="form-group border-bottom">
-        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.advancedLayout.delete" checked=""><i></i></label>
-          <label class="strong" for="excluded">Ignore this field</label>
-          <div class="field-description">Short description about this field</div>
-
-        </div>
 
         <div class="field-group">
           <h4 class="group-label">General Info</h4>
@@ -24,13 +14,12 @@
               <label for="jsonName">Name</label>
               <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" id="jsonName"
                      ng-model="field.name">
-
-              <div class="field-description">Description text here</div>
+              <div class="field-description">The name of the field for any JSON representation</div>
             </div>
             <div class="form-group form-group-half">
-              <label for="DefaultValue">Default Value</label>
-              <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" ng-model-options="{ updateOn: 'blur'}" id="DefaultValue"
-                     ng-model="field.advancedLayout.defaultValue">
+              <label class="strong" for="dbName">Database Name</label>
+              <input type="text" class="form-control" disabled id="dbName" ng-model="field.databaseName">
+              <div class="field-description">The name of the field in the database</div>
             </div>
             <div class="form-group  form-group-half">
               <label for="dbName">Database Name</label>
@@ -38,41 +27,48 @@
                      ng-model="field.databaseName">
             </div>
             <div class="form-group form-group-half">
-              <label for="DatabaseType">Database Type</label>
+              <label class="strong" for="DatabaseType">Type</label>
               <input type="text" class="form-control" disabled id="DatabaseType"
                      ng-model="field.type">
-            </div>
-            <div class="form-group form-group-half">
-              <label for="Required">Required</label>
-              <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
-                ng-disabled="field.advancedLayout.delete" id="Required" type="checkbox"
-                ng-model="field.advancedLayout.required" checked=""><i></i></label>
-            </div>
-
-            <div class="form-group form-group-half">
-              <label for="Searchable">Searchable</label>
-              <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
-                ng-disabled="field.advancedLayout.delete" id="Searchable" type="checkbox"
-                ng-model="field.grid.hideFilter" checked=""><i></i></label>
+              <div class="field-description">The type of the field in Backand</div>
             </div>
           </div><!--group inner-->
 
         </div><!--field-group-->
-
-<!--        <div class="form-group">
-          <label c for="Audit">Audit</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="Audit" type="checkbox"  ng-model="field.required" checked=""><i></i></label>
-        </div>-->
-        <div class="row">
-          <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
-            <label for="minVal">Min Value</label>
-            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="minVal" ng-model-options="{ updateOn: 'blur'}"
-                   ng-model="field.advancedLayout.minimumValue">
-          </div>
-          <div class="form-group col-md-6" ng-show="field.type=='Numeric' || field.type=='DateTime'">
-            <label for="maxVal">Max Value</label>
-            <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="maxVal" ng-model-options="{ updateOn: 'blur'}"
-                   ng-model="field.advancedLayout.maximumValue">
+        <div class="field-group">
+          <h4 class="group-label">Server Side Validation</h4>
+          <div class="group-inner">
+            <div class="form-group form-group-half">
+              <label class="strong" for="Required">Required</label>
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
+                ng-disabled="field.advancedLayout.delete" id="Required" type="checkbox"
+                ng-model="field.advancedLayout.required" checked=""><i></i></label>
+              <div class="field-description">When set to True, you must send value when creating new row</div>
+            </div>
+            <div class="form-group form-group-half">
+              <label class="strong" for="DefaultValue">Default Value</label>
+              <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" ng-model-options="{ updateOn: 'blur'}" id="DefaultValue"
+                     ng-model="field.advancedLayout.defaultValue">
+              <div class="field-description">The default value is used when creating new row and no other value is set</div>
+            </div>
+            <div class="form-group form-group-half" ng-show="field.type=='Numeric'">
+              <label class="strong" for="minVal">Min Value</label>
+              <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="minVal" ng-model-options="{ updateOn: 'blur'}"
+                     ng-model="field.advancedLayout.minimumValue">
+              <div class="field-description">The minimum value of the field</div>
+            </div>
+            <div class="form-group form-group-half" ng-show="field.type=='Numeric'">
+              <label class="strong" for="maxVal">Max Value</label>
+              <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="maxVal" ng-model-options="{ updateOn: 'blur'}"
+                     ng-model="field.advancedLayout.maximumValue">
+              <div class="field-description">The maximum value of the field</div>
+            </div>
+            <div class="form-group" ng-show="field.type=='DateTime'">
+              <label class="strong" for="Format">Format</label>
+              <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="Format" ng-model-options="{ updateOn: 'blur'}"
+                     ng-model="field.advancedLayout.format">
+              <div class="field-description">Date or number format to be forced in the server side</div>
+            </div>
           </div>
         </div>
         <!--<div class="row">
@@ -87,11 +83,7 @@
                    ng-model="field.advancedLayout.minimumLength">
           </div>
         </div>-->
-        <div class="form-group" ng-show="">
-          <label for="Format">Format</label>
-          <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="Format" ng-model-options="{ updateOn: 'blur'}"
-                 ng-model="field.advancedLayout.format">
-        </div>
+
     <!--    <div class="form-group col-sm-4" >
           <label for="allowCreate">Allow Create</label>
           <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="allowCreate"
@@ -110,14 +102,32 @@
 
 
 
-
-        <div class="form-group">
-          <label  for="ExcludeUpdate">Exclude in Update</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeUpdate" type="checkbox" ng-model="field.advancedLayout.excludeInUpdate" checked=""><i></i></label>
+        <div class="field-group">
+          <div class="group-inner">
+            <div class="form-group form-group-half">
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeUpdate" type="checkbox" ng-model="field.advancedLayout.excludeInUpdate" checked=""><i></i></label>
+              <label class="strong" for="ExcludeUpdate">Exclude in Update</label>
+              <div class="field-description">Use the field in any server side rule but don't save to the database when updating a row</div>
+            </div>
+            <div class="form-group form-group-half">
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeInsert" type="checkbox" ng-model="field.advancedLayout.excludeInInsert" checked=""><i></i></label>
+              <label class="strong" for="ExcludeInsert">Exclude in Create</label>
+              <div class="field-description">Use the field in any server side rule but don't save to the database when creating new row</div>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label  for="ExcludeInsert">Exclude in Insert</label>
-          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeInsert" type="checkbox" ng-model="field.advancedLayout.excludeInInsert" checked=""><i></i></label>
+        <!--<div class="form-group">-->
+          <!--<label  for="EnableUpload">Enable Upload</label>-->
+          <!--<label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="EnableUpload" type="checkbox" ng-model="field.EnableUpload" checked=""><i></i></label>-->
+        <!--</div>-->
+        <div class="field-group">
+          <div class="group-inner">
+            <div class="form-group">
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.advancedLayout.delete" checked=""><i></i></label>
+              <label class="strong" for="excluded">Ignore this field</label>
+              <div class="field-description">Use this if to exclude the field from any server side action</div>
+            </div>
+          </div>
         </div>
         <div class="form-group">
           <label  for="EnableUpload">Enable Upload</label>
