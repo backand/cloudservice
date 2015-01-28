@@ -11,7 +11,7 @@
           <h4 class="group-label">General Info</h4>
           <div class="group-inner">
             <div class="form-group form-group-half">
-              <label class="strong" for="jsonName">Name</label>
+              <label for="jsonName">Name</label>
               <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" id="jsonName"
                      ng-model="field.name">
               <div class="field-description">The name of the field for any JSON representation</div>
@@ -21,12 +21,10 @@
               <input type="text" class="form-control" disabled id="dbName" ng-model="field.databaseName">
               <div class="field-description">The name of the field in the database</div>
             </div>
-            <div class="form-group form-group-half">
-              <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
-                ng-disabled="field.advancedLayout.delete" id="Searchable" type="checkbox"
-                ng-model="field.grid.hideFilter" checked=""><i></i></label>
-              <label class="strong" for="Searchable">Searchable</label>
-              <div class="field-description">Include the filed in textual search filter</div>
+            <div class="form-group  form-group-half">
+              <label for="dbName">Database Name</label>
+              <input type="text" class="form-control" disabled id="dbName"
+                     ng-model="field.databaseName">
             </div>
             <div class="form-group form-group-half">
               <label class="strong" for="DatabaseType">Type</label>
@@ -131,6 +129,11 @@
             </div>
           </div>
         </div>
+        <div class="form-group">
+          <label  for="EnableUpload">Enable Upload</label>
+          <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="EnableUpload" type="checkbox" ng-model="field.EnableUpload" checked=""><i></i></label>
+        </div>
+
       </form>
 
     </tab>

@@ -292,6 +292,10 @@ a.app-panel:hover {
   }
 
 }
+
+.save-bar {
+  clear:both;
+}
 .form-group {
   label {
     font-weight:normal;
@@ -304,6 +308,7 @@ a.app-panel:hover {
     margin-bottom:10px;
     padding-bottom:10px;
   }
+
   &.form-group-half {
     float:left;
     width:49%;
@@ -373,3 +378,19 @@ h4.page-description {
   font-size:13px;
 }
 
+
+
+
+ul.tables-list {
+  height:300px;
+  overflow:auto;
+}
+.nav-container .nav ul li {
+  padding-right:10px;
+}
+.nav-container .nav ul li > a span {
+ word-break:break-all;
+}
+.actions-bar .form-inline .input-group {
+  vertical-align: top;
+}
