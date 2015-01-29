@@ -112,6 +112,8 @@
       );
     };
 
+    $scope.$on('fetchTables', self.fetchTables);
+
     self.showTable = function(table) {
       $state.go('tables.columns', {
         name: $state.params.name,

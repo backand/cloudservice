@@ -11,6 +11,7 @@
     $scope.appName = appData.Name;
 
     AppsService.setCurrentApp(appItem.data);
+    $scope.$root.$broadcast('fetchTables');
 
     //not connected to database :
     if (appItem.data.DatabaseStatus !== 1) {

@@ -23,7 +23,7 @@
       <div class="form-group col-lg-12 col-md-12 col-sm-12"
            ng-class="{ 'has-error': newRuleForm.eventTrigger.$invalid && newRuleForm.eventTrigger.$dirty}">
 
-        <label for="eventTrigger">Event Trigger</label>
+        <label>Event Trigger</label>
 
         <select class="form-control"
                 ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
@@ -66,6 +66,7 @@
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition"
          ng-class="{ 'has-error': newRuleForm.action.$invalid &&  newRuleForm.action.$dirty }">
+
       <label>Action</label>
       <select class="form-control"
               name="action"
@@ -238,22 +239,8 @@
                     style="resize: vertical"></textarea>
         </div>
 
-        <!--   <div class="form-group col-lg-6 col-md-6 col-sm-6">
-             <label>In parameters:</label>
-             <input type="text"
-                    ng-model="rule.inparameters"
-                    class="form-control"/>
-           </div>
-
-           <div class="form-group col-lg-6 col-md-6 col-sm-6">
-             <label>Out parameters:</label>
-             <input type="text"
-                    ng-model="rule.outParameters"
-                    class="form-control"/>
-           </div>-->
-
       </div>
-      <!-- ./execute -->
+
 
       <div ng-switch-when="WebService">
 
