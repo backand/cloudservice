@@ -3,8 +3,8 @@
      class="ui-tab-container ui-tab-vertical"
      style="height:600px; overflow:auto">
   <tabset class="ui-tab">
-    <tab ng-repeat="field in fields.items"
-         heading="{{ field.name }}">
+    <tab ng-repeat="field in fields.items track by field.__metadata.id"
+         heading="{{ ::field.name }}">
       <form role="form"  >
 
         <div class="field-group">
