@@ -16,6 +16,14 @@
       });
     };
 
+    self.getRule = function (id) {
+      return $http({
+        method: 'GET',
+        url : CONSTS.appUrl + baseUrl+ '/' + id,
+        headers: {AppName: self.appName}
+      })
+    };
+
     self.post = function (rule) {
       return $http({
         method: 'POST',

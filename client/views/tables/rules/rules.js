@@ -127,15 +127,21 @@
     };
 
     /**
-     * put an existing rule on the scope,
-     * set the scope mode to new,
-     * and lunch the modal
+     * get the rule name from the tree and get the full rule data from server
      * @param rule
      */
     function editRule(rule) {
-      $scope.rule = getRuleByName(rule);
+      var rule = getRuleByName(rule);
+      RulesService.getRule(rule.__metadata.id).then(loadRule,errorHandler)
+    }
 
-      //$scope.rule = angular.copy(rule);
+    /**
+     * Update rule in scope and open the edit dialog
+     * @param data
+     */
+    function loadRule(data)
+    {
+      $scope.rule = data.data;
       $scope.modal.mode = 'update';
       launchModal();
     }
