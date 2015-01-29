@@ -12,13 +12,13 @@
     <div class="col-lg-2">
       <div class="override-template"><label> override</label>
         <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
-          <input id="override-checkbox" type="checkbox" ng-model="security.override"/><i></i>
+          <input id="override-checkbox" type="checkbox" ng-model="security.view.permissions.overrideinheritable"/><i></i>
         </label>
       </div>
     </div>
   </div>
   <security-matrix security-template="security.sTemplate"
-                   override="security.override"
+                   override="security.view.permissions.overrideinheritable"
                    on-update="security.templateChanged(template)"
                    on-role-add="security.templateRoleAdd(role)"
                    on-role-rename="security.templateRoleRename(role, newRole)"

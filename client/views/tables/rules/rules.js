@@ -17,7 +17,6 @@
       self.groupVisiable = true;
       self.open = newRule;
       self.edit = editRule;
-      self.clearRule = deleteRule;
       self.toggleGroup = toggleGroup;
       $scope.$on('tabs:rules', getRules);
       DictionaryService.get().then(populateDictionaryItems);
@@ -126,21 +125,23 @@
     };
 
     /**
-     * put an existing rule on the scope,
-     * set the scope mode to new,
-     * and lunch the modal
+     * get the rule name from the tree and get the full rule data from server
      * @param rule
      */
     function editRule(rule) {
-      $scope.rule = getRuleByName(rule);
-
-      //$scope.rule = angular.copy(rule);
-      $scope.modal.mode = 'update';
-      launchModal();
+      var rule = getRuleByName(rule);
+      RulesService.getRule(rule.__metadata.id).then(loadRule,errorHandler)
     }
 
-    function deleteRule(rule) {
-      RulesService.remove(getRuleByName(rule)).then(getRules)
+    /**
+     * Update rule in scope and open the edit dialog
+     * @param data
+     */
+    function loadRule(data)
+    {
+      $scope.rule = data.data;
+      $scope.modal.mode = 'update';
+      launchModal();
     }
 
     /**
@@ -167,9 +168,13 @@
        * @param rule
        */
       $scope.delete = function (rule) {
-        console.log('delete rule', rule);
-        RulesService.remove(rule).then(getRules);
-        modalInstance.close();
+        ConfirmationPopup.confirm('Are sure you want to delete this rule?')
+          .then(function(result){
+            if(result){
+              RulesService.remove(rule).then(getRules);
+              modalInstance.close();
+            }
+          });
       }
 
       /**

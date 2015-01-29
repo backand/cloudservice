@@ -4,9 +4,9 @@
 
     var self = this;
 
-    self.workspaces = null;
-
     (function init() {
+      self._lastPermissions = null;
+      self.workspaces = null;
       self.view = null;
       self.templateChanged = templateChanged;
       self.templateRoleAdd = templateRoleAdd;
@@ -17,8 +17,21 @@
 
     //todo: (yariv): save the template to the server
     function templateChanged (template) {
-      console.log('callback function, template changed: ', template);
-      var p = SecurityMatrixService.getPermission(self.sTemplate);
+
+      var permissions = SecurityMatrixService.getPermission(template);
+
+      if(self._lastPermissions == null || JSON.stringify(permissions) == JSON.stringify(self._lastPermissions))
+      {
+        self._lastPermissions = permissions;
+        return;
+      }
+
+      self.view.permissions.allowCreateRoles = permissions.allowCreate;
+      self.view.permissions.allowEditRoles = permissions.allowEdit;
+      self.view.permissions.allowDeleteRoles = permissions.allowDelete;
+      self.view.permissions.allowReadRoles = permissions.allowRead;
+
+      ColumnsService.commit(self.view);
     }
 
     /**
@@ -43,7 +56,7 @@
     function getWorkspaces() {
       if (self.workspaces == null) {
         SecurityService.appName =
-          SecurityService.getWorkspace().then(WorksapceSuccessHandler, errorHandler)
+          SecurityService.getWorkspace().then(worksapceSuccessHandler, errorHandler)
       }
     }
 
@@ -52,7 +65,7 @@
      * @param data
      * @constructor
      */
-    function WorksapceSuccessHandler(data) {
+    function worksapceSuccessHandler(data) {
       self.workspaces = data.data.data;
 
       if (self.view == null)
@@ -107,7 +120,7 @@
         permissions.allowEdit = self.view.permissions.allowEditRoles;
         permissions.allowDelete = self.view.permissions.allowDeleteRoles;
         permissions.allowRead = self.view.permissions.allowReadRoles;
-
+        self._lastPermissions = permissions;
       }
       //if no, read the permissions from the User
       SecurityMatrixService.loadMatrix(permissions).then(function (data) {

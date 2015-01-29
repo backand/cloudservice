@@ -35,22 +35,23 @@
       </div>
     </div>
 
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.dataAction" ng-class="{ 'has-error': newRuleForm.whereCondition.$invalid && newRuleForm.whereCondition.$dirty }">
 
-    <label>Where condition</label>
+      <label>Where condition</label>
 
-    <div class="pull-right">
-      <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.dictionaryState = !modal.dictionaryState"></span>
-    </div>
+      <div class="pull-right">
+        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.dictionaryState = !modal.dictionaryState"></span>
+      </div>
 
-    <div ng-cloak>
-      <angled-window ng-show="modal.dictionaryState"
-                     id="{{winId}}"
-                     title="Columns"
-                     grouping="w"
-                     style="left: 550px; top: -50px;">
-        <div ng-include="'views/tables/rules/where_condition_window.html'"></div>
-      </angled-window>
-    </div>
+      <div ng-cloak>
+        <angled-window ng-show="modal.dictionaryState"
+                       id="{{winId}}"
+                       title="Columns"
+                       grouping="w"
+                       style="left: 550px; top: -50px;">
+          <div ng-include="'views/tables/rules/where_condition_window.html'"></div>
+        </angled-window>
+      </div>
 
       <textarea id="whereCondition"
                 required
@@ -62,7 +63,7 @@
                 ng-model-options="{debounce:{default:400}}"
                 style="resize: vertical"
                 insert-at-caret></textarea>
-
+    </div>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition"
          ng-class="{ 'has-error': newRuleForm.action.$invalid &&  newRuleForm.action.$dirty }">
@@ -82,9 +83,10 @@
       <!-- notify options -->
       <div ng-switch-when="Notify">
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+        <div class="form-group col-lg-6 col-md-6 col-sm-6" ng-class="{ 'has-error': newRuleForm.to.$invalid }">
           <label>To:</label>
           <input type="text"
+                 required
                  name="to"
                  id="to"
                  ng-model="rule.to"
@@ -124,9 +126,8 @@
                  class="form-control"/>
         </div>
 
-
         <div ng-cloak>
-          <angled-window ng-show="modal.messege.window"
+          <angled-window ng-show="modal.notifyMessage.window"
                          id="{{winId}}"
                          title="Columns"
                          grouping="w"
@@ -136,19 +137,19 @@
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': newRuleForm.message.$invalid }">
+             ng-class="{ 'has-error': newRuleForm.notifyMessage.$invalid }">
 
           <div class="pull-right">
             <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
-                  ng-click="modal.messege.window = !modal.messege.window"></span>
+                  ng-click="modal.notifyMessage.window = !modal.notifyMessage.window"></span>
 
           </div>
-          <label for="message">Message:</label>
-          <textarea class="form-control" name="message"
-                    id="message"
-                    ng-model="rule.message"
+          <label for="notifyMessage">Message:</label>
+          <textarea class="form-control" name="notifyMessage"
+                    id="notifyMessage"
+                    ng-model="rule.notifyMessage"
                     style="resize: vertical"
-                    insert-at-caret="message"
+                    insert-at-caret="notifyMessage"
                     required
             ></textarea>
         </div>
@@ -235,7 +236,7 @@
         <div class="form-group col-lg-12 col-md-12 col-sm-12">
           <label>Message:</label>
           <textarea class="form-control"
-                    ng-model="rule.message"
+                    ng-model="rule.executeMessage"
                     style="resize: vertical"></textarea>
         </div>
 
