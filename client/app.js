@@ -64,7 +64,7 @@
     'app.backoffice',
     'app.playground',
   ])
-    .config(['$compileProvider','$httpProvider',appConfig])
+    //.config(['$compileProvider','$httpProvider',appConfig])
     .run(run)
     .controller('MainController', ["SessionService", '$state', '$location', MainController])
     .value('version', '1.0.1')

@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function ViewData($log, NotificationService, ColumnsService, $scope) {
+  function ViewData($log, NotificationService, ColumnsService, $scope,usSpinnerService) {
 
     var self = this;
     self.title = '';
@@ -45,6 +45,7 @@
 
     function getData() {
       if (self.gridOptions.data.length == 0) {
+        usSpinnerService.spin("loading");
         ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successHandler, errorHandler);
         self.refreshOnce = false;
       }
@@ -55,14 +56,15 @@
       self.gridOptions.totalItems = data.data.totalRows;
 
       setTimeout(refreshGridDisplay(),1); //fix bug with bootstrap tab and ui grid
+      usSpinnerService.stop("loading");
     }
 
     function refreshGridDisplay()
     {
-      //if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
-      //  $scope.gridApi.grid.options.columnDefs.splice(0,1);
+      if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
+        $scope.gridApi.grid.options.columnDefs.splice(0,1);
       if(!self.refreshOnce){
-        setTimeout("$('#grid-container').trigger('resize')", 1); //resize the tab to fix the width issue with UI grid
+        setTimeout("$('#grid-container').trigger('resize')", 100); //resize the tab to fix the width issue with UI grid
         self.refreshOnce = true;
       }
 
@@ -84,6 +86,7 @@
       'NotificationService',
       'ColumnsService',
       '$scope',
+      'usSpinnerService',
       ViewData
     ]);
 
