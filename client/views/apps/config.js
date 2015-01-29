@@ -20,8 +20,8 @@ function config($stateProvider) {
       controller: 'AppsShowController as show',
       templateUrl: 'views/apps/show.tpl.html',
       resolve: {
-        appItem: ['AppsService', '$stateParams', function (AppsService, stateParams) {
-          return AppsService.find(stateParams.name);
+        appItem: ['AppsService', '$stateParams','$rootScope', function (AppsService, stateParams, $rootScope) {
+          return AppsService.find(stateParams.name)
         }]
       }
     })

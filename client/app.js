@@ -12,6 +12,11 @@
     }
   }
 
+  //function appConfig ($compileProvider, $httpProvider) {
+  //  $compileProvider.debugInfoEnabled(false);
+  //  $httpProvider.useApplyAsync(true);
+  //}
+
   function run($log, editableOptions) {
     $log.debug('App is running!');
     editableOptions.theme = 'bs3';
@@ -54,9 +59,11 @@
     'app.backoffice',
     'app.playground',
   ])
+    .config(['$compileProvider','$httpProvider',appConfig])
     .run(run)
     .controller('MainController', ["SessionService", '$state', '$location', MainController])
-    .value('version', '1.0.1');
+    .value('version', '1.0.1')
+
 
   angular.element(document).ready(function () {
     angular.bootstrap(document, ['app']);
