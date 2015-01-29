@@ -12,10 +12,15 @@
     }
   }
 
-  //function appConfig ($compileProvider, $httpProvider) {
-  //  $compileProvider.debugInfoEnabled(false);
-  //  $httpProvider.useApplyAsync(true);
-  //}
+  /**
+   * optimizations (nir)
+   * @param $compileProvider
+   * @param $httpProvider
+   */
+  function appConfig ($compileProvider, $httpProvider) {
+    $compileProvider.debugInfoEnabled(false);
+    $httpProvider.useApplyAsync(true);
+  }
 
   function run($log, editableOptions) {
     $log.debug('App is running!');
