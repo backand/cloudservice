@@ -25,7 +25,7 @@
          */
         scope.$watch('securityTemplate', function (template, oldTemplate) {
           //$log.debug('template have been changed: ', template)
-          if(template != null && oldTemplate != null && template != oldTemplate)
+          if(template != null && oldTemplate != null && template !== oldTemplate)
           {
             scope.onUpdate({template: template});
           }

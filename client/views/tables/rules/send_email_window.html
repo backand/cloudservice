@@ -6,7 +6,7 @@
 
 <ul class="list-unstyled">
   <li ng-repeat="token in modal.dictionaryItems.data.tokens"
-      ng-click="modal.insertAtChar('message' ,token.token)"
+      ng-click="modal.insertAtChar('notifyMessage' ,token.token)"
       ng-bind="token.label"
       style="cursor:pointer;">
   </li>
@@ -17,7 +17,7 @@
 
 <ul class="list-unstyled">
   <li ng-repeat="prop in modal.dictionaryItems.data.props"
-      ng-click="modal.insertAtChar('message',prop.token)"
+      ng-click="modal.insertAtChar('notifyMessage',prop.token)"
       ng-bind="prop.label"
       style="cursor:pointer;"
     >

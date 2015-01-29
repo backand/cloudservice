@@ -17,7 +17,6 @@
       self.groupVisiable = true;
       self.open = newRule;
       self.edit = editRule;
-      self.clearRule = deleteRule;
       self.toggleGroup = toggleGroup;
       $scope.$on('tabs:rules', getRules);
       DictionaryService.get().then(populateDictionaryItems);
@@ -145,10 +144,6 @@
       launchModal();
     }
 
-    function deleteRule(rule) {
-      RulesService.remove(getRuleByName(rule)).then(getRules)
-    }
-
     /**
      * init and launch modal window and
      * pass it a scope
@@ -173,9 +168,13 @@
        * @param rule
        */
       $scope.delete = function (rule) {
-        console.log('delete rule', rule);
-        RulesService.remove(rule).then(getRules);
-        modalInstance.close();
+        ConfirmationPopup.confirm('Are sure you want to delete this rule?')
+          .then(function(result){
+            if(result){
+              RulesService.remove(rule).then(getRules);
+              modalInstance.close();
+            }
+          });
       }
 
       /**
