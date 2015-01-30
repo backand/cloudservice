@@ -141,7 +141,6 @@
         method: 'PUT',
         url: CONSTS.appUrl + '/admin/myApps/' + name,
         data: data
-
       });
     };
 

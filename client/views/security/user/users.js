@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $stateParams, $log, usSpinnerService, NotificationService, SecurityService, $scope) {
+  function SecurityUsers(ConfirmationPopup, $modal, $stateParams, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService) {
 
     var self = this;
 
@@ -12,6 +12,8 @@
     self.roles = null;
     self.gridOptions = {};
     self.appName = SecurityService.appName = $stateParams.name;
+    self.actions = ['Delete'];
+    self.action = '';
 
     self.invitedUsers = '';
     self.invitedAdmins = '';
@@ -24,14 +26,7 @@
       pageSizes: [20, 50, 100, 1000]
     };
 
-    /*self.gridOptions.afterSelectionChange= function(rowItem, event) {
-     $scope.rowId = rowItem.rowIndex;
-     //$scope.item_id = rowItem.entity.item_id;
-     $scope.descp = rowItem.entity.descp;
 
-     //solution: get the index of array from rowMap by rowIndex
-     $scope.arrayIdx = $scope.gridOptions.ngGrid.rowMap.indexOf(rowItem.rowIndex);
-     };*/
     function getUsers() {
       usSpinnerService.spin('loading');
       SecurityService.getUsers(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort)
@@ -73,7 +68,7 @@
       enableColumnResize: true,
       enablePaginationControls: false,
       useExternalSorting: true,
-      multiSelect: false,
+      multiSelect: true,
       enableSelectAll: false,
       columnDefs: [
         {name: 'FirstName'},
@@ -97,20 +92,30 @@
     }
 
     self.delete = function () {
-      var item = $scope.gridApi.selection.getSelectedRows();
+      var items = $scope.gridApi.selection.getSelectedRows();
 
-      if (!item || item.length == 0) {
-        NotificationService.add('error', 'No user was selected, please select a row');
+      if (!items || items.length == 0) {
+        NotificationService.add('error', 'No user was selected, please select row(s)');
         return;
       }
 
-      var result = ConfirmationPopup.confirm('You are going to delete ' + item[0].Username + '. are sure you want to continue?')
+      //get the app creator
+      var username = SessionService.currentUser.username;
+
+      var result = ConfirmationPopup.confirm('You are going to delete ' + items.length + ' user(s). Are you sure you want to continue?')
         .then(function (result) {
           if (!result)
             return;
-          SecurityService.deleteUser(item[0].ID)
-            .then(usersDeleteSuccessHandler, errorHandler);
-
+          angular.forEach(items, function(item) {
+            if(username==item.Username)
+            {
+              NotificationService.add('error', 'Can\'t delete the creator of the app');
+            }
+            else
+            {
+              SecurityService.deleteUser(item.ID).then(usersDeleteSuccessHandler, errorHandler);
+            }
+          })
         })
 
     };
@@ -226,8 +231,7 @@
           LastName: name[1]
         };
         SetDataUserRole(user, userRole);
-        SecurityService.postUser(user)
-          .then(getUsers, errorHandler);
+        SecurityService.postUser(user).then(getUsers, errorHandler);
         ;
 
       }
@@ -294,6 +298,7 @@
       'NotificationService',
       'SecurityService',
       '$scope',
+      'SessionService',
       SecurityUsers
     ]);
 
