@@ -4,7 +4,7 @@
      style="height:500px; overflow:auto">
   <tabset class="ui-tab">
     <tab ng-repeat="field in fields.items track by field.__metadata.id"
-         heading="{{ ::field.name }}">
+         heading="{{ field.name }}">
       <form role="form"  >
 
         <div class="field-group">
@@ -19,7 +19,7 @@
             <div class="form-group form-group-half">
               <label class="strong" for="dbName">Database Name</label>
               <input type="text" class="form-control" disabled id="dbName" ng-model="field.databaseName">
-              <div class="field-description">The name of the field in the database</div>
+              <div class="field-description">The name of the column in the database</div>
             </div>
             <div class="form-group form-group-half">
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input

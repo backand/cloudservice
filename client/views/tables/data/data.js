@@ -24,7 +24,7 @@
     }());
 
     self.gridOptions = {
-      enableColumnResize: true,
+      enableColumnResize: false,
       enablePaginationControls: false,
       useExternalSorting: true,
       onRegisterApi: function (gridApi) {
@@ -61,10 +61,10 @@
 
     function refreshGridDisplay()
     {
-      if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
-        $scope.gridApi.grid.options.columnDefs.splice(0,1);
+      //if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
+      //  $scope.gridApi.grid.options.columnDefs.splice(0,1);
       if(!self.refreshOnce){
-        setTimeout("$('#grid-container').trigger('resize')", 100); //resize the tab to fix the width issue with UI grid
+        setTimeout("$('#grid-container').trigger('resize');", 1); //resize the tab to fix the width issue with UI grid
         self.refreshOnce = true;
       }
 
@@ -76,7 +76,7 @@
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
-      $log.debug(error);
+      usSpinnerService.stop("loading");
     }
   }
 

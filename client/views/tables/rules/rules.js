@@ -19,7 +19,6 @@
       self.edit = editRule;
       self.toggleGroup = toggleGroup;
       $scope.$on('tabs:rules', getRules);
-      DictionaryService.get().then(populateDictionaryItems);
     }());
 
     $scope.modal = {
@@ -242,6 +241,7 @@
      * ajax call to get the rules list
      */
     function getRules() {
+      DictionaryService.get().then(populateDictionaryItems);
       RulesService.get().then(buildTree, errorHandler);
     };
 

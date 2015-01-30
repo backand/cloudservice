@@ -1,31 +1,108 @@
 (function () {
 
-  function SecurityController($scope, $state, $filter, SecurityMatrixService, NotificationService, SecurityService, ColumnsService) {
+  function SecurityController($scope, $state, $filter, SecurityMatrixService, NotificationService, SecurityService, ColumnsService, DictionaryService) {
 
     var self = this;
 
     (function init() {
+      self.placeHolder = "'{{sys::username}}' = ProjectUserEmail"
       self._lastPermissions = null;
       self.workspaces = null;
       self.view = null;
+
+      //Security Matrix
       self.templateChanged = templateChanged;
       self.templateRoleAdd = templateRoleAdd;
       self.templateRoleRename = templateRoleRename;
       self.templateRoleRemove = templateRoleRemove;
       $scope.$on('tabs:security', getWorkspaces);
+
+      //Dictionary
+      self.dictionaryItems = {};
+      self.dictionaryState = false;
+      self.toggleOptions = toggleDictionary;
+      self.insertAtChar= insertTokenAtChar;
     }());
 
-    //todo: (yariv): save the template to the server
+    /**
+     * switch the state of the dictionary window
+     */
+    function toggleDictionary() {
+      self.dictionaryState = !self.dictionaryState;
+      $scope.$broadcast('insert:windowClosed');
+    }
+
+    /**
+     * success handle for getting dictionary items
+     * @param data
+     */
+    function populateDictionaryItems(data) {
+      var raw = data.data;
+      var keys = Object.keys(raw);
+      self.dictionaryItems = {
+        headings: {
+          tokens: keys[0]
+        },
+        data: {
+          tokens: raw[keys[0]]
+        }
+      };
+    }
+
+    /**
+     * broadcast insert event from the parent scope
+     * element id used by jquery to locate the element
+     * @param elementId
+     * @param token
+     */
+    function insertTokenAtChar(elementId, token) {
+      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
+    }
+
+    /**
+     * Read the list of workspaces
+     */
+    function getWorkspaces() {
+      DictionaryService.get().then(populateDictionaryItems);
+
+      if (self.workspaces == null) {
+        SecurityService.appName =
+          SecurityService.getWorkspace().then(worksapceSuccessHandler, errorHandler)
+      }
+    }
+
+    /**
+     * @param data
+     * @constructor
+     */
+    function worksapceSuccessHandler(data) {
+      self.workspaces = data.data.data;
+
+      if (self.view == null)
+        ColumnsService.get().then(successHandler, errorHandler)
+    }
+
+    /**
+     * extract and bind the data to the scope
+     * @param data
+     */
+    function successHandler(data) {
+      self.view = data;
+      self.currentST = String(self.view.permissions.securityWorkspace);
+      buildTemplate();
+    }
+
+    /**
+     * Save the changes in the matrix to the view
+     * @param template
+     */
     function templateChanged (template) {
-
       var permissions = SecurityMatrixService.getPermission(template);
-
       if(self._lastPermissions == null || JSON.stringify(permissions) == JSON.stringify(self._lastPermissions))
       {
         self._lastPermissions = permissions;
         return;
       }
-
       self.view.permissions.allowCreateRoles = permissions.allowCreate;
       self.view.permissions.allowEditRoles = permissions.allowEdit;
       self.view.permissions.allowDeleteRoles = permissions.allowDelete;
@@ -50,37 +127,8 @@
     function templateRoleRemove(roleName){
       return SecurityService.deleteRole(roleName);
     }
-    /**
-     * Read the list of workspaces
-     */
-    function getWorkspaces() {
-      if (self.workspaces == null) {
-        SecurityService.appName =
-          SecurityService.getWorkspace().then(worksapceSuccessHandler, errorHandler)
-      }
-    }
 
-    /**
-     *
-     * @param data
-     * @constructor
-     */
-    function worksapceSuccessHandler(data) {
-      self.workspaces = data.data.data;
 
-      if (self.view == null)
-        ColumnsService.get().then(successHandler, errorHandler)
-    }
-
-    /**
-     * extract and bind the data to the scope
-     * @param data
-     */
-    function successHandler(data) {
-      self.view = data;
-      self.currentST = String(self.view.permissions.securityWorkspace);
-      buildTemplate();
-    }
 
     $scope.$watch('security.currentST', function (newVal, oldValue) {
       if (newVal != null && oldValue != null && newVal !== oldValue)
@@ -135,5 +183,5 @@
   }
 
   angular.module('app')
-    .controller('SecurityController', ['$scope', '$state', '$filter', 'SecurityMatrixService', 'NotificationService', 'SecurityService', 'ColumnsService', SecurityController]);
+    .controller('SecurityController', ['$scope', '$state', '$filter', 'SecurityMatrixService', 'NotificationService', 'SecurityService', 'ColumnsService','DictionaryService', SecurityController]);
 }());
