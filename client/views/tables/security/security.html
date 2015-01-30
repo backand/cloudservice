@@ -1,6 +1,32 @@
 <div ng-controller="SecurityController as security">
 
   <div class="row security-header">
+    <div class="col-lg-12 form-group">
+      <label class="strong" for="PermanentFilter">Pre-defined Filter</label>
+
+      <div class="pull-right">
+        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="security.dictionaryState = !security.dictionaryState"></span>
+      </div>
+      <div ng-cloak>
+        <angled-window ng-show="security.dictionaryState"
+                       id="{{winId}}"
+                       title="App Tokens"
+                       grouping="w"
+                       style="left: 550px; top: -50px; height:400px;">
+          <div ng-include="'views/tables/security/pre_defined_window.html'"></div>
+        </angled-window>
+      </div>
+
+      <textarea id="PermanentFilter" ng-model="security.view.dataEditing.permanentFilter"
+                name="PermanentFilter"
+                ng-model-options="{ updateOn: 'blur'}" class="form-control"
+                placeholder="{{security.placeHolder}}"
+                insert-at-caret></textarea>
+      <div class="field-description">The pre-defined filter is used to load data based on rules that can not be overwritten. For example, load only the projects associated with the current logged in user</div>
+    </div>
+  </div>
+
+  <div class="row security-header">
     <div class="col-lg-2">
     <label class="strong" >Security Template</label>
       <select class="form-control"

@@ -104,7 +104,7 @@
     self.fetchTables = function () {
       TablesService.get($state.params.name).then(
         function (data) {
-          self.tables = data.data.data;
+          self.tables = data;
         },
         function (data) {
           $log.debug("TablesService failure", data);
@@ -113,6 +113,7 @@
     };
 
     $scope.$on('fetchTables', self.fetchTables);
+    $scope.$on('appname:saved', self.fetchTables);
 
     self.showTable = function(table) {
       $state.go('tables.columns', {

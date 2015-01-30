@@ -1,6 +1,6 @@
 (function() {
 
-  function ColumnsService($http, CONSTS, $q, NotificationService, $interval) {
+  function ColumnsService($http, CONSTS, $q, NotificationService, $interval, $rootScope) {
 
     var self = this;
     var _tableConfig = null;
@@ -113,6 +113,9 @@
           {
             saveData = false;
             NotificationService.add('success', 'Data saved');
+            //only when app name change
+            if(table1.__metadata.name != table1.name)
+              $rootScope.$broadcast('appname:saved');
           }
         }, function (error){
           saveData = false;
@@ -129,12 +132,12 @@
       }
     }
 
-    //$scope.$on('$destroy', function() {
+    //$rootScope.$on('$destroy', function() {
     //  stopRefresh();
     //});
 
   }
 
   angular.module('common.services')
-    .service('ColumnsService', ['$http', 'CONSTS', '$q','NotificationService','$interval', ColumnsService]);
+    .service('ColumnsService', ['$http', 'CONSTS', '$q','NotificationService','$interval','$rootScope', ColumnsService]);
 })();

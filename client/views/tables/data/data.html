@@ -1,8 +1,8 @@
 <div ng-controller="ViewData as data" id="grid-container">
+    <div us-spinner spinner-key="loading" spinner-start-active></div>
     <div ui-grid="data.gridOptions"
          class="datagrid"
-         ng-show="data.gridOptions.totalItems > 0"
-         >
+         ng-show="data.gridOptions.totalItems > 0">
     </div>
     <div ng-show="data.gridOptions.totalItems == 0">
       <h3>No data in {{data.title}}</h3>

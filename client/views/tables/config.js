@@ -5,7 +5,6 @@
     .config(config);
 
   function config($stateProvider) {
-
     $stateProvider
       .state('tables.show', {
         url: '/:name',
@@ -13,7 +12,7 @@
         templateUrl: 'views/tables/show.html'
       })
       .state('tables.columns', {
-        url: '/:name/:tableName/:tableId',
+        url: '/:name/:tableId',
         controller: 'SingleTableShow as singleTable',
         templateUrl: 'views/tables/show_single_table.html'
 

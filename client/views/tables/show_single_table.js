@@ -1,11 +1,11 @@
 (function () {
 
-  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService, NotificationService,$rootScope) {
+  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService, NotificationService,$rootScope, TablesService, $filter) {
 
     var self = this;
 
     (function init() {
-      self.tableName = $stateParams.tableName;
+      self.appName = $stateParams.name;
       self.tableId = $stateParams.tableId;
       self.messages = [];
       self.fields = [];
@@ -13,19 +13,57 @@
       self.switchTab = switchTab;
       self.fieldTypesRange = ["String", "DateTime", "Integer"];
       self.selectedField = null;
-      self.appName = $stateParams.name;
-
       RulesService.appName = ColumnsService.appName = DictionaryService.appName = SecurityService.appName = self.appName;
       RulesService.tableId = self.tableId;
-      ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
+      $scope.$on('appname:updated', updateAppName);
+      $scope.$on('appname:saved', loadTables);
 
-      ColumnsService.get(); //populate the view configuration data
+      loadTables();
 
     }());
 
+    function loadTables()
+    {
+      TablesService.get(self.appName).then(loadColumns,errorHandler);
+    }
+    /**
+     * Need to het first the tables before loading the page
+     * @param tables
+     */
+    function loadColumns(tables)
+    {
+      self.tableName = getTableNameById(tables,$stateParams.tableId).name;
+      ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
+      ColumnsService.get(); //populate the view configuration data
+
+      switchTab('fields');
+    }
+
+    /**
+     * Load the UI for each tab
+     * @param tab
+     */
     function switchTab (tab) {
       $scope.$broadcast('tabs:' + tab);
     }
+
+    function updateAppName(event, data){
+      self.tableName = data;
+      ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
+    }
+
+
+
+    /**
+     * Find the table name by id
+     * @param id
+     * @returns {*|XMLList|XML}
+     */
+    function getTableNameById(tables,id) {
+      return angular.copy($filter('filter')(tables, function (t) {
+        return t.__metadata.id === id;
+      })[0])
+    };
 
     /**
      * Sync the database into Backand - add all the tables and sync
@@ -63,6 +101,14 @@
         });
     }
 
+    /**
+     * delegate any error to notification service
+     * @param error
+     * @param message
+     */
+    function errorHandler(error, message) {
+      NotificationService.add('error', message);
+    }
   }
 
   angular.module('app')
@@ -75,6 +121,8 @@
       'SecurityService',
       'NotificationService',
       '$rootScope',
+      'TablesService',
+      '$filter',
       SingleTableShow
     ]);
 
