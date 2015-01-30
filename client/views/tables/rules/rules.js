@@ -58,8 +58,6 @@
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
       resetRule: resetCurrentRule,
-      toggleOptions: toggleDictionary,
-      toggleEmailMessage : toggleEmailMessage
     };
 
 
@@ -94,19 +92,6 @@
           props: raw[keys[1]]
         }
       };
-    }
-
-    /**
-     * switch the state of the dictionary window
-     */
-    function toggleDictionary() {
-      $scope.modal.dictionaryState = !$scope.modal.dictionaryState;
-      $scope.$broadcast('insert:windowClosed');
-    }
-
-    function toggleEmailMessage () {
-      $scope.modal.notifyMessage != $scope.modal.notifyMessage;
-      $scope.$broadcast('insert:windowClosed');
     }
 
     /**
