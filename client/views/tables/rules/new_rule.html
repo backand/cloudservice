@@ -127,7 +127,7 @@
         </div>
 
         <div ng-cloak>
-          <angled-window ng-show="modal.notifyMessage.window"
+          <angled-window ng-show="modal.notifyMessage"
                          id="{{winId}}"
                          title="Columns"
                          grouping="w"
@@ -141,7 +141,7 @@
 
           <div class="pull-right">
             <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
-                  ng-click="modal.notifyMessage.window = !modal.notifyMessage.window"></span>
+                  ng-click="modal.notifyMessage = !modal.notifyMessage"></span>
 
           </div>
           <label for="notifyMessage">Message:</label>

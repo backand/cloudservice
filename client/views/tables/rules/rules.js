@@ -21,6 +21,7 @@
       $scope.$on('tabs:rules', getRules);
     }());
 
+
     $scope.modal = {
       title: 'Application Rule',
       okButtonText: 'Save',
@@ -57,8 +58,10 @@
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
       resetRule: resetCurrentRule,
-      toggleOptions: toggleDictionary
+      toggleOptions: toggleDictionary,
+      toggleEmailMessage : toggleEmailMessage
     };
+
 
     function toggleGroup() {
       self.groupVisiable = !self.groupVisiable;
@@ -98,6 +101,11 @@
      */
     function toggleDictionary() {
       $scope.modal.dictionaryState = !$scope.modal.dictionaryState;
+      $scope.$broadcast('insert:windowClosed');
+    }
+
+    function toggleEmailMessage () {
+      $scope.modal.notifyMessage != $scope.modal.notifyMessage;
       $scope.$broadcast('insert:windowClosed');
     }
 
