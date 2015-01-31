@@ -39,14 +39,13 @@
       <div class="field-group">
         <div class="group-inner">
           <div class="form-group">
-            <label class="strong" for="allowAnonymousPrivate">Private App</label>
+            <label class="strong" for="allowAnonymousPrivate">Public App</label>
             <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-              <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.privateApp"
+              <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.settings.enableUserRegistration"
                      checked=""><i></i>
             </label>
 
-            <div class="field-description">Only invited users can access. Set Private App to Off will Allow
-              any user to register to the app.
+            <div class="field-description">Any user can register to the app. The default is Off so only invited users can register. To invite user go to <a href="" ng-click="auth.goTo('security.users');">Users</a> page.
             </div>
           </div>
           <div class="row">
@@ -102,7 +101,7 @@
             <div class="form-group">
               <input type="text" class="form-control" id="signupkey"
                      ng-disabled="true"
-                     ng-model="auth.data">
+                     ng-model="auth.keys.signup">
               <div class="field-description">Use this token key to call the signup REST API call - /user/signup?SignUpToken=</div>
             </div>
           </div>

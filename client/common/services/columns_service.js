@@ -8,6 +8,7 @@
     var stop;
 
     self.commit = update;
+    self.forceCommit = _update;
     self.appName = null;
     self.tableName = null;
 
@@ -19,9 +20,10 @@
         });
     };
 
-    self.get = function () {
+    self.get = function (force) {
       var deferred = $q.defer();
-      if (_tableConfig == null || _preTableName == null || _preTableName != self.tableName) {
+      var toForce = force || false;
+      if (toForce || _tableConfig == null || _preTableName == null || _preTableName != self.tableName) {
           _get()
           .success(function (data) {
             _tableConfig = data;
@@ -132,9 +134,9 @@
       }
     }
 
-    //$rootScope.$on('$destroy', function() {
-    //  stopRefresh();
-    //});
+    $rootScope.$on('$destroy', function() {
+      stopRefresh();
+    });
 
   }
 

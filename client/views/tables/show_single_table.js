@@ -34,8 +34,11 @@
     {
       self.tableName = getTableNameById(tables,$stateParams.tableId).name;
       ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
-      ColumnsService.get(); //populate the view configuration data
+      ColumnsService.get().then(loadColumnsDone,errorHandler); //populate the view configuration data
 
+    }
+
+    function loadColumnsDone(){
       switchTab('fields');
     }
 
@@ -92,8 +95,9 @@
           }
           //refresh tables list
           //broadcast to NAV
-          $rootScope.$broadcast('tables.update');
-
+          $rootScope.$broadcast('fetchTables');
+          //need to save once after sync to see the changes
+          $rootScope.$broadcast('after:sync');
 
         }, function (err) {
           self.syncing = false;

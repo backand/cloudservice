@@ -22,16 +22,17 @@
      */
     (function init() {
       self.items = [];
-      getFields();
+      //getFields();
       $scope.$on('tabs:fields', getFields);
       $scope.$on('appname:saved', reloadFields);
+      $scope.$on('after:sync', afterSync);
     }());
 
     /**
      * Force to load the view
      */
     function reloadFields() {
-        ColumnsService.get().then(successHandler, errorHandler)
+        ColumnsService.get(true).then(successHandler, errorHandler)
     }
 
     /**
@@ -39,7 +40,7 @@
      */
     function getFields() {
       if(self.view == null && ColumnsService.tableName != null)
-        ColumnsService.get().then(successHandler, errorHandler)
+        ColumnsService.get(false).then(successHandler, errorHandler)
     }
 
     /**
@@ -61,6 +62,13 @@
           $scope.$emit('appname:updated',self.view.name);
       }
     }, true);
+
+    /**
+     * Commit the changes
+     */
+    function afterSync(){
+      ColumnsService.forceCommit(self.view).then(reloadFields,errorHandler);
+    }
 
     /**
      * delegate any error to notification service

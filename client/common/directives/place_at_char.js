@@ -10,12 +10,16 @@
   function insertAtCaretDirective() {
     var listener = null;
     return {
+      scope: {
+        onUpdate: '&'
+      },
       link: function (scope) {
 
         if(listener) {listener();}
 
         listener = scope.$on('insert:placeAtCaret', function (evt, data) {
           $('#' + data[0]).insertAtCaret("{{" + data[1] + "}}");
+          scope.onUpdate(data);
         });
 
       }

@@ -11,7 +11,6 @@
     (function init() {
       self.appName = $state.params.name;
       self.app = null;
-      $scope.$on('tables.update', loadApp);
     }());
 
     self.goTo = function(state) {

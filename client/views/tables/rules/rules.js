@@ -14,10 +14,8 @@
      */
     (function init() {
       self.items = [];
-      self.groupVisiable = true;
       self.open = newRule;
       self.edit = editRule;
-      self.toggleGroup = toggleGroup;
       $scope.$on('tabs:rules', getRules);
     }());
 
@@ -54,15 +52,25 @@
         {value: 'Execute', label: 'Run additional database script'},
         {value: 'WebService', label: 'Make HTTP call'}
       ],
-      dictionaryState: false,
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
       resetRule: resetCurrentRule,
+      digest: digestIn,
+      toggleGroup: toggleGroup
     };
 
 
-    function toggleGroup() {
-      self.groupVisiable = !self.groupVisiable;
+    function toggleGroup(obj) {
+      $scope.modal.dictionaryState = false;
+      $scope.modal.notifySubject = false;
+      $scope.modal.notifyMessage = false;
+      $scope.modal.webService = false;
+      $scope.modal.sqlCommand = false;
+      if(obj != undefined){
+        return !obj;
+      }
+      else
+        return false;
     }
 
     /**
@@ -73,6 +81,10 @@
      */
     function insertTokenAtChar(elementId, token) {
       $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
+    }
+
+    function digestIn(){
+      angular.element()
     }
 
     /**
@@ -142,6 +154,7 @@
      */
     function launchModal() {
 
+      $scope.modal.toggleGroup();
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/rules/new_rule.html',
         backdrop: 'static',
