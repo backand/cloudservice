@@ -45,7 +45,7 @@
 
         <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
           <div class="ui-ribbon-wrapper">
-            <div class="ui-ribbon">{{ ::index.getRibboninfo(app).text }}</div>
+            <div class="ui-ribbon">{{ index.getRibboninfo(app).text }}</div>
           </div>
           <div class="panel-heading text-center">
             <a ng-if="app.DatabaseStatus == 1"
@@ -54,7 +54,7 @@
               <i class="ti-settings"></i></a>{{ ::app.Name }}</div>
           <div class="panel-body app-panel-body">
             <p class="body-height">{{ ::app.Title }}</p>
-            <button ng-click="index.appDetails(app.Name, app.DatabaseStatus)"
+            <button ng-click="index.appDetails(app.Name, app.DatabaseStatus)" ng-disabled="app.DatabaseStatus==2"
                     class="btn btn-default btn-w-md btn-block">
               App Details
             </button>
