@@ -2,19 +2,15 @@
 
   <div id="rules-header" class="page-header clearfix">
     <div class="title-group">
-       <h1 class="page-name ">Rules</h1>
-
-    <h4 class=" page-description lead pull-left">short description of what rules are and how to use them</h4>
+       <h2 class="page-name ">Rules</h2>
+    <h4 class=" page-description lead pull-left">Manage here all the server side logic and operations</h4>
     </div>
-
-
     <button ng-click="rules.open()"
             id="new-rule-btn"
             class="btn btn-lg btn-success pull-right">
       + new rule
     </button>
   </div>
-
 
   <ul id="rules" class="list-unstyled">
 
@@ -40,7 +36,7 @@
             <i ng-class="{'ti-arrow-up' : subitem.visible, 'ti-arrow-down' : !subitem.visible   }"></i></div>
 
           <p class="rule-sub-description">
-            These rules fire {{ ::subitem.title }} an object is created
+            These rules fire {{ ::subitem.title }} an object is {{ ::item.verb }}
           </p>
 
           <ul class="rules-names-list" ng-show="subitem.visible">
@@ -51,9 +47,8 @@
                   ng-click="rules.edit(rule.name)">
                 {{ ::rule.name}}</h5>
 
-              <p class="rule-description">
-                some description about the action should be here
-              </p>
+              <!--<p class="rule-description">-->
+              <!--</p>-->
             </li>
 
             <li class="add-new-rule text-primary" ng-click="rules.open()">Add new rule</li>

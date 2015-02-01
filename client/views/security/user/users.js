@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $stateParams, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService) {
+  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService) {
 
     var self = this;
 
@@ -16,7 +16,7 @@
       self.open = newUser;
       self.roles = null;
       self.gridOptions = {};
-      self.appName = SecurityService.appName = $stateParams.name;
+      self.appName = SecurityService.appName = $state.params.name;
       self.actions = ['Delete'];
       self.action = '';
 
@@ -58,13 +58,13 @@
       getUsers();
 
       //get the default role for invited users
-      AppsService.getCurrentApp(self.appName).then(suucessApp, errorHandler)
+      AppsService.getCurrentApp(self.appName).then(successApp, errorHandler)
 
     }());
 
     function getUsers() {
       usSpinnerService.spin('loading');
-      SecurityService.getUsers(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort)
+      SecurityService.getUsers(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
         .then(usersSuccessHandler, errorHandler);
 
     }
@@ -96,9 +96,14 @@
       getUsers();
     }
 
-    function suucessApp(data){
+    function successApp(data){
       self.defaultUserRole = data.settings.newUserDefaultRole || 'User';
+      self.registrationRedirectUrl = data.settings.registrationRedirectUrl || '';
     }
+
+    self.goTo = function(state) {
+      $state.go(state, {name: this.appName});
+    };
 
     function newUser() {
       $scope.modal.mode = 'new';
@@ -205,7 +210,7 @@
         }
         if (!self.isEmail(email_array[i])) {
           isValid = false;
-          NotificationService.add('error', email_array[i] + 'is not an email')
+          NotificationService.add('error', email_array[i] + ' is not a valid email')
         }
         i++;
       }
@@ -302,7 +307,7 @@
     .controller('SecurityUsers', [
       'ConfirmationPopup',
       '$modal',
-      '$stateParams',
+      '$state',
       '$log',
       'usSpinnerService',
       'NotificationService',

@@ -9,7 +9,7 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12"
          ng-class="{ 'has-error': newRuleForm.ruleName.$invalid &&  newRuleForm.ruleName.$dirty}">
 
-      <label>Rule name</label>
+      <label>Rule Name</label>
       <input type="text"
              name="ruleName"
              class="form-control"
@@ -162,7 +162,7 @@
           <textarea class="form-control" name="notifyMessage"
                     id="notifyMessage"
                     ng-model="rule.notifyMessage"
-                    style="resize: vertical"
+                    style="resize: vertical" rows="10"
                     insert-at-caret on-update="modal.digest()"
                     required
             ></textarea>

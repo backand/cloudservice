@@ -28,18 +28,18 @@
       dataActions: [{value: 'BeforeCreate', label: 'Create - Before adding data', level1: 0, level2: 0},
         {
           value: 'AfterCreateBeforeCommit',
-          label: 'Create - After data saved before it committed',
+          label: 'Create - During data saved before it committed',
           level1: 0,
           level2: 1
         },
         {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 0, level2: 2},
         {value: 'BeforeEdit', label: 'Update - Before update data', level1: 1, level2: 0},
-        {value: 'AfterEditBeforeCommit', label: 'Update - After data saved before it committed', level1: 1, level2: 1},
+        {value: 'AfterEditBeforeCommit', label: 'Update - During data saved before it committed', level1: 1, level2: 1},
         {value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 1, level2: 2},
         {value: 'BeforeDelete', label: 'Delete - Before delete', level1: 2, level2: 0},
         {
           value: 'AfterDeleteBeforeCommit',
-          label: 'Delete - After record deleted but before it committed',
+          label: 'Delete - During record deleted but before it committed',
           level1: 2,
           level2: 1
         },
@@ -158,6 +158,7 @@
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/rules/new_rule.html',
         backdrop: 'static',
+        keyboard: false,
         scope: $scope
       });
 
@@ -262,6 +263,7 @@
       self.items = [
         {
           title: 'Create',
+          verb: 'created',
           visible: true,
           items: [
             {
@@ -282,6 +284,7 @@
         },
         {
           title: 'Edit',
+          verb: 'edited',
           visible: true,
           items: [
             {
@@ -302,6 +305,7 @@
         },
         {
           title: 'Delete',
+          verb: 'deleted',
           visible: true,
           items: [
             {
@@ -322,6 +326,7 @@
         },
         {
           title: 'Open',
+          verb: 'opened',
           visible: true,
           items: [
             {

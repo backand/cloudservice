@@ -70,7 +70,7 @@
       <div class="field-group">
         <div class="group-inner">
             <div class="form-group">
-              <label for="inputUrl1" class="control-label strong">Custom register page URL</label>
+              <label for="inputUrl1" class="control-label strong">Custom Registration Page URL</label>
 
               <div class="form-group">
                 <input type="text" class="form-control" id="inputUrl1" placeholder="/app/sign-up.html"
@@ -81,7 +81,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="inputUrl2" class="strong control-label">Custom verified email page URL</label>
+              <label for="inputUrl2" class="strong control-label">Custom Verified Email Page URL</label>
 
               <div class="form-group">
                 <input type="text" class="form-control" id="inputUrl2" ng-model-options="{ updateOn: 'blur' ,debounce: 400 }"
@@ -105,6 +105,11 @@
               <div class="field-description">Use this token key to call the signup REST API call - /user/signup?SignUpToken=</div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="group-inner">
+          <ng-include src="'views/tables/rules/rules.html'"></ng-include>
         </div>
       </div>
     </div>

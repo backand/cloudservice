@@ -3,11 +3,11 @@
  */
 (function () {
 
-  function SecurityAuth($stateParams, NotificationService, SecurityService, AppsService, $scope, $state) {
+  function SecurityAuth($state, NotificationService, SecurityService, AppsService, RulesService, DictionaryService, $scope) {
 
     var self = this;
     (function init() {
-      self.appName = SecurityService.appName = AppsService.appName = $stateParams.name;
+      self.appName = SecurityService.appName = AppsService.appName = $state.params.name;
       self.data = {settings: {}, allowAnonymous: false};
       self.updateAppAuth = updateAppAuth;
       //secureLevel= "RegisteredUsers";
@@ -31,6 +31,12 @@
 
       AppsService.appKeys(self.appName).then(setKeysInfo, errorHandler);
       $scope.$watch('auth', updateAppAuth, true);
+
+      //enable here the rules tab only for 'v_durados_user'
+      RulesService.appName = DictionaryService.appName = self.appName;
+      RulesService.tableId = 4;
+      DictionaryService.tableName = 'v_durados_user';
+      $scope.$broadcast('tabs:rules');
     }
 
     function setKeysInfo(data){
@@ -75,12 +81,13 @@
 
   angular.module('app')
     .controller('SecurityAuth', [
-      '$stateParams',
+      '$state',
       'NotificationService',
       'SecurityService',
       'AppsService',
+      'RulesService',
+      'DictionaryService',
       '$scope',
-      '$state',
       SecurityAuth
     ]);
 
