@@ -25,24 +25,15 @@
       okButtonText: 'Save',
       cancelButtonText: 'Cancel',
       deleteButtonText: 'Delete',
-      dataActions: [{value: 'BeforeCreate', label: 'Create - Before adding data', level1: 0, level2: 0},
-        {
-          value: 'AfterCreateBeforeCommit',
-          label: 'Create - During data saved before it committed',
-          level1: 0,
-          level2: 1
-        },
+      dataActions: [
+        {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 0, level2: 0},
+        {value: 'AfterCreateBeforeCommit', label: 'Create - During data saved before it committed', level1: 0, level2: 1},
         {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 0, level2: 2},
         {value: 'BeforeEdit', label: 'Update - Before update data', level1: 1, level2: 0},
         {value: 'AfterEditBeforeCommit', label: 'Update - During data saved before it committed', level1: 1, level2: 1},
         {value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 1, level2: 2},
         {value: 'BeforeDelete', label: 'Delete - Before delete', level1: 2, level2: 0},
-        {
-          value: 'AfterDeleteBeforeCommit',
-          label: 'Delete - During record deleted but before it committed',
-          level1: 2,
-          level2: 1
-        },
+        {value: 'AfterDeleteBeforeCommit',label: 'Delete - During record deleted but before it committed',level1: 2,level2: 1},
         {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 2, level2: 2},
         {value: 'BeforeViewOpen', label: 'Read - Before reading data from database', level1: 3, level2: 0},
         {value: 'Open', label: 'Read - After reading from database but before send to client', level1: 3, level2: 1}
@@ -110,9 +101,15 @@
      * set the scope to update mode
      * and launch modal
      */
-    function newRule() {
+    function newRule(trigger) {
       $scope.modal.mode = 'new';
       resetCurrentRule();
+      if(trigger){
+        $scope.rule.dataAction = trigger;
+        //$scope.rule.dataAction = angular.copy($filter('filter')($scope.modal.dataActions, function (a) {
+        //  return a.value === trigger;
+        //})[0])
+      }
       launchModal();
     }
 
@@ -241,7 +238,7 @@
      * reset the current active rule on scope
      */
     function resetCurrentRule() {
-      $scope.rule = null;
+      $scope.rule = {};
     }
 
     /**
@@ -269,16 +266,19 @@
             {
               visible: false,
               title: 'Before',
+              dataAction: 'BeforeCreate',
               items: []
             },
             {
               visible: false,
               title: 'During',
+              dataAction: 'AfterCreateBeforeCommit',
               items: []
             },
             {
               visible: false,
               title: 'After',
+              dataAction: 'AfterCreate',
               items: []
             }]
         },
@@ -290,16 +290,19 @@
             {
               visible: false,
               title: 'Before',
+              dataAction: 'BeforeEdit',
               items: []
             },
             {
               visible: false,
               title: 'During',
+              dataAction: 'AfterEditBeforeCommit',
               items: []
             },
             {
               visible: false,
               title: 'After',
+              dataAction: 'AfterEdit',
               items: []
             }]
         },
@@ -311,16 +314,19 @@
             {
               visible: false,
               title: 'Before',
+              dataAction: 'BeforeDelete',
               items: []
             },
             {
               visible: false,
               title: 'During',
+              dataAction: 'AfterDeleteBeforeCommit',
               items: []
             },
             {
               visible: false,
               title: 'After',
+              dataAction: 'AfterDelete',
               items: []
             }]
         },
@@ -332,11 +338,13 @@
             {
               visible: false,
               title: 'Before',
+              dataAction: 'BeforeViewOpen',
               items: []
             },
             {
               visible: false,
               title: 'After',
+              dataAction: 'Open',
               items: []
             }]
         }];
