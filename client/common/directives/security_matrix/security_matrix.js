@@ -77,6 +77,9 @@
           }
 
           scope.modal.closeModal = function () {
+            if(scope.modal.roleName == "Developer")
+              return;
+
             switch (scope.modal.mode) {
               case 'new':
                 scope.onRoleAdd({role: scope.modal.roleName}).then(addRole,errorHandler);

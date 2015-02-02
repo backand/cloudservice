@@ -10,10 +10,11 @@
            ng-model="modal.roleName"
            placeholder="Role name">
   </div>
+  <div ng-show="modal.roleName == 'Developer'" class="input-error">Developer role can't be added or changed</div>
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="modal.closeModal()" ng-bind="modal.okButtonText" ng-disabled="!modal.roleName"></button>
+  <button class="btn btn-primary" ng-click="modal.closeModal()" ng-bind="modal.okButtonText" ng-disabled="!modal.roleName || modal.roleName == 'Developer'"></button>
   <button class="btn btn-default" ng-click="modal.cancel()" ng-bind="modal.cancelButtonText"></button>
-  <button class="btn btn-danger pull-left" ng-click="modal.removeRole()" ng-bind="modal.deleteButtonText" ng-if="modal.mode == 'update'"></button>
+  <button class="btn btn-danger pull-left" ng-click="modal.removeRole()" ng-disabled ="modal.roleName == 'Developer'" ng-bind="modal.deleteButtonText" ng-if="modal.mode == 'update'"></button>
 </div>
