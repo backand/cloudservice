@@ -1,7 +1,7 @@
 <div ng-controller="ViewData as data" id="grid-container">
     <div us-spinner spinner-key="loading" spinner-start-active></div>
     <div ui-grid="data.gridOptions"
-         class="datagrid"
+         class="datagrid" ui-grid-resize-columns
          ng-show="data.gridOptions.totalItems > 0">
     </div>
     <div ng-show="data.gridOptions.totalItems == 0">
@@ -9,7 +9,15 @@
     </div>
     <div ng-show="data.gridOptions.totalItems > 0" class="row">
       <div class="col-md-5">
-        <pagination total-items="data.gridOptions.totalItems" ng-model="data.paginationOptions.pageNumber" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" items-per-page="data.paginationOptions.pageSize" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+        <pagination total-items="data.gridOptions.totalItems"
+                    ng-model="data.paginationOptions.pageNumber"
+                    max-size="5"
+                    class="pagination-sm"
+                    boundary-links="true"
+                    rotate="false"
+                    items-per-page="data.paginationOptions.pageSize"
+                    previous-text="&lsaquo;"
+                    next-text="&rsaquo;"></pagination>
       </div>
       <div class="col-md-2" style="margin-top:20px;">
         Page size:

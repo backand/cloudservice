@@ -5,7 +5,7 @@
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
-      <div id="logGrid" ui-grid="log.gridOptions" class="grid" ng-show="log.gridOptions.totalItems > 0"></div>
+      <div id="logGrid" ui-grid="log.gridOptions" ui-grid-resize-columns class="grid" ng-show="log.gridOptions.totalItems > 0"></div>
       <div ng-show="log.gridOptions.totalItems == 0">
         <h3>No {{log.title}}</h3>
       </div>
