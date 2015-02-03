@@ -35,10 +35,10 @@
           <div class="pull-right" ng-click="subitem.visible = !subitem.visible">
             <i ng-class="{'ti-arrow-up' : subitem.visible, 'ti-arrow-down' : !subitem.visible   }"></i></div>
 
-          <p class="rule-sub-description" ng-if="subitem.dataAction != 'OnDemandExecute'">
+          <p class="rule-sub-description" ng-if="subitem.dataAction != 'OnDemand'">
             These rules fire {{ ::subitem.title }} an object is {{ ::item.verb }}
           </p>
-          <p class="rule-sub-description" ng-if="subitem.dataAction == 'OnDemandExecute'">
+          <p class="rule-sub-description" ng-if="subitem.dataAction == 'OnDemand'">
             These rules fire based on a direct all of the REST API
           </p>
 

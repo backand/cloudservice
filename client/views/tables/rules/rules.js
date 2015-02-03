@@ -26,7 +26,7 @@
       cancelButtonText: 'Cancel',
       deleteButtonText: 'Delete',
       dataActions: [
-        {value: 'OnDemandExecute', label: 'On demand - Execute from REST API', level1: 0, level2: 0},
+        {value: 'OnDemand', label: 'On demand - Execute from REST API', level1: 0, level2: 0},
         {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 1, level2: 0},
         {value: 'AfterCreateBeforeCommit', label: 'Create - During data saved before it committed', level1: 1, level2: 1},
         {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 1, level2: 2},
@@ -265,7 +265,7 @@
             {
               visible: false,
               title: 'Execute',
-              dataAction: 'OnDemandExecute',
+              dataAction: 'OnDemand',
               items: []
             }]
         },
