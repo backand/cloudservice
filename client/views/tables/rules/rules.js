@@ -26,17 +26,16 @@
       cancelButtonText: 'Cancel',
       deleteButtonText: 'Delete',
       dataActions: [
-        {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 0, level2: 0},
-        {value: 'AfterCreateBeforeCommit', label: 'Create - During data saved before it committed', level1: 0, level2: 1},
-        {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 0, level2: 2},
-        {value: 'BeforeEdit', label: 'Update - Before update data', level1: 1, level2: 0},
-        {value: 'AfterEditBeforeCommit', label: 'Update - During data saved before it committed', level1: 1, level2: 1},
-        {value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 1, level2: 2},
-        {value: 'BeforeDelete', label: 'Delete - Before delete', level1: 2, level2: 0},
-        {value: 'AfterDeleteBeforeCommit',label: 'Delete - During record deleted but before it committed',level1: 2,level2: 1},
-        {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 2, level2: 2},
-        {value: 'BeforeViewOpen', label: 'Read - Before reading data from database', level1: 3, level2: 0},
-        {value: 'Open', label: 'Read - After reading from database but before send to client', level1: 3, level2: 1}
+        {value: 'OnDemandExecute', label: 'On demand - Execute from REST API', level1: 0, level2: 0},
+        {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 1, level2: 0},
+        {value: 'AfterCreateBeforeCommit', label: 'Create - During data saved before it committed', level1: 1, level2: 1},
+        {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 1, level2: 2},
+        {value: 'BeforeEdit', label: 'Update - Before update data', level1: 2, level2: 0},
+        {value: 'AfterEditBeforeCommit', label: 'Update - During data saved before it committed', level1: 2, level2: 1},
+        {value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 2, level2: 2},
+        {value: 'BeforeDelete', label: 'Delete - Before delete', level1: 3, level2: 0},
+        {value: 'AfterDeleteBeforeCommit',label: 'Delete - During record deleted but before it committed',level1: 3,level2: 1},
+        {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2},
       ],
       workflowActions: [{value: 'Notify', label: 'Send Email'},
         {value: 'Validate', label: 'Advanced Data Validation'},
@@ -259,6 +258,18 @@
       self.data = data.data.data;
       self.items = [
         {
+          title: 'On Demand',
+          verb: 'on demand',
+          visible: true,
+          items: [
+            {
+              visible: false,
+              title: 'Execute',
+              dataAction: 'OnDemandExecute',
+              items: []
+            }]
+        },
+        {
           title: 'Create',
           verb: 'created',
           visible: true,
@@ -327,24 +338,6 @@
               visible: false,
               title: 'After',
               dataAction: 'AfterDelete',
-              items: []
-            }]
-        },
-        {
-          title: 'Open',
-          verb: 'opened',
-          visible: true,
-          items: [
-            {
-              visible: false,
-              title: 'Before',
-              dataAction: 'BeforeViewOpen',
-              items: []
-            },
-            {
-              visible: false,
-              title: 'After',
-              dataAction: 'Open',
               items: []
             }]
         }];
