@@ -66,6 +66,19 @@
 
     <div ng-switch="rule.workflowAction">
 
+      <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.workflowAction">
+
+      <label> Input Parameters</label>
+      <input type="text"
+             name="inputParameters"
+             class="form-control"
+             ng-model="rule.inputParameters"
+             ng-model-options="{debounce:{default:100}}"
+             ng-pattern**="/^[a-zA-Z0-9 ]*$/"
+
+             placeholder="input1,input2,....">
+        </div>
+      <span ng-show="">{{rule.inputParameters.$error.pattern}} Not a valid value!</span>
       <!-- notify options -->
       <div ng-switch-when="Notify">
 
