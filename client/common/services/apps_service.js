@@ -78,7 +78,6 @@
     };
 
     self.all = function () {
-
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'

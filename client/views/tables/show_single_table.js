@@ -74,7 +74,7 @@
     self.sync = function () {
       self.syncing = true;
       NotificationService.add('info', 'Sync takes 1-2 minutes');
-      ColumnsService.sync(self.appName)
+      ColumnsService.sync()
         .then(function (data) {
           self.syncing = false;
           //update messages

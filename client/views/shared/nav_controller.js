@@ -11,6 +11,7 @@
     (function init() {
       self.appName = $state.params.name;
       self.app = null;
+      self.dbEmpty = false;
     }());
 
     self.goTo = function(state) {
@@ -98,12 +99,17 @@
       stopRefresh();
     });
 
+    function successDbStats(data){
+      self.dbEmpty = data.data.tableCount == 0;
+    }
+
     self.tables = [];
 
     self.fetchTables = function () {
       TablesService.get($state.params.name).then(
         function (data) {
           self.tables = data;
+          AppsService.appDbStat($state.params.name).then(successDbStats);
         },
         function (data) {
           $log.debug("TablesService failure", data);

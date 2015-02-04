@@ -1,0 +1,36 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+        <strong> Database Tables  </strong>
+        <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="tables.sync()" ladda="tables.syncing" data-style="expand-right" style="margin-left: 50px;">Sync with Database</button>
+
+        <li class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="tables.alertClass" style="margin-left: 10px;">
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="ti-bell" ></i>
+            </a>
+            <div class="dropdown-menu with-arrow panel panel-default">
+                <div class="panel-heading">
+                    Sync Status
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="message in tables.getMessages()" style="text-transform: none;">
+                        {{message}}
+                    </li>
+                </ul>
+            </div>
+        </li>
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+
+    <div class="panel-body">
+      <div class="ui-bullet">
+        <div class="btn-icon btn-icon-round btn-icon-lg bg-danger">
+          <i class="ti-wand"></i>
+        </div>
+        <div class="ui-bullet-content">
+          <br/><h4>Click the <a href="" ng-click="tables.sync()">Sync with Database</a> to add the tables to your app</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

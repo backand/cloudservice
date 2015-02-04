@@ -1,10 +1,10 @@
 (function () {
   'use strict';
   angular.module('app')
-    .controller('TablesAdd', ['$scope', '$state', '$timeout', 'AppsService', 'usSpinnerService', 'NotificationService', 'TablesService', TablesAdd]);
+    .controller('TablesAdd', ['$scope', '$state', '$rootScope', 'AppsService', 'usSpinnerService', 'NotificationService', 'TablesService', TablesAdd]);
 
 
-  function TablesAdd($scope, $state, $timeout, AppsService, usSpinnerService, NotificationService, TablesService) {
+  function TablesAdd($scope, $state, $rootScope, AppsService, usSpinnerService, NotificationService, TablesService) {
     var self = this;
 
     (function init() {
@@ -227,13 +227,12 @@
     }());
 
     function checkForExistingTables() {
-      TablesService.get($state.params.name)
-        .then(function (data) {
-          self.isEmptyDb = data.length == 0;
-        }, function (err) {
-          NotificationService.add('error', 'Can not get tables list');
-        });
+      AppsService.appDbStat($state.params.name)
+        .then(function(data){
+          self.isEmptyDb = data.data.tableCount == 0;
+        })
     }
+
 
     self.stringfy = function (obj) {
       return angular.toJson(obj, true);
@@ -259,6 +258,9 @@
               NotificationService.add('success', 'The app is ready with the new tables');
               self.processing = false;
               self.isReady = true;
+              //broadcast to NAV
+              $rootScope.$broadcast('fetchTables');
+              checkForExistingTables();
             }, function (err) {
               self.processing = false;
               NotificationService.add('error', 'Can not create table ' + table.name);
