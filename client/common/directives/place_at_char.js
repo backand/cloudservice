@@ -18,8 +18,10 @@
         if(listener) {listener();}
 
         listener = scope.$on('insert:placeAtCaret', function (evt, data) {
-          $('#' + data[0]).insertAtCaret("{{" + data[1] + "}}");
+          var elementToInsert = $('#' + data[0]);
+          elementToInsert.insertAtCaret("{{" + data[1] + "}}");
           scope.onUpdate(data);
+          elementToInsert.trigger('change');
         });
 
       }
