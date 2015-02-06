@@ -99,9 +99,14 @@
           <div class="form-group">
             <label for="inputUrl1" class="control-label strong">Signup Private Token Key</label>
             <div class="form-group">
-              <input type="text" class="form-control" id="signupkey"
-                     ng-disabled="true"
+              <div class="input-group">
+                <input type="text" class="form-control" id="signupkey"
+                     ng-readonly="true"
                      ng-model="auth.keys.signup">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" clip-copy="auth.keys.signup">Copy</button>
+                </span>
+              </div>
               <div class="field-description">Use this token key to call the sign-up REST API call - /user/signup (headers: {SignUpToken: ?})</div>
             </div>
           </div>
