@@ -1,9 +1,6 @@
-<button class="btn btn-danger btn-xs pull-right" ng-click="modal.dictionaryState = modal.toggleGroup(modal.dictionaryState)">X</button>
-
-<strong ng-bind="modal.dictionaryItems.headings.tokens"></strong>
-
+<button class="btn btn-danger btn-xs" style="margin-left: 230px;" ng-click="modal.dictionaryState = modal.toggleGroup(modal.dictionaryState)">X</button>
 <hr/>
-
+<strong ng-bind="modal.dictionaryItems.headings.tokens"></strong>
 <ul class="list-unstyled">
   <li ng-repeat="token in modal.dictionaryItems.data.tokens"
       ng-click="modal.insertAtChar('whereCondition' ,token.token)"
@@ -12,14 +9,22 @@
   </li>
 </ul>
 
-<strong ng-bind="modal.dictionaryItems.headings.props"></strong>
 <hr/>
+<strong ng-bind="modal.dictionaryItems.headings.parameters"></strong>
+<ul class="list-unstyled">
+  <li ng-repeat="token in modal.dictionaryItems.data.parameters"
+      ng-click="modal.insertAtChar('whereCondition' ,token.token)"
+      ng-bind="token.label"
+      style="cursor:pointer;">
+  </li>
+</ul>
 
+
+<hr/>
+<strong ng-bind="modal.dictionaryItems.headings.props"></strong>
 <ul class="list-unstyled">
   <li ng-repeat="prop in modal.dictionaryItems.data.props"
       ng-click="modal.insertAtChar('whereCondition',prop.token)"
-      ng-bind="prop.label"
-      style="cursor:pointer;"
-    >
+      style="cursor:pointer;">{{prop.label}}<a class="pull-right" href="" ng-click="modal.insertAtChar('whereCondition','prev:' + prop.token); $event.stopPropagation()">prev value</a>
   </li>
 </ul>

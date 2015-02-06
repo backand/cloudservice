@@ -221,7 +221,7 @@
         {name: "E-commerce Campaign", template: self.tableTemplate2, active: 2},
         {name: "Advertising System", template: self.tableTemplate3, active: 3}];
 
-      self.isEmptyDb = true;
+      self.isEmptyDb = false;
       self.isReady = false;
       checkForExistingTables();
     }());
@@ -260,6 +260,7 @@
               self.isReady = true;
               //broadcast to NAV
               $rootScope.$broadcast('fetchTables');
+              self.isEmptyDb = false;
               checkForExistingTables();
             }, function (err) {
               self.processing = false;

@@ -1,9 +1,6 @@
-<button class="btn btn-danger btn-xs pull-right" ng-click="modal.notifySubject = modal.toggleGroup(modal.notifySubject)">X</button>
-
-<strong ng-bind="modal.dictionaryItems.headings.tokens"></strong>
-
+<button class="btn btn-danger btn-xs" style="margin-left: 230px;" ng-click="modal.notifySubject = modal.toggleGroup(modal.notifySubject)">X</button>
 <hr/>
-
+<strong ng-bind="modal.dictionaryItems.headings.tokens"></strong>
 <ul class="list-unstyled">
   <li ng-repeat="token in modal.dictionaryItems.data.tokens"
       ng-click="modal.insertAtChar('subject' ,token.token)"
@@ -12,9 +9,18 @@
   </li>
 </ul>
 
-<strong ng-bind="modal.dictionaryItems.headings.props"></strong>
 <hr/>
+<strong ng-bind="modal.dictionaryItems.headings.parameters"></strong>
+<ul class="list-unstyled">
+  <li ng-repeat="token in modal.dictionaryItems.data.parameters"
+      ng-click="modal.insertAtChar('subject' ,token.token)"
+      ng-bind="token.label"
+      style="cursor:pointer;">
+  </li>
+</ul>
 
+<hr/>
+<strong ng-bind="modal.dictionaryItems.headings.props"></strong>
 <ul class="list-unstyled">
   <li ng-repeat="prop in modal.dictionaryItems.data.props"
       ng-click="modal.insertAtChar('subject',prop.token)"

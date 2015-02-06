@@ -32,7 +32,7 @@
       <select class="form-control"
               ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
               ng-model="security.currentST"
-              ng-disabled="security.override">
+              ng-disabled="security.view.permissions.overrideinheritable">
       </select>
     </div>
     <div class="col-lg-2">

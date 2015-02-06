@@ -46,7 +46,8 @@
       insertAtChar: insertTokenAtChar,
       resetRule: resetCurrentRule,
       digest: digestIn,
-      toggleGroup: toggleGroup
+      toggleGroup: toggleGroup,
+      buildParameres: buildParameresDictionary
     };
 
 
@@ -87,13 +88,24 @@
       $scope.modal.dictionaryItems = {
         headings: {
           tokens: keys[0],
-          props: keys[1]
+          props: keys[1],
+          parameters: 'Parameters'
         },
         data: {
           tokens: raw[keys[0]],
-          props: raw[keys[1]]
+          props: raw[keys[1]],
+          parameters: []
         }
       };
+    }
+
+    function buildParameresDictionary() {
+      var keys = [];
+      angular.forEach($scope.rule.inputParameters.split(','), function (param){
+        keys.push({token: param, label: param})
+      })
+
+      $scope.modal.dictionaryItems.data.parameters =  keys;
     }
 
     /**
