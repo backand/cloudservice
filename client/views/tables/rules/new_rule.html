@@ -4,7 +4,7 @@
 
 <div class="modal-body clearfix">
 
-  <form name="newRuleForm">
+  <form name="newRuleForm" insert-at-caret>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12"
          ng-class="{ 'has-error': newRuleForm.eventTrigger.$invalid && newRuleForm.eventTrigger.$dirty}">
@@ -45,8 +45,7 @@
                 placeholder="enter value true to run always or build new condition"
                 ng-model="rule.whereCondition"
                 ng-model-options="{debounce:{default:100}}"
-                style="resize: vertical"
-                insert-at-caret></textarea>
+                style="resize: vertical"></textarea>
     </div>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition"
@@ -66,6 +65,19 @@
 
     <div ng-switch="rule.workflowAction">
 
+      <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.workflowAction">
+
+      <label> Input Parameters</label>
+      <input type="text"
+             name="inputParameters"
+             class="form-control"
+             ng-model="rule.inputParameters"
+             ng-model-options="{debounce:{default:100}}"
+             ng-pattern**="/^[a-zA-Z0-9 ]*$/"
+
+             placeholder="input1,input2,....">
+        </div>
+      <span ng-show="">{{rule.inputParameters.$error.pattern}} Not a valid value!</span>
       <!-- notify options -->
       <div ng-switch-when="Notify">
 
@@ -149,7 +161,7 @@
                     id="notifyMessage"
                     ng-model="rule.notifyMessage"
                     style="resize: vertical" rows="10"
-                    insert-at-caret on-update="modal.digest()"
+                    on-update="modal.digest()"
                     required
             ></textarea>
         </div>
