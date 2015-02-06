@@ -12,7 +12,21 @@
       self.appName = $state.params.name;
       self.app = null;
       self.dbEmpty = false;
+      loadTables();
     }());
+
+    function loadTables(){
+      TablesService.get($state.params.name).then(
+        function (data) {
+          self.tables = data;
+          AppsService.appDbStat($state.params.name).then(successDbStats);
+        },
+        function (data) {
+          $log.debug("TablesService failure", data);
+        }
+      );
+    }
+
 
     self.goTo = function(state) {
       if (this.app.DatabaseStatus === 1) {
@@ -29,6 +43,8 @@
           self.app = data;
           var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
           checkChanges(oldStatus);
+          if(oldStatus == 0)
+            self.tables = [];
         });
     }
 
@@ -106,15 +122,7 @@
     self.tables = [];
 
     self.fetchTables = function () {
-      TablesService.get($state.params.name).then(
-        function (data) {
-          self.tables = data;
-          AppsService.appDbStat($state.params.name).then(successDbStats);
-        },
-        function (data) {
-          $log.debug("TablesService failure", data);
-        }
-      );
+      loadTables();
     };
 
     $scope.$on('fetchTables', self.fetchTables);
