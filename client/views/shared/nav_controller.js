@@ -19,7 +19,9 @@
       TablesService.get($state.params.name).then(
         function (data) {
           self.tables = data;
-          AppsService.appDbStat($state.params.name).then(successDbStats);
+          if($state.params.name){
+            AppsService.appDbStat($state.params.name).then(successDbStats);
+          }
         },
         function (data) {
           $log.debug("TablesService failure", data);
@@ -116,7 +118,9 @@
     });
 
     function successDbStats(data){
-      self.dbEmpty = data.data.tableCount == 0;
+      if(data.data){
+        self.dbEmpty = data.data.tableCount == 0;
+      }
     }
 
     self.tables = [];
