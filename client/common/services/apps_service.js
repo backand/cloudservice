@@ -24,12 +24,12 @@
       })
     }
 
-    this.setCurrentApp = function (data) {
+    self.setCurrentApp = function (data) {
       currentApp = data;
       currentApp.databaseName = data.Database_Source ? DatabaseNamesService.getDBSource(data.Database_Connection.Database_Source) : undefined;
     };
 
-    this.getCurrentApp = function (appName) {
+    self.getCurrentApp = function (appName) {
       var deferred = $q.defer();
       self.find(appName)
         .success(function (data) {
@@ -45,7 +45,7 @@
 
     };
 
-    this.getAlert = function (appName) {
+    self.getAlert = function (appName) {
       if (apps.alerts[appName] == null) {
         this.appDbStat(appName)
           .success(function (data) {
@@ -59,7 +59,7 @@
 
     };
 
-    this.setAlert = function (appName, msg) {
+    self.setAlert = function (appName, msg) {
       apps.alerts[appName] = msg;
     };
 
@@ -70,15 +70,14 @@
       return -1;
     }
 
-    this.appNames = function (appName) {
+    self.appNames = function (appName) {
       if (searchStringInArray(appName, apps.names) === -1) {
         apps.names.push(appName);
       }
       return apps.names;
     };
 
-    this.all = function () {
-
+    self.all = function () {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
@@ -93,21 +92,21 @@
 
     };
 
-    this.refresh = function () {
+    self.refresh = function () {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
       });
 
     };
-    this.find = function (appName) {
+    self.find = function (appName) {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps/' + appName + '?deep=true'
       });
     };
 
-    this.add = function (name, title) {
+    self.add = function (name, title) {
       var deferred = $q.defer();
 
       $http({
@@ -128,7 +127,7 @@
       return deferred.promise;
     };
 
-    this.appDbStat = function (appName) {
+    self.appDbStat = function (appName) {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/1/app/dbStat',
@@ -136,16 +135,22 @@
       });
     };
 
-    this.update = function (name, data) {
+    self.appKeys = function (appName) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/admin/myAppKeys/' + appName,
+      });
+    };
+
+    self.update = function (name, data) {
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/admin/myApps/' + name,
         data: data
-
       });
     };
 
-    this.delete = function (name) {
+    self.delete = function (name) {
       return $http({
         method: 'DELETE',
         url: CONSTS.appUrl + '/admin/myApps/' + name

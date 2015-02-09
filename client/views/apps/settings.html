@@ -5,7 +5,7 @@
       <a href="javascript:;" class="btn btn-lg pull-right" style="margin-top: -10px;" ng-click="settings.delete()"><i class="ti-trash"></i></a>
     </div>
     <div class="panel-body">
-      <form role="form" role="form" ng-submit="settings.sumbitForm()">
+      <form role="form" role="form" ng-submit="settings.submitForm()">
         <div class="form-group   form-group-half">
           <label for="name">Name</label>
           <input type="text" class="form-control" id="name" ng-model="settings.appName" required ng-disabled="false">
@@ -27,7 +27,7 @@
             <label for="rows">Default List Page Rows</label>
             <input type="number" class="form-control" id="rows" data-ng-model="settings.defaultPageSize" data-min=5 data-max=1000 required>
           </div>
-         
+
         </div>
         <br/>
         <div class="save-bar">

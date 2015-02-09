@@ -18,7 +18,7 @@
         .success(function (data) {
           AuthService.signIn(self.email,self.password)
               .success(function (data) {
-                  SessionService.setCredentials(data);
+                  SessionService.setCredentials(data, self.email);
                   $state.go('apps.index');
               })
               .error(function (data) {

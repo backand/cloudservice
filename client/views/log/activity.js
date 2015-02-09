@@ -28,29 +28,35 @@
     }());
 
     this.gridOptions = {
-      enableColumnResize: true,
       enablePaginationControls: false,
       useExternalSorting: true,
       columnDefs: [
-        {name: 'ID', displayName:'Exception Id', sort:{direction: 'desc', priority:0}},
-        {name: 'Username', displayName:'Updated By'},
-        {name: 'Time', displayName:'Time', type: 'datetime'},
-        {name: 'ExceptionMessage'},
-        {name: 'Trace', displayName: 'Additional Info'}
+        {name: 'ID', displayName:'Exception Id', sort:{direction: 'desc', priority:0}, width: 100},
+        {name: 'Username', displayName:'Updated By', width: 100},
+        {name: 'Time', field:'__metadata.dates.Time', displayName:'Time', type: 'datetime', width: 150},
+        {name: 'ExceptionMessage', minWidth: 300}
+        //{name: 'Trace', displayName: 'Additional Info'}
       ],
       onRegisterApi: function( gridApi ) {
         $scope.gridApi = gridApi;
         //declare the events
         $scope.gridApi.core.on.sortChanged( $scope, function( grid, sortColumns ) {
-          if(sortColumns[0].name != 'ID')
-            self.gridOptions.columnDefs[0].sort.direction = '';
-          self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
+          if (sortColumns[0]) {
+            if (sortColumns[0].name != 'ID')
+              self.gridOptions.columnDefs[0].sort.direction = '';
+            self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
+          }
+          else
+            self.sort = '';
           getLog();
         });
       }
     };
 
-    $scope.$watch('log.paginationOptions.pageNumber',getLog)
+    $scope.$watchGroup([
+      'log.paginationOptions.pageNumber',
+      'log.paginationOptions.pageSize']
+      , getLog);
 
     function getLog() {
       AppLogService.getAppActivity($stateParams.name, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, isException, self.sort)

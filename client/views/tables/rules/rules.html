@@ -2,12 +2,9 @@
 
   <div id="rules-header" class="page-header clearfix">
     <div class="title-group">
-       <h1 class="page-name ">Rules</h1>
-
-    <h4 class=" page-description lead pull-left">short description of what rules are and how to use them</h4>
+       <h2 class="page-name ">Rules</h2>
+    <h4 class=" page-description lead pull-left">Manage here all the server side logic and operations</h4>
     </div>
-   
-
     <button ng-click="rules.open()"
             id="new-rule-btn"
             class="btn btn-lg btn-success pull-right">
@@ -15,18 +12,17 @@
     </button>
   </div>
 
-
   <ul id="rules" class="list-unstyled">
 
     <li ng-repeat="item in rules.items">
 
-      <h3 class="rule-group-title">{{ item.title | uppercase}}</h3>
+      <h3 class="rule-group-title">{{ ::item.title | uppercase}}</h3>
 
       <div class="pull-right" ng-click="item.visible = !item.visible">
         <i ng-class="{'ti-arrow-up' : item.visible, 'ti-arrow-down' : !item.visible}"></i>
       </div>
 
-      <p class="rule-group-description">These rules fires on {{ item.title }} action</p>
+      <p class="rule-group-description">These rules fires on {{ ::item.title }} action</p>
 
       <ul class="rules-sub-items-list"
           ng-show="item.visible">
@@ -34,13 +30,16 @@
         <li ng-repeat="subitem in item.items">
 
           <h4 class="rule-sub-title"
-              ng-click="subitem.visible = !subitem.visible">{{subitem.title}}</h4>
+              ng-click="subitem.visible = !subitem.visible">{{ ::subitem.title }}</h4>
 
           <div class="pull-right" ng-click="subitem.visible = !subitem.visible">
             <i ng-class="{'ti-arrow-up' : subitem.visible, 'ti-arrow-down' : !subitem.visible   }"></i></div>
 
-          <p class="rule-sub-description">
-            These rules fire {{ subitem.title }} an object is created
+          <p class="rule-sub-description" ng-if="subitem.dataAction != 'OnDemand'">
+            These rules fire {{ ::subitem.title }} an object is {{ ::item.verb }}
+          </p>
+          <p class="rule-sub-description" ng-if="subitem.dataAction == 'OnDemand'">
+            These rules fire based on a direct call of the REST API
           </p>
 
           <ul class="rules-names-list" ng-show="subitem.visible">
@@ -49,14 +48,13 @@
 
               <h5 class="rule-name text-primary"
                   ng-click="rules.edit(rule.name)">
-                {{rule.name}}</h5>
+                {{ ::rule.name}}</h5>
 
-              <p class="rule-description">
-                some description about the action should be here
-              </p>
+              <!--<p class="rule-description">-->
+              <!--</p>-->
             </li>
 
-            <li class="add-new-rule text-primary" ng-click="rules.open()">Add new rule</li>
+            <li class="add-new-rule text-primary" ng-click="rules.open(subitem.dataAction)">Add new rule</li>
 
           </ul>
         </li>

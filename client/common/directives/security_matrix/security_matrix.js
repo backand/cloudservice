@@ -25,7 +25,7 @@
          */
         scope.$watch('securityTemplate', function (template, oldTemplate) {
           //$log.debug('template have been changed: ', template)
-          if(template != null && oldTemplate != null && template != oldTemplate)
+          if(template != null && oldTemplate != null && template !== oldTemplate)
           {
             scope.onUpdate({template: template});
           }
@@ -77,6 +77,9 @@
           }
 
           scope.modal.closeModal = function () {
+            if(scope.modal.roleName == "Developer")
+              return;
+
             switch (scope.modal.mode) {
               case 'new':
                 scope.onRoleAdd({role: scope.modal.roleName}).then(addRole,errorHandler);

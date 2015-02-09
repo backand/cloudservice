@@ -92,3 +92,13 @@
     content: "\e608";
 }
 
+
+/** itay: override the original class of the component**/
+/** Minimum inside height and width, scroll content when needed **/
+.angled-window-body-content {
+  min-height: 18px;
+  min-width: 220px;
+  min-height: 50px;
+  overflow: scroll;
+}
+

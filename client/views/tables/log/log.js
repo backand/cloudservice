@@ -1,6 +1,6 @@
 (function () {
 
-  function LogConfig($stateParams, $state, $log, NotificationService, AppLogService, $scope) {
+  function LogData($stateParams, $log, NotificationService, AppLogService, $scope) {
 
     var self = this;
     var isAdmin;
@@ -17,15 +17,8 @@
      * init the data
      */
     (function init() {
-      isAdmin = ($state.$current.url.prefix.indexOf('/history/') == -1);
-      if(isAdmin){
-        self.title ='Log Configuration';
-        self.names = {ViewName: 'Entity Name',PK:'Entity Id', FieldName:'Property Name'};
-      }
-      else{
-        self.title ='Data History'
-        self.names = {ViewName: 'Table Name',PK:'Table PK', FieldName:'Column Name'};
-      }
+      isAdmin = true;
+      $scope.$on('tabs:log', getLog);
     }());
 
     this.gridOptions = {
@@ -36,9 +29,7 @@
         {name: 'UpdateDate', field:'__metadata.dates.UpdateDate', displayName:'Updated', type: 'date', sort:{direction: 'desc', priority:0}},
         {name: 'Username', displayName:'Updated By', field:'__metadata.descriptives.Username.label'},
         {name: 'Action', field:'__metadata.descriptives.Action.label'},
-        {name: 'ViewName', displayName:self.names.ViewName},
-        {name: 'PK', displayName:self.names.PK},
-        {name: 'FieldName', displayName:self.names.FieldName},
+        {name: 'FieldName'},
         {name: 'OldValue'},
         {name: 'NewValue'}
       ],
@@ -57,13 +48,26 @@
     $scope.$watch('log.paginationOptions.pageNumber',getLog)
 
     function getLog() {
-      AppLogService.getAppLog($stateParams.name, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, isAdmin, self.sort)
+      AppLogService.getAppLog($stateParams.name, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, isAdmin, self.sort, $stateParams.tableName)
         .then(logSuccsessHandler, errorHandler);
     }
 
     function logSuccsessHandler(data) {
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
+
+      setTimeout(refreshGridDisplay(),1); //fix bug with bootstrap tab and ui grid
+    }
+
+    function refreshGridDisplay()
+    {
+      //if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
+      //  $scope.gridApi.grid.options.columnDefs.splice(0,1);
+      if(!self.refreshOnce){
+        setTimeout("$('#grid-container').trigger('resize')", 1); //resize the tab to fix the width issue with UI grid
+        self.refreshOnce = true;
+      }
+
     }
 
     this.pageMax = function (pageSize, currentPage, max) {
@@ -77,14 +81,13 @@
   }
 
   angular.module('app')
-    .controller('LogConfig', [
+    .controller('LogData', [
       '$stateParams',
-      '$state',
       '$log',
       'NotificationService',
       'AppLogService',
       '$scope',
-      LogConfig
+      LogData
     ]);
 
 }());

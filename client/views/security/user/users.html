@@ -11,61 +11,57 @@
       <div class="row">
         <div class="form-group col-sm-7">
           <input type="text" class="form-control col-sm-7" id="inviteAdminEmails" ng-model="users.invitedAdmins"
-                 placeholder="Admin Email Address -  Use for multiple users"/></div>
+                 placeholder="Admin Email Address -  Use comma for multiple users"/></div>
         <div class="col-sm-3">
-          <button type="button" ng-disabled="!users.invitedAdmins" id="addAdminInvites" class="btn btn-default btn-success "
+          <button type="button" ng-disabled="!users.invitedAdmins" id="addAdminInvites"
+                  class="btn btn-default btn-success "
                   ng-click="users.inviteAdmins()">Invite Admin User(s)
           </button>
         </div>
         <br>
         <br>
+
         <div class=" form-group col-sm-7">
-          <label for="inviteUsersEmails"></label> Invite users to access the applixation with role {{Role}}. If "Allow
-          only invited users to register is On then this is the only way to add users to the app.</lable>
+          <label for="inviteUsersEmails"></label> Invite users to access the application with role
+          '{{users.defaultUserRole}}'. If "Public App"
+          is Off then this is the only way to add users to the app.</lable>
         </div>
 
         <div class=" form-group col-sm-7">
-
-          <input type="text"  class="form-control  col-sm-7" id="inviteUsersEmails" ng-model="users.invitedUsers"
-                 placeholder="Email Address -  Use for multiple users"/></div>
+          <input type="text" class="form-control  col-sm-7" id="inviteUsersEmails" ng-model="users.invitedUsers" ng-disabled="users.registrationRedirectUrl == ''"
+                 placeholder="Email Address -  Use comma for multiple users"/>
+        </div>
         <div class="col-sm-3">
-          <button  type="button" ng-disabled="!users.invitedUsers" id="addUserInvites" class="btn btn-success" ng-click="users.inviteUsers()">Invite
-            User(s)
-          </button>
+          <button type="button" ng-disabled="!users.invitedUsers || users.registrationRedirectUrl == ''" id="addUserInvites" class="btn btn-success"
+                  ng-click="users.inviteUsers()">Invite User(s)</button>
         </div>
-
-        <br>
       </div>
-      <!--<button type="button" id="addUser" class="btn btn-success" ng-click="users.open()">Add User</button>-->
-      <a id="delUser" href="" ng-click="users.delete()">Delete User</a>
+      <div class="field-description" ng-if="users.registrationRedirectUrl == ''">Note: Invite users is enabled only when the registration page is ready. To update the custom registration page URL go to <a href="" ng-click="users.goTo('security.auth')">Security Configuration</a></div>
+      <br/>
       <div class="actions-bar row">
         <div class="col-md-8">
-          <h1 class="page-name">Users</h1>
-          <h4 class="page-description">Mange your users here</h4>
+          <h2 class="page-name">Users</h2>
+          <h4 class="page-description">Mange your users here - To update user's details double click in the cell</h4>
         </div>
         <div class="col-md-4 form-inline form-action-top ">
           <div class="input-group ">
-            <select class="form-control">
-            <option>Select Action</option>
-            <option>Delete</option>
-              </select>
+            <select class="form-control"
+                    ng-options="action for action in users.actions"
+                    ng-model="users.action"
+                    ng-model-options="{debounce:{default:400}}">
+              <option value="">Select Action...</option>
+            </select>
               <span class="input-group-btn">
-                 <button class="btn btn-success"  type="button">
-                Go
-              </button>
+                 <button class="btn btn-success" type="button" ng-click="users.delete()" ng-disabled="users.action==''">
+                   Go
+                 </button>
               </span>
           </div>
-          <div class="input-group"> <button class="btn btn-success"  type="button">
-              Invite Users
-            </button></div>
-            
         </div>
-       
-      
 
-        
+
       </div>
-      <div us-spinner spinner-key="loading" ></div>
+      <div us-spinner spinner-key="loading"></div>
       <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection
            class="grid"></div>
       <!--pagination-->
@@ -74,11 +70,14 @@
       </div>
       <div ng-show="users.gridOptions.totalItems > 0" class="row">
         <div class="col-md-5">
-          <pagination total-items="users.gridOptions.totalItems" ng-model="users.paginationOptions.pageNumber" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" items-per-page="users.paginationOptions.pageSize" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+          <pagination total-items="users.gridOptions.totalItems" ng-model="users.paginationOptions.pageNumber"
+                      max-size="5" class="pagination-sm" boundary-links="true" rotate="false"
+                      items-per-page="users.paginationOptions.pageSize" previous-text="&lsaquo;"
+                      next-text="&rsaquo;"></pagination>
         </div>
         <div class="col-md-2" style="margin-top:20px;">
           Page size:
-          <select class="ui-select" ng-model="users.paginationOptions.pageSize" >
+          <select class="ui-select" ng-model="users.paginationOptions.pageSize">
             <option ng-repeat="size in users.paginationOptions.pageSizes">{{size}}</option>
           </select>
         </div>

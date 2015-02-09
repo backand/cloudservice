@@ -37,6 +37,16 @@
       getRoles();
     }
 
+    var defaultUser = {
+      Email: "",
+      IsApproved: true,
+      durados_User_Role: "User",
+      FirstName: "",
+      LastName: "",
+      Email: ""
+
+    };
+
 
     getRoles();
     self.gridOptions.multiSelect=false;

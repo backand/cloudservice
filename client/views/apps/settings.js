@@ -6,22 +6,21 @@
 
   function AppSettings($scope, ConfirmationPopup, appItem, AppsService, $state, NotificationService) {
     var self = this;
-    this.loading = false;
 
-    var appData = appItem.data;
-    $scope.appName = appData.Name;
+    (function init() {
+      self.appName = $state.params.name;
+      var appData = appItem.data;
 
-    AppsService.setCurrentApp(appItem.data);
+      AppsService.setCurrentApp(appItem.data);
+      self.globalAppName = appData.Name;
+      self.appName = appData.Name;
+      self.appTitle = appData.Title;
+      self.dateFormat = appData.settings.defaultDateFormat;
+      self.datesFormar = ['MM/dd/yyyy', 'dd/MM/yyyy'];
+      self.defaultPageSize = appData.settings.defaultPageSize;
+    }());
 
-    this.globalAppName = appData.Name;
-    this.appName = appData.Name;
-    this.appTitle = appData.Title;
-    this.dateFormat = appData.settings.defaultDateFormat;
-    this.datesFormar = ['MM/dd/yyyy', 'dd/MM/yyyy'];
-    this.defaultPageSize = appData.settings.defaultPageSize;
-
-
-    this.sumbitForm = function () {
+    self.submitForm = function () {
       self.loading = true;
       var data = {
         Name: self.appName,
@@ -34,7 +33,7 @@
       AppsService.update(self.globalAppName, data).then(submitSuccess, errorHandler);
     }
 
-    function submitSuccess(error, message) {
+    function submitSuccess() {
       NotificationService.add('success', 'Application settings updated successfully');
       self.loading = false;
 
@@ -42,7 +41,7 @@
         $state.go('apps.index', {name: ''});
     }
 
-    this.delete = function () {
+    self.delete = function () {
       ConfirmationPopup.confirm('Are you sure you want to delete the app?')
         .then(function (result) {
           if (!result)

@@ -14,57 +14,54 @@
      */
     (function init() {
       self.items = [];
-      self.groupVisiable = true;
       self.open = newRule;
       self.edit = editRule;
-      self.clearRule = deleteRule;
-      self.toggleGroup = toggleGroup;
       $scope.$on('tabs:rules', getRules);
-      DictionaryService.get().then(populateDictionaryItems);
     }());
+
 
     $scope.modal = {
       title: 'Application Rule',
       okButtonText: 'Save',
       cancelButtonText: 'Cancel',
       deleteButtonText: 'Delete',
-      dataActions: [{value: 'BeforeCreate', label: 'Create - Before adding data', level1: 0, level2: 0},
-        {
-          value: 'AfterCreateBeforeCommit',
-          label: 'Create - After data saved before it committed',
-          level1: 0,
-          level2: 1
-        },
-        {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 0, level2: 2},
-        {value: 'BeforeEdit', label: 'Update - Before update data', level1: 1, level2: 0},
-        {value: 'AfterEditBeforeCommit', label: 'Update - After data saved before it committed', level1: 1, level2: 1},
-        {value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 1, level2: 2},
-        {value: 'BeforeDelete', label: 'Delete - Before delete', level1: 2, level2: 0},
-        {
-          value: 'AfterDeleteBeforeCommit',
-          label: 'Delete - After record deleted but before it committed',
-          level1: 2,
-          level2: 1
-        },
-        {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 2, level2: 2},
-        {value: 'BeforeViewOpen', label: 'Read - Before reading data from database', level1: 3, level2: 0},
-        {value: 'Open', label: 'Read - After reading from database but before send to client', level1: 3, level2: 1}
+      dataActions: [
+        {value: 'OnDemand', label: 'On demand - Execute from REST API', level1: 0, level2: 0},
+        {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 1, level2: 0},
+        {value: 'AfterCreateBeforeCommit', label: 'Create - During data saved before it committed', level1: 1, level2: 1},
+        {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 1, level2: 2},
+        {value: 'BeforeEdit', label: 'Update - Before update data', level1: 2, level2: 0},
+        {value: 'AfterEditBeforeCommit', label: 'Update - During data saved before it committed', level1: 2, level2: 1},
+        {value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 2, level2: 2},
+        {value: 'BeforeDelete', label: 'Delete - Before delete', level1: 3, level2: 0},
+        {value: 'AfterDeleteBeforeCommit',label: 'Delete - During record deleted but before it committed',level1: 3,level2: 1},
+        {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2},
       ],
       workflowActions: [{value: 'Notify', label: 'Send Email'},
         {value: 'Validate', label: 'Advanced Data Validation'},
         {value: 'Execute', label: 'Run additional database script'},
         {value: 'WebService', label: 'Make HTTP call'}
       ],
-      dictionaryState: false,
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
       resetRule: resetCurrentRule,
-      toggleOptions: toggleDictionary
+      digest: digestIn,
+      toggleGroup: toggleGroup,
+      buildParameres: buildParameresDictionary
     };
 
-    function toggleGroup() {
-      debugger;
-      self.groupVisiable = !self.groupVisiable;
+
+    function toggleGroup(obj) {
+      $scope.modal.dictionaryState = false;
+      $scope.modal.notifySubject = false;
+      $scope.modal.notifyMessage = false;
+      $scope.modal.webService = false;
+      $scope.modal.sqlCommand = false;
+      if(obj != undefined){
+        return !obj;
+      }
+      else
+        return false;
     }
 
     /**
@@ -73,8 +70,12 @@
      * @param elementId
      * @param token
      */
-    function insertTokenAtChar(token) {
-      $scope.$parent.$broadcast('insert:placeAtCaret', token);
+    function insertTokenAtChar(elementId, token) {
+      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
+    }
+
+    function digestIn(){
+      angular.element()
     }
 
     /**
@@ -87,30 +88,39 @@
       $scope.modal.dictionaryItems = {
         headings: {
           tokens: keys[0],
-          props: keys[1]
+          props: keys[1],
+          parameters: 'Parameters'
         },
         data: {
           tokens: raw[keys[0]],
-          props: raw[keys[1]]
+          props: raw[keys[1]],
+          parameters: []
         }
       };
     }
 
-    /**
-     * switch the state of the dictionary window
-     */
-    function toggleDictionary() {
-      $scope.modal.dictionaryState = !$scope.modal.dictionaryState;
-      $scope.$broadcast('insert:windowClosed');
+    function buildParameresDictionary() {
+      var keys = [];
+      angular.forEach($scope.rule.inputParameters.split(','), function (param){
+        keys.push({token: param, label: param})
+      })
+
+      $scope.modal.dictionaryItems.data.parameters =  keys;
     }
 
     /**
      * set the scope to update mode
      * and launch modal
      */
-    function newRule() {
+    function newRule(trigger) {
       $scope.modal.mode = 'new';
       resetCurrentRule();
+      if(trigger){
+        $scope.rule.dataAction = trigger;
+        //$scope.rule.dataAction = angular.copy($filter('filter')($scope.modal.dataActions, function (a) {
+        //  return a.value === trigger;
+        //})[0])
+      }
       launchModal();
     }
 
@@ -127,21 +137,23 @@
     };
 
     /**
-     * put an existing rule on the scope,
-     * set the scope mode to new,
-     * and lunch the modal
+     * get the rule name from the tree and get the full rule data from server
      * @param rule
      */
     function editRule(rule) {
-      $scope.rule = getRuleByName(rule);
-
-      //$scope.rule = angular.copy(rule);
-      $scope.modal.mode = 'update';
-      launchModal();
+      var rule = getRuleByName(rule);
+      RulesService.getRule(rule.__metadata.id).then(loadRule,errorHandler)
     }
 
-    function deleteRule(rule) {
-      RulesService.remove(getRuleByName(rule)).then(getRules)
+    /**
+     * Update rule in scope and open the edit dialog
+     * @param data
+     */
+    function loadRule(data)
+    {
+      $scope.rule = data.data;
+      $scope.modal.mode = 'update';
+      launchModal();
     }
 
     /**
@@ -150,9 +162,11 @@
      */
     function launchModal() {
 
+      $scope.modal.toggleGroup();
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/rules/new_rule.html',
         backdrop: 'static',
+        keyboard: false,
         scope: $scope
       });
 
@@ -168,9 +182,13 @@
        * @param rule
        */
       $scope.delete = function (rule) {
-        console.log('delete rule', rule);
-        RulesService.remove(rule).then(getRules);
-        modalInstance.close();
+        ConfirmationPopup.confirm('Are sure you want to delete this rule?')
+          .then(function(result){
+            if(result){
+              RulesService.remove(rule).then(getRules);
+              modalInstance.close();
+            }
+          });
       }
 
       /**
@@ -231,13 +249,14 @@
      * reset the current active rule on scope
      */
     function resetCurrentRule() {
-      $scope.rule = null;
+      $scope.rule = {};
     }
 
     /**
      * ajax call to get the rules list
      */
     function getRules() {
+      DictionaryService.get().then(populateDictionaryItems);
       RulesService.get().then(buildTree, errorHandler);
     };
 
@@ -251,77 +270,86 @@
       self.data = data.data.data;
       self.items = [
         {
+          title: 'On Demand',
+          verb: 'on demand',
+          visible: true,
+          items: [
+            {
+              visible: false,
+              title: 'Execute',
+              dataAction: 'OnDemand',
+              items: []
+            }]
+        },
+        {
           title: 'Create',
+          verb: 'created',
           visible: true,
           items: [
             {
               visible: false,
               title: 'Before',
+              dataAction: 'BeforeCreate',
               items: []
             },
             {
               visible: false,
               title: 'During',
+              dataAction: 'AfterCreateBeforeCommit',
               items: []
             },
             {
               visible: false,
               title: 'After',
+              dataAction: 'AfterCreate',
               items: []
             }]
         },
         {
           title: 'Edit',
+          verb: 'edited',
           visible: true,
           items: [
             {
               visible: false,
               title: 'Before',
+              dataAction: 'BeforeEdit',
               items: []
             },
             {
               visible: false,
               title: 'During',
+              dataAction: 'AfterEditBeforeCommit',
               items: []
             },
             {
               visible: false,
               title: 'After',
+              dataAction: 'AfterEdit',
               items: []
             }]
         },
         {
           title: 'Delete',
+          verb: 'deleted',
           visible: true,
           items: [
             {
               visible: false,
               title: 'Before',
+              dataAction: 'BeforeDelete',
               items: []
             },
             {
               visible: false,
               title: 'During',
+              dataAction: 'AfterDeleteBeforeCommit',
               items: []
             },
             {
               visible: false,
               title: 'After',
-              items: []
-            }]
-        },
-        {
-          title: 'Open',
-          visible: true,
-          items: [
-            {
-              visible: false,
-              title: 'Before',
-              items: []
-            },
-            {
-              visible: false,
-              title: 'After',
+              dataAction: 'AfterDelete',
               items: []
             }]
         }];

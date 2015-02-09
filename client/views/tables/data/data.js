@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function ViewData($log, NotificationService, ColumnsService, $scope) {
+  function ViewData($log, NotificationService, ColumnsService, $scope, usSpinnerService) {
 
     var self = this;
     self.title = '';
@@ -24,48 +24,56 @@
     }());
 
     self.gridOptions = {
-      enableColumnResize: true,
       enablePaginationControls: false,
       useExternalSorting: true,
+      excludeProperties: '__metadata',
+      excessColumns: 20,
       onRegisterApi: function (gridApi) {
         $scope.gridApi = gridApi;
         //declare the events
 
         $scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
-          self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
+          if (sortColumns[0])
+            self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
+          else
+            self.sort = '';
           getData();
         });
       }
     };
 
-    $scope.$watch('data.paginationOptions.pageNumber', function (newVal,oldValue){
-        if(newVal != null && newVal !== oldValue)
-          getData();
-      });
+    $scope.$watchGroup([
+        'data.paginationOptions.pageNumber',
+        'data.paginationOptions.pageSize']
+      , getData);
 
-    function getData() {
-      if (self.gridOptions.data.length == 0) {
+    function getData(newVal, oldValue) {
+      if (newVal != null && newVal !== oldValue) {
+        usSpinnerService.spin("loading");
         ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successHandler, errorHandler);
-        self.refreshOnce = false;
       }
     }
 
     function successHandler(data) {
       self.gridOptions.data = data.data.data;
+      var columns = _.without(Object.keys(data.data.data[0]), '__metadata')
+      self.gridOptions.columnDefs = columns.map(function (column) {
+        return {
+          minWidth: 80,
+          name: column
+        }
+      });
       self.gridOptions.totalItems = data.data.totalRows;
 
-      setTimeout(refreshGridDisplay(),1); //fix bug with bootstrap tab and ui grid
+      setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
+      usSpinnerService.stop("loading");
     }
 
-    function refreshGridDisplay()
-    {
-      //if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
-      //  $scope.gridApi.grid.options.columnDefs.splice(0,1);
-      if(!self.refreshOnce){
-        setTimeout("$('#grid-container').trigger('resize')", 1); //resize the tab to fix the width issue with UI grid
+    function refreshGridDisplay() {
+      if (!self.refreshOnce) {
+        setTimeout("$('#grid-container').trigger('resize');", 1); //resize the tab to fix the width issue with UI grid
         self.refreshOnce = true;
       }
-
     }
 
     this.pageMax = function (pageSize, currentPage, max) {
@@ -74,7 +82,7 @@
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
-      $log.debug(error);
+      usSpinnerService.stop("loading");
     }
   }
 
@@ -84,6 +92,7 @@
       'NotificationService',
       'ColumnsService',
       '$scope',
+      'usSpinnerService',
       ViewData
     ]);
 

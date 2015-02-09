@@ -3,38 +3,68 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $stateParams, $log, usSpinnerService, NotificationService, SecurityService, $scope) {
+  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService) {
 
     var self = this;
 
-    self.roleFieldName = 'durados_User_Role';
-    self.open = newUser;
-    self.roles = null;
-    self.gridOptions = {};
-    self.appName = SecurityService.appName = $stateParams.name;
+    /**
+     * Init the users page
+     */
+    (function init() {
 
-    self.invitedUsers = '';
-    self.invitedAdmins = '';
-    self.sort = '[{fieldName:"Username", order:"desc"}]';
+      self.roleFieldName = 'durados_User_Role';
+      self.open = newUser;
+      self.roles = null;
+      self.gridOptions = {};
+      self.appName = SecurityService.appName = $state.params.name;
+      self.actions = ['Delete'];
+      self.action = '';
 
-    self.gridOptions.rowEditWaitInterval = 200;
-    self.paginationOptions = {
-      pageNumber: 1,
-      pageSize: 20,
-      pageSizes: [20, 50, 100, 1000]
-    };
+      self.invitedUsers = '';
+      self.invitedAdmins = '';
+      self.sort = '[{fieldName:"Username", order:"desc"}]';
 
-    /*self.gridOptions.afterSelectionChange= function(rowItem, event) {
-     $scope.rowId = rowItem.rowIndex;
-     //$scope.item_id = rowItem.entity.item_id;
-     $scope.descp = rowItem.entity.descp;
+      self.gridOptions.rowEditWaitInterval = 200;
+      self.paginationOptions = {
+        pageNumber: 1,
+        pageSize: 20,
+        pageSizes: [20, 50, 100, 1000]
+      };
 
-     //solution: get the index of array from rowMap by rowIndex
-     $scope.arrayIdx = $scope.gridOptions.ngGrid.rowMap.indexOf(rowItem.rowIndex);
-     };*/
+      self.gridOptions = {
+        enableColumnResize: true,
+        enablePaginationControls: false,
+        useExternalSorting: true,
+        multiSelect: true,
+        enableSelectAll: false,
+        columnDefs: [
+          {name: 'FirstName'},
+          {name: 'LastName'},
+          {name: 'Username', enableCellEdit: false, sort: {direction: 'desc', priority: 0}},
+          {name: 'Email'},
+          {
+            name: self.roleFieldName,
+            displayName: 'Role',
+            editableCellTemplate: 'ui-grid/dropdownEditor',
+            editDropdownOptionsArray: [],
+            editDropdownIdLabel: 'Name',
+            editDropdownValueLabel: 'Name'
+          },
+          {name: 'IsApproved', displayName: 'Approved', type: 'boolean'}
+        ]
+      };
+
+      $scope.$watch('users.paginationOptions.pageNumber', getUsers);
+      getUsers();
+
+      //get the default role for invited users
+      AppsService.getCurrentApp(self.appName).then(successApp, errorHandler)
+
+    }());
+
     function getUsers() {
       usSpinnerService.spin('loading');
-      SecurityService.getUsers(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort)
+      SecurityService.getUsers(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
         .then(usersSuccessHandler, errorHandler);
 
     }
@@ -66,63 +96,49 @@
       getUsers();
     }
 
-    $scope.$watch('users.paginationOptions.pageNumber', getUsers);
-    getUsers();
+    function successApp(data){
+      self.defaultUserRole = data.settings.newUserDefaultRole || 'User';
+      self.registrationRedirectUrl = data.settings.registrationRedirectUrl || '';
+    }
 
-    self.gridOptions = {
-      enableColumnResize: true,
-      enablePaginationControls: false,
-      useExternalSorting: true,
-      multiSelect: false,
-      enableSelectAll: false,
-      columnDefs: [
-        {name: 'FirstName'},
-        {name: 'LastName'},
-        {name: 'Username', enableCellEdit: false, sort: {direction: 'desc', priority: 0}},
-        {name: 'Email'},
-        {
-          name: self.roleFieldName,
-          displayName: 'Role',
-          editableCellTemplate: 'ui-grid/dropdownEditor',
-          editDropdownOptionsArray: [],
-          editDropdownIdLabel: 'Name',
-          editDropdownValueLabel: 'Name'
-        },
-        {name: 'IsApproved', displayName: 'Approved', type: 'boolean'}
-      ]
+    self.goTo = function(state) {
+      $state.go(state, {name: this.appName});
     };
+
     function newUser() {
       $scope.modal.mode = 'new';
       launchModal();
     }
 
     self.delete = function () {
-      var item = $scope.gridApi.selection.getSelectedRows();
+      var items = $scope.gridApi.selection.getSelectedRows();
 
-      if (!item || item.length == 0) {
-        NotificationService.add('error', 'No user was selected, please select a row');
+      if (!items || items.length == 0) {
+        NotificationService.add('error', 'No user was selected, please select row(s)');
         return;
       }
 
-      var result = ConfirmationPopup.confirm('You are going to delete ' + item[0].Username + '. are sure you want to continue?')
+      //get the app creator
+      var username = SessionService.currentUser.username;
+
+      var result = ConfirmationPopup.confirm('You are going to delete ' + items.length + ' user(s). Are you sure you want to continue?')
         .then(function (result) {
           if (!result)
             return;
-          SecurityService.deleteUser(item[0].ID)
-            .then(usersDeleteSuccessHandler, errorHandler);
-
+          angular.forEach(items, function(item) {
+            if(username==item.Username)
+            {
+              NotificationService.add('error', 'Can\'t delete the creator of the app');
+            }
+            else
+            {
+              SecurityService.deleteUser(item.ID).then(usersDeleteSuccessHandler, errorHandler);
+            }
+          })
         })
 
     };
-    var defaultUser = {
-      Email: "",
-      IsApproved: true,
-      durados_User_Role: "User",
-      FirstName: "",
-      LastName: "",
-      Email: ""
 
-    };
     $scope.modal = {
       title: 'Application User',
       okButtonText: 'Save',
@@ -178,11 +194,11 @@
       if (email.indexOf("@") <= 0) return false;
       return true;
     }
+
     self.inviteAdmins = function () {
-
       self.inviteUsers(self.invitedAdmins, 'Admin');
-
     }
+
     self.validateEmail = function (email_array) {
       var isValid = true;
       for (var i = 0; i < email_array.length;) {
@@ -194,16 +210,21 @@
         }
         if (!self.isEmail(email_array[i])) {
           isValid = false;
-          NotificationService.add('error', email_array[i] + 'is not an email')
+          NotificationService.add('error', email_array[i] + ' is not a valid email')
         }
         i++;
       }
       return isValid;
     }
 
+    /**
+     * Read the list of emails, split it and call POST user
+     * @param emails_string
+     * @param role
+     */
     self.inviteUsers = function (emails_string, role) {
 
-      var userRole = role ? role : 'User';
+      var userRole = role ? role : self.defaultUserRole;
       var emails = emails_string ? emails_string : self.invitedUsers;
       var email_array = emails.split(',');
 
@@ -226,11 +247,9 @@
           LastName: name[1]
         };
         SetDataUserRole(user, userRole);
-        SecurityService.postUser(user)
-          .then(getUsers, errorHandler);
-        ;
-
+        SecurityService.postUser(user).then(getUsers, errorHandler);
       }
+
       if (emails_string)
         self.invitedAdmins = '';
       else
@@ -288,12 +307,14 @@
     .controller('SecurityUsers', [
       'ConfirmationPopup',
       '$modal',
-      '$stateParams',
+      '$state',
       '$log',
       'usSpinnerService',
       'NotificationService',
       'SecurityService',
       '$scope',
+      'SessionService',
+      'AppsService',
       SecurityUsers
     ]);
 

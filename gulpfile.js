@@ -2,7 +2,6 @@
 
 var fs = require('fs');
 var config = require('./build/build.config.js');
-var karmaConfig = require('./build/karma.config.js');
 var protractorConfig = require('./build/protractor.config.js');
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
@@ -28,11 +27,8 @@ var currEnv = 'dev';
 gulp.task('webdriver:update', webdriverUpdate);
 
 // run unit tests and watch files
-gulp.task('tdd', function(cb) {
-  karma.start(_.assign({}, karmaConfig, {
-    singleRun: false,
-    action: 'watch',
-  }), cb);
+gulp.task('tdd', function() {
+  karma.start(karmaConfig);
 });
 
 // run unit tests with travis CI

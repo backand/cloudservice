@@ -5,15 +5,14 @@
     .config(config);
 
   function config($stateProvider) {
-
     $stateProvider
-      .state('tables.show', {
-        url: '/:name',
+      .state('tables.notables', {
+        url: '/sync/:name',
         controller: 'TablesShow as tables',
-        templateUrl: 'views/tables/show.html'
+        templateUrl: 'views/tables/no_tables.html'
       })
       .state('tables.columns', {
-        url: '/:name/:tableName/:tableId',
+        url: '/:name/:tableId',
         controller: 'SingleTableShow as singleTable',
         templateUrl: 'views/tables/show_single_table.html'
 

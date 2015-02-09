@@ -224,7 +224,7 @@ a.app-panel:hover {
       font-size:16px;
       text-transform: uppercase;
       margin-bottom:0px;
-   
+
     }
 
     h4.rule-sub-title:hover {
@@ -252,10 +252,15 @@ a.app-panel:hover {
 
       h5.rule-name {
         text-decoration: none;
-    font-weight:bold;
-    margin:0;
-    margin-bottom:5px;
+        font-weight:bold;
+        margin:0;
+        margin-bottom:5px;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
       }
+
       p.rule-description {
         margin-bottom: 0;
         font-size:12px;
@@ -322,7 +327,7 @@ a.app-panel:hover {
       margin:0;
       clear:both;
       float:none;
-      
+
     }
     &:nth-child(odd) {
       clear:both;
@@ -330,7 +335,7 @@ a.app-panel:hover {
       margin-right:1%;
       @media screen and (max-width:980px) {
         margin:0;
-        
+
       }
 
     }
@@ -400,6 +405,7 @@ ul.tables-list {
   vertical-align: top;
 }
 
+<<<<<<< HEAD
 
 .database-heading {
   overflow:hidden;
@@ -473,3 +479,10 @@ ul.tables-list {
     
   }
 }
+=======
+.scrollbar{ background-color:#17232c; height: auto;max-height: 300px;overflow-x: hidden;overflow-y:scroll; max-width: 221px;margin-top: 0px; }
+#ex4::-webkit-scrollbar { width:10px;background-color:rgba(51,51,51, 0.5); }
+#ex4::-webkit-scrollbar-thumb { background-color:rgba(246, 246, 246, 0.4);border-radius:10px; }
+#ex4::-webkit-scrollbar-thumb:hover { background-color:rgba(246, 246, 246, 0.2);border:1px solid #333333; }
+#ex4::-webkit-scrollbar-thumb:active { background-color:rgba(246, 246, 246, 0.2);border:1px solid #333333; }
+>>>>>>> 50f4ec263ecdb6e7fc6cfcbc05108c79b7bb8481

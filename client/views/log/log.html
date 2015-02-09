@@ -16,11 +16,11 @@
         <div class="col-md-2" style="margin-top:20px;">
           Page size:
           <select class="ui-select" ng-model="log.paginationOptions.pageSize" >
-            <option ng-repeat="size in log.paginationOptions.pageSizes">{{size}}</option>
+            <option ng-repeat="size in log.paginationOptions.pageSizes">{{ ::size}}</option>
           </select>
         </div>
         <div class="col-md-5" style="margin-top:20px;">
-          <span class="pull-right">Showing {{log.paginationOptions.pageSize * (log.paginationOptions.pageNumber-1) +1}} to {{log.pageMax(log.paginationOptions.pageSize, log.paginationOptions.pageNumber, log.gridOptions.totalItems)}} of {{log.gridOptions.totalItems}} rows</span>
+          <span class="pull-right">Showing {{ log.paginationOptions.pageSize * (log.paginationOptions.pageNumber-1) +1}} to {{log.pageMax(log.paginationOptions.pageSize, log.paginationOptions.pageNumber, log.gridOptions.totalItems)}} of {{log.gridOptions.totalItems}} rows</span>
         </div>
       </div>
     </div>

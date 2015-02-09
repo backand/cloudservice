@@ -5,12 +5,17 @@
 
     var self = this;
 
-    this.getAppLog = function(appName, size, page, isAdmin, sort){
+    this.getAppLog = function(appName, size, page, isAdmin, sort, tableName){
       var filterParam = '';
       if(isAdmin)
+      {
+        //filterParam = '[{fieldName:"Admin", operator:"equals", value:"true"},{fieldName:"ViewName", operator:"equals", value:"' + tableName + '"}]';
         filterParam = '[{fieldName:"Admin", operator:"equals", value:"true"}]';
+      }
       else
+      {
         filterParam = '[{fieldName:"Admin", operator:"equals", value:"false"}]';
+      }
       var sortParam = '[{fieldName:"id", order:"desc"}]';
       if(sort)
         sortParam = sort;

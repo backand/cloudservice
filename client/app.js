@@ -12,6 +12,16 @@
     }
   }
 
+  /**
+   * optimizations (nir)
+   * @param $compileProvider
+   * @param $httpProvider
+   */
+  function appConfig ($compileProvider, $httpProvider) {
+    $compileProvider.debugInfoEnabled(false);
+    $httpProvider.useApplyAsync(true);
+  }
+
   function run($log, editableOptions) {
     $log.debug('App is running!');
     editableOptions.theme = 'bs3';
@@ -31,6 +41,7 @@
     'ui.grid.selection',
     'ui.grid.resizeColumns',
     'angled-windows',
+    'ngClipboard',
     'xeditable',
     'app.routes',
     'app.consts',
@@ -54,9 +65,14 @@
     'app.backoffice',
     'app.playground',
   ])
+    //.config(['$compileProvider','$httpProvider',appConfig])
+    .config(['ngClipProvider', function(ngClipProvider) {
+      ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");
+    }])
     .run(run)
     .controller('MainController', ["SessionService", '$state', '$location', MainController])
-    .value('version', '1.0.1');
+    .value('version', '1.0.1')
+
 
   angular.element(document).ready(function () {
     angular.bootstrap(document, ['app']);

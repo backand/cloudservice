@@ -43,7 +43,6 @@
         });
     };
 
-    //todo: (yariv) don't change array prototype
     self.contains = function (arr,obj) {
       var i = arr.length;
       while (i--) {

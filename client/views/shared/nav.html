@@ -79,16 +79,18 @@
             </li>
         </ul>
     </li>
-
-
-
-    <li ng-class="{active: nav.state == 'tables.show'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.fetchTables()" href="">
+    <li ng-class="{active: nav.state == 'tables.show'}" ng-show="!nav.dbEmpty">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"
+         ng-click="nav.fetchTables()" href="" ng-show="nav.tables.length > 0">
         <i class="ti-view-grid"></i>
         <span>Database Tables</span>
         <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
-      <ul class="tables-list">
+      <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('tables.notables')" href="" ng-show="nav.tables.length == 0">
+        <i class="ti-view-grid"></i>
+        <span>Database Tables</span>
+      </a>
+      <ul class="scrollbar" id="ex4">
         <li ng-class="{active: false }" ng-repeat="table in nav.tables">
             <a ng-class="{disabled: false}"  ng-click="nav.showTable(table)" href="">
                 <i class="ti-cloud"></i>
@@ -97,7 +99,6 @@
         </li>
       </ul>
     </li>
-
 
     <li ng-class="{active: nav.state == 'security.users'}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">

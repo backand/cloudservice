@@ -6,16 +6,17 @@
     self.appName = null;
     self.usersTableName = 'v_durados_user';
     self.rolesTableName = 'durados_UserRole';
-    self.workspaceTableName ='/1/workspace';
-    self.dbDataUrl ='/1/table/data/';
+    self.workspaceTableName = '/1/workspace';
+    self.dbDataUrl = '/1/table/data/';
 
 
-    self.getData = function (tableName, size, page,  sort,isConfig) {
+    self.getData = function (tableName, size, page, sort, isConfig, filter) {
       var sortParam = '[{fieldName:"id", order:"desc"}]';
-     var url =(isConfig)?'':self.dbDataUrl;
-      size = !size? 20 : size;
+      var url = (isConfig) ? '' : self.dbDataUrl;
+      var filterParam = filter || '';
+      size = !size ? 20 : size;
       page = !page ? 1 : page;
-      if(sort)
+      if (sort)
         sortParam = sort;
       return $http({
         method: 'GET',
@@ -24,24 +25,25 @@
         params: {
           'pageSize': String(size),
           'pageNumber': String(page),
-          'sort' : sortParam
+          'sort': sortParam,
+          'filter': filterParam
         }
       });
     };
 
-    self.updateData = function (tableName, rowData,pk,isConfig ) {
-      var url =(isConfig)?'':self.dbDataUrl;
-      var id=(!pk)?rowData.ID:pk;
+    self.updateData = function (tableName, rowData, pk, isConfig) {
+      var url = (isConfig) ? '' : self.dbDataUrl;
+      var id = (!pk) ? rowData.ID : pk;
       return $http({
         method: 'PUT',
-        url: CONSTS.appUrl + url + tableName + '/' + id ,
+        url: CONSTS.appUrl + url + tableName + '/' + id,
         headers: {AppName: self.appName},
         data: rowData
       });
     };
 
-    self.postData = function (tableName, rowData,isConfig) {
-      var url =(isConfig)?'':self.dbDataUrl;
+    self.postData = function (tableName, rowData, isConfig) {
+      var url = (isConfig) ? '' : self.dbDataUrl;
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + url + tableName + '/',
@@ -50,8 +52,8 @@
       });
     };
 
-    self.deleteData = function (tableName, Id,isConfig) {
-      var url =(isConfig)?'':self.dbDataUrl;
+    self.deleteData = function (tableName, Id, isConfig) {
+      var url = (isConfig) ? '' : self.dbDataUrl;
       return $http({
         method: 'DELETE',
         url: CONSTS.appUrl + url + tableName + '/' + Id,
@@ -60,9 +62,9 @@
       });
     };
 
-    self.getUsers = function ( size, page,  sort) {
+    self.getUsers = function (size, page, sort, filter) {
 
-      return self.getData(self.usersTableName,size, page,  sort)
+      return self.getData(self.usersTableName, size, page, sort, '', filter)
     };
 
     self.getRoles = function () {
@@ -74,7 +76,7 @@
     };
     self.updateRole = function (role, pk) {
 
-       return self.updateData(self.rolesTableName, role, pk);
+      return self.updateData(self.rolesTableName, role, pk);
     };
 
     self.postUser = function (user) {
@@ -93,16 +95,16 @@
     };
 
     self.getWorkspace = function (size, page, sort) {
-      return self.getData(self.workspaceTableName,null,null,'[{fieldName:"name", order:"asc"}]',true);
+      return self.getData(self.workspaceTableName, null, null, '[{fieldName:"name", order:"asc"}]', true);
 
     };
     self.postWorkspace = function (workspace) {
-      return self.postData(self.workspaceTableName,workspace,true);
+      return self.postData(self.workspaceTableName, workspace, true);
 
     };
 
     self.updateWorkspace = function (workspace) {
-      return self.updateData(self.workspaceTableName,workspace,workspace.__metadata.id,true);
+      return self.updateData(self.workspaceTableName, workspace, workspace.__metadata.id, true);
 
     };
   }
