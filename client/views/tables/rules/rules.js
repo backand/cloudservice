@@ -101,10 +101,11 @@
 
     function buildParameresDictionary() {
       var keys = [];
-      angular.forEach($scope.rule.inputParameters.split(','), function (param){
-        keys.push({token: param, label: param})
-      })
-
+      if($scope.rule.inputParameters){
+        angular.forEach($scope.rule.inputParameters.split(','), function (param){
+          keys.push({token: param, label: param})
+        })
+      }
       $scope.modal.dictionaryItems.data.parameters =  keys;
     }
 
