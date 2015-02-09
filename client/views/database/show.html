@@ -4,12 +4,11 @@
       <strong> Database Information</strong>
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
-    <div class="panel-body">
-      <div class="row col-md-10 col-sm-offset-1">
+    <div class="panel-body data" id="database-info-panel">
+      <div class="row">
         <div class="list-unstyled row"><br/></div>
-        <div class="divider divider-solid"></div>
         <div class="row">
-            <div class="col-md-7">
+            <div class="left-col">
 
 
 
@@ -117,13 +116,9 @@
 
 
             </div>
-            <div class="col-md-1">
-                <div class="vertical-border" style="height:400px;"></div>
-            </div>
-            <div class="col-md-4">
-              <div class="ui-bullet">
-                <div class="ui-bullet-content">
-                    <h4><i class="ti-comment-alt"></i>  <strong> Database Admin</strong></h4>
+          
+            <div class="right-col">
+             <h4><i class="ti-comment-alt"></i>  <strong> Database Admin</strong></h4>
                     <p>To administrate your database schema, like adding new tables or modifying columns, use one of the following tools:<br/>
                     <ul>
                         <li><a href="//www.mysql.com/products/workbench" target="_blank">Workbench</a></li>
@@ -135,8 +130,6 @@
                     <!--<br/>Go to <a ng-click="dbshow.sync(0)" href="">Database Table</a> and click <button type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary" ng-click="dbshow.sync(1)">Sync Tables</button>-->
                     <!--after you update your schema to sync your changes into Backand.-->
                     </p>
-                </div>
-              </div>
           </div>
         </div>
       </div>
