@@ -94,7 +94,7 @@
     };
 
     stop = $interval(function () {
-      //don't get into the loop while saving = semafore
+      //don't get into the loop while saving = semaphore
       if (saveData)
         return;
 

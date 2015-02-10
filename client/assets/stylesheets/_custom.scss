@@ -206,6 +206,10 @@ a.app-panel:hover {
     font-weight: bold;
      margin-top:10px;
   }
+  h3.rule-group-title:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
   p.rule-group-description {
     border-bottom: 1px solid #d3d3d3;
     padding-bottom: 10px;
@@ -538,6 +542,13 @@ ul.tables-list {
       border: 1px solid #333333;
     }
   }
+}
+.angled-window-body-content {
+  overflow: auto;
+}
+
+.modal-footer {
+  clear:both;
 }
 
 .list-style-none {

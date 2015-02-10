@@ -29,14 +29,20 @@
     </li>
 
     <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-      <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goTo('database.show')" href="">
+      <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
         <i class="icon-databsase-icon"></i>
         <span>Database</span>
         <span class="status status-{{nav.getDBStatus()}} pull-left"></span>
         <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
       <ul>
-
+        <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+          <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goTo('database.show')" href="">
+            <i class="ti-wand"></i>
+            <span ng-if="nav.DatabaseStatus != 1">Connect</span>
+            <span ng-if="nav.DatabaseStatus == 1">Configuration</span>
+          </a>
+        </li>
         <li ng-class="{active: nav.state == 'database.add-tables'}">
           <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('database.add-tables')" href="">
             <i class="ti-file"></i>
