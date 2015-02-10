@@ -13,8 +13,8 @@
       </div>
       <div class="form-group form-group-half">
         <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  id="History" type="checkbox" ng-model="fields.view.toolbarSettings.saveHistory" checked=""><i></i></label>
-        <label class="strong" for="History">Record Changes</label>
-        <div class="field-description">Use this to monitor any changes in the table's data. Note: By enabling data recording you allow Backand to save any changes in the table's data into the history log. This action may slowdown the app.</div>
+        <label class="strong" for="History">Track Changes</label>
+        <div class="field-description">When enabled, Backand will track all changes to the table's data. Enabling this option may negatively impact application performance</div>
       </div>
       <div class="form-group form-group-half" >
         <label class="strong" for="dbName">Descriptive Column</label>
@@ -22,7 +22,7 @@
                 ng-options="field.name as field.displayName for field in fields.items"
                 ng-model="fields.view.columnDisplayinTitle">
         </select>
-        <div class="field-description">The descriptive column is used when the table is been related by another table.</div>
+        <div class="field-description">The descriptive column is used in MultiSelect and SingleSelect fields when this table has been selected as a "relatedTable"</div>
       </div>
       <!--<div class="form-group">-->
         <!--<label  for="DefaultSort">Default Sort</label>-->

@@ -21,7 +21,7 @@
 
 
     $scope.modal = {
-      title: 'Application Rule',
+      title: 'Action',
       okButtonText: 'Save',
       cancelButtonText: 'Cancel',
       deleteButtonText: 'Delete',
@@ -237,7 +237,7 @@
        * close the modal window if user confirm
        */
       $scope.cancel = function () {
-        ConfirmationPopup.confirm('Changes will be lost. are sure you want to close this window?')
+        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
           .then(function(result){
             result ? modalInstance.dismiss() : false;
           });
@@ -272,85 +272,91 @@
       self.items = [
         {
           title: 'On Demand',
-          verb: 'on demand',
           visible: true,
           items: [
             {
               visible: false,
               title: 'Execute',
+              description: 'These actions fire based on a direct call to the REST API',
               dataAction: 'OnDemand',
               items: []
             }]
         },
         {
           title: 'Create',
-          verb: 'created',
           visible: true,
           items: [
             {
               visible: false,
               title: 'Before',
               dataAction: 'BeforeCreate',
+              description: 'These actions execute before an object is created in the database',
               items: []
             },
             {
               visible: false,
               title: 'During',
               dataAction: 'AfterCreateBeforeCommit',
+              description: 'These actions execute while the object is being created, occurring during the same transaction context',
               items: []
             },
             {
               visible: false,
               title: 'After',
               dataAction: 'AfterCreate',
+              description: 'These actions fire after a new record has been added to the database',
               items: []
             }]
         },
         {
           title: 'Edit',
-          verb: 'edited',
           visible: true,
           items: [
             {
               visible: false,
               title: 'Before',
               dataAction: 'BeforeEdit',
+              description: 'These actions execute before an object is updated in the database',
               items: []
             },
             {
               visible: false,
               title: 'During',
               dataAction: 'AfterEditBeforeCommit',
+              description: 'These actions execute while the object is being updated, occurring during the same transaction context',
               items: []
             },
             {
               visible: false,
               title: 'After',
               dataAction: 'AfterEdit',
+              description: 'These actions fire after a record has been modified in the database',
               items: []
             }]
         },
         {
           title: 'Delete',
-          verb: 'deleted',
           visible: true,
           items: [
             {
               visible: false,
               title: 'Before',
               dataAction: 'BeforeDelete',
+              description: 'These actions execute before an object is deleted from the database',
               items: []
             },
             {
               visible: false,
               title: 'During',
               dataAction: 'AfterDeleteBeforeCommit',
+              description: 'These actions execute while the object is being deleted, occurring during the same transaction context',
               items: []
             },
             {
               visible: false,
               title: 'After',
               dataAction: 'AfterDelete',
+              description: 'These actions fire after a new record has been deleted from the database',
               items: []
             }]
         }];

@@ -44,13 +44,13 @@
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
                 ng-disabled="field.advancedLayout.delete" id="Required" type="checkbox"
                 ng-model="field.advancedLayout.required" checked=""><i></i></label>
-              <div class="field-description">When set to True, you must send value when creating new row</div>
+              <div class="field-description">Require that a value is provided for this field during record creation</div>
             </div>
             <div class="form-group form-group-half">
               <label class="strong" for="DefaultValue">Default Value</label>
               <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" id="DefaultValue"
                      ng-model="field.advancedLayout.defaultValue">
-              <div class="field-description">The default value is used when creating new row and no other value is set</div>
+              <div class="field-description">This value will be used as a default during creation</div>
             </div>
             <div class="form-group form-group-half" ng-show="field.type=='Numeric'">
               <label class="strong" for="minVal">Min Value</label>
@@ -126,7 +126,7 @@
             <div class="form-group">
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.advancedLayout.delete" checked=""><i></i></label>
               <label class="strong" for="excluded">Ignore this field</label>
-              <div class="field-description">Use this if to exclude the field from any server side action</div>
+              <div class="field-description">When true, this field will be ignored by any server-side actions</div>
             </div>
           </div>
         </div>

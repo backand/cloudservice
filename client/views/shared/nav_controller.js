@@ -43,6 +43,7 @@
       AppsService.getCurrentApp(self.appName)
         .then(function (data) {
           self.app = data;
+          self.DatabaseStatus = self.app.DatabaseStatus;
           var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
           checkChanges(oldStatus);
           if(oldStatus == 0)
@@ -80,7 +81,7 @@
     };
 
     self.goToLocation = function(href) {
-        if (this.app.DatabaseStatus === 1) {
+        if (self.app.DatabaseStatus === 1) {
             window.open(href, '_blank');
         }
     }

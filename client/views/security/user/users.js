@@ -280,7 +280,7 @@
        * close the modal window if user confirm
        */
       $scope.cancel = function () {
-        var result = ConfirmationPopup.confirm('Changes will be lost. are sure you want to close this window?')
+        var result = ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
           .then(function (result) {
             result ? modalInstance.dismiss() : false;
           })
