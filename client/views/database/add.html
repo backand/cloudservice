@@ -12,7 +12,7 @@
         <div class="col-md-7">
 
           <h3>Templates</h3>
-          <h5>Select a template below to populate your app with tables...</h5>
+          <h5>Select a template to use as the starting point for your app...</h5>
           <br>
           <div >
             <ul class="nav nav-tabs" ng-class="{'nav-stacked': vertical, 'nav-justified': justified}" >
@@ -48,10 +48,10 @@
               </h4>
 
         <ul>
-              <li> The JSON on the left represents a database schema, which you can change depending on your project.</li>
-              <li> A JSON table object has a "name" and "fields" properties, you do not need to specify a primary key as we generate it for you.</li>
-              <li> The allowed types for a column are ShortText, LongText,DateTime, Numeric,SingleSelect, MultiSelect. For SingleSelect and MultiSelect you need to specify the relatedTable property.</li>
-              <li> POST request to Backand REST server (see code below).</li>
+              <li> The JSON in the edit window represents a database schema for the selected template. You can modify the JSON to match your desired table structure.</li>
+              <li> A table is represented in JSON as a name entry (stored in "name") and an array of fields (stored in "fields"). Primary keys are generated automatically.</li>
+              <li> The following column data types are available: ShortText, LongText, DateTime, Numeric, SingleSelect, MultiSelect. ***Note: For SingleSelect and MultiSelect you need to specify a related table with the available options. This is specified by the relatedTable property.</li>
+              <li> You can either use the "Create" button to send your schema to your database, or submit the schema as stringified JSON using the code below</li>
         </ul>
               <br>
               <h3> <i class="ti-shortcode"></i> <strong>Code</strong></h3>

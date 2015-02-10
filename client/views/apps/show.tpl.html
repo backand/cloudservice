@@ -9,19 +9,19 @@
           <ul class="list-inline text-center stats" >
               <li class="col-md-3">
                 <h1>{{show.statisticsArray['last24hours'] | number:0}}</h1>
-                <p class="text-muted size-h5">Requests in 24h</p>
+                <p class="text-muted size-h5">Requests in the last 24h</p>
               </li>
               <li class="col-md-3">
                   <h1>{{show.statisticsArray['diffLastDaytoYesterday']==null ? 0:show.statisticsArray['diffLastDaytoYesterday'] | number:0}}%</h1>
-                  <p class="text-muted size-h5">Diff in last 24h</p>
+                  <p class="text-muted size-h5">Change in the last 24h</p>
               </li>
               <li class="col-md-3">
                   <h1>{{show.statisticsArray['last30days'] | number:0}}</h1>
-                  <p class="text-muted size-h5">Requests in 30d</p>
+                  <p class="text-muted size-h5">Requests in the last 30d</p>
               </li>
               <li class="col-md-3">
                   <h1>{{show.statisticsArray['diffLast30DaysToPrev']==null ? 0:show.statisticsArray['diffLast30DaysToPrev'] | number:0}}%</h1>
-                  <p class="text-muted size-h5">Diff in last 30d</p>
+                  <p class="text-muted size-h5">Change in the last 30d</p>
               </li>
               <!--<li class="col-md-2">-->
                   <!--<h1>{{show.statisticsArray['sizeInMb']==null ? 0:show.statisticsArray['sizeInMb'] | number:0}}MB</h1>-->

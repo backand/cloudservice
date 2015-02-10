@@ -34,8 +34,7 @@
       <label>Where Condition</label>
       <div class="pull-right">
 
-
-        <span class="ti-list" style="cursor: pointer;font-size:20px;" ng-click="modal.dictionaryState = modal.toggleGroup(modal.dictionaryState)"></span>
+        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.dictionaryState = modal.toggleGroup(modal.dictionaryState)"></span>
       </div>
       <div ng-cloak>
         <angled-window ng-show="modal.dictionaryState"
@@ -51,7 +50,7 @@
                 name="whereCondition"
                 class="form-control"
                 ng-focus="flag = true"
-                placeholder="enter value true to run always or build new condition"
+                placeholder="Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution"
                 ng-model="rule.whereCondition"
                 ng-model-options="{debounce:{default:100}}"
                 style="resize: vertical"></textarea>
@@ -60,13 +59,13 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition"
          ng-class="{ 'has-error': newRuleForm.action.$invalid &&  newRuleForm.action.$dirty }">
 
-      <label>Action</label>
+      <label>Type</label>
       <select class="form-control"
               name="action"
               required
               ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
               ng-model="rule.workflowAction">
-        <option value="">Select action...</option>
+        <option value="">Select what to do...</option>
       </select>
     </div>
 
@@ -301,14 +300,14 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.workflowAction"
          ng-class="{ 'has-error': newRuleForm.ruleName.$invalid &&  newRuleForm.ruleName.$dirty}">
 
-      <label>Rule Name</label>
+      <label>Action Name</label>
       <input type="text"
              name="ruleName"
              class="form-control"
              ng-model="rule.name"
              ng-model-options="{debounce:{default:100}}"
              required
-             placeholder="name your rule">
+             placeholder="name your action">
     </div>
 
     <div class="modal-footer">

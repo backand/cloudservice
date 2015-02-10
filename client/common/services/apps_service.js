@@ -50,7 +50,7 @@
         this.appDbStat(appName)
           .success(function (data) {
             if (data.tableCount == 0)
-              apps.alerts[appName] = "Your database has no tables! go to <a href=''>Database Create</a> and run our existing schemas or use any Admin tool to add tables";
+              apps.alerts[appName] = "Your database has no tables! Go to <a href=''>Database Create</a> to load a template, or use an administrative tool to create some tables";
             return apps.alerts[appName];
           })
       }
