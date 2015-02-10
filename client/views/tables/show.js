@@ -1,9 +1,9 @@
 (function  () {
   'use strict';
   angular.module('app')
-    .controller('TablesShow', ['$scope', '$stateParams', 'AppsService', 'usSpinnerService', 'NotificationService', 'ColumnsService','$timeout', TablesShow]);
+    .controller('TablesShow', ['$scope', '$rootScope', '$stateParams', 'AppsService', 'usSpinnerService', 'NotificationService', 'ColumnsService','$timeout', TablesShow]);
 
-  function TablesShow($scope, $stateParams, AppsService, usSpinnerService, NotificationService, ColumnsService,$timeout) {
+  function TablesShow($scope, $rootScope, $stateParams, AppsService, usSpinnerService, NotificationService, ColumnsService,$timeout) {
 
     var self = this;
 

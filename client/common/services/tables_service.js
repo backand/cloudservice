@@ -19,13 +19,9 @@
     };
 
     self.tables = function(appName) {
-
-
       if(self._tables != null)
       {
-        var deferred = $q.defer();
-        deferred.resolve(self._tables);
-        return deferred.promise;
+        return $q.when(self._tables);
       }
       else{
         return self.get(appName);

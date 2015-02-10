@@ -2,9 +2,9 @@
 (function  () {
     'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService','$interval', '$log', 'NotificationService', 'TablesService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService','$interval', '$log', 'NotificationService', 'TablesService', 'DbQueriesService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService){
+  function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService, DbQueriesService){
     var self = this;
     var stop;
 
@@ -21,6 +21,9 @@
           self.tables = data;
           if($state.params.name){
             AppsService.appDbStat($state.params.name).then(successDbStats);
+            //DbQueriesService.get($state.params.name);
+            loadDbQueries();
+
           }
         },
         function (data) {
@@ -28,7 +31,6 @@
         }
       );
     }
-
 
     self.goTo = function(state) {
       if (this.app.DatabaseStatus === 1) {
@@ -83,7 +85,7 @@
         if (this.app.DatabaseStatus === 1) {
             window.open(href, '_blank');
         }
-    }
+    };
 
     function checkChanges(oldStatus) {
       var newStatus = parseInt(self.app.myStatus.status);
@@ -124,6 +126,7 @@
     }
 
     self.tables = [];
+    self.queries = [];
 
     self.fetchTables = function () {
       loadTables();
@@ -140,6 +143,29 @@
       });
     };
 
+    self.fetchDbQueries = function () {
+      loadDbQueries();
+    };
 
+    function loadDbQueries() {
+      DbQueriesService.get($state.params.name).then(
+        function (data) {
+          self.queries = data;
+        },
+        function (data) {
+          $log.debug("DbQueriesService failure", data);
+        }
+      );
+    }
+
+    self.showDbQuery = function(query) {
+      query = query || DbQueriesService.newQuery();
+      var params = {
+        name: $state.params.name,
+        queryName: query.name,
+        queryId: query.__metadata.id
+      };
+      $state.go('dbQueries.query', params);
+    };
   }
 }());

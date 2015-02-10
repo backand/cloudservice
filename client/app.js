@@ -64,6 +64,7 @@
     'app.database',
     'app.backoffice',
     'app.playground',
+    'app.dbQueries',
   ])
     //.config(['$compileProvider','$httpProvider',appConfig])
     .config(['ngClipProvider', function(ngClipProvider) {

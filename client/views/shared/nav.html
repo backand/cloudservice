@@ -90,12 +90,35 @@
         <i class="ti-view-grid"></i>
         <span>Database Tables</span>
       </a>
-      <ul class="scrollbar" id="ex4">
+      <ul class="scrollbar ex4" id="ex4">
         <li ng-class="{active: false }" ng-repeat="table in nav.tables">
             <a ng-class="{disabled: false}"  ng-click="nav.showTable(table)" href="">
                 <i class="ti-cloud"></i>
                 <span>{{table.name}}</span>
             </a>
+        </li>
+      </ul>
+    </li>
+
+    <li ng-class="{active: nav.state == 'dbQueries.index' || nav.state == 'dbQueries.index'}">
+      <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.fetchDbQueries()" href="">
+        <i class="ti-gift"></i>
+        <span>Database Queries</span>
+      </a>
+      <ul>
+        <li ng-class="{active: false }">
+          <a ng-class="{disabled: false}"  ng-click="nav.showDbQuery()" href="">
+            <i class="ti-plus"></i>
+            <span>New Query</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="scrollbar ex4">
+        <li ng-class="{active: false }" ng-repeat="query in nav.queries">
+          <a ng-class="{disabled: false}"  ng-click="nav.showDbQuery(query)" href="">
+            <i class="ti-gift"></i>
+            <span>{{query.name}}</span>
+          </a>
         </li>
       </ul>
     </li>

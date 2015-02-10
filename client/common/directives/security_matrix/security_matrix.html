@@ -3,10 +3,7 @@
   <thead>
   <tr>
     <th>ROLE</th>
-    <th class="text-center">READ</th>
-    <th class="text-center">CREATE</th>
-    <th class="text-center">UPDATE</th>
-    <th class="text-center">DELETE</th>
+    <th class="text-center" ng-repeat="action in actions" ng-bind="action.toUpperCase()"></th>
   </tr>
   </thead>
 
@@ -19,28 +16,10 @@
       <td ng-if="override && !role.readonly"><a  href="" ng-click="OpenRole(role.title, 'update')" ng-bind="role.title"></a></td>
       <td ng-if="!override || role.readonly" ng-bind="role.title"></td>
 
-      <td class="text-center">
-        <input ng-checked="role.permissions.read"
+      <td class="text-center" ng-repeat="action in actions">
+        <input ng-checked="role.permissions[action]"
                ng-disabled="!override"
-               ng-model="role.permissions.read"
-               type="checkbox"/>
-      </td>
-      <td class="text-center">
-        <input ng-checked="role.permissions.create"
-               ng-model="role.permissions.create"
-               ng-disabled="!override"
-               type="checkbox"/>
-      </td>
-      <td class="text-center">
-        <input ng-checked="role.permissions.update"
-               ng-model="role.permissions.update"
-               ng-disabled="!override"
-               type="checkbox"/>
-      </td>
-      <td class="text-center">
-        <input ng-checked="role.permissions.delete"
-               ng-model="role.permissions.delete"
-               ng-disabled="!override"
+               ng-model="role.permissions[action]"
                type="checkbox"/>
       </td>
 

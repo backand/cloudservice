@@ -11,12 +11,17 @@
       scope: {
         securityTemplate: '=',
         override: '=',
+        actions: '=?',
         onUpdate: '&',
         onRoleAdd: '&',
         onRoleRename: '&',
         onRoleRemove: '&'
       },
       templateUrl: 'common/directives/security_matrix/security_matrix.html',
+
+      controller: function($scope) {
+        $scope.actions = $scope.actions || ['read', 'create', 'update', 'delete'];
+      },
 
       link: function securityMatrixLink(scope) {
 
@@ -74,7 +79,7 @@
 
           scope.modal.cancel= function () {
             modalInstance.close();
-          }
+          };
 
           scope.modal.closeModal = function () {
             if(scope.modal.roleName == "Developer")
@@ -123,14 +128,8 @@
             modalInstance.close();
             var newRole = {
               title: scope.modal.roleName,
-              permissions: {
-                read: false,
-                write: false,
-                edit: false,
-                delete: false
-              }
+              permissions: _.reduce(scope.actions, false)
             };
-
             scope.securityTemplate.push(newRole);
           }
 

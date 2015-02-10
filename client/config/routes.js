@@ -59,6 +59,11 @@ angular.module('app.routes', []).
         url: '/security',
         abstract: true,
         template: '<div ui-view></div>'
+      })
+      .state('dbQueries', {
+        url: '/dbQueries',
+        abstract: true,
+        template: '<div ui-view></div>'
       });
     })
   .run(run,['$state','AuthService', '$rootScope']);

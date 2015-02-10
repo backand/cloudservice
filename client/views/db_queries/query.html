@@ -1,0 +1,69 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Database Query: {{DbQuery.query.name}}</strong>
+      <a href="javascript:;" class="btn btn-lg pull-right" style="margin-top: -10px;" ng-click="settings.delete()"><i class="ti-trash"></i></a>
+      <button class="btn btn-sm btn-primary pull-right" style="margin-top: -5px;" ng-click="DbQuery.duplicateQuery()">Duplicate</button>
+
+    </div>
+    <div class="panel-body" id="database-query-panel">
+      <div class="row">
+        <div class="left-col">
+
+      <form role="form" role="form" ng-submit="DbQuery.saveOrEdit()" novalidate>
+        <div class="form-group">
+          <label for="name">Query Name</label>
+          <input type="text" class="form-control" id="name" ng-model="DbQuery.query.name" required ng-disabled="!DbQuery.editMode">
+        </div>
+        <div class="form-group">
+          <label for="params">Input Parameters</label>
+          <input type="text" class="form-control" id="params" ng-model="DbQuery.query.parameters"  ng-disabled="!DbQuery.editMode">
+        </div>
+
+        <div class="form-group">
+          <label for="query">Query</label>
+          <textarea type="text" class="form-control" id="query" ng-model="DbQuery.query.sQL" required ng-disabled="!DbQuery.editMode"></textarea>
+        </div>
+
+        <div class="form-group">
+
+          <label >Read Permissions</label>
+          <ul class="list-style-none" >
+            <li ng-repeat="role in DbQuery.roles">
+              <input type="checkbox"
+                     ng-model="DbQuery.allowSelectRolesObject[role]"
+                     id="permissions-checkbox-{{role}}"
+                     ng-disabled="!DbQuery.editMode">
+              </input>
+              <label for="permissions-checkbox-{{role}}">
+                {{ role }}
+              </label>
+            </li>
+          </ul>
+
+        </div>
+        <br/>
+
+        <div class="save-bar">
+          <button type="submit"
+                  ng-disabled="form.$invalid"
+                  class="btn btn-success btn-lg btn-w-lg"
+                  data-style="expand-right"
+                  ng-bind="DbQuery.editMode ? 'Save' : 'Edit'"></button>
+          <button type="button"
+                  ng-show="DbQuery.editMode"
+                  class="btn btn-behance btn-lg btn-w-lg"
+                  data-style="expand-right"
+                  ng-click="DbQuery.cancel()">Cancel</button>
+        </div>
+      </form>
+
+    </div>
+      <div class="right-col">
+        <h1>Set values to params</h1>
+        <h1>Test query (show results)</h1>
+        </div>
+      </div></div>
+  </section>
+  </section>
+
