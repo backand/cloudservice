@@ -21,7 +21,7 @@
         });
       });
 
-      self.editMode = false;
+      self.editMode = (!$stateParams.queryId);
     }
 
     self.saveOrEdit = function () {

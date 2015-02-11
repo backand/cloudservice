@@ -21,7 +21,6 @@
           self.tables = data;
           if($state.params.name){
             AppsService.appDbStat($state.params.name).then(successDbStats);
-            //DbQueriesService.get($state.params.name);
             loadDbQueries();
 
           }
@@ -160,13 +159,20 @@
     }
 
     self.showDbQuery = function(query) {
-      query = query || DbQueriesService.newQuery();
+      query = query;
       var params = {
         name: $state.params.name,
         queryName: query.name,
         queryId: query.__metadata.id
       };
       $state.go('dbQueries.query', params);
+    };
+
+    self.newDbQuery = function() {
+      var params = {
+        name: $state.params.name
+      };
+      $state.go('dbQueries.newQuery', params);
     };
   }
 }());
