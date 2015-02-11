@@ -9,7 +9,7 @@
     var getPromise = null;
     var currentApp = null;
 
-    self.get = function(appName) {
+    self.getQueries = function(appName) {
       if (!getPromise || currentApp != appName) {
         currentApp = appName;
         getPromise = _get(appName)
@@ -44,61 +44,77 @@
       }
     }
     self.getQuery = function (id) {
-      if (!id)
-        return new Query();
-      var found = _.find(self._queries, {'__metadata': {'id' : id } });
-      return found;
+      return _.find(self._queries, {'__metadata': {'id' : id } });
     };
 
+    self.getQueryForEdit = function (id) {
+      return angular.copy(self.getQuery(id));
+    };
+
+    self.getNewQuery = function() {
+      return new Query();
+    };
+
+
+    function _request(method, path, data) {
+      return $http({
+        method: method,
+        url: CONSTS.appUrl + baseUrl + configUrl + path,
+        headers: { AppName: currentApp },
+        data: data
+      });
+    }
+
     function _put(query, queryId) {
-      return $http({
-        method: 'PUT',
-        url: CONSTS.appUrl + baseUrl + configUrl + queryId,
-        headers: { AppName: currentApp },
-        data: query
-      });
+      return _request('PUT', queryId, query)
     }
 
-    function _post(query, appName) {
-      return $http({
-        method: 'POST',
-        url: CONSTS.appUrl + baseUrl + configUrl,
-        headers: { AppName: currentApp },
-        data: query
-      });
-    }
-
-    function refresh() {
-      getPromise = null;
-      return self.get(currentApp);
+    function _post(query) {
+      return _request('POST', '', query)
     }
 
     self.saveQuery = function (query) {
-      if (query.__metadata)
+      if (query.__metadata) // edit query
       {
         var queryId = query.__metadata.id;
-        _put(query, queryId)
+        return _put(query, queryId)
         .then(function (data) {
             NotificationService.add('success', 'Query saved');
-            refresh();
+            _.assign(self.getQuery(queryId), query);
+            return data.data;
           }
           , function (err) {
             NotificationService.add('error', "Can't get DB queries");
           });
       }
-      else
+      else // new query
       {
-        _post(query)
+        return _post(query)
           .then(function (data) {
-            NotificationService.add('success', 'Query saved');
-            var query = data.data;
+            NotificationService.add('success', 'New query saved');
+            query = data.data;
             self._queries.push(query);
+            return data.data;
           }
           , function (err) {
             NotificationService.add('error', "Can't save query");
           });
       }
     };
+
+    function _delete(queryId) {
+      return _request('DELETE', queryId, null)
+    }
+
+    self.deleteQuery = function (query) {
+      return _delete(query.__metadata.id)
+        .then (function(data) {
+        _.remove(self._queries, self.getQuery(query.__metadata.id));
+        return data;
+      })
+    };
+
+
   }
 
 

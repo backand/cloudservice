@@ -25,7 +25,8 @@
           NotificationService.add("error",rejection.data || rejection.data.error_description);
           if(rejection.status === 401){
             SessionService.ClearCredentials();
-            return $injector.get('$state').transitionTo('sign_in');
+            $injector.get('$state').transitionTo('sign_in');
+            return $q.reject(rejection);
           }
         }
         return $q.reject(rejection);

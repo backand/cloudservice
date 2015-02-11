@@ -22,7 +22,6 @@
           if($state.params.name){
             AppsService.appDbStat($state.params.name).then(successDbStats);
             loadDbQueries();
-
           }
         },
         function (data) {
@@ -148,7 +147,7 @@
     };
 
     function loadDbQueries() {
-      DbQueriesService.get($state.params.name).then(
+      DbQueriesService.getQueries($state.params.name).then(
         function (data) {
           self.queries = data;
         },
@@ -162,7 +161,6 @@
       query = query;
       var params = {
         name: $state.params.name,
-        queryName: query.name,
         queryId: query.__metadata.id
       };
       $state.go('dbQueries.query', params);
