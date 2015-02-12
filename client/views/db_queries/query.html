@@ -2,15 +2,21 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> Database Query: {{DbQuery.query.name}}</strong>
-      <a href="javascript:;" class="btn btn-lg pull-right" style="margin-top: -10px;" ng-click="DbQuery.deleteQuery()"><i class="ti-trash"></i></a>
-      <button class="btn btn-sm btn-primary pull-right" style="margin-top: -5px;" ng-click="DbQuery.duplicateQuery()">Duplicate</button>
+      <span ng-show="!DbQuery.new">
+        <a href="javascript:;"
+           class="btn btn-lg pull-right"
+           style="margin-top: -10px;"
+           ng-click="DbQuery.deleteQuery()">
+          <i class="ti-trash" ></i></a>
+        <button class="btn btn-sm btn-primary pull-right" style="margin-top: -5px;" ng-click="DbQuery.duplicateQuery()">Duplicate</button>
+      </span>
 
     </div>
     <div class="panel-body" id="database-query-panel">
       <div class="row">
         <div class="left-col">
 
-      <form role="form" role="form" ng-submit="DbQuery.saveOrEdit()" novalidate>
+      <form role="form" role="form" ng-submit="DbQuery.saveQuery()" novalidate insert-at-caret>
         <div class="form-group">
           <label for="name">Query Name</label>
           <input type="text" class="form-control" id="name" ng-model="DbQuery.query.name" required ng-disabled="!DbQuery.editMode">
@@ -22,7 +28,15 @@
 
         <div class="form-group">
           <label for="query">Query</label>
-          <textarea type="text" class="form-control" id="query" ng-model="DbQuery.query.sQL" required ng-disabled="!DbQuery.editMode"></textarea>
+          <div class="pull-right" ng-show="DbQuery.editMode">
+            <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
+                  ng-click="DbQuery.toggleParametersModal()"></span>
+          </div>
+          <textarea type="text"
+                    class="form-control"
+                    id="query" ng-model="DbQuery.query.sQL"
+                    required
+                    ng-disabled="!DbQuery.editMode"></textarea>
         </div>
 
         <div class="form-group">
@@ -44,12 +58,18 @@
         </div>
         <br/>
 
-        <div class="save-bar">
-          <button type="submit"
+        <div class="save-bar" ng-show="!DbQuery.editMode">
+          <button type="button"
                   ng-disabled="form.$invalid"
                   class="btn btn-success btn-lg btn-w-lg"
                   data-style="expand-right"
-                  ng-bind="DbQuery.editMode ? 'Save' : 'Edit'"></button>
+                  ng-click="DbQuery.editQuery()">Edit</button>
+        </div>
+        <div class="save-bar" ng-show="DbQuery.editMode">
+          <button type="submit"
+                  ng-disabled="form.$invalid"
+                  class="btn btn-success btn-lg btn-w-lg"
+                  data-style="expand-right">Save</button>
           <button type="button"
                   ng-show="DbQuery.editMode"
                   class="btn btn-behance btn-lg btn-w-lg"
@@ -66,4 +86,14 @@
       </div></div>
   </section>
   </section>
+
+<div ng-cloak>
+  <angled-window ng-if="DbQuery.openParamsModal"
+                 id="select-params"
+                 title="Query Parameters"
+                 grouping="w"
+                 style="left: 650px; top: 70px;">
+    <div ng-include="'views/db_queries/select_parameters.html'"></div>
+  </angled-window>
+</div>
 

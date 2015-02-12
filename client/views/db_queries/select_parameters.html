@@ -1,0 +1,11 @@
+<button class="btn btn-danger btn-xs" style="margin-left: 230px;" ng-click="DbQuery.toggleParametersModal()">X</button>
+
+<hr/>
+<strong>Parameters</strong>
+<ul class="list-unstyled">
+  <li ng-repeat="parameter in DbQuery.getParameters()"
+      ng-click="DbQuery.insertParamAtChar('query', parameter)"
+      ng-bind="parameter"
+      style="cursor:pointer;">
+  </li>
+</ul>
