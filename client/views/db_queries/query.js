@@ -2,15 +2,17 @@
 (function  () {
   'use strict';
   angular.module('app.dbQueries')
-    .controller('DbQueryController', ['$scope', '$state', '$stateParams', 'DbQueriesService', 'ConfirmationPopup', 'NotificationService', 'DictionaryService', DbQueryController]);
+    .controller('DbQueryController', ['$scope', '$state', '$stateParams', 'DbQueriesService', 'ConfirmationPopup', 'NotificationService', 'DictionaryService','SecurityService', DbQueryController]);
 
-  function DbQueryController($scope, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService) {
+  function DbQueryController($scope, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService ) {
     var self = this;
+
     init();
 
 
     function init() {
-      DbQueriesService.getQueries($stateParams.name).then(function() {
+      self.appName = $stateParams.name;
+      DbQueriesService.getQueries(self.appName).then(function() {
         self.openParamsModal = false;
         self.new = (!$stateParams.queryId);
         self.editMode = self.new;
@@ -19,14 +21,23 @@
         } else {
           self.query = DbQueriesService.getQueryForEdit($stateParams.queryId);
           if (typeof self.query == 'undefined') {
-            $state.go('dbQueries.newQuery', {name: $stateParams.name});
+            $state.go('dbQueries.newQuery', {name: self.appName});
             return;
           }
         }
-        self.roles = ['Admin', 'Public', 'User'];
-        rolesToObj();
-
+        self.currentST = String(self.query.workspaceID);
+        SecurityService.appName = self.appName;
+        loadRoles();
+        getWorkspaces();
       });
+    }
+
+    function loadRoles(){
+      SecurityService.getRoles()
+        .then(function (data) {
+          self.roles = data.data.data;
+          rolesToObj();
+        })
     }
 
     function rolesToObj() {
@@ -45,16 +56,18 @@
       self.query.allowSelectRoles = allowSelectRolesArray.join(',');
     }
 
-    this.saveQuery = function () {
-      //TODO: spinner start
+    self.saveQuery = function () {
+      self.loading = true;
       self.openParamsModal = false;
+      self.query.workspaceID = Number(self.currentST);
+
       rolesToString();
       DbQueriesService.saveQuery(self.query)
         .then(function (query) {
           self.editMode = false;
-          //TODO: spinner stop
+          self.loading = false;
           var params = {
-            name: $stateParams.name,
+            name: self.appName,
             queryId: query.__metadata.id
           };
           $state.go('dbQueries.query', params);
@@ -62,19 +75,19 @@
 
     };
 
-    this.editQuery = function () {
+    self.editQuery = function () {
       self.editMode = true;
-      //populateDictionaryItems();
+      populateDictionaryItems();
     };
 
-    this.cancel = function () {
+    self.cancel = function () {
       ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
         .then(function(result){
           result ? init() : false;
         });
     };
 
-    this.deleteQuery = function () {
+    self.deleteQuery = function () {
       ConfirmationPopup.confirm('Are you sure you want to delete the query?')
         .then(function (result) {
           if (!result)
@@ -85,53 +98,76 @@
             }, function(error, message) {
               NotificationService.add('error', message);
             });
-          $state.go('apps.show', {name: $stateParams.name});
+          $state.go('apps.show', {name: self.appName});
         })
     };
 
+    /**
+     * Read the list of workspaces
+     */
+    function getWorkspaces() {
+      if (self.workspaces == null) {
+        SecurityService.getWorkspace().then(workspaceSuccessHandler, errorHandler)
+      }
+    }
+
+    /**
+     * @param data
+     * @constructor
+     */
+    function workspaceSuccessHandler(data) {
+      self.workspaces = data.data.data;
+    }
+
 
     function populateDictionaryItems() {
+      DictionaryService.appName = self.appName;
+      DictionaryService.tableName = 'v_durados_user'; //used just any table - we just need the system tokens
+
       DictionaryService.get().then(function (data) {
         var raw = data.data;
         var keys = Object.keys(raw);
-        this.dictionaryItems = {
+        self.dictionaryItems = {
           headings: {
             tokens: keys[0],
-            props: keys[1],
             parameters: 'Parameters'
           },
           data: {
             tokens: raw[keys[0]],
-            props: raw[keys[1]],
             parameters: []
           }
         };
       });
     }
 
-    this.toggleParametersModal = function () {
+    self.toggleParametersModal = function () {
       self.openParamsModal = !self.openParamsModal;
     };
 
-    this.insertParamAtChar = function (elementId, param) {
+    self.insertParamAtChar = function (elementId, param) {
       $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, param]);
     };
 
-    var paramRegex = /{{([^}]*)}}/g; //anything between '{{' and '}}' except '}'
-    this.getParameters = function () {
-      if (self.query) {
-        var paramsMatch = self.query.parameters.replace(/ /g, '').split(',');
-        var queryMatch = [];
-        var queryMatchWithBrackets = self.query.sQL.match(paramRegex);
-        if (queryMatchWithBrackets != null)
-          queryMatchWithBrackets.forEach(function (match) {
-            queryMatch.push(match.substring(2, match.length-2).replace(/ /g, ''));
-          });
+    function errorHandler(error, message) {
+      NotificationService.add('error', message);
+    }
 
-        var parameters = _.union(paramsMatch, queryMatch);
-        self.query.parameters = parameters.join(',');
-        return parameters;
-      }
+    //var paramRegex = /{{([^}]*)}}/g; //anything between '{{' and '}}' except '}'
+    self.getParameters = function () {
+      return self.query.parameters.replace(/ /g, '').split(',');
+      //if (self.query) {
+      //  var paramsMatch = self.query.parameters.replace(/ /g, '').split(',');
+      //  var queryMatch = [];
+      //  var queryMatchWithBrackets = self.query.sQL.match(paramRegex);
+      //  if (queryMatchWithBrackets != null)
+      //    queryMatchWithBrackets.forEach(function (match) {
+      //      queryMatch.push(match.substring(2, match.length-2).replace(/ /g, ''));
+      //    });
+      //
+      //  var parameters = _.union(paramsMatch, queryMatch);
+      //  self.query.parameters = parameters.join(',');
+      //  return parameters;
+      //}
     }
 
   }

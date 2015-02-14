@@ -67,7 +67,7 @@
 
       if (self.workspaces == null) {
         SecurityService.appName =
-          SecurityService.getWorkspace().then(worksapceSuccessHandler, errorHandler)
+          SecurityService.getWorkspace().then(workspaceSuccessHandler, errorHandler)
       }
     }
 
@@ -75,7 +75,7 @@
      * @param data
      * @constructor
      */
-    function worksapceSuccessHandler(data) {
+    function workspaceSuccessHandler(data) {
       self.workspaces = data.data.data;
 
       if (self.view == null)

@@ -1,4 +1,13 @@
 <button class="btn btn-danger btn-xs" style="margin-left: 230px;" ng-click="DbQuery.toggleParametersModal()">X</button>
+<hr/>
+<strong ng-bind="modal.dictionaryItems.headings.tokens"></strong>
+<ul class="list-unstyled">
+  <li ng-repeat="token in DbQuery.dictionaryItems.data.tokens"
+      ng-click="DbQuery.insertParamAtChar('query' ,token.token)"
+      ng-bind="token.label"
+      style="cursor:pointer;">
+  </li>
+</ul>
 
 <hr/>
 <strong>Parameters</strong>

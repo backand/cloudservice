@@ -9,18 +9,25 @@
     var stop;
 
     (function init() {
-      self.appName = $state.params.name;
       self.app = null;
-      self.dbEmpty = false;
+      self.tables = [];
+      self.queries = [];
       loadTables();
     }());
 
+
     function loadTables(){
-      TablesService.get($state.params.name).then(
+      self.appName = $state.params.name
+      self.dbEmpty = false;
+      if(self.appName == undefined)
+        return;
+      TablesService.get(self.appName).then(
         function (data) {
           self.tables = data;
-          if($state.params.name){
-            AppsService.appDbStat($state.params.name).then(successDbStats);
+          if(self.appName){
+            if(self.tables.length == 0){ //only check the database if there are no tables
+              AppsService.appDbStat(self.appName).then(successDbStats);
+            }
             loadDbQueries();
           }
         },
@@ -46,7 +53,7 @@
           self.DatabaseStatus = self.app.DatabaseStatus;
           var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
           checkChanges(oldStatus);
-          if(oldStatus == 0)
+          if(self.DatabaseStatus == 0)
             self.tables = [];
         });
     }
@@ -124,13 +131,17 @@
       }
     }
 
-    self.tables = [];
-    self.queries = [];
+    self.clearTables = function () {
+      self.tables = [];
+      self.queries = [];
+    }
 
     self.fetchTables = function () {
+      self.clearTables();
       loadTables();
     };
 
+    $scope.$on('clearTables', self.clearTables);
     $scope.$on('fetchTables', self.fetchTables);
     $scope.$on('appname:saved', self.fetchTables);
 

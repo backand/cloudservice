@@ -11,10 +11,13 @@
         return a.Name === appName;
       })[0])
 
+
+
       if (app.DatabaseStatus == 1) {
         $state.go('apps.show', {name: appName});
       }
       else{
+        $scope.$root.$broadcast('clearTables');
         $state.go('database.edit', {name: appName});
       }
     };

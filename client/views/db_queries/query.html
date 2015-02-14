@@ -8,7 +8,7 @@
            style="margin-top: -10px;"
            ng-click="DbQuery.deleteQuery()">
           <i class="ti-trash" ></i></a>
-        <button class="btn btn-sm btn-primary pull-right" style="margin-top: -5px;" ng-click="DbQuery.duplicateQuery()">Duplicate</button>
+        <!--<button class="btn btn-sm btn-primary pull-right" style="margin-top: -5px;" ng-click="DbQuery.duplicateQuery()">Duplicate</button>-->
       </span>
 
     </div>
@@ -16,7 +16,7 @@
       <div class="row">
         <div class="left-col">
 
-      <form role="form" role="form" ng-submit="DbQuery.saveQuery()" novalidate insert-at-caret>
+      <form role="form" ng-submit="DbQuery.saveQuery()" name="queryForm" insert-at-caret>
         <div class="form-group">
           <label for="name">Query Name</label>
           <input type="text" class="form-control" id="name" ng-model="DbQuery.query.name" required ng-disabled="!DbQuery.editMode">
@@ -36,43 +36,62 @@
                     class="form-control"
                     id="query" ng-model="DbQuery.query.sQL"
                     required
+                    rows="10"
                     ng-disabled="!DbQuery.editMode"></textarea>
         </div>
 
-        <div class="form-group">
-
-          <label >Read Permissions</label>
-          <ul class="list-style-none" >
-            <li ng-repeat="role in DbQuery.roles">
-              <input type="checkbox"
-                     ng-model="DbQuery.allowSelectRolesObject[role]"
-                     id="permissions-checkbox-{{role}}"
-                     ng-disabled="!DbQuery.editMode">
-              </input>
-              <label for="permissions-checkbox-{{role}}">
-                {{ role }}
-              </label>
-            </li>
-          </ul>
-
+        <div class="form-group" ng-if="DbQuery.editMode">
+          <div class="row security-header">
+            <div class="col-lg-4">
+              <label class="strong">Security Template</label>
+              <select class="form-control"
+                      ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in DbQuery.workspaces"
+                      ng-model="DbQuery.currentST"
+                      required
+                      ng-disabled="DbQuery.precedent">
+              </select>
+            </div>
+            <div class="col-lg-4">
+              <div class="override-template"><label> override</label>
+                <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
+                  <input id="override-checkbox" type="checkbox" ng-model="DbQuery.precedent"/><i></i>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div ng-if="DbQuery.precedent">
+            <label >Read Permissions</label>
+            <ul class="list-style-none" >
+              <li ng-repeat="role in DbQuery.roles">
+                <input type="checkbox"
+                       ng-model="DbQuery.allowSelectRolesObject[role.Name]"
+                       id="permissions-checkbox-{{role.Name}}"
+                       ng-disabled="!DbQuery.precedent">
+                </input>
+                <label for="permissions-checkbox-{{role.Name}}">
+                  {{ role.Name }}
+                </label>
+              </li>
+            </ul>
+          </div>
         </div>
         <br/>
 
         <div class="save-bar" ng-show="!DbQuery.editMode">
           <button type="button"
-                  ng-disabled="form.$invalid"
+                  ng-disabled="queryForm.$invalid"
                   class="btn btn-success btn-lg btn-w-lg"
-                  data-style="expand-right"
+                  data-style="expand-right" ladda="DbQuery.loading"
                   ng-click="DbQuery.editQuery()">Edit</button>
         </div>
         <div class="save-bar" ng-show="DbQuery.editMode">
           <button type="submit"
-                  ng-disabled="form.$invalid"
-                  class="btn btn-success btn-lg btn-w-lg"
+                  ng-disabled="queryForm.$invalid"
+                  class="btn btn-success btn-lg btn-w-lg" ladda="DbQuery.loading"
                   data-style="expand-right">Save</button>
           <button type="button"
                   ng-show="DbQuery.editMode"
-                  class="btn btn-behance btn-lg btn-w-lg"
+                  class="btn btn-default btn-lg btn-w-lg"
                   data-style="expand-right"
                   ng-click="DbQuery.cancel()">Cancel</button>
         </div>

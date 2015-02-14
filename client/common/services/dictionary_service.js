@@ -12,7 +12,6 @@
     var baseUrl = '/1/table/dictionary/';
 
     self.appName = null;
-    self.tableId = null;
     self.tableName = null;
 
     self.get = function () {
