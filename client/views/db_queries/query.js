@@ -1,10 +1,9 @@
-
-(function  () {
+(function () {
   'use strict';
   angular.module('app.dbQueries')
-    .controller('DbQueryController', ['$scope', '$state', '$stateParams', 'DbQueriesService', 'ConfirmationPopup', 'NotificationService', 'DictionaryService','SecurityService', DbQueryController]);
+    .controller('DbQueryController', ['$scope', '$state', '$stateParams', 'DbQueriesService', 'ConfirmationPopup', 'NotificationService', 'DictionaryService', 'SecurityService', DbQueryController]);
 
-  function DbQueryController($scope, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService ) {
+  function DbQueryController($scope, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService) {
     var self = this;
 
     init();
@@ -12,7 +11,9 @@
 
     function init() {
       self.appName = $stateParams.name;
-      DbQueriesService.getQueries(self.appName).then(function() {
+      self.allowTest = true;
+      self.inputValues = {};
+      DbQueriesService.getQueries(self.appName).then(function () {
         self.openParamsModal = false;
         self.new = (!$stateParams.queryId);
         self.editMode = self.new;
@@ -29,10 +30,11 @@
         SecurityService.appName = self.appName;
         loadRoles();
         getWorkspaces();
+        getParameters();
       });
     }
 
-    function loadRoles(){
+    function loadRoles() {
       SecurityService.getRoles()
         .then(function (data) {
           self.roles = data.data.data;
@@ -43,14 +45,14 @@
     function rolesToObj() {
       self.allowSelectRolesObject = {};
       var allowSelectRolesArray = self.query.allowSelectRoles.split(',');
-      allowSelectRolesArray.forEach(function(role) {
+      allowSelectRolesArray.forEach(function (role) {
         self.allowSelectRolesObject[role] = true;
       });
     }
 
     function rolesToString() {
       var allowSelectRolesArray = [];
-      _.forOwn(self.allowSelectRolesObject, function(permission, role) {
+      _.forOwn(self.allowSelectRolesObject, function (permission, role) {
         if (permission) allowSelectRolesArray.push(role);
       });
       self.query.allowSelectRoles = allowSelectRolesArray.join(',');
@@ -61,15 +63,17 @@
       self.openParamsModal = false;
       self.query.workspaceID = Number(self.currentST);
 
+
       rolesToString();
       DbQueriesService.saveQuery(self.query)
         .then(function (query) {
-          self.editMode = false;
           self.loading = false;
           var params = {
             name: self.appName,
             queryId: query.__metadata.id
           };
+          getParameters();
+          self.allowTest = true;
           $state.go('dbQueries.query', params);
         });
 
@@ -82,7 +86,7 @@
 
     self.cancel = function () {
       ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
-        .then(function(result){
+        .then(function (result) {
           result ? init() : false;
         });
     };
@@ -93,9 +97,9 @@
           if (!result)
             return;
           DbQueriesService.deleteQuery(self.query)
-            .then(function() {
+            .then(function () {
               NotificationService.add('success', 'The query was deleted');
-            }, function(error, message) {
+            }, function (error, message) {
               NotificationService.add('error', message);
             });
           $state.go('apps.show', {name: self.appName});
@@ -152,23 +156,35 @@
       NotificationService.add('error', message);
     }
 
-    //var paramRegex = /{{([^}]*)}}/g; //anything between '{{' and '}}' except '}'
-    self.getParameters = function () {
+    self.getDicParameters = function () {
       return self.query.parameters.replace(/ /g, '').split(',');
-      //if (self.query) {
-      //  var paramsMatch = self.query.parameters.replace(/ /g, '').split(',');
-      //  var queryMatch = [];
-      //  var queryMatchWithBrackets = self.query.sQL.match(paramRegex);
-      //  if (queryMatchWithBrackets != null)
-      //    queryMatchWithBrackets.forEach(function (match) {
-      //      queryMatch.push(match.substring(2, match.length-2).replace(/ /g, ''));
-      //    });
-      //
-      //  var parameters = _.union(paramsMatch, queryMatch);
-      //  self.query.parameters = parameters.join(',');
-      //  return parameters;
-      //}
     }
 
+
+    var paramRegex = /{{([^}]*)}}/g; //anything between '{{' and '}}' except '}'
+    function getParameters() {
+      if (self.query) {
+        var paramsMatch = self.query.parameters.replace(/ /g, '').split(',');
+        var queryMatch = [];
+        var queryMatchWithBrackets = self.query.sQL.match(paramRegex);
+        if (queryMatchWithBrackets != null)
+          queryMatchWithBrackets.forEach(function (match) {
+            queryMatch.push(match.substring(2, match.length - 2).replace(/ /g, ''));
+          });
+
+        var parameters = _.union(paramsMatch, queryMatch);
+        self.query.parameters = parameters.join(',');
+        self.inputParameters = parameters;
+      }
+    }
+
+    self.testData = function () {
+      $scope.$broadcast('tabs:data', {"query": self.query.name, "app": self.appName, "parameters": self.inputValues});
+    }
+
+    self.clearData = function () {
+      self.allowTest = false;
+      $scope.$broadcast('clearData');
+    }
   }
 }());

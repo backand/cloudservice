@@ -7,7 +7,7 @@
            class="btn btn-lg pull-right"
            style="margin-top: -10px;"
            ng-click="DbQuery.deleteQuery()">
-          <i class="ti-trash" ></i></a>
+          <i class="ti-trash"></i></a>
         <!--<button class="btn btn-sm btn-primary pull-right" style="margin-top: -5px;" ng-click="DbQuery.duplicateQuery()">Duplicate</button>-->
       </span>
 
@@ -16,95 +16,122 @@
       <div class="row">
         <div class="left-col">
 
-      <form role="form" ng-submit="DbQuery.saveQuery()" name="queryForm" insert-at-caret>
-        <div class="form-group">
-          <label for="name">Query Name</label>
-          <input type="text" class="form-control" id="name" ng-model="DbQuery.query.name" required ng-disabled="!DbQuery.editMode">
-        </div>
-        <div class="form-group">
-          <label for="params">Input Parameters</label>
-          <input type="text" class="form-control" id="params" ng-model="DbQuery.query.parameters"  ng-disabled="!DbQuery.editMode">
-        </div>
+          <form role="form" ng-submit="DbQuery.saveQuery()" name="queryForm" insert-at-caret>
+            <div class="form-group">
+              <label for="name">Query Name</label>
+              <input type="text" class="form-control" id="name" ng-model="DbQuery.query.name" required
+                     ng-disabled="!DbQuery.editMode">
+            </div>
+            <div class="form-group">
+              <label for="params">Input Parameters</label>
+              <input type="text" class="form-control" id="params" ng-model="DbQuery.query.parameters"
+                     ng-disabled="!DbQuery.editMode">
+            </div>
 
-        <div class="form-group">
-          <label for="query">Query</label>
-          <div class="pull-right" ng-show="DbQuery.editMode">
+            <div class="form-group">
+              <label for="query">Query</label>
+
+              <div class="pull-right" ng-show="DbQuery.editMode">
             <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
                   ng-click="DbQuery.toggleParametersModal()"></span>
-          </div>
+              </div>
           <textarea type="text"
                     class="form-control"
                     id="query" ng-model="DbQuery.query.sQL"
                     required
                     rows="10"
+                    ng-change="DbQuery.clearData();"
                     ng-disabled="!DbQuery.editMode"></textarea>
-        </div>
-
-        <div class="form-group" ng-if="DbQuery.editMode">
-          <div class="row security-header">
-            <div class="col-lg-4">
-              <label class="strong">Security Template</label>
-              <select class="form-control"
-                      ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in DbQuery.workspaces"
-                      ng-model="DbQuery.currentST"
-                      required
-                      ng-disabled="DbQuery.precedent">
-              </select>
             </div>
-            <div class="col-lg-4">
-              <div class="override-template"><label> override</label>
-                <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
-                  <input id="override-checkbox" type="checkbox" ng-model="DbQuery.precedent"/><i></i>
-                </label>
+
+            <div class="form-group" ng-if="DbQuery.editMode">
+              <div class="row security-header">
+                <div class="col-lg-4">
+                  <label class="strong">Security Template</label>
+                  <select class="form-control"
+                          ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in DbQuery.workspaces"
+                          ng-model="DbQuery.currentST"
+                          required
+                          ng-disabled="DbQuery.precedent">
+                  </select>
+                </div>
+                <div class="col-lg-4">
+                  <div class="override-template"><label> override</label>
+                    <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
+                      <input id="override-checkbox" type="checkbox" ng-model="DbQuery.precedent"/><i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="DbQuery.precedent">
+                <label>Read Permissions</label>
+                <ul class="list-style-none">
+                  <li ng-repeat="role in DbQuery.roles">
+                    <input type="checkbox"
+                           ng-model="DbQuery.allowSelectRolesObject[role.Name]"
+                           id="permissions-checkbox-{{role.Name}}"
+                           ng-disabled="!DbQuery.precedent">
+                    </input>
+                    <label for="permissions-checkbox-{{role.Name}}">
+                      {{ role.Name }}
+                    </label>
+                  </li>
+                </ul>
               </div>
             </div>
-          </div>
-          <div ng-if="DbQuery.precedent">
-            <label >Read Permissions</label>
-            <ul class="list-style-none" >
-              <li ng-repeat="role in DbQuery.roles">
-                <input type="checkbox"
-                       ng-model="DbQuery.allowSelectRolesObject[role.Name]"
-                       id="permissions-checkbox-{{role.Name}}"
-                       ng-disabled="!DbQuery.precedent">
-                </input>
-                <label for="permissions-checkbox-{{role.Name}}">
-                  {{ role.Name }}
-                </label>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <br/>
+            <br/>
 
-        <div class="save-bar" ng-show="!DbQuery.editMode">
-          <button type="button"
-                  ng-disabled="queryForm.$invalid"
-                  class="btn btn-success btn-lg btn-w-lg"
-                  data-style="expand-right" ladda="DbQuery.loading"
-                  ng-click="DbQuery.editQuery()">Edit</button>
-        </div>
-        <div class="save-bar" ng-show="DbQuery.editMode">
-          <button type="submit"
-                  ng-disabled="queryForm.$invalid"
-                  class="btn btn-success btn-lg btn-w-lg" ladda="DbQuery.loading"
-                  data-style="expand-right">Save</button>
-          <button type="button"
-                  ng-show="DbQuery.editMode"
-                  class="btn btn-default btn-lg btn-w-lg"
-                  data-style="expand-right"
-                  ng-click="DbQuery.cancel()">Cancel</button>
-        </div>
-      </form>
+            <div class="save-bar" ng-show="!DbQuery.editMode">
+              <button type="button"
+                      ng-disabled="queryForm.$invalid"
+                      class="btn btn-success btn-lg btn-w-lg"
+                      data-style="expand-right" ladda="DbQuery.loading"
+                      ng-click="DbQuery.editQuery()">Edit
+              </button>
+            </div>
+            <div class="save-bar" ng-show="DbQuery.editMode">
+              <button type="submit"
+                      ng-disabled="queryForm.$invalid"
+                      class="btn btn-success btn-lg btn-w-lg" ladda="DbQuery.loading"
+                      data-style="expand-right">Save
+              </button>
+              <button type="button"
+                      ng-show="DbQuery.editMode"
+                      class="btn btn-default btn-lg btn-w-lg"
+                      data-style="expand-right"
+                      ng-click="DbQuery.cancel()">Cancel
+              </button>
+            </div>
+          </form>
 
+        </div>
+        <div class="right-col">
+          <h3>Test query parameters</h3>
+          <br/>
+
+          <form role="form" name="inputParametersForm">
+            <div class="form-group" ng-repeat="inputParam in DbQuery.inputParameters">
+              <label for="name">{{inputParam}}</label>
+              <input type="text"
+                     class="form-control"
+                     ng-model="DbQuery.inputValues[inputParam]"
+                     required>
+            </div>
+            <button type="button"
+                    class="btn btn-success btn-lg btn-w-lg"
+                    data-style="expand-right" ladda="DbQuery.testLoading"
+                    ng-disabled="!DbQuery.allowTest || inputParametersForm.$invalid"
+                    ng-click="DbQuery.testData()">Test Query
+            </button>
+            <div ng-if="!DbQuery.allowTest">** Must save first to enable Test Query</div>
+          </form>
+          <br/><br/>
+          <ng-include src="'views/tables/data/data.html'"></ng-include>
+        </div>
+      </div>
     </div>
-      <div class="right-col">
-        <h1>Set values to params</h1>
-        <h1>Test query (show results)</h1>
-        </div>
-      </div></div>
   </section>
-  </section>
+</section>
 
 <div ng-cloak>
   <angled-window ng-if="DbQuery.openParamsModal"

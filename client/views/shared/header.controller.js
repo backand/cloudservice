@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function HeaderController($scope, AppsService, $state, $filter, $rootScope) {
+  function HeaderController($scope, AppsService, $state, $filter) {
     var self = this;
 
     self.currAppName = '';
@@ -37,7 +37,7 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", 'AppsService', '$state', '$filter','$rootScope', HeaderController]);
+    ["$scope", 'AppsService', '$state', '$filter', HeaderController]);
 
 }());
 

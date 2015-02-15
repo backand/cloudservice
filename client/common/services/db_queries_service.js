@@ -39,8 +39,7 @@
         "sQL": "",
         "parameters": "",
         "workspaceID": "",
-        "precedent": false,
-        "allowSelectRoles": "Admin,Public,User"
+        "precedent": false
       }
     }
     self.getQuery = function (id) {
@@ -114,6 +113,17 @@
       })
     };
 
+    self.runQuery = function (currentApp, queryName, parameters) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + baseUrl + 'data/' + queryName + '?parameters=' + parameters,
+        headers: { AppName: currentApp },
+        //params: {
+        //  parameters : parameters
+        //}
+      });
+
+    }
 
   }
 
