@@ -5,14 +5,16 @@
 
   function DbQueryController($scope, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService) {
     var self = this;
+    self.namePattern = /^\w+$/;
 
     init();
-
 
     function init() {
       self.appName = $stateParams.name;
       self.allowTest = true;
       self.inputValues = {};
+      self.inputParameters = null;
+
       DbQueriesService.getQueries(self.appName).then(function () {
         self.openParamsModal = false;
         self.new = (!$stateParams.queryId);

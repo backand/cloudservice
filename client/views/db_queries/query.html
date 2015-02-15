@@ -19,13 +19,14 @@
           <form role="form" ng-submit="DbQuery.saveQuery()" name="queryForm" insert-at-caret>
             <div class="form-group">
               <label for="name">Query Name</label>
-              <input type="text" class="form-control" id="name" ng-model="DbQuery.query.name" required
-                     ng-disabled="!DbQuery.editMode">
+              <input type="text" class="form-control" id="name" name="name" ng-model="DbQuery.query.name" required
+                     ng-disabled="!DbQuery.editMode" ng-pattern="DbQuery.namePattern" placeholder="name your query">
+              <div ng-show="queryForm.name.$error.pattern" class="input-error">no spaces or %$#@^&* allowed</div>
             </div>
             <div class="form-group">
               <label for="params">Input Parameters</label>
               <input type="text" class="form-control" id="params" ng-model="DbQuery.query.parameters"
-                     ng-disabled="!DbQuery.editMode">
+                     ng-disabled="!DbQuery.editMode" placeholder="input1,input2,....">
             </div>
 
             <div class="form-group">
@@ -108,7 +109,6 @@
         <div class="right-col">
           <h3>Test query parameters</h3>
           <br/>
-
           <form role="form" name="inputParametersForm">
             <div class="form-group" ng-repeat="inputParam in DbQuery.inputParameters">
               <label for="name">{{inputParam}}</label>
