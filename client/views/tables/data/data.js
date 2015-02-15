@@ -52,7 +52,7 @@
      * @param args
      */
     function dataEvent(obj,args){
-      if(args || args.query){
+      if(args){
         self.queryName = args.query;
         self.appName = args.app;
         self.parameters = JSON.stringify(args.parameters);
@@ -69,7 +69,7 @@
       , getData);
 
     function getData(newVal, oldValue) {
-      if (newVal != null && newVal !== oldValue) {
+      if (oldValue == null) {
         usSpinnerService.spin("loading");
         if(self.queryName == null){
           ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successDataHandler, errorHandler);

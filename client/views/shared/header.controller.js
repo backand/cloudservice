@@ -1,15 +1,15 @@
 (function () {
   'use strict';
 
-  function HeaderController($scope, AppsService, $state, $filter) {
+  function HeaderController($scope, AppsService, $state, $filter, usSpinnerService) {
     var self = this;
-
     self.currAppName = '';
 
     this.redirectTo = function (appName) {
+      usSpinnerService.spin('loading-app');
       var app = angular.copy($filter('filter')(self.apps, function (a) {
         return a.Name === appName;
-      })[0])
+      })[0]);
 
 
 
@@ -31,13 +31,14 @@
         .then(function (data) {
           self.apps = data.data.data;
           self.currAppName = $state.params.name;
+          usSpinnerService.stop('loading-app');
         });
     });
   }
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", 'AppsService', '$state', '$filter', HeaderController]);
+    ["$scope", 'AppsService', '$state', '$filter', 'usSpinnerService', HeaderController]);
 
 }());
 
