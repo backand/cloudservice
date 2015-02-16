@@ -5,7 +5,7 @@
 
     var self = this;
 
-    this.getAppLog = function(appName, size, page, isAdmin, sort, tableName){
+    self.getAppLog = function(appName, size, page, isAdmin, sort, tableName){
       var filterParam = '';
       if(isAdmin)
       {
@@ -50,7 +50,7 @@
       return log;
     }
 
-    this.createLogMsg = function(array){
+    self.createLogMsg = function(array){
       var logMsgs = [];
       array.forEach(function(item){
         var msg = arrangeMsg(item);
@@ -62,7 +62,7 @@
       return logMsgs;
     }
 
-    this.getAppActivity = function(appName, size, page, isException, sort){
+    self.getAppActivity = function(appName, size, page, isException, sort){
       var filterParam = '';
       if(isException)
         filterParam = '[{fieldName:"LogType", operator:"equals", value:"1"}]';

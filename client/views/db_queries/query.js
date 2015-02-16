@@ -173,7 +173,7 @@
           queryMatchWithBrackets.forEach(function (match) {
             queryMatch.push(match.substring(2, match.length - 2).replace(/ /g, ''));
           });
-
+        //todo: need to ignore system parameters - starts with sys:
         var parameters = _.union(paramsMatch, queryMatch);
         self.query.parameters = parameters.join(',');
         self.inputParameters = parameters;

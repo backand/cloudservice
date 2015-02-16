@@ -16,7 +16,7 @@
       <div class="row">
         <div class="left-col">
 
-          <form role="form" ng-submit="DbQuery.saveQuery()" name="queryForm" insert-at-caret>
+          <form role="form" ng-submit="DbQuery.saveQuery()" name="queryForm" novalidate insert-at-caret>
             <div class="form-group">
               <label for="name">Query Name</label>
               <input type="text" class="form-control" id="name" name="name" ng-model="DbQuery.query.name" required
@@ -25,8 +25,13 @@
             </div>
             <div class="form-group">
               <label for="params">Input Parameters</label>
-              <input type="text" class="form-control" id="params" ng-model="DbQuery.query.parameters"
-                     ng-disabled="!DbQuery.editMode" placeholder="input1,input2,....">
+              <input type="text"
+                     class="form-control"
+                     id="params"
+                     ng-model="DbQuery.query.parameters"
+                     ng-disabled="!DbQuery.editMode"
+                     placeholder="input1,input2,...."
+                     ng-change="DbQuery.clearData();">
             </div>
 
             <div class="form-group">
@@ -109,7 +114,7 @@
         <div class="right-col">
           <h3>Test query parameters</h3>
           <br/>
-          <form role="form" name="inputParametersForm">
+          <form role="form" name="inputParametersForm" novalidate>
             <div class="form-group" ng-repeat="inputParam in DbQuery.inputParameters">
               <label for="name">{{inputParam}}</label>
               <input type="text"
@@ -120,7 +125,7 @@
             <button type="button"
                     class="btn btn-success btn-lg btn-w-lg"
                     data-style="expand-right" ladda="DbQuery.testLoading"
-                    ng-disabled="!DbQuery.allowTest || inputParametersForm.$invalid"
+                    ng-disabled="!(DbQuery.allowTest && !inputParametersForm.$invalid)"
                     ng-click="DbQuery.testData()">Test Query
             </button>
             <div ng-if="!DbQuery.allowTest">** Must save first to enable Test Query</div>
