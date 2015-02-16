@@ -2,9 +2,9 @@
 (function  () {
     'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService','$interval', '$log', 'NotificationService', 'TablesService', 'DbQueriesService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService','$interval', '$log', 'NotificationService', 'TablesService', 'DbQueriesService','AppState', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService, DbQueriesService){
+  function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService, DbQueriesService, AppState){
     var self = this;
     var stop;
 
@@ -12,12 +12,11 @@
       self.app = null;
       self.tables = [];
       self.queries = [];
-      loadTables();
     }());
 
 
     function loadTables(){
-      self.appName = $state.params.name
+      self.appName = AppState.get();//  $state.params.name
       self.dbEmpty = false;
       if(self.appName == undefined)
         return;
@@ -45,8 +44,11 @@
 
     function loadApp() {
       if (typeof self.appName === 'undefined') {
-        return
+        AppState.reset();
+        return;
       }
+      AppState.set(self.appName);
+
       AppsService.getCurrentApp(self.appName)
         .then(function (data) {
           self.app = data;
@@ -55,6 +57,8 @@
           checkChanges(oldStatus);
           if(self.DatabaseStatus == 0)
             self.tables = [];
+          else if(self.tables.length == 0) //only load tables when it's empty
+            loadTables();
         });
     }
 

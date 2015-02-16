@@ -54,7 +54,7 @@
               <i class="ti-settings"></i></a>{{ ::app.Name }}</div>
           <div class="panel-body app-panel-body">
             <p class="body-height">{{ ::app.Title }}</p>
-            <button ng-click="index.appDetails(app.Name, app.DatabaseStatus)" ng-disabled="app.DatabaseStatus==2"
+            <button ng-click="index.appManage(app.Name, app.DatabaseStatus)" ng-disabled="app.DatabaseStatus==2"
                     class="btn btn-default btn-w-md btn-block">
               Manage App
             </button>

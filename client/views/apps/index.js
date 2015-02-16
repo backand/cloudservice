@@ -2,9 +2,9 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','$filter','usSpinnerService', AppsIndexController]);
+    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', AppsIndexController]);
 
-  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval,$filter,usSpinnerService) {
+  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval,AppState,usSpinnerService) {
     var self = this;
     self.loading = false;
     var stop;
@@ -20,6 +20,7 @@
       AppsService.add(self.appName, self.appTitle)
         .then(function(data){
           NotificationService.add('success', 'App was added successfully');
+          AppState.set(self.appName);
           $state.go('database.edit', { name: self.appName });
         },function(err){
           self.loading = false;
@@ -31,9 +32,10 @@
      *
      * @param appName
      */
-    self.appDetails = function (appName,status ) {
+    self.appManage = function (appName, status ) {
       usSpinnerService.spin("loading");
       //check app status
+      AppState.set(appName);
       if (status == 1)
         $state.go('apps.show', {name: appName});
       else
@@ -45,6 +47,7 @@
      * @param appName
      */
     self.appSettings = function (appName) {
+      AppState.set(appName);
       $state.go('apps.edit', {name: appName});
     }
 

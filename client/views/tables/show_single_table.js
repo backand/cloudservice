@@ -1,11 +1,12 @@
 (function () {
 
-  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService, NotificationService,$rootScope, TablesService, $filter) {
+  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService, NotificationService,$rootScope, TablesService, $filter, AppState) {
 
     var self = this;
 
     (function init() {
       self.appName = $stateParams.name;
+      AppState.set(self.appName);
       self.tableId = $stateParams.tableId;
       self.messages = [];
       self.fields = [];
@@ -127,6 +128,7 @@
       '$rootScope',
       'TablesService',
       '$filter',
+      'AppState',
       SingleTableShow
     ]);
 
