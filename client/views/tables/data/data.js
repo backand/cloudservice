@@ -60,23 +60,26 @@
       else{
         self.queryName = null;
       }
-      getData(obj);
+      getData();
     }
 
     $scope.$watchGroup([
         'data.paginationOptions.pageNumber',
         'data.paginationOptions.pageSize']
-      , getData);
+      , getPageData);
 
-    function getData(newVal, oldValue) {
-      if (oldValue == null) {
-        usSpinnerService.spin("loading");
-        if(self.queryName == null){
-          ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successDataHandler, errorHandler);
-        }
-        else {
-          DbQueriesService.runQuery(self.appName, self.queryName, self.parameters).then(successQueryHandler, errorHandler);
-        }
+    function getPageData(newVal, oldVal) {
+      if (newVal !== oldVal)
+        getData();
+    }
+
+    function getData() {
+      usSpinnerService.spin("loading");
+      if(self.queryName == null){
+        ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successDataHandler, errorHandler);
+      }
+      else {
+        DbQueriesService.runQuery(self.appName, self.queryName, self.parameters).then(successQueryHandler, errorHandler);
       }
     }
 
