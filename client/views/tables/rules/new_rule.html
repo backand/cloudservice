@@ -294,31 +294,30 @@
 
 
       </div>
-
         <!--code-->
-        <div ng-switch-when="Code">
+      <div ng-switch-when="Code">
+        <div class="form-group col-lg-12 col-md-12 col-sm-12"
+             ng-class="{ 'has-error': newRuleForm.code.$invalid }">
 
-
-          <div class="form-group col-lg-12 col-md-12 col-sm-12"
-               ng-class="{ 'has-error': newRuleForm.code.$invalid }">
-
-            <label>JavaScript Code:</label>
+          <label>JavaScript Code:</label>
           <textarea class="form-control"
                     name="code"
                     id="code"
-                    ng-model="rule.javaScriptCode"
+                    ng-model="rule.code"
                     ng-model-options="{ updateOn: 'blur' }"
                     required
                     custom-validator="codeValidator"
+                    ng-keydown = "modal.handleTabKey($event)"
                     style="resize: vertical"
                     rows="15"></textarea>
-            <div ng-messages="newRuleForm.code.$error">
-              <div ng-message="backandCallback" class="text-danger">Code is not ok!</div>
+          <div ng-messages="newRuleForm.code.$error">
+            <div ng-message="backandCallback" class="text-danger">Code is not ok!</div>
           </div>
         </div>
-
+      </div>
     </div>
     <!-- end switch -->
+    </div>
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.workflowAction"
          ng-class="{ 'has-error': newRuleForm.ruleName.$invalid &&  newRuleForm.ruleName.$dirty}">
 
@@ -329,15 +328,17 @@
              ng-model="rule.name"
              ng-model-options="{debounce:{default:100}}"
              required
+             ng-pattern="modal.namePattern"
              placeholder="name your action">
+      <div ng-show="newRuleForm.ruleName.$error.pattern" class="input-error">no spaces or %$#@^&* allowed</div>
+
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-primary" ng-disabled="newRuleForm.$invalid" ng-click="closeModal(rule)"
-              ng-bind="modal.okButtonText"></button>
-      <button class="btn btn-danger pull-left" ng-click="delete(rule)" ng-bind="modal.deleteButtonText"
-              ng-if="modal.mode == 'modal.mode == 'update'"></button>
-      <button class="btn btn-default" ng-click="cancel()" ng-bind="modal.cancelButtonText"></button>
+      <button class="btn btn-primary" ng-disabled="newRuleForm.$invalid" ng-click="closeModal(rule, true)">Save & Close</button>
+      <button class="btn btn-primary" ng-disabled="newRuleForm.$invalid" ng-click="closeModal(rule, false)">Save</button>
+      <button class="btn btn-danger pull-left" ng-click="delete(rule)" ng-if="modal.mode == 'update'">Delete</button>
+      <button class="btn btn-default" ng-click="cancel()">Cancel</button>
     </div>
   </form>
 

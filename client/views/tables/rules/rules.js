@@ -22,9 +22,7 @@
 
     $scope.modal = {
       title: 'Action',
-      okButtonText: 'Save',
-      cancelButtonText: 'Cancel',
-      deleteButtonText: 'Delete',
+      namePattern: /^\w+$/,
       dataActions: [
         {value: 'OnDemand', label: 'On demand - Execute from REST API', level1: 0, level2: 0},
         {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 1, level2: 0},
@@ -38,11 +36,11 @@
         {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2},
       ],
       workflowActions: [
+        {value: 'Code', label: 'Server side JavaScript code'},
         {value: 'Notify', label: 'Send Email'},
+        {value: 'Execute', label: 'Additional database script'},
         {value: 'Validate', label: 'Advanced Data Validation'},
-        {value: 'Execute', label: 'Run additional database script'},
-        {value: 'WebService', label: 'Make HTTP call'},
-        {value: 'Code', label: 'Add JavaScript code'}
+        {value: 'WebService', label: 'Make HTTP call'}
       ],
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
@@ -160,6 +158,29 @@
       launchModal();
     }
 
+    $scope.modal.handleTabKey = function(e){
+      // get caret position/selection
+      if(e.keyCode === 9) { // tab was pressed
+        var start = e.currentTarget.selectionStart;
+        var end = e.currentTarget.selectionEnd;
+
+        var target = e.target;
+        var value = target.value;
+
+        // set textarea value to: text before caret + tab + text after caret
+        target.value = value.substring(0, start)
+        + "\t"
+        + value.substring(end);
+
+        // put caret at right position again (add one for the tab)
+        e.currentTarget.selectionStart = e.currentTarget.selectionEnd = start + 1;
+
+        // prevent the focus lose
+        e.preventDefault();
+      }
+
+    }
+
     /**
      * init and launch modal window and
      * pass it a scope
@@ -205,14 +226,14 @@
        *
        * @param rule
        */
-      $scope.closeModal = function (rule) {
+      $scope.closeModal = function (rule, closeDialog) {
         reformatCode(rule.code);
         switch ($scope.modal.mode) {
           case 'new':
             postNewRule(rule);
             break;
           case 'update':
-            updateRule(rule);
+            updateRule(rule, closeDialog);
             break;
 
         }
@@ -236,9 +257,12 @@
        *
        * @param rule
        */
-      function updateRule(rule) {
+      function updateRule(rule, closeDialog) {
         RulesService.update(rule).then(getRules);
-        modalInstance.close();
+        if(closeDialog){
+          modalInstance.close();
+        }
+        NotificationService.add('success', 'The action was saved');
       }
 
       /**
@@ -263,10 +287,10 @@
      */
     function resetCurrentRule() {
       $scope.rule = {};
-      $scope.rule.javaScriptCode =
-        backandCallbackConstCode.start + '\n' +
-        '// write your code here\n\n' +
-        backandCallbackConstCode.end;
+      $scope.rule.code = $scope.rule.code ||
+              backandCallbackConstCode.start + '\n' +
+              '\t// write your code here\n\n' +
+              backandCallbackConstCode.end;
     }
 
     /**
@@ -275,9 +299,10 @@
     $scope.codeValidator = {
       name: 'backandCallback',
       validate: function (code) {
+        code = code.trim() || '';
         return (
           code.indexOf(backandCallbackConstCode.start) === 0) &&
-          (code.indexOf(backandCallbackConstCode.end) === code.length - 1);
+          (code.lastIndexOf(backandCallbackConstCode.end) === code.length - 1);
       }
     };
 
