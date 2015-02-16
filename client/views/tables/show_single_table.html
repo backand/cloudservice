@@ -3,7 +3,7 @@
     <div class="panel-heading database-heading">
       <strong style="text-transform:none"> DATABASE TABLE - {{singleTable.tableName}} </strong>
       <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="singleTable.sync()" ladda="singleTable.syncing" data-style="expand-right" style="margin-left: 50px;">Sync with Database</button>
-      <li ng-if="false" class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="singleTable.alertClass" style="margin-left: 10px;">
+      <li class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="singleTable.alertClass" style="margin-left: 10px;">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
           <i class="ti-bell" ></i>
         </a>

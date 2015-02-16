@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function HeaderController($scope, AppsService, $state, $filter, AppState) {
+  function HeaderController($scope, AppsService, $state, $filter, AppState, usSpinnerService ) {
     var self = this;
 
     self.currAppName = '';
@@ -10,7 +10,9 @@
       var app = angular.copy($filter('filter')(self.apps, function (a) {
         return a.Name === appName;
       })[0])
-      AppState.set(appName);
+
+
+
       if (app.DatabaseStatus == 1) {
         $state.go('apps.show', {name: appName});
       }
@@ -29,14 +31,16 @@
       AppsService.all()
         .then(function (data) {
           self.apps = data.data.data;
+          self.currAppName = $state.params.name;
           self.currAppName = AppState.get();
+          usSpinnerService.stop('loading-app');
         });
     });
   }
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", 'AppsService', '$state', '$filter','AppState', HeaderController]);
+    ["$scope", 'AppsService', '$state', '$filter','AppState','usSpinnerService', HeaderController]);
 
 }());
 
