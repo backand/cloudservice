@@ -65,6 +65,7 @@
     'app.backoffice',
     'app.playground',
     'app.dbQueries',
+    'ngMessages',
   ])
     //.config(['$compileProvider','$httpProvider',appConfig])
     .config(['ngClipProvider', function(ngClipProvider) {

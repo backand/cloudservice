@@ -4,7 +4,7 @@
 
 <div class="modal-body clearfix">
 
-  <form name="newRuleForm" insert-at-caret>
+  <form name="newRuleForm" insert-at-caret novalidate>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12"
          ng-class="{ 'has-error': newRuleForm.eventTrigger.$invalid && newRuleForm.eventTrigger.$dirty}">
@@ -265,7 +265,7 @@
         </div>
 
       </div>
-
+<!--WebService-->
       <div ng-cloak>
         <angled-window ng-show="modal.webService"
                        id="{{winId}}"
@@ -294,6 +294,28 @@
 
 
       </div>
+
+        <!--code-->
+        <div ng-switch-when="Code">
+
+
+          <div class="form-group col-lg-12 col-md-12 col-sm-12"
+               ng-class="{ 'has-error': newRuleForm.code.$invalid }">
+
+            <label>JavaScript Code:</label>
+          <textarea class="form-control"
+                    name="code"
+                    id="code"
+                    ng-model="rule.javaScriptCode"
+                    ng-model-options="{ updateOn: 'blur' }"
+                    required
+                    custom-validator="codeValidator"
+                    style="resize: vertical"
+                    rows="15"></textarea>
+            <div ng-messages="newRuleForm.code.$error">
+              <div ng-message="backandCallback" class="text-danger">Code is not ok!</div>
+          </div>
+        </div>
 
     </div>
     <!-- end switch -->

@@ -7,9 +7,10 @@
     self.currAppName = '';
 
     this.redirectTo = function (appName) {
+      usSpinnerService.spin('loading-app');
       var app = angular.copy($filter('filter')(self.apps, function (a) {
         return a.Name === appName;
-      })[0])
+      })[0]);
 
 
 

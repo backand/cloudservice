@@ -37,10 +37,12 @@
         {value: 'AfterDeleteBeforeCommit',label: 'Delete - During record deleted but before it committed',level1: 3,level2: 1},
         {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2},
       ],
-      workflowActions: [{value: 'Notify', label: 'Send Email'},
+      workflowActions: [
+        {value: 'Notify', label: 'Send Email'},
         {value: 'Validate', label: 'Advanced Data Validation'},
         {value: 'Execute', label: 'Run additional database script'},
-        {value: 'WebService', label: 'Make HTTP call'}
+        {value: 'WebService', label: 'Make HTTP call'},
+        {value: 'Code', label: 'Add JavaScript code'}
       ],
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
@@ -57,6 +59,7 @@
       $scope.modal.notifyMessage = false;
       $scope.modal.webService = false;
       $scope.modal.sqlCommand = false;
+      $scope.modal.code = false;
       if(obj != undefined){
         return !obj;
       }
@@ -135,7 +138,7 @@
       return angular.copy($filter('filter')($scope.rules.data, function (f) {
         return f.name === rulname;
       })[0])
-    };
+    }
 
     /**
      * get the rule name from the tree and get the full rule data from server
@@ -190,7 +193,11 @@
               modalInstance.close();
             }
           });
+      };
+
+      function reformatCode(code) {
       }
+
 
       /**
        * choose the close method depend on
@@ -199,6 +206,7 @@
        * @param rule
        */
       $scope.closeModal = function (rule) {
+        reformatCode(rule.code);
         switch ($scope.modal.mode) {
           case 'new':
             postNewRule(rule);
@@ -220,7 +228,7 @@
         var data = angular.extend(defaultRule, rule);
         RulesService.post(data).then(getRules);
         modalInstance.close();
-      };
+      }
 
       /**
        * delegate to the update method on
@@ -246,12 +254,32 @@
 
     }
 
+    var backandCallbackConstCode = {
+      start: 'function backandCallback(newRow, oldRow, parameters, userProfile) {',
+      end: '}'
+    };
     /**
      * reset the current active rule on scope
      */
     function resetCurrentRule() {
       $scope.rule = {};
+      $scope.rule.javaScriptCode =
+        backandCallbackConstCode.start + '\n' +
+        '// write your code here\n\n' +
+        backandCallbackConstCode.end;
     }
+
+    /**
+     * validate JavaScript function code
+     */
+    $scope.codeValidator = {
+      name: 'backandCallback',
+      validate: function (code) {
+        return (
+          code.indexOf(backandCallbackConstCode.start) === 0) &&
+          (code.indexOf(backandCallbackConstCode.end) === code.length - 1);
+      }
+    };
 
     /**
      * ajax call to get the rules list
@@ -259,7 +287,7 @@
     function getRules() {
       DictionaryService.get().then(populateDictionaryItems);
       RulesService.get().then(buildTree, errorHandler);
-    };
+    }
 
     /**
      * parse the raw data object to a tree
