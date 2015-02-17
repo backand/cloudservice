@@ -11,7 +11,6 @@
 
     function init() {
       self.appName = $stateParams.name;
-      self.allowTest = true;
       self.inputValues = {};
       self.inputParameters = null;
 
@@ -19,6 +18,8 @@
         self.openParamsModal = false;
         self.new = (!$stateParams.queryId);
         self.editMode = self.new;
+        self.allowTest = !self.new;
+
         if (self.new) {
           self.query = DbQueriesService.getNewQuery();
         } else {
@@ -33,6 +34,7 @@
         loadRoles();
         getWorkspaces();
         getParameters();
+        populateDictionaryItems();
       });
     }
 
@@ -83,7 +85,6 @@
 
     self.editQuery = function () {
       self.editMode = true;
-      populateDictionaryItems();
     };
 
     self.cancel = function () {
@@ -160,7 +161,7 @@
 
     self.getDicParameters = function () {
       return self.query.parameters.replace(/ /g, '').split(',');
-    }
+    };
 
 
     var paramRegex = /{{([^}]*)}}/g; //anything between '{{' and '}}' except '}'
@@ -182,7 +183,7 @@
 
     self.testData = function () {
       $scope.$broadcast('tabs:data', {"query": self.query.name, "app": self.appName, "parameters": self.inputValues});
-    }
+    };
 
     self.clearData = function () {
       self.allowTest = false;

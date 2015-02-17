@@ -116,8 +116,9 @@
           <br/>
           <form role="form" name="inputParametersForm" novalidate>
             <div class="form-group" ng-repeat="inputParam in DbQuery.inputParameters">
-              <label for="name">{{inputParam}}</label>
+              <label for="inputParam">{{inputParam}}</label>
               <input type="text"
+                     id="inputParam"
                      class="form-control"
                      ng-model="DbQuery.inputValues[inputParam]"
                      required>

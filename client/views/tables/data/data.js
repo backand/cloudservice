@@ -85,7 +85,9 @@
 
     function successDataHandler(data) {
       self.gridOptions.data = data.data.data;
-      var columns = _.without(Object.keys(data.data.data[0]), '__metadata')
+      var columns = [];
+      if (data.data.data.length > 0)
+        _.without(Object.keys(data.data.data[0]), '__metadata')
       self.gridOptions.columnDefs = columns.map(function (column) {
         return {
           minWidth: 80,

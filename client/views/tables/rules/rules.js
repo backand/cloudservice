@@ -50,6 +50,12 @@
       buildParameres: buildParameresDictionary
     };
 
+    $scope.allowTest = function() {
+      var allow = this.newRuleForm &&
+        (!this.newRuleForm.code.$dirty &&
+         !this.newRuleForm.ruleName.$dirty);
+      return allow;
+    };
 
     function toggleGroup(obj) {
       $scope.modal.dictionaryState = false;
@@ -179,7 +185,7 @@
         e.preventDefault();
       }
 
-    }
+    };
 
     /**
      * init and launch modal window and
@@ -188,6 +194,7 @@
     function launchModal() {
 
       $scope.modal.toggleGroup();
+      $scope.clearTest();
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/rules/new_rule.html',
         backdrop: 'static',
@@ -216,27 +223,27 @@
           });
       };
 
-      function reformatCode(code) {
-      }
-
-
       /**
        * choose the close method depend on
        * modal mode
        *
        * @param rule
        */
-      $scope.closeModal = function (rule, closeDialog) {
-        reformatCode(rule.code);
+      $scope.closeModal = function (rule, closeDialog, form) {
+        var ruleToSend = replaceSpecialCharInCode(rule);
         switch ($scope.modal.mode) {
           case 'new':
-            postNewRule(rule);
+            postNewRule(ruleToSend);
             break;
           case 'update':
-            updateRule(rule, closeDialog);
+            updateRule(ruleToSend);
             break;
-
         }
+        if(closeDialog){
+          modalInstance.close();
+        }
+        if (form) form.$setPristine();
+        NotificationService.add('success', 'The action was saved');
       };
 
       /**
@@ -247,8 +254,12 @@
        */
       function postNewRule(rule) {
         var data = angular.extend(defaultRule, rule);
-        RulesService.post(data).then(getRules);
-        modalInstance.close();
+        RulesService.post(data)
+          .then(function (response) {
+            $scope.rule = response.data;
+            $scope.modal.mode = 'update';
+          })
+          .then(getRules);
       }
 
       /**
@@ -257,13 +268,8 @@
        *
        * @param rule
        */
-      function updateRule(rule, closeDialog) {
-        var ruleToSend = replaceSpecialCharInCode(rule);
-        RulesService.update(ruleToSend).then(getRules);
-        if(closeDialog){
-          modalInstance.close();
-        }
-        NotificationService.add('success', 'The action was saved');
+      function updateRule(rule) {
+        RulesService.update(rule).then(getRules);
       }
 
       /**
@@ -284,6 +290,27 @@
       ruleToSend.code = ruleToSend.code.replace(/\+/g, "%2B");
       return ruleToSend;
     }
+    $scope.clearTest = function () {
+      this.test = {
+        inputParameters: [],
+        oldRow: 1
+      };
+    };
+
+    $scope.testData = function () {
+      RulesService.testRule(this.rule, this.test.inputParameters, this.test.oldRow)
+        .then(showTestResult, errorHandler);
+    };
+
+
+    function showTestResult(response) {
+      $scope.test.result = response.data;
+      $scope.test.consoleMessages = response.data.log;
+    }
+
+    $scope.addParameter = function (){
+      $scope.test.inputParameters.push({name:'', id:''});
+    };
 
     var backandCallbackConstCode = {
       start: 'function backandCallback(newRow, oldRow, parameters, userProfile) {',

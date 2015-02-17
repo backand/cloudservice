@@ -4,9 +4,11 @@
 
     var self= this;
     var baseUrl = '/1/businessRule';
+    var tableRuleUrl = '/1/table/rule/'
 
     self.appName = null;
     self.tableId = null;
+    self.tableName = null;
 
     self.get = function () {
       return $http({
@@ -49,7 +51,29 @@
         data: rule,
         headers: {AppName: self.appName}
       })
+    };
+
+    function paramsToObject(parametersArray) {
+      var parameters = {};
+      parametersArray.forEach(function(parameter) {
+        if (!_.isEmpty(parameter.name))
+          parameters[parameter.name] = parameter.value;
+      });
+      return parameters;
     }
+
+    self.testRule = function (rule, parameters, row) {
+      var parametersObj = paramsToObject(parameters);
+      return $http({
+        method: 'GET',
+        url : CONSTS.appUrl + tableRuleUrl + self.tableName + '/' + row,
+        headers: {AppName: self.appName},
+        params: {
+          ruleName: rule.name,
+          parameters: parametersObj
+        }
+      })
+    };
   }
 
   angular.module('app')
