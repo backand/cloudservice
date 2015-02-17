@@ -281,7 +281,8 @@
 
     function replaceSpecialCharInCode(rule){
       var ruleToSend = angular.copy(rule);
-      return ruleToSend.code.replace(/\+/g, "%2B");
+      ruleToSend.code = ruleToSend.code.replace(/\+/g, "%2B");
+      return ruleToSend;
     }
 
     var backandCallbackConstCode = {
