@@ -5,10 +5,8 @@
     return {
         request: function(config) {
           usSpinnerService.spin("spinner-1");
-          usSpinnerService.spin("spinner-1");
           if (SessionService.currentUser) {
-            config.headers['Authorization'] =
-              SessionService.getAuthHeader();
+            config.headers['Authorization'] = SessionService.getAuthHeader();
           }
           return config;
       },

@@ -12,25 +12,6 @@
           <h4></h4>
         </div>
       </a>
-
-      <!--<a class="icon-box col-md-3" ng-click ="dbedit.dataName = 'newPostgre'">-->
-        <!--<div class="icon-container" ng-class="{active : dbedit.currentTab() === 'newPostgre'}">-->
-          <!--<img src="assets/images/postgresql.jpg"/>-->
-        <!--</div>-->
-        <!--<div class="desc-container">-->
-          <!--<h4></h4>-->
-        <!--</div>-->
-      <!--</a>-->
-
-      <!--<a class="icon-box col-md-3" ng-click ="dbedit.dataName = 'newDummy'">-->
-        <!--<div class="icon-container" ng-class="{active : dbedit.currentTab() === 'newDummy'}">-->
-          <!--<img src="assets/images/angular-logo.png"/>-->
-        <!--</div>-->
-        <!--<div class="desc-container">-->
-          <!--<h4></h4>-->
-        <!--</div>-->
-      <!--</a>-->
-
     </div>
   </div>
 </div>
@@ -43,9 +24,12 @@
       <div class="col-sm-12">
         <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg center-block" ladda="dbedit.loading" data-style="expand-right"
                 ng-click="dbedit.create()">Create</button>
+        <div class="btn center-block"><input type="checkbox"> Add sample data to your FREE database</div>
       </div>
     </div>
   </div>
+
+
 </div>
 
 <div class="divider divider-solid"></div>

@@ -36,7 +36,7 @@
         {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2},
       ],
       workflowActions: [
-        {value: 'Code', label: 'Server side JavaScript code'},
+        {value: 'JavaScript', label: 'Server side JavaScript code'},
         {value: 'Notify', label: 'Send Email'},
         {value: 'Execute', label: 'Additional database script'},
         {value: 'Validate', label: 'Advanced Data Validation'},
@@ -258,7 +258,8 @@
        * @param rule
        */
       function updateRule(rule, closeDialog) {
-        RulesService.update(rule).then(getRules);
+        var ruleToSend = replaceSpecialCharInCode(rule);
+        RulesService.update(ruleToSend).then(getRules);
         if(closeDialog){
           modalInstance.close();
         }
@@ -278,6 +279,11 @@
 
     }
 
+    function replaceSpecialCharInCode(rule){
+      var ruleToSend = angular.copy(rule);
+      return ruleToSend.code.replace(/\+/g, "%2B");
+    }
+
     var backandCallbackConstCode = {
       start: 'function backandCallback(newRow, oldRow, parameters, userProfile) {',
       end: '}'
@@ -289,7 +295,8 @@
       $scope.rule = {};
       $scope.rule.code = $scope.rule.code ||
               backandCallbackConstCode.start + '\n' +
-              '\t// write your code here\n\n' +
+              '\t// write your code here\n' +
+              '\treturn {};\n\n' +
               backandCallbackConstCode.end;
     }
 
