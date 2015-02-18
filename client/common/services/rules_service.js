@@ -4,7 +4,7 @@
 
     var self= this;
     var baseUrl = '/1/businessRule';
-    var tableRuleUrl = '/1/table/rule/'
+    var tableRuleUrl = '/1/table/action/'
 
     self.appName = null;
     self.tableId = null;
@@ -69,7 +69,7 @@
         url : CONSTS.appUrl + tableRuleUrl + self.tableName + '/' + row,
         headers: {AppName: self.appName},
         params: {
-          ruleName: rule.name,
+          name: rule.name,
           parameters: parametersObj
         }
       })

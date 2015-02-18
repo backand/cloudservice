@@ -26,7 +26,7 @@
           <div class="ui-select" style="font-weight: bold;">
             <select ng-options="app.Name as app.Name for app in header.apps" ng-model="header.currAppName" ng-change="header.redirectTo(header.currAppName)"></select>
           </div>
-          <div us-spinner spinner-key="loading-app" style="position: relative;left: 150px;top: -18px;"></div>
+          <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}" style="position: relative;left: 150px;top: -18px;"></div>
         </div>
       </li>
     </ul>
