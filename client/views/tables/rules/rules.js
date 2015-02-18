@@ -327,7 +327,7 @@
         RulesService.tableName + '/' +
         this.test.rowId +
         '?name=' + this.rule.name +
-        '&parameters=' + this.test.parameters)
+        '&parameters=' + JSON.stringify(this.test.parameters));
     };
 
     function getLog(response) {
