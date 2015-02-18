@@ -174,8 +174,6 @@
     function loadRule(data)
     {
       $scope.rule = data.data;
-      // TODO: mock - remove when input parameters are retrieved from server
-      $scope.rule.inputParameters = 'x,y,z,param1,param2';
       launchModal();
     }
 
@@ -321,17 +319,22 @@
     };
 
     $scope.getTestUrl = function () {
-      return encodeURI(
+      $scope.testUrl = encodeURI(
         CONSTS.appUrl +
         RulesService.tableRuleUrl +
         RulesService.tableName + '/' +
         this.test.rowId +
         '?name=' + this.rule.name +
         '&parameters=' + JSON.stringify(this.test.parameters));
+
+      $scope.testUrl = $scope.testUrl.replace('%7B%22$$debug$$%22:true%7D','')
+      return $scope.testUrl;
     };
 
     function getLog(response) {
       $scope.test.result = response.data;
+      $scope.getTestUrl();
+      return;
       RulesService.getLog()
         .then(showLog, errorHandler);
     }

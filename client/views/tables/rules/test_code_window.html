@@ -24,9 +24,8 @@
 
     <hr>
     <label>HTTP Request URL:</label>
-    <input class="form-control" ng-readonly="true" ng-value="getTestUrl()">
+    <input class="form-control" ng-readonly="true" ng-value="testUrl">
     <br/><br/>
-
     <button type="button"
             class="btn btn-success pull-right"
             data-style="expand-right" ladda="test.testLoading"
@@ -36,12 +35,14 @@
     <div ng-if="!allowTest()">** Must save first to enable Test Code</div>
   </ng-form>
   <br/>
+  <hr/>
   <div ng-if="test.result">
     <label>Test Result:</label>
     <br/>
     {{ test.result | json }}
     <br/>
   </div>
+  <hr/>
   <div>
     <label>Test Log:</label>
     <br/>
@@ -56,5 +57,4 @@
     </table>
 
   </div>
-  <br/><br/>
 </div>
