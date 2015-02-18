@@ -296,33 +296,89 @@
       </div>
         <!--code-->
       <div ng-switch-when="JavaScript">
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': newRuleForm.code.$invalid }">
 
-          <label>JavaScript Code:</label>
-          <textarea class="form-control"
-                    name="code"
-                    id="code"
-                    ng-model="rule.code"
-                    ng-model-options="{ updateOn: 'blur' }"
-                    required
-                    custom-validator="codeValidator"
-                    ng-keydown = "modal.handleTabKey($event)"
-                    style="resize: vertical"
-                    rows="15"></textarea>
-          <div ng-messages="newRuleForm.code.$error">
-            <div ng-message="backandCallback" class="text-danger">Code is not ok!</div>
+        <div class="row">
+          <div ng-class="{ 'has-error': newRuleForm.code.$invalid,
+               'col-sm-12': rule.dataAction != 'OnDemand',
+               'col-sm-6': rule.dataAction == 'OnDemand'}">
+
+            <div class="form-group ">
+              <label>JavaScript Code:</label>
+
+              <textarea class="form-control"
+                        name="code"
+                        id="code"
+                        ng-model="rule.code"
+
+                        required
+                        custom-validator="codeValidator"
+                        ng-keydown = "modal.handleTabKey($event)"
+                        style="resize: vertical"
+                        rows="15"></textarea>
+              <div ng-messages="newRuleForm.code.$error">
+                <div ng-message="backandCallback" class="text-danger">Code is not ok!</div>
+              </div>
+            </div>
+          </div>
+
+
+          <div ng-if="rule.dataAction == 'OnDemand'" class="col-sm-6">
+            <h3>Test query parameters</h3>
+            <br/>
+            <ng-form role="form" name="inputParametersForm" novalidate>
+
+              <div class="form-group">
+                <label>Row ID</label>
+                <input type="number"
+                       class="form-control"
+                       ng-model="test.oldRow">
+              </div>
+
+              <label>Parameters</label>
+
+              <div class="row form-group" ng-repeat="inputParam in test.inputParameters">
+                <div class="col-sm-6">
+                  <input type="text"
+                         class="form-control"
+                         ng-model="inputParam.name"
+                         placeholder="Name">
+                </div>
+                <div class="col-sm-6">
+                  <input type="text"
+                         class="form-control"
+                         ng-model="inputParam.value"
+                         placeholder="Value">
+                </div>
+              </div>
+              <div>
+                <button class="btn" ng-click="addParameter()">Add</button>
+              </div>
+              <button type="button"
+                      class="btn btn-success pull-right"
+                      data-style="expand-right" ladda="test.testLoading"
+                      ng-disabled="!allowTest()"
+                      ng-click="testData()">Test Code
+              </button>
+              <div ng-if="!allowTest()">** Must save first to enable Test Code</div>
+            </ng-form>
+            <br/>
+            <div ng-if="test.result">
+              <label>Test Result:</label>
+              <br/>
+              {{ test.result | json }}
+            </div>
+            <br/><br/>
           </div>
         </div>
       </div>
-    </div>
     <!-- end switch -->
     </div>
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.workflowAction"
          ng-class="{ 'has-error': newRuleForm.ruleName.$invalid &&  newRuleForm.ruleName.$dirty}">
 
-      <label>Action Name</label>
+      <label for="ruleName">Action Name</label>
       <input type="text"
+             id="ruleName"
              name="ruleName"
              class="form-control"
              ng-model="rule.name"
@@ -336,10 +392,11 @@
 
     <div class="modal-footer">
       <button class="btn btn-primary" ng-disabled="newRuleForm.$invalid" ng-click="closeModal(rule, true)">Save & Close</button>
-      <button class="btn btn-primary" ng-disabled="newRuleForm.$invalid" ng-click="closeModal(rule, false)">Save</button>
+      <button class="btn btn-primary" ng-disabled="newRuleForm.$invalid" ng-click="closeModal(rule, false, newRuleForm)">Save</button>
       <button class="btn btn-danger pull-left" ng-click="delete(rule)" ng-if="modal.mode == 'update'">Delete</button>
       <button class="btn btn-default" ng-click="cancel()">Cancel</button>
     </div>
+  </div>
   </form>
 
 </div>

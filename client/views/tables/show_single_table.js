@@ -34,7 +34,10 @@
     function loadColumns(tables)
     {
       self.tableName = getTableNameById(tables,$stateParams.tableId).name;
-      ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
+      RulesService.tableName
+        = ColumnsService.tableName
+        = DictionaryService.tableName
+        = self.tableName;
       ColumnsService.get().then(loadColumnsDone,errorHandler); //populate the view configuration data
 
     }
