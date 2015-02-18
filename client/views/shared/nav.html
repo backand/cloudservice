@@ -21,8 +21,9 @@
       data-slim-scroll
       data-collapse-nav
       ng-show="nav.state != 'apps.index'">
+
     <li ng-class="{active: nav.state == 'apps.show'}" >
-      <a ui-sref="apps.show({ name: nav.appName })" ng-click="nav.goTo('apps.show')" href="">
+      <a ng-click="nav.goTo('apps.show')" href="" ng-class="{disabled: nav.DatabaseStatus != 1}">
         <i class="icon-dashboard-icon"></i>
         <span>Dashboard</span>
       </a>
@@ -55,10 +56,16 @@
     <li ng-class="{active: nav.state == 'playground.orm'}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}" href="">
           <i class="icon-rest-api-icon"></i>
-          <span>Playground</span>
+          <span>Docs & API</span>
           <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
         <ul>
+            <li ng-class="{active: nav.state == 'playground.get-started'}">
+              <a ng-click="nav.goTo('playground.get-started')" href="">
+                <i class="ti-star"></i>
+                <span>AngularJS Quickstart</span>
+              </a>
+            </li>
             <li ng-class="{active: nav.state == 'playground.show'}">
               <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.show')" href="">
                 <i class="icon-rest-api-icon"></i>
@@ -106,23 +113,23 @@
       </ul>
     </li>
 
-    <li ng-class="{active: nav.state == 'dbQueries.index' || nav.state == 'dbQueries.index'}">
+    <li ng-class="{active: nav.state == 'dbQueries.index' || nav.state == 'dbQueries.index'}" ng-if="disabled: nav.DatabaseStatus !== 1">
       <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.loadDbQueries()" href="">
         <i class="ti-gift"></i>
         <span>Database Queries</span>
         <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
       <ul>
-        <li ng-class="{active: false }">
-          <a ng-class="{disabled: false}"  ng-click="nav.newDbQuery()" href="">
+        <li ng-class="{active: nav.state == 'dbQueries.index' || nav.state == 'dbQueries.index'}">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.newDbQuery()" href="">
             <i class="ti-plus"></i>
             <span>New Query</span>
           </a>
         </li>
       </ul>
       <ul class="scrollbar ex4">
-        <li ng-class="{active: false }" ng-repeat="query in nav.queries">
-          <a ng-class="{disabled: false}"  ng-click="nav.showDbQuery(query)" href="">
+        <li ng-class="{active: nav.state == 'dbQueries.index' || nav.state == 'dbQueries.index'}" ng-repeat="query in nav.queries">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.showDbQuery(query)" href="">
             <i class="ti-gift"></i>
             <span>{{query.name}}</span>
           </a>

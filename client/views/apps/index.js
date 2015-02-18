@@ -4,7 +4,7 @@
   angular.module('app.apps')
     .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', AppsIndexController]);
 
-  function AppsIndexController($scope,AppsService, appsList, $state, NotificationService,$interval,AppState,usSpinnerService) {
+  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService) {
     var self = this;
     self.loading = false;
     var stop;
@@ -51,6 +51,12 @@
       $state.go('apps.edit', {name: appName});
     }
 
+    self.getStarted = function (appName) {
+      AppState.set(appName);
+      $state.go('playground.get-started', {name: appName});
+    }
+
+
     self.namePattern = /^\w+$/;
 
     self.getRibboninfo = function(app) {
@@ -64,7 +70,7 @@
         case "1":
           return { class: 'ui-ribbon-success', text: 'Connected'};
         case "2":
-          return { class: "ui-ribbon-info", text: 'Creating...'};
+          return { class: "ui-ribbon-info", text: 'Create'};
         default:
           return { class: 'ui-ribbon-danger', text: 'Error'};
       }

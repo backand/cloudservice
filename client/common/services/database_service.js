@@ -29,11 +29,11 @@
         });
     };
 
-    this.createDB = function(appName, product) {
+    this.createDB = function(appName, product, sampleApp) {
       return $http({
         method: 'POST',
-        url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
-        data: {"product": product}
+        url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
+        data: {"product": product, "sampleApp": sampleApp}
       });
     };
 

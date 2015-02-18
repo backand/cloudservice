@@ -5,7 +5,35 @@
 .app-panel-body {
   height: 175px;
   .body-height {
-    height: 90px;
+    height: 34px;
+  }
+}
+
+.app-panel-body-link{
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  white-space: nowrap;
+  padding: 25px 12px;
+  font-size: 14px;
+  line-height: 1.42857;
+  -webkit-user-select: none;
+  a {
+    text-decoration: underline;
+  }
+  a.active {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  a:hover {
+    cursor: pointer;
+    text-decoration: underline;
   }
 }
 
@@ -553,4 +581,9 @@ ul.tables-list {
 .list-style-none {
   list-style: none;
   padding-left: 10px;
+}
+
+
+.spinner-ribbon {
+  left: 50px;
 }

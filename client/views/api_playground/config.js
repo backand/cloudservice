@@ -7,6 +7,11 @@
 
   function config($stateProvider) {
     $stateProvider
+      .state('playground.get-started', {
+        parent: 'playground',
+        url: '/docs/start/:name',
+        templateUrl: 'views/api_playground/get-started.html'
+      })
       .state('playground.show', {
         parent: 'playground',
         url: '/rest/:name',

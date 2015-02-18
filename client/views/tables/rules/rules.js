@@ -286,7 +286,7 @@
     }
 
     var backandCallbackConstCode = {
-      start: 'function backandCallback(newRow, oldRow, parameters, userProfile) {',
+      start: 'function backandCallback(userInput, dbRow, parameters, userProfile) {',
       end: '}'
     };
     /**

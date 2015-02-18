@@ -83,8 +83,8 @@
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
       })
         .success(function (data) {
-            apps.list = data.data;
-            updateAppNames();
+          apps.list = data.data;
+          updateAppNames();
         })
         .error(function (error, message) {
           NotificationService.add('error', message);
@@ -117,12 +117,12 @@
           Title: title
         }
       })
-        .success(function (data) {
-          deferred.resolve(data.data);
-        })
-        .error(function (error) {
-          deferred.reject(error);
-        });
+      .success(function (data) {
+        deferred.resolve(data.data);
+      })
+      .error(function (error) {
+        deferred.reject(error);
+      });
 
       return deferred.promise;
     };
@@ -159,6 +159,6 @@
   }
 
   angular.module('common.services')
-    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService','NotificationService', appsService]);
+    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', 'NotificationService', appsService]);
 
 })();

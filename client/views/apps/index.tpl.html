@@ -11,11 +11,11 @@
           <div class="panel-body app-panel-body">
             <div class="row">
               <div class="col-xs-10 col-xs-offset-1">
-                <form class="form-horizontal" name="form" role="form">
+                <form class="form-horizontal" name="form" role="form" ng-submit="index.addApp()">
                   <fieldset>
                     <div class="form-group">
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Application name"
+                          <input type="text" class="form-control" placeholder="App Name"
                                  ng-model = "index.appName" ng-model-options="{debounce: 500}"
                                  ng-pattern="index.namePattern" name="appName" required >
                             <div class="input-group-addon">.backand.net</div>
@@ -23,15 +23,12 @@
                       <div ng-show="form.appName.$error.pattern" class="input-error">no spaces or %$#@^&* allowed</div>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Application title"
+                      <input type="text" class="form-control" placeholder="App Title"
                              ng-model = "index.appTitle" ng-model-options="{debounce: 500}">
                     </div>
                     <div class="form-group">
-
-                    <div ng-click="index.addApp()" ng-disabled="form.$invalid" class="btn btn-primary btn-w-md btn-block" ladda="index.loading" data-style="expand-right">
-                      Create
+                      <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary btn-w-md btn-block" ladda="index.loading" data-style="expand-right">Create New App</button>
                     </div>
-                      </div>
                   </fieldset>
                 </form>
               </div>
@@ -44,8 +41,10 @@
            ng-repeat="app in index.apps track by app.__metadata.id">
 
         <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
+          <span style="left:150px;" ng-if="app.DatabaseStatus == '2'" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '545px', color: 'white'}"></span>
           <div class="ui-ribbon-wrapper">
-            <div class="ui-ribbon">{{ index.getRibboninfo(app).text }}</div>
+            <div class="ui-ribbon" ng-if="app.DatabaseStatus == '2'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index.getRibboninfo(app).text }}</div>
+            <div class="ui-ribbon" ng-if="app.DatabaseStatus != '2'">{{ index.getRibboninfo(app).text }}</div>
           </div>
           <div class="panel-heading text-center">
             <a ng-if="app.DatabaseStatus == 1"
@@ -53,11 +52,13 @@
                ng-click="index.appSettings(app.Name)" class="pull-in">
               <i class="ti-settings"></i></a>{{ ::app.Name }}</div>
           <div class="panel-body app-panel-body">
-            <p class="body-height">{{ ::app.Title }}</p>
+            <div class="body-height">{{ ::app.Title }}</div>
+            <div class="app-panel-body-link"><a href="" ng-click="index.getStarted(app.Name)"><i class="ti-star" ></i> AngularJS Quickstart</a></div>
             <button ng-click="index.appManage(app.Name, app.DatabaseStatus)" ng-disabled="app.DatabaseStatus==2"
                     class="btn btn-default btn-w-md btn-block">
               Manage App
             </button>
+
           </div>
         </div>
       </div>

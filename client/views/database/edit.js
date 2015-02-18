@@ -7,17 +7,22 @@
 
     var self = this;
 
-    this.appName = $stateParams.name;
-    this.loading = false;
-    this.showHelp = false;
-    this.showND = true;
+    (function init() {
+      self.appName = $stateParams.name;
+      self.loading = false;
+      self.showHelp = false;
+      self.showND = true;
+      self.includeData = true;
+      getCurrentApp();
+    }());
 
-    AppsService.getCurrentApp($state.params.name)
+    function getCurrentApp(){
+      AppsService.getCurrentApp($state.params.name)
       .then(function (data) {
         //currentApp = data;
         self.databaseStatus = data.DatabaseStatus;
         self.dbConnected = data.DatabaseStatus === 1;
-        self.dataName = data.databaseName || 'mysql';
+        self.dataName = data.databaseName || 'newMysql';
         self.data = {
           usingSsl: 'true',
           usingSsh: 'false'
@@ -29,8 +34,9 @@
       }, function (err) {
         NotificationService('error', 'can not get current app info');
       });
+    }
 
-    this.currentTab = function () {
+    self.currentTab = function () {
       return self.dataName;
     };
 
@@ -55,14 +61,17 @@
         usSpinnerService.stop("loading");
     }
 
-    this.create = function(){
+    self.create = function(){
         self.loading = true;
         var product = DatabaseNamesService.getNumber(self.dataName);
 
-        DatabaseService.createDB($state.params.name,product)
+        var sampleApp = "OnlineGaming-MySql";
+        if(!self.includeData)
+          sampleApp = "";
+
+        DatabaseService.createDB($state.params.name, product, sampleApp)
         .success(function(data){
-          NotificationService.add('info','Creating new database');
-          checkDatabaseStatus();
+          NotificationService.add('info','Creating new database... It may takes 1-2 minutes');
           $state.go('apps.index',{name: $state.params.name});
         })
         .error(function(err){
@@ -70,9 +79,9 @@
         })
     };
 
-    this.dataSources = DatabaseService.getDataSources();
+    self.dataSources = DatabaseService.getDataSources();
 
-    this.sumbitForm = function() {
+    self.sumbitForm = function() {
       self.loading = true;
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
 
@@ -90,7 +99,7 @@
       else {
           DatabaseService.connect2DB($state.params.name, self.data)
               .success(function (data) {
-                  NotificationService.add('info', 'App connecting to database');
+                  NotificationService.add('info', 'Connecting to the database...');
                   $state.go('apps.index', {name: $state.params.name})
               })
               .error(function (err) {
@@ -100,7 +109,7 @@
       }
     };
 
-    this.back = function(){
+    self.back = function(){
       $state.go('apps.show',({name:$state.params.name}));
     };
 
