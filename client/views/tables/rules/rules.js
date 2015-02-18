@@ -303,11 +303,16 @@
     $scope.clearTest = function () {
       this.modal.testCode = false;
       this.test = {
-        inputParameters: [],
         parameters: {},
         rowId: 1
       };
-      if ($scope.rule.inputParameters) this.test.inputParameters = $scope.rule.inputParameters.replace(/ /g, '').split(',');
+    };
+
+    $scope.getInputParameters = function () {
+      var inputParameters = [];
+      if ($scope.rule.inputParameters)
+        inputParameters = $scope.rule.inputParameters.replace(/ /g, '').split(',');
+      return inputParameters;
     };
 
     $scope.testData = function () {

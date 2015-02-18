@@ -14,7 +14,7 @@
 
     <label>Parameters</label>
 
-    <div class="form-group" ng-repeat="inputParam in test.inputParameters">
+    <div class="form-group" ng-repeat="inputParam in getInputParameters()">
       <label for="inputParam">{{inputParam}}</label>
       <input type="text"
              id="inputParam"
