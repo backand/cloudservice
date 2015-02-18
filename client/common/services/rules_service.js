@@ -4,7 +4,8 @@
 
     var self= this;
     var baseUrl = '/1/businessRule';
-    var tableRuleUrl = '/1/table/action/'
+    self.tableRuleUrl = '/1/table/action/';
+    var logUrl = '/1/view/data/durados_Log';
 
     self.appName = null;
     self.tableId = null;
@@ -53,27 +54,33 @@
       })
     };
 
-    function paramsToObject(parametersArray) {
-      var parameters = {};
-      parametersArray.forEach(function(parameter) {
-        if (!_.isEmpty(parameter.name))
-          parameters[parameter.name] = parameter.value;
-      });
-      return parameters;
+    function paramsToJson(parameters) {
+      parameters['$$debug$$'] =  true;
+      return JSON.stringify(parameters);
     }
 
     self.testRule = function (rule, parameters, row) {
-      var parametersObj = paramsToObject(parameters);
+      var parametersJson = paramsToJson(parameters);
       return $http({
         method: 'GET',
-        url : CONSTS.appUrl + tableRuleUrl + self.tableName + '/' + row,
+        url : CONSTS.appUrl + self.tableRuleUrl + self.tableName + '/' + row,
         headers: {AppName: self.appName},
         params: {
           name: rule.name,
-          parameters: parametersObj
+          parameters: parametersJson
         }
       })
     };
+
+    // TODO: get log which is filtered by Guid from server
+    self.getLog = function (Guid) {
+      return $http({
+        method: 'GET',
+        url : 'http://api.backand.info:8099/1/view/data/durados_Log?filter=[{"fieldName":"LogType", "operator":"greaterThanOrEqualsTo","value":"500"},{"fieldName":"Guid", "operator":"equals","value":"9a7d6618-75c4-4d3e-ad9a-77f8911c3b33"}]',
+        headers: {AppName: self.appName}
+      })
+    };
+
   }
 
   angular.module('app')

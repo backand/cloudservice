@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function RulesController($modal, $scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService) {
+  function RulesController(CONSTS, $modal, $scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService) {
 
     var self = this;
 
@@ -47,13 +47,30 @@
       resetRule: resetCurrentRule,
       digest: digestIn,
       toggleGroup: toggleGroup,
-      buildParameres: buildParameresDictionary
+      buildParameters: buildParametersDictionary,
+      toggleTestCode: toggleTestCode
+    };
+
+    function toggleTestCode() {
+      $scope.modal.testCode = !$scope.modal.testCode;
+
+    }
+
+    $scope.isNew = function () {
+      return (typeof this.rule.__metadata === 'undefined');
+    };
+
+    $scope.allowTestModal = function () {
+      var allow = this.newRuleForm &&
+        this.modal.testCode &&
+        (typeof this.newRuleForm.code !== 'undefined') &&
+        this.rule.dataAction == 'OnDemand';
+      return allow;
     };
 
     $scope.allowTest = function() {
-      var allow = this.newRuleForm &&
-        (!this.newRuleForm.code.$dirty &&
-         !this.newRuleForm.ruleName.$dirty);
+      var allow = this.allowTestModal() &&
+        !this.newRuleForm.$dirty;
       return allow;
     };
 
@@ -63,7 +80,6 @@
       $scope.modal.notifyMessage = false;
       $scope.modal.webService = false;
       $scope.modal.sqlCommand = false;
-      $scope.modal.code = false;
       if(obj != undefined){
         return !obj;
       }
@@ -106,10 +122,10 @@
       };
     }
 
-    function buildParameresDictionary() {
+    function buildParametersDictionary() {
       var keys = [];
       if($scope.rule.inputParameters){
-        angular.forEach($scope.rule.inputParameters.split(','), function (param){
+        angular.forEach($scope.rule.inputParameters.replace(/ /g, '').split(','), function (param){
           keys.push({token: param, label: param})
         })
       }
@@ -117,11 +133,9 @@
     }
 
     /**
-     * set the scope to update mode
-     * and launch modal
+     * launch modal
      */
     function newRule(trigger) {
-      $scope.modal.mode = 'new';
       resetCurrentRule();
       if(trigger){
         $scope.rule.dataAction = trigger;
@@ -160,7 +174,8 @@
     function loadRule(data)
     {
       $scope.rule = data.data;
-      $scope.modal.mode = 'update';
+      // TODO: mock - remove when input parameters are retrieved from server
+      $scope.rule.inputParameters = 'x,y,z,param1,param2';
       launchModal();
     }
 
@@ -229,20 +244,13 @@
        *
        * @param rule
        */
-      $scope.closeModal = function (rule, closeDialog, form) {
+      $scope.saveRule = function (rule) {
         var ruleToSend = replaceSpecialCharInCode(rule);
-        switch ($scope.modal.mode) {
-          case 'new':
+        if ($scope.isNew())
             postNewRule(ruleToSend);
-            break;
-          case 'update':
+        else
             updateRule(ruleToSend);
-            break;
-        }
-        if(closeDialog){
-          modalInstance.close();
-        }
-        if (form) form.$setPristine();
+        this.newRuleForm.$setPristine();
         NotificationService.add('success', 'The action was saved');
       };
 
@@ -257,7 +265,6 @@
         RulesService.post(data)
           .then(function (response) {
             $scope.rule = response.data;
-            $scope.modal.mode = 'update';
           })
           .then(getRules);
       }
@@ -276,13 +283,16 @@
        * close the modal window if user confirm
        */
       $scope.cancel = function () {
-        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
-          .then(function(result){
+        var close = true;
+        if (this.newRuleForm.$pristine)
+          modalInstance.dismiss();
+        else {
+          ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
+          .then(function (result) {
             result ? modalInstance.dismiss() : false;
           });
-
+        }
       };
-
     }
 
     function replaceSpecialCharInCode(rule){
@@ -291,26 +301,43 @@
       return ruleToSend;
     }
     $scope.clearTest = function () {
+      this.modal.testCode = false;
       this.test = {
         inputParameters: [],
-        oldRow: 1
+        parameters: {},
+        rowId: 1
       };
+      if ($scope.rule.inputParameters) this.test.inputParameters = $scope.rule.inputParameters.replace(/ /g, '').split(',');
     };
 
     $scope.testData = function () {
-      RulesService.testRule(this.rule, this.test.inputParameters, this.test.oldRow)
-        .then(showTestResult, errorHandler);
+      RulesService.testRule(this.rule, this.test.parameters, this.test.rowId)
+        .then(getLog, errorHandler);
     };
 
+    $scope.getTestUrl = function () {
+      return encodeURI(
+        CONSTS.appUrl +
+        RulesService.tableRuleUrl +
+        RulesService.tableName + '/' +
+        this.test.rowId +
+        '?name=' + this.rule.name +
+        '&parameters=' + this.test.parameters)
+    };
 
-    function showTestResult(response) {
+    function getLog(response) {
       $scope.test.result = response.data;
-      $scope.test.consoleMessages = response.data.log;
+      RulesService.getLog()
+        .then(showLog, errorHandler);
     }
-
-    $scope.addParameter = function (){
-      $scope.test.inputParameters.push({name:'', id:''});
-    };
+    function showLog(response) {
+      var guid = response.data.data[0].Guid;
+      var filtered = _.filter(response.data.data, {'Guid': guid});
+      $scope.test.logMessages = [];
+      filtered.forEach(function (log) {
+        $scope.test.logMessages.push({text: log.FreeText, isError: log.LogType === '501', time: log.Time});
+      });
+    }
 
     var backandCallbackConstCode = {
       start: 'function backandCallback(userInput, dbRow, parameters, userProfile) {',
@@ -471,8 +498,9 @@
     function errorHandler(error, message) {
       NotificationService.add('error', message);
     }
+
   }
 
   angular.module('app')
-    .controller('RulesController', ['$modal', '$scope', 'ConfirmationPopup', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', RulesController]);
+    .controller('RulesController', ['CONSTS', '$modal', '$scope', 'ConfirmationPopup', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', RulesController]);
 }());

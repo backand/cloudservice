@@ -587,3 +587,12 @@ ul.tables-list {
 .spinner-ribbon {
   left: 50px;
 }
+
+.log-table > tbody > tr > td {
+  padding: 0 10px 0 10px;
+  border: 1px solid #ddd;
+  .log-icon {
+    font-weight: bold;
+    padding-right: 10px;
+  }
+}
