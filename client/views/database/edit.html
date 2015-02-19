@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-md-12">
           <tabset justified="true" class="ui-tab ui-tab-horizontal ui-tab-container">
-            <tab  heading="New RDS Database" ng-hide="dbedit.databaseStatus !== 0" ng-click ="dbedit.dataName = 'newMysql'">
+            <tab  heading="New RDS Database" ng-if="dbedit.databaseStatus === 0" ng-click ="dbedit.dataName = 'newMysql'">
               <ng-include src = " 'views/database/new_data/new_source.html' "></ng-include>
             </tab>
             <tab heading="Connect Existing Database" ng-click ="dbedit.dataName = 'mysql'">
