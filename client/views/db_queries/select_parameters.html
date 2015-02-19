@@ -12,7 +12,7 @@
 <hr/>
 <strong>Parameters</strong>
 <ul class="list-unstyled">
-  <li ng-repeat="parameter in DbQuery.getDicParameters()"
+  <li ng-repeat="parameter in DbQuery.getParameters()"
       ng-click="DbQuery.insertParamAtChar('query', parameter)"
       ng-bind="parameter"
       style="cursor:pointer;">

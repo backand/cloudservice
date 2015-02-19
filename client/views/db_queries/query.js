@@ -12,7 +12,6 @@
     function init() {
       self.appName = $stateParams.name;
       self.inputValues = {};
-      self.inputParameters = null;
 
       DbQueriesService.getQueries(self.appName).then(function () {
         self.openParamsModal = false;
@@ -33,7 +32,6 @@
         SecurityService.appName = self.appName;
         loadRoles();
         getWorkspaces();
-        getParameters();
         populateDictionaryItems();
       });
     }
@@ -76,7 +74,6 @@
             name: self.appName,
             queryId: query.__metadata.id
           };
-          getParameters();
           self.allowTest = true;
           $state.go('dbQueries.query', params);
         });
@@ -159,27 +156,11 @@
       NotificationService.add('error', message);
     }
 
-    self.getDicParameters = function () {
-      return self.query.parameters.replace(/ /g, '').split(',');
-    };
-
-
-    var paramRegex = /{{([^}]*)}}/g; //anything between '{{' and '}}' except '}'
-    function getParameters() {
+    self.getParameters = function () {
       if (self.query) {
-        var paramsMatch = self.query.parameters.replace(/ /g, '').split(',');
-        var queryMatch = [];
-        var queryMatchWithBrackets = self.query.sQL.match(paramRegex);
-        if (queryMatchWithBrackets != null)
-          queryMatchWithBrackets.forEach(function (match) {
-            queryMatch.push(match.substring(2, match.length - 2).replace(/ /g, ''));
-          });
-        //todo: need to ignore system parameters - starts with sys:
-        var parameters = _.union(paramsMatch, queryMatch);
-        self.query.parameters = parameters.join(',');
-        self.inputParameters = parameters;
+        return _.without(_.unique(self.query.parameters.replace(/ /g, '').split(',')),'');
       }
-    }
+    };
 
     self.testData = function () {
       $scope.$broadcast('tabs:data', {"query": self.query.name, "app": self.appName, "parameters": self.inputValues});

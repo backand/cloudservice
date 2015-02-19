@@ -87,7 +87,7 @@
       self.gridOptions.data = data.data.data;
       var columns = [];
       if (data.data.data.length > 0)
-        _.without(Object.keys(data.data.data[0]), '__metadata')
+        columns = _.without(Object.keys(data.data.data[0]), '__metadata');
       self.gridOptions.columnDefs = columns.map(function (column) {
         return {
           minWidth: 80,
@@ -101,8 +101,11 @@
     }
 
     function successQueryHandler(data) {
+      console.log(data);
       self.gridOptions.data = data.data;
-      var columns = _.at(data.data);
+      var columns = [];
+      if (data.data.length > 0)
+        columns = Object.keys(data.data[0]);
       self.gridOptions.columnDefs = columns.map(function (column) {
         return {
           minWidth: 80,

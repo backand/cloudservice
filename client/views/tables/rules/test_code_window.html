@@ -5,13 +5,6 @@
   <br/>
   <ng-form role="form" name="inputParametersForm" novalidate>
 
-    <div class="form-group">
-      <label>Row ID</label>
-      <input type="number"
-             class="form-control"
-             ng-model="test.rowId">
-    </div>
-
     <label>Parameters</label>
 
     <div class="form-group" ng-repeat="inputParam in getInputParameters()">
@@ -20,6 +13,14 @@
              id="inputParam"
              class="form-control"
              ng-model="test.parameters[inputParam]">
+    </div>
+
+    <hr>
+    <div class="form-group">
+      <label>Row ID</label>
+      <input type="number" min="0"
+             class="form-control"
+             ng-model="test.rowId">
     </div>
 
     <hr>
@@ -43,7 +44,8 @@
     <br/>
   </div>
   <hr/>
-  <div>
+
+  <div ng-if="test.result">
     <label>Test Log:</label>
     <br/>
 

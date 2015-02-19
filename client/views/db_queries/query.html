@@ -30,7 +30,7 @@
                      id="params"
                      ng-model="DbQuery.query.parameters"
                      ng-disabled="!DbQuery.editMode"
-                     placeholder="input1,input2,...."
+                     placeholder="input1, input2,...."
                      ng-change="DbQuery.clearData();">
             </div>
 
@@ -115,7 +115,7 @@
           <h3>Test query parameters</h3>
           <br/>
           <form role="form" name="inputParametersForm" novalidate>
-            <div class="form-group" ng-repeat="inputParam in DbQuery.inputParameters">
+            <div class="form-group" ng-repeat="inputParam in DbQuery.getParameters()">
               <label for="inputParam">{{inputParam}}</label>
               <input type="text"
                      id="inputParam"

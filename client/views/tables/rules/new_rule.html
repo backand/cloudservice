@@ -37,7 +37,7 @@
         <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.dictionaryState = modal.toggleGroup(modal.dictionaryState)"></span>
       </div>
       <div ng-cloak>
-        <angled-window ng-show="modal.dictionaryState"
+        <angled-window ng-if="modal.dictionaryState"
                        id="{{winId}}"
                        title="Where Condition"
                        grouping="w"
@@ -67,6 +67,14 @@
               ng-model="rule.workflowAction">
         <option value="">Select what to do...</option>
       </select>
+    </div>
+    <div class="form-group col-sm-12">
+      <button name="testCode"
+              ng-if="rule.dataAction == 'OnDemand'"
+              class="pull-right btn btn-success btn-xs"
+              ng-click="modal.toggleTestCode()">
+        Test Action >>
+      </button>
     </div>
 
     <div ng-switch="rule.workflowAction">
@@ -111,7 +119,7 @@
         </div>
 
         <div ng-cloak>
-          <angled-window ng-show="modal.notifySubject"
+          <angled-window ng-if="modal.notifySubject"
                          id="{{winId}}"
                          title="Email Subject"
                          grouping="w"
@@ -134,7 +142,7 @@
         </div>
 
         <div ng-cloak>
-          <angled-window ng-show="modal.notifyMessage"
+          <angled-window ng-if="modal.notifyMessage"
                          id="{{winId}}"
                          title="Email Message"
                          grouping="w"
@@ -231,7 +239,7 @@
       <div ng-switch-when="Execute">
 
         <div ng-cloak>
-          <angled-window ng-show="modal.sqlCommand"
+          <angled-window ng-if="modal.sqlCommand"
                          id="{{winId}}"
                          title="SQL Command"
                          grouping="w"
@@ -267,7 +275,7 @@
       </div>
 <!--WebService-->
       <div ng-cloak>
-        <angled-window ng-show="modal.webService"
+        <angled-window ng-if="modal.webService"
                        id="{{winId}}"
                        title="Web Service URL"
                        grouping="w"
@@ -301,7 +309,6 @@
 
           <div class="form-group ">
             <label>JavaScript Code:</label>
-            <button name="testCode" ng-if="rule.dataAction == 'OnDemand'" class="pull-right btn btn-success btn-xs" ng-click="modal.toggleTestCode()">Test Code >></button>
 
             <textarea class="form-control"
                       name="code"
@@ -309,12 +316,12 @@
                       ng-model="rule.code"
 
                       required
-                      custom-validator="codeValidator"
+                      ng-pattern="codeRegex"
                       ng-keydown = "modal.handleTabKey($event)"
                       style="resize: vertical"
                       rows="15"></textarea>
             <div ng-messages="newRuleForm.code.$error">
-              <div ng-message="backandCallback" class="text-danger">Code is not ok!</div>
+              <div ng-message="pattern" class="text-danger">Code is not ok!</div>
             </div>
           </div>
         </div>

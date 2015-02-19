@@ -54,21 +54,25 @@
       })
     };
 
-    function paramsToJson(parameters) {
-      parameters['$$debug$$'] =  true;
-      return JSON.stringify(parameters);
-    }
 
-    self.testRule = function (rule, parameters, row) {
-      var parametersJson = paramsToJson(parameters);
+    self.getTestUrl = function (rule, test, debug) {
+      var parameters = angular.copy(test.parameters);
+      if (debug)
+        parameters['$$debug$$'] =  true;
+      return encodeURI(
+        CONSTS.appUrl +
+        self.tableRuleUrl +
+        self.tableName + '/' +
+        test.rowId +
+        '?name=' + rule.name +
+        '&parameters=' + JSON.stringify(parameters));
+    };
+
+    self.testRule = function (rule, test) {
       return $http({
         method: 'GET',
-        url : CONSTS.appUrl + self.tableRuleUrl + self.tableName + '/' + row,
-        headers: {AppName: self.appName},
-        params: {
-          name: rule.name,
-          parameters: parametersJson
-        }
+        url : self.getTestUrl(rule, test, true),
+        headers: { AppName: self.appName }
       })
     };
 

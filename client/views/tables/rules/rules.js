@@ -63,7 +63,6 @@
     $scope.allowTestModal = function () {
       var allow = this.newRuleForm &&
         this.modal.testCode &&
-        (typeof this.newRuleForm.code !== 'undefined') &&
         this.rule.dataAction == 'OnDemand';
       return allow;
     };
@@ -302,7 +301,7 @@
       this.modal.testCode = false;
       this.test = {
         parameters: {},
-        rowId: 1
+        rowId: ''
       };
     };
 
@@ -314,30 +313,25 @@
     };
 
     $scope.testData = function () {
-      RulesService.testRule(this.rule, this.test.parameters, this.test.rowId)
+      RulesService.testRule(this.rule, this.test)
         .then(getLog, errorHandler);
     };
 
-    $scope.getTestUrl = function () {
-      $scope.testUrl = encodeURI(
-        CONSTS.appUrl +
-        RulesService.tableRuleUrl +
-        RulesService.tableName + '/' +
-        this.test.rowId +
-        '?name=' + this.rule.name +
-        '&parameters=' + JSON.stringify(this.test.parameters));
 
-      $scope.testUrl = $scope.testUrl.replace('%7B%22$$debug$$%22:true%7D','')
-      return $scope.testUrl;
-    };
+    $scope.$watch('test.rowId', function(newVal, oldVal) {
+        if(newVal === 0)
+          $scope.test.rowId = '';
+      });
 
     function getLog(response) {
       $scope.test.result = response.data;
-      $scope.getTestUrl();
+      var guid = response.headers('Action-Guid');
+      $scope.testUrl = RulesService.getTestUrl($scope.rule, $scope.test);
       return;
       RulesService.getLog()
         .then(showLog, errorHandler);
     }
+
     function showLog(response) {
       var guid = response.data.data[0].Guid;
       var filtered = _.filter(response.data.data, {'Guid': guid});
@@ -351,6 +345,8 @@
       start: 'function backandCallback(userInput, dbRow, parameters, userProfile) {',
       end: '}'
     };
+
+    $scope.codeRegex = /^\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow,\s*parameters\s*,\s*userProfile\s*\)\s*\{(.|[\r\n])*}\s*$/;
     /**
      * reset the current active rule on scope
      */
@@ -362,19 +358,6 @@
               '\treturn {};\n\n' +
               backandCallbackConstCode.end;
     }
-
-    /**
-     * validate JavaScript function code
-     */
-    $scope.codeValidator = {
-      name: 'backandCallback',
-      validate: function (code) {
-        code = code.trim() || '';
-        return (
-          code.indexOf(backandCallbackConstCode.start) === 0) &&
-          (code.lastIndexOf(backandCallbackConstCode.end) === code.length - 1);
-      }
-    };
 
     /**
      * ajax call to get the rules list
