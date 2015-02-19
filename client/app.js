@@ -8,7 +8,7 @@
 
     this.logout = function () {
       SessionService.ClearCredentials();
-      $location.path("/sign_in")
+      $location.path("/")
     }
   }
 
