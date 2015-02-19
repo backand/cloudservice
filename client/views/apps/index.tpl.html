@@ -41,7 +41,7 @@
            ng-repeat="app in index.apps track by app.__metadata.id">
 
         <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
-          <span style="left:150px;" ng-if="app.DatabaseStatus == '2'" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '544px', color: 'white'}"></span>
+          <span ng-if="app.DatabaseStatus == '2'" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '90%', color: 'white'}"></span>
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon" ng-if="app.DatabaseStatus == '2'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index.getRibboninfo(app).text }}</div>
             <div class="ui-ribbon" ng-if="app.DatabaseStatus != '2'">{{ index.getRibboninfo(app).text }}</div>
