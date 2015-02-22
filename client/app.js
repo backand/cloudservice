@@ -66,6 +66,7 @@
     'app.playground',
     'app.dbQueries',
     'ngMessages',
+    'pascalprecht.translate',
   ])
     //.config(['$compileProvider','$httpProvider',appConfig])
     .config(['ngClipProvider', function(ngClipProvider) {
