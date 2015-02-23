@@ -327,16 +327,13 @@
       $scope.test.result = response.data;
       var guid = response.headers('Action-Guid');
       $scope.testUrl = RulesService.getTestUrl($scope.rule, $scope.test);
-      return;
-      RulesService.getLog()
+      RulesService.getLog(guid)
         .then(showLog, errorHandler);
     }
 
     function showLog(response) {
-      var guid = response.data.data[0].Guid;
-      var filtered = _.filter(response.data.data, {'Guid': guid});
       $scope.test.logMessages = [];
-      filtered.forEach(function (log) {
+      response.data.data.forEach(function (log) {
         $scope.test.logMessages.push({text: log.FreeText, isError: log.LogType === '501', time: log.Time});
       });
     }
