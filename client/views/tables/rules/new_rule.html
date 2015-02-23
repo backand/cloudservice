@@ -41,6 +41,7 @@
                        id="{{winId}}"
                        title="Where Condition"
                        grouping="w"
+                       close-function="modal.dictionaryState = modal.toggleGroup(modal.dictionaryState)"
                        style="left: 550px; top: -50px;">
           <div ng-include="'views/tables/rules/where_condition_window.html'"></div>
         </angled-window>
@@ -123,7 +124,8 @@
                          id="{{winId}}"
                          title="Email Subject"
                          grouping="w"
-                         style="left: 650px; top: -50px;">
+                         close-function="modal.notifySubject = modal.toggleGroup(modal.notifySubject)"
+                         style="left: 580px; top: -50px;">
             <div ng-include="'views/tables/rules/send_email_subject_window.html'"></div>
           </angled-window>
         </div>
@@ -146,7 +148,8 @@
                          id="{{winId}}"
                          title="Email Message"
                          grouping="w"
-                         style="left: 650px; top: -50px;">
+                         close-function="modal.notifyMessage = modal.toggleGroup(modal.notifyMessage)"
+                         style="left: 580px; top: -50px;">
             <div ng-include="'views/tables/rules/send_email_message_window.html'"></div>
           </angled-window>
         </div>
@@ -243,7 +246,8 @@
                          id="{{winId}}"
                          title="SQL Command"
                          grouping="w"
-                         style="left: 650px; top: -50px;">
+                         close-function="modal.sqlCommand = modal.toggleGroup(modal.sqlCommand)"
+                         style="left: 580px; top: -50px;">
             <div ng-include="'views/tables/rules/sql_command_window.html'"></div>
           </angled-window>
         </div>
@@ -279,7 +283,8 @@
                        id="{{winId}}"
                        title="Web Service URL"
                        grouping="w"
-                       style="left: 650px; top: -50px;">
+                       close-function="modal.webService = modal.toggleGroup(modal.webService)"
+                       style="left: 580px; top: -50px;">
           <div ng-include="'views/tables/rules/web_service_url_window.html'"></div>
         </angled-window>
       </div>
@@ -358,6 +363,7 @@
                    id="testCode"
                    title="Test Code"
                    grouping="w"
+                   close-function="modal.toggleTestCode()"
                    style="left: 580px; top: 200px;">
       <div ng-include="'views/tables/rules/test_code_window.html'"></div>
     </angled-window>

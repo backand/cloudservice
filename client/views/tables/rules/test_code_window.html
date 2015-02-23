@@ -1,6 +1,4 @@
-<button class="btn btn-danger btn-xs" style="margin-left: 230px;" ng-click="modal.toggleTestCode()">X</button>
-<hr/>
-<div>
+
   <h3>Test query parameters</h3>
   <br/>
   <ng-form role="form" name="inputParametersForm" novalidate>
@@ -36,16 +34,18 @@
     <div ng-if="!allowTest()">** Must save first to enable Test Code</div>
   </ng-form>
   <br/>
-  <hr/>
   <div ng-if="test.result">
+    <hr/>
     <label>Test Result:</label>
     <br/>
     {{ test.result | json }}
     <br/>
+
   </div>
-  <hr/>
+
 
   <div ng-if="test.result">
+    <hr/>
     <label>Test Log:</label>
     <br/>
 
@@ -59,4 +59,3 @@
     </table>
 
   </div>
-</div>
