@@ -30,6 +30,10 @@ angular.module('app.routes', []).
         abstract: true,
         template: '<div ui-view></div>'
       })
+      .state('getting-started', {
+        url: '/docs/start',
+        templateUrl: 'views/api_playground/get-started.html'
+      })
       .state('database', {
         url: '/database',
         abstract: true,

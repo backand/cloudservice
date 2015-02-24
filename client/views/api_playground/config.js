@@ -9,7 +9,7 @@
     $stateProvider
       .state('playground.get-started', {
         parent: 'playground',
-        url: '/docs/start/',
+        url: '/docs/start/:name',
         templateUrl: 'views/api_playground/get-started.html'
       })
       .state('playground.show', {
