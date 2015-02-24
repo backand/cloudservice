@@ -56,7 +56,7 @@
      * @param token
      */
     function insertTokenAtChar(elementId, token) {
-      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
+      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, "{{" + token + "}}"]);
     }
 
     /**

@@ -40,6 +40,7 @@
     'ui.grid.cellNav',
     'ui.grid.selection',
     'ui.grid.resizeColumns',
+    'ui.ace',
     'ngClipboard',
     'xeditable',
     'app.routes',

@@ -34,27 +34,28 @@
       <label>Where Condition</label>
       <div class="pull-right">
 
-        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.dictionaryState = modal.toggleGroup(modal.dictionaryState)"></span>
+        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.toggleGroup('dictionaryState')"></span>
       </div>
       <div ng-cloak>
-        <angled-window ng-if="modal.dictionaryState"
+        <angled-window ng-if="modal.isCurGroup('dictionaryState')"
                        id="{{winId}}"
                        title="Where Condition"
                        grouping="w"
-                       close-function="modal.dictionaryState = modal.toggleGroup(modal.dictionaryState)"
+                       close-function="modal.toggleGroup('dictionaryState')"
                        style="left: 550px; top: -50px;">
           <div ng-include="'views/tables/rules/where_condition_window.html'"></div>
         </angled-window>
       </div>
-      <textarea id="whereCondition"
-                required
-                name="whereCondition"
-                class="form-control"
-                ng-focus="flag = true"
-                placeholder="Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution"
-                ng-model="rule.whereCondition"
-                ng-model-options="{debounce:{default:100}}"
-                style="resize: vertical"></textarea>
+      <div  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType}"
+            id="whereCondition"
+            required
+            name="whereCondition"
+            class="form-control"
+            ng-focus="flag = true"
+            placeholder="Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution"
+            ng-model="rule.whereCondition"
+            ng-model-options="{debounce:{default:100}}"
+            style="resize: vertical"></div>
     </div>
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition"
@@ -120,11 +121,11 @@
         </div>
 
         <div ng-cloak>
-          <angled-window ng-if="modal.notifySubject"
+          <angled-window ng-if="modal.isCurGroup('notifySubject')"
                          id="{{winId}}"
                          title="Email Subject"
                          grouping="w"
-                         close-function="modal.notifySubject = modal.toggleGroup(modal.notifySubject)"
+                         close-function="modal.toggleGroup('notifySubject')"
                          style="left: 580px; top: -50px;">
             <div ng-include="'views/tables/rules/send_email_subject_window.html'"></div>
           </angled-window>
@@ -132,7 +133,7 @@
         <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newRuleForm.subject.$invalid }">
           <div class="pull-right">
             <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
-                  ng-click="modal.notifySubject = modal.toggleGroup(modal.notifySubject)"></span>
+                  ng-click="modal.toggleGroup('notifySubject')"></span>
           </div>
           <label>Subject:</label>
           <input type="text"
@@ -144,11 +145,11 @@
         </div>
 
         <div ng-cloak>
-          <angled-window ng-if="modal.notifyMessage"
+          <angled-window ng-if="modal.isCurGroup('notifyMessage')"
                          id="{{winId}}"
                          title="Email Message"
                          grouping="w"
-                         close-function="modal.notifyMessage = modal.toggleGroup(modal.notifyMessage)"
+                         close-function="modal.toggleGroup('notifyMessage')"
                          style="left: 580px; top: -50px;">
             <div ng-include="'views/tables/rules/send_email_message_window.html'"></div>
           </angled-window>
@@ -159,7 +160,7 @@
 
           <div class="pull-right">
             <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
-                  ng-click="modal.notifyMessage = modal.toggleGroup(modal.notifyMessage)"></span>
+                  ng-click="modal.toggleGroup('notifyMessage')"></span>
 
           </div>
           <label for="notifyMessage">Message:</label>
@@ -242,11 +243,11 @@
       <div ng-switch-when="Execute">
 
         <div ng-cloak>
-          <angled-window ng-if="modal.sqlCommand"
+          <angled-window ng-if="modal.isCurGroup('sqlCommand')"
                          id="{{winId}}"
                          title="SQL Command"
                          grouping="w"
-                         close-function="modal.sqlCommand = modal.toggleGroup(modal.sqlCommand)"
+                         close-function="modal.toggleGroup('sqlCommand')"
                          style="left: 580px; top: -50px;">
             <div ng-include="'views/tables/rules/sql_command_window.html'"></div>
           </angled-window>
@@ -255,15 +256,18 @@
              ng-class="{ 'has-error': newRuleForm.sqlCommand.$invalid}">
           <div class="pull-right">
             <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
-                  ng-click="modal.sqlCommand = modal.toggleGroup(modal.sqlCommand)"></span>
+                  ng-click="modal.toggleGroup('sqlCommand')"></span>
           </div>
           <label>Command:</label>
-          <textarea class="form-control"
-                    name="sqlCommand"
-                    id="sqlCommand"
-                    ng-model="rule.command"
-                    required
-                    style="resize: vertical"></textarea>
+          <div
+            ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType}"
+            class="form-control"
+            name="sqlCommand"
+            id="sqlCommand"
+            ng-model="rule.command"
+            required
+            style="resize: vertical">
+          </div>
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
@@ -279,11 +283,11 @@
       </div>
 <!--WebService-->
       <div ng-cloak>
-        <angled-window ng-if="modal.webService"
+        <angled-window ng-if="modal.isCurGroup('webService')"
                        id="{{winId}}"
                        title="Web Service URL"
                        grouping="w"
-                       close-function="modal.webService = modal.toggleGroup(modal.webService)"
+                       close-function="modal.toggleGroup('webService')"
                        style="left: 580px; top: -50px;">
           <div ng-include="'views/tables/rules/web_service_url_window.html'"></div>
         </angled-window>
@@ -294,7 +298,7 @@
              ng-class="{ 'has-error': newRuleForm.webService.$invalid }">
           <div class="pull-right">
             <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
-                  ng-click="modal.webService = modal.toggleGroup(modal.webService)"></span>
+                  ng-click="modal.toggleGroup('webService')"></span>
           </div>
           <label>Web Service URL:</label>
           <textarea class="form-control"
@@ -315,16 +319,16 @@
           <div class="form-group ">
             <label>JavaScript Code:</label>
 
-            <textarea class="form-control"
-                      name="code"
-                      id="code"
-                      ng-model="rule.code"
-
-                      required
-                      ng-pattern="codeRegex"
-                      ng-keydown = "modal.handleTabKey($event)"
-                      style="resize: vertical"
-                      rows="15"></textarea>
+            <div  ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript'}"
+                  class="form-control"
+                  name="code"
+                  id="code"
+                  ng-model="rule.code"
+                  required
+                  ng-pattern="codeRegex"
+                  ng-keydown = "modal.handleTabKey($event)"
+                  style="resize: vertical"
+                  rows="15"></div>
             <div ng-messages="newRuleForm.code.$error">
               <div ng-message="pattern" class="text-danger">Code is not ok!</div>
             </div>

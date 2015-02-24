@@ -3,10 +3,10 @@
  */
 (function () {
 
-  function RulesController(CONSTS, $modal, $scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService) {
+  function RulesController(CONSTS, $modal, $scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService, AppState, AppsService) {
 
     var self = this;
-
+    var appName;
     /**
      * init an empty items array on scope
      * register an event listener.
@@ -16,9 +16,17 @@
       self.items = [];
       self.open = newRule;
       self.edit = editRule;
+      loadDbType();
       $scope.$on('tabs:rules', getRules);
     }());
 
+    $scope.ace = {
+      dbType: 'sql',
+      editors: {},
+      onLoad: function(_editor) {        
+        $scope.ace.editors[_editor.container.id] = _editor;
+      }
+    }
 
     $scope.modal = {
       title: 'Action',
@@ -47,6 +55,7 @@
       resetRule: resetCurrentRule,
       digest: digestIn,
       toggleGroup: toggleGroup,
+      isCurGroup: isCurGroup,
       buildParameters: buildParametersDictionary,
       toggleTestCode: toggleTestCode
     };
@@ -73,17 +82,17 @@
       return allow;
     };
 
-    function toggleGroup(obj) {
-      $scope.modal.dictionaryState = false;
-      $scope.modal.notifySubject = false;
-      $scope.modal.notifyMessage = false;
-      $scope.modal.webService = false;
-      $scope.modal.sqlCommand = false;
-      if(obj != undefined){
-        return !obj;
+    function isCurGroup(groupName) {
+      return $scope.modal.curGroup == groupName;
+    }
+
+    function toggleGroup(groupName) {
+      if ($scope.modal.isCurGroup(groupName)) {
+        $scope.modal.curGroup = null;
       }
-      else
-        return false;
+      else {
+        $scope.modal.curGroup = groupName;
+      }
     }
 
     /**
@@ -93,7 +102,14 @@
      * @param token
      */
     function insertTokenAtChar(elementId, token) {
-      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, token]);
+      // Handle case of ace editor:
+      if ($scope.ace.editors[elementId]) {
+        $scope.ace.editors[elementId].insert("{{" + token + "}}");
+      }
+    // Handle regular text field using place-at-char directive:
+      else {
+        $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, "{{" + token + "}}"]);
+      }
     }
 
     function digestIn(){
@@ -339,20 +355,30 @@
     }
 
     var backandCallbackConstCode = {
-      start: 'function backandCallback(userInput, dbRow, parameters, userProfile) {',
-      end: '}'
+      start: '/* globals\n\  $http: http service for AJAX calls,\n\  $q: Promise service\n\*/\n' +
+             '\'use strict\';\n' +
+             'function backandCallback(userInput, dbRow, parameters, userProfile) {',
+      end:   '}'
     };
 
     $scope.codeRegex = /^\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow,\s*parameters\s*,\s*userProfile\s*\)\s*\{(.|[\r\n])*}\s*$/;
     /**
      * reset the current active rule on scope
      */
+
+    function loadDbType() {
+      appName = AppState.get();
+      AppsService.getCurrentApp(appName).then(function(app) {
+        $scope.ace.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
+      });
+    }
+
     function resetCurrentRule() {
       $scope.rule = {};
       $scope.rule.code = $scope.rule.code ||
               backandCallbackConstCode.start + '\n' +
-              '\t// write your code here\n' +
-              '\treturn {};\n\n' +
+              '\t// write your code here\n\n' +
+              '\treturn {};\n' +
               backandCallbackConstCode.end;
     }
 
@@ -412,7 +438,7 @@
             }]
         },
         {
-          title: 'Edit',
+          title: 'Update',
           visible: true,
           items: [
             {
@@ -490,5 +516,5 @@
   }
 
   angular.module('app')
-    .controller('RulesController', ['CONSTS', '$modal', '$scope', 'ConfirmationPopup', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', RulesController]);
+    .controller('RulesController', ['CONSTS', '$modal', '$scope', 'ConfirmationPopup', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', 'AppState', 'AppsService', RulesController]);
 }());

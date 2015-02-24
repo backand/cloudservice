@@ -1,11 +1,17 @@
 (function () {
   'use strict';
   angular.module('app.dbQueries')
-    .controller('DbQueryController', ['$scope', '$state', '$stateParams', 'DbQueriesService', 'ConfirmationPopup', 'NotificationService', 'DictionaryService', 'SecurityService', DbQueryController]);
+    .controller('DbQueryController', ['$scope', '$state', '$stateParams', 'DbQueriesService', 'ConfirmationPopup', 'NotificationService', 'DictionaryService', 'SecurityService', 'AppsService', DbQueryController]);
 
-  function DbQueryController($scope, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService) {
+  function DbQueryController($scope, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService, AppsService) {
     var self = this;
     self.namePattern = /^\w+$/;
+    self.ace = {
+      dbType: 'sql',
+      onLoad: function(_editor) {        
+        self.ace.editor = _editor;
+      }
+    }
 
     init();
 
@@ -13,6 +19,17 @@
       self.appName = $stateParams.name;
       self.inputValues = {};
 
+      loadQueries();
+      loadDbType();
+    }
+
+    function loadDbType() {
+      AppsService.getCurrentApp(self.appName).then(function(app) {
+        self.ace.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
+      });
+    }
+
+    function loadQueries() {
       DbQueriesService.getQueries(self.appName).then(function () {
         self.openParamsModal = false;
         self.new = (!$stateParams.queryId);
@@ -149,7 +166,7 @@
     };
 
     self.insertParamAtChar = function (elementId, param) {
-      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, param]);
+      self.ace.editor.insert("{{" + param + "}}");
     };
 
     function errorHandler(error, message) {
