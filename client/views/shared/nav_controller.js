@@ -97,6 +97,13 @@
         }
     };
 
+    var generalStates = ['apps.index', 'playground.get-started'];
+
+    self.isGeneralState = function () {
+      return !$state.params.name;
+      //return _.findIndex(generalStates, self.state) === -1;
+    };
+
     function checkChanges(oldStatus) {
       var newStatus = parseInt(self.app.myStatus.status);
       oldStatus = parseInt(oldStatus);
@@ -138,7 +145,7 @@
     self.clearTables = function () {
       self.tables = [];
       self.queries = [];
-    }
+    };
 
     self.fetchTables = function () {
       self.clearTables();

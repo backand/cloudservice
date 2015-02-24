@@ -3,9 +3,13 @@
       data-slim-scroll
       data-collapse-nav
       data-highlight-active
-      ng-show="nav.state === 'apps.index'">
+      ng-show="nav.isGeneralState()">
     <li>
       <a ui-sref="apps.index"> <i class="ti-layers-alt"></i><span>My Apps</span> </a>
+    </li>
+
+    <li>
+      <a ui-sref="playground.get-started"> <i class="ti-gift"></i><span>Getting Started</span></a>
     </li>
 
     <!--<li>-->
@@ -20,7 +24,7 @@
   <ul id="nav2" class="nav"
       data-slim-scroll
       data-collapse-nav
-      ng-show="nav.state != 'apps.index'">
+      ng-show="!nav.isGeneralState()">
 
     <li ng-class="{active: nav.state == 'apps.show'}" >
       <a ng-click="nav.goTo('apps.show')" href="" ng-class="{disabled: nav.DatabaseStatus != 1}">

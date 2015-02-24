@@ -1,11 +1,8 @@
 <div class="modal-header">
   <h3 class="modal-title">{{title}}</h3>
 </div>
-<div class="modal-body-video">
-  <iframe width="420" height="345" ng-src='{{givenUrl}}'></iframe>
-  <!--"https://www.youtube.com/embed/3O1_3zBUKM8"-->
+<div class="modal-body-video text-center">
+  <iframe width="560" height="315" ng-src='{{givenUrl}}' frameborder="0" allowfullscreen></iframe>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()">OK</button>
-  <button class="btn btn-default" ng-click="cancel()">Cancel</button>
 </div>

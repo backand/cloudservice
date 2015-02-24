@@ -8,11 +8,10 @@
         url: '=',
         title: '='
       },
-      template: '<button class="btn" ng-click="openModal()">Watch</button>',
       link: function videoModalLink(scope, element, attrs) {
 
         element.bind('click', function($event) {
-
+          scope.openModal();
         });
 
         scope.openModal = function () {
@@ -21,7 +20,6 @@
 
           var modalInstance = $modal.open({
             templateUrl: 'common/directives/video_modal/video_modal.html',
-            backdrop: 'static',
             scope: scope
           });
 
