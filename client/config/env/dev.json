@@ -1,4 +1,4 @@
 {
-  "appUrl":"http://backand.loc:8090",
+  "appUrl":"http://api.backand.info:8099",
   "playgroundUrl": "//s3-us-west-2.amazonaws.com/demoqa.backand.net/"
 }

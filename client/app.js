@@ -40,7 +40,6 @@
     'ui.grid.cellNav',
     'ui.grid.selection',
     'ui.grid.resizeColumns',
-    'angled-windows',
     'ngClipboard',
     'xeditable',
     'app.routes',
@@ -67,6 +66,7 @@
     'app.dbQueries',
     'ngMessages',
     'pascalprecht.translate',
+    'angled-windows.directives'
   ])
     //.config(['$compileProvider','$httpProvider',appConfig])
     .config(['ngClipProvider', function(ngClipProvider) {
