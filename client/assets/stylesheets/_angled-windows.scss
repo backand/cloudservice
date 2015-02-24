@@ -1,0 +1,53 @@
+.angled-window, .angled-window-body, .angled-window-body-content, .angled-window > .panel  { /* fix for sudden margins when using resizeable with bootstrap */
+  -webkit-box-sizing: content-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: content-box;    /* Firefox, other Gecko */
+  box-sizing: content-box;         /* Opera/IE 8+ */
+}
+
+.angled-window-title { font-size: 16px; }
+
+/** Window minimize and expansion transition **/
+.angled-window {
+  position: absolute;
+  max-height: 1000px;
+  webkit-transition: max-height .4s ease;
+  -moz-transition: max-height .4s ease;
+  -o-transition: height .4s ease;
+  transition: max-height .4s ease;
+  overflow: visible;
+  z-index: 1;
+}
+
+/** Minimum sizes for resizing / starting width **/
+.angled-window > .panel {
+  min-width: 220px;
+  overflow: hidden;
+}
+
+/** Minimum inside height and width, scroll content when needed **/
+.angled-window-body-content {
+  min-height: 50px;
+  min-width: 220px;
+  height: 200px;
+  overflow: auto;
+  resize: both;
+}
+
+/** Hide content falling outside of window
+.panel { overflow: hidden; }**/
+
+/** For animated transitions **/
+.angled-window.rolled-up, .angled-window.rolled-up-add.rolled-up-add-active, .angled-window.rolled-up-remove{
+  .angled-window-body-content {
+    display: none;
+  }
+}
+
+.angled-window.rolled-up-add, .angled-window.rolled-up-remove.rolled-up-remove-active {
+  max-height: 1000px;
+}
+
+/** Appropriate mouse cursors **/
+.cursor-move { cursor: move; }
+.cursor-pointer { cursor: pointer; }
+

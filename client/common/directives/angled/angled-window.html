@@ -1,0 +1,18 @@
+<div class="angled-window {{grouping}}" angled-draggable="{{dragOpts | obj2string}}" group="{{grouping}}">
+  <div class="panel panel-primary">
+    <div class="panel-heading cursor-move" id="windowHeading_{{id}}">
+      <span class="pull-right">
+        <button class="btn btn-danger btn-xs" style="margin-left: 3px;" ng-click="closeFunction()">X</button>
+      </span>
+      <span class="pull-right">
+        <a type="button" id="windowMinimizeBtn_{{id}}" class="btn btn-primary btn-xs" ng-click="rollUp()">
+          <span class="glyphicon" ng-class="{false: 'glyphicon-chevron-up',true: 'glyphicon-chevron-down'}[rolledUp]"></span>
+        </a>
+      </span>
+      <span class="angled-window-title" ng-bind-html="title"></span>
+    </div>
+    <div id="windowBody_{{id}}" class="angled-window-body">
+      <div class="panel-body angled-window-body-content" id="windowBodyContent_{{id}}" ng-transclude></div>
+    </div>
+  </div>
+</div>
