@@ -19,7 +19,7 @@
 
         listener = scope.$on('insert:placeAtCaret', function (evt, data) {
           var elementToInsert = $('#' + data[0]);
-          elementToInsert.insertAtCaret("{{" + data[1] + "}}");
+          elementToInsert.insertAtCaret(data[1]);
           scope.onUpdate(data);
           elementToInsert.trigger('change');
         });

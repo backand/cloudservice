@@ -103,8 +103,9 @@
      */
     function insertTokenAtChar(elementId, token) {
       // Handle case of ace editor:
-      if ($scope.ace.editors[elementId]) {
-        $scope.ace.editors[elementId].insert("{{" + token + "}}");
+      var aceEditor = $scope.ace.editors[elementId];
+      if (aceEditor) {
+        aceEditor.insert("{{" + token + "}}");
       }
     // Handle regular text field using place-at-char directive:
       else {
