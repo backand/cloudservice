@@ -166,7 +166,9 @@
     };
 
     self.insertParamAtChar = function (elementId, param) {
-      self.ace.editor.insert("{{" + param + "}}");
+      setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
+        self.ace.editor.insert("{{" + param + "}}");
+      });
     };
 
     function errorHandler(error, message) {

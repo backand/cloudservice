@@ -105,7 +105,9 @@
       // Handle case of ace editor:
       var aceEditor = $scope.ace.editors[elementId];
       if (aceEditor) {
-        aceEditor.insert("{{" + token + "}}");
+        setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
+          aceEditor.insert("{{" + token + "}}");          
+        })
       }
     // Handle regular text field using place-at-char directive:
       else {
@@ -347,7 +349,7 @@
     }
 
     var backandCallbackConstCode = {
-      start: '/* globals\n\  $http: http service for AJAX calls,\n\  $q: Promise service\n\*/\n' +
+      start: '/* globals\n\  $http: http service for AJAX calls\n\*/\n' +
              '\'use strict\';\n' +
              'function backandCallback(userInput, dbRow, parameters, userProfile) {',
       end:   '}'
