@@ -1,8 +1,13 @@
-<div class="modal-header">
-  <h3 class="modal-title">{{modal.title}} - {{rule.name}}</h3>
+<div ng-if="!rule">
+  <p>Here you can define actions that will run on triggers (hooks).</p>
 </div>
 
-<div class="modal-body clearfix">
+<div ng-if="rule">
+<div class="header">
+  <h3 class="title">{{modal.title}} - {{rule.name}}</h3>
+</div>
+
+<div class="clearfix">
 
   <form name="newRuleForm" insert-at-caret novalidate>
 
@@ -42,7 +47,7 @@
                        title="Where Condition"
                        grouping="w"
                        close-function="modal.toggleGroup('dictionaryState')"
-                       style="left: 550px; top: -50px;">
+                       style="z-index: 10; right: 0; bottom: -50px;">
           <div ng-include="'views/tables/rules/where_condition_window.html'"></div>
         </angled-window>
       </div>
@@ -125,7 +130,7 @@
                          title="Email Subject"
                          grouping="w"
                          close-function="modal.toggleGroup('notifySubject')"
-                         style="left: 580px; top: -50px;">
+                         style="z-index: 10; right: 0; bottom: -50px;">
             <div ng-include="'views/tables/rules/send_email_subject_window.html'"></div>
           </angled-window>
         </div>
@@ -149,7 +154,7 @@
                          title="Email Message"
                          grouping="w"
                          close-function="modal.toggleGroup('notifyMessage')"
-                         style="left: 580px; top: -50px;">
+                         style="z-index: 10; right: 0; bottom: -50px;">
             <div ng-include="'views/tables/rules/send_email_message_window.html'"></div>
           </angled-window>
         </div>
@@ -247,7 +252,7 @@
                          title="SQL Command"
                          grouping="w"
                          close-function="modal.toggleGroup('sqlCommand')"
-                         style="left: 580px; top: -50px;">
+                         style="z-index: 10; right: 0; bottom: -50px;">
             <div ng-include="'views/tables/rules/sql_command_window.html'"></div>
           </angled-window>
         </div>
@@ -287,7 +292,7 @@
                        title="Web Service URL"
                        grouping="w"
                        close-function="modal.toggleGroup('webService')"
-                       style="left: 580px; top: -50px;">
+                       style="z-index: 10; right: 0; bottom: -50px;">
           <div ng-include="'views/tables/rules/web_service_url_window.html'"></div>
         </angled-window>
       </div>
@@ -367,9 +372,10 @@
                    title="Test Code"
                    grouping="w"
                    close-function="modal.toggleTestCode()"
-                   style="left: 580px; top: 200px;">
+                   style="z-index: 10; right: 0; top: 500px;">
       <div ng-include="'views/tables/rules/test_code_window.html'"></div>
     </angled-window>
   </div>
 
+</div>
 </div>

@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function RulesController(CONSTS, $modal, $scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService, AppState, AppsService) {
+  function RulesController($scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService, AppState, AppsService) {
 
     var self = this;
     var appName;
@@ -14,7 +14,7 @@
      */
     (function init() {
       self.items = [];
-      self.open = newRule;
+      self.newAction = newRule;
       self.edit = editRule;
       loadDbType();
       $scope.$on('tabs:rules', getRules);
@@ -23,10 +23,10 @@
     $scope.ace = {
       dbType: 'sql',
       editors: {},
-      onLoad: function(_editor) {        
+      onLoad: function(_editor) {
         $scope.ace.editors[_editor.container.id] = _editor;
       }
-    }
+    };
 
     $scope.modal = {
       title: 'Action',
@@ -155,9 +155,6 @@
       resetCurrentRule();
       if(trigger){
         $scope.rule.dataAction = trigger;
-        //$scope.rule.dataAction = angular.copy($filter('filter')($scope.modal.dataActions, function (a) {
-        //  return a.value === trigger;
-        //})[0])
       }
       launchModal();
     }
@@ -168,9 +165,9 @@
      * @param rulname
      * @returns {*|XMLList|XML}
      */
-    function getRuleByName(rulname) {
-      return angular.copy($filter('filter')($scope.rules.data, function (f) {
-        return f.name === rulname;
+    function getRuleByName(rulename) {
+      return angular.copy($filter('filter')(self.rules, function (f) {
+        return f.name === rulename;
       })[0])
     }
 
@@ -178,8 +175,8 @@
      * get the rule name from the tree and get the full rule data from server
      * @param rule
      */
-    function editRule(rule) {
-      var rule = getRuleByName(rule);
+    function editRule(ruleName) {
+      var rule = getRuleByName(ruleName);
       RulesService.getRule(rule.__metadata.id).then(loadRule,errorHandler)
     }
 
@@ -224,12 +221,6 @@
 
       $scope.modal.toggleGroup();
       $scope.clearTest();
-      var modalInstance = $modal.open({
-        templateUrl: 'views/tables/rules/new_rule.html',
-        backdrop: 'static',
-        keyboard: false,
-        scope: $scope
-      });
 
       var defaultRule = {
         'viewTable': RulesService.tableId,
@@ -299,11 +290,11 @@
       $scope.cancel = function () {
         var close = true;
         if (this.newRuleForm.$pristine)
-          modalInstance.dismiss();
+          $scope.rule = null;
         else {
           ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
           .then(function (result) {
-            result ? modalInstance.dismiss() : false;
+            result ? $scope.rule = null : false;
           });
         }
       };
@@ -391,6 +382,10 @@
       RulesService.get().then(buildTree, errorHandler);
     }
 
+    self.treeSign = function (item) {
+      return item.items.length === 0 ? '' : ( item.visible ? '-' : '+' );
+    };
+
     /**
      * parse the raw data object to a tree
      * and bind it to self
@@ -398,7 +393,7 @@
      * @param data
      */
     function buildTree(data) {
-      self.data = data.data.data;
+      self.rules = data.data.data;
       self.items = [
         {
           title: 'On Demand',
@@ -492,7 +487,7 @@
         }];
 
       //build the tree
-      angular.forEach(data.data.data, function (value, key) {
+      angular.forEach(self.rules, function (value, key) {
         var obj = {name: value.name};
         var da = $filter('filter')($scope.modal.dataActions, function (f) {
           return f.value === value.dataAction;
@@ -517,5 +512,5 @@
   }
 
   angular.module('app')
-    .controller('RulesController', ['CONSTS', '$modal', '$scope', 'ConfirmationPopup', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', 'AppState', 'AppsService', RulesController]);
+    .controller('RulesController', ['$scope', 'ConfirmationPopup', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', 'AppState', 'AppsService', RulesController]);
 }());

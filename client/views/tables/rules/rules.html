@@ -2,66 +2,64 @@
 
   <div id="rules-header" class="page-header clearfix">
     <div class="title-group">
-       <h2 class="page-name ">Actions</h2>
-    <h4 class=" page-description lead pull-left">Manage here all the server side logic and operations</h4>
+      <h2 class="page-name ">Actions</h2>
+      <h4 class=" page-description lead pull-left">Manage here all the server side logic and operations</h4>
     </div>
-    <button ng-click="rules.open()"
+    <button ng-show="!rule"
+            ng-click="rules.newAction()"
             id="new-rule-btn"
             class="btn btn-lg btn-success pull-right">
       + new action
     </button>
   </div>
 
-  <ul id="rules" class="list-unstyled">
+  <div class="row">
+    <div class="col-xs-4 col-md-3">
 
-    <li ng-repeat="item in rules.items">
+      <ul  class="list-unstyled rule-tree">
 
-      <h3 class="rule-group-title" ng-click="item.visible = !item.visible">
-          {{ ::item.title | uppercase}}</h3>
+        <li ng-repeat="item in rules.items">
 
-      <div class="pull-right" ng-click="item.visible = !item.visible" style="margin-top: -28px;font-size: 24px;">
-          <i ng-class="{'ti-arrow-up' : item.visible, 'ti-arrow-down' : !item.visible}"></i>
-      </div>
-      <p class="rule-group-description"></p>
+          <div class="row">
+            <a href="" ng-click="item.visible = !item.visible" class="rule-group-title" >
+              <span class="col-xs-1">{{rules.treeSign(item)}}</span> <!-- + or - -->
+              {{ ::item.title }}
+            </a>
+          </div>
 
-      <ul class="rules-sub-items-list"
-          ng-show="item.visible">
+          <ul class="rules-sub-items-list" ng-show="item.visible">
 
-        <li ng-repeat="subitem in item.items">
+            <li ng-repeat="subitem in item.items">
 
-          <h4 class="rule-sub-title"
-              ng-click="subitem.visible = !subitem.visible">{{ ::subitem.title }}</h4>
+              <div class="row rule-sub-title">
+                <a href="" ng-click="subitem.visible = !subitem.visible">
+                  <span class="col-xs-1">{{rules.treeSign(subitem)}}</span>
+                  {{ ::subitem.title }}</a>
+                <ba-tooltip tooltip-text="{{ ::subitem.description }}" tooltip-placement="right" class="pull-right"></ba-tooltip>
+                <a href=""
+                   class="btn-icon-lined btn-icon-round btn-icon-xs btn-success pull-right"
+                   ng-click="rules.newAction(subitem.dataAction)">
+                  <i class="ti-plus"></i></a>
+              </div>
 
-          <div class="pull-right" ng-click="subitem.visible = !subitem.visible">
-            <i ng-class="{'ti-arrow-up' : subitem.visible, 'ti-arrow-down' : !subitem.visible   }"></i></div>
+              <ul class="rules-names-list" ng-show="subitem.visible">
 
-          <p class="rule-sub-description">
-            <!--These rules fire {{ ::subitem.title }} an object is {{ ::item.verb }}-->
-            {{ ::subitem.description }}
-          </p>
-          <!--<p class="rule-sub-description" ng-if="subitem.dataAction == 'OnDemand'">-->
-            <!--These rules fire based on a direct call of the REST API-->
-          <!--</p>-->
+                <li ng-repeat="rule in subitem.items">
 
-          <ul class="rules-names-list" ng-show="subitem.visible">
+                  <a href="" ng-click="rules.edit(rule.name)" class="rule-name text-primary">
+                    {{ ::rule.name}}</a>
+                </li>
 
-            <li ng-repeat="rule in subitem.items">
-
-              <h5 class="rule-name text-primary"
-                  ng-click="rules.edit(rule.name)">
-                {{ ::rule.name}}</h5>
-
-              <!--<p class="rule-description">-->
-              <!--</p>-->
+              </ul>
             </li>
-
-            <li class="add-new-rule text-primary" ng-click="rules.open(subitem.dataAction)">Add new rule</li>
-
           </ul>
         </li>
       </ul>
-    </li>
-  </ul>
+    </div>
+    <div class="col-xs-8 col-md-9" ng-include="'views/tables/rules/new_rule.html'">
+
+    </div>
+  </div>
 </div>
 
 
