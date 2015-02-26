@@ -20,6 +20,7 @@
 
           var modalInstance = $modal.open({
             templateUrl: 'common/directives/video_modal/video_modal.html',
+            size: 'lg',
             scope: scope
           });
 

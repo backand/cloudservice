@@ -23,7 +23,7 @@
     $scope.ace = {
       dbType: 'sql',
       editors: {},
-      onLoad: function(_editor) {        
+      onLoad: function(_editor) {
         $scope.ace.editors[_editor.container.id] = _editor;
       }
     }
@@ -356,7 +356,7 @@
     }
 
     var backandCallbackConstCode = {
-      start: '/* globals\n\  $http: http service for AJAX calls,\n\  $q: Promise service\n\*/\n' +
+      start: '/* globals\n\  $http: http service for AJAX calls\n\*/\n' +
              '\'use strict\';\n' +
              'function backandCallback(userInput, dbRow, parameters, userProfile) {',
       end:   '}'
