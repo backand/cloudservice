@@ -32,7 +32,7 @@ angular.module('app.routes', []).
       })
       .state('getting-started', {
         url: '/docs/start',
-        templateUrl: 'views/api_playground/get-started.html'
+        templateUrl: 'views/api_playground/get-started-open.html'
       })
       .state('database', {
         url: '/database',

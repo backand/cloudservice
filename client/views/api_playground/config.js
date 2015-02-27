@@ -12,6 +12,11 @@
         url: '/docs/start/:name',
         templateUrl: 'views/api_playground/get-started.html'
       })
+      .state('playground.get-started-open', {
+        parent: 'playground',
+        url: '/docs/start/:name',
+        templateUrl: 'views/api_playground/get-started-open.html'
+      })
       .state('playground.show', {
         parent: 'playground',
         url: '/rest/:name',

@@ -46,9 +46,7 @@
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
         {value: 'Notify', label: 'Send Email'},
-        {value: 'Execute', label: 'Additional database script'},
-        {value: 'Validate', label: 'Advanced Data Validation'},
-        {value: 'WebService', label: 'Make HTTP call'}
+        {value: 'Execute', label: 'Transactional database script'}
       ],
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
@@ -106,7 +104,7 @@
       var aceEditor = $scope.ace.editors[elementId];
       if (aceEditor) {
         setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
-          aceEditor.insert("{{" + token + "}}");          
+          aceEditor.insert("{{" + token + "}}");
         })
       }
     // Handle regular text field using place-at-char directive:

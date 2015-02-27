@@ -93,21 +93,35 @@
 
 }
 
-
+.rule-column{
+  border-right-color: #DDD;
+  border-right-style: solid;
+  border-right-width: 1px;
+}
 
 .rule-tree {
   font-weight: bold;
+  padding-right: 30px;
   list-style: none;
   :hover {
     text-decoration: none;
+    color: #333;
   }
 
   .rule-group-title {
-    font-size: 120%;
+    padding-top: 10px;
+    a{
+      font-size: 150%;
+      color: #333;
+    }
   }
 
   .rule-sub-title {
-    font-size: 110%;
+    padding-top: 10px;
+    a {
+      font-size: 120%;
+      color: #333;
+    }
   }
 
  .tooltip {
@@ -128,11 +142,12 @@
     padding-left: 15px;
     .rules-names-list {
       list-style: none;
-      padding-left: 15px;
+      padding-left: 35px;
       .rule-name {
         border: none;
         margin: 0;
         padding: 1px 1px;
+        font-size:120%;
       }
     }
   }

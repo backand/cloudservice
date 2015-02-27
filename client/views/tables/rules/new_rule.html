@@ -1,6 +1,6 @@
-<div ng-if="!rule">
-  <p>Here you can define actions that will run on triggers (hooks).</p>
-</div>
+<!--<div ng-if="!rule">-->
+  <!--<p>Here you can define actions that will run on triggers (hooks).</p>-->
+<!--</div>-->
 
 <div ng-if="rule">
 <div class="header">
@@ -38,7 +38,6 @@
     <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.dataAction" ng-class="{ 'has-error': newRuleForm.whereCondition.$invalid && newRuleForm.whereCondition.$dirty }">
       <label>Where Condition</label>
       <div class="pull-right">
-
         <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="modal.toggleGroup('dictionaryState')"></span>
       </div>
       <div ng-cloak>
@@ -56,13 +55,15 @@
             required
             name="whereCondition"
             class="form-control"
-            placeholder="Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution"
+            placeholder=""
             ng-model="rule.whereCondition"
             ng-model-options="{debounce:{default:100}}"
-            style="resize: vertical"></div>
+          style="resize: vertical">
+      </div>
+      <span>** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.whereCondition"
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rule.dataAction"
          ng-class="{ 'has-error': newRuleForm.action.$invalid &&  newRuleForm.action.$dirty }">
 
       <label>Type</label>
@@ -322,17 +323,16 @@
 
           <div class="form-group ">
             <label>JavaScript Code:</label>
-
-            <div  ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript'}"
-                  class="form-control"
+            <div  ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', firstLineNumber: 7}"
+                  class="form-control ace-rule"
                   name="code"
                   id="code"
                   ng-model="rule.code"
                   required
                   ng-pattern="codeRegex"
                   ng-keydown = "modal.handleTabKey($event)"
-                  style="resize: vertical"
-                  rows="15"></div>
+                  style="resize: vertical; "
+                  ></div>
             <div ng-messages="newRuleForm.code.$error">
               <div ng-message="pattern" class="text-danger">Code is not ok!</div>
             </div>

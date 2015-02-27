@@ -14,14 +14,14 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-4 col-md-3">
+    <div class="col-xs-4 col-md-3 rule-column">
 
       <ul  class="list-unstyled rule-tree">
 
         <li ng-repeat="item in rules.items">
 
-          <div class="row">
-            <a href="" ng-click="item.visible = !item.visible" class="rule-group-title" >
+          <div class="row rule-group-title">
+            <a href="" ng-click="item.visible = !item.visible" class="" >
               <span class="col-xs-1">{{rules.treeSign(item)}}</span> <!-- + or - -->
               {{ ::item.title }}
             </a>
@@ -35,11 +35,11 @@
                 <a href="" ng-click="subitem.visible = !subitem.visible">
                   <span class="col-xs-1">{{rules.treeSign(subitem)}}</span>
                   {{ ::subitem.title }}</a>
-                <ba-tooltip tooltip-text="{{ ::subitem.description }}" tooltip-placement="right" class="pull-right"></ba-tooltip>
-                <a href=""
-                   class="btn-icon-lined btn-icon-round btn-icon-xs btn-success pull-right"
-                   ng-click="rules.newAction(subitem.dataAction)">
-                  <i class="ti-plus"></i></a>
+                <ba-tooltip tooltip-text="{{ ::subitem.description }}" tooltip-placement="right" class=""></ba-tooltip>
+                <button
+                   class="btn btn-xs btn-success pull-right"
+                   ng-click="rules.newAction(subitem.dataAction)">+
+                </button>
               </div>
 
               <ul class="rules-names-list" ng-show="subitem.visible">
