@@ -5,12 +5,12 @@
 
     <label>Parameters</label>
 
-    <div class="form-group" ng-repeat="inputParam in getInputParameters()">
+    <div class="form-group" ng-repeat="inputParam in rules.getInputParameters()">
       <label for="inputParam">{{inputParam}}</label>
       <input type="text"
              id="inputParam"
              class="form-control"
-             ng-model="test.parameters[inputParam]">
+             ng-model="rules.test.parameters[inputParam]">
     </div>
 
     <hr>
@@ -18,40 +18,40 @@
       <label>Row ID</label>
       <input type="number" min="0"
              class="form-control"
-             ng-model="test.rowId">
+             ng-model="rules.test.rowId">
     </div>
 
     <hr>
     <label>HTTP Request URL:</label>
-    <input class="form-control" ng-readonly="true" ng-value="testUrl">
+    <input class="form-control" ng-readonly="true" ng-value="rules.testUrl">
     <br/><br/>
     <button type="button"
             class="btn btn-success pull-right"
-            data-style="expand-right" ladda="test.testLoading"
-            ng-disabled="!allowTest()"
-            ng-click="testData()">Test Code
+            data-style="expand-right" ladda="rules.test.testLoading"
+            ng-disabled="!rules.allowTest()"
+            ng-click="rules.testData()">Test Action
     </button><br/>
-    <div ng-if="!allowTest()">** Must save first to enable Test Code</div>
+    <div ng-if="!rules.allowTest()">** Must save first to enable Test</div>
   </ng-form>
   <br/>
-  <div ng-if="test.result">
+  <div ng-if="rules.test.result">
     <hr/>
     <label>Test Result:</label>
     <br/>
-    {{ test.result | json }}
+    {{ rules.test.result | json }}
     <br/>
 
   </div>
 
 
-  <div ng-if="test.result">
+  <div ng-if="rules.test.result">
     <hr/>
     <label>Test Log:</label>
     <br/>
 
     <table class="table log-table">
       <tbody>
-        <tr ng-repeat="message in test.logMessages | orderBy: 'time' "
+        <tr ng-repeat="message in rules.test.logMessages | orderBy: 'time' "
             ng-class="{'text-danger': message.isError}">
           <td><span class="log-icon" ng-bind="message.isError? 'X' : '>' "></span> {{ message.text }}</td>
         </tr>

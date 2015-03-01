@@ -14,11 +14,125 @@
      */
     (function init() {
       self.items = [];
-      self.newAction = newRule;
-      self.edit = editRule;
       loadDbType();
       $scope.$on('tabs:rules', getRules);
     }());
+
+    var defaultRule = {
+      'viewTable': RulesService.tableId,
+      'additionalView': "",
+      'databaseViewName': "",
+      'useSqlParser': true
+    };
+
+    self.newAction = function (trigger) {
+      self.action = {
+        whereCondition: 'true',
+        code: backandCallbackConstCode.start + '\n' +
+        '\t// write your code here\n\n' +
+        '\treturn {};\n' +
+        backandCallbackConstCode.end
+      };
+
+      if (trigger) {
+        self.action.dataAction = trigger;
+      }
+
+      self.editAction();
+};
+
+    self.showAction = function (actionName) {
+      var action = getRuleByName(actionName);
+      refreshAction(action);
+      self.clearTest();
+    };
+
+    function refreshAction(action) {
+      self.editMode = false;
+      $scope.modal.toggleGroup();
+      if (self.newRuleForm)
+        self.newRuleForm.$setPristine();
+      if (action && action.__metadata) {
+        RulesService.getRule(action.__metadata.id).then(loadAction, errorHandler); }
+      else {
+        self.action = null; }
+    }
+
+    function loadAction(data)
+    {
+      self.action = data.data;
+    }
+
+    self.allowEditAction = function () {
+      return (self.action && self.action.__metadata && !self.editMode);
+    };
+
+    self.editAction = function () {
+      self.editMode = true;
+      $scope.modal.toggleGroup();
+    };
+
+    self.clearTest = function () {
+      self.test = {
+        parameters: {},
+        rowId: ''
+      };
+    };
+
+    self.cancelEdit = function () {
+      if (self.newRuleForm.$pristine)
+        refreshAction(self.action);
+      else {
+        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
+          .then(function (result) {
+            result ? refreshAction(self.action) : false;
+          });
+      }
+    };
+
+    self.saveAction = function () {
+      var ruleToSend = replaceSpecialCharInCode(self.action);
+      updateOrPostNew(ruleToSend, self.action.__metadata)
+        .then(getRules)
+        .then(function () {
+          self.newRuleForm.$setPristine();
+          NotificationService.add('success', 'The action was saved');
+        })
+    };
+
+    function updateOrPostNew(action, isUpdate) {
+      if (isUpdate)
+        return updateRule(action);
+      else
+        return postNewRule(action);
+    }
+
+    self.deleteAction = function () {
+      ConfirmationPopup.confirm('Are sure you want to delete this rule?')
+        .then(function(result){
+          if(result){
+            RulesService.remove(self.action)
+              .then(getRules)
+              .then(refreshAction);
+          }
+        });
+    };
+
+    self.allowTestForm = function () {
+      var allow = self.action &&
+        self.action.__metadata &&
+        self.action.dataAction == 'OnDemand';
+      return allow;
+    };
+
+    self.toggleTestForm = function () {
+      self.showTestForm = !self.showTestForm;
+    };
+
+    self.allowTest = function() {
+      var allow = self.newRuleForm && !self.newRuleForm.$dirty;
+      return allow;
+    };
 
     $scope.ace = {
       dbType: 'sql',
@@ -30,7 +144,7 @@
 
     $scope.modal = {
       title: 'Action',
-      namePattern: /^\w+$/,
+      namePattern: /^\w+[\w ].*$/,
       dataActions: [
         {value: 'OnDemand', label: 'On demand - Execute from REST API', level1: 0, level2: 0},
         {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 1, level2: 0},
@@ -50,34 +164,10 @@
       ],
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
-      resetRule: resetCurrentRule,
       digest: digestIn,
       toggleGroup: toggleGroup,
       isCurGroup: isCurGroup,
-      buildParameters: buildParametersDictionary,
-      toggleTestCode: toggleTestCode
-    };
-
-    function toggleTestCode() {
-      $scope.modal.testCode = !$scope.modal.testCode;
-
-    }
-
-    $scope.isNew = function () {
-      return (typeof this.rule.__metadata === 'undefined');
-    };
-
-    $scope.allowTestModal = function () {
-      var allow = this.newRuleForm &&
-        this.modal.testCode &&
-        this.rule.dataAction == 'OnDemand';
-      return allow;
-    };
-
-    $scope.allowTest = function() {
-      var allow = this.allowTestModal() &&
-        !this.newRuleForm.$dirty;
-      return allow;
+      buildParameters: buildParametersDictionary
     };
 
     function isCurGroup(groupName) {
@@ -140,8 +230,8 @@
 
     function buildParametersDictionary() {
       var keys = [];
-      if($scope.rule.inputParameters){
-        angular.forEach($scope.rule.inputParameters.replace(/ /g, '').split(','), function (param){
+      if(self.action.inputParameters){
+        angular.forEach(self.action.inputParameters.replace(/ /g, '').split(','), function (param){
           keys.push({token: param, label: param})
         })
       }
@@ -151,13 +241,7 @@
     /**
      * launch modal
      */
-    function newRule(trigger) {
-      resetCurrentRule();
-      if(trigger){
-        $scope.rule.dataAction = trigger;
-      }
-      launchModal();
-    }
+
 
     /**
      * return the rule object by
@@ -166,28 +250,9 @@
      * @returns {*|XMLList|XML}
      */
     function getRuleByName(rulename) {
-      return angular.copy($filter('filter')(self.rules, function (f) {
+      return angular.copy($filter('filter')(self.ruleList, function (f) {
         return f.name === rulename;
       })[0])
-    }
-
-    /**
-     * get the rule name from the tree and get the full rule data from server
-     * @param rule
-     */
-    function editRule(ruleName) {
-      var rule = getRuleByName(ruleName);
-      RulesService.getRule(rule.__metadata.id).then(loadRule,errorHandler)
-    }
-
-    /**
-     * Update rule in scope and open the edit dialog
-     * @param data
-     */
-    function loadRule(data)
-    {
-      $scope.rule = data.data;
-      launchModal();
     }
 
     $scope.modal.handleTabKey = function(e){
@@ -214,90 +279,27 @@
     };
 
     /**
-     * init and launch modal window and
-     * pass it a scope
+     * extend the default rule object and
+     * delegate to rulesService post method
+     *
+     * @param rule
      */
-    function launchModal() {
+    function postNewRule(rule) {
+      var data = angular.extend(defaultRule, rule);
+      return RulesService.post(data)
+        .then(function (response) {
+          self.action = response.data;
+        });
+    }
 
-      $scope.modal.toggleGroup();
-      $scope.clearTest();
-
-      var defaultRule = {
-        'viewTable': RulesService.tableId,
-        'additionalView': "",
-        'databaseViewName': "",
-        'useSqlParser': true
-      };
-
-      /**
-       * delete the provided rule
-       * @param rule
-       */
-      $scope.delete = function (rule) {
-        ConfirmationPopup.confirm('Are sure you want to delete this rule?')
-          .then(function(result){
-            if(result){
-              RulesService.remove(rule).then(getRules);
-              modalInstance.close();
-            }
-          });
-      };
-
-      /**
-       * choose the close method depend on
-       * modal mode
-       *
-       * @param rule
-       */
-      $scope.saveRule = function (rule) {
-        var ruleToSend = replaceSpecialCharInCode(rule);
-        if ($scope.isNew())
-            postNewRule(ruleToSend);
-        else
-            updateRule(ruleToSend);
-        this.newRuleForm.$setPristine();
-        NotificationService.add('success', 'The action was saved');
-      };
-
-      /**
-       * extend the default rule object and
-       * delegate to rulesService post method
-       *
-       * @param rule
-       */
-      function postNewRule(rule) {
-        var data = angular.extend(defaultRule, rule);
-        RulesService.post(data)
-          .then(function (response) {
-            $scope.rule = response.data;
-          })
-          .then(getRules);
-      }
-
-      /**
-       * delegate to the update method on
-       * rules service
-       *
-       * @param rule
-       */
-      function updateRule(rule) {
-        RulesService.update(rule).then(getRules);
-      }
-
-      /**
-       * close the modal window if user confirm
-       */
-      $scope.cancel = function () {
-        var close = true;
-        if (this.newRuleForm.$pristine)
-          $scope.rule = null;
-        else {
-          ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
-          .then(function (result) {
-            result ? $scope.rule = null : false;
-          });
-        }
-      };
+    /**
+     * delegate to the update method on
+     * rules service
+     *
+     * @param rule
+     */
+    function updateRule(rule) {
+      return RulesService.update(rule);
     }
 
     function replaceSpecialCharInCode(rule){
@@ -305,72 +307,50 @@
       ruleToSend.code = ruleToSend.code.replace(/\+/g, "%2B");
       return ruleToSend;
     }
-    $scope.clearTest = function () {
-      this.modal.testCode = false;
-      this.test = {
-        parameters: {},
-        rowId: ''
-      };
-    };
 
-    $scope.getInputParameters = function () {
+    self.getInputParameters = function () {
       var inputParameters = [];
-      if ($scope.rule.inputParameters)
-        inputParameters = $scope.rule.inputParameters.replace(/ /g, '').split(',');
+      if (self.action && self.action.inputParameters)
+        inputParameters = self.action.inputParameters.replace(/ /g, '').split(',');
       return inputParameters;
     };
 
-    $scope.testData = function () {
-      RulesService.testRule(this.rule, this.test)
+    self.testData = function () {
+      RulesService.testRule(self.action, self.test)
         .then(getLog, errorHandler);
     };
 
-
     $scope.$watch('test.rowId', function(newVal, oldVal) {
         if(newVal === 0)
-          $scope.test.rowId = '';
+          self.test.rowId = '';
       });
 
     function getLog(response) {
-      $scope.test.result = response.data;
+      self.test.result = response.data;
       var guid = response.headers('Action-Guid');
-      $scope.testUrl = RulesService.getTestUrl($scope.rule, $scope.test);
-      AppLogService.getActionLog(AppState.get(),guid).then(showLog, errorHandler);
+      self.testUrl = RulesService.getTestUrl(self.action, self.test);
+      AppLogService.getActionLog(AppState.get(), guid)
+        .then(showLog, errorHandler);
     }
 
     function showLog(response) {
-      $scope.test.logMessages = [];
+      self.test.logMessages = [];
       response.data.data.forEach(function (log) {
-        $scope.test.logMessages.push({text: log.FreeText, isError: log.LogType === '501', time: log.Time});
+        self.test.logMessages.push({text: log.FreeText, isError: log.LogType === '501', time: log.Time});
       });
     }
 
-    var backandCallbackConstCode = {
-      start: '/* globals\n\  $http: http service for AJAX calls\n\*/\n' +
-             '\'use strict\';\n' +
-             'function backandCallback(userInput, dbRow, parameters, userProfile) {',
-      end:   '}'
-    };
 
-    $scope.codeRegex = /^\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow,\s*parameters\s*,\s*userProfile\s*\)\s*\{(.|[\r\n])*}\s*$/;
     /**
      * reset the current active rule on scope
      */
 
     function loadDbType() {
       appName = AppState.get();
-      AppsService.getCurrentApp(appName).then(function(app) {
-        $scope.ace.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
-      });
-    }
-
-    function resetCurrentRule() {
-      $scope.rule = {};
-      $scope.rule.code = $scope.rule.code ||
-              backandCallbackConstCode.start + '\n' +
-              '\t// write your code here\n\n' +
-              '\treturn {};\n' +
-              backandCallbackConstCode.end;
+      AppsService.getCurrentApp(appName)
+        .then(function(app) {
+          $scope.ace.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
+        });
     }
 
     /**
@@ -392,7 +372,7 @@
      * @param data
      */
     function buildTree(data) {
-      self.rules = data.data.data;
+      self.ruleList = data.data.data;
       self.items = [
         {
           title: 'On Demand',
@@ -486,7 +466,7 @@
         }];
 
       //build the tree
-      angular.forEach(self.rules, function (value, key) {
+      angular.forEach(self.ruleList, function (value, key) {
         var obj = {name: value.name};
         var da = $filter('filter')($scope.modal.dataActions, function (f) {
           return f.value === value.dataAction;
@@ -499,7 +479,17 @@
 
     }
 
-    /**
+
+    self.codeRegex = /^\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow,\s*parameters\s*,\s*userProfile\s*\)\s*\{(.|[\r\n])*}\s*$/;
+
+    var backandCallbackConstCode = {
+      start: '/* globals\n\  $http: http service for AJAX calls\n\*/\n' +
+      '\'use strict\';\n' +
+      'function backandCallback(userInput, dbRow, parameters, userProfile) {',
+      end:   '}'
+    };
+
+  /**
      * delegate errors to the notification service
      * @param error
      * @param message

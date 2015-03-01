@@ -498,3 +498,13 @@ ul.tables-list {
     padding-right: 10px;
   }
 }
+
+.form-control[disabled].ace-monokai,
+.form-control[readonly].ace-monokai,
+fieldset[disabled] .form-control.ace-monokai {
+    background-color: #272822;
+}
+
+button.with-margin {
+  margin: 3px;
+}

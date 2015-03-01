@@ -5,16 +5,18 @@
       <h2 class="page-name ">Actions</h2>
       <h4 class=" page-description lead pull-left">Manage here all the server side logic and operations</h4>
     </div>
-    <button ng-show="!rule"
+    <button ng-show="!rules.editMode"
             ng-click="rules.newAction()"
-            id="new-rule-btn"
-            class="btn btn-lg btn-success pull-right">
+            id="new-rule-btn with-margin"
+            class="btn btn-success pull-right">
       + new action
     </button>
+
+
   </div>
 
   <div class="row">
-    <div class="col-xs-4 col-md-3 rule-column">
+    <div ng-show="!rules.editMode && !rules.showTestForm" class="col-xs-4 col-md-3 rule-column">
 
       <ul  class="list-unstyled rule-tree">
 
@@ -46,7 +48,7 @@
 
                 <li ng-repeat="rule in subitem.items">
 
-                  <a href="" ng-click="rules.edit(rule.name)" class="rule-name text-primary">
+                  <a href="" ng-click="rules.showAction(rule.name)" class="rule-name text-primary">
                     {{ ::rule.name}}</a>
                 </li>
 
@@ -56,9 +58,8 @@
         </li>
       </ul>
     </div>
-    <div class="col-xs-8 col-md-9" ng-include="'views/tables/rules/new_rule.html'">
-
-    </div>
+    <div ng-class="(!rules.editMode || rules.showTestForm) ? 'col-xs-8 col-md-9' : 'col-xs-12'" ng-include="'views/tables/rules/new_rule.html'"></div>
+    <div ng-show="rules.showTestForm" class="col-xs-4 col-md-3 test-column" ng-include="'views/tables/rules/test_code_window.html'"></div>
   </div>
 </div>
 
