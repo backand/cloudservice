@@ -8,6 +8,7 @@
     var self = this;
 
     (function init() {
+      self.databaseStatus = null;
       self.appName = $stateParams.name;
       self.loading = false;
       self.showHelp = false;
@@ -72,7 +73,7 @@
         DatabaseService.createDB($state.params.name, product, sampleApp)
         .success(function(data){
           NotificationService.add('info','Creating new database... It may takes 1-2 minutes');
-          $state.go('apps.index',{name: $state.params.name});
+          $state.go('playground.get-started',{name: $state.params.name});
         })
         .error(function(err){
             self.loading = false;
