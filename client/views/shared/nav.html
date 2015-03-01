@@ -25,7 +25,7 @@
       data-collapse-nav
       ng-show="!nav.isGeneralState()">
 
-    <li ng-class="{active: nav.state == 'apps.show'}" >
+    <li ng-class="{active: nav.state == 'apps.show', disabled: nav.DatabaseStatus != 1}" >
       <a ng-click="nav.goTo('apps.show')" href="" ng-class="{disabled: nav.DatabaseStatus != 1}">
         <i class="icon-dashboard-icon"></i>
         <span>Dashboard</span>
@@ -194,8 +194,8 @@
         </li>
       </ul>
     </li>
-    <li>
-      <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goTo('apps.edit')" href="">
+    <li ng-class="{active: nav.state == 'apps.edit', disabled: nav.DatabaseStatus !== 1}">
+      <a ng-click="nav.goTo('apps.edit')" href="">
         <i class="ti-settings"></i>
         <span>App Settings</span>
       </a>
