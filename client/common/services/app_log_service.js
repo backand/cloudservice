@@ -4,6 +4,8 @@
   function AppLogService($http, $q, CONSTS) {
 
     var self = this;
+    self.LOG_URL = '/1/table/data/durados_Log';
+    self.HISTORY_URL = '/1/table/data/durados_v_ChangeHistory';
 
     self.getAppLog = function(appName, size, page, isAdmin, sort, tableName){
       var filterParam = '';
@@ -21,7 +23,7 @@
         sortParam = sort;
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/table/data/durados_v_ChangeHistory',
+        url: CONSTS.appUrl + self.HISTORY_URL,
         headers: {
           'AppName': appName
         },
@@ -70,7 +72,7 @@
         filterParam = '[{fieldName:"LogType", operator:"equals", value:"3"}]';
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/table/data/Durados_Log',
+        url: CONSTS.appUrl + self.LOG_URL,
         headers: {
           'AppName': appName
         },
@@ -81,6 +83,20 @@
           'sort' : sort
         }
       });
+    };
+
+    self.getActionLog = function (appName, guid) {
+      return $http({
+        method: 'GET',
+        url : CONSTS.appUrl + self.LOG_URL,
+        headers: {AppName: appName},
+        params: {
+          'pageSize': '100',
+          'pageNumber': '1',
+          'filter' : '[{"fieldName":"LogType", "operator":"greaterThanOrEqualsTo","value":"500"},{"fieldName":"Guid", "operator":"equals","value":"'+guid+'"}]',
+          'sort' : '[{fieldName:"ID", order:"desc"}]'
+        }
+      })
     };
 
   }

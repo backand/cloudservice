@@ -76,17 +76,6 @@
       })
     };
 
-    // TODO: get log which is filtered by Guid from server
-    self.getLog = function (guid) {
-      return $http({
-        method: 'GET',
-        url : 'http://api.backand.info:8099/1/view/data/durados_Log?' +
-              'filter=[{"fieldName":"LogType", "operator":"greaterThanOrEqualsTo","value":"500"},' +
-              '{"fieldName":"Guid", "operator":"equals","value":"'+guid+'"}]',
-        headers: {AppName: self.appName}
-      })
-    };
-
   }
 
   angular.module('app')
