@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function RulesController($scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService, AppState, AppsService) {
+  function RulesController($scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService, AppState, AppsService,AppLogService) {
 
     var self = this;
     var appName;
@@ -335,8 +335,7 @@
       $scope.test.result = response.data;
       var guid = response.headers('Action-Guid');
       $scope.testUrl = RulesService.getTestUrl($scope.rule, $scope.test);
-      RulesService.getLog(guid)
-        .then(showLog, errorHandler);
+      AppLogService.getActionLog(AppState.get(),guid).then(showLog, errorHandler);
     }
 
     function showLog(response) {
@@ -512,5 +511,15 @@
   }
 
   angular.module('app')
-    .controller('RulesController', ['$scope', 'ConfirmationPopup', '$filter', 'RulesService', 'NotificationService', 'DictionaryService', 'AppState', 'AppsService', RulesController]);
+    .controller('RulesController',
+      ['$scope',
+      'ConfirmationPopup',
+      '$filter',
+      'RulesService',
+      'NotificationService',
+      'DictionaryService',
+      'AppState',
+      'AppsService',
+      'AppLogService',
+      RulesController]);
 }());
