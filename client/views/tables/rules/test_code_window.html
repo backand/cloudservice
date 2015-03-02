@@ -25,12 +25,19 @@
     <label>HTTP Request URL:</label>
     <input class="form-control" ng-readonly="true" ng-value="rules.testUrl">
     <br/><br/>
-    <button type="button"
-            class="btn btn-success pull-right"
-            data-style="expand-right" ladda="rules.test.testLoading"
-            ng-disabled="!rules.allowTest()"
-            ng-click="rules.testData()">Test Action
-    </button><br/>
+    <div class="row">
+      <div class="col-xs-4 col-md-6" style="height: 30px;"
+           us-spinner spinner-key="testing-action" us-spinner="{length:10, radius: 10}" ></div>
+      <div class="col-md-6 pull-right">
+        <button type="button"
+                class="btn btn-success pull-right"
+                data-style="expand-right" ladda="rules.test.testLoading"
+                ng-disabled="!rules.allowTest()"
+                ng-click="rules.testData()">Test Action
+        </button>
+      </div>
+    </div>
+    <br/>
     <div ng-if="!rules.allowTest()">** Must save first to enable Test</div>
   </ng-form>
   <br/>

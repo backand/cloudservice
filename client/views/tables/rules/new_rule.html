@@ -15,8 +15,9 @@
   </button>
 
   <!--<button ng-show="rules.action.__metadata && rules.editMode" ng-click="rules.deleteAction()" class="btn btn-danger pull-right with-margin">Delete</button>-->
-  <button ng-show="rules.editMode" ng-click="rules.cancelEdit()" class="btn btn-default pull-right with-margin">Cancel</button>
-  <button ng-show="rules.editMode" ng-click="rules.saveAction()" ng-disabled="newRuleForm.$invalid" class="btn btn-primary pull-right with-margin">Save</button>
+  <button ng-show="rules.editMode && rules.newRuleForm.$pristine" ng-click="rules.doneEdit()" class="btn btn-default pull-right with-margin">Done</button>
+  <button ng-show="rules.editMode && !rules.newRuleForm.$pristine" ng-click="rules.cancelEdit()" class="btn btn-default pull-right with-margin">Cancel</button>
+  <button ng-show="rules.editMode" ng-click="rules.saveAction()" ng-disabled="rules.newRuleForm.$invalid" class="btn btn-primary pull-right with-margin">Save</button>
 
   </div>
   <br/>
@@ -25,7 +26,7 @@
           ng-show="rules.allowTestForm()"
           class="pull-right btn btn-success btn-xs with-margin"
           ng-click="rules.toggleTestForm()">
-    {{ rules.showTestForm ? '<< Hide Test' : 'Test Action >>'}}
+    {{ rules.requestTestForm ? '<< Hide Test' : 'Test Action >>'}}
   </button>
     </div>
 </div>
@@ -384,7 +385,8 @@
     <div class="modal-footer" ng-show="rules.action && rules.editMode">
       <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid" ng-click="rules.saveAction()">Save</button>
       <button class="btn btn-danger pull-left" ng-click="rules.deleteAction()" ng-if="rules.action.__metadata">Delete</button>
-      <button class="btn btn-default" ng-click="rules.cancelEdit()">Cancel</button>
+      <button ng-show="rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.doneEdit()">Done</button>
+      <button ng-show="!rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.cancelEdit()">Cancel</button>
     </div>
   </div>
     </fieldset>

@@ -3,7 +3,31 @@
  */
 (function () {
 
-  function RulesController($scope, ConfirmationPopup, $filter, RulesService, NotificationService, DictionaryService, AppState, AppsService,AppLogService) {
+  angular.module('app')
+    .controller('RulesController',
+    ['$scope',
+      'ConfirmationPopup',
+      '$filter',
+      'RulesService',
+      'NotificationService',
+      'DictionaryService',
+      'AppState',
+      'AppsService',
+      'AppLogService',
+      'usSpinnerService',
+      RulesController]);
+
+  function RulesController(
+    $scope,
+    ConfirmationPopup,
+    $filter,
+    RulesService,
+    NotificationService,
+    DictionaryService,
+    AppState,
+    AppsService,
+    AppLogService,
+    usSpinnerService) {
 
     var self = this;
     var appName;
@@ -38,6 +62,7 @@
         self.action.dataAction = trigger;
       }
 
+      self.clearTest();
       self.editAction();
 };
 
@@ -49,6 +74,7 @@
 
     function refreshAction(action) {
       self.editMode = false;
+      self.requestTestForm = false;
       $scope.modal.toggleGroup();
       if (self.newRuleForm)
         self.newRuleForm.$setPristine();
@@ -79,15 +105,15 @@
       };
     };
 
+    self.doneEdit = function () {
+      refreshAction(self.action);
+    };
+
     self.cancelEdit = function () {
-      if (self.newRuleForm.$pristine)
-        refreshAction(self.action);
-      else {
-        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
-          .then(function (result) {
-            result ? refreshAction(self.action) : false;
-          });
-      }
+      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
+        .then(function (result) {
+          result ? refreshAction(self.action) : false;
+        });
     };
 
     self.saveAction = function () {
@@ -121,12 +147,16 @@
     self.allowTestForm = function () {
       var allow = self.action &&
         self.action.__metadata &&
-        self.action.dataAction == 'OnDemand';
+        self.action.dataAction === 'OnDemand';
       return allow;
     };
 
     self.toggleTestForm = function () {
-      self.showTestForm = !self.showTestForm;
+      self.requestTestForm = !self.requestTestForm;
+    };
+
+    self.showTestForm = function () {
+      return (self.requestTestForm && self.allowTestForm());
     };
 
     self.allowTest = function() {
@@ -316,6 +346,7 @@
     };
 
     self.testData = function () {
+      usSpinnerService.spin('testing-action');
       RulesService.testRule(self.action, self.test)
         .then(getLog, errorHandler);
     };
@@ -337,6 +368,7 @@
       self.test.logMessages = [];
       response.data.data.forEach(function (log) {
         self.test.logMessages.push({text: log.FreeText, isError: log.LogType === '501', time: log.Time});
+        usSpinnerService.stop('testing-action');
       });
     }
 
@@ -500,16 +532,4 @@
 
   }
 
-  angular.module('app')
-    .controller('RulesController',
-      ['$scope',
-      'ConfirmationPopup',
-      '$filter',
-      'RulesService',
-      'NotificationService',
-      'DictionaryService',
-      'AppState',
-      'AppsService',
-      'AppLogService',
-      RulesController]);
 }());

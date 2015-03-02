@@ -159,3 +159,22 @@
     }
   }
 }
+
+.actions-animate-show.ng-hide-add.ng-hide-add-active,
+.actions-animate-show.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  overflow: hidden;
+}
+
+.actions-animate-show.ng-hide {
+  opacity: 0;
+  width: 0;
+  padding: 0;
+  border-width: 0;
+}
+
+.actions-display {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
