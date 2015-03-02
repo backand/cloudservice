@@ -35,7 +35,8 @@ angular.module('angled-windows.directives',['ngSanitize','ngAnimate','angled-dra
 				title : '@title',
 				grouping : '@grouping', // windows group for organizing z-index
 				status : '=status', // status bar messages bi-directional
-        closeFunction: '&closeFunction'
+        closeFunction: '&closeFunction',
+        dictionaryItems: '='
 			},
 			compile : function(tEl,tAttrs,transFn){
 				return {

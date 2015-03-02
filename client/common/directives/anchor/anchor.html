@@ -1,0 +1,16 @@
+<div class="pull-right" ng-show='anchorParams.showAnchorCondition()'>
+  <span class="ti-anchor"
+        style="cursor: pointer;font-size:20px;"
+        ng-click="anchorParams.toggleAngledWindow(inputId)"></span>
+</div>
+<div ng-cloak>
+  <angled-window ng-if="anchorParams.showAngledWindow(inputId)"
+                 title="{{windowTitle}}"
+                 id="{{winId}}"
+                 grouping="w"
+                 close-function="anchorParams.toggleAngledWindow(inputId)"
+                 dictionaryItems="anchorParams.getDictionaryItems"
+                 style="z-index: 10; right: 0; bottom: -50px;">
+    <div ng-include="anchorParams.template"></div>
+  </angled-window>
+</div>

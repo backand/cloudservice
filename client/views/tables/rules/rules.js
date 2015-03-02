@@ -96,6 +96,7 @@
     self.editAction = function () {
       self.editMode = true;
       $scope.modal.toggleGroup();
+      buildParametersDictionary();
     };
 
     self.clearTest = function () {
@@ -200,6 +201,22 @@
       buildParameters: buildParametersDictionary
     };
 
+    self.anchorParams = {
+      showAnchorCondition: isEditMode,
+      toggleAngledWindow: $scope.modal.toggleGroup,
+      showAngledWindow: $scope.modal.isCurGroup,
+      getDictionaryItems: getDictionaryItems,
+      insertAtChar: insertTokenAtChar,
+      template : "views/tables/rules/dictionary_window.html"
+    };
+
+    function isEditMode() {
+      return self.editMode;
+    }
+
+    function getDictionaryItems() {
+      return $scope.modal.dictionaryItems;
+    }
     function isCurGroup(groupName) {
       return $scope.modal.curGroup == groupName;
     }
