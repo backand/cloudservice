@@ -42,6 +42,10 @@
       }
     };
 
+    self.goToAlways = function(state) {
+      $state.go(state, {name: this.appName});
+    };
+
     function loadApp() {
       if (typeof self.appName === 'undefined') {
         AppState.reset();

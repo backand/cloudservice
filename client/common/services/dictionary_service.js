@@ -17,7 +17,7 @@
     self.get = function () {
       return $http({
           method: 'GET',
-          url: CONSTS.appUrl + baseUrl + self.tableName + '/?deep=false&withSystemTokens=true',
+          url: CONSTS.appUrl + baseUrl + self.tableName + '/?deep=true&withSystemTokens=true',
           headers: {AppName: self.appName}
         })
       }

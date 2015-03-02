@@ -10,13 +10,14 @@
 
   <button ng-show="rules.allowEditAction()"
           ng-click="rules.editAction()"
-          class="btn btn-success pull-right with-margin">
-    edit action
+          class="btn btn-primary pull-right with-margin">
+    Edit Action
   </button>
 
-  <button ng-show="rules.editMode" ng-click="rules.saveAction()" ng-disabled="newRuleForm.$invalid" class="btn btn-primary pull-right with-margin">Save</button>
-  <button ng-show="rules.action.__metadata && rules.editMode" ng-click="rules.deleteAction()" class="btn btn-danger pull-right with-margin">Delete</button>
+  <!--<button ng-show="rules.action.__metadata && rules.editMode" ng-click="rules.deleteAction()" class="btn btn-danger pull-right with-margin">Delete</button>-->
   <button ng-show="rules.editMode" ng-click="rules.cancelEdit()" class="btn btn-default pull-right with-margin">Cancel</button>
+  <button ng-show="rules.editMode" ng-click="rules.saveAction()" ng-disabled="newRuleForm.$invalid" class="btn btn-primary pull-right with-margin">Save</button>
+
   </div>
   <br/>
   <div class="col-xs-12">
@@ -24,7 +25,7 @@
           ng-show="rules.allowTestForm()"
           class="pull-right btn btn-success btn-xs with-margin"
           ng-click="rules.toggleTestForm()">
-    {{ rules.showTestForm ? 'Hide Test >>' : 'Test Action >>'}}
+    {{ rules.showTestForm ? '<< Hide Test' : 'Test Action >>'}}
   </button>
     </div>
 </div>
@@ -304,7 +305,6 @@
           <textarea class="form-control"
                     ng-model="rules.action.executeMessage"
                     name="sqlMessage"
-                    required
                     style="resize: vertical"></textarea>
         </div>
 

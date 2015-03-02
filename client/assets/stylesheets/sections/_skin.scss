@@ -217,6 +217,11 @@
                 background-color: $dark_bg_sub_nav_bg;
 
                 > li {
+                    &.disabled, &.disabled:hover {
+                      > a {
+                        color: $navbar-default-link-color;
+                      }
+                    }
                     &:hover,
                     &.active {
                         > a {

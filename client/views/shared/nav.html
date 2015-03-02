@@ -33,21 +33,26 @@
     </li>
 
     <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-      <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
+      <a href="">
         <i class="icon-databsase-icon"></i>
         <span>Database</span>
         <span class="status status-{{nav.getDBStatus()}} pull-left"></span>
         <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+        <li ng-if="nav.DatabaseStatus === 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
           <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goTo('database.show')" href="">
             <i class="ti-wand"></i>
-            <span ng-if="nav.DatabaseStatus != 1">Connect</span>
-            <span ng-if="nav.DatabaseStatus == 1">Configuration</span>
+            <span>Configuration</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'database.add-tables'}">
+        <li ng-if="nav.DatabaseStatus !== 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+          <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goToAlways('database.edit')" href="">
+            <i class="ti-wand"></i>
+            <span>Connect</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.state == 'database.add-tables', disabled: nav.DatabaseStatus != 1}">
           <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('database.add-tables')" href="">
             <i class="ti-file"></i>
             <span>Templates</span>
@@ -57,45 +62,45 @@
     </li>
 
     <li ng-class="{active: nav.state == 'playground.orm'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}" href="">
+      <a href="">
           <i class="icon-rest-api-icon"></i>
           <span>Docs & API</span>
           <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
         <ul>
             <li ng-class="{active: nav.state == 'playground.get-started'}">
-              <a ng-click="nav.goTo('playground.get-started')" href="">
+              <a ng-click="nav.goToAlways('playground.get-started')" href="">
                 <i class="ti-star"></i>
                 <span>AngularJS Quickstart</span>
               </a>
             </li>
-            <li ng-class="{active: nav.state == 'playground.show'}">
+            <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}">
               <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.show')" href="">
                 <i class="icon-rest-api-icon"></i>
                 <span>REST API Playground</span>
               </a>
             </li>
-            <li ng-class="{active: nav.state == 'playground.orm'}">
+            <li ng-class="{active: nav.state == 'playground.orm', disabled: nav.DatabaseStatus != 1}">
               <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.orm')" href="">
                 <i class="icon-orm-icon"></i>
                 <span>ORM Playground</span>
               </a>
             </li>
             <li ng-class="{active: nav.state == 'playground.orm-usage'}">
-                <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.orm-usage')" href="">
+                <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goToAlways('playground.orm-usage')" href="">
                     <i class="ti-shortcode"></i>
                     <span>ORM Usage</span>
                 </a>
             </li>
             <li ng-class="{active: nav.state == 'playground.orm-config'}">
-                <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.orm-config')" href="">
+                <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goToAlways('playground.orm-config')" href="">
                     <i class="ti-github"></i>
                     <span>ORM Configuration</span>
                 </a>
             </li>
         </ul>
     </li>
-    <li ng-class="{active: nav.state == 'tables.show'}" ng-show="!nav.dbEmpty">
+    <li ng-class="{active: nav.state == 'tables.show', disabled: nav.DatabaseStatus != 1}" ng-show="!nav.dbEmpty">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"
          ng-click="nav.loadTables()" href="" ng-show="nav.tables.length > 0">
         <i class="ti-view-grid"></i>
@@ -116,7 +121,7 @@
       </ul>
     </li>
 
-    <li ng-class="{active: nav.state == 'dbQueries.index' || nav.state == 'dbQueries.index'}" >
+    <li ng-class="{active: nav.state == 'dbQueries.index' || nav.state == 'dbQueries.index', disabled: nav.DatabaseStatus != 1}" >
       <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.loadDbQueries()" href="">
         <i class="ti-write"></i>
         <span>Database Queries</span>
@@ -140,13 +145,13 @@
       </ul>
     </li>
 
-    <li ng-class="{active: nav.state == 'security.users'}">
+    <li ng-class="{active: nav.state == 'security.users', disabled: nav.DatabaseStatus !== 1}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
         <i class="icon-security"></i>
         <span>Security & Auth</span>
         <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
-      <ul>
+      <ul ng-if="nav.DatabaseStatus != 1">
         <li ng-class="{active: nav.state == 'security.auth'}">
           <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('security.auth')" href="">
             <i class="ti-settings"></i>
@@ -167,13 +172,13 @@
         </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.state == 'log.activity'}">
+    <li ng-class="{active: nav.state == 'log.activity', disabled: nav.DatabaseStatus !== 1}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
         <i class="icon-clipboard"></i>
         <span>Log</span>
         <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
-      <ul>
+      <ul ng-if="nav.DatabaseStatus != 1">
         <li ng-class="{active: nav.state == 'log.config'}">
           <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('log.config')" href="">
             <i class="ti-settings"></i>
@@ -200,14 +205,14 @@
         <span>App Settings</span>
       </a>
     </li>
-    <li ng-class="{active: nav.state == 'backoffice.edit'}">
+    <li ng-class="{active: nav.state == 'backoffice.edit', disabled: nav.DatabaseStatus !== 1}">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
         <i class="icon-backoffice-icon"></i>
         <span>Back Office</span>
         <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
-      <ul>
-        <li ng-class="{active: nav.state == 'backoffice.edit'}">
+      <ul ng-if="nav.DatabaseStatus != 1">
+        <li ng-class="{active: nav.state == 'backoffice.edit', disabled: nav.DatabaseStatus !== 1}">
           <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.edit')" href="">
             <i class="icon-style"></i>
             <span>Templates</span>
