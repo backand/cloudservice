@@ -113,16 +113,16 @@
       })
     };
 
+    self.getQueryUrl = function (queryName, parameters) {
+      return encodeURI(CONSTS.appUrl + baseUrl + 'data/' + queryName + '?parameters=' + JSON.stringify(parameters));
+    };
+
     self.runQuery = function (currentApp, queryName, parameters) {
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + baseUrl + 'data/' + queryName + '?parameters=' + parameters,
-        headers: { AppName: currentApp },
-        //params: {
-        //  parameters : parameters
-        //}
+        url: self.getQueryUrl(queryName, parameters),
+        headers: { AppName: currentApp }
       });
-
     }
 
   }

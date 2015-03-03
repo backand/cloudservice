@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function ViewData($log, NotificationService, ColumnsService, $scope, usSpinnerService, DbQueriesService) {
+  function ViewData(NotificationService, ColumnsService, $scope, usSpinnerService) {
 
     var self = this;
     self.title = '';
@@ -21,7 +21,6 @@
      */
     (function init() {
       $scope.$on('tabs:data', dataEvent);
-      $scope.$on('clearData', clearData);
     }());
 
     self.gridOptions = {
@@ -43,23 +42,12 @@
       }
     };
 
-    function clearData(){
-      self.gridOptions.data = null;
-    }
-
     /**
      * Get the broadcast
      * @param args
      */
-    function dataEvent(obj,args){
-      if(args){
-        self.queryName = args.query;
-        self.appName = args.app;
-        self.parameters = JSON.stringify(args.parameters);
-      }
-      else{
-        self.queryName = null;
-      }
+    function dataEvent() {
+      self.queryName = null;
       getData();
     }
 
@@ -75,12 +63,11 @@
 
     function getData() {
       usSpinnerService.spin("loading");
-      if(self.queryName == null){
-        ColumnsService.getData(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort).then(successDataHandler, errorHandler);
-      }
-      else {
-        DbQueriesService.runQuery(self.appName, self.queryName, self.parameters).then(successQueryHandler, errorHandler);
-      }
+      ColumnsService.getData(
+        self.paginationOptions.pageSize,
+        self.paginationOptions.pageNumber,
+        self.sort)
+        .then(successDataHandler, errorHandler);
     }
 
     function successDataHandler(data) {
@@ -99,25 +86,6 @@
       setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
       usSpinnerService.stop("loading");
     }
-
-    function successQueryHandler(data) {
-      console.log(data);
-      self.gridOptions.data = data.data;
-      var columns = [];
-      if (data.data.length > 0)
-        columns = Object.keys(data.data[0]);
-      self.gridOptions.columnDefs = columns.map(function (column) {
-        return {
-          minWidth: 80,
-          name: column
-        }
-      });
-      self.gridOptions.totalItems = data.data.length;
-
-      setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
-      usSpinnerService.stop("loading");
-    }
-
 
     function refreshGridDisplay() {
       if (!self.refreshOnce) {
@@ -138,12 +106,10 @@
 
   angular.module('app')
     .controller('ViewData', [
-      '$log',
       'NotificationService',
       'ColumnsService',
       '$scope',
       'usSpinnerService',
-      'DbQueriesService',
       ViewData
     ]);
 

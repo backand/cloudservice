@@ -14,7 +14,6 @@
       'AppState',
       'AppsService',
       'AppLogService',
-      'usSpinnerService',
       RulesController]);
 
   function RulesController(
@@ -26,8 +25,7 @@
     DictionaryService,
     AppState,
     AppsService,
-    AppLogService,
-    usSpinnerService) {
+    AppLogService) {
 
     var self = this;
     var appName;
@@ -118,10 +116,13 @@
     };
 
     self.saveAction = function () {
+      self.testUrl = '';
       var ruleToSend = replaceSpecialCharInCode(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
         .then(function () {
+          if (newRuleForm.inputParameters.$dirty)
+            self.test.parameters = {};
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
         })
@@ -161,7 +162,7 @@
     };
 
     self.allowTest = function() {
-      var allow = self.newRuleForm && !self.newRuleForm.$dirty;
+      var allow = self.newRuleForm && self.newRuleForm.$pristine;
       return allow;
     };
 
@@ -364,7 +365,7 @@
     };
 
     self.testData = function () {
-      usSpinnerService.spin('testing-action');
+      self.test.testLoading = true;
       RulesService.testRule(self.action, self.test)
         .then(getLog, errorHandler);
     };
@@ -378,6 +379,8 @@
       self.test.result = response.data;
       var guid = response.headers('Action-Guid');
       self.testUrl = RulesService.getTestUrl(self.action, self.test);
+      self.inputParametersForm.$setPristine();
+      self.testUrlCopied = false;
       AppLogService.getActionLog(AppState.get(), guid)
         .then(showLog, errorHandler);
     }
@@ -386,7 +389,7 @@
       self.test.logMessages = [];
       response.data.data.forEach(function (log) {
         self.test.logMessages.push({text: log.FreeText, isError: log.LogType === '501', time: log.Time});
-        usSpinnerService.stop('testing-action');
+        self.test.testLoading = false;
       });
     }
 
@@ -529,6 +532,23 @@
 
     }
 
+    self.copyUrlParams = {
+      getUrl: getTestUrl,
+      getInputForm: getInputParametersForm,
+      getTestForm: getRuleForm
+    };
+
+    function getInputParametersForm () {
+      return self.inputParametersForm;
+    }
+
+    function getRuleForm () {
+      return self.newRuleForm;
+    }
+
+    function getTestUrl () {
+      return self.testUrl;
+    }
 
     self.codeRegex = /^\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow,\s*parameters\s*,\s*userProfile\s*\)\s*\{(.|[\r\n])*}\s*$/;
 
@@ -546,6 +566,7 @@
      */
     function errorHandler(error, message) {
       NotificationService.add('error', message);
+      self.test.testLoading = false;
     }
 
   }

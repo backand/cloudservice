@@ -178,3 +178,17 @@
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
+
+.request-url {
+  font-family: Consolas, Menlo, "Liberation Mono", Courier, monospace;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: smaller;
+  width: calc(100% - 32px);
+  vertical-align: middle;
+}
+
+.request-url-copy {
+  margin: 2px;
+  vertical-align: middle;
+}
