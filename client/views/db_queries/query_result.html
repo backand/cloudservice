@@ -1,0 +1,14 @@
+<label ng-hide="DbQuery.gridOptions.totalItems == undefined">Test Results</label>
+
+<div id="grid-container">
+
+  <div ui-grid="DbQuery.gridOptions"
+       class="querygrid" ui-grid-resize-columns
+       ng-show="DbQuery.gridOptions.totalItems > 0">
+  </div>
+
+  <div ng-show="DbQuery.gridOptions.totalItems == 0">
+    <h3>No records found</h3>
+  </div>
+
+</div>

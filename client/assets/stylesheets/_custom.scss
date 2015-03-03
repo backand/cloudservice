@@ -147,7 +147,7 @@ a.app-panel:hover {
   text-align: center;
   font-family: "Open Sans", arial, sans-serfi;
   font-weight: bold;
-  text-shadow: 1px solid draken(#4f95bf, 20%);
+  text-shadow: 1px 1px 0 darken(#4f95bf, 20%);
   box-shadow: 0px 4px 0px darken(#4f95bf, 20%);
   border-radius: 5px;
   @include transition(200ms);
@@ -194,6 +194,10 @@ a.app-panel:hover {
 
 .datagrid {
   height: 650px;
+}
+
+.querygrid {
+  height: 0px;
 }
 
 /* edit in place overrides (nir kaufman)
@@ -306,7 +310,7 @@ a.app-panel:hover {
 
 
 .ui-tab-vertical .nav-tabs > li > a {
-  word-break : break-word;
+  word-wrap : break-word;
 }
 .form-action-top {
   text-align:right;

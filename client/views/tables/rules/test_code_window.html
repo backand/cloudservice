@@ -1,68 +1,69 @@
+<h3>Test query parameters</h3>
+<br/>
+<ng-form role="form" name="rules.inputParametersForm" novalidate>
 
-  <h3>Test query parameters</h3>
-  <br/>
-  <ng-form role="form" name="inputParametersForm" novalidate>
+  <label>Parameters</label>
 
-    <label>Parameters</label>
-
-    <div class="form-group" ng-repeat="inputParam in rules.getInputParameters()">
-      <label for="inputParam">{{inputParam}}</label>
-      <input type="text"
-             id="inputParam"
-             class="form-control"
-             ng-model="rules.test.parameters[inputParam]">
-    </div>
-
-    <hr>
-    <div class="form-group">
-      <label>Row ID</label>
-      <input type="number" min="0"
-             class="form-control"
-             ng-model="rules.test.rowId">
-    </div>
-
-    <hr>
-    <label>HTTP Request URL:</label>
-    <input class="form-control" ng-readonly="true" ng-value="rules.testUrl">
-    <br/><br/>
-    <div class="row">
-      <div class="col-xs-4 col-md-6" style="height: 30px;"
-           us-spinner spinner-key="testing-action" us-spinner="{length:10, radius: 10}" ></div>
-      <div class="col-md-6 pull-right">
-        <button type="button"
-                class="btn btn-success pull-right"
-                data-style="expand-right" ladda="rules.test.testLoading"
-                ng-disabled="!rules.allowTest()"
-                ng-click="rules.testData()">Test Action
-        </button>
-      </div>
-    </div>
-    <br/>
-    <div ng-if="!rules.allowTest()">** Must save first to enable Test</div>
-  </ng-form>
-  <br/>
-  <div ng-if="rules.test.result">
-    <hr/>
-    <label>Test Result:</label>
-    <br/>
-    {{ rules.test.result | json }}
-    <br/>
-
+  <div class="form-group" ng-repeat="inputParam in rules.getInputParameters()">
+    <label for="inputParam">{{inputParam}}</label>
+    <input type="text"
+           id="inputParam"
+           class="form-control"
+           ng-model="rules.test.parameters[inputParam]">
   </div>
 
-
-  <div ng-if="rules.test.result">
-    <hr/>
-    <label>Test Log:</label>
-    <br/>
-
-    <table class="table log-table">
-      <tbody>
-        <tr ng-repeat="message in rules.test.logMessages | orderBy: 'time' "
-            ng-class="{'text-danger': message.isError}">
-          <td><span class="log-icon" ng-bind="message.isError? 'X' : '>' "></span> {{ message.text }}</td>
-        </tr>
-      </tbody>
-    </table>
-
+  <hr>
+  <div class="form-group">
+    <label>Row ID</label>
+    <input type="number" min="0"
+           class="form-control"
+           ng-model="rules.test.rowId">
   </div>
+
+  <hr>
+
+  <label>HTTP Request URL:</label>
+  <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
+  <br/>
+
+  <div class="row">
+    <div class="col-xs-4 col-md-6" style="height: 30px;"
+         us-spinner spinner-key="testing-action" us-spinner="{length:10, radius: 10}"></div>
+    <div class="col-md-6 pull-right">
+      <button type="button"
+              class="btn btn-success pull-right"
+              data-style="expand-right" ladda="rules.test.testLoading"
+              ng-disabled="!rules.allowTest()"
+              ng-click="rules.testData()">Test Action
+      </button>
+    </div>
+  </div>
+
+  <div ng-show="!rules.allowTest()">** Must save first to enable Test</div>
+</ng-form>
+
+<div ng-if="rules.test.result">
+  <hr/>
+  <label>Test Result:</label>
+  <br/>
+  {{ rules.test.result | json }}
+  <br/>
+
+</div>
+
+
+<div ng-if="rules.test.result">
+  <hr/>
+  <label>Test Log:</label>
+  <br/>
+
+  <table class="table log-table">
+    <tbody>
+    <tr ng-repeat="message in rules.test.logMessages | orderBy: 'time' "
+        ng-class="{'text-danger': message.isError}">
+      <td><span class="log-icon" ng-bind="message.isError? 'X' : '>' "></span> {{ message.text }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

@@ -1,16 +1,46 @@
 (function () {
   'use strict';
   angular.module('app.dbQueries')
-    .controller('DbQueryController', ['$scope', '$state', '$stateParams', 'DbQueriesService', 'ConfirmationPopup', 'NotificationService', 'DictionaryService', 'SecurityService', 'AppsService', DbQueryController]);
+    .controller('DbQueryController', [
+      '$state',
+      '$stateParams',
+      'DbQueriesService',
+      'ConfirmationPopup',
+      'NotificationService',
+      'DictionaryService',
+      'SecurityService',
+      'AppsService',
+      DbQueryController]);
 
-  function DbQueryController($scope, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService, AppsService) {
+  function DbQueryController($state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService, AppsService) {
+
     var self = this;
     self.namePattern = /^\w+$/;
+    self.gridOptions = {virtualizationThreshold: 10};
+
     self.ace = {
       dbType: 'sql',
-      onLoad: function(_editor) {        
+      onLoad: function(_editor) {
         self.ace.editor = _editor;
       }
+    };
+
+    self.copyUrlParams = {
+      getUrl: getQueryUrl,
+      getInputForm: getInputParametersForm,
+      getTestForm: getQueryForm
+    };
+
+    function getInputParametersForm () {
+      return self.inputParametersForm;
+    }
+
+    function getQueryForm () {
+      return self.queryForm;
+    }
+
+    function getQueryUrl () {
+      return self.queryUrl;
     }
 
     init();
@@ -18,6 +48,8 @@
     function init() {
       self.appName = $stateParams.name;
       self.inputValues = {};
+      if (self.queryForm)
+        self.queryForm.$setPristine();
 
       loadQueries();
       loadDbType();
@@ -34,7 +66,6 @@
         self.openParamsModal = false;
         self.new = (!$stateParams.queryId);
         self.editMode = self.new;
-        self.allowTest = !self.new;
 
         if (self.new) {
           self.query = DbQueriesService.getNewQuery();
@@ -57,7 +88,8 @@
       SecurityService.getRoles()
         .then(function (data) {
           self.roles = data.data.data;
-          rolesToObj();
+          if (self.query.allowSelectRoles)
+            rolesToObj();
         })
     }
 
@@ -79,33 +111,45 @@
 
     self.saveQuery = function () {
       self.loading = true;
+      self.queryUrl = '';
       self.openParamsModal = false;
       self.query.workspaceID = Number(self.currentST);
 
-
       rolesToString();
       DbQueriesService.saveQuery(self.query)
-        .then(function (query) {
-          self.loading = false;
-          var params = {
-            name: self.appName,
-            queryId: query.__metadata.id
-          };
-          self.allowTest = true;
-          $state.go('dbQueries.query', params);
-        });
-
+        .then(reload);
     };
+
+    function reload(query) {
+      self.loading = false;
+      if (query) {
+        var params = {
+          name: self.appName,
+          queryId: query.__metadata.id
+        };
+
+        if (self.queryForm.params.$dirty)
+          self.inputValues = {};
+
+        self.queryForm.$setPristine();
+        $state.go('dbQueries.query', params);
+      }
+    }
+
 
     self.editQuery = function () {
       self.editMode = true;
     };
 
     self.cancel = function () {
-      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
-        .then(function (result) {
-          result ? init() : false;
-        });
+      if (self.queryForm.$pristine)
+        init();
+      else {
+        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
+          .then(function (result) {
+            result ? init() : false;
+          });
+      }
     };
 
     self.deleteQuery = function () {
@@ -171,23 +215,47 @@
       });
     };
 
-    function errorHandler(error, message) {
-      NotificationService.add('error', message);
-    }
-
     self.getParameters = function () {
       if (self.query) {
         return _.without(_.unique(self.query.parameters.replace(/ /g, '').split(',')),'');
       }
     };
 
-    self.testData = function () {
-      $scope.$broadcast('tabs:data', {"query": self.query.name, "app": self.appName, "parameters": self.inputValues});
+    self.allowTest = function () {
+      return self.query && self.query.__metadata && self.queryForm.$pristine;
     };
 
-    self.clearData = function () {
-      self.allowTest = false;
-      $scope.$broadcast('clearData');
+    self.testData = function () {
+      if (!self.query.__metadata)
+        return;
+      self.testLoading = true;
+      DbQueriesService.runQuery(self.appName, self.query.name, self.inputValues).then(successQueryHandler, errorHandler);
+    };
+
+    function successQueryHandler(data) {
+      self.gridOptions.data = data.data;
+      var columns = [];
+      if (data.data.length > 0)
+        columns = Object.keys(data.data[0]);
+      self.gridOptions.columnDefs = columns.map(function (column) {
+        return {
+          minWidth: 80,
+          name: column
+        }
+      });
+      self.gridOptions.totalItems = data.data.length;
+
+      self.queryUrl = DbQueriesService.getQueryUrl(self.query.name, self.inputValues);
+      self.inputParametersForm.$setPristine();
+      self.queryUrlCopied = false;
+
+      self.testLoading = false;
     }
+
+    function errorHandler(error, message) {
+      NotificationService.add('error', message);
+      self.testLoading = false;
+    }
+
   }
 }());
