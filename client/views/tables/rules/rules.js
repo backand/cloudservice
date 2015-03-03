@@ -121,7 +121,7 @@
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
         .then(function () {
-          if (newRuleForm.inputParameters.$dirty)
+          if (self.newRuleForm.inputParameters.$dirty)
             self.test.parameters = {};
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
@@ -389,8 +389,8 @@
       self.test.logMessages = [];
       response.data.data.forEach(function (log) {
         self.test.logMessages.push({text: log.FreeText, isError: log.LogType === '501', time: log.Time});
-        self.test.testLoading = false;
       });
+      self.test.testLoading = false;
     }
 
 
