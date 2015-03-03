@@ -12,10 +12,10 @@
         url: '/docs/start/:name',
         templateUrl: 'views/api_playground/get-started.html'
       })
-      .state('playground.get-started-open', {
+      .state('playground.kickstart', {
         parent: 'playground',
-        url: '/docs/start/:name',
-        templateUrl: 'views/api_playground/get-started-open.html'
+        url: '/docs/kickstart/:name',
+        templateUrl: 'views/api_playground/kickstart.html'
       })
       .state('playground.show', {
         parent: 'playground',

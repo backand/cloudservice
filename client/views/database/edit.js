@@ -73,7 +73,7 @@
         DatabaseService.createDB($state.params.name, product, sampleApp)
         .success(function(data){
           NotificationService.add('info','Creating new database... It may takes 1-2 minutes');
-          $state.go('apps.index',{name: $state.params.name});
+          $state.go('getting-started-open');
         })
         .error(function(err){
             self.loading = false;

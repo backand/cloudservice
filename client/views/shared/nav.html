@@ -8,7 +8,11 @@
     </li>
 
     <li ui-sref-active="active">
-      <a ui-sref="getting-started"> <i class="ti-star"></i><span>Getting Started</span></a>
+      <a ui-sref="getting-started-open"> <i class="ti-star"></i><span>Getting Started</span></a>
+    </li>
+
+    <li ui-sref-active="active">
+      <a ui-sref="kickstart-open"> <i class="ti-star"></i><span>Kickstart toturial</span></a>
     </li>
 
     <!--<li>-->
@@ -74,6 +78,13 @@
                 <span>AngularJS Quickstart</span>
               </a>
             </li>
+            <li ng-class="{active: nav.state == 'playground.kickstart'}">
+              <a ng-click="nav.goToAlways('playground.kickstart')" href="">
+                <i class="ti-star"></i>
+                <span>Kickstart Toturial</span>
+              </a>
+            </li>
+
             <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}">
               <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('playground.show')" href="">
                 <i class="icon-rest-api-icon"></i>
