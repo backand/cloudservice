@@ -171,6 +171,7 @@
       editors: {},
       onLoad: function(_editor) {
         $scope.ace.editors[_editor.container.id] = _editor;
+        _editor.$blockScrolling = Infinity;
       }
     };
 
