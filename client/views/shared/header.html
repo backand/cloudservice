@@ -20,7 +20,7 @@
       <li>
         <a ng-click="header.goTo('apps.index');" href=""><i class="ti-layers-alt" style="font-size: 25px;"></i></a>
       </li>
-      <li class="search-box ">
+      <li class="search-box">
         <div class="input-group">
           <span class="input-group-addon">App: &nbsp;</span>
           <div class="ui-select" style="font-weight: bold;">
@@ -33,11 +33,10 @@
 
     <ul class="nav-right pull-right list-unstyled">
         <li class="dropdown text-normal nav-profile">
-            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" style="padding-top: 15px;padding-right: 30px;">
+            <a ng-click="main.logout()" href="" class="dropdown-toggle" data-toggle="dropdown" style="padding-top: 15px;padding-right: 30px;">
                 <span class="hidden-md">
                     <i class="ti-user"></i>
                     <span>{{main.getCurrentUser().username}}</span>
-
                 </span>
             </a>
             <ul class="dropdown-menu with-arrow pull-right">
