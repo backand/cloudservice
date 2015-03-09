@@ -1,6 +1,24 @@
 (function () {
 
-  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService, NotificationService,$rootScope, TablesService, $filter, AppState) {
+
+  angular.module('app')
+    .controller('SingleTableShow', [
+      '$stateParams',
+      'ColumnsService',
+      '$scope',
+      'RulesService',
+      'DictionaryService',
+      'SecurityService',
+      'NotificationService',
+      '$rootScope',
+      'TablesService',
+      '$filter',
+      'AppState',
+      'tableName',
+      SingleTableShow
+    ]);
+
+  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService, NotificationService,$rootScope, TablesService, $filter, AppState, tableName) {
 
     var self = this;
 
@@ -8,50 +26,54 @@
       self.appName = $stateParams.name;
       AppState.set(self.appName);
       self.tableId = $stateParams.tableId;
+      self.tableName = tableName;
       self.messages = [];
       self.fields = [];
       self.view = {};
-      self.switchTab = switchTab;
       self.fieldTypesRange = ["String", "DateTime", "Integer"];
       self.selectedField = null;
+      self.tabs = [
+        {
+          heading: 'Fields',
+          route: 'tables.columns.fields'
+        },
+        {
+          heading: 'Actions',
+          route: 'tables.columns.actions'
+        },
+        {
+          heading: 'Security',
+          route: 'tables.columns.security'
+        },
+        {
+          heading: 'Settings',
+          route: 'tables.columns.settings'
+        },
+        {
+          heading: 'Data',
+          route: 'tables.columns.data'
+        },/*
+        {
+          heading: 'Config Log',
+          route: 'tables.columns.log'
+        }*/
+      ];
       RulesService.appName = ColumnsService.appName = DictionaryService.appName = SecurityService.appName = self.appName;
       RulesService.tableId = self.tableId;
       $scope.$on('appname:updated', updateAppName);
-      $scope.$on('appname:saved', loadTables);
+      $scope.$on('appname:saved', loadColumns);
 
-      loadTables();
+      loadColumns();
 
     }());
 
-    function loadTables()
-    {
-      TablesService.get(self.appName).then(loadColumns,errorHandler);
-    }
     /**
      * Need to het first the tables before loading the page
      * @param tables
      */
-    function loadColumns(tables)
+    function loadColumns()
     {
-      self.tableName = getTableNameById(tables,$stateParams.tableId).name;
-      RulesService.tableName
-        = ColumnsService.tableName
-        = DictionaryService.tableName
-        = self.tableName;
-      ColumnsService.get().then(loadColumnsDone,errorHandler); //populate the view configuration data
-
-    }
-
-    function loadColumnsDone(){
-      switchTab('fields');
-    }
-
-    /**
-     * Load the UI for each tab
-     * @param tab
-     */
-    function switchTab (tab) {
-      $scope.$broadcast('tabs:' + tab);
+      ColumnsService.get().then(null, errorHandler); //populate the view configuration data
     }
 
     function updateAppName(event, data){
@@ -118,21 +140,5 @@
       NotificationService.add('error', message);
     }
   }
-
-  angular.module('app')
-    .controller('SingleTableShow', [
-      '$stateParams',
-      'ColumnsService',
-      '$scope',
-      'RulesService',
-      'DictionaryService',
-      'SecurityService',
-      'NotificationService',
-      '$rootScope',
-      'TablesService',
-      '$filter',
-      'AppState',
-      SingleTableShow
-    ]);
 
 }());

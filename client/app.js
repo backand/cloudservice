@@ -51,6 +51,7 @@
     'xeditable',
     'angular-ladda',
     'angularMoment',
+    'ui.router.tabs',
     'common.directives',
     'theme.directives',
     'common.services',

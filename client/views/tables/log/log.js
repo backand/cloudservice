@@ -18,7 +18,6 @@
      */
     (function init() {
       isAdmin = true;
-      $scope.$on('tabs:log', getLog);
     }());
 
     this.gridOptions = {

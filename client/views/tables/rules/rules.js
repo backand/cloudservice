@@ -2,7 +2,6 @@
  * Created by nirkaufman on 1/4/15.
  */
 (function () {
-
   angular.module('app')
     .controller('RulesController',
     ['$scope',
@@ -35,9 +34,10 @@
      * init the open modal
      */
     (function init() {
+
       self.items = [];
       loadDbType();
-      $scope.$on('tabs:rules', getRules);
+      getRules();
     }());
 
     var defaultRule = {
@@ -568,7 +568,5 @@
       NotificationService.add('error', message);
       self.test.testLoading = false;
     }
-
   }
-
 }());

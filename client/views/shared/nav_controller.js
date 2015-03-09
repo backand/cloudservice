@@ -79,6 +79,10 @@
       }
     });
 
+    self.isTablesActive = function() {
+      return $state.current.name.indexOf('tables.columns') != -1;
+    }
+
     self.getDBStatus = function() {
       if (self.app === null) {
         return 'unknown';
@@ -161,7 +165,11 @@
     $scope.$on('appname:saved', self.fetchTables);
 
     self.showTable = function(table) {
-      $state.go('tables.columns', {
+      var path = 'tables.columns.fields';
+      if (self.isTablesActive()) {
+        path = $state.current.name;
+      }
+      $state.go(path, {
         name: $state.params.name,
         tableName: table.name,
         tableId: table.__metadata.id

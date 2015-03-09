@@ -3,8 +3,19 @@
  */
 (function () {
 
-  function ViewData(NotificationService, ColumnsService, $scope, usSpinnerService) {
 
+  angular.module('app')
+    .controller('ViewData', [
+      'NotificationService',
+      'ColumnsService',
+      '$scope',
+      'usSpinnerService',
+      'DbQueriesService',
+      '$timeout',
+      ViewData
+    ]);
+
+  function ViewData(NotificationService, ColumnsService, $scope, usSpinnerService, DbQueriesService, $timeout) {
     var self = this;
     self.title = '';
     self.sort = '';
@@ -20,7 +31,7 @@
      * init the data
      */
     (function init() {
-      $scope.$on('tabs:data', dataEvent);
+      getData();
     }());
 
     self.gridOptions = {
@@ -42,15 +53,6 @@
       }
     };
 
-    /**
-     * Get the broadcast
-     * @param args
-     */
-    function dataEvent() {
-      self.queryName = null;
-      getData();
-    }
-
     $scope.$watchGroup([
         'data.paginationOptions.pageNumber',
         'data.paginationOptions.pageSize']
@@ -62,7 +64,7 @@
     }
 
     function getData() {
-      usSpinnerService.spin("loading");
+      $timeout(function() { usSpinnerService.spin("loading") });
       ColumnsService.getData(
         self.paginationOptions.pageSize,
         self.paginationOptions.pageNumber,
@@ -103,14 +105,4 @@
       usSpinnerService.stop("loading");
     }
   }
-
-  angular.module('app')
-    .controller('ViewData', [
-      'NotificationService',
-      'ColumnsService',
-      '$scope',
-      'usSpinnerService',
-      ViewData
-    ]);
-
 }());

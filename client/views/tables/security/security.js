@@ -15,7 +15,8 @@
       self.templateRoleAdd = templateRoleAdd;
       self.templateRoleRename = templateRoleRename;
       self.templateRoleRemove = templateRoleRemove;
-      $scope.$on('tabs:security', getWorkspaces);
+
+      getWorkspaces();
 
       //Dictionary
       self.dictionaryItems = {};

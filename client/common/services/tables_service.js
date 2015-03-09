@@ -28,6 +28,11 @@
       }
     };
 
+    self.getTableNameById = function(tables,id) {
+      return _.findWhere(tables, {__metadata: {id: id}});
+    }
+
+
     function _get(appName) {
       return $http({
         method: 'GET',

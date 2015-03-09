@@ -22,8 +22,7 @@
      */
     (function init() {
       self.items = [];
-      //getFields();
-      $scope.$on('tabs:fields', getFields);
+      getFields();
       $scope.$on('appname:saved', reloadFields);
       $scope.$on('after:sync', afterSync);
     }());
