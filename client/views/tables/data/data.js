@@ -8,18 +8,23 @@
     .controller('ViewData', [
       'NotificationService',
       'ColumnsService',
+      'DataService',
       '$scope',
       'usSpinnerService',
       'DbQueriesService',
       '$timeout',
+      '$rootScope',
+      'tableName',
       ViewData
     ]);
 
-  function ViewData(NotificationService, ColumnsService, $scope, usSpinnerService, DbQueriesService, $timeout) {
+  function ViewData(NotificationService, ColumnsService, DataService, $scope, usSpinnerService, DbQueriesService, $timeout, $rootScope, tableName) {    
     var self = this;
+    self.tableName = tableName;
     self.title = '';
     self.sort = '';
     self.refreshOnce = false;
+    $rootScope.data = self;
 
     this.paginationOptions = {
       pageNumber: 1,
@@ -65,25 +70,38 @@
 
     function getData() {
       $timeout(function() { usSpinnerService.spin("loading") });
-      ColumnsService.getData(
-        self.paginationOptions.pageSize,
-        self.paginationOptions.pageNumber,
-        self.sort)
+
+      ColumnsService.get(false)
+        .then(successColumnsHandler, errorHandler)
+        .then(function () {
+          return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort);
+        })
         .then(successDataHandler, errorHandler);
     }
 
-    function successDataHandler(data) {
-      self.gridOptions.data = data.data.data;
+    function successColumnsHandler (data) {
+      self.columnDefs = data.fields;
+    }
+
+    function successDataHandler(response) {
+      self.gridOptions.data = response.data.data;
       var columns = [];
-      if (data.data.data.length > 0)
-        columns = _.without(Object.keys(data.data.data[0]), '__metadata');
+      if (response.data.data.length > 0) {
+        columns = _.without(Object.keys(response.data.data[0]), '__metadata');
+      }
+
+      fixDatesInData();
+      
       self.gridOptions.columnDefs = columns.map(function (column) {
+        var columnInfo = _.find(self.columnDefs, {name: column});
+
         return {
           minWidth: 80,
-          name: column
+          name: column,
+          cellTemplate: getCellEditTemplate(columnInfo)
         }
       });
-      self.gridOptions.totalItems = data.data.totalRows;
+      self.gridOptions.totalItems = response.data.totalRows;
 
       setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
       usSpinnerService.stop("loading");
@@ -104,5 +122,57 @@
       NotificationService.add('error', message);
       usSpinnerService.stop("loading");
     }
+    function getCellEditTemplate (column) {
+      if (column.name === 'Id') return undefined;
+      var type = 'text';
+      var extraOptions = '';
+      var calllbackOptions = ' onbeforesave="$root.data.onUpdateRowCell(row, col, $data)"';
+      switch (column.type) {
+        case 'Numeric':
+          type = 'text'; // Also floats, so can't use number
+          break;
+        case 'DateTime':
+          return '<span class="ui-grid-cell-contents" editable-date="MODEL_COL_FIELD" '
+                  + calllbackOptions
+                  + '>{{COL_FIELD | date:"MM/dd/yyyy" CUSTOM_FILTERS }}</span>'
+                  + '<span class="ui-grid-cell-contents" editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" '
+                  + calllbackOptions
+                  + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span>';
+          break;
+        case 'ShortText':
+          type = 'text';
+          break;
+        case 'SingleSelect':
+          // type = 'select';
+          break;
+        case 'LongText':
+          type = 'textarea';
+          break;
+        case 'Boolean':
+          type = 'checkbox';
+          break;
+        default:
+          type = 'text'
+      }
+      return '<div class="ui-grid-cell-contents" editable-' + type + '="MODEL_COL_FIELD" '
+        + calllbackOptions
+        + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
+    }
+    self.onUpdateRowCell = function(row, col, newValue) {
+      var updatedObject = angular.copy(row.entity);
+      updatedObject[col.name] = newValue;
+      return DataService.update(self.tableName, updatedObject);
+    }
+    
+    function fixDatesInData(data) {
+      self.columnDefs.forEach(function(columnDef) {
+        if (columnDef.type == 'DateTime') {
+          self.gridOptions.data.forEach(function(row) {
+            row[columnDef.name] = new Date(row[columnDef.name]);
+          })
+          console.log(self.gridOptions.data);
+        }
+      });
+    }    
   }
 }());

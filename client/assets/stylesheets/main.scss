@@ -1,10 +1,11 @@
+$icon-font-path:          "/assets/fonts/bootstrap/" !default;
 
 @import "bootstrap";
 @import "ui/ui";
 
 // Shared variables and mixins
 @import
-    "global/var"                        // global variables
+    "global/var"                        // global variables (TODO: (Adam) This has no affect if it's after import bootstrap)
 ,   "mixins"        // Bootstrap mixins
 ,   "bourbon/bourbon"                   // mixins
 ;
