@@ -1,0 +1,39 @@
+tabs .tab-content {
+  display: none;
+}
+
+/* edit in place overrides (nir kaufman)
+// ------------------------------------*/
+// .editable-buttons button {
+//   display: none !important;
+// }
+
+.editable-click, a.editable-click {
+  text-decoration: none !important;
+  color: black !important;
+  border-bottom: none !important;
+}
+
+.editable-wrap {
+  position: absolute;
+  top: -8px;
+  left: -18px;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.5);
+  background: rgba(255,255,255,0.9);
+  padding: 6px 16px;
+  z-index: 10;
+}
+
+.editable-input {
+  padding: 6px 6px !important;
+  border-radius: 3px !important;
+}
+
+.ui-grid-viewport {
+  overflow: visible !important;
+}
+
+.ui-grid-cell {
+  overflow: visible !important;
+  position: relative !important;
+}

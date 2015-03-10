@@ -12,7 +12,7 @@
         prevNeeded: '=?'
       },
       controller: function ($scope) {
-        $scope.dictionaryItems = $scope.anchorParams.getDictionaryItems();
+        $scope.dictionaryItems = $scope.anchorParams.dictionaryItems;
       },
       templateUrl: 'common/directives/anchor/anchor.html'
     };

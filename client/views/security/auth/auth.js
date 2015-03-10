@@ -36,7 +36,6 @@
       RulesService.appName = DictionaryService.appName = self.appName;
       RulesService.tableId = 4;
       DictionaryService.tableName = 'v_durados_user';
-      $scope.$broadcast('tabs:rules');
     }
 
     function setKeysInfo(data){

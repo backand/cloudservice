@@ -53,22 +53,6 @@
       });
     }
 
-    self.getData = function(size, page, sort){
-      return $http({
-        method: 'GET',
-        url: CONSTS.appUrl + '/1/table/data/' + self.tableName,
-        headers: {
-          'AppName': self.appName
-        },
-        params: {
-          'pageSize': String(size),
-          'pageNumber': String(page),
-          'filter' : '',
-          'sort' : sort
-        }
-      });
-    };
-
     //Keep hash with the objects to save.
     //Run interval every x seconds to save the objects that are in the cache.
     //After save remove from hash
