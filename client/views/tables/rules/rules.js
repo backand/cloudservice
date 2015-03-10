@@ -207,7 +207,7 @@
       showAnchorCondition: isEditMode,
       toggleAngledWindow: $scope.modal.toggleGroup,
       showAngledWindow: $scope.modal.isCurGroup,
-      getDictionaryItems: getDictionaryItems,
+      dictionaryItems: $scope.modal.dictionaryItems,
       insertAtChar: insertTokenAtChar,
       template : "views/tables/rules/dictionary_window.html"
     };
@@ -216,9 +216,6 @@
       return self.editMode;
     }
 
-    function getDictionaryItems() {
-      return $scope.modal.dictionaryItems;
-    }
     function isCurGroup(groupName) {
       return $scope.modal.curGroup == groupName;
     }
@@ -263,17 +260,15 @@
     function populateDictionaryItems(data) {
       var raw = data.data;
       var keys = Object.keys(raw);
-      $scope.modal.dictionaryItems = {
-        headings: {
-          tokens: keys[0],
-          props: keys[1],
-          parameters: 'Parameters'
-        },
-        data: {
-          tokens: raw[keys[0]],
-          props: raw[keys[1]],
-          parameters: []
-        }
+      $scope.modal.dictionaryItems.headings = {
+        tokens: keys[0],
+        props: keys[1],
+        parameters: 'Parameters'
+      };
+      $scope.modal.dictionaryItems.data = {
+        tokens: raw[keys[0]],
+        props: raw[keys[1]],
+        parameters: []
       };
     }
 
