@@ -33,7 +33,7 @@
           checkDatabaseStatus();
         }
       }, function (err) {
-        NotificationService('error', 'can not get current app info');
+        NotificationService.add('error', 'can not get current app info');
       });
     }
 

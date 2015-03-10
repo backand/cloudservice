@@ -15,10 +15,14 @@
   </button>
 
   <!--<button ng-show="rules.action.__metadata && rules.editMode" ng-click="rules.deleteAction()" class="btn btn-danger pull-right with-margin">Delete</button>-->
-  <button ng-show="rules.editMode && rules.newRuleForm.$pristine" ng-click="rules.doneEdit()" class="btn btn-default pull-right with-margin">Done</button>
-  <button ng-show="rules.editMode && !rules.newRuleForm.$pristine" ng-click="rules.cancelEdit()" class="btn btn-default pull-right with-margin">Cancel</button>
-  <button ng-show="rules.editMode" ng-click="rules.saveAction()" ng-disabled="rules.newRuleForm.$invalid" class="btn btn-primary pull-right with-margin">Save</button>
-
+    <div ng-show="rules.editMode">
+  <button ng-show="rules.newRuleForm.$pristine" ng-click="rules.doneEdit()" class="btn btn-default pull-right with-margin">Done</button>
+  <button ng-show="!rules.newRuleForm.$pristine" ng-click="rules.cancelEdit()" class="btn btn-default pull-right with-margin">Cancel</button>
+  <button ng-click="rules.saveAction()"
+          ng-disabled="rules.newRuleForm.$invalid"
+          class="btn btn-primary pull-right with-margin"
+          ladda="rules.saving" data-style="expand-right">Save</button>
+  </div>
   </div>
   <br/>
   <div class="col-xs-12">
@@ -362,7 +366,7 @@
     </div>
 
     <div class="modal-footer" ng-show="rules.action && rules.editMode">
-      <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid" ng-click="rules.saveAction()">Save</button>
+      <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid" ng-click="rules.saveAction()" ladda="rules.saving" data-style="expand-right">Save</button>
       <button class="btn btn-danger pull-left" ng-click="rules.deleteAction()" ng-if="rules.action.__metadata">Delete</button>
       <button ng-show="rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.doneEdit()">Done</button>
       <button ng-show="!rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.cancelEdit()">Cancel</button>

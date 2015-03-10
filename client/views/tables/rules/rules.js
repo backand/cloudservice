@@ -116,6 +116,7 @@
     };
 
     self.saveAction = function () {
+      self.saving = true;
       self.testUrl = '';
       var ruleToSend = replaceSpecialCharInCode(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
@@ -125,7 +126,8 @@
             self.test.parameters = {};
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
-        })
+          self.saving = false;
+        }, function() {self.saving = false;});
     };
 
     function updateOrPostNew(action, isUpdate) {

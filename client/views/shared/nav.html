@@ -113,7 +113,7 @@
     </li>
     <li ng-class="{active: nav.isTablesActive(), disabled: nav.DatabaseStatus != 1}" ng-show="!nav.dbEmpty">
       <a ng-class="{disabled: nav.DatabaseStatus !== 1}"
-         ng-click="nav.tables.length == 0 ? nav.loadTables() : nav.goTo('tables.notables')"
+         ng-click="nav.tables.length == 0 ? nav.goTo('tables.notables') : {}"
          href="">
         <i class="ti-view-grid"></i>
         <span>Database Tables</span>
