@@ -17,7 +17,6 @@
 
     function loadTables(){
       self.appName = AppState.get();//  $state.params.name
-      self.dbEmpty = false;
       if(self.appName == undefined)
         return;
       TablesService.get(self.appName).then(
@@ -27,6 +26,10 @@
             if(self.tables.length == 0){ //only check the database if there are no tables
               AppsService.appDbStat(self.appName).then(successDbStats);
             }
+            else{
+              self.dbEmpty = false;
+            }
+
             loadDbQueries();
           }
         },
