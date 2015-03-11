@@ -550,7 +550,9 @@
     self.codeRegex = /^\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow,\s*parameters\s*,\s*userProfile\s*\)\s*\{(.|[\r\n])*}\s*$/;
 
     var backandCallbackConstCode = {
-      start: '/* globals\n\  $http: http service for AJAX calls\n\*/\n' +
+      start: '/* globals\n\  $http - service for AJAX calls - $http({method:"GET",url:CONSTS.apiUrl + "/1/table/data/tableexample" , headers: {"Authorization":userProfile.token}});\n' +
+        '  CONSTS - CONSTS.apiUrl for Backands API URL\n' +
+        '\*/\n' +
       '\'use strict\';\n' +
       'function backandCallback(userInput, dbRow, parameters, userProfile) {',
       end:   '}'
