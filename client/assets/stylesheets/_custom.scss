@@ -499,3 +499,8 @@ button.with-margin {
 .hovering-menu {
   display: block;
 }
+
+.ui-tab ul.nav.nav-tabs {
+  height: 100%;
+  overflow: auto;
+}

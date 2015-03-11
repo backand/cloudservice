@@ -24,7 +24,6 @@
 
     self.statisticsArray = appItem.data.stat;
 
-    var time = new Date();
     self.logLimit = 7;
     self.appTitle = appData.Title;
     self.connectionStatus = '';
@@ -32,21 +31,25 @@
 
     self.goToLocation = function(href) {
         window.open(href,'_blank');
-    }
+    };
 
     AppsService.appDbStat($state.params.name)
       .then(function(data){
         if (data.data.tableCount == 0) {
-          var msg = 'Your database has no tables! go to <a href="#/database/template/' + $state.params.name + '">Database Templates</a> to populate the database or use any DB admin tool like Workbench or phpMyAdmin';
+          var msg = 'Your database has no tables! go to <a href="#/database/template/' +
+            $state.params.name +
+            '">Database Templates</a> to populate the database or use any DB admin tool like Workbench or phpMyAdmin';
+
           self.alertMsg = $sce.trustAsHtml(msg);
           AppsService.setAlert($state.params.name, msg)
         }
-      })
+      });
 
 
-    self.setAlertStatus = function(){
-        AppsService.setAlert(self.appName,'');
-    }
+    self.setAlertStatus = function() {
+      AppsService.setAlert(self.appName,'');
+      self.alertMsg = '';
+    };
 
     $scope.$on('$destroy', function() {
 

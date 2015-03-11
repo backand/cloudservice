@@ -11,20 +11,20 @@ angular.module('app.routes', []).
 
     $stateProvider
       .state('sign_up', {
-            url: '/sign_up',
-            templateUrl: 'views/auth/sign_up.html',
-            controller : 'SignUpController as signup'
+        url: '/sign_up',
+        templateUrl: 'views/auth/sign_up.html',
+        controller : 'SignUpController as signup'
       })
       .state('sign_in', {
         url: '/sign_in',
         templateUrl: 'views/auth/sign_in.tpl.html',
         controller : 'SignInController as sign'
       })
-      .state('change_password', {
-        url: '/change_password',
-        templateUrl: 'views/auth/change_password.html',
-        controller : 'changePasswordController as change'
-      })
+      //.state('change_password', {
+      //  url: '/change_password',
+      //  templateUrl: 'views/auth/change_password.html',
+      //  controller : 'changePasswordController as change'
+      //})
       .state('apps', {
         url: '/',
         abstract: true,
@@ -73,16 +73,25 @@ angular.module('app.routes', []).
         abstract: true,
         template: '<div ui-view></div>'
       });
-    })
-  .run(run,['$state','AuthService', '$rootScope']);
+  })
+  .run(['$rootScope', '$state', 'SessionService', run]);
 
-function run($state,SessionService, $location){
-  if (!SessionService.currentUser )  {
-      if($location.path() != '/sign_up' && $location.path() != '/change_password')
-        $state.go('sign_in')
-  }
-  else {
-    $state.go('apps.index')
-  }
+function isStateForSignedOutUser(state) {
+  return (state.name === 'sign_in' || state.name === 'sign_up');
+}
 
+function run($rootScope, $state, SessionService) {
+  $rootScope.$on('$stateChangeStart', function (event, toState) {
+    if (!SessionService.currentUser) {
+      if (!isStateForSignedOutUser(toState)) {
+        event.preventDefault();
+        $state.go('sign_in', null, {notify: false});
+      }
+    } else {
+      if (isStateForSignedOutUser(toState)) {
+        event.preventDefault();
+        $state.go('apps.index');
+      }
+    }
+  });
 }
