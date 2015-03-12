@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function HeaderController($scope, AppsService, $state, $filter, AppState, usSpinnerService ) {
+  function HeaderController($scope, AppsService, $state, $filter, AppState, usSpinnerService, NotificationService ) {
     var self = this;
 
     self.currAppName = '';
@@ -12,10 +12,14 @@
         return a.Name === appName;
       })[0]);
 
-
-
       if (app.DatabaseStatus == 1) {
         $state.go('apps.show', {name: appName});
+      }
+      else if (app.DatabaseStatus==2) {
+        usSpinnerService.stop('loading-app');
+        self.currAppName = '';
+        NotificationService.add('error', 'Please wait until the database is connected');
+        return;
       }
       else{
         $scope.$root.$broadcast('clearTables');
@@ -41,7 +45,7 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", 'AppsService', '$state', '$filter','AppState','usSpinnerService', HeaderController]);
+    ["$scope", 'AppsService', '$state', '$filter','AppState','usSpinnerService', 'NotificationService', HeaderController]);
 
 }());
 
