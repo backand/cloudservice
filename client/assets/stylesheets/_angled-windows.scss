@@ -9,7 +9,9 @@
 /** Window minimize and expansion transition **/
 .angled-window {
   position: absolute;
-  max-height: 1000px;
+  display: table;
+  max-height: 500px;
+  max-width: 100%;
   webkit-transition: max-height .4s ease;
   -moz-transition: max-height .4s ease;
   -o-transition: height .4s ease;
@@ -30,6 +32,7 @@
   min-width: 220px;
   overflow: auto;
   resize: both;
+  height: 250px;
 }
 
 /** Hide content falling outside of window
