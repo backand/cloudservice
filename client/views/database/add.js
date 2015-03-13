@@ -216,8 +216,21 @@
         }
       ];
 
-      self.activeTemplate = 1;
-      self.templates = [{name: "Game Shop", template: self.tableTemplate1, active: 1},
+      self.tableTemplate4 =
+        [
+          {
+            name: "items",
+            fields: [
+              {name: "name", type: "ShortText"},
+              {name: "description", type: "LongText"}
+            ]
+          }
+        ];
+
+      self.activeTemplate = 4;
+      self.templates = [
+        {name: "Create your own", template: self.tableTemplate4, active: 4},
+        {name: "Game Shop", template: self.tableTemplate1, active: 1},
         {name: "E-commerce Campaign", template: self.tableTemplate2, active: 2},
         {name: "Advertising System", template: self.tableTemplate3, active: 3}];
 
@@ -233,12 +246,11 @@
         })
     }
 
-
     self.stringfy = function (obj) {
       return angular.toJson(obj, true);
     }
 
-    self.tableTemplate = self.stringfy(self.tableTemplate1);
+    self.tableTemplate = self.stringfy(self.tableTemplate4);
 
     self.add = function () {
       var table = null;
@@ -276,6 +288,15 @@
       }
     }
 
+
+    $scope.ace = {
+      dbType: 'json',
+      editors: {},
+      onLoad: function(_editor) {
+        $scope.ace.editors[_editor.container.id] = _editor;
+        _editor.$blockScrolling = Infinity;
+      }
+    };
 
     //AppsService.getCurrentApp($state.params.name)
     //  .then(function (data) {

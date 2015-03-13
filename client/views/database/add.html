@@ -20,10 +20,19 @@
             </ul>
           </div>
 
+          <!--<textarea class="" ng-model="dbadd.tableTemplate"  rows="19"></textarea>-->
+          <div  ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1}"
+                class="form-control ace-rule"
+                name="tableTemplate"
+                id="tableTemplate"
+                ng-model="dbadd.tableTemplate"
+                required
+                ng-pattern="codeRegex"
+                style="resize: vertical; ">
 
-
-          <textarea class="form-control ng-pristine ng-invalid ng-invalid-required" ng-model="dbadd.tableTemplate"  rows="19"></textarea>
-
+          </div>
+          <div>** Fields types: ShortText, LongText, DateTime, Numeric, SingleSelect, MultiSelect</div>
+          <div>** For SingleSelect and MultiSelect you need to specify the "relatedTable" </div>
 
           <br><button ng-disabled="!dbadd.isEmptyDb" class="btn btn-success btn-lg btn-w-md btn-block ladda-button" ladda="dbadd.processing" data-style="expand-right" ng-click="dbadd.add()">
            <span class="ladda-label"><span class="ng-scope">
@@ -32,8 +41,6 @@
           <br>
           <div ng-show="!dbadd.isEmptyDb" class="alert ng-isolate-scope alert-danger alert-dismissable">Your database is not empty, the template can be applied only on an empty database.</div>
           <div ng-show="dbadd.isReady" class="alert ng-isolate-scope alert-success alert-dismissable">Congratulations, your app is ready now with the template database.</div>
-
-
           <br>
 
         </div>

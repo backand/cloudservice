@@ -44,14 +44,14 @@
         <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
       </a>
       <ul>
-        <li ng-if="nav.DatabaseStatus === 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-          <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goTo('database.show')" href="">
+        <li ng-if="nav.DatabaseStatus == 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+          <a ng-class="{disabled: nav.DatabaseStatus !== 1}" ng-click="nav.goTo('database.show')" href="">
             <i class="ti-wand"></i>
             <span>Configuration</span>
           </a>
         </li>
-        <li ng-if="nav.DatabaseStatus !== 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-          <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.goToAlways('database.edit')" href="">
+        <li ng-if="nav.DatabaseStatus == 0" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+          <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goToAlways('database.edit')" href="">
             <i class="ti-wand"></i>
             <span>Connect</span>
           </a>
@@ -214,43 +214,6 @@
         <i class="ti-settings"></i>
         <span>App Settings</span>
       </a>
-    </li>
-    <li ng-class="{active: nav.state == 'backoffice.edit'}">
-      <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
-        <i class="icon-backoffice-icon"></i>
-        <span>Back Office</span>
-        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
-      </a>
-      <ul>
-        <li ng-class="{active: nav.state == 'backoffice.edit', disabled: nav.DatabaseStatus !== 1}">
-          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.edit')" href="">
-            <i class="icon-style"></i>
-            <span>Templates</span>
-          </a>
-        </li>
-
-        <li ng-class="{active: nav.state == 'backoffice.edit', disabled: nav.DatabaseStatus !== 1}">
-          <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goToLocation('http://' + nav.appName + '.backand.net')" href="">
-            <i class="icon-cloud"></i>
-            <span>Hosted Back Office</span>
-          </a>
-        </li>
-
-        <li ng-class="{active: nav.state == 'backoffice.cust'}">
-          <a ng-click="nav.goToAlways('backoffice.cust')" href="">
-            <i class="icon-magic"></i>
-            <span>Customization</span>
-          </a>
-        </li>
-
-        <li ng-class="{active: nav.state == 'backoffice.code'}">
-          <a ng-click="nav.goToAlways('backoffice.code')" href="">
-            <i class="icon-file-code-o"></i>
-            <span>Code Example</span>
-          </a>
-        </li>
-
-      </ul>
     </li>
   </ul>
 </div>

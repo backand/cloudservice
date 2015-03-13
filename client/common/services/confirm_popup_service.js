@@ -24,11 +24,13 @@
      * @param cancelText
      * @returns {modalInstance.result|*}
      */
-    self.confirm = function (msg, okText, cancelText) {
+    self.confirm = function (msg, okText, cancelText, showOk, showCancel) {
 
       self.modalScope.msg = msg;
       self.modalScope.okBtnText = okText || 'OK';
       self.modalScope.cancelBtnText = cancelText || 'CANCEL';
+      self.modalScope.showOk = angular.isDefined(showOk) ? showOk : true;
+      self.modalScope.showCancel = angular.isDefined(showCancel) ? showCancel : true;
 
       self.modalScope.close = function (result) {
         modalInstance.close(result);

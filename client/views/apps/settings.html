@@ -6,16 +6,16 @@
     </div>
     <div class="panel-body">
       <form role="form" role="form" ng-submit="settings.submitForm()">
-        <div class="form-group   form-group-half">
+        <div class="form-group">
           <label for="name">Name</label>
           <input type="text" class="form-control" id="name" ng-model="settings.appName" required ng-disabled="false">
         </div>
-        <div class="form-group   form-group-half">
+        <div class="form-group">
           <label for="title">Title</label>
           <input type="text" class="form-control" id="title" ng-model="settings.appTitle" required>
         </div>
-        <div class="form-group form-group-half">
-          <div class="form-group   form-group-half">
+        <div class="form-group">
+          <div class="form-group">
             <label>Default Date Format</label>
             <div>
               <label class="ui-radio" ng-repeat="dates in settings.datesFormar">
@@ -23,7 +23,7 @@
               </label>
             </div>
           </div>
-           <div class="form-group   form-group-half">
+           <div class="form-group">
             <label for="rows">Default List Page Rows</label>
             <input type="number" class="form-control" id="rows" data-ng-model="settings.defaultPageSize" data-min=5 data-max=1000 required>
           </div>

@@ -34,7 +34,7 @@
       </a>
 
       <a class="icon-box col-md-2" >
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'oracle'}" ng-click ="[dbedit.dataName = 'oracle',dbedit.data.usingSsh = false]">
+        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'oracle'}" ng-click="dbedit.Confirmation('Oracle is available only in the Enterprise edition.');" >
           <img src="assets/images/oracle.jpg" style="vertical-align: inherit;"/>
         </div>
         <div class="desc-container">
@@ -43,7 +43,7 @@
       </a>
 
       <a class="icon-box col-md-2"  >
-        <div class="icon-container" onclick="window.alert('Sorry but mongoDB is in closed Beta');" ng-class="{active : false}" style="border: none;" >
+        <div class="icon-container" ng-click="dbedit.Confirmation('Sorry but mongoDB is in closed Beta');" ng-class="{active : false}" style="border: none;" >
           <img src="assets/images/mongodb.png"/>
         </div>
         <div class="desc-container">

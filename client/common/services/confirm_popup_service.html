@@ -14,7 +14,7 @@
   <br>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="close(true)" ng-bind="okBtnText"></button>
-  <button class="btn btn-default" ng-click="close(false)" ng-bind="cancelBtnText"></button>
+  <button class="btn btn-primary" ng-if="showOk" ng-click="close(true)" ng-bind="okBtnText"></button>
+  <button class="btn btn-default" ng-if="showCancel" ng-click="close(false)" ng-bind="cancelBtnText"></button>
 </div>
 

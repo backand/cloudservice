@@ -1,9 +1,9 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseEdit', ['$scope', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService', DatabaseEdit]);
+    .controller('DatabaseEdit', ['$scope', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup', DatabaseEdit]);
 
-  function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService) {
+  function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup) {
 
     var self = this;
 
@@ -113,6 +113,10 @@
     self.back = function(){
       $state.go('apps.show',({name:$state.params.name}));
     };
+
+    self.Confirmation = function(msg){
+      ConfirmationPopup.confirm(msg,'Ok','',true,false);
+    }
 
   }
 }());
