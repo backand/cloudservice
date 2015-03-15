@@ -60,8 +60,7 @@
         .then(function (data) {
           self.app = data;
           self.DatabaseStatus = self.app.DatabaseStatus;
-          var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
-          checkChanges(oldStatus);
+          checkChanges(self.app.myStatus.oldStatus);
           if(self.DatabaseStatus == 0)
             self.tables = [];
           else if(self.tables.length == 0) //only load tables when it's empty
@@ -84,7 +83,7 @@
 
     self.isTablesActive = function() {
       return $state.current.name.indexOf('tables.columns') != -1;
-    }
+    };
 
     self.getDBStatus = function() {
       if (self.app === null) {
@@ -116,6 +115,8 @@
     };
 
     function checkChanges(oldStatus) {
+      if (oldStatus === undefined) return;
+
       var newStatus = parseInt(self.app.myStatus.status);
       oldStatus = parseInt(oldStatus);
 

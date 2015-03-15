@@ -10,6 +10,8 @@
       self.workspaces = null;
       self.view = null;
 
+      self.savePermanentFilter = savePermanentFilter;
+
       //Security Matrix
       self.templateChanged = templateChanged;
       self.templateRoleAdd = templateRoleAdd;
@@ -30,7 +32,6 @@
      */
     function toggleDictionary() {
       self.dictionaryState = !self.dictionaryState;
-      $scope.$broadcast('insert:windowClosed');
     }
 
     /**
@@ -109,6 +110,10 @@
       self.view.permissions.allowDeleteRoles = permissions.allowDelete;
       self.view.permissions.allowReadRoles = permissions.allowRead;
 
+      ColumnsService.commit(self.view);
+    }
+
+    function savePermanentFilter() {
       ColumnsService.commit(self.view);
     }
 
