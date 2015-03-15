@@ -152,7 +152,7 @@
           return f.__metadata.id == String(self.view.permissions.securityWorkspace);
         });
 
-        if (!ws) {
+        if (!ws || !ws[0]) {
           NotificationService.add('error', "Can't find security template");
           return;
         }

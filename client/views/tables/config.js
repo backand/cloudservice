@@ -37,8 +37,7 @@
       })
       .state('tables.columns.actions', {
         url: '/actions',
-        templateUrl: 'views/tables/rules/rules.html',
-        controller: 'RulesController as rules'
+        templateUrl: 'views/tables/rules/rules.html'
       })
       .state('tables.columns.security', {
         url: '/security',
