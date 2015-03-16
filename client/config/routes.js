@@ -85,7 +85,7 @@ function run($rootScope, $state, SessionService) {
     if (!SessionService.currentUser) {
       if (!isStateForSignedOutUser(toState)) {
         event.preventDefault();
-        $state.go('sign_in', null, {notify: false});
+        $state.go('sign_in');
       }
     } else {
       if (isStateForSignedOutUser(toState)) {

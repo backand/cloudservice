@@ -1,3 +1,31 @@
+<div class="apps-jumbo" ng-show="index.showJumbo()">
+  <i ng-click="index.closeJumbo()" class="ti-close apps-jumbo-close-icon"></i>
+  <div class="row apps-jumbo-title">
+    <h1>Welcome to Backand</h1>
+    <div class="apps-jumbo-headline">Start by creating your first app below.
+    You can also read our quick start resources</div>
+  </div>
+  <div class="row apps-jumbo-sections">
+    <div class="col-xs-4">
+      <div class="apps-jumbo-section-wrapper" ui-sref="getting-started-open">
+        <img src="/assets/images/apps_page/icon-tutorial.png" alt=""/>
+        <div class="apps-jumbo-section-title">Getting started guide</div>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="apps-jumbo-section-wrapper" ui-sref="kickstart-open">
+        <img src="/assets/images/apps_page/icon-seed.png" alt=""/>
+        <div class="apps-jumbo-section-title">Kickstart seed tutorial</div>
+      </div>
+    </div>
+    <div class="col-xs-4">
+      <div class="apps-jumbo-section-wrapper">
+        <img src="/assets/images/apps_page/icon-api.png" alt=""/>
+        <div class="apps-jumbo-section-title">API documentation</div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="page ng-scope">
   <div class="panel-body">
     <div class="row">

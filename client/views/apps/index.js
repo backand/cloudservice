@@ -2,9 +2,9 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', AppsIndexController]);
+    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', '$localStorage', AppsIndexController]);
 
-  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService) {
+  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, $localStorage) {
     var self = this;
     self.loading = false;
     var stop;
@@ -49,12 +49,12 @@
     self.appSettings = function (appName) {
       AppState.set(appName);
       $state.go('apps.edit', {name: appName});
-    }
+    };
 
     self.getStarted = function (appName) {
       AppState.set(appName);
       $state.go('playground.get-started', {name: appName});
-    }
+    };
 
 
     self.namePattern = /^\w+$/;
@@ -95,6 +95,14 @@
       stopRefresh();
     });
 
+    self.showJumbo = function () {
+      return  !$localStorage.backand.hideJumbo;
+    };
+
+    self.closeJumbo = function () {
+      self.hideJumbo = true;
+      $localStorage.backand.hideJumbo = true;
+    }
 
   }
 }());
