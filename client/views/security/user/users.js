@@ -38,10 +38,9 @@
         multiSelect: true,
         enableSelectAll: false,
         columnDefs: [
+          {name: 'Username', enableCellEdit: false, sort: {direction: 'asc', priority: 0}},
           {name: 'FirstName'},
           {name: 'LastName'},
-          {name: 'Username', enableCellEdit: false, sort: {direction: 'desc', priority: 0}},
-          {name: 'Email'},
           {
             name: self.roleFieldName,
             displayName: 'Role',
@@ -71,7 +70,7 @@
 
     function rolesSuccessHandler(data) {
       self.roles = data.data.data;
-      self.gridOptions.columnDefs[4].editDropdownOptionsArray = self.roles;
+      self.gridOptions.columnDefs[3].editDropdownOptionsArray = self.roles;
 
       $scope.modal.roles = self.roles;
       usSpinnerService.stop('loading');
@@ -82,7 +81,7 @@
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
       self.roleFieldName = self.gridOptions.data[0] && self.gridOptions.data[0].Role ? 'Role' : self.roleFieldName;
-      self.gridOptions.columnDefs[4].name = self.roleFieldName;
+      self.gridOptions.columnDefs[3].name = self.roleFieldName;
       if (self.roles == null)
         SecurityService.getRoles()
           .then(rolesSuccessHandler, errorHandler);

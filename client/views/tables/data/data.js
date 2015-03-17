@@ -101,7 +101,9 @@
           cellTemplate: getCellEditTemplate(columnInfo)
         }
       });
-      _.last(self.gridOptions.columnDefs).minWidth = 286;
+      if(_.last(self.gridOptions.columnDefs))
+        _.last(self.gridOptions.columnDefs).minWidth = 286;
+
       self.gridOptions.totalItems = response.data.totalRows;
 
       setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid

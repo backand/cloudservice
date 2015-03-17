@@ -38,6 +38,10 @@ angular.module('app.routes', []).
         url: '/docs/kickstart',
         templateUrl: 'views/api_playground/kickstart-open.html'
       })
+      .state('api-desc', {
+        url: '/docs/api',
+        templateUrl: 'views/api_playground/api-desc.html'
+      })
       .state('database', {
         url: '/database',
         abstract: true,
