@@ -65,11 +65,11 @@
 
     function convertStateNumber(stateNumber) {
       switch(stateNumber) {
-        case "0":
+        case 0:
           return { class: "ui-ribbon-warning", text: 'Pending'};
-        case "1":
+        case 1:
           return { class: 'ui-ribbon-success', text: 'Connected'};
-        case "2":
+        case 2:
           return { class: "ui-ribbon-info", text: 'Create'};
         default:
           return { class: 'ui-ribbon-danger', text: 'Error'};
