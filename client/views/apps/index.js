@@ -80,7 +80,9 @@
       AppsService.all()
         .then(function(apps){
           self.apps = apps.data.data;
-        });
+        },function(error){
+          stopRefresh();
+      });
     }, 10000);
 
     function stopRefresh() {

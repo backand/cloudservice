@@ -20,7 +20,10 @@
         //if not sign in screen :
         usSpinnerService.stop("loading");
         if ((rejection.config.url+"").indexOf('token') === -1){
-          NotificationService.add("error",rejection.data);
+          if(rejection.data == null)
+            NotificationService.add("error","The service is temporary unavailable, please refresh the page in few seconds");
+          else
+            NotificationService.add("error",rejection.data);
           if (rejection.status === 401) {
             SessionService.ClearCredentials();
             $injector.get('$state').transitionTo('sign_in');

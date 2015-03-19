@@ -33,9 +33,9 @@
     };
 
     $scope.$on('$stateChangeSuccess', function () {
-      AppsService.all()
-        .then(function (data) {
-          self.apps = data.data.data;
+      AppsService.getApps()
+        .then(function (apps) {
+          self.apps = apps.list;
           self.currAppName = $state.params.name;
           self.currAppName = AppState.get();
           usSpinnerService.stop('loading-app');
