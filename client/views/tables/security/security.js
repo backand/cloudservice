@@ -10,6 +10,8 @@
       self.workspaces = null;
       self.view = null;
 
+      self.savePermanentFilter = savePermanentFilter;
+
       //Security Matrix
       self.templateChanged = templateChanged;
       self.templateRoleAdd = templateRoleAdd;
@@ -30,7 +32,6 @@
      */
     function toggleDictionary() {
       self.dictionaryState = !self.dictionaryState;
-      $scope.$broadcast('insert:windowClosed');
     }
 
     /**
@@ -112,6 +113,10 @@
       ColumnsService.commit(self.view);
     }
 
+    function savePermanentFilter() {
+      ColumnsService.commit(self.view);
+    }
+
     /**
      * Add new role
      * @param roleName
@@ -152,7 +157,7 @@
           return f.__metadata.id == String(self.view.permissions.securityWorkspace);
         });
 
-        if (!ws) {
+        if (!ws || !ws[0]) {
           NotificationService.add('error', "Can't find security template");
           return;
         }

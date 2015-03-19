@@ -10,11 +10,12 @@
 
     self.get = function(){
       return _currentApp;
-    }
+    };
 
     self.set = function(appName){
       _currentApp = appName;
-    }
+      return appName;
+    };
 
     self.reset = function(){
       _currentApp = null;

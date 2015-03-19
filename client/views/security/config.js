@@ -19,7 +19,15 @@
       .state('security.auth', {
         url: '/auth/:name',
         controller: 'SecurityAuth as auth',
-        templateUrl: 'views/security/auth/auth.html'
+        templateUrl: 'views/security/auth/auth.html',
+        resolve: {
+          tableName: function ($stateParams, AppState, RulesService, DictionaryService) {
+            DictionaryService.appName = RulesService.appName = AppState.set($stateParams.name);
+            RulesService.tableId = 4;
+            DictionaryService.tableName = 'v_durados_user';
+            return DictionaryService.tableName;
+          }
+        }
       })
   }
 

@@ -18,7 +18,7 @@
       ViewData
     ]);
 
-  function ViewData(NotificationService, ColumnsService, DataService, $scope, usSpinnerService, DbQueriesService, $timeout, $rootScope, tableName) {    
+  function ViewData(NotificationService, ColumnsService, DataService, $scope, usSpinnerService, DbQueriesService, $timeout, $rootScope, tableName) {
     var self = this;
     self.tableName = tableName;
     self.title = '';
@@ -91,7 +91,7 @@
       }
 
       fixDatesInData();
-      
+
       self.gridOptions.columnDefs = columns.map(function (column) {
         var columnInfo = _.find(self.columnDefs, {name: column});
 
@@ -101,6 +101,9 @@
           cellTemplate: getCellEditTemplate(columnInfo)
         }
       });
+      if(_.last(self.gridOptions.columnDefs))
+        _.last(self.gridOptions.columnDefs).minWidth = 286;
+
       self.gridOptions.totalItems = response.data.totalRows;
 
       setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
@@ -163,7 +166,7 @@
       updatedObject[col.name] = newValue;
       return DataService.update(self.tableName, updatedObject);
     }
-    
+
     function fixDatesInData(data) {
       self.columnDefs.forEach(function(columnDef) {
         if (columnDef.type == 'DateTime') {
@@ -173,6 +176,6 @@
           console.log(self.gridOptions.data);
         }
       });
-    }    
+    }
   }
 }());

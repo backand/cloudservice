@@ -39,7 +39,12 @@
         url: '/orm/usage/:name',
         templateUrl: 'views/api_playground/orm-usage.html'
       })
-
+      .state('playground.todo', {
+        parent: 'playground',
+        url: '/todo/:name',
+        controller: 'Todo as todo',
+        templateUrl: 'views/api_playground/todo.html'
+      })
   }
 
 })();

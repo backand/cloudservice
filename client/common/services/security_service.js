@@ -11,7 +11,7 @@
 
 
     self.getData = function (tableName, size, page, sort, isConfig, filter) {
-      var sortParam = '[{fieldName:"id", order:"desc"}]';
+      var sortParam = '';
       var url = (isConfig) ? '' : self.dbDataUrl;
       var filterParam = filter || '';
       size = !size ? 20 : size;
@@ -64,7 +64,7 @@
 
     self.getUsers = function (size, page, sort, filter) {
 
-      return self.getData(self.usersTableName, size, page, sort, '', filter)
+      return self.getData(self.usersTableName, size, page, '[{fieldName:"Username", order:"asc"}]', '', filter)
     };
 
     self.getRoles = function () {

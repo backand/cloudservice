@@ -87,7 +87,7 @@
 
     self.isTablesActive = function() {
       return $state.current.name.indexOf('tables.columns') != -1;
-    }
+    };
 
     self.getDBStatus = function() {
       if (self.app === null) {
@@ -119,6 +119,8 @@
     };
 
     function checkChanges(oldStatus) {
+      if (oldStatus === undefined) return;
+
       var newStatus = parseInt(self.app.myStatus.status);
       oldStatus = parseInt(oldStatus);
 

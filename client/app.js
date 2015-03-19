@@ -22,9 +22,10 @@
     $httpProvider.useApplyAsync(true);
   }
 
-  function run($log, editableOptions) {
+  function run($log, editableOptions, $localStorage) {
     $log.debug('App is running!');
     editableOptions.theme = 'bs3';
+    $localStorage.backand = $localStorage.backand || {};
   }
 
   angular.module('controllers', []);
@@ -68,7 +69,8 @@
     'app.dbQueries',
     'ngMessages',
     'pascalprecht.translate',
-    'angled-windows.directives'
+    'angled-windows.directives',
+    'ngStorage'
   ])
     //.config(['$compileProvider','$httpProvider',appConfig])
     .config(['ngClipProvider', function(ngClipProvider) {

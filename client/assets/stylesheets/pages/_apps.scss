@@ -1,0 +1,56 @@
+.apps-jumbo {
+  background: url("/assets/images/apps_page/background.jpg");
+  color: rgba(255, 255, 255, 0.9);
+  padding: 20px 15px 60px 15px;
+  box-shadow: 0px 5px 25px gray;
+  font-family: "Open Sans", sans-serif;
+
+  .apps-jumbo-close-icon {
+    position: relative;
+    left: calc(100% - 4px);
+    top: -14px;
+
+    &:hover {
+      cursor: pointer;
+      font-weight: bolder;
+    }
+  }
+
+  .apps-jumbo-title {
+    text-align: center;
+    margin-bottom: 50px;
+
+    h1 {
+      font-size: 48px;
+    }
+  }
+
+  .apps-jumbo-headline {
+    opacity: .8;
+    font-size: 20px;
+  }
+
+  .apps-jumbo-sections {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 16px;
+  }
+
+  .apps-jumbo-section-wrapper {
+    width: 200px;
+    margin: 0 auto;
+
+    &:hover {
+      cursor: pointer;
+      font-weight: bolder;
+    }
+  }
+
+  .apps-jumbo-section-title {
+    display: inline-block;
+    text-transform: uppercase;
+    margin-left: 5px;
+    width: 70%;
+    vertical-align: middle;
+  }
+}
