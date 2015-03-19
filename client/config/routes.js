@@ -31,8 +31,9 @@ angular.module('app.routes', []).
         template: '<div ui-view></div>'
       })
       .state('getting-started-open', {
-        url: '/docs/start',
-        templateUrl: 'views/api_playground/get-started-open.html'
+        url: '/docs/start/:isnew',
+        templateUrl: 'views/api_playground/get-started-open.html',
+        controller: 'Docs as docs'
       })
       .state('kickstart-open', {
         url: '/docs/kickstart',

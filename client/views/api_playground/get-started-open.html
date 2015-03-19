@@ -5,7 +5,8 @@
       <div class="row col-sm-10 col-sm-offset-1">
         <section class="panel panel-box">
           <div class="panel-item bg-info">
-            <h2 style="text-align:center;">Follow these steps to integrate Backand into your existing Angular project. If you do not yet have an Angular project, download the <a ui-sref="kickstart-open" style="color:#FE4E00 ;text-decoration: underline;">kickstart seed</a> project with Backand inside.</h2>
+            <h2 ng-if="docs.isNew !== 'new'" style="text-align:center;">Follow these steps to integrate Backand into your existing Angular project. If you do not yet have an Angular project, download the <a ui-sref="kickstart-open" style="color:#FE4E00 ;text-decoration: underline; font-weight: normal;">kickstart seed</a> project with Backand inside.</h2>
+            <h2 ng-if="docs.isNew === 'new'" style="text-align:center;">We're creating your app and it will take only 1 more minute...<br/> In the mean time let's start connect your Angular app to backand. If you do not yet have an Angular project, download the <a ui-sref="kickstart-open" style="color:#FE4E00 ;text-decoration: underline; font-weight: normal;">kickstart seed</a> project with Backand inside.</h2>
           </div>
         </section>
         <br/>
@@ -66,7 +67,7 @@
       //Option 1: Add a call to the Backand SDK in the app's config to add the authentication token to the header
       myApp.config(function (Backand) {
         Backand.setDefaultHeader();
-      }
+      })
 
       //Option 2: Use an Angular HTTP Interceptor to add the authentication token to each HTTP request
       function httpInterceptor($q, $log, $cookieStore) {
