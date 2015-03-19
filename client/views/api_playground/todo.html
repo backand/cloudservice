@@ -1,0 +1,21 @@
+<section class="page-form-ele page ng-scope">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>ORM Usage</strong></div>
+        <div class="panel-body">
+            <div class="row col-sm-10 col-sm-offset-1">
+            <h1>
+                Todo
+            </h1>
+              <div  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: 'html', firstLineNumber: 1}"
+                    readonly
+                    class="form-control ace-rule"
+                    id="tableTemplate"
+                    ng-model="todo.todoHTML"
+                    required
+                    ng-pattern="codeRegex"
+                    style="resize: vertical; ">
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
