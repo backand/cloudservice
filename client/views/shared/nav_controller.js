@@ -56,16 +56,23 @@
       }
       AppState.set(self.appName);
 
-      AppsService.getCurrentApp(self.appName)
-        .then(function (data) {
-          self.app = data;
-          self.DatabaseStatus = self.app.DatabaseStatus;
-          checkChanges(self.app.myStatus.oldStatus);
-          if(self.DatabaseStatus == 0)
-            self.tables = [];
-          else if(self.tables.length == 0) //only load tables when it's empty
-            loadTables();
-        });
+      AppsService.getCurrentApp(self.appName).then(successGetCurrentApp,errorGetCurrentApp);
+    }
+
+    function successGetCurrentApp(data){
+      self.app = data;
+      self.DatabaseStatus = self.app.DatabaseStatus;
+      var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
+      checkChanges(oldStatus);
+      if(self.DatabaseStatus == 0)
+        self.tables = [];
+      else if(self.tables.length == 0) //only load tables when it's empty
+        loadTables();
+    }
+
+    function errorGetCurrentApp()
+    {
+      stopRefresh();
     }
 
     $scope.$on('$stateChangeSuccess', function(){
@@ -76,9 +83,6 @@
 
       loadApp();
 
-      if (typeof self.appName !== 'undefined') {
-        stop = $interval(loadApp, 10 * 1000);
-      }
     });
 
     self.isTablesActive = function() {

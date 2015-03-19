@@ -9,7 +9,8 @@
       list: [],
       names: [],
       status: {},
-      alerts: {}
+      alerts: {},
+      loaded: false
     };
 
     var currentApp;
@@ -77,7 +78,20 @@
       return apps.names;
     };
 
+    self.getApps = function () {
+      var deferred = $q.defer();
+      if(apps.loaded)
+        deferred.resolve(apps)
+      else
+        self.all().then(function(){
+          deferred.resolve(apps);
+        });
+
+      return deferred.promise;
+    }
+
     self.all = function () {
+      var deferred = $q.defer();
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
@@ -85,11 +99,15 @@
         .success(function (data) {
           apps.list = data.data;
           updateAppNames();
+          apps.loaded = true;
+          deferred.resolve(data);
         })
-        .error(function (error, message) {
-          NotificationService.add('error', message);
+        .error(function (error) {
+          apps.loaded = false;
+          deferred.reject(error);
         });
 
+      return deferred.promise;
     };
 
     self.refresh = function () {
