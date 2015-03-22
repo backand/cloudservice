@@ -41,6 +41,10 @@
           usSpinnerService.stop('loading-app');
         });
     });
+
+    self.hideAppList = function () {
+      return $state.current.name === 'apps.index';
+    }
   }
 
   angular.module('controllers')

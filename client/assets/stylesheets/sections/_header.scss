@@ -1,5 +1,5 @@
 
-// 
+//
 .header-container {
     // height:( $header_height * 2);
     // @media (min-width:$screen-sm) {
@@ -52,7 +52,7 @@
             }
         }
 
-        // 
+        //
         .menu-button {
             display: block;
             position: absolute;
@@ -82,7 +82,7 @@
             }
         }
 
-        // 
+        //
         .admin-options {
             z-index: 20;
             line-height: 20px;
@@ -95,11 +95,11 @@
             }
         }
 
-        // 
+        //
         .dropdown-menu.panel {
             padding: 0;
             white-space: nowrap;
-            
+
             .panel-heading,
             .panel-footer {
                 padding: 10px 15px;
@@ -120,7 +120,7 @@
         }
 
 
-        // 
+        //
         .top-nav {
             width: 100%;
             height: $header_height;
@@ -133,7 +133,7 @@
                 margin-bottom: 0;
             }
 
-            // 
+            //
             .nav-left,
             .nav-right {
                 font-size: 16px;
@@ -152,7 +152,7 @@
                             width: 18px;
                             font-size: 16px;
                             margin-right: 5px;
-                        } 
+                        }
                     }
 
                     > .toggle-min {
@@ -208,7 +208,7 @@
 
             .search-box {
                 max-width: 180px;
-                padding: ($header_height/2 - 17px) 0;
+                padding: ($header_height/2 - 18px) 0;
 
                 .input-group-addon {
                     padding: 6px 0 6px 12px;
@@ -222,7 +222,7 @@
                 }
             }
 
-            // 
+            //
             .nav-left {
                 float: left;
                 padding: 0;
@@ -231,7 +231,7 @@
                 }
             }
 
-            // 
+            //
             .nav-right {
                 padding: 0;
                 > li {
@@ -249,7 +249,7 @@
             }
         }
 
-        // 
+        //
         .langs {
             .active-flag {
                 .flag {
@@ -277,7 +277,7 @@
 }
 
 
-// 
+//
 .skin-check {
     position: relative;
     display: block;
@@ -288,7 +288,7 @@
     input[type="radio"] + span:hover {
         cursor: pointer;
     }
-    
+
     input[type="radio"] + span {
         position: relative;
         > .overlay {
@@ -302,8 +302,8 @@
             height: 100%;
             background-color: rgba(0,0,0,.3);
             text-align: center;
-            line-height: 30px; 
-            color: #fff;           
+            line-height: 30px;
+            color: #fff;
         }
     }
 

@@ -2,9 +2,9 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', '$localStorage', AppsIndexController]);
+    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', 'LayoutService', AppsIndexController]);
 
-  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, $localStorage) {
+  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService) {
     var self = this;
     self.loading = false;
     var stop;
@@ -98,13 +98,17 @@
     });
 
     self.showJumbo = function () {
-      return  !$localStorage.backand.hideJumbo;
+      return LayoutService.showJumbo();
     };
 
     self.closeJumbo = function () {
-      self.hideJumbo = true;
-      $localStorage.backand.hideJumbo = true;
-    }
+      LayoutService.closeJumbo();
+    };
+
+    self.openJumbo = function () {
+      LayoutService.openJumbo();
+    };
+
 
   }
 }());

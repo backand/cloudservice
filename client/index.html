@@ -28,11 +28,11 @@
   </script>
 </head>
 
-<body id="app" class="app" custom-page>
+<body id="app" class="app" ng-class="{'nav-collapsed-min' : main.hideNav()}" custom-page>
 
   <section ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/header.html' " id="header" class="header-container ng-scope header-fixed bg-white"> </section>
   <div class="main-container">
-    <aside ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/nav.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
+    <aside ng-if="main.getCurrentUser()" ng-hide="main.hideNav()" data-ng-include=" 'views/shared/nav.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
     <div id="content" class="content-container">
       <toaster-container></toaster-container>
       <section ui-view class="view-container">
@@ -94,6 +94,7 @@
   <script type="text/javascript" src="common/services/confirm_popup_service.js"></script>
   <script type="text/javascript" src="common/services/db_queries_service.js"></script>
   <script type="text/javascript" src="common/services/app_state_service.js"></script>
+  <script type="text/javascript" src="common/services/layout_service.js"></script>
 
   <script type="text/javascript" src="config/routes.js"></script>
   <script type="text/javascript" src="config/consts.js"></script>

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function MainController(SessionService, $state, $location) {
+  function MainController(SessionService, $state, $location, LayoutService) {
     this.getCurrentUser = function () {
       return SessionService.currentUser;
     };
@@ -9,8 +9,14 @@
     this.logout = function () {
       SessionService.ClearCredentials();
       $location.path("/sign_in")
-    }
+    };
+
+    this.hideNav = function () {
+      return ($state.current.name == 'apps.index' && LayoutService.showJumbo())
+    };
+
   }
+
 
   /**
    * optimizations (nir)
@@ -77,7 +83,7 @@
       ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");
     }])
     .run(run)
-    .controller('MainController', ["SessionService", '$state', '$location', MainController])
+    .controller('MainController', ["SessionService", '$state', '$location', 'LayoutService', MainController])
     .value('version', '1.0.1')
 
 
