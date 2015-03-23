@@ -15,10 +15,6 @@
       <a ui-sref="kickstart-open"> <i class="ti-star"></i><span>Kickstart Tutorial</span></a>
     </li>
 
-    <li ui-sref-active="active">
-      <a ui-sref="api-desc"> <i class="ti-star"></i><span>API Documentation</span></a>
-    </li>
-
     <!--<li>-->
       <!--<a href="http://blog.backand.com/documentation/" target="_blank"><i class="ti-layout-media-overlay"></i><span>Documentation</span></a>-->
     <!--</li>-->
@@ -218,57 +214,6 @@
         <i class="ti-settings"></i>
         <span>App Settings</span>
       </a>
-    </li>
-    <li ng-class="{active: nav.state == 'backoffice.edit'}">
-      <a ng-class="{disabled: nav.DatabaseStatus != 1}"  href="">
-        <i class="icon-backoffice-icon"></i>
-        <span>Back Office</span>
-        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
-      </a>
-      <ul>
-        <li ng-class="{active: nav.state == 'backoffice.edit', disabled: nav.DatabaseStatus != 1}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('backoffice.edit')" href="">
-            <i class="icon-style"></i>
-            <span>Templates</span>
-          </a>
-        </li>
-        <li ng-class="{active: nav.state == 'backoffice.edit', disabled: nav.DatabaseStatus != 1}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goToLocation('http://' + nav.appName + '.backand.net')" href="">
-            <i class="icon-cloud"></i>
-            <span>Hosted Back Office</span>
-          </a>
-        </li>
-
-        <li ng-class="{active: nav.state == 'backoffice.cust'}">
-          <a ng-click="nav.goToAlways('backoffice.cust')" href="">
-            <i class="icon-magic"></i>
-            <span>Customization</span>
-          </a>
-        </li>
-
-        <li ng-class="{active: nav.state == 'backoffice.code'}">
-          <a ng-click="nav.goToAlways('backoffice.code')" href="">
-            <i class="icon-file-code-o"></i>
-            <span>Code Example</span>
-          </a>
-        </li>
-
-      </ul>
-    </li>
-    <li ng-class="{active: nav.state == 'playground.todo'}">
-      <a ng-class="{disabled: nav.DatabaseStatus != 1}"  href="">
-        <i class="icon-backoffice-icon"></i>
-        <span>Example</span>
-        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
-      </a>
-      <ul>
-        <li ng-class="{active: nav.state == 'playground.todo', disabled: nav.DatabaseStatus != 1}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('playground.todo')" href="">
-            <i class="icon-style"></i>
-            <span>Code</span>
-          </a>
-        </li>
-        </ul>
     </li>
   </ul>
 </div>

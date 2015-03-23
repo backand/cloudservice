@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function HeaderController($scope, AppsService, $state, $filter, AppState, usSpinnerService, NotificationService,LayoutService) {
+  function HeaderController($scope, AppsService, $state, $filter, AppState, usSpinnerService, NotificationService, LayoutService) {
     var self = this;
 
     self.currAppName = '';
@@ -21,7 +21,7 @@
         NotificationService.add('error', 'Please wait until the database is connected');
         return;
       }
-      else{
+      else {
         $scope.$root.$broadcast('clearTables');
         $state.go('database.edit', {name: appName});
       }
@@ -43,13 +43,13 @@
     });
 
     self.hideAppList = function () {
-      return LayoutService.showJumbo();
+      return $state.current.name === 'apps.index' && LayoutService.showJumbo();
     }
   }
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", 'AppsService', '$state', '$filter','AppState','usSpinnerService', 'NotificationService','LayoutService', HeaderController]);
+    ["$scope", 'AppsService', '$state', '$filter', 'AppState', 'usSpinnerService', 'NotificationService', 'LayoutService', HeaderController]);
 
 }());
 

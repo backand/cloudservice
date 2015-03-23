@@ -1,9 +1,9 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseEdit', ['AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup', DatabaseEdit]);
+    .controller('DatabaseEdit', ['$scope', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup', DatabaseEdit]);
 
-  function DatabaseEdit(AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup) {
+  function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup) {
 
     var self = this;
 
@@ -13,6 +13,7 @@
       self.loading = false;
       self.showHelp = false;
       self.showND = true;
+      self.includeData = true;
       getCurrentApp();
     }());
 
@@ -43,7 +44,7 @@
     function checkDatabaseStatus() {
         usSpinnerService.spin("loading");
         DatabaseService.getDBInfo($state.params.name)
-          .success(function (dataIn) {
+          .success(function(dataIn) {
             self.data = {};
             self.data.Database_Source = dataIn.Database_Source;
             self.data.databaseName = DatabaseNamesService.getDBSource(dataIn.Database_Source);
@@ -57,20 +58,24 @@
             self.data.sshPort   = dataIn.SshPort;
             self.data.sshPassword   = dataIn.SshPassword;
             self.data.sshPrivateKey   = dataIn.SshPrivateKey;
-          });
+          })
         usSpinnerService.stop("loading");
     }
 
-    self.create = function () {
+    self.create = function(){
         self.loading = true;
         var product = DatabaseNamesService.getNumber(self.dataName);
 
-        DatabaseService.createDB($state.params.name, product, "")
-        .success(function (data) {
+        var sampleApp = "OnlineGaming-MySql";
+        if(!self.includeData)
+          sampleApp = "";
+
+        DatabaseService.createDB($state.params.name, product, sampleApp)
+        .success(function(data){
           NotificationService.add('info','Creating new database... It may take 1-2 minutes');
           $state.go('getting-started-open', {isnew: 'new'});
         })
-        .error(function (err) {
+        .error(function(err){
             self.loading = false;
         })
     };
@@ -105,12 +110,12 @@
       }
     };
 
-    self.back = function () {
-      $state.go('apps.show', ({name:$state.params.name}));
+    self.back = function(){
+      $state.go('apps.show',({name:$state.params.name}));
     };
 
-    self.Confirmation = function (msg) {
-      ConfirmationPopup.confirm(msg, 'Ok', '', true, false);
+    self.Confirmation = function(msg){
+      ConfirmationPopup.confirm(msg,'Ok','',true,false);
     }
 
   }
