@@ -76,7 +76,9 @@
     'ngMessages',
     'pascalprecht.translate',
     'angled-windows.directives',
-    'ngStorage'
+    'ngStorage',
+    'angulartics',
+    'angulartics.woopra'
   ])
     //.config(['$compileProvider','$httpProvider',appConfig])
     .config(['ngClipProvider', function(ngClipProvider) {

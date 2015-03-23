@@ -2,9 +2,9 @@
     'use strict';
 
   angular.module('app.apps')
-    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', 'LayoutService', AppsIndexController]);
+    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', 'LayoutService','$analytics', AppsIndexController]);
 
-  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService) {
+  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService,$analytics) {
     var self = this;
     self.loading = false;
     var stop;
@@ -19,6 +19,7 @@
           self.appTitle = self.appName;
       AppsService.add(self.appName, self.appTitle)
         .then(function(data){
+          $analytics.eventTrack('createdApp',{});
           NotificationService.add('success', 'App was added successfully');
           AppState.set(self.appName);
           $state.go('database.edit', { name: self.appName });

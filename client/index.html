@@ -39,6 +39,18 @@
   <script type='text/javascript'>
     !function(e,t){var r='JacoRecorder';!function(e,t,n,o){function c(e,t){e[t]=function(){e.q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}if(!n.__VERSION){e[r]=n,n.q=[];for(var a=['init','identify','startRecording','stopRecording','setUserInfo'],i=0;i<a.length;i++)c(n,a[i]);n.__VERSION=.8,n.__INIT_TIME=1*new Date;var s=t.createElement('script');s.async=!0,s.setAttribute('crossorigin','anonymous'),s.src=o;var u=t.getElementsByTagName('script')[0];u.parentNode.insertBefore(s,u)}}(e,t,e[r]||[],'//bo.getjaco.com/build/recorder.js')}(window,document); JacoRecorder.init('0f89881c-b5a0-40a9-b966-155473b7aa5a', {});
   </script>
+  <!-- Start of Woopra Code -->
+  <script>
+    (function(){
+      var t,i,e,n=window,o=document,a=arguments,s="script",r=["config","track","identify","visit","push","call","trackForm","trackClick"],c=function(){var t,i=this;for(i._e=[],t=0;r.length>t;t++)(function(t){i[t]=function(){return i._e.push([t].concat(Array.prototype.slice.call(arguments,0))),i}})(r[t])};for(n._w=n._w||{},t=0;a.length>t;t++)n._w[a[t]]=n[a[t]]=n[a[t]]||new c;i=o.createElement(s),i.async=1,i.src="//static.woopra.com/js/w.js",e=o.getElementsByTagName(s)[0],e.parentNode.insertBefore(i,e)
+    })("woopra");
+
+    woopra.config({
+      domain: 'backand1.com'
+    });
+    woopra.track();
+  </script>
+  <!-- End of Woopra Code -->
 </head>
 
 <body id="app" class="app" ng-class="{'nav-collapsed-min' : main.hideNav()}" custom-page>
@@ -86,6 +98,8 @@
   <script type="text/javascript" src="vendor/angular-ui-ace/ui-ace.js"></script>
   <script type="text/javascript" src="vendor/angular-ui-router-tabs/src/ui-router-tabs.js"></script>
   <script type="text/javascript" src="vendor/ngstorage/ngStorage.js"></script>
+  <script type="text/javascript" src="vendor/angulartics/dist/angulartics.min.js"></script>
+  <script type="text/javascript" src="vendor/angulartics/dist/angulartics-woopra.min.js"></script>
   <!-- endbuild -->
 
   <!-- build:js assets/js/main.js -->

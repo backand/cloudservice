@@ -1,9 +1,9 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseEdit', ['$scope', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup', DatabaseEdit]);
+    .controller('DatabaseEdit', ['$scope', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup','$analytics', DatabaseEdit]);
 
-  function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup) {
+  function DatabaseEdit($scope, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup,$analytics) {
 
     var self = this;
 
@@ -72,7 +72,8 @@
 
         DatabaseService.createDB($state.params.name, product, sampleApp)
         .success(function(data){
-          NotificationService.add('info','Creating new database... It may take 1-2 minutes');
+            $analytics.eventTrack('addedDbTables',{product:product,sampleApp:sampleApp,includeData:self.includeData});
+            NotificationService.add('info','Creating new database... It may take 1-2 minutes');
           $state.go('getting-started-open', {isnew: 'new'});
         })
         .error(function(err){
@@ -100,7 +101,9 @@
       else {
           DatabaseService.connect2DB($state.params.name, self.data)
               .success(function (data) {
-                  NotificationService.add('info', 'Connecting to the database...');
+              $analytics.eventTrack('connectExisting',{product:self.data.product});
+
+              NotificationService.add('info', 'Connecting to the database...');
                   $state.go('apps.index', {name: $state.params.name})
               })
               .error(function (err) {
