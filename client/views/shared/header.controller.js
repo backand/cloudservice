@@ -21,7 +21,7 @@
         NotificationService.add('error', 'Please wait until the database is connected');
         return;
       }
-      else{
+      else {
         $scope.$root.$broadcast('clearTables');
         $state.go('database.edit', {name: appName});
       }
