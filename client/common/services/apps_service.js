@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function appsService($http, $q, CONSTS, DatabaseNamesService, NotificationService) {
+  function appsService($http, $q, CONSTS, DatabaseNamesService, AuthService) {
 
     var self = this;
 
@@ -81,14 +81,14 @@
     self.getApps = function () {
       var deferred = $q.defer();
       if(apps.loaded)
-        deferred.resolve(apps)
+        deferred.resolve(apps);
       else
         self.all().then(function(){
           deferred.resolve(apps);
         });
 
       return deferred.promise;
-    }
+    };
 
     self.all = function () {
       var deferred = $q.defer();
@@ -99,6 +99,7 @@
         .success(function (data) {
           apps.list = data.data;
           updateAppNames();
+          ensureExampleApp();
           apps.loaded = true;
           deferred.resolve(data);
         })
@@ -110,13 +111,21 @@
       return deferred.promise;
     };
 
+    function ensureExampleApp () {
+      var exampleAppName = 'todo' + AuthService.getUserId();
+      if (!_.contains(apps.names, exampleAppName)) {
+        self.add(exampleAppName, 'Todo List - Example App')
+          .then(self.all);
+      }
+    }
+
     self.refresh = function () {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
       });
-
     };
+
     self.find = function (appName) {
       return $http({
         method: 'GET',
@@ -177,6 +186,6 @@
   }
 
   angular.module('common.services')
-    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', 'NotificationService', appsService]);
+    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', 'AuthService', appsService]);
 
 })();

@@ -6,8 +6,8 @@
 
   function config($stateProvider) {
     $stateProvider
-      .state('database.todo-example', {
-        url: '/todo-example',
+      .state('database.example', {
+        url: '/example/:name',
         controller: 'DatabaseTodoExample as dbtodo',
         templateUrl: 'views/database/todo_example.html'
       })

@@ -1,13 +1,15 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseEdit', ['AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup', DatabaseEdit]);
+    .controller('DatabaseEdit', ['AppsService', 'AuthService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup', DatabaseEdit]);
 
-  function DatabaseEdit(AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup) {
+  function DatabaseEdit(AppsService, AuthService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup) {
 
     var self = this;
 
     (function init() {
+      if ($stateParams.name === 'todo' + AuthService.getUserId())
+        $state.go('database.example', {name: $stateParams.name});
       self.databaseStatus = null;
       self.appName = $stateParams.name;
       self.loading = false;
