@@ -274,17 +274,16 @@
               $rootScope.$broadcast('fetchTables');
               self.isEmptyDb = false;
               checkForExistingTables();
+              __insp.push(['tagSession', "addSchema_" + self.activeTemplate]);
             }, function (err) {
               self.processing = false;
               NotificationService.add('error', 'Can not create table ' + table.name);
             })
-
         }
         catch (err) {
           self.processing = false;
           NotificationService.add('error', err.message);
         }
-
       }
     }
 

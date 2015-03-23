@@ -108,6 +108,7 @@
           self.messages.push('New tables added: ' + data.data.added);
           self.messages.push('Tables with error:' + (data.data.newTables - data.data.added));
 
+          __insp.push(['tagSession', "sync tables_" + data.data.added]);
           if (data.data.errors !== '') {
 
             //data.data.errors = data.data.errors.replace(/\r?\n/g, "%0D%0A");

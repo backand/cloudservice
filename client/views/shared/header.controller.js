@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function HeaderController($scope, AppsService, $state, $filter, AppState, usSpinnerService, NotificationService ) {
+  function HeaderController($scope, AppsService, $state, $filter, AppState, usSpinnerService, NotificationService,LayoutService) {
     var self = this;
 
     self.currAppName = '';
@@ -43,13 +43,13 @@
     });
 
     self.hideAppList = function () {
-      return $state.current.name === 'apps.index';
+      return LayoutService.showJumbo();
     }
   }
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", 'AppsService', '$state', '$filter','AppState','usSpinnerService', 'NotificationService', HeaderController]);
+    ["$scope", 'AppsService', '$state', '$filter','AppState','usSpinnerService', 'NotificationService','LayoutService', HeaderController]);
 
 }());
 

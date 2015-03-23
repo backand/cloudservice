@@ -33,6 +33,7 @@
 
       $cookieStore.put('globals', user);
       JacoRecorder.identify(user.currentUser.username);
+      __insp.push(['identify', user.currentUser.username]);
     };
 
     this.ClearCredentials = function () {
