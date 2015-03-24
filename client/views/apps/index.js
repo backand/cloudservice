@@ -2,9 +2,15 @@
     'use strict';
 
   angular.module('app.apps')
+<<<<<<< HEAD
+    .controller('AppsIndexController', ['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval', 'AppState', 'usSpinnerService', 'LayoutService', 'AuthService', AppsIndexController]);
+
+  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService, AuthService) {
+=======
     .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', 'LayoutService','$analytics', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService,$analytics) {
+>>>>>>> baas
     var self = this;
     self.loading = false;
     var stop;
@@ -33,14 +39,21 @@
      *
      * @param appName
      */
-    self.appManage = function (appName, status ) {
+    self.appManage = function (app) {
       usSpinnerService.spin("loading");
       //check app status
-      AppState.set(appName);
-      if (status == 1)
-        $state.go('apps.show', {name: appName});
-      else
-        $state.go('database.edit', {name: appName});
+      AppState.set(app.Name);
+
+      if (app.DatabaseStatus == 1)
+        $state.go('apps.show', {name: app.Name});
+      else {
+        if (app.Name === 'todo' + AuthService.getUserId()) {
+          $state.go('database.example', {name: app.Name});
+        }
+        else {
+          $state.go('database.edit', {name: app.Name});
+        }
+      }
     };
 
     /**
@@ -61,20 +74,28 @@
     self.namePattern = /^\w+$/;
 
     self.getRibboninfo = function(app) {
-      return convertStateNumber(app.DatabaseStatus);
+      return convertStateNumber(app);
     };
 
-    function convertStateNumber(stateNumber) {
-      switch(stateNumber) {
+    function convertStateNumber(app) {
+      var ribbonInfo;
+      switch(app.DatabaseStatus) {
         case 0:
-          return { class: "ui-ribbon-warning", text: 'Pending'};
+          ribbonInfo = { class: "ui-ribbon-warning", text: 'Pending'};
+          break;
         case 1:
-          return { class: 'ui-ribbon-success', text: 'Connected'};
+          ribbonInfo = { class: 'ui-ribbon-success', text: 'Connected'};
+          break;
         case 2:
-          return { class: "ui-ribbon-info", text: 'Create'};
+          ribbonInfo = { class: "ui-ribbon-info", text: 'Create'};
+          break;
         default:
-          return { class: 'ui-ribbon-danger', text: 'Error'};
+          ribbonInfo = { class: 'ui-ribbon-danger', text: 'Error'};
+          break;
       }
+      if (app.Name === 'todo' + AuthService.getUserId())
+        ribbonInfo.text = 'Example';
+      return ribbonInfo;
     }
 
     stop = $interval(function() {
@@ -110,6 +131,9 @@
       LayoutService.openJumbo();
     };
 
+    self.setUserId = function (x) {
+      AuthService.setUserId(x);
+    }
 
   }
 }());

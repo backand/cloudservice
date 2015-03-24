@@ -504,3 +504,16 @@ button.with-margin {
   height: 100%;
   overflow: auto;
 }
+
+.panel-body .panel-body-explanation {
+  margin: 30px 10% 30px 10%;
+}
+
+.panel-body .panel-body-description {
+  font-size: 16px;
+}
+
+.ace-title {
+  text-transform: uppercase;
+  font-size: larger;
+}
