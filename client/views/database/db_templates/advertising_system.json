@@ -1,0 +1,127 @@
+[
+  {
+    "name": "channel_type",
+    "fields": [
+      {
+        "name": "name",
+        "type": "ShortText"
+      },
+      {
+        "name": "description",
+        "type": "LongText"
+      }
+    ]
+  },
+  {
+    "name": "channel",
+    "fields": [
+      {
+        "name": "name",
+        "type": "ShortText"
+      },
+      {
+        "name": "description",
+        "type": "LongText"
+      },
+      {
+        "name": "channel_type_id",
+        "type": "SingleSelect",
+        "relatedTable": "channel_type"
+      }
+    ]
+  },
+  {
+    "name": "agency",
+    "fields": [
+      {
+        "name": "name",
+        "type": "ShortText"
+      },
+      {
+        "name": "description",
+        "type": "LongText"
+      }
+    ]
+  },
+  {
+    "name": "marketing_campaign",
+    "fields": [
+      {
+        "name": "name",
+        "type": "ShortText"
+      },
+      {
+        "name": "description",
+        "type": "LongText"
+      }
+    ]
+  },
+  {
+    "name": "advertisement",
+    "fields": [
+      {
+        "name": "agency_id",
+        "type": "SingleSelect",
+        "relatedTable": "agency"
+      },
+      {
+        "name": "marketing_campaign_id",
+        "type": "SingleSelect",
+        "relatedTable": "marketing_campaign"
+      },
+      {
+        "name": "channel_id",
+        "type": "SingleSelect",
+        "relatedTable": "channel"
+      }
+    ]
+  },
+  {
+    "name": "response",
+    "fields": [
+      {
+        "name": "advertisement_id",
+        "type": "SingleSelect",
+        "relatedTable": "advertisement"
+      },
+      {
+        "name": "response_tag_id",
+        "type": "SingleSelect",
+        "relatedTable": "response_tag"
+      }
+    ]
+  },
+  {
+    "name": "invoice_status",
+    "fields": [
+      {
+        "name": "name",
+        "type": "ShortText"
+      },
+      {
+        "name": "description",
+        "type": "LongText"
+      }
+    ]
+  },
+  {
+    "name": "invoice",
+    "fields": [
+      {
+        "name": "agency_id",
+        "type": "SingleSelect",
+        "relatedTable": "agency"
+      },
+      {
+        "name": "client_id",
+        "type": "SingleSelect",
+        "relatedTable": "client"
+      },
+      {
+        "name": "invoice_status_id",
+        "type": "SingleSelect",
+        "relatedTable": "invoice_status"
+      }
+    ]
+  }
+]

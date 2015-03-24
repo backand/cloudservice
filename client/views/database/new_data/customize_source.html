@@ -1,0 +1,45 @@
+<div class="db-tab-content">
+
+  <div class="db-ace-title">database generator code</div>
+  <br/>
+
+  <div class="row">
+    <div class="col-md-8 col-lg-9">
+      <div
+        ui-ace="{onLoad : dbedit.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+        class="form-control ace-db-custom"
+        name="customSchema"
+        id="customSchema"
+        ng-model="dbedit.customSchema"
+        required
+        ng-pattern="codeRegex"
+        style="resize: vertical; ">
+
+      </div>
+      <br/>
+
+      <div>
+        <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
+                ladda="dbedit.loading" data-style="expand-right"
+                ng-click="dbedit.create()">Create
+        </button>
+        <button type="submit" ng-disabled="form.$invalid" class="btn db-btn-default btn-lg btn-w-lg pull-right"
+                ladda="dbedit.loading" data-style="expand-right"
+                ng-click="dbedit.customMode=false">Restore Default
+        </button>
+      </div>
+    </div>
+    <div class="col-md-4 col-lg-3">
+      <div class="db-types-title">Field Types</div>
+      <br/>
+
+      <div class="db-types" ng-repeat="fieldType in dbedit.fieldTypes" ng-click="dbedit.insertTypeAtChar(fieldType)">
+        {{fieldType}}
+      </div>
+      <br/>
+
+      <div class="db-types-note">For <b>SingleSelect</b> and <b>MultiSelect</b> you need to specify <b>RelatedTable</b>
+      </div>
+    </div>
+  </div>
+</div>

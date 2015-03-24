@@ -1,10 +1,10 @@
 (function () {
   'use strict';
   angular.module('app')
-    .controller('TablesAdd', ['$scope', '$state', '$rootScope', 'AppsService', 'usSpinnerService', 'NotificationService', 'TablesService', TablesAdd]);
+    .controller('TablesAdd', ['$scope', '$state', '$rootScope', 'AppsService', 'usSpinnerService', 'NotificationService', 'TablesService','$analytics', TablesAdd]);
 
 
-  function TablesAdd($scope, $state, $rootScope, AppsService, usSpinnerService, NotificationService, TablesService) {
+  function TablesAdd($scope, $state, $rootScope, AppsService, usSpinnerService, NotificationService, TablesService,$analytics) {
     var self = this;
 
     (function init() {
@@ -267,6 +267,7 @@
           /* $timeout(function(){self.processing = false;}, 2000);*/
           TablesService.addSchema($state.params.name, self.tableTemplate)
             .then(function (data) {
+              $analytics.eventTrack('addedDbTables',{tempate:!0});
               NotificationService.add('success', 'The app is ready with the new tables');
               self.processing = false;
               self.isReady = true;

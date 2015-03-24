@@ -1,0 +1,95 @@
+[
+  {
+    "name": "user",
+    "fields": [
+      {
+        "name": "username",
+        "type": "ShortText"
+      },
+      {
+        "name": "password",
+        "type": "ShortText"
+      },
+      {
+        "name": "name",
+        "type": "ShortText"
+      },
+      {
+        "name": "email",
+        "type": "ShortText"
+      },
+      {
+        "name": "is_approved",
+        "type": "Boolean"
+      },
+      {
+        "name": "details",
+        "type": "LongText"
+      }
+    ]
+  },
+  {
+    "name": "product",
+    "fields": [
+      {
+        "name": "name",
+        "type": "ShortText"
+      },
+      {
+        "name": "type",
+        "type": "SingleSelect",
+        "relatedTable": "product_type"
+      },
+      {
+        "name": "memory_spec",
+        "type": "Numeric"
+      },
+      {
+        "name": "num_of_playes",
+        "type": "Numeric"
+      },
+      {
+        "name": "description",
+        "type": "LongText"
+      },
+      {
+        "name": "price",
+        "type": "Numeric"
+      }
+    ]
+  },
+  {
+    "name": "user_order",
+    "fields": [
+      {
+        "name": "user_id",
+        "type": "SingleSelect",
+        "relatedTable": "user"
+      },
+      {
+        "name": "status",
+        "type": "SingleSelect",
+        "relatedTable": "order_status"
+      },
+      {
+        "name": "order_date",
+        "type": "DateTime"
+      }
+    ]
+  },
+  {
+    "name": "order_item",
+    "fields": [
+      {
+        "name": "order_id",
+        "type": "SingleSelect",
+        "relatedTable": "user_order"
+      },
+      {
+        "name": "product_id",
+        "type": "SingleSelect",
+        "relatedTable": "product"
+      }
+    ]
+  }
+]

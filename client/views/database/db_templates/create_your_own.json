@@ -1,0 +1,15 @@
+[
+  {
+    "name": "items",
+    "fields": [
+      {
+        "name": "name",
+        "type": "ShortText"
+      },
+      {
+        "name": "description",
+        "type": "LongText"
+      }
+    ]
+  }
+]

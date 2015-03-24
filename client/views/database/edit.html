@@ -2,22 +2,28 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-        <strong> database configuration</strong>
-        <div us-spinner spinner-key="loading" spinner-start-active></div>
+      <strong> database configuration</strong>
+
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
-      <div class="row">
-        <div class="col-md-12">
-          <tabset justified="true" class="ui-tab ui-tab-horizontal ui-tab-container">
-            <tab heading="New Database" ng-if="dbedit.databaseStatus === 0" ng-click ="dbedit.dataName = 'newMysql'">
-              <ng-include src = "'views/database/new_data/new_source.html'"></ng-include>
-            </tab>
-            <tab heading="Connect Existing Database" ng-if="dbedit.databaseStatus != null" ng-click ="dbedit.dataName = 'mysql'">
-              <ng-include src = "'views/database/exs_data/exs_source.html'"></ng-include>
-            </tab>
-          </tabset>
-        </div>
+      <div class="db-panel-body-explanation">
+        <h4>You'll need to connect your application to a database.
+          You can create a new hosted database with Backand, or connect to an existing one.</h4>
       </div>
-     </div>
+      <br/>
+
+      <tabset justified="true" class="ui-tab ui-tab-horizontal ui-tab-container">
+        <tab heading="New Hosted Database" ng-if="dbedit.databaseStatus === 0" ng-click="dbedit.dataName = 'newMysql'">
+          <ng-include src="'views/database/new_data/new_source.html'" ng-if="!dbedit.customMode"></ng-include>
+          <ng-include src="'views/database/new_data/customize_source.html'" ng-if="dbedit.customMode"></ng-include>
+        </tab>
+        <tab heading="Connect to Existing Database" ng-if="dbedit.databaseStatus != null"
+             ng-click="dbedit.dataName = 'mysql'">
+          <ng-include src="'views/database/exs_data/exs_source.html'"></ng-include>
+        </tab>
+      </tabset>
+    </div>
+
   </section>
 </section>

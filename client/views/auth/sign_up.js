@@ -2,9 +2,9 @@
 (function  () {
 
   angular.module('app')
-    .controller('SignUpController',["$scope",'AuthService','$state','SessionService','$timeout', SignUpController]);
+    .controller('SignUpController',["$scope",'AuthService','$state','SessionService','$timeout','$analytics', SignUpController]);
 
-  function SignUpController($scope,AuthService,$state,SessionService,$timeout){
+  function SignUpController($scope,AuthService,$state,SessionService,$timeout,$analytics){
     var self = this;
 
 
@@ -16,6 +16,7 @@
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
         .success(function (data) {
+          $analytics.eventTrack('signup',{});
           AuthService.signIn(self.email,self.password)
               .success(function (data) {
                   SessionService.setCredentials(data, self.email);

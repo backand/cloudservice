@@ -1,9 +1,15 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
+<<<<<<< HEAD
     .controller('DatabaseEdit', ['AppsService', 'AuthService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup', DatabaseEdit]);
 
   function DatabaseEdit(AppsService, AuthService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup) {
+=======
+    .controller('DatabaseEdit', ['$http', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$analytics', DatabaseEdit]);
+
+  function DatabaseEdit($http, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $analytics) {
+>>>>>>> baas
 
     var self = this;
 
@@ -97,7 +103,9 @@
       else {
           DatabaseService.connect2DB($state.params.name, self.data)
               .success(function (data) {
-                  NotificationService.add('info', 'Connecting to the database...');
+              $analytics.eventTrack('connectExisting', {product: self.data.product});
+
+              NotificationService.add('info', 'Connecting to the database...');
                   $state.go('apps.index', {name: $state.params.name})
               })
               .error(function (err) {
@@ -107,6 +115,7 @@
       }
     };
 
+<<<<<<< HEAD
     self.back = function () {
       $state.go('apps.show', ({name:$state.params.name}));
     };
@@ -114,6 +123,70 @@
     self.Confirmation = function (msg) {
       ConfirmationPopup.confirm(msg, 'Ok', '', true, false);
     }
+=======
+    self.back = function(){
+      $state.go('apps.show', {name: $state.params.name});
+    };
+
+    self.Confirmation = function(msg){
+      ConfirmationPopup.confirm(msg, 'Ok', '', true, false);
+    };
+
+
+    // Ace Templates
+
+    self.ace = {
+      onLoad: function(_editor) {
+        self.ace.editor = _editor;
+      }
+    };
+
+    self.defaultTemplate = {title: "Create your own", template: 'create_your_own'};
+
+    self.templates = [
+      {title: "Game Shop", template: 'game_shop'},
+      {title: "E-commerce Campaign", template: 'ecommerce_campaign'},
+      {title: "Advertising System", template: 'advertising_system'}
+    ];
+
+    self.getFile = function (file) {
+      return $http({
+        method: 'GET',
+        url: '/views/database/db_templates/' + file.template + '.json'
+      }).then (function (result) {
+        return angular.toJson(result.data, true);
+      })
+    };
+
+    self.showFile = function (file) {
+      self.getFile(file)
+        .then(function (result) {
+          self.template = result;
+          self.activeFile = file;
+        })
+    };
+
+    self.showFile(self.templates[0]);
+
+    self.getFile(self.defaultTemplate)
+      .then(function (result) {
+        self.customSchema = result;
+      });
+
+    self.customize = function () {
+      self.customMode = true;
+    };
+
+    // Field Types
+
+    self.fieldTypes = ['ShortText', 'LongText', 'DateTime', 'Numeric', 'Boolean', 'SingleSelect', 'MultiSelect'];
+
+    self.insertTypeAtChar = function (param) {
+      setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
+        self.ace.editor.insert('"' + param + '"');
+      });
+    };
+>>>>>>> baas
 
   }
 }());
