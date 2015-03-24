@@ -75,14 +75,21 @@
             <div class="ui-ribbon" ng-if="app.DatabaseStatus != 2">{{ index.getRibboninfo(app).text }}</div>
           </div>
           <div class="panel-heading text-center">
-            <a ng-if="app.DatabaseStatus == 1"
-               href="" class="pull-left"
+            <a href="" class="pull-left"
                ng-click="index.appSettings(app.Name)" class="pull-in">
-              <i class="ti-settings"></i></a>{{ ::app.Name }}</div>
+              <i class="ti-settings"></i>
+            </a>{{ ::app.Name }}
+          </div>
           <div class="panel-body app-panel-body">
             <div class="body-height">{{ ::app.Title }}</div>
-            <div class="app-panel-body-link"><a href="" ng-click="index.getStarted(app.Name)"><i class="ti-star" ></i> AngularJS Quickstart</a></div>
-            <button ng-click="index.appManage(app.Name, app.DatabaseStatus)" ng-disabled="app.DatabaseStatus == 2"
+            <div class="app-panel-body-link">
+              <a href="" ng-click="index.getStarted(app.Name)">
+                <i class="ti-star" ></i>
+                AngularJS Quickstart
+              </a>
+            </div>
+            <button ng-click="index.appManage(app)"
+                    ng-disabled="app.DatabaseStatus == 2"
                     class="btn btn-default btn-w-md btn-block">
               Manage App
             </button>

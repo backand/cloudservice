@@ -6,6 +6,11 @@
 
   function config($stateProvider) {
     $stateProvider
+      .state('database.example', {
+        url: '/example/:name',
+        controller: 'DatabaseTodoExample as dbtodo',
+        templateUrl: 'views/database/todo_example.html'
+      })
       .state('database.show', {
         url: '/:name',
         controller: 'DatabaseShow as dbshow',
@@ -21,6 +26,7 @@
         controller: 'TablesAdd as dbadd',
         templateUrl: 'views/database/add.html'
       })
+
   }
 
 })();

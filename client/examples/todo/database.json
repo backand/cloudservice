@@ -1,0 +1,15 @@
+[
+  {
+    "name": "todo",
+    "fields": [
+      {
+        "name": "description",
+        "type": "ShortText"
+      },
+      {
+        "name": "completed",
+        "type": "Boolean"
+      }
+    ]
+  }
+]

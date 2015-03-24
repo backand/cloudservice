@@ -1,0 +1,74 @@
+<section class="page-form-ele page ng-scope">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> database configuration</strong>
+
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+    <div class="panel-body">
+      <div class="panel-body-explanation">
+        <h4>You'll need to connect your application to a database.
+          For the todo-list example we created a database in MySQL.
+          All you need to do is click "create".
+          Backand offers database templates and customization options for your own special apps.</h4>
+      </div>
+      <hr/>
+      <br/>
+
+      <div class="row" style="padding: 3%">
+        <div class="col-md-6">
+
+
+          <div class="row">
+            <a class="icon-box col-xs-5 col-sm-4 col-md-3">
+              <div class="icon-container active">
+                <img src="assets/images/mysql.png" style="vertical-align: inherit;"/>
+              </div>
+            </a>
+
+            <h3 class="col-xs-7" style="padding-top: 35px; padding-left: 30px;">Hosted <br/>MySQL Database</h3>
+          </div>
+
+          <br/>
+
+          <div class="panel-body-description">
+            <p>The new database is a hosted dedicated MySQL database just for you.</p>
+
+            <p>You can access the database using any database admin tool like: Workbench, phpMyAdmin, Sequel Pro or
+              any other tool.</p>
+
+            <p>Once you complete any action on the database, e.g. adding new tables or modifying columns, you will
+              need to sync the changes back to Backand</p>
+          </div>
+          <br/>
+
+          <div class="form-group">
+            <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
+                    ladda="dbtodo.loading" data-style="expand-right"
+                    ng-click="dbtodo.create()">Create
+            </button>
+            <br/>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+          <div class="ace-title">database generator code</div>
+          <div
+            ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+            class="form-control ace-rule"
+            readonly
+            name="tableTemplate"
+            id="tableTemplate"
+            ng-model="dbtodo.generatorCode"
+            required
+            ng-pattern="codeRegex"
+            style="resize: vertical; ">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

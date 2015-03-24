@@ -1,11 +1,11 @@
 (function() {
   'use strict';
 
-  function AuthService($http, CONSTS) {
+  function AuthService($http, CONSTS, $localStorage) {
 
     var self =this;
 
-    this.signIn = function(userName,password){
+    this.signIn = function (userName, password) {
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + '/token',
@@ -25,7 +25,7 @@
       }
       )};
 
-    this.signUp = function(fullName, email, password){
+    this.signUp = function (fullName, email, password) {
       return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/api/account/signUp',
@@ -38,7 +38,7 @@
         }
       )};
 
-    this.forgot = function(email){
+    this.forgot = function (email) {
       return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/api/account/SendChangePasswordLink',
@@ -48,7 +48,7 @@
         }
       )};
 
-    this.resetPassword = function(password, id){
+    this.resetPassword = function (password, id) {
       return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/api/account/changePassword',
@@ -60,9 +60,19 @@
         });
     };
 
+    self.getUserId = function () {
+      if (!$localStorage.backand.userId)
+        $localStorage.backand.userId = 5;
+      return $localStorage.backand.userId;
+    };
+
+    self.setUserId = function (x) {
+      $localStorage.backand.userId = x;
+    };
+
   }
 
   angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', AuthService])
+    .service('AuthService', ['$http', 'CONSTS', '$localStorage', AuthService])
 
 })();

@@ -1,21 +1,58 @@
 <section class="page-form-ele page ng-scope">
-    <div class="panel panel-default">
-        <div class="panel-heading"><strong>ORM Usage</strong></div>
-        <div class="panel-body">
-            <div class="row col-sm-10 col-sm-offset-1">
-            <h1>
-                Todo
-            </h1>
-              <div  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: 'html', firstLineNumber: 1}"
-                    readonly
-                    class="form-control ace-rule"
-                    id="tableTemplate"
-                    ng-model="todo.todoHTML"
-                    required
-                    ng-pattern="codeRegex"
-                    style="resize: vertical; ">
-              </div>
-            </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Quickstart Quide</strong>
+  </div>
+
+  <div class="panel-body">
+    <br/>
+
+    <h3>Todo list application example</h3>
+    <br/>
+      <div class="row">
+        <div class="col-md-7">
+          <div>
+            <ul class="nav nav-tabs"
+                ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
+              <li  ng-class="{active: todo.activeFile === codeFile}"
+                  ng-repeat="codeFile in todo.codeFiles">
+                <a ng-click="todo.getFile(codeFile)" href="">
+                  {{codeFile.name}}
+                </a>
+              </li>
+            </ul>
+          </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-md-7">
+
+          <div ui-ace=todo.getAceObj()
+               readonly
+               class="form-control ace-rule"
+               id="tableTemplate"
+               ng-model="todo.todoHTML"
+               required
+               ng-pattern="codeRegex"
+               style="resize: vertical; ">
+          </div>
+        </div>
+        <div class="row col-md-5">
+          <!--<div ng-include="'/examples/todo/main.html'"></div>-->
+          <iframe src="/examples/todo/main.html"
+                  style="border-width: 1px; border-color: #dddddd; height: 400px; width: 100%;"
+                  seamless="true">
+          </iframe>
+          <br/><br/>
+          <b>Download the code:</b>
+          <pre>git clone https://github.com/backand/angular-yeoman-todos.git</pre>
+          <br/>
+          <b>Launch local server</b>
+          <pre>gulp</pre>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
+
+
