@@ -19,19 +19,21 @@
         });
     }());
 
-    self.create = function () {
+    self.create = function(){
       self.loading = true;
       var product = DatabaseNamesService.getNumber("newMysql");
 
-      DatabaseService.createDB(self.appName, product, 'todo-mysql')
-      .success(function () {
-          NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
-          $state.go('getting-started-open', {isnew: 'new'});
-      })
-      .error(function (err) {
+      var sampleApp = "todo-mysql";
+
+      DatabaseService.createDB(self.appName, product, sampleApp)
+        .success(function(data){
+          NotificationService.add('info','Creating new database... It may take 1-2 minutes');
+          $state.go('playground.todo', {isnew: 'new'});
+        })
+        .error(function(err){
           self.loading = false;
           NotificationService.add('error', err)
-      })
+        })
     };
 
   }

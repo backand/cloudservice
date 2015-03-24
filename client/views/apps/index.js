@@ -40,10 +40,12 @@
       if (app.DatabaseStatus == 1)
         $state.go('apps.show', {name: app.Name});
       else {
-        if (app.Name === 'todo' + AuthService.getUserId())
+        if (app.Name === 'todo' + AuthService.getUserId()) {
           $state.go('database.example', {name: app.Name});
-        else
+        }
+        else {
           $state.go('database.edit', {name: app.Name});
+        }
       }
     };
 

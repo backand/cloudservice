@@ -62,7 +62,7 @@
 
     self.getUserId = function () {
       if (!$localStorage.backand.userId)
-        $localStorage.backand.userId = 1;
+        $localStorage.backand.userId = 5;
       return $localStorage.backand.userId;
     };
 
