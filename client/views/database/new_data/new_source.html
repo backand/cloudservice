@@ -1,52 +1,71 @@
-<br/>
+<div class="db-tab-content">
+  <div class="row">
+    <div class="col-md-6 db-panel-right-half">
 
-<div class="row">
-  <div>
-    <div class="col-md-8 col-md-offset-5">
-      <a class="icon-box col-md-3" ng-click ="dbedit.dataName = 'newMysql'">
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'newMysql'}">
-          <img src="assets/images/mysql.png" style="vertical-align: inherit;"/>
+      <div class="icon-box db-icon-box">
+        <div class="icon-container active">
+          <img src="assets/images/mysql.png"/>
         </div>
-        <div class="desc-container">
-          <h4></h4>
+        <div class="db-icon-title">
+          Hosted <br/> MySQL Database
         </div>
-      </a>
+      </div>
+
+      <br/>
+
+      <div class="db-panel-body-description">
+        <p>The new database is a hosted dedicated MySQL database just for you.</p>
+
+        <p>You can access the database using any database admin tool like: Workbench, phpMyAdmin, Sequel Pro or
+          any other tool.</p>
+
+        <p>Once you complete any action on the database, e.g. adding new tables or modifying columns, you will
+          need to sync the changes back to Backand</p>
+      </div>
+      <br/>
     </div>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-6">
+      <div class="db-ace-title">database generator code</div>
+      <br/>
 
-    <div class="divider divider-dashed divider-lg pull-in"></div>
-    <div class="form-group">
-      <div class="col-sm-12">
-        <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg center-block" ladda="dbedit.loading" data-style="expand-right"
-                ng-click="dbedit.create()">Create</button>
-        <br/>
-        <div class="center-block" style="text-align:center;"><input type="checkbox" ng-model="dbedit.includeData"> Add sample data to your FREE database</div>
+      <div>
+        <ul class="db-nav db-nav-tabs"
+            ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
+          <li ng-class="{active: dbedit.activeFile === codeFile}"
+              ng-repeat="codeFile in dbedit.templates">
+            <a ng-click="dbedit.showFile(codeFile)" href="">
+              {{codeFile.title}}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div
+        ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+        class="form-control ace-db-template"
+        readonly
+        name="tableTemplate"
+        id="tableTemplate"
+        ng-model="dbedit.template"
+        required
+        ng-pattern="codeRegex"
+        style="resize: vertical; ">
+
       </div>
     </div>
   </div>
+  <br/>
 
-
-</div>
-
-<div class="divider divider-solid"></div>
-
-<div class="panel-body">
-    <div class="ui-bullet">
-        <div class="btn-icon btn-icon-round btn-icon-lg bg-info">
-            <i class="ti-star"></i>
-        </div>
-        <div class="ui-bullet-content">
-            <h4><br/><a ng-click="dbedit.showND = !dbedit.showND" href="" >New Database</a></h4>
-            <p></p>
-        </div>
-    </div>
-    <div class="" ng-show="dbedit.showND">
-        <p>The new database is a hosted dedicated MySQL database just for you.</p>
-        <p>You can access the database using any database admin tool like: Workbench, phpMyAdmin, Sequel Pro or any other tool.</p>
-        <p>Once you complete any action on the database, e.g. adding new tables or modifying columns, you will need to sync the changes back to Backand</p>
-    </div>
+  <div>
+    <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
+            ladda="dbedit.loading" data-style="expand-right"
+            ng-click="dbedit.create()">
+      Create
+    </button>
+    <button type="submit" ng-disabled="form.$invalid" class="btn db-btn-default btn-lg btn-w-lg pull-right"
+            ladda="dbedit.loading" data-style="expand-right"
+            ng-click="dbedit.customize()">
+      Customize Database
+    </button>
+  </div>
 </div>
