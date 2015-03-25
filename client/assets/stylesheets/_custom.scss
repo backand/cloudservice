@@ -517,3 +517,22 @@ button.with-margin {
   text-transform: uppercase;
   font-size: larger;
 }
+
+.iframe-substitute {
+  border-width: 1px;
+  border-color: #dddddd;
+  border-style: solid;
+  height: 400px;
+  width: 100%;
+  background-color: #e0e0e0;
+  text-align: center;
+  padding: 40px;
+
+  .iframe-substitute-message {
+    font-size: 28px;
+  }
+
+  .iframe-substitute-submessage {
+    font-size: 22px;
+  }
+}

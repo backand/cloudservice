@@ -38,8 +38,17 @@
           </div>
         </div>
         <div class="row col-md-5">
-          <!--<div ng-include="'/examples/todo/main.html'"></div>-->
-          <iframe id="todoIframe" src="http://localhost:9000"
+
+          <div ng-hide="todo.iframeReady == 1" class="iframe-substitute">
+            <div ng-hide="todo.iframeReady === 'unknown'">
+              <div class="iframe-substitute-message">Please wait a few minutes while the application is set up in the server.</div><br/><br/>
+              <div us-spinner spinner-key="loading-iframe" us-spinner="{length:10, radius: 10}" style="position: relative;"></div><br/><br/>
+              <div class="iframe-substitute-submessage">You can come back to this page by selecting "Todo Example" under "Docs & API" in the navigation bar on the right.</div>
+            </div>
+          </div>
+
+          <iframe ng-if="todo.iframeReady == 1"
+                  id="todoIframe" src="http://localhost:9000"
                   style="border-width: 1px; border-color: #dddddd; height: 400px; width: 100%;"
                   seamless="true">
           </iframe>

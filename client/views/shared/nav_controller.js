@@ -2,7 +2,7 @@
 (function  () {
     'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService','$interval', '$log', 'NotificationService', 'TablesService', 'DbQueriesService','AppState', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$interval', '$log', 'NotificationService', 'TablesService', 'DbQueriesService', 'AppState', NavCtrl]);
 
   function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService, DbQueriesService, AppState){
     var self = this;
@@ -17,13 +17,13 @@
 
     function loadTables(){
       self.appName = AppState.get();//  $state.params.name
-      if(self.appName == undefined)
+      if (self.appName == undefined)
         return;
       TablesService.get(self.appName).then(
         function (data) {
           self.tables = data;
-          if(self.appName){
-            if(self.tables.length == 0){ //only check the database if there are no tables
+          if (self.appName) {
+            if (self.tables.length == 0) { //only check the database if there are no tables
               AppsService.appDbStat(self.appName).then(successDbStats);
             }
             else{
@@ -56,7 +56,7 @@
       }
       AppState.set(self.appName);
 
-      AppsService.getCurrentApp(self.appName).then(successGetCurrentApp,errorGetCurrentApp);
+      AppsService.getCurrentApp(self.appName).then(successGetCurrentApp, errorGetCurrentApp);
     }
 
     function successGetCurrentApp(data){
@@ -64,9 +64,9 @@
       self.DatabaseStatus = self.app.DatabaseStatus;
       var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
       checkChanges(oldStatus);
-      if(self.DatabaseStatus == 0)
+      if (self.DatabaseStatus == 0)
         self.tables = [];
-      else if(self.tables.length == 0) //only load tables when it's empty
+      else if(self.DatabaseStatus == 1 && self.tables.length == 0) //only load tables when it's empty
         loadTables();
     }
 
@@ -75,7 +75,7 @@
       stopRefresh();
     }
 
-    $scope.$on('$stateChangeSuccess', function(){
+    $scope.$on('$stateChangeSuccess', function() {
       self.state = $state.current.name;
       self.appName = $state.params.name;
 
@@ -111,11 +111,8 @@
         }
     };
 
-    var generalStates = ['apps.index', 'playground.get-started'];
-
     self.isGeneralState = function () {
       return !$state.params.name;
-      //return _.findIndex(generalStates, self.state) === -1;
     };
 
     function checkChanges(oldStatus) {
@@ -153,7 +150,7 @@
     });
 
     function successDbStats(data){
-      if(data.data){
+      if (data.data) {
         self.dbEmpty = data.data.tableCount == 0;
       }
     }
@@ -200,7 +197,6 @@
     }
 
     self.showDbQuery = function(query) {
-      query = query;
       var params = {
         name: $state.params.name,
         queryId: query.__metadata.id
@@ -215,9 +211,9 @@
       $state.go('dbQueries.newQuery', params);
     };
 
-    self.showExample = function(example){
+    self.showExample = function(example) {
       if($state.params.name)
-        return ($state.params.name.substring(0,4).toLowerCase() == example);
+        return ($state.params.name.substring(0, 4).toLowerCase() == example);
       else
         return false;
     }

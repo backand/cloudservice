@@ -5,9 +5,9 @@
   'use strict';
 
   angular.module('app.playground')
-    .controller('Todo', ['$scope', '$http', 'SessionService','usSpinnerService','$state', Todo]);
+    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService', TodoCtrl]);
 
-  function Todo($scope, $http, SessionService, usSpinnerService, $state) {
+  function TodoCtrl($scope, $http, SessionService, usSpinnerService, $state, $interval, AppsService) {
 
     var self = this;
 
@@ -43,7 +43,6 @@
         theme:'monokai',
         mode: self.activeFile ? self.activeFile.type : 'html',
         firstLineNumber: 1};
-
     };
 
     window.addEventListener('message', function (e) {
@@ -65,6 +64,38 @@
           break;
       }
     }, false);
+
+    // Show "wait message" while DB is set up
+
+    function getAppStatus () {
+      AppsService.getCurrentApp($state.params.name)
+        .then(function (result) {
+          if (result)
+            self.iframeReady = result.DatabaseStatus;
+          if (self.iframeReady != 1)
+            usSpinnerService.spin("loading-iframe");
+          else
+            stopRefresh();
+        });
+    }
+
+    function stopRefresh() {
+      if (angular.isDefined(checkAppStatus)) {
+        $interval.cancel(checkAppStatus);
+        usSpinnerService.stop("loading-iframe");
+        checkAppStatus = undefined;
+      }
+    }
+
+    $scope.$on('$destroy', function() {
+      // Make sure that the interval is destroyed too
+      stopRefresh();
+    });
+
+    self.iframeReady = 'unknown';
+    getAppStatus();
+    var checkAppStatus = $interval(getAppStatus, 3000);
+
   }
 
 
