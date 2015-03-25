@@ -37,7 +37,10 @@
   <!-- End Inspectlet Embed Code -->
 
   <script type='text/javascript'>
-    !function(e,t){var r='JacoRecorder';!function(e,t,n,o){function c(e,t){e[t]=function(){e.q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}if(!n.__VERSION){e[r]=n,n.q=[];for(var a=['init','identify','startRecording','stopRecording','setUserInfo'],i=0;i<a.length;i++)c(n,a[i]);n.__VERSION=.8,n.__INIT_TIME=1*new Date;var s=t.createElement('script');s.async=!0,s.setAttribute('crossorigin','anonymous'),s.src=o;var u=t.getElementsByTagName('script')[0];u.parentNode.insertBefore(s,u)}}(e,t,e[r]||[],'//bo.getjaco.com/build/recorder.js')}(window,document); JacoRecorder.init('0f89881c-b5a0-40a9-b966-155473b7aa5a', {});
+    if(this.window.location.hostname != 'localhost')
+    {
+      !function(e,t){var r='JacoRecorder';!function(e,t,n,o){function c(e,t){e[t]=function(){e.q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}if(!n.__VERSION){e[r]=n,n.q=[];for(var a=['init','identify','startRecording','stopRecording','setUserInfo'],i=0;i<a.length;i++)c(n,a[i]);n.__VERSION=.8,n.__INIT_TIME=1*new Date;var s=t.createElement('script');s.async=!0,s.setAttribute('crossorigin','anonymous'),s.src=o;var u=t.getElementsByTagName('script')[0];u.parentNode.insertBefore(s,u)}}(e,t,e[r]||[],'//bo.getjaco.com/build/recorder.js')}(window,document); JacoRecorder.init('0f89881c-b5a0-40a9-b966-155473b7aa5a', {});
+    }
   </script>
   <!-- Start of Woopra Code -->
   <script>

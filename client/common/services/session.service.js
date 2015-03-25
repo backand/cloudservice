@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function SessionService($rootScope, $cookieStore) {
+  function SessionService($rootScope, $cookieStore, JacoRecorder) {
     var self = this;
 
     this.currentUser = $cookieStore.get('globals') ? $cookieStore.get('globals').currentUser : undefined;
@@ -25,14 +25,16 @@
       var user = {
         currentUser: {
           access_token : serverData.access_token,
-          username: username
+          username: username,
+          userId: serverData.userId
         }
       };
 
       self.currentUser = user.currentUser;
 
       $cookieStore.put('globals', user);
-      JacoRecorder.identify(user.currentUser.username);
+      if(JacoRecorder)
+        JacoRecorder.identify(user.currentUser.username);
       woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
       __insp.push(['identify', user.currentUser.username]);
     };

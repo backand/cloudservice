@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function appsService($http, $q, CONSTS, DatabaseNamesService, AuthService) {
+  function AppsService($http, $q, CONSTS, DatabaseNamesService) {
 
     var self = this;
 
@@ -99,7 +99,6 @@
         .success(function (data) {
           apps.list = data.data;
           updateAppNames();
-          ensureExampleApp();
           apps.loaded = true;
           deferred.resolve(data);
         })
@@ -110,14 +109,6 @@
 
       return deferred.promise;
     };
-
-    function ensureExampleApp () {
-      var exampleAppName = 'todo' + AuthService.getUserId();
-      if (!_.contains(apps.names, exampleAppName)) {
-        self.add(exampleAppName, 'Todo List - Example App')
-          .then(self.all);
-      }
-    }
 
     self.refresh = function () {
       return $http({
@@ -186,6 +177,6 @@
   }
 
   angular.module('common.services')
-    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', 'AuthService', appsService]);
+    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', AppsService]);
 
 })();

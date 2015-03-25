@@ -214,5 +214,12 @@
       };
       $state.go('dbQueries.newQuery', params);
     };
+
+    self.showExample = function(example){
+      if($state.params.name)
+        return ($state.params.name.substring(0,4).toLowerCase() == example);
+      else
+        return false;
+    }
   }
 }());

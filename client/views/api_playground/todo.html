@@ -29,7 +29,7 @@
 
           <div ui-ace=todo.getAceObj()
                readonly
-               class="form-control ace-rule"
+               class="form-control ace-example"
                id="tableTemplate"
                ng-model="todo.todoHTML"
                required
@@ -39,7 +39,7 @@
         </div>
         <div class="row col-md-5">
           <!--<div ng-include="'/examples/todo/main.html'"></div>-->
-          <iframe src="/examples/todo/main.html"
+          <iframe id="todoIframe" src="http://localhost:9000"
                   style="border-width: 1px; border-color: #dddddd; height: 400px; width: 100%;"
                   seamless="true">
           </iframe>

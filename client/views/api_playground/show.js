@@ -24,14 +24,13 @@
       var data = e.data[1];
       switch (eventName) {
         case 'setHeight':
-          $("#restIfrmae").height(data + 50);
+          $("#todoIframe").height(data + 50);
           break;
         case 'ready':
           var o = document.getElementsByTagName('iframe')[0];
           usSpinnerService.spin("loading");
 
           var message = {auth: 'bearer ' + token, appName: appName};
-          //var auth = SessionService.getAuthHeader();
           o.contentWindow.postMessage(message, "*");
           break;
         case 'complete':

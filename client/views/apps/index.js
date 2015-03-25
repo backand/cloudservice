@@ -1,16 +1,11 @@
 (function  () {
     'use strict';
 
-  angular.module('app.apps')
-<<<<<<< HEAD
-    .controller('AppsIndexController', ['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval', 'AppState', 'usSpinnerService', 'LayoutService', 'AuthService', AppsIndexController]);
+angular.module('app.apps')
+  .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', 'LayoutService','$analytics', 'AuthService', AppsIndexController]);
 
-  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService, AuthService) {
-=======
-    .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', 'LayoutService','$analytics', AppsIndexController]);
+  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService, $analytics, AuthService) {
 
-  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService,$analytics) {
->>>>>>> baas
     var self = this;
     self.loading = false;
     var stop;

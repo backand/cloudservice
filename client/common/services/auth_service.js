@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function AuthService($http, CONSTS, $localStorage) {
+  function AuthService($http, CONSTS, SessionService) {
 
     var self =this;
 
@@ -61,18 +61,15 @@
     };
 
     self.getUserId = function () {
-      if (!$localStorage.backand.userId)
-        $localStorage.backand.userId = 5;
-      return $localStorage.backand.userId;
-    };
-
-    self.setUserId = function (x) {
-      $localStorage.backand.userId = x;
+      if(SessionService.currentUser.userId)
+        return SessionService.currentUser.userId;
+      else
+        return 0;
     };
 
   }
 
   angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', '$localStorage', AuthService])
+    .service('AuthService', ['$http', 'CONSTS', 'SessionService', AuthService])
 
 })();

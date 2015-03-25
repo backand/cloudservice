@@ -1,15 +1,9 @@
 (function  () {
   'use strict';
-  angular.module('app.apps')
-<<<<<<< HEAD
-    .controller('DatabaseEdit', ['AppsService', 'AuthService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService','usSpinnerService','ConfirmationPopup', DatabaseEdit]);
+angular.module('app.apps')
+  .controller('DatabaseEdit', ['$http', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$analytics','AuthService', DatabaseEdit]);
 
-  function DatabaseEdit(AppsService, AuthService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService,usSpinnerService,ConfirmationPopup) {
-=======
-    .controller('DatabaseEdit', ['$http', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$analytics', DatabaseEdit]);
-
-  function DatabaseEdit($http, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $analytics) {
->>>>>>> baas
+function DatabaseEdit($http, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $analytics, AuthService) {
 
     var self = this;
 
@@ -115,15 +109,6 @@
       }
     };
 
-<<<<<<< HEAD
-    self.back = function () {
-      $state.go('apps.show', ({name:$state.params.name}));
-    };
-
-    self.Confirmation = function (msg) {
-      ConfirmationPopup.confirm(msg, 'Ok', '', true, false);
-    }
-=======
     self.back = function(){
       $state.go('apps.show', {name: $state.params.name});
     };
@@ -186,7 +171,5 @@
         self.ace.editor.insert('"' + param + '"');
       });
     };
->>>>>>> baas
-
   }
 }());

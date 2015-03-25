@@ -2,9 +2,9 @@
 (function  () {
 
   angular.module('app')
-    .controller('SignUpController',["$scope",'AuthService','$state','SessionService','$timeout','$analytics', SignUpController]);
+    .controller('SignUpController',["$scope",'AuthService','$state','SessionService','$timeout','$analytics', 'AppsService', SignUpController]);
 
-  function SignUpController($scope,AuthService,$state,SessionService,$timeout,$analytics){
+  function SignUpController($scope,AuthService,$state,SessionService,$timeout,$analytics, AppsService){
     var self = this;
 
 
@@ -20,7 +20,14 @@
           AuthService.signIn(self.email,self.password)
               .success(function (data) {
                   SessionService.setCredentials(data, self.email);
-                  $state.go('apps.index');
+                  //create todos sample app
+                  var exampleAppName = 'todo' + AuthService.getUserId();
+                  if(exampleAppName != 'todo0'){
+                    AppsService.add(exampleAppName, 'Todo List - Example App')
+                      .then(
+                      $state.go('apps.index')
+                    );
+                  }
               })
               .error(function (data) {
                   self.loading = false;

@@ -41,7 +41,7 @@
       })
       .state('playground.todo', {
         parent: 'playground',
-        url: '/todo/:name',
+        url: '/todo/:name/:isnew',
         controller: 'Todo as todo',
         templateUrl: 'views/api_playground/todo.html'
       })

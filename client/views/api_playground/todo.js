@@ -5,11 +5,13 @@
   'use strict';
 
   angular.module('app.playground')
-    .controller('Todo', ['$scope', '$http', Todo]);
+    .controller('Todo', ['$scope', '$http', 'SessionService','usSpinnerService','$state', Todo]);
 
-  function Todo($scope, $http) {
+  function Todo($scope, $http, SessionService, usSpinnerService, $state) {
 
     var self = this;
+
+    var token = SessionService.getToken();
 
     self.codeFiles = [
       {name: 'index.html', type: 'html'},
@@ -18,14 +20,6 @@
       {name: 'theme.css', type: 'css'}
     ];
 
-    $scope.ace = {
-      dbType: 'html',
-      editors: {},
-      onLoad: function(_editor) {
-        $scope.ace.editors[_editor.container.id] = _editor;
-        _editor.$blockScrolling = Infinity;
-      }
-    };
 
     self.getFile = function (file) {
       $http({
@@ -49,7 +43,28 @@
         theme:'monokai',
         mode: self.activeFile ? self.activeFile.type : 'html',
         firstLineNumber: 1};
+
     };
+
+    window.addEventListener('message', function (e) {
+      var eventName = e.data[0];
+      var data = e.data[1];
+      switch (eventName) {
+        case 'setHeight':
+          $("#restIfrmae").height(data + 50);
+          break;
+        case 'ready':
+          var o = document.getElementsByTagName('iframe')[0];
+          usSpinnerService.spin("loading");
+
+          var message = {auth: 'bearer ' + token, appName: $state.params.name};
+          o.contentWindow.postMessage(message, "*");
+          break;
+        case 'complete':
+          usSpinnerService.stop("loading");
+          break;
+      }
+    }, false);
   }
 
 
