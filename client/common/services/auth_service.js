@@ -61,7 +61,7 @@
     };
 
     self.getUserId = function () {
-      if(SessionService.currentUser.userId)
+      if(SessionService.currentUser && SessionService.currentUser.userId)
         return SessionService.currentUser.userId;
       else
         return 0;

@@ -14,7 +14,7 @@
           <div>
             <ul class="nav nav-tabs"
                 ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
-              <li  ng-class="{active: todo.activeFile === codeFile}"
+              <li ng-class="{active: todo.activeFile === codeFile}"
                   ng-repeat="codeFile in todo.codeFiles">
                 <a ng-click="todo.getFile(codeFile)" href="">
                   {{codeFile.name}}
@@ -39,16 +39,16 @@
         </div>
         <div class="row col-md-5">
 
-          <div ng-hide="todo.iframeReady == 1" class="iframe-substitute">
+          <div ng-hide="todo.iframeReady === 1" class="iframe-substitute">
             <div ng-hide="todo.iframeReady === 'unknown'">
-              <div class="iframe-substitute-message">Please wait a few minutes while the application is set up in the server.</div><br/><br/>
+              <div class="iframe-substitute-message">Please wait a few minutes while the application is been created.</div><br/><br/>
               <div us-spinner spinner-key="loading-iframe" us-spinner="{length:10, radius: 10}" style="position: relative;"></div><br/><br/>
-              <div class="iframe-substitute-submessage">You can come back to this page by selecting "Todo Example" under "Docs & API" in the navigation bar on the right.</div>
+              <div class="iframe-substitute-submessage">You can come back to this page by selecting "Todo Example" under "Docs & API" in the navigation bar.</div>
             </div>
           </div>
 
-          <iframe ng-if="todo.iframeReady == 1"
-                  id="todoIframe" src="http://localhost:9000"
+          <iframe ng-if="todo.iframeReady === 1"
+                  id="todoIframe" src="http://s3.amazonaws.com/todosample.backand.net/index.html"
                   style="border-width: 1px; border-color: #dddddd; height: 400px; width: 100%;"
                   seamless="true">
           </iframe>

@@ -88,10 +88,15 @@
                 AngularJS Quickstart
               </a>
             </div>
-            <button ng-click="index.appManage(app)"
+            <button ng-click="index.appManage(app)" ng-if="!index.exampleApp()"
                     ng-disabled="app.DatabaseStatus == 2"
                     class="btn btn-default btn-w-md btn-block">
               Manage App
+            </button>
+            <button ng-click="index.appManage(app)" ng-if="index.exampleApp()"
+                    ng-disabled="app.DatabaseStatus == 2"
+                    class="btn btn-primary btn-w-md btn-block" data-style="expand-right">
+              Create Example App
             </button>
 
           </div>

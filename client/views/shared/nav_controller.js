@@ -75,6 +75,7 @@
       stopRefresh();
     }
 
+
     $scope.$on('$stateChangeSuccess', function() {
       self.state = $state.current.name;
       self.appName = $state.params.name;
@@ -84,6 +85,8 @@
       loadApp();
 
     });
+
+    $scope.$on('AppIsReady', loadApp);
 
     self.isTablesActive = function() {
       return $state.current.name.indexOf('tables.columns') != -1;

@@ -8,7 +8,8 @@
     var self = this;
 
     (function init() {
-      self.appName = 'todo' + AuthService.getUserId();
+      //self.appName = 'todo' + AuthService.getUserId();
+      self.appName = $state.params.name;
       self.loading = false;
       $http({
         method: 'GET',

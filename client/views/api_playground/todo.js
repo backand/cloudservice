@@ -5,9 +5,9 @@
   'use strict';
 
   angular.module('app.playground')
-    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService', TodoCtrl]);
+    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService','$rootScope','CONSTS', TodoCtrl]);
 
-  function TodoCtrl($scope, $http, SessionService, usSpinnerService, $state, $interval, AppsService) {
+  function TodoCtrl($scope, $http, SessionService, usSpinnerService, $state, $interval, AppsService, $rootScope, CONSTS) {
 
     var self = this;
 
@@ -56,7 +56,7 @@
           var o = document.getElementsByTagName('iframe')[0];
           usSpinnerService.spin("loading");
 
-          var message = {auth: 'bearer ' + token, appName: $state.params.name};
+          var message = {auth: 'bearer ' + token, appName: $state.params.name, url: CONSTS.appUrl};
           o.contentWindow.postMessage(message, "*");
           break;
         case 'complete':
@@ -70,12 +70,18 @@
     function getAppStatus () {
       AppsService.getCurrentApp($state.params.name)
         .then(function (result) {
-          if (result)
-            self.iframeReady = result.DatabaseStatus;
-          if (self.iframeReady != 1)
-            usSpinnerService.spin("loading-iframe");
-          else
-            stopRefresh();
+          if (result) {
+            if (result.DatabaseStatus != 1)
+            {
+              usSpinnerService.spin("loading-iframe");
+            }
+            else
+            {
+              stopRefresh();
+              self.iframeReady = 1;
+              $rootScope.$broadcast('AppIsReady');
+            }
+          }
         });
     }
 

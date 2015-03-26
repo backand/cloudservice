@@ -43,6 +43,7 @@ angular.module('app.apps')
         $state.go('apps.show', {name: app.Name});
       else {
         if (app.Name === 'todo' + AuthService.getUserId()) {
+        //if (app.Name.substring(0,4) === 'todo') {
           $state.go('database.example', {name: app.Name});
         }
         else {
@@ -88,9 +89,13 @@ angular.module('app.apps')
           ribbonInfo = { class: 'ui-ribbon-danger', text: 'Error'};
           break;
       }
-      if (app.Name === 'todo' + AuthService.getUserId())
+      if (self.exampleApp())
         ribbonInfo.text = 'Example';
       return ribbonInfo;
+    }
+
+    self.exampleApp = function(){
+      return app.Name === 'todo' + AuthService.getUserId();
     }
 
     stop = $interval(function() {
