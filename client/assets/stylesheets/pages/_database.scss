@@ -69,17 +69,23 @@
 .db-types-title {
   text-transform: uppercase;
   font-size: 15px;
-  padding-left: 15px;
 }
 
 .db-types {
   line-height: 31px;
   font-size: 15px;
-  padding-left: 15px;
+
+  i {
+    visibility: hidden;
+  }
 
   &:hover {
     background-color: #e0e0e0;
     cursor: pointer;
+
+    i {
+      visibility: visible;
+    }
   }
 }
 

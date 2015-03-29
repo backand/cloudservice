@@ -11,6 +11,7 @@
         name="customSchema"
         id="customSchema"
         ng-model="dbedit.customSchema"
+        ng-model-options="{ updateOn: 'default blur', debounce: {'default': 1000, 'blur': 0} }"
         required
         ng-pattern="codeRegex"
         style="resize: vertical; ">
@@ -30,10 +31,12 @@
       </div>
     </div>
     <div class="col-md-4 col-lg-3">
-      <div class="db-types-title">Field Types</div>
+      <span class="db-types-title">Field Types</span>
+      <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span>
       <br/>
 
-      <div class="db-types" ng-repeat="fieldType in dbedit.fieldTypes" ng-click="dbedit.insertTypeAtChar(fieldType)">
+      <div class="db-types" ng-repeat="fieldType in dbedit.fieldTypes" ng-click="dbedit.insertTypeAtChar(fieldType)" ng-mouseover="fieldHover = true">
+        <i class="ti-angle-left"></i>
         {{fieldType}}
       </div>
       <br/>

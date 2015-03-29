@@ -1,15 +1,15 @@
 (function  () {
   'use strict';
   angular.module('app.apps')
-    .controller('DatabaseTodoExample', ['$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', '$http', 'AuthService','$scope', DatabaseTodoExample]);
+    .controller('DatabaseTodoExample', ['$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', '$http', 'AuthService', '$scope', DatabaseTodoExample]);
 
-  function DatabaseTodoExample($state, DatabaseNamesService, NotificationService, DatabaseService, $http, AuthService,$scope) {
+  function DatabaseTodoExample($state, DatabaseNamesService, NotificationService, DatabaseService, $http, AuthService, $scope) {
 
     var self = this;
 
     (function init() {
-      //self.appName = 'todo' + AuthService.getUserId();
-      self.appName = $state.params.name;
+      self.appName = 'todo' + AuthService.getUserId();
+      //self.appName = $state.params.name;
       self.loading = false;
       $http({
         method: 'GET',
@@ -27,11 +27,11 @@
       var sampleApp = "todo-mysql";
 
       DatabaseService.createDB(self.appName, product, sampleApp)
-        .success(function(data){
-          NotificationService.add('info','Creating new database... It may take 1-2 minutes');
+        .success(function(data) {
+          NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
           $state.go('playground.todo', {name: self.appName, isnew: 'new'});
         })
-        .error(function(err){
+        .error(function(err) {
           self.loading = false;
           NotificationService.add('error', err)
         })

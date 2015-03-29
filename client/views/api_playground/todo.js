@@ -5,7 +5,7 @@
   'use strict';
 
   angular.module('app.playground')
-    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService','$rootScope','CONSTS', TodoCtrl]);
+    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService', '$rootScope', 'CONSTS', TodoCtrl]);
 
   function TodoCtrl($scope, $http, SessionService, usSpinnerService, $state, $interval, AppsService, $rootScope, CONSTS) {
 
@@ -75,6 +75,7 @@
             if (result.DatabaseStatus != 1)
             {
               usSpinnerService.spin("loading-iframe");
+              self.iframeReady = 0;
             }
             else
             {
@@ -87,6 +88,7 @@
     }
 
     function stopRefresh() {
+      AppsService.all();
       if (angular.isDefined(checkAppStatus)) {
         $interval.cancel(checkAppStatus);
         usSpinnerService.stop("loading-iframe");

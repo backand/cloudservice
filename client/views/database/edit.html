@@ -14,11 +14,16 @@
       <br/>
 
       <tabset justified="true" class="ui-tab ui-tab-horizontal ui-tab-container">
-        <tab heading="New Hosted Database" ng-if="dbedit.databaseStatus === 0" ng-click="dbedit.dataName = 'newMysql'">
-          <ng-include src="'views/database/new_data/new_source.html'" ng-if="!dbedit.customMode"></ng-include>
-          <ng-include src="'views/database/new_data/customize_source.html'" ng-if="dbedit.customMode"></ng-include>
+        <tab heading="New Hosted Database"
+             ng-if="dbedit.databaseStatus === 0"
+             ng-click="dbedit.dataName = 'newMysql'">
+            <div ng-include="'views/database/new_data/new_source.html'"
+                 ng-show="!dbedit.customMode"></div>
+            <div ng-include="'views/database/new_data/customize_source.html'"
+                 ng-show="dbedit.customMode"></div>
         </tab>
-        <tab heading="Connect to Existing Database" ng-if="dbedit.databaseStatus != null"
+        <tab heading="Connect to Existing Database"
+             ng-if="dbedit.databaseStatus != null"
              ng-click="dbedit.dataName = 'mysql'">
           <ng-include src="'views/database/exs_data/exs_source.html'"></ng-include>
         </tab>

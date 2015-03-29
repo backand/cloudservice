@@ -1,12 +1,27 @@
 (function() {
   'use strict';
 
-  function DatabaseService($http,CONSTS) {
+  function DatabaseService($http, CONSTS, $localStorage) {
+
+    var self = this;
+
+    self.getCustomSchema = function (appName) {
+      if (!$localStorage.backand[appName])
+        $localStorage.backand[appName] = {};
+      return $localStorage.backand[appName].customSchema;
+    };
+
+    self.saveCustomSchema = function(appName, schema) {
+      if (!$localStorage.backand[appName])
+        $localStorage.backand[appName] = {};
+      if (schema)
+        $localStorage.backand[appName].customSchema = schema;
+    };
 
     this.updateTemplate = function(name, templateId) {
       return $http({
         method: 'PUT',
-        url: CONSTS.appUrl + '/admin/myApps/'+name,
+        url: CONSTS.appUrl + '/admin/myApps/' + name,
         data: {
           ThemeId : templateId
         }
@@ -16,7 +31,7 @@
     this.connect2DB = function(appName, data) {
       return $http({
         method: 'POST',
-        url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
+        url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
         data: data
       });
     };
@@ -24,7 +39,7 @@
     this.reConnect2DB = function(appName, data) {
         return $http({
           method: 'PUT',
-          url: CONSTS.appUrl + '/admin/myAppConnection/'+appName,
+          url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
           data: data
         });
     };
@@ -40,14 +55,14 @@
     this.getDBInfo = function(appName) {
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/admin/myAppConnection/'+appName
+        url: CONSTS.appUrl + '/admin/myAppConnection/' + appName
       });
     };
 
     this.getAppPassword = function(appName){
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/admin/myAppConnection/getPassword/'+appName
+        url: CONSTS.appUrl + '/admin/myAppConnection/getPassword/' + appName
       });
     };
 
@@ -66,6 +81,6 @@
   }
 
   angular.module('common.services')
-    .service('DatabaseService',['$http','CONSTS', DatabaseService]);
+    .service('DatabaseService',['$http', 'CONSTS', '$localStorage', DatabaseService]);
 
 })();

@@ -2,7 +2,7 @@
     'use strict';
 
 angular.module('app.apps')
-  .controller('AppsIndexController',['$scope','AppsService', 'appsList', '$state', 'NotificationService','$interval','AppState','usSpinnerService', 'LayoutService','$analytics', 'AuthService', AppsIndexController]);
+  .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval', 'AppState', 'usSpinnerService', 'LayoutService', '$analytics', 'AuthService', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService, $analytics, AuthService) {
 
@@ -18,13 +18,15 @@ angular.module('app.apps')
       self.loading = true;
       if(self.appTitle === '')
           self.appTitle = self.appName;
+
       AppsService.add(self.appName, self.appTitle)
-        .then(function(data){
-          $analytics.eventTrack('createdApp',{});
+        .then(function(data) {
+          $analytics.eventTrack('createdApp', {});
           NotificationService.add('success', 'App was added successfully');
           AppState.set(self.appName);
           $state.go('database.edit', { name: self.appName });
-        },function(err){
+        },
+        function(err) {
           self.loading = false;
           NotificationService.add('error', err);
         })
@@ -100,9 +102,10 @@ angular.module('app.apps')
 
     stop = $interval(function() {
       AppsService.all()
-        .then(function(apps){
+        .then(function(apps) {
           self.apps = apps.data.data;
-        },function(error){
+        },
+        function(error) {
           stopRefresh();
       });
     }, 10000);
