@@ -45,6 +45,11 @@
         controller: 'TodoCtrl as todo',
         templateUrl: 'views/api_playground/todo.html'
       })
+      .state('api-desc', {
+        parent: 'playground',
+        url: '/api/:name',
+        templateUrl: 'views/api_playground/api-desc.html'
+      })
   }
 
 })();

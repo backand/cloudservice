@@ -15,6 +15,10 @@
       <a ui-sref="kickstart-open"> <i class="ti-star"></i><span>Kickstart Tutorial</span></a>
     </li>
 
+    <li ui-sref-active="active">
+      <a ui-sref="api-desc-open"> <i class="ti-star"></i><span>API Documentation</span></a>
+    </li>
+
     <!--<li>-->
       <!--<a href="http://blog.backand.com/documentation/" target="_blank"><i class="ti-layout-media-overlay"></i><span>Documentation</span></a>-->
     <!--</li>-->
@@ -84,31 +88,37 @@
                 <span>Kickstart Tutorial</span>
               </a>
             </li>
-
+            <li ng-class="{active: nav.state == 'api-desc', disabled: nav.DatabaseStatus != 1}">
+              <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('api-desc')" href="">
+                <i class="icon-rest-api-icon"></i>
+                <span>API Documentation</span>
+              </a>
+            </li>
             <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}">
               <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('playground.show')" href="">
                 <i class="icon-rest-api-icon"></i>
                 <span>REST API Playground</span>
               </a>
             </li>
-            <li ng-class="{active: nav.state == 'playground.orm', disabled: nav.DatabaseStatus != 1}">
-              <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('playground.orm')" href="">
-                <i class="icon-orm-icon"></i>
-                <span>ORM Playground</span>
-              </a>
-            </li>
-            <li ng-class="{active: nav.state == 'playground.orm-usage'}">
-                <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways('playground.orm-usage')" href="">
-                    <i class="ti-shortcode"></i>
-                    <span>ORM Usage</span>
-                </a>
-            </li>
-            <li ng-class="{active: nav.state == 'playground.orm-config'}">
-                <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways('playground.orm-config')" href="">
-                    <i class="ti-github"></i>
-                    <span>ORM Configuration</span>
-                </a>
-            </li>
+
+            <!--<li ng-class="{active: nav.state == 'playground.orm', disabled: nav.DatabaseStatus != 1}">-->
+              <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('playground.orm')" href="">-->
+                <!--<i class="icon-orm-icon"></i>-->
+                <!--<span>ORM Playground</span>-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-class="{active: nav.state == 'playground.orm-usage'}">-->
+                <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways('playground.orm-usage')" href="">-->
+                    <!--<i class="ti-shortcode"></i>-->
+                    <!--<span>ORM Usage</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li ng-class="{active: nav.state == 'playground.orm-config'}">-->
+                <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways('playground.orm-config')" href="">-->
+                    <!--<i class="ti-github"></i>-->
+                    <!--<span>ORM Configuration</span>-->
+                <!--</a>-->
+            <!--</li>-->
             <li ng-class="{active: nav.state == 'playground.todo'}" ng-show="nav.showExample('todo')">
               <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways('playground.todo')" href="">
                 <i class="ti-github"></i>

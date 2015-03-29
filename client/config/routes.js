@@ -39,7 +39,7 @@ angular.module('app.routes', []).
         url: '/docs/kickstart',
         templateUrl: 'views/api_playground/kickstart-open.html'
       })
-      .state('api-desc', {
+      .state('api-desc-open', {
         url: '/docs/api',
         templateUrl: 'views/api_playground/api-desc.html'
       })

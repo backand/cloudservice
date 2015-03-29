@@ -12,6 +12,7 @@
     var self = this;
 
     var token = SessionService.getToken();
+    //self.iFrameSrc = 'http://localhost:9000/#/'; //http://s3.amazonaws.com/todosample.backand.net/index.html
 
     self.codeFiles = [
       {name: 'index.html', type: 'html'},
@@ -50,7 +51,7 @@
       var data = e.data[1];
       switch (eventName) {
         case 'setHeight':
-          $("#restIfrmae").height(data + 50);
+          $("#todoIframe").height(data + 50);
           break;
         case 'ready':
           var o = document.getElementsByTagName('iframe')[0];

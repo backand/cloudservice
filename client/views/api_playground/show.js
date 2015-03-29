@@ -24,7 +24,7 @@
       var data = e.data[1];
       switch (eventName) {
         case 'setHeight':
-          $("#todoIframe").height(data + 50);
+          $("#restIfrmae").height(data + 50);
           break;
         case 'ready':
           var o = document.getElementsByTagName('iframe')[0];
