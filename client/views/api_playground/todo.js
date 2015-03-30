@@ -46,7 +46,9 @@
         onLoad : ace.onLoad,
         theme:'monokai',
         mode: self.activeFile ? self.activeFile.type : 'html',
-        firstLineNumber: 1};
+        firstLineNumber: 1,
+        rendererOptions: { fontSize: 15 }
+      };
     };
 
     window.addEventListener('message', function (e) {

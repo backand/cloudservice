@@ -1,6 +1,6 @@
 <div class="db-tab-content">
   <div class="row">
-    <div class="col-md-6 db-panel-right-half">
+    <div class="col-md-6 db-panel-right-half" ng-show="!dbedit.customMode">
 
       <div class="icon-box db-icon-box">
         <div class="icon-container active">
@@ -25,11 +25,11 @@
       <br/>
     </div>
 
-    <div class="col-md-6">
+    <div ng-class="!dbedit.customMode ? 'col-md-6' : 'col-xs-12'">
       <div class="db-ace-title">database generator code</div>
       <br/>
 
-      <div>
+      <div ng-hide="dbedit.customMode">
         <ul class="db-nav db-nav-tabs"
             ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
           <li ng-class="{active: dbedit.template === template}"
@@ -40,32 +40,54 @@
           </li>
         </ul>
       </div>
-      <div
-        ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
-        class="form-control ace-db-template"
-        readonly
-        name="tableTemplate"
-        id="tableTemplate"
-        ng-model="dbedit.template.schema"
-        required
-        ng-pattern="codeRegex"
-        style="resize: vertical; ">
+      <div class="row">
+        <div ng-class="!dbedit.customMode ? 'col-xs-12' : 'col-md-8 col-lg-9'">
+          <div
+            ui-ace="{onLoad : dbedit.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+            class="form-control ace-db-template"
+            name="tableTemplate"
+            id="tableTemplate"
+            ng-model="dbedit.activeSchema"
+            required
+            readonly
+            ng-pattern="codeRegex"
+            style="resize: vertical">
+
+          </div>
+        </div>
+
+        <div class="col-md-4 col-lg-3" ng-show="dbedit.customMode">
+          <span class="db-types-title">Field Types</span>
+          <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span>
+          <br/>
+
+          <div class="db-types" ng-repeat="fieldType in dbedit.fieldTypes" ng-click="dbedit.insertTypeAtChar(fieldType)"
+               ng-mouseover="fieldHover = true">
+            <i class="ti-angle-left"></i>
+            {{fieldType}}
+          </div>
+          <br/>
+
+          <div class="db-types-note">For <b>SingleSelect</b> and <b>MultiSelect</b> you need to specify
+            <b>RelatedTable</b>
+          </div>
+        </div>
 
       </div>
     </div>
   </div>
-  <br/>
-
-  <div>
-    <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
-            ladda="dbedit.loading" data-style="expand-right"
-            ng-click="dbedit.create()">
-      Create
-    </button>
-    <button type="submit" ng-disabled="form.$invalid" class="btn db-btn-default btn-lg btn-w-lg pull-right"
-            ladda="dbedit.loading" data-style="expand-right"
-            ng-click="dbedit.customize()">
-      Customize Database
-    </button>
+  <div class="row">
+    <div ng-class="!dbedit.customMode ? 'col-xs-12' : 'col-md-8 col-lg-9'">
+      <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
+              ladda="dbedit.loading" data-style="expand-right"
+              ng-click="dbedit.create()">
+        Create
+      </button>
+      <button type="submit" ng-disabled="form.$invalid" class="btn db-btn-default btn-lg btn-w-lg pull-right"
+              ladda="dbedit.loading" data-style="expand-right"
+              ng-click="dbedit.customize()">
+        <span ng-bind="!dbedit.customMode ? 'Customize Database' : 'Restore Default'"></span>
+      </button>
+    </div>
   </div>
 </div>

@@ -17,10 +17,7 @@
         <tab heading="New Hosted Database"
              ng-if="dbedit.databaseStatus === 0"
              ng-click="dbedit.dataName = 'newMysql'">
-            <div ng-include="'views/database/new_data/new_source.html'"
-                 ng-show="!dbedit.customMode"></div>
-            <div ng-include="'views/database/new_data/customize_source.html'"
-                 ng-show="dbedit.customMode"></div>
+            <div ng-include="'views/database/new_data/new_source.html'"></div>
         </tab>
         <tab heading="Connect to Existing Database"
              ng-if="dbedit.databaseStatus != null"

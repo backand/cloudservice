@@ -154,25 +154,38 @@ angular.module('app.apps')
     };
 
     self.showFile = function (template) {
-      self.getFile(template)
-        .then(function (result) {
-          self.template = template;
-          self.template.schema = result;
-        })
+      self.template = template;
+      if (template.schema) {
+        self.activeSchema = template.schema;
+      }
+      else {
+        self.getFile(template)
+          .then(function (result) {
+            template.schema = result;
+            self.activeSchema = template.schema;
+          });
+      }
     };
 
     self.showFile(self.templates[0]);
 
     self.customize = function () {
-      self.customMode = true;
-      self.customSchema = DatabaseService.getCustomSchema(self.appName) || self.template.schema;
+      self.customMode = !self.customMode;
+      self.ace.editor.setReadOnly(!self.customMode);
+      if (self.customMode) {
+        self.activeSchema = DatabaseService.getCustomSchema(self.appName) || self.activeSchema;
+      }
+      else {
+        self.activeSchema = self.template.schema;
+      }
     };
 
     function saveCustomSchema (schema) {
-      DatabaseService.saveCustomSchema(self.appName, schema);
+      if (self.customMode)
+        DatabaseService.saveCustomSchema(self.appName, schema);
     }
 
-    $scope.$watch('dbedit.customSchema', saveCustomSchema);
+    $scope.$watch('dbedit.activeSchema', saveCustomSchema);
 
     // Field Types
 
