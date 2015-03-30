@@ -93,12 +93,12 @@
               </a>
               <div ng-if="index.exampleApp(app) && app.DatabaseStatus != 1" style="margin-bottom: -5px;">&nbsp;</div>
             </div>
-            <button ng-click="index.appManage(app)" ng-if="!index.exampleApp(app)"
+            <button ng-click="index.appManage(app)" ng-if="!index.exampleApp(app) || app.DatabaseStatus === 1"
                     ng-disabled="app.DatabaseStatus == 2"
                     class="btn btn-default btn-w-md btn-block">
               Manage App
             </button>
-            <button ng-click="index.appManage(app)" ng-if="index.exampleApp(app)"
+            <button ng-click="index.appManage(app)" ng-if="index.exampleApp(app) && app.DatabaseStatus !== 1"
                     ng-disabled="app.DatabaseStatus == 2"
                     class="btn btn-primary btn-w-md btn-block" data-style="expand-right">
               Build Example App
