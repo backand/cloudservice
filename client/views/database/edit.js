@@ -64,15 +64,24 @@ angular.module('app.apps')
     }
 
     self.create = function () {
-        self.loading = true;
-        var product = DatabaseNamesService.getNumber(self.dataName);
-        var schema = null;
-        if(angular.isDefined(self.customSchema))
-          schema = JSON.parse(self.customSchema);
+      self.loading = true;
+      var product = DatabaseNamesService.getNumber(self.dataName);
 
-        DatabaseService.createDB($state.params.name, product, "", schema)
+      var schema = null;
+
+      if (self.customMode) {
+        try {
+          schema = JSON.parse(self.customSchema);
+        }
+        catch (err) {
+          NotificationService.add('error', 'JSON is not properly formatted');
+          return;
+        }
+      }
+
+        DatabaseService.createDB($state.params.name, product, self.template.appName, schema)
         .success(function (data) {
-          NotificationService.add('info','Creating new database... It may take 1-2 minutes');
+          NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
           $state.go('getting-started-open', {isnew: 'new'});
         })
         .error(function (err) {
@@ -120,48 +129,6 @@ angular.module('app.apps')
       ConfirmationPopup.confirm(msg, 'Ok', '', true, false);
     };
 
-    function createCustomDb() {
-      try {
-        var tables = JSON.parse(self.customSchema);
-      }
-      catch (err) {
-        NotificationService.add('error', 'JSON is not properly formatted');
-      }
-      if (tables != null) {
-        try {
-          NotificationService.add('info', 'The process takes 5-7 minutes');
-          self.processing = true;
-          TablesService.addSchema($state.params.name, self.tableTemplate)
-            .then(function (data) {
-              $analytics.eventTrack('addedDbTables', {tempate: !0});
-              NotificationService.add('success', 'The app is ready with the new tables');
-              self.processing = false;
-              self.isReady = true;
-              //broadcast to NAV
-              $rootScope.$broadcast('fetchTables');
-              self.isEmptyDb = false;
-              checkForExistingTables();
-              __insp.push(['tagSession', "addSchema_" + self.activeTemplate]);
-            }, function (err) {
-              self.processing = false;
-              NotificationService.add('error', 'Can not create table ' + table.name);
-            })
-        }
-        catch (err) {
-          self.processing = false;
-          NotificationService.add('error', err.message);
-        }
-      }
-    }
-
-    function checkForExistingTables() {
-      AppsService.appDbStat($state.params.name)
-        .then(function(data){
-          self.isEmptyDb = data.data.tableCount == 0;
-        })
-    }
-
-
     // Ace Templates
 
     self.ace = {
@@ -171,10 +138,10 @@ angular.module('app.apps')
     };
 
     self.templates = [
-      {title: "Create your own", template: 'create_your_own'},
-      {title: "Game Shop", template: 'game_shop'},
-      {title: "E-commerce Campaign", template: 'ecommerce_campaign'},
-      {title: "Advertising System", template: 'advertising_system'}
+      {title: "Create your own", template: 'create_your_own', appName: 'new'},
+      {title: "Game Shop", template: 'game_shop', appName: 'game'},
+      {title: "E-commerce Campaign", template: 'ecommerce_campaign', appName: 'ecommerce'},
+      {title: "Advertising System", template: 'advertising_system', appName: 'advertising'}
     ];
 
     self.getFile = function (file) {
