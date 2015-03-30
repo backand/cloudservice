@@ -138,26 +138,26 @@ angular.module('app.apps')
     };
 
     self.templates = [
-      {title: "Create your own", template: 'create_your_own', appName: 'new'},
-      {title: "Game Shop", template: 'game_shop', appName: 'game'},
-      {title: "E-commerce Campaign", template: 'ecommerce_campaign', appName: 'ecommerce'},
-      {title: "Advertising System", template: 'advertising_system', appName: 'advertising'}
+      {title: "Create your own", filename: 'create_your_own', appName: 'items-mysql'},
+      {title: "Game Shop", filename: 'game_shop', appName: 'game'},
+      {title: "E-commerce Campaign", filename: 'ecommerce_campaign', appName: 'ecommerce'},
+      {title: "Advertising System", filename: 'advertising_system', appName: 'advertising'}
     ];
 
-    self.getFile = function (file) {
+    self.getFile = function (template) {
       return $http({
         method: 'GET',
-        url: '/views/database/db_templates/' + file.template + '.json'
+        url: '/views/database/db_templates/' + template.filename + '.json'
       }).then (function (result) {
         return angular.toJson(result.data, true);
       })
     };
 
-    self.showFile = function (file) {
-      self.getFile(file)
+    self.showFile = function (template) {
+      self.getFile(template)
         .then(function (result) {
-          self.template = result;
-          self.activeFile = file;
+          self.template = template;
+          self.template.schema = result;
         })
     };
 
@@ -165,7 +165,7 @@ angular.module('app.apps')
 
     self.customize = function () {
       self.customMode = true;
-      self.customSchema = DatabaseService.getCustomSchema(self.appName) || self.template;
+      self.customSchema = DatabaseService.getCustomSchema(self.appName) || self.template.schema;
     };
 
     function saveCustomSchema (schema) {

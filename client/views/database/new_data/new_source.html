@@ -32,10 +32,10 @@
       <div>
         <ul class="db-nav db-nav-tabs"
             ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
-          <li ng-class="{active: dbedit.activeFile === codeFile}"
-              ng-repeat="codeFile in dbedit.templates">
-            <a ng-click="dbedit.showFile(codeFile)" href="">
-              {{codeFile.title}}
+          <li ng-class="{active: dbedit.template === template}"
+              ng-repeat="template in dbedit.templates">
+            <a ng-click="dbedit.showFile(template)" href="">
+              {{template.title}}
             </a>
           </li>
         </ul>
@@ -46,7 +46,7 @@
         readonly
         name="tableTemplate"
         id="tableTemplate"
-        ng-model="dbedit.template"
+        ng-model="dbedit.template.schema"
         required
         ng-pattern="codeRegex"
         style="resize: vertical; ">
