@@ -2,16 +2,13 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> database configuration</strong>
+      <strong> Todo list App Example</strong>
 
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
       <div class="panel-body-explanation">
-        <h4>You'll need to connect your application to a database.
-          For the todo-list example we created a database in MySQL.
-          All you need to do is click "create".
-          Backand offers database templates and customization options for your own special apps.</h4>
+        <h4>The to-do list example app is almost ready, just click "Build" to complete the process.<br/> After the app is ready you can review the code, download it and play with the live demo.</h4>
       </div>
       <hr/>
       <br/>
@@ -27,26 +24,24 @@
               </div>
             </a>
 
-            <h3 class="col-xs-7" style="padding-top: 35px; padding-left: 30px;">Hosted <br/>MySQL Database</h3>
+            <h3 class="col-xs-7" style="padding-top: 35px; padding-left: 30px;">Todo List<br/>MySQL Database</h3>
           </div>
 
           <br/>
 
           <div class="panel-body-description">
-            <p>The new database is a hosted dedicated MySQL database just for you.</p>
+            <p>The todo list database is a hosted dedicated MySQL database just for you.</p>
 
             <p>You can access the database using any database admin tool like: Workbench, phpMyAdmin, Sequel Pro or
               any other tool.</p>
 
-            <p>Once you complete any action on the database, e.g. adding new tables or modifying columns, you will
-              need to sync the changes back to Backand</p>
           </div>
           <br/>
 
           <div class="form-group">
             <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
                     ladda="dbtodo.loading" data-style="expand-right"
-                    ng-click="dbtodo.create()">Create
+                    ng-click="dbtodo.create()">Build
             </button>
             <br/>
           </div>

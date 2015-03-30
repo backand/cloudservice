@@ -68,6 +68,10 @@ angular.module('app.apps')
       $state.go('playground.get-started', {name: appName});
     };
 
+    self.todoExample = function (appName) {
+      AppState.set(appName);
+      $state.go('playground.todo', {name: appName});
+    };
 
     self.namePattern = /^\w+$/;
 
@@ -91,12 +95,12 @@ angular.module('app.apps')
           ribbonInfo = { class: 'ui-ribbon-danger', text: 'Error'};
           break;
       }
-      if (self.exampleApp())
+      if (self.exampleApp(app))
         ribbonInfo.text = 'Example';
       return ribbonInfo;
     }
 
-    self.exampleApp = function(){
+    self.exampleApp = function(app){
       return app.Name === 'todo' + AuthService.getUserId();
     }
 

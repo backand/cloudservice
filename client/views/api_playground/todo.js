@@ -16,9 +16,12 @@
 
     self.codeFiles = [
       {name: 'index.html', type: 'html'},
-      {name: 'project.js', type: 'javascript'},
-      {name: 'database.json', type: 'json'},
-      {name: 'theme.css', type: 'css'}
+      {name: 'main.html', type: 'html'},
+      {name: 'main.js', type: 'javascript'},
+      {name: 'todo_service.js', type: 'javascript'},
+      {name: 'theme.css', type: 'css'},
+      {name: 'database.json', type: 'json'}
+
     ];
 
 
