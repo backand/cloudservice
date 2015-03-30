@@ -66,7 +66,9 @@ angular.module('app.apps')
     self.create = function () {
         self.loading = true;
         var product = DatabaseNamesService.getNumber(self.dataName);
-        var schema = JSON.parse(self.customSchema);
+        var schema = null;
+        if(angular.isDefined(self.customSchema))
+          schema = JSON.parse(self.customSchema);
 
         DatabaseService.createDB($state.params.name, product, "", schema)
         .success(function (data) {
