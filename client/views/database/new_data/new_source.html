@@ -7,14 +7,14 @@
           <img src="assets/images/mysql.png"/>
         </div>
         <div class="db-icon-title">
-          Hosted <br/> MySQL Database
+          Managed <br/> MySQL Database
         </div>
       </div>
 
       <br/>
 
       <div class="db-panel-body-description">
-        <p>The new database is a hosted dedicated MySQL database just for you.</p>
+        <p>The new database is a hosted dedicated managed MySQL database just for you.</p>
 
         <p>You can access the database using any database admin tool like: Workbench, phpMyAdmin, Sequel Pro or
           any other tool.</p>
@@ -26,7 +26,8 @@
     </div>
 
     <div ng-class="!dbedit.customMode ? 'col-md-6' : 'col-xs-12'">
-      <div class="db-ace-title">database generator code</div>
+      <div class="db-panel-body-description" ng-if="!dbedit.customMode">Select a database model example to use as the starting point for your app's database or add your own model by clicking on "Customize Database Model"</div>
+      <div class="db-panel-body-description" ng-if="dbedit.customMode">Edit the customized model to be the starting point of your app's database</div>
       <br/>
 
       <div ng-hide="dbedit.customMode">
@@ -76,17 +77,18 @@
       </div>
     </div>
   </div>
+  <br/>
   <div class="row">
     <div ng-class="!dbedit.customMode ? 'col-xs-12' : 'col-md-8 col-lg-9'">
       <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
               ladda="dbedit.loading" data-style="expand-right"
               ng-click="dbedit.create()">
-        Create
+        <span ng-bind="!dbedit.customMode ? 'Connect New DB and Run Example Model' : 'Connect New DB and Run Customize Model'"></span>
       </button>
       <button type="submit" ng-disabled="form.$invalid" class="btn db-btn-default btn-lg btn-w-lg pull-right"
               ladda="dbedit.loading" data-style="expand-right"
               ng-click="dbedit.customize()">
-        <span ng-bind="!dbedit.customMode ? 'Customize Database' : 'Restore Default'"></span>
+        <span ng-bind="!dbedit.customMode ? 'Customize Database Model' : 'Back to Example Models'"></span>
       </button>
     </div>
   </div>
