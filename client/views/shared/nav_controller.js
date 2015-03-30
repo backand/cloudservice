@@ -63,7 +63,7 @@
       self.app = data;
       self.DatabaseStatus = self.app.DatabaseStatus;
       var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
-      checkChanges(oldStatus);
+      //checkChanges(oldStatus);
       if (self.DatabaseStatus == 0)
         self.tables = [];
       else if(self.DatabaseStatus == 1 && self.tables.length == 0) //only load tables when it's empty
