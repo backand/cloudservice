@@ -45,11 +45,20 @@
     };
 
     this.createDB = function(appName, product, sampleApp, schema) {
-      return $http({
-        method: 'POST',
-        url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
-        data: {"product": product, "sampleApp": sampleApp, "schema": schema}
-      });
+      if(schema==null){
+        return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
+          data: {"product": product, "sampleApp": sampleApp}
+        });
+      }
+      else {
+        return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
+          data: {"product": product, "sampleApp": "", "schema": schema}
+        });
+      }
     };
 
     this.getDBInfo = function(appName) {
