@@ -67,7 +67,7 @@ angular.module('app.apps')
         self.loading = true;
         var product = DatabaseNamesService.getNumber(self.dataName);
 
-        DatabaseService.createDB($state.params.name, product, "")
+        DatabaseService.createDB($state.params.name, product, "", self.customSchema)
         .success(function (data) {
           NotificationService.add('info','Creating new database... It may take 1-2 minutes');
           $state.go('getting-started-open', {isnew: 'new'});

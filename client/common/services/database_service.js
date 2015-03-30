@@ -44,11 +44,11 @@
         });
     };
 
-    this.createDB = function(appName, product, sampleApp) {
+    this.createDB = function(appName, product, sampleApp, schema) {
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
-        data: {"product": product, "sampleApp": sampleApp}
+        data: {"product": product, "sampleApp": sampleApp, "schema": schema}
       });
     };
 
