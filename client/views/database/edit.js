@@ -134,14 +134,15 @@ angular.module('app.apps')
     self.ace = {
       onLoad: function(_editor) {
         self.ace.editor = _editor;
+        _editor.$blockScrolling = Infinity;
       }
     };
 
     self.templates = [
-      {title: "New Model", filename: 'create_your_own', appName: 'items-mysql'},
-      {title: "Game Shop", filename: 'game_shop', appName: 'game'},
-      {title: "E-commerce Campaigns", filename: 'ecommerce_campaign', appName: 'ecommerce'},
-      {title: "Advertising App", filename: 'advertising_system', appName: 'advertising'}
+      {title: "New Model", filename: 'create_your_own', appName: 'items-mysql', description: 'basic schema of items'},
+      {title: "Game Shop", filename: 'game_shop', appName: 'game', description: 'Several tables for game shop management'},
+      {title: "E-commerce Campaigns", filename: 'ecommerce_campaign', appName: 'ecommerce', description: 'e-commerce data'},
+      {title: "Advertising App", filename: 'advertising_system', appName: 'advertising', description: 'tables you shall need for advertising app'}
     ];
 
     self.getFile = function (template) {

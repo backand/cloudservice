@@ -72,7 +72,7 @@
                    input-id="whereCondition"
                    prev-needed="true"></bknd-anchor>
 
-      <div  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType}"
+      <div  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
             id="whereCondition"
             required
             name="whereCondition"
@@ -278,7 +278,7 @@
                        input-id="sqlCommand"></bknd-anchor>
 
           <div
-            ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType}"
+            ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
             class="form-control"
             name="sqlCommand"
             id="sqlCommand"
@@ -328,7 +328,7 @@
           <div class="form-group ">
             <label for="code">JavaScript Code:</label>
 
-            <div  ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', firstLineNumber: 7}"
+            <div  ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', firstLineNumber: 7, rendererOptions: { fontSize: 15 }}"
                   class="form-control ace-rule"
                   name="code"
                   id="code"

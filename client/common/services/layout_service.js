@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function LayoutService($localStorage) {
+  function LayoutService($localStorage, AuthService) {
 
     var self = this;
 
@@ -10,16 +10,16 @@
     };
 
     self.closeJumbo = function () {
-      $localStorage.backand.hideJumbo = true;
+      $localStorage.backand[AuthService.getUserId()].hideJumbo = true;
     };
 
     self.openJumbo = function () {
-      $localStorage.backand.hideJumbo = false;
+      $localStorage.backand[AuthService.getUserId()].hideJumbo = false;
     };
 
   }
 
   angular.module('common.services')
-    .service('LayoutService',['$localStorage', LayoutService]);
+    .service('LayoutService',['$localStorage', 'AuthService', LayoutService]);
 
 })();

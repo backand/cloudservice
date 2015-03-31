@@ -67,6 +67,7 @@
   }
   .rules-names-list {
     list-style: none;
+    //list-style-type: decimal;
     li {
       border: 1px solid #d3d3d3;
       margin: 10px 0 10px -40px;
@@ -140,6 +141,18 @@
     line-height: inherit;
     i {
       font-weight: bold;
+    }
+  }
+
+  .rule-small-btn {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    width: 24px;
+    height: 24px;
+
+    &:hover {
+      color: #FFFFFF;
     }
   }
 

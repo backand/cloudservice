@@ -41,9 +41,11 @@
 
     self.getFile(self.codeFiles[0]);
 
+
+
     self.getAceObj = function () {
       return {
-        onLoad : ace.onLoad,
+        onLoad : function (_editor) {_editor.$blockScrolling = Infinity;},
         theme:'monokai',
         mode: self.activeFile ? self.activeFile.type : 'html',
         firstLineNumber: 1,

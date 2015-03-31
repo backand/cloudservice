@@ -22,6 +22,7 @@
       dbType: 'sql',
       onLoad: function(_editor) {
         self.ace.editor = _editor;
+        _editor.$blockScrolling = Infinity;
       }
     };
 

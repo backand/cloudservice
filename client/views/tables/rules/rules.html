@@ -39,12 +39,12 @@
                   {{ ::subitem.title }}</a>
                 <ba-tooltip tooltip-text="{{ ::subitem.description }}" tooltip-placement="right" class=""></ba-tooltip>
                 <button
-                   class="btn btn-xs btn-success pull-right"
+                   class="btn btn-xs btn-success pull-right rule-small-btn"
                    ng-click="rules.newAction(subitem.dataAction)">+
                 </button>
               </div>
 
-              <ul class="rules-names-list" ng-show="subitem.visible">
+              <ol class="rules-names-list" ng-show="subitem.visible">
 
                 <li ng-repeat="rule in subitem.items">
 
@@ -52,7 +52,7 @@
                     {{ ::rule.name}}</a>
                 </li>
 
-              </ul>
+              </ol>
             </li>
           </ul>
         </li>

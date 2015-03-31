@@ -36,7 +36,7 @@
           <li ng-class="{active: dbedit.template === template}"
               ng-repeat="template in dbedit.templates">
             <a ng-click="dbedit.showFile(template)" href="">
-              {{template.title}}
+              {{template.title}} <ba-tooltip tooltip-text="{{template.description}}"></ba-tooltip>
             </a>
           </li>
         </ul>
@@ -83,7 +83,7 @@
       <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
               ladda="dbedit.loading" data-style="expand-right"
               ng-click="dbedit.create()">
-        <span ng-bind="!dbedit.customMode ? 'Connect New DB and Run Example Model' : 'Connect New DB and Run Customize Model'"></span>
+        Connect
       </button>
       <button type="submit" ng-disabled="form.$invalid" class="btn db-btn-default btn-lg btn-w-lg pull-right"
               ladda="dbedit.loading" data-style="expand-right"

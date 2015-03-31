@@ -35,8 +35,10 @@
       $cookieStore.put('globals', user);
       if(JacoRecorder)
         JacoRecorder.identify(user.currentUser.username);
-      woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
-      __insp.push(['identify', user.currentUser.username]);
+      if (woopra)
+        woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
+      if (typeof __insp != 'undefined')
+        __insp.push(['identify', user.currentUser.username]);
     };
 
     this.ClearCredentials = function () {
