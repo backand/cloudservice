@@ -138,10 +138,10 @@ angular.module('app.apps')
     };
 
     self.templates = [
-      {title: "Create your own", filename: 'create_your_own', appName: 'items-mysql'},
+      {title: "New Model", filename: 'create_your_own', appName: 'items-mysql'},
       {title: "Game Shop", filename: 'game_shop', appName: 'game'},
-      {title: "E-commerce Campaign", filename: 'ecommerce_campaign', appName: 'ecommerce'},
-      {title: "Advertising System", filename: 'advertising_system', appName: 'advertising'}
+      {title: "E-commerce Campaigns", filename: 'ecommerce_campaign', appName: 'ecommerce'},
+      {title: "Advertising App", filename: 'advertising_system', appName: 'advertising'}
     ];
 
     self.getFile = function (template) {
