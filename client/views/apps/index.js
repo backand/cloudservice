@@ -44,8 +44,7 @@ angular.module('app.apps')
       if (app.DatabaseStatus == 1)
         $state.go('apps.show', {name: app.Name});
       else {
-        if (app.Name === 'todo' + AuthService.getUserId()) {
-        //if (app.Name.substring(0,4) === 'todo') {
+        if (self.exampleApp(app.Name)) {
           $state.go('database.example', {name: app.Name});
         }
         else {
@@ -102,7 +101,8 @@ angular.module('app.apps')
 
     self.exampleApp = function(app){
       return app.Name === 'todo' + AuthService.getUserId();
-    }
+      // return (app.Name.substring(0,4) === 'todo')
+    };
 
     stop = $interval(function() {
       AppsService.all()
