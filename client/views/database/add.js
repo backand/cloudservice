@@ -155,7 +155,7 @@
         }
       ];
 
-      self.tableTemplate3 = [
+      self.tableTemplate3 =  [
         {
           name: "channel_type",
           fields: [
@@ -167,7 +167,7 @@
           fields: [
             {name: "name", type: "ShortText"}
             , {name: "description", type: "LongText"}
-            , {name: "channel_type_id", type: "SingleSelect", relatedTable: "channel_type"}
+            , {name: "channel_type_", type: "SingleSelect", relatedTable: "channel_type"}
 
           ]
         }, {
@@ -187,16 +187,16 @@
         }, {
           name: "advertisement",
           fields: [
-            {name: "agency_id", type: "SingleSelect", relatedTable: "agency"}
-            , {name: "marketing_campaign_id", type: "SingleSelect", relatedTable: "marketing_campaign"}
-            , {name: "channel_id", type: "SingleSelect", relatedTable: "channel"}
+            {name: "agency_", type: "SingleSelect", relatedTable: "agency"}
+            , {name: "marketing_campaign_", type: "SingleSelect", relatedTable: "marketing_campaign"}
+            , {name: "channel_", type: "SingleSelect", relatedTable: "channel"}
 
           ]
         }, {
           name: "response",
           fields: [
-            {name: "advertisement_id", type: "SingleSelect", relatedTable: "advertisement"}
-            , {name: "response_tag_id", type: "SingleSelect", relatedTable: "response_tag"}
+            {name: "advertisement_", type: "SingleSelect", relatedTable: "advertisement"}
+            , {name: "response_tag_", type: "SingleSelect", relatedTable: "response_tag"}
           ]
         }, {
           name: "invoice_status",
@@ -209,12 +209,13 @@
         , {
           name: "invoice",
           fields: [
-            {name: "agency_id", type: "SingleSelect", relatedTable: "agency"}
-            , {name: "client_id", type: "SingleSelect", relatedTable: "client"}
-            , {name: "invoice_status_id", type: "SingleSelect", relatedTable: "invoice_status"}
+            {name: "agency_", type: "SingleSelect", relatedTable: "agency"}
+            , {name: "client_", type: "SingleSelect", relatedTable: "client"}
+            , {name: "invoice_status_", type: "SingleSelect", relatedTable: "invoice_status"}
           ]
         }
-      ];
+      ]
+      ;
 
       self.tableTemplate4 =
         [
