@@ -6,7 +6,10 @@
         <section class="panel panel-box">
           <div class="panel-item bg-info">
             <h2 ng-if="docs.isNew !== 'new'" style="text-align:center;">Follow these steps to integrate Backand into your existing Angular project. If you do not yet have an Angular project, download the <a ui-sref="kickstart-open" style="color:#FE4E00 ;text-decoration: underline; font-weight: normal;">kickstart seed</a> project with Backand inside.</h2>
-            <h2 ng-if="docs.isNew === 'new'" style="text-align:center;">We're creating your app and it will take only 1 more minute...<br/> In the mean time let's start connect your Angular app to backand. If you do not yet have an Angular project, download the <a ui-sref="kickstart-open" style="color:#FE4E00 ;text-decoration: underline; font-weight: normal;">kickstart seed</a> project with Backand inside.</h2>
+            <h2 ng-if="docs.isNew === 'new'" style="text-align:center;">We're creating your app and it will take only 1 more minute...
+              <div us-spinner spinner-key="loading-iframe" us-spinner="{length:10, radius: 10}" style="position: relative;margin-top: 30px;"></div>
+              <br/>
+              In the mean time let's start connect your Angular app to backand. If you do not yet have an Angular project, download the <a ui-sref="kickstart-open" style="color:#FE4E00 ;text-decoration: underline; font-weight: normal;">kickstart seed</a> project with Backand inside.</h2>
           </div>
         </section>
         <br/>

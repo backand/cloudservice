@@ -71,10 +71,11 @@ angular.module('app.apps')
 
       if (self.customMode) {
         try {
-          schema = JSON.parse(self.customSchema);
+          schema = JSON.parse(self.activeSchema);
         }
         catch (err) {
           NotificationService.add('error', 'JSON is not properly formatted');
+          self.loading = false;
           return;
         }
       }
@@ -82,7 +83,7 @@ angular.module('app.apps')
         DatabaseService.createDB($state.params.name, product, self.template.appName, schema)
         .success(function (data) {
           NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
-          $state.go('getting-started-open', {isnew: 'new'});
+          $state.go('playground.get-started', {name: $state.params.name, isnew: 'new'});
         })
         .error(function (err) {
             self.loading = false;

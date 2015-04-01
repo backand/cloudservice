@@ -28,6 +28,22 @@
               <div class="field-description">* The role can be changed any time after the registration vip API or from user page</div>
             </div>
           </div>
+          <div class="row" ng-if="auth.data.allowAnonymous">
+            <div class="col-md-12">
+              <label for="anonymouskey" class="control-label strong">Anonymous Token</label>
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="anonymouskey"
+                         ng-readonly="true"
+                         ng-model="auth.keys.anonymous">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" clip-copy="auth.keys.anonymous">Copy</button>
+                  </span>
+                </div>
+                <div class="field-description">Use this token when accessing the REST API without login (Anonymous access) (put the token in headers parameter AnonymousToken)</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="field-group">
