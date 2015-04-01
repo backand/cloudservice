@@ -139,10 +139,11 @@ angular.module('app.apps')
     };
 
     self.templates = [
-      {title: "New Model", filename: 'create_your_own', appName: 'items-mysql', description: 'basic schema of items'},
-      {title: "Game Shop", filename: 'game_shop', appName: 'game', description: 'Several tables for game shop management'},
-      {title: "E-commerce Campaigns", filename: 'ecommerce_campaign', appName: 'ecommerce', description: 'e-commerce data'},
-      {title: "Advertising App", filename: 'advertising_system', appName: 'advertising', description: 'tables you shall need for advertising app'}
+      {title: "New", filename: 'create_your_own', appName: 'items-mysql', description: 'Basic schema model'},
+      {title: "Game Shop", filename: 'game_shop', appName: 'OnlineGaming-MySql', description: 'Schema mode for game shop management store'},
+      {title: "E-commerce Campaigns", filename: 'ecommerce_campaign', appName: 'Email-campaign-MySql', description: 'Complex schema model for building e-commerce campaign app'},
+      {title: "Blank", filename: 'blank', appName: '', description: 'Create blank database to be populate via external tools'}
+      //{title: "Advertising App", filename: 'advertising_system', appName: 'advertising', description: 'tables you shall need for advertising app'}
     ];
 
     self.getFile = function (template) {

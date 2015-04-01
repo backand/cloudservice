@@ -63,9 +63,9 @@ angular.module('app.apps')
       $state.go('apps.edit', {name: appName});
     };
 
-    self.getStarted = function (appName) {
+    self.goToLink = function (appName) {
       AppState.set(appName);
-      $state.go('playground.get-started', {name: appName});
+      $state.go('playground.show', {name: appName});
     };
 
     self.todoExample = function (appName) {
