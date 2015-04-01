@@ -24,7 +24,7 @@
         "type": "LongText"
       },
       {
-        "name": "channel_type_id",
+        "name": "channel_type_",
         "type": "SingleSelect",
         "relatedTable": "channel_type"
       }
@@ -60,17 +60,17 @@
     "name": "advertisement",
     "fields": [
       {
-        "name": "agency_id",
+        "name": "agency_",
         "type": "SingleSelect",
         "relatedTable": "agency"
       },
       {
-        "name": "marketing_campaign_id",
+        "name": "marketing_campaign_",
         "type": "SingleSelect",
         "relatedTable": "marketing_campaign"
       },
       {
-        "name": "channel_id",
+        "name": "channel_",
         "type": "SingleSelect",
         "relatedTable": "channel"
       }
@@ -80,12 +80,12 @@
     "name": "response",
     "fields": [
       {
-        "name": "advertisement_id",
+        "name": "advertisement_",
         "type": "SingleSelect",
         "relatedTable": "advertisement"
       },
       {
-        "name": "response_tag_id",
+        "name": "response_tag_",
         "type": "SingleSelect",
         "relatedTable": "response_tag"
       }
@@ -108,17 +108,17 @@
     "name": "invoice",
     "fields": [
       {
-        "name": "agency_id",
+        "name": "agency_",
         "type": "SingleSelect",
         "relatedTable": "agency"
       },
       {
-        "name": "client_id",
+        "name": "client_",
         "type": "SingleSelect",
         "relatedTable": "client"
       },
       {
-        "name": "invoice_status_id",
+        "name": "invoice_status_",
         "type": "SingleSelect",
         "relatedTable": "invoice_status"
       }
