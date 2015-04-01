@@ -22,7 +22,7 @@
 
         <li ng-repeat="item in rules.items">
 
-          <div class="row rule-group-title">
+          <div class="rule-group-title">
             <a href="" ng-click="item.visible = !item.visible" class="" >
               <span class="col-xs-1">{{rules.treeSign(item)}}</span> <!-- + or - -->
               {{ ::item.title }}
@@ -46,10 +46,10 @@
 
               <ol class="rules-names-list" ng-show="subitem.visible">
 
-                <li ng-repeat="rule in subitem.items">
+                <li ng-repeat="rule in subitem.items" >
 
-                  <a href="" ng-click="rules.showAction(rule.name)" class="rule-name text-primary">
-                    {{ ::rule.name}}</a>
+                  <a href="" ng-click="rules.showAction(rule.name)" class="rule-name">
+                  {{ ::rule.name}}</a>
                 </li>
 
               </ol>

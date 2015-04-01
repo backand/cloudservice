@@ -35,10 +35,9 @@
             ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
           <li ng-class="{active: dbedit.template === template}"
               ng-repeat="template in dbedit.templates">
-            <a ng-click="dbedit.showFile(template)" href="">
-              {{template.title}} <ba-tooltip tooltip-text="{{template.description}}"></ba-tooltip>
+            <a ng-click="dbedit.showFile(template)" href="" tooltip="{{ ::template.description }}" tooltip-placement="top">
+              {{ ::template.title}}
             </a>
-          </li>
         </ul>
       </div>
       <div class="row">
