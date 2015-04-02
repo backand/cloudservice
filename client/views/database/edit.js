@@ -21,7 +21,6 @@ angular.module('app.apps')
     function getCurrentApp(){
       AppsService.getCurrentApp($state.params.name)
       .then(function (data) {
-        //currentApp = data;
         self.databaseStatus = data.DatabaseStatus;
         self.dbConnected = data.DatabaseStatus === 1;
         self.dataName = data.databaseName || 'newMysql';
@@ -69,9 +68,9 @@ angular.module('app.apps')
 
       var schema = null;
 
-      if (self.customMode) {
+      if (self.isCustomMode()) {
         try {
-          schema = JSON.parse(self.customSchema);
+          schema = JSON.parse(self.template.schema);
         }
         catch (err) {
           NotificationService.add('error', 'JSON is not properly formatted');
@@ -138,8 +137,8 @@ angular.module('app.apps')
       }
     };
 
+    self.customTemplate = {title: "Custom", filename: 'create_your_own', appName: 'items-mysql', description: 'Basic schema model'};
     self.templates = [
-      {title: "New", filename: 'create_your_own', appName: 'items-mysql', description: 'Basic schema model'},
       {title: "Game Shop", filename: 'game_shop', appName: 'OnlineGaming-MySql', description: 'Schema mode for game shop management store'},
       {title: "E-commerce Campaigns", filename: 'ecommerce_campaign', appName: 'Email-campaign-MySql', description: 'Complex schema model for building e-commerce campaign app'},
       {title: "Blank", filename: 'blank', appName: '', description: 'Create blank database to be populate via external tools'}
@@ -156,38 +155,41 @@ angular.module('app.apps')
     };
 
     self.showFile = function (template) {
+      if(self.ace && self.ace.editor)
+        self.ace.editor.setReadOnly(true);
       self.template = template;
-      if (template.schema) {
-        self.activeSchema = template.schema;
-      }
-      else {
+      if (!template.schema) {
         self.getFile(template)
           .then(function (result) {
             template.schema = result;
-            self.activeSchema = template.schema;
           });
       }
     };
 
-    self.showFile(self.templates[0]);
-
-    self.customize = function () {
-      self.customMode = !self.customMode;
-      self.ace.editor.setReadOnly(!self.customMode);
-      if (self.customMode) {
-        self.activeSchema = DatabaseService.getCustomSchema(self.appName) || self.activeSchema;
-      }
-      else {
-        self.activeSchema = self.template.schema;
-      }
+    self.isCustomMode = function () {
+      return self.template === self.customTemplate;
     };
 
+    self.customize = function () {
+      self.template = self.customTemplate;
+      var schema = DatabaseService.getCustomSchema(self.appName);
+      if (schema) {
+        self.template.schema = schema;
+      }
+      else {
+        self.showFile(self.customTemplate);
+      }
+      if(self.ace && self.ace.editor)
+        self.ace.editor.setReadOnly(false);
+    };
+
+    self.customize();
+
     function saveCustomSchema (schema) {
-      if (self.customMode)
-        DatabaseService.saveCustomSchema(self.appName, schema);
+       DatabaseService.saveCustomSchema(self.appName, schema);
     }
 
-    $scope.$watch('dbedit.activeSchema', saveCustomSchema);
+    $scope.$watch('dbedit.customTemplate.schema', saveCustomSchema);
 
     // Field Types
 

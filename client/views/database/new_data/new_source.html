@@ -1,94 +1,81 @@
 <div class="db-tab-content">
+
   <div class="row">
-    <div class="col-md-6 db-panel-right-half" ng-show="!dbedit.customMode">
-
-      <div class="icon-box db-icon-box">
-        <div class="icon-container active">
-          <img src="assets/images/mysql.png"/>
-        </div>
-        <div class="db-icon-title">
-          Managed <br/> MySQL Database
-        </div>
-      </div>
-
-      <br/>
-
+    <div class="col-md-8 col-lg-9">
       <div class="db-panel-body-description">
-        <p>The new database is a hosted dedicated managed MySQL database just for you.</p>
-
-        <p>You can access the database using any database admin tool like: Workbench, phpMyAdmin, Sequel Pro or
-          any other tool.</p>
-
-        <p>Once you complete any action on the database, e.g. adding new tables or modifying columns, you will
-          need to sync the changes back to Backand</p>
+        <p>Select a database model example to use as the starting point for your app's database,<br/>
+          or add your own model by editing the model in the "Custom" tab.</p>
       </div>
       <br/>
-    </div>
 
-    <div ng-class="!dbedit.customMode ? 'col-md-6' : 'col-xs-12'">
-      <div class="db-panel-body-description" ng-if="!dbedit.customMode">Select a database model example to use as the starting point for your app's database or add your own model by clicking on "Customize Database Model"</div>
-      <div class="db-panel-body-description" ng-if="dbedit.customMode">Edit the customized model to be the starting point of your app's database</div>
-      <br/>
+      <ul class="db-nav db-nav-tabs"
+          ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
+        <li ng-class="{active: dbedit.template === dbedit.customTemplate}" class="pull-left">
+          <a ng-click="dbedit.customize()" href="" tooltip="{{ ::dbedit.customTemplate.description }}">
+            Custom
+          </a></li>
 
-      <div ng-hide="dbedit.customMode">
-        <ul class="db-nav db-nav-tabs"
-            ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
-          <li ng-class="{active: dbedit.template === template}"
-              ng-repeat="template in dbedit.templates">
-            <a ng-click="dbedit.showFile(template)" href="" tooltip="{{ ::template.description }}" tooltip-placement="top">
-              {{ ::template.title}}
-            </a>
-        </ul>
-      </div>
-      <div class="row">
-        <div ng-class="!dbedit.customMode ? 'col-xs-12' : 'col-md-8 col-lg-9'">
-          <div
-            ui-ace="{onLoad : dbedit.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
-            class="form-control ace-db-template"
-            name="tableTemplate"
-            id="tableTemplate"
-            ng-model="dbedit.activeSchema"
-            required
-            readonly
-            ng-pattern="codeRegex"
-            style="resize: vertical">
 
-          </div>
-        </div>
+        <li ng-class="{active: dbedit.template === template}"
+            ng-repeat="template in dbedit.templates" class="pull-right">
+          <a ng-click="dbedit.showFile(template)" href="" tooltip="{{ ::template.description }}">
+            {{ ::template.title}}
+          </a></li>
+        <li class="db-ace-example-title pull-right">
+          Examples:
+        </li>
+      </ul>
 
-        <div class="col-md-4 col-lg-3" ng-show="dbedit.customMode">
-          <span class="db-types-title">Field Types</span>
-          <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span>
-          <br/>
-
-          <div class="db-types" ng-repeat="fieldType in dbedit.fieldTypes" ng-click="dbedit.insertTypeAtChar(fieldType)"
-               ng-mouseover="fieldHover = true">
-            <i class="ti-angle-left"></i>
-            {{fieldType}}
-          </div>
-          <br/>
-
-          <div class="db-types-note">For <b>SingleSelect</b> and <b>MultiSelect</b> you need to specify
-            <b>RelatedTable</b>
-          </div>
-        </div>
-
-      </div>
     </div>
   </div>
-  <br/>
   <div class="row">
-    <div ng-class="!dbedit.customMode ? 'col-xs-12' : 'col-md-8 col-lg-9'">
-      <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
-              ladda="dbedit.loading" data-style="expand-right"
-              ng-click="dbedit.create()">
-        Connect
-      </button>
-      <button type="submit" ng-disabled="form.$invalid" class="btn db-btn-default btn-lg btn-w-lg pull-right"
-              ladda="dbedit.loading" data-style="expand-right"
-              ng-click="dbedit.customize()">
-        <span ng-bind="!dbedit.customMode ? 'Customize Database Model' : 'Back to Example Models'"></span>
-      </button>
+    <div class="col-md-8 col-lg-9">
+      <div
+        ui-ace="{onLoad : dbedit.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+        class="form-control ace-db-template"
+        name="tableTemplate"
+        id="tableTemplate"
+        ng-model="dbedit.template.schema"
+        required
+        ng-pattern="codeRegex"
+        style="resize: vertical; height: 500px;">
+
+      </div>
+      <div>
+        <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
+                ladda="dbedit.loading" data-style="expand-right"
+                ng-click="dbedit.create()">
+          Create
+        </button>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-lg-3">
+      <span class="db-types-title">Field Types</span>
+      <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span>
+      <br/>
+
+      <div class="db-types" ng-repeat="fieldType in dbedit.fieldTypes" ng-click="dbedit.insertTypeAtChar(fieldType)"
+           ng-mouseover="fieldHover = true">
+        <i class="ti-angle-left"></i>
+        {{fieldType}}
+      </div>
+      <br/>
+
+      <div class="db-types-note">For <b>SingleSelect</b> and <b>MultiSelect</b> you need to specify
+        <b>RelatedTable</b>
+      </div>
+      <br/>
+
+      <div class="db-note">
+        <p>You can access the database using any database admin tool like:
+          Workbench, phpMyAdmin, Sequel Pro or any other tool.</p>
+
+        <p>Once you complete any action on the database,
+          e.g. adding new tables or modifying columns,
+          you will need to sync the changes back to Backand.</p>
+      </div>
+
     </div>
   </div>
 </div>
