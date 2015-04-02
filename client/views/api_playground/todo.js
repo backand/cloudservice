@@ -29,7 +29,7 @@
     self.getFile = function (file) {
       $http({
         method: 'GET',
-        url: '/examples/todo/' + file.name
+        url: 'examples/todo/' + file.name
       })
         .then(function (result) {
           if (typeof result.data === "object")
