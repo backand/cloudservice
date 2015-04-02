@@ -15,6 +15,10 @@
       self.modalScope = $rootScope.$new(true);
     }());
 
+    self.setTitle = function(title){
+      self.modalScope.Title = title;
+    }
+
     /**
      * launce modal with custom scope and
      * configuration

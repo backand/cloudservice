@@ -13,7 +13,7 @@
       self.loading = false;
       $http({
         method: 'GET',
-        url: '/examples/todo/database.json'
+        url: 'examples/todo/database.json'
       })
         .then(function (result) {
           self.generatorCode = angular.toJson(result.data, true);

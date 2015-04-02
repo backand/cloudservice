@@ -5,11 +5,12 @@
   'use strict';
 
   angular.module('app.playground')
-    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService', '$rootScope', 'CONSTS', TodoCtrl]);
+    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService', '$rootScope', 'CONSTS','ConfirmationPopup', TodoCtrl]);
 
-  function TodoCtrl($scope, $http, SessionService, usSpinnerService, $state, $interval, AppsService, $rootScope, CONSTS) {
+  function TodoCtrl($scope, $http, SessionService, usSpinnerService, $state, $interval, AppsService, $rootScope, CONSTS, ConfirmationPopup) {
 
     var self = this;
+    self.isNew = $state.params.isnew
 
     var token = SessionService.getToken();
     //self.iFrameSrc = 'http://localhost:9000/#/'; //http://s3.amazonaws.com/todosample.backand.net/index.html
@@ -28,7 +29,7 @@
     self.getFile = function (file) {
       $http({
         method: 'GET',
-        url: '/examples/todo/' + file.name
+        url: 'examples/todo/' + file.name
       })
         .then(function (result) {
           if (typeof result.data === "object")
@@ -79,7 +80,7 @@
       AppsService.getCurrentApp($state.params.name)
         .then(function (result) {
           if (result) {
-            if (result.DatabaseStatus != 1)
+            if (result.DatabaseStatus !== 1)
             {
               usSpinnerService.spin("loading-iframe");
               self.iframeReady = 0;
@@ -89,6 +90,9 @@
               stopRefresh();
               self.iframeReady = 1;
               $rootScope.$broadcast('AppIsReady');
+              ConfirmationPopup.setTitle('Your app is ready');
+              ConfirmationPopup.confirm('You can start by reviewing the REST API of your model in the Playground page. You can find the page under "Docs & API" in the navigation bar.', 'Ok', '', true, false);
+
             }
           }
         });
@@ -100,6 +104,7 @@
         $interval.cancel(checkAppStatus);
         usSpinnerService.stop("loading-iframe");
         checkAppStatus = undefined;
+        self.isNew = '';
       }
     }
 
@@ -108,10 +113,15 @@
       stopRefresh();
     });
 
-    self.iframeReady = 'unknown';
-    getAppStatus();
-    var checkAppStatus = $interval(getAppStatus, 3000);
 
+    var checkAppStatus = null;
+    if(self.isNew == 'new'){
+      self.iframeReady = 'unknown';
+      getAppStatus();
+      checkAppStatus = $interval(getAppStatus, 3000);
+    }
+    else
+      self.iframeReady = 1;
   }
 
 

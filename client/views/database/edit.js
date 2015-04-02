@@ -74,6 +74,7 @@ angular.module('app.apps')
         }
         catch (err) {
           NotificationService.add('error', 'JSON is not properly formatted');
+          self.loading = false;
           return;
         }
       }
@@ -81,7 +82,7 @@ angular.module('app.apps')
         DatabaseService.createDB($state.params.name, product, self.template.appName, schema)
         .success(function (data) {
           NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
-          $state.go('getting-started-open', {isnew: 'new'});
+          $state.go('playground.get-started', {name: $state.params.name, isnew: 'new'});
         })
         .error(function (err) {
             self.loading = false;
@@ -148,7 +149,7 @@ angular.module('app.apps')
     self.getFile = function (template) {
       return $http({
         method: 'GET',
-        url: '/views/database/db_templates/' + template.filename + '.json'
+        url: 'views/database/db_templates/' + template.filename + '.json'
       }).then (function (result) {
         return angular.toJson(result.data, true);
       })

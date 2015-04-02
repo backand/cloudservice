@@ -9,8 +9,9 @@
     $stateProvider
       .state('playground.get-started', {
         parent: 'playground',
-        url: '/docs/start/:name',
-        templateUrl: 'views/api_playground/get-started.html'
+        url: '/docs/start/:name/:isnew',
+        controller: 'TodoCtrl as docs',
+        templateUrl: 'views/api_playground/get-started-open.html'
       })
       .state('playground.kickstart', {
         parent: 'playground',

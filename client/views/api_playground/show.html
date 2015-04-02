@@ -4,9 +4,22 @@
             <div us-spinner spinner-key="loading" spinner-start-active></div>
         </div>
         <div class="panel-body">
-            <div class="row col-sm-10 col-sm-offset-1" ng-bind-html="play.urlPrefix()">
-                <!--<iframe id="restIfrmae" src="//www.modubiz.us:4019/misc/rest-api/index.html?useToken=true#!/Database_Table_Data" style="height:578px;width:1028px;border: none"></iframe>-->
-            </div>
+          <div class="row col-sm-6 col-sm-offset-2">
+            <section class="panel panel-box">
+            <h4 class="panel-item bg-info">
+              With Backand's REST API Playground, you simply encapsulate 'CRUD' functions within objecte that represents your database model.<br/>
+              In essence, the objects you create to represent your data in Angular also manipulate that data on the backend.<br/><br/>
+
+              Just select any of the CRUD functionality with any of the advanced parameters to get the endpoints URL you need in Angular.<br/>
+
+              In every section click on 'Try it out!' to see the JSON result and the endpoint URL.
+
+            </h4>
+            </section>
+          </div>
+          <div class="row col-sm-10 col-sm-offset-1" ng-bind-html="play.urlPrefix()">
+              <!--<iframe id="restIfrmae" src="//www.modubiz.us:4019/misc/rest-api/index.html?useToken=true#!/Database_Table_Data" style="height:578px;width:1028px;border: none"></iframe>-->
+          </div>
         </div>
     </div>
 </section>
