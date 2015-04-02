@@ -150,7 +150,7 @@ angular.module('app.apps')
     self.getFile = function (template) {
       return $http({
         method: 'GET',
-        url: '/views/database/db_templates/' + template.filename + '.json'
+        url: 'views/database/db_templates/' + template.filename + '.json'
       }).then (function (result) {
         return angular.toJson(result.data, true);
       })
