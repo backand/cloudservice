@@ -12,12 +12,12 @@
           ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
         <li ng-class="{active: dbedit.template === dbedit.customTemplate}" class="pull-left">
           <a ng-click="dbedit.customize()" href="" tooltip="{{ ::dbedit.customTemplate.description }}">
-            Custom
+            {{dbedit.customTemplate.title}}
           </a></li>
 
 
         <li ng-class="{active: dbedit.template === template}"
-            ng-repeat="template in dbedit.templates" class="pull-right">
+            ng-repeat="template in dbedit.templates | orderBy:'order'" class="pull-right">
           <a ng-click="dbedit.showFile(template)" href="" tooltip="{{ ::template.description }}">
             {{ ::template.title}}
           </a></li>
@@ -41,6 +41,7 @@
         style="resize: vertical; height: 500px;">
 
       </div>
+      <br/>
       <div>
         <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
                 ladda="dbedit.loading" data-style="expand-right"

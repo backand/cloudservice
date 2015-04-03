@@ -21,7 +21,7 @@
       {name: 'main.js', type: 'javascript'},
       {name: 'todo_service.js', type: 'javascript'},
       {name: 'theme.css', type: 'css'},
-      {name: 'database.json', type: 'json'}
+      {name: 'model.json', type: 'json'}
 
     ];
 

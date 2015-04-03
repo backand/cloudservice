@@ -64,6 +64,7 @@ angular.module('app.apps')
 
     self.create = function () {
       self.loading = true;
+      var useSchema = false;
       var product = DatabaseNamesService.getNumber(self.dataName);
 
       var schema = null;
@@ -71,6 +72,7 @@ angular.module('app.apps')
       if (self.isCustomMode()) {
         try {
           schema = JSON.parse(self.template.schema);
+          useSchema = true;
         }
         catch (err) {
           NotificationService.add('error', 'JSON is not properly formatted');
@@ -82,6 +84,10 @@ angular.module('app.apps')
         DatabaseService.createDB($state.params.name, product, self.template.appName, schema)
         .success(function (data) {
           NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
+          if(useSchema)
+            $analytics.eventTrack('create app', {schema: self.template.schema});
+          else
+            $analytics.eventTrack('create app', {app: self.template.appName});
           $state.go('playground.get-started', {name: $state.params.name, isnew: 'new'});
         })
         .error(function (err) {
@@ -138,12 +144,11 @@ angular.module('app.apps')
       }
     };
 
-    self.customTemplate = {title: "Custom", filename: 'create_your_own', appName: 'items-mysql', description: 'Basic schema model'};
+    self.customTemplate = {title: "Custom Model", filename: 'create_your_own', appName: 'items-mysql', description: 'Basic schema model'};
     self.templates = [
-      {title: "Game Shop", filename: 'game_shop', appName: 'OnlineGaming-MySql', description: 'Schema mode for game shop management store'},
-      {title: "E-commerce Campaigns", filename: 'ecommerce_campaign', appName: 'Email-campaign-MySql', description: 'Complex schema model for building e-commerce campaign app'},
-      {title: "Blank", filename: 'blank', appName: '', description: 'Create blank database to be populate via external tools'}
-      //{title: "Advertising App", filename: 'advertising_system', appName: 'advertising', description: 'tables you shall need for advertising app'}
+      {order:3, title: "Game Shop Store", filename: 'game_shop', appName: 'OnlineGaming-MySql', description: 'Schema mode for game shop management store'},
+      {order:2, title: "Email Campaigns", filename: 'ecommerce_campaign', appName: 'Email-campaign-MySql', description: 'Advanced schema model for building e-commerce campaign app'},
+      {order:1, title: "Advertisement Agency", filename: 'advertising_system', appName: 'Advertising-System', description: 'Complex schema model to support advertising agency app'}
     ];
 
     self.getFile = function (template) {

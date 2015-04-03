@@ -268,7 +268,6 @@
           /* $timeout(function(){self.processing = false;}, 2000);*/
           TablesService.addSchema($state.params.name, self.tableTemplate)
             .then(function (data) {
-              $analytics.eventTrack('addedDbTables',{tempate:!0});
               NotificationService.add('success', 'The app is ready with the new tables');
               self.processing = false;
               self.isReady = true;
