@@ -5,9 +5,9 @@
   'use strict';
 
   angular.module('app.playground')
-    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService', '$rootScope', 'CONSTS','ConfirmationPopup', TodoCtrl]);
+    .controller('TodoCtrl', ['$scope', '$http', 'SessionService', 'usSpinnerService', '$state', '$interval', 'AppsService', '$rootScope', 'CONSTS','ConfirmationPopup','$anchorScroll', TodoCtrl]);
 
-  function TodoCtrl($scope, $http, SessionService, usSpinnerService, $state, $interval, AppsService, $rootScope, CONSTS, ConfirmationPopup) {
+  function TodoCtrl($scope, $http, SessionService, usSpinnerService, $state, $interval, AppsService, $rootScope, CONSTS, ConfirmationPopup, $anchorScroll) {
 
     var self = this;
     self.isNew = $state.params.isnew
@@ -92,7 +92,7 @@
               $rootScope.$broadcast('AppIsReady');
               ConfirmationPopup.setTitle('Your app is ready');
               ConfirmationPopup.confirm('You can start by reviewing the REST API of your model in the Playground page. You can find the page under "Docs & API" in the navigation bar.', 'Ok', '', true, false);
-
+              $anchorScroll('top');
             }
           }
         });
@@ -113,7 +113,7 @@
       stopRefresh();
     });
 
-
+    $anchorScroll('top');
     var checkAppStatus = null;
     if(self.isNew == 'new'){
       self.iframeReady = 'unknown';

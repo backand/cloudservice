@@ -71,7 +71,10 @@ angular.module('app.apps')
 
       if (self.isCustomMode()) {
         try {
-          schema = JSON.parse(self.template.schema);
+          if(!angular.isDefined(self.template.schema))
+            schema = null;
+          else
+            schema = JSON.parse(self.template.schema);
           useSchema = true;
         }
         catch (err) {
@@ -144,7 +147,7 @@ angular.module('app.apps')
       }
     };
 
-    self.customTemplate = {title: "Custom Model", filename: 'create_your_own', appName: 'items-mysql', description: 'Basic schema model'};
+    self.customTemplate = {title: "Custom Model", filename: 'create_your_own', appName: '', description: 'Design your own database schema model'};
     self.templates = [
       {order:3, title: "Game Shop Store", filename: 'game_shop', appName: 'OnlineGaming-MySql', description: 'Schema mode for game shop management store'},
       {order:2, title: "Email Campaigns", filename: 'ecommerce_campaign', appName: 'Email-campaign-MySql', description: 'Advanced schema model for building e-commerce campaign app'},
