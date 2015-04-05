@@ -1,5 +1,14 @@
-tabs .tab-content {
+.tabs .tab-content {
   display: none;
+}
+
+.dropdown .dropdown-menu.panel {
+  padding: 0;
+  line-height: 22px;
+}
+
+.single-table-message {
+  padding: 5px 15px;
 }
 
 /* edit in place overrides (nir kaufman)

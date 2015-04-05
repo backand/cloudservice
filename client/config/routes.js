@@ -29,7 +29,7 @@ angular.module('app.routes', []).
       .state('apps', {
         url: '/',
         abstract: true,
-        template: '<div ui-view></div>'
+        template: '<ui-view autoscroll="true"/>'
       })
       .state('docs', {
         url: '/docs',
