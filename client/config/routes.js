@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('app.routes', []).
-  config(function($stateProvider, $urlRouterProvider, $logProvider, $httpProvider) {
+  config(function($stateProvider, $urlRouterProvider, $uiViewScrollProvider, $logProvider, $httpProvider) {
 
     $urlRouterProvider.otherwise('/');
+    $uiViewScrollProvider.useAnchorScroll();
 
     $logProvider.debugEnabled(true);
 
@@ -30,17 +31,22 @@ angular.module('app.routes', []).
         abstract: true,
         template: '<div ui-view></div>'
       })
-      .state('getting-started-open', {
-        url: '/docs/start',
+      .state('docs', {
+        url: '/docs',
+        abstract: true,
+        template: '<ui-view autoscroll="true"/>'
+      })
+      .state('docs.getting-started-open', {
+        url: '/start',
         templateUrl: 'views/api_playground/get-started-open.html',
         controller: 'Docs as docs'
       })
-      .state('kickstart-open', {
-        url: '/docs/kickstart',
+      .state('docs.kickstart-open', {
+        url: '/kickstart',
         templateUrl: 'views/api_playground/kickstart-open.html'
       })
-      .state('api-desc-open', {
-        url: '/docs/api',
+      .state('docs.api-desc-open', {
+        url: '/api',
         templateUrl: 'views/api_playground/api-desc.html'
       })
       .state('database', {
@@ -56,7 +62,7 @@ angular.module('app.routes', []).
       .state('playground', {
         url: '/playground',
         abstract: true,
-        template: '<div ui-view></div>'
+        template: '<ui-view autoscroll="true"/>'
       })
       .state('tables', {
         url: '/tables',
