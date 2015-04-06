@@ -1,40 +1,39 @@
 (function  () {
   'use strict';
-angular.module('app.apps')
-  .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$analytics', 'AuthService', DatabaseEdit]);
+angular.module('backand.database')
+  .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService',
+    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$analytics', DatabaseEdit]);
 
-  function DatabaseEdit($scope, $http, AppsService, $stateParams, $state, DatabaseNamesService, NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $analytics, AuthService) {
+  function DatabaseEdit($scope, $http, AppsService, $stateParams, $state, DatabaseNamesService,
+                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $analytics) {
 
     var self = this;
+    var currentApp = AppsService.currentApp;
 
     (function init() {
-      if ($stateParams.name === 'todo' + AuthService.getUserId())
-        $state.go('database.example', {name: $stateParams.name});
+      if (AppsService.isExampleApp(currentApp))
+        $state.go('database.example');
+      if (currentApp.DatabaseStatus == 2)
+        $state.go('docs.get-started');
       self.databaseStatus = null;
-      self.appName = $stateParams.name;
+      self.appName = $stateParams.appName;
       self.loading = false;
       self.showHelp = false;
-      self.showND = true;
       getCurrentApp();
     }());
 
-    function getCurrentApp(){
-      AppsService.getCurrentApp($state.params.name)
-      .then(function (data) {
-        self.databaseStatus = data.DatabaseStatus;
-        self.dbConnected = data.DatabaseStatus === 1;
-        self.dataName = data.databaseName || 'newMysql';
-        self.data = {
-          usingSsl: 'true',
-          usingSsh: 'false'
-        };
+    function getCurrentApp() {
+      self.databaseStatus = currentApp.DatabaseStatus;
+      self.dbConnected = currentApp.DatabaseStatus === 1;
+      self.dataName = currentApp.databaseName || 'newMysql';
+      self.data = {
+        usingSsl: 'true',
+        usingSsh: 'false'
+      };
 
-        if (self.databaseStatus !== 0) {
-          checkDatabaseStatus();
-        }
-      }, function (err) {
-        NotificationService.add('error', 'can not get current app info');
-      });
+      if (self.databaseStatus !== 0) {
+        checkDatabaseStatus();
+      }
     }
 
     self.currentTab = function () {
@@ -43,7 +42,7 @@ angular.module('app.apps')
 
     function checkDatabaseStatus() {
         usSpinnerService.spin("loading");
-        DatabaseService.getDBInfo($state.params.name)
+        DatabaseService.getDBInfo($state.params.appName)
           .success(function (dataIn) {
             self.data = {};
             self.data.Database_Source = dataIn.Database_Source;
@@ -84,14 +83,14 @@ angular.module('app.apps')
         }
       }
 
-        DatabaseService.createDB($state.params.name, product, self.template.appName, schema)
+        DatabaseService.createDB($state.params.appName, product, self.template.appName, schema)
         .success(function (data) {
           NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
           if(useSchema)
             $analytics.eventTrack('create app', {schema: self.template.schema});
           else
             $analytics.eventTrack('create app', {app: self.template.appName});
-          $state.go('playground.get-started', {name: $state.params.name, isnew: 'new'});
+          $state.go('docs.get-started');
         })
         .error(function (err) {
             self.loading = false;
@@ -106,24 +105,24 @@ angular.module('app.apps')
 
       if(self.dbConnected) //connected
       {
-          DatabaseService.reConnect2DB($state.params.name, self.data)
+          DatabaseService.reConnect2DB($state.params.appName, self.data)
               .success(function (data) {
                   NotificationService.add('info', 'Update App connection to database');
-                  $state.go('apps.index', {name: $state.params.name});
+                  $state.go('apps.index');
               })
               .error(function (err) {
                   self.loading = false;
               })
       }
       else {
-          DatabaseService.connect2DB($state.params.name, self.data)
+          DatabaseService.connect2DB($state.params.appName, self.data)
               .success(function (data) {
               $analytics.eventTrack('connectExisting', {product: self.data.product});
 
               NotificationService.add('info', 'Connecting to the database...');
-                  $state.go('apps.index', {name: $state.params.name})
+                  $state.go('apps.index')
               })
-              .error(function (err) {
+              .error(function () {
                   self.loading = false;
                   self.showHelp = true;
               })
@@ -131,7 +130,7 @@ angular.module('app.apps')
     };
 
     self.back = function(){
-      $state.go('apps.show', {name: $state.params.name});
+      $state.go('app.show');
     };
 
     self.Confirmation = function(msg){
@@ -147,11 +146,15 @@ angular.module('app.apps')
       }
     };
 
-    self.customTemplate = {title: "Custom Model", filename: 'create_your_own', appName: '', description: 'Design your own database schema model'};
+    self.customTemplate = {title: "Custom Model", filename: 'create_your_own', appName: '',
+      description: 'Design your own database schema model'};
     self.templates = [
-      {order:3, title: "Game Shop Store", filename: 'game_shop', appName: 'OnlineGaming-MySql', description: 'Schema mode for game shop management store'},
-      {order:2, title: "Email Campaigns", filename: 'ecommerce_campaign', appName: 'Email-campaign-MySql', description: 'Advanced schema model for building e-commerce campaign app'},
-      {order:1, title: "Advertisement Agency", filename: 'advertising_system', appName: 'Advertising-System', description: 'Complex schema model to support advertising agency app'}
+      {order:3, title: "Game Shop Store", filename: 'game_shop', appName: 'OnlineGaming-MySql',
+        description: 'Schema mode for game shop management store'},
+      {order:2, title: "Email Campaigns", filename: 'ecommerce_campaign', appName: 'Email-campaign-MySql',
+        description: 'Advanced schema model for building e-commerce campaign app'},
+      {order:1, title: "Advertisement Agency", filename: 'advertising_system', appName: 'Advertising-System',
+        description: 'Complex schema model to support advertising agency app'}
     ];
 
     self.getFile = function (template) {
@@ -198,7 +201,10 @@ angular.module('app.apps')
        DatabaseService.saveCustomSchema(self.appName, schema);
     }
 
-    $scope.$watch('dbedit.customTemplate.schema', saveCustomSchema);
+    $scope.$watch(function () {
+      if (self.customTemplate)
+        return self.customTemplate.schema
+    }, saveCustomSchema);
 
     // Field Types
 

@@ -39,6 +39,6 @@
     }
   }
 
-  angular.module('app')
+  angular.module('common.directives')
     .directive('videoModal', ['$modal','$sce', VideoModalDirective]);
 }());

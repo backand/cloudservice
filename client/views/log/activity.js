@@ -21,19 +21,19 @@
      */
     (function init() {
       isException = ($state.$current.url.prefix.indexOf('/exception/') > -1);
-      if(isException)
-        self.title ='APP Exceptions'
+      if (isException)
+        self.title ='APP Exceptions';
       else
-        self.title ='APP Activity'
+        self.title ='APP Activity';
     }());
 
     this.gridOptions = {
       enablePaginationControls: false,
       useExternalSorting: true,
       columnDefs: [
-        {name: 'ID', displayName:'Exception Id', sort:{direction: 'desc', priority:0}, width: 100},
-        {name: 'Username', displayName:'Updated By', width: 100},
-        {name: 'Time', field:'__metadata.dates.Time', displayName:'Time', type: 'datetime', width: 150},
+        {name: 'ID', displayName: 'Exception Id', sort: {direction: 'desc', priority: 0}, width: 100},
+        {name: 'Username', displayName: 'Updated By', width: 100},
+        {name: 'Time', field: '__metadata.dates.Time', displayName: 'Time', type: 'datetime', width: 150},
         {name: 'ExceptionMessage', minWidth: 300}
         //{name: 'Trace', displayName: 'Additional Info'}
       ],
@@ -59,7 +59,12 @@
       , getLog);
 
     function getLog() {
-      AppLogService.getAppActivity($stateParams.name, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, isException, self.sort)
+      AppLogService.getAppActivity(
+        $stateParams.appName,
+        self.paginationOptions.pageSize,
+        self.paginationOptions.pageNumber,
+        isException,
+        self.sort)
         .then(logSuccsessHandler, errorHandler);
     }
 
@@ -78,7 +83,7 @@
     }
   }
 
-  angular.module('app')
+  angular.module('backand')
     .controller('LogActivity', [
       '$stateParams',
       '$state',

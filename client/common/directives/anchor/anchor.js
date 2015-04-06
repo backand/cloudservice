@@ -18,6 +18,6 @@
     };
   }
 
-  angular.module('app')
+  angular.module('common.directives')
     .directive('bkndAnchor', bkndAnchor);
 })();

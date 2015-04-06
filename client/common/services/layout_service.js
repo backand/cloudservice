@@ -4,9 +4,11 @@
   function LayoutService($localStorage, AuthService) {
 
     var self = this;
+    $localStorage.backand[AuthService.getUserId()] =
+      $localStorage.backand[AuthService.getUserId()] || {};
 
     self.showJumbo = function () {
-      return !$localStorage.backand.hideJumbo;
+      return !$localStorage.backand[AuthService.getUserId()].hideJumbo;
     };
 
     self.closeJumbo = function () {

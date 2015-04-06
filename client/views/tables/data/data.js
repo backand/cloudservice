@@ -4,21 +4,20 @@
 (function () {
 
 
-  angular.module('app')
+  angular.module('backand')
     .controller('ViewData', [
       'NotificationService',
       'ColumnsService',
       'DataService',
       '$scope',
       'usSpinnerService',
-      'DbQueriesService',
       '$timeout',
       '$rootScope',
       'tableName',
       ViewData
     ]);
 
-  function ViewData(NotificationService, ColumnsService, DataService, $scope, usSpinnerService, DbQueriesService, $timeout, $rootScope, tableName) {
+  function ViewData(NotificationService, ColumnsService, DataService, $scope, usSpinnerService, $timeout, $rootScope, tableName) {
     var self = this;
     self.tableName = tableName;
     self.title = '';
@@ -128,7 +127,6 @@
     function getCellEditTemplate (column) {
       if (column.name === 'Id') return undefined;
       var type = 'text';
-      var extraOptions = '';
       var calllbackOptions = ' onbeforesave="$root.data.onUpdateRowCell(row, col, $data)"';
       switch (column.type) {
         case 'Numeric':
@@ -146,7 +144,6 @@
           type = 'text';
           break;
         case 'SingleSelect':
-          // type = 'select';
           break;
         case 'LongText':
           type = 'textarea';
@@ -165,15 +162,14 @@
       var updatedObject = angular.copy(row.entity);
       updatedObject[col.name] = newValue;
       return DataService.update(self.tableName, updatedObject);
-    }
+    };
 
-    function fixDatesInData(data) {
+    function fixDatesInData() {
       self.columnDefs.forEach(function(columnDef) {
         if (columnDef.type == 'DateTime') {
           self.gridOptions.data.forEach(function(row) {
             row[columnDef.name] = new Date(row[columnDef.name]);
-          })
-          console.log(self.gridOptions.data);
+          });
         }
       });
     }

@@ -48,6 +48,6 @@
     };
   }
 
-  angular.module('app')
+  angular.module('common.directives')
     .directive('bkndCopyUrl', bkndCopyUrl);
 })();

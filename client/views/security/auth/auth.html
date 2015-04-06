@@ -25,7 +25,9 @@
                       ng-model-options="{debounce:{default:400}}"
                       required>
               </select>
-              <div class="field-description">* The role can be changed any time after the registration vip API or from user page</div>
+              <div class="field-description">
+                * The role can be changed any time after the registration vip API or from user page
+              </div>
             </div>
           </div>
           <div class="row" ng-if="auth.data.allowAnonymous">
@@ -40,7 +42,10 @@
                     <button class="btn btn-default" type="button" clip-copy="auth.keys.anonymous">Copy</button>
                   </span>
                 </div>
-                <div class="field-description">Use this token when accessing the REST API without login (Anonymous access) (put the token in headers parameter AnonymousToken)</div>
+                <div class="field-description">
+                  Use this token when accessing the REST API without login (Anonymous access)
+                  (put the token in headers parameter AnonymousToken)
+                </div>
               </div>
             </div>
           </div>
@@ -54,7 +59,9 @@
               <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.settings.enableUserRegistration"
                      checked=""><i></i>
             </label>
-            <div class="field-description">When enabled, any user can register with the application. When disabled, only invited users may register. To invite users, go to the <a href="" ng-click="auth.goTo('security.users');">Users</a> page.
+            <div class="field-description">
+              When enabled, any user can register with the application. When disabled, only invited users may register.
+              To invite users, go to the <a href="" ng-click="auth.goTo('security.users');">Users</a> page.
             </div>
           </div>
           <div class="row">
@@ -67,7 +74,9 @@
                       ng-model-options="{debounce:{default:400}}"
                       required>
               </select>
-              <div class="field-description">* The role can be changed any time after the registration vip API or from user page</div>
+              <div class="field-description">
+                * The role can be changed any time after the registration vip API or from user page
+              </div>
             </div>
           </div>
         </div>
@@ -112,7 +121,10 @@
                   <button class="btn btn-default" type="button" clip-copy="auth.keys.signup">Copy</button>
                 </span>
               </div>
-              <div class="field-description">Use this token when registering a user via the sign-up REST API URL - /user/signup (put it in headers parameter SignUpToken)</div>
+              <div class="field-description">
+                Use this token when registering a user via the sign-up REST API URL -
+                /user/signup (put it in headers parameter SignUpToken)
+              </div>
             </div>
           </div>
         </div>

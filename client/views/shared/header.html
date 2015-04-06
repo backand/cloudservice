@@ -4,7 +4,7 @@
 
   <!-- Logo -->
   <div class="logo bg-dark">
-    <a ng-click="header.goTo('apps.index');" href="">
+    <a ui-sref="apps.index">
       <span>Backand</span>
     </a>
   </div>
@@ -19,13 +19,16 @@
   <div class="top-nav">
     <ul class="nav-left list-unstyled" ng-hide="header.hideAppList()">
       <li>
-        <a ng-click="header.goTo('apps.index');" href=""><i class="ti-layers-alt" style="font-size: 25px;"></i></a>
+        <a ui-sref="apps.index"><i class="ti-layers-alt" style="font-size: 25px;"></i></a>
       </li>
       <li class="search-box">
         <div class="input-group">
           <span class="input-group-addon">App: &nbsp;</span>
           <div class="ui-select" style="font-weight: bold;">
-            <select ng-options="app.Name as app.Name for app in header.apps | orderBy:'Name'" ng-model="header.currAppName" ng-change="header.redirectTo(header.currAppName)"></select>
+            <select ng-model="header.currApp"
+                    ng-change="header.goToApp()"
+                    ng-options="app as app.Name for app in header.apps.list | orderBy:'Name'">
+            </select>
           </div>
           <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}" style="position: relative;left: 150px;top: -18px;"></div>
         </div>
@@ -38,12 +41,12 @@
                href="" class="dropdown-toggle" data-toggle="dropdown" style="padding-top: 15px;padding-right: 30px;">
                 <span>
                     <i class="ti-user"></i>
-                    <span>{{main.getCurrentUser().username}}</span>
+                    <span>{{::header.getCurrentUser().username}}</span>
                 </span>
             </a>
             <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
                 <li>
-                    <a href="" ng-click="main.logout()">
+                    <a href="" ng-click="header.logout()">
                         <i class="ti-export"></i>
                         <span>Log Out</span>
                     </a>

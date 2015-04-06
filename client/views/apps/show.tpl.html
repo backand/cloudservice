@@ -12,7 +12,7 @@
                 <p class="text-muted size-h5">Requests in the last 24h</p>
               </li>
               <li class="col-md-3">
-                  <h1>{{show.statisticsArray['diffLastDaytoYesterday']==null ? 0:show.statisticsArray['diffLastDaytoYesterday'] | number:0}}%</h1>
+                  <h1>{{show.statisticsArray['diffLastDaytoYesterday'] == null ? 0 : show.statisticsArray['diffLastDaytoYesterday'] | number:0}}%</h1>
                   <p class="text-muted size-h5">Change in the last 24h</p>
               </li>
               <li class="col-md-3">
@@ -20,7 +20,7 @@
                   <p class="text-muted size-h5">Requests in the last 30d</p>
               </li>
               <li class="col-md-3">
-                  <h1>{{show.statisticsArray['diffLast30DaysToPrev']==null ? 0:show.statisticsArray['diffLast30DaysToPrev'] | number:0}}%</h1>
+                  <h1>{{show.statisticsArray['diffLast30DaysToPrev'] == null ? 0 : show.statisticsArray['diffLast30DaysToPrev'] | number:0 }}%</h1>
                   <p class="text-muted size-h5">Change in the last 30d</p>
               </li>
               <!--<li class="col-md-2">-->
@@ -45,7 +45,7 @@
             <div class="app-log">
               <h4 class="">TOOLS AND KNOWLEDGE BASE</h4>
 
-              <section ui-sref="playground.show({name: show.appName})" class="data-panel">
+              <section ui-sref="app.playground.show({name: show.appName})" class="data-panel">
                 <div class="panel-icon">
                   <i class="icon-rest-api-icon text-huge"></i>
                 </div>
@@ -55,7 +55,7 @@
                 </div>
               </section>
 
-                <section ui-sref="playground.orm({name: show.appName})" class="data-panel data-panel-success">
+                <section ui-sref="app.playground.orm({name: show.appName})" class="data-panel data-panel-success">
                     <div class="panel-icon">
                         <i class="icon-orm-icon text-huge"></i>
                     </div>

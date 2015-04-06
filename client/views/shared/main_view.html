@@ -1,0 +1,20 @@
+<div class="app" ng-class="{'nav-collapsed-min' : main.hideNav()}">
+  <section ng-include=" 'views/shared/header.html' "
+           id="header"
+           class="header-container ng-scope header-fixed bg-white">
+  </section>
+
+  <div class="main-container">
+
+    <aside ng-include="nav.showAppNav()"
+           ng-hide="main.hideNav()"
+           id="nav-container"
+           class="nav-container nav-fixed nav-vertical bg-dark"
+           ng-controller="NavCtrl as nav">
+    </aside>
+    <div id="content" class="content-container" autoscroll="true">
+      <section ui-view class="view-container"></section>
+
+    </div>
+  </div>
+</div>

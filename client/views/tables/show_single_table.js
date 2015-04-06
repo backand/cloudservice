@@ -1,7 +1,7 @@
 (function () {
 
 
-  angular.module('app')
+  angular.module('backand')
     .controller('SingleTableShow', [
       '$stateParams',
       'ColumnsService',
@@ -11,20 +11,17 @@
       'SecurityService',
       'NotificationService',
       '$rootScope',
-      'TablesService',
-      '$filter',
-      'AppState',
       'tableName',
       SingleTableShow
     ]);
 
-  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService, NotificationService,$rootScope, TablesService, $filter, AppState, tableName) {
+  function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService,
+                           NotificationService, $rootScope, tableName) {
 
     var self = this;
 
     (function init() {
-      self.appName = $stateParams.name;
-      AppState.set(self.appName);
+      self.appName = $stateParams.appName;
       self.tableId = $stateParams.tableId;
       self.tableName = tableName;
       self.messages = [];
@@ -35,23 +32,23 @@
       self.tabs = [
         {
           heading: 'Fields',
-          route: 'tables.columns.fields'
+          route: '^.fields'
         },
         {
           heading: 'Actions',
-          route: 'tables.columns.actions'
+          route: '^.actions'
         },
         {
           heading: 'Security',
-          route: 'tables.columns.security'
+          route: '^.security'
         },
         {
           heading: 'Settings',
-          route: 'tables.columns.settings'
+          route: '^.settings'
         },
         {
           heading: 'Data',
-          route: 'tables.columns.data'
+          route: '^.data'
         },/*
         {
           heading: 'Config Log',
@@ -80,19 +77,6 @@
       self.tableName = data;
       ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
     }
-
-
-
-    /**
-     * Find the table name by id
-     * @param id
-     * @returns {*|XMLList|XML}
-     */
-    function getTableNameById(tables,id) {
-      return angular.copy($filter('filter')(tables, function (t) {
-        return t.__metadata.id === id;
-      })[0])
-    };
 
     /**
      * Sync the database into Backand - add all the tables and sync
@@ -130,7 +114,7 @@
           self.syncing = false;
           NotificationService.add('error', 'Can not sync tables');
         });
-    }
+    };
 
     /**
      * delegate any error to notification service

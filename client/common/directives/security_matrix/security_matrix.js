@@ -149,6 +149,6 @@
     }
   }
 
-  angular.module('app')
+  angular.module('common.directives')
     .directive('securityMatrix', ['ConfirmationPopup','$modal','$log','$filter', SecurityMatrixDirective]);
 }());

@@ -20,11 +20,11 @@
       isAdmin = ($state.$current.url.prefix.indexOf('/history/') == -1);
       if(isAdmin){
         self.title ='Log Configuration';
-        self.names = {ViewName: 'Entity Name',PK:'Entity Id', FieldName:'Property Name'};
+        self.names = {ViewName: 'Entity Name', PK:'Entity Id', FieldName:'Property Name'};
       }
-      else{
-        self.title ='Data History'
-        self.names = {ViewName: 'Table Name',PK:'Table PK', FieldName:'Column Name'};
+      else {
+        self.title ='Data History';
+        self.names = {ViewName: 'Table Name', PK:'Table PK', FieldName:'Column Name'};
       }
     }());
 
@@ -33,7 +33,7 @@
       enablePaginationControls: false,
       useExternalSorting: true,
       columnDefs: [
-        {name: 'UpdateDate', field:'__metadata.dates.UpdateDate', displayName:'Updated', type: 'date', sort:{direction: 'desc', priority:0}},
+        {name: 'UpdateDate', field:'__metadata.dates.UpdateDate', displayName: 'Updated', type: 'date', sort: {direction: 'desc', priority:0} },
         {name: 'Username', displayName:'Updated By', field:'__metadata.descriptives.Username.label'},
         {name: 'Action', field:'__metadata.descriptives.Action.label'},
         {name: 'ViewName', displayName:self.names.ViewName},
@@ -54,10 +54,13 @@
       }
     };
 
-    $scope.$watch('log.paginationOptions.pageNumber',getLog)
+    $scope.$watch(function () {
+      if (self.paginationOptions)
+        return self.paginationOptions.pageNumber
+    }, getLog)
 
     function getLog() {
-      AppLogService.getAppLog($stateParams.name, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, isAdmin, self.sort)
+      AppLogService.getAppLog($stateParams.appName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, isAdmin, self.sort)
         .then(logSuccsessHandler, errorHandler);
     }
 
@@ -76,7 +79,7 @@
     }
   }
 
-  angular.module('app')
+  angular.module('backand')
     .controller('LogConfig', [
       '$stateParams',
       '$state',

@@ -52,6 +52,6 @@
     }
   }
 
-  angular.module('app')
+  angular.module('common.services')
     .service('ConfirmationPopup', ['$modal', '$rootScope', ConfirmationPopupService])
 }());

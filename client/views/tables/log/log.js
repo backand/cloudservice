@@ -25,9 +25,9 @@
       enablePaginationControls: false,
       useExternalSorting: true,
       columnDefs: [
-        {name: 'UpdateDate', field:'__metadata.dates.UpdateDate', displayName:'Updated', type: 'date', sort:{direction: 'desc', priority:0}},
-        {name: 'Username', displayName:'Updated By', field:'__metadata.descriptives.Username.label'},
-        {name: 'Action', field:'__metadata.descriptives.Action.label'},
+        {name: 'UpdateDate', field: '__metadata.dates.UpdateDate', displayName: 'Updated', type: 'date', sort: {direction: 'desc', priority:0} },
+        {name: 'Username', displayName:'Updated By', field: '__metadata.descriptives.Username.label'},
+        {name: 'Action', field: '__metadata.descriptives.Action.label'},
         {name: 'FieldName'},
         {name: 'OldValue'},
         {name: 'NewValue'}
@@ -44,10 +44,13 @@
       }
     };
 
-    $scope.$watch('log.paginationOptions.pageNumber',getLog)
+    $scope.$watch(function () {
+      if (self.paginationOptions)
+        return self.paginationOptions.pageNumber
+    }, getLog);
 
     function getLog() {
-      AppLogService.getAppLog($stateParams.name, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, isAdmin, self.sort, $stateParams.tableName)
+      AppLogService.getAppLog($stateParams.appName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, isAdmin, self.sort, $stateParams.tableName)
         .then(logSuccsessHandler, errorHandler);
     }
 
@@ -55,18 +58,15 @@
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
 
-      setTimeout(refreshGridDisplay(),1); //fix bug with bootstrap tab and ui grid
+      setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
     }
 
     function refreshGridDisplay()
     {
-      //if($scope.gridApi.grid.options.columnDefs[0].name == '__metadata')
-      //  $scope.gridApi.grid.options.columnDefs.splice(0,1);
       if(!self.refreshOnce){
         setTimeout("$('#grid-container').trigger('resize')", 1); //resize the tab to fix the width issue with UI grid
         self.refreshOnce = true;
       }
-
     }
 
     this.pageMax = function (pageSize, currentPage, max) {
@@ -79,7 +79,7 @@
     }
   }
 
-  angular.module('app')
+  angular.module('backand')
     .controller('LogData', [
       '$stateParams',
       '$log',
