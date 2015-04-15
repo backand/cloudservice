@@ -46,7 +46,11 @@ angular.module('backand.apps')
         $state.go('app.show', {appName: app.Name});
       else {
         if (self.exampleApp(app)) {
-          $state.go('database.example', {appName: app.Name});
+          if (app.DatabaseStatus == 2) {
+            $state.go('playground.todo', {appName: app.Name})
+          } else {
+            $state.go('database.example', {appName: app.Name});
+          }
         }
         else {
           $state.go('database.edit', {appName: app.Name});

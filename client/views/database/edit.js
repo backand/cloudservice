@@ -108,7 +108,7 @@ angular.module('backand.database')
           DatabaseService.reConnect2DB($state.params.appName, self.data)
               .success(function (data) {
                   NotificationService.add('info', 'Update App connection to database');
-                  $state.go('apps.index');
+                  $state.go('docs.get-started');
               })
               .error(function (err) {
                   self.loading = false;
@@ -120,7 +120,7 @@ angular.module('backand.database')
               $analytics.eventTrack('connectExisting', {product: self.data.product});
 
               NotificationService.add('info', 'Connecting to the database...');
-                  $state.go('apps.index')
+                  $state.go('docs.get-started')
               })
               .error(function () {
                   self.loading = false;
