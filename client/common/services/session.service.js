@@ -33,12 +33,20 @@
       self.currentUser = user.currentUser;
 
       $cookieStore.put('globals', user);
-      if(JacoRecorder)
-        JacoRecorder.identify(user.currentUser.username);
+
+      if(window.JacoRecorder)
+        window.JacoRecorder.identify(user.currentUser.username);
       if (woopra)
         woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
       if (typeof __insp != 'undefined')
         __insp.push(['identify', user.currentUser.username]);
+      if(window.Intercom)
+        window.Intercom('boot', {
+          app_id: "ufkkj816",
+          name: user.currentUser.userId,
+          email: user.currentUser.username,
+          created_at: new Date().getTime()
+        });
     };
 
     this.ClearCredentials = function () {

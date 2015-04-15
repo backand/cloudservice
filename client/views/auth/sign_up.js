@@ -23,7 +23,7 @@
                   //create todos sample app
                   var exampleAppName = 'todo' + AuthService.getUserId();
                   if(exampleAppName != 'todo0'){
-                    AppsService.add(exampleAppName, 'Todo List - Example App')
+                    AppsService.add(exampleAppName, 'My First App - Todo list example')
                       .then(
                       $state.go('apps.index')
                     );

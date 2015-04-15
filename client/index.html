@@ -66,10 +66,25 @@
       for (n._w = n._w || {}, t = 0; a.length > t; t++)n._w[a[t]] = n[a[t]] = n[a[t]] || new c;
       i = o.createElement(s), i.async = 1, i.src = "//static.woopra.com/js/w.js", e = o.getElementsByTagName(s)[0], e.parentNode.insertBefore(i, e)
     })("woopra");
-    woopra.config({domain: 'backand.com'});
+    woopra.config({domain: 'backand.com',cookie_name: 'back_woop'});
 
   </script>
   <!-- End of Woopra Code -->
+
+  <!-- Start of Intercom Code -->
+  <script>
+//    window.intercomSettings = {
+//      widget: {
+//        activator: "[href$='intercom.io']"
+//      },
+//      app_id: "ufkkj816"
+//    };
+//
+//    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://static.intercomcdn.com/intercom.v1.js';var x=d.getElementsByTagName('script')[0];
+//      x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+  </script>
+  <!-- Start of Intercom Code -->
+
 </head>
 
 <body id="app" class="app" ng-class="{'nav-collapsed-min' : main.hideNav()}" custom-page>
@@ -119,6 +134,7 @@
   <script type="text/javascript" src="vendor/ngstorage/ngStorage.js"></script>
   <script type="text/javascript" src="vendor/angulartics/dist/angulartics.min.js"></script>
   <script type="text/javascript" src="vendor/angulartics/dist/angulartics-woopra.min.js"></script>
+  <script type="text/javascript" src="vendor/angulartics/dist/angulartics-intercom.min.js"></script>
   <!-- endbuild -->
 
   <!-- build:js assets/js/main.js -->
