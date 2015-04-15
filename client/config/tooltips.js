@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('app')
+  angular.module('backand')
     .config(['$translateProvider', function ($translateProvider) {
 
       var tooltips = {

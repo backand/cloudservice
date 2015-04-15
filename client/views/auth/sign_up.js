@@ -1,7 +1,7 @@
 
 (function  () {
 
-  angular.module('app')
+  angular.module('backand')
     .controller('SignUpController',["$scope",'AuthService','$state','SessionService','$timeout','$analytics', 'AppsService', SignUpController]);
 
   function SignUpController($scope,AuthService,$state,SessionService,$timeout,$analytics, AppsService){

@@ -54,7 +54,7 @@
     /**
      * watch for changes in view object
      */
-    $scope.$watch('fields.view', function (newVal,oldValue){
+    $scope.$watch(function () { return self.view }, function (newVal,oldValue){
       if(newVal != null && oldValue != null && newVal !== oldValue) {
         ColumnsService.commit(self.view);
         if(self.view.name != self.view.__metadata.name)
@@ -79,6 +79,6 @@
     }
   }
 
-  angular.module('app')
+  angular.module('backand')
     .controller('FieldsController', ['$scope', 'ColumnsService', 'NotificationService', FieldsController]);
 }());

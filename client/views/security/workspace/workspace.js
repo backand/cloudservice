@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityWorkspace($stateParams, SecurityService, SecurityMatrixService, NotificationService, $filter, $scope) {
+  function SecurityWorkspace($stateParams, SecurityService, SecurityMatrixService, NotificationService, $filter) {
 
     var self = this;
 
@@ -11,7 +11,7 @@
      * Init the workspaces = security templates page
      */
     (function init() {
-      self.appName = SecurityMatrixService.appName = SecurityService.appName = $stateParams.name;
+      var appName = SecurityMatrixService.appName = SecurityService.appName = $stateParams.appName;
       self.workspaces = null;
       self.templateChanged = templateChanged;
       self.templateRoleAdd = templateRoleAdd;
@@ -31,23 +31,26 @@
       )
     };
     function templateRoleAdd (roleName){
-      return SecurityService.postRole({Name: roleName, Description: roleName}).then(function (data) {
-        getWorkspaces();
-        return data;
+      return SecurityService.postRole({Name: roleName, Description: roleName})
+        .then(function (data) {
+          getWorkspaces();
+          return data;
       })
     }
 
     function  templateRoleRename(roleName, newName){
-      return SecurityService.updateRole({Name: newName, Description: newName}, roleName).then(function (data) {
-        getWorkspaces();
-        return data;
+      return SecurityService.updateRole({Name: newName, Description: newName}, roleName)
+        .then(function (data) {
+          getWorkspaces();
+          return data;
       })
     }
 
     function templateRoleRemove(roleName){
-      return SecurityService.deleteRole(roleName).then(function (data) {
-        getWorkspaces();
-        return data;
+      return SecurityService.deleteRole(roleName)
+        .then(function (data) {
+          getWorkspaces();
+          return data;
       })
     }
 
@@ -74,7 +77,8 @@
      * Read the list of workspaces
      */
     function getWorkspaces() {
-      SecurityService.getWorkspace().then(workspaceSuccessHandler, errorHandler);
+      SecurityService.getWorkspace()
+        .then(workspaceSuccessHandler, errorHandler);
     }
 
     /**
@@ -94,7 +98,8 @@
       };
 
       self.defaultWorkspaceName = newWorkspaceName;
-      SecurityService.postWorkspace(newWS).then(getWorkspaces,errorHandler);
+      SecurityService.postWorkspace(newWS)
+        .then(getWorkspaces,errorHandler);
 
     };
 
@@ -114,7 +119,8 @@
         permissions.allowDelete = workspace.allowDelete;
         permissions.allowRead = workspace.allowRead;
         workspace.tabActive = (workspace.workspaceName == self.defaultWorkspaceName);
-        SecurityMatrixService.loadMatrix(permissions).then(function (data) {
+        SecurityMatrixService.loadMatrix(permissions)
+          .then(function (data) {
           workspace.template = data;
         });
       });
@@ -154,14 +160,13 @@
     }
   }
 
-  angular.module('app')
+  angular.module('backand')
     .controller('SecurityWorkspace', [
       '$stateParams',
       'SecurityService',
       'SecurityMatrixService',
       'NotificationService',
       '$filter',
-      '$scope',
       SecurityWorkspace
     ]);
 

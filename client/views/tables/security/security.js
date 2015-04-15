@@ -136,7 +136,7 @@
 
 
 
-    $scope.$watch('security.currentST', function (newVal, oldValue) {
+    $scope.$watch(function () { return self.currentST }, function (newVal, oldValue) {
       if (newVal != null && oldValue != null && newVal !== oldValue)
       {
         self.view.permissions.securityWorkspace = Number(self.currentST);
@@ -147,7 +147,7 @@
     function buildTemplate() {
       self.sTemplate = [];
       var permissions = {};
-      self.appName = SecurityMatrixService.appName = $state.params.name;
+      self.appName = SecurityMatrixService.appName = $state.params.appName;
 
       //check if override is on - if yes read the permissions from the workspace (security group)
       //self.view.override
@@ -188,6 +188,6 @@
 
   }
 
-  angular.module('app')
+  angular.module('backand')
     .controller('SecurityController', ['$scope', '$state', '$filter', 'SecurityMatrixService', 'NotificationService', 'SecurityService', 'ColumnsService','DictionaryService', SecurityController]);
 }());

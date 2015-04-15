@@ -1,17 +1,19 @@
 (function  () {
     'use strict';
 
-angular.module('app.apps')
-  .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval', 'AppState', 'usSpinnerService', 'LayoutService', '$analytics', 'AuthService', AppsIndexController]);
+angular.module('backand.apps')
+  .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
+    'usSpinnerService', 'LayoutService', '$analytics', 'AuthService', AppsIndexController]);
 
-  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService, $analytics, AuthService) {
+  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
+                                usSpinnerService, LayoutService, $analytics, AuthService) {
 
     var self = this;
     self.loading = false;
     var stop;
 
     (function () {
-      self.apps = appsList.data.data;
+      self.apps = appsList.data;
     }());
 
     self.addApp = function() {
@@ -23,12 +25,12 @@ angular.module('app.apps')
         .then(function(data) {
           $analytics.eventTrack('createdApp', {});
           NotificationService.add('success', 'App was added successfully');
-          AppState.set(self.appName);
-          $state.go('database.edit', { name: self.appName });
+          $state.go('database.edit', { appName: self.appName });
         },
         function(err) {
           self.loading = false;
-          NotificationService.add('error', err);
+          // the error message already shows
+          //NotificationService.add('error', err);
         })
     };
 
@@ -39,16 +41,15 @@ angular.module('app.apps')
     self.appManage = function (app) {
       usSpinnerService.spin("loading");
       //check app status
-      AppState.set(app.Name);
 
       if (app.DatabaseStatus == 1)
-        $state.go('apps.show', {name: app.Name});
+        $state.go('app.show', {appName: app.Name});
       else {
-        if (self.exampleApp(app.Name)) {
-          $state.go('database.example', {name: app.Name});
+        if (self.exampleApp(app)) {
+          $state.go('database.example', {appName: app.Name});
         }
         else {
-          $state.go('database.edit', {name: app.Name});
+          $state.go('database.edit', {appName: app.Name});
         }
       }
     };
@@ -58,18 +59,15 @@ angular.module('app.apps')
      * @param appName
      */
     self.appSettings = function (appName) {
-      AppState.set(appName);
-      $state.go('apps.edit', {name: appName});
+      $state.go('app.edit', {appName: appName});
     };
 
     self.goToLink = function (appName) {
-      AppState.set(appName);
-      $state.go('playground.show', {name: appName});
+      $state.go('playground.show', {appName: appName});
     };
 
     self.todoExample = function (appName) {
-      AppState.set(appName);
-      $state.go('playground.todo', {name: appName});
+      $state.go('playground.todo', {appName: appName});
     };
 
     self.namePattern = /^\w+$/;
@@ -100,14 +98,13 @@ angular.module('app.apps')
     }
 
     self.exampleApp = function(app){
-      return app.Name === 'todo' + AuthService.getUserId();
-      // return (app.Name.substring(0,4) === 'todo')
+      return AppsService.isExampleApp(app);
     };
 
     stop = $interval(function() {
       AppsService.all()
         .then(function(apps) {
-          self.apps = apps.data.data;
+          self.apps = apps.data;
         },
         function(error) {
           stopRefresh();

@@ -1,26 +1,22 @@
 (function() {
     'use strict';
 
-    angular.module('app.backoffice', [])
+    angular.module('backand.backoffice', [])
         .config(config);
 
     function config($stateProvider) {
         $stateProvider
             .state('backoffice.edit', {
-                parent: 'backoffice',
-                url: '/template/:name',
+                url: '/template',
                 controller: 'BackofficeTemplate as backT',
                 templateUrl: 'views/backoffice/template.html'
             })
             .state('backoffice.cust', {
-                parent: 'backoffice',
-                url: '/customization/:name',
-                controller: 'BackofficeCust as cust',
+                url: '/customization',
                 templateUrl: 'views/backoffice/customize.html'
             })
             .state('backoffice.code', {
-                parent: 'backoffice',
-                url: '/code/:name',
+                url: '/code',
                 templateUrl: 'views/backoffice/code.html'
             })
     }

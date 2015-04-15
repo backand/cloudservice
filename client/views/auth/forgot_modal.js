@@ -1,6 +1,6 @@
 (function  () {
     'use strict';
-  angular.module('app')
+  angular.module('backand')
     .controller('ForgotController',["$scope", '$modalInstance','Uemail','AuthService','$timeout',ForgotController]);
 
   function ForgotController($scope, $modalInstance,Uemail,AuthService,$timeout){

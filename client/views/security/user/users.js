@@ -16,7 +16,7 @@
       self.open = newUser;
       self.roles = null;
       self.gridOptions = {};
-      self.appName = SecurityService.appName = $state.params.name;
+      self.appName = SecurityService.appName = $state.params.appName;
       self.actions = ['Delete'];
       self.action = '';
 
@@ -53,17 +53,25 @@
         ]
       };
 
-      $scope.$watch('users.paginationOptions.pageNumber', getUsers);
+      $scope.$watch(function () {
+        if (self.paginationOptions)
+          return self.paginationOptions.pageNumber
+      }, getUsers);
+
       getUsers();
 
       //get the default role for invited users
-      AppsService.getCurrentApp(self.appName).then(successApp, errorHandler)
+      successApp(AppsService.currentApp);
 
     }());
 
     function getUsers() {
       usSpinnerService.spin('loading');
-      SecurityService.getUsers(self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
+      SecurityService.getUsers(
+        self.paginationOptions.pageSize,
+        self.paginationOptions.pageNumber,
+        self.sort,
+        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
         .then(usersSuccessHandler, errorHandler);
 
     }
@@ -101,7 +109,7 @@
     }
 
     self.goTo = function(state) {
-      $state.go(state, {name: this.appName});
+      $state.go(state);
     };
 
     function newUser() {
@@ -120,7 +128,7 @@
       //get the app creator
       var username = SessionService.currentUser.username;
 
-      var result = ConfirmationPopup.confirm('You are going to delete ' + items.length + ' user(s). Are you sure you want to continue?')
+      ConfirmationPopup.confirm('You are going to delete ' + items.length + ' user(s). Are you sure you want to continue?')
         .then(function (result) {
           if (!result)
             return;
@@ -135,7 +143,6 @@
             }
           })
         })
-
     };
 
     $scope.modal = {
@@ -192,11 +199,11 @@
       if (email == '') return false;
       if (email.indexOf("@") <= 0) return false;
       return true;
-    }
+    };
 
     self.inviteAdmins = function () {
       self.inviteUsers(self.invitedAdmins, 'Admin');
-    }
+    };
 
     self.validateEmail = function (email_array) {
       var isValid = true;
@@ -214,7 +221,7 @@
         i++;
       }
       return isValid;
-    }
+    };
 
     /**
      * Read the list of emails, split it and call POST user
@@ -254,7 +261,7 @@
       else
         self.invitedUsers = '';
 
-    }
+    };
 
     /**
      * init and launch modal window and
@@ -279,7 +286,7 @@
        * close the modal window if user confirm
        */
       $scope.cancel = function () {
-        var result = ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
+        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
           .then(function (result) {
             result ? modalInstance.dismiss() : false;
           })
@@ -302,7 +309,7 @@
 
   }
 
-  angular.module('app')
+  angular.module('backand')
     .controller('SecurityUsers', [
       'ConfirmationPopup',
       '$modal',

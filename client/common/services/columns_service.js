@@ -66,7 +66,7 @@
       //  NotificationService.add('success', 'Data saved');
       //  return data;
       //});
-    };
+    }
 
     function _update (table) {
       return $http({
@@ -75,7 +75,7 @@
         headers: { AppName: self.appName },
         data: table
       });
-    };
+    }
 
     stop = $interval(function () {
       //don't get into the loop while saving = semaphore
@@ -125,5 +125,5 @@
   }
 
   angular.module('common.services')
-    .service('ColumnsService', ['$http', 'CONSTS', '$q','NotificationService','$interval','$rootScope', ColumnsService]);
+    .service('ColumnsService', ['$http', 'CONSTS', '$q', 'NotificationService', '$interval', '$rootScope', ColumnsService]);
 })();

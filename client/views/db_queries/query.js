@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('app.dbQueries')
+  angular.module('backand.dbQueries')
     .controller('DbQueryController', [
       '$state',
       '$stateParams',
@@ -47,7 +47,7 @@
     init();
 
     function init() {
-      self.appName = $stateParams.name;
+      self.appName = $stateParams.appName;
       self.inputValues = {};
       if (self.queryForm)
         self.queryForm.$setPristine();
@@ -57,9 +57,8 @@
     }
 
     function loadDbType() {
-      AppsService.getCurrentApp(self.appName).then(function(app) {
+      var app = AppsService.currentApp;
         self.ace.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
-      });
     }
 
     function loadQueries() {
@@ -73,7 +72,7 @@
         } else {
           self.query = DbQueriesService.getQueryForEdit($stateParams.queryId);
           if (typeof self.query == 'undefined') {
-            $state.go('dbQueries.newQuery', {name: self.appName});
+            $state.go('dbQueries.newQuery');
             return;
           }
         }
@@ -125,7 +124,6 @@
       self.loading = false;
       if (query) {
         var params = {
-          name: self.appName,
           queryId: query.__metadata.id
         };
 
@@ -164,7 +162,7 @@
             }, function (error, message) {
               NotificationService.add('error', message);
             });
-          $state.go('apps.show', {name: self.appName});
+          $state.go('app.show');
         })
     };
 

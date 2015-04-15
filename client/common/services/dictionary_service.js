@@ -18,11 +18,11 @@
       return $http({
           method: 'GET',
           url: CONSTS.appUrl + baseUrl + self.tableName + '/?deep=true&withSystemTokens=true',
-          headers: {AppName: self.appName}
+          headers: { AppName: self.appName }
         })
       }
     }
 
-    angular.module('app')
-      .service('DictionaryService', ['$http','CONSTS',DictionaryService]);
+    angular.module('common.services')
+      .service('DictionaryService', ['$http', 'CONSTS', DictionaryService]);
   }());

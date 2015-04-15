@@ -1,32 +1,26 @@
 (function() {
   'use strict';
 
-  angular.module('app.database', [])
+  angular.module('backand.database', [])
     .config(config);
 
   function config($stateProvider) {
     $stateProvider
       .state('database.example', {
-        url: '/example/:name',
+        url: '/example',
         controller: 'DatabaseTodoExample as dbtodo',
         templateUrl: 'views/database/todo_example.html'
       })
       .state('database.show', {
-        url: '/:name',
+        url: '',
         controller: 'DatabaseShow as dbshow',
         templateUrl: 'views/database/show.html'
       })
       .state('database.edit', {
-        url: '/:name/edit',
+        url: '/edit',
         controller: 'DatabaseEdit as dbedit',
         templateUrl: 'views/database/edit.html'
       })
-      .state('database.add-tables', {
-        url: '/template/:name',
-        controller: 'TablesAdd as dbadd',
-        templateUrl: 'views/database/add.html'
-      })
-
   }
 
 })();

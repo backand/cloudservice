@@ -2,7 +2,7 @@
  * Created by nirkaufman on 1/4/15.
  */
 (function () {
-  angular.module('app')
+  angular.module('backand')
     .controller('RulesController',
     ['$scope',
       'ConfirmationPopup',
@@ -10,7 +10,7 @@
       'RulesService',
       'NotificationService',
       'DictionaryService',
-      'AppState',
+      '$stateParams',
       'AppsService',
       'AppLogService',
       RulesController]);
@@ -22,7 +22,7 @@
     RulesService,
     NotificationService,
     DictionaryService,
-    AppState,
+    $stateParams,
     AppsService,
     AppLogService) {
 
@@ -169,7 +169,7 @@
     };
 
     $scope.ace = {
-      dbType: 'sql',
+      dbType: AppsService.currentApp.databaseName == 'mysql' && 'mysql' || 'pgsql',
       editors: {},
       onLoad: function(_editor) {
         $scope.ace.editors[_editor.container.id] = _editor;
@@ -367,7 +367,10 @@
         .then(getLog, errorHandler);
     };
 
-    $scope.$watch('test.rowId', function(newVal, oldVal) {
+    $scope.$watch(function () {
+      if (self.test)
+        return self.test.rowId
+    }, function(newVal, oldVal) {
         if(newVal === 0)
           self.test.rowId = '';
       });
@@ -378,7 +381,7 @@
       self.testUrl = RulesService.getTestUrl(self.action, self.test);
       self.inputParametersForm.$setPristine();
       self.testUrlCopied = false;
-      AppLogService.getActionLog(AppState.get(), guid)
+      AppLogService.getActionLog($stateParams.appName, guid)
         .then(showLog, errorHandler);
     }
 
@@ -396,11 +399,6 @@
      */
 
     function loadDbType() {
-      appName = AppState.get();
-      AppsService.getCurrentApp(appName)
-        .then(function(app) {
-          $scope.ace.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
-        });
     }
 
     /**

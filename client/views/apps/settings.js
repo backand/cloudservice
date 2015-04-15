@@ -1,17 +1,15 @@
 (function () {
 
   'use strict';
-  angular.module('app.apps')
-    .controller('AppSettings', ['$scope', 'ConfirmationPopup', 'appItem', 'AppsService', '$state', 'NotificationService', AppSettings]);
+  angular.module('backand.apps')
+    .controller('AppSettings', ['ConfirmationPopup', 'AppsService', '$state', 'NotificationService', AppSettings]);
 
-  function AppSettings($scope, ConfirmationPopup, appItem, AppsService, $state, NotificationService) {
+  function AppSettings(ConfirmationPopup, AppsService, $state, NotificationService) {
     var self = this;
 
     (function init() {
-      self.appName = $state.params.name;
-      var appData = appItem.data;
+      var appData = AppsService.currentApp;
 
-      AppsService.setCurrentApp(appItem.data);
       self.globalAppName = appData.Name;
       self.appName = appData.Name;
       self.appTitle = appData.Title;
@@ -31,14 +29,14 @@
         }
       };
       AppsService.update(self.globalAppName, data).then(submitSuccess, errorHandler);
-    }
+    };
 
     function submitSuccess() {
       NotificationService.add('success', 'Application settings updated successfully');
       self.loading = false;
 
       if (self.globalAppName != self.appName)
-        $state.go('apps.index', {name: ''});
+        $state.go('apps.index');
     }
 
     self.delete = function () {
@@ -47,7 +45,7 @@
           if (!result)
             return;
           AppsService.delete(self.globalAppName).then(deleteSuccess, errorHandler);
-          $state.go('apps.index', {name: ''});
+          $state.go('apps.index');
         })
     };
 

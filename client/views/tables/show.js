@@ -1,14 +1,14 @@
 (function  () {
   'use strict';
-  angular.module('app')
-    .controller('TablesShow', ['$scope', '$rootScope', '$stateParams', 'AppsService', 'usSpinnerService', 'NotificationService', 'ColumnsService','$timeout', TablesShow]);
+  angular.module('backand')
+    .controller('TablesShow', ['$rootScope', '$stateParams', 'NotificationService', 'ColumnsService', TablesShow]);
 
-  function TablesShow($scope, $rootScope, $stateParams, AppsService, usSpinnerService, NotificationService, ColumnsService,$timeout) {
+  function TablesShow($rootScope, $stateParams,NotificationService, ColumnsService) {
 
     var self = this;
 
     (function init() {
-      self.appName = $stateParams.name;
+      self.appName = $stateParams.appName;
     }());
 
     /**
