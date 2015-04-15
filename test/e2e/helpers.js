@@ -1,8 +1,9 @@
 'use strict';
 
 function Helpers() {
+  var self = this;
   browser.getCapabilities().then(function (cap) {
-    this.browserName = cap.caps_.browserName;
+    self.browserName = cap.caps_.browserName;
   });
 }
 
@@ -101,7 +102,7 @@ Helpers.prototype.createMessage = function (context, message) {
     var msg = message
       .replace('{{actual}}', context.actual)
       .replace('{{not}}', (context.isNot ? ' not ' : ' '));
-    
+
     if (context.actual.locator) {
       msg = msg.replace('{{locator}}', context.actual.locator());
     }
@@ -128,7 +129,7 @@ module.exports = new Helpers();
 
 (function () {
   var helpers = new Helpers();
-  
+
   beforeEach(function () {
     this.addMatchers({
       toBePresent: function () {
