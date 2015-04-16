@@ -26,7 +26,8 @@
                            class="form-control input-lg"
                            name = "uEmail"
                            placeholder="Username"
-                           ng-model = "sign.userName"
+                           test-hook="signin.username"
+                           ng-model="sign.userName"
                            ng-model-options="{updateOn: 'blur'}"
                            ng-focus="emailInput.focus = true"
                            ng-blur="emailInput.focus = false"
@@ -45,6 +46,7 @@
                     <input type="password"
                            class="form-control input-lg"
                            placeholder="Password"
+                           test-hook="signin.password"
                            name = "uPassword"
                            ng-model = "sign.userPassword"
                            ng-model-options="{debounce: 500}"
@@ -62,6 +64,7 @@
                 <div class="form-group">
                   <button type="submit"
                           class="blue-button btn btn-lg"
+                          test-hook="signin.login"
                           ladda="sign.loading" data-style="expand-right">
                     Log in
                   </button>
