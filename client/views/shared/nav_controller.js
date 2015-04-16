@@ -111,11 +111,11 @@
     };
 
     self.getDBStatus = function() {
-      if (self.app === null) {
+      if (_.isEmpty(self.app)) {
         return 'unknown';
       }
 
-      switch(parseInt(self.app.myStatus.status)) {
+      switch(parseInt(self.app.DatabaseStatus)) {
         case 0:
         case 2:
           return 'warning';

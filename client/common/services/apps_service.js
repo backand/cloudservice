@@ -9,43 +9,24 @@
 
     var apps = {
       list: [],
-      names: [],
-      status: {},
       alerts: {},
-      loaded: false
     };
 
     self.apps = apps;
-
-    self.getAppsList = function () {
-      return apps.names;
-    };
 
     self.all = function () {
       var deferred = $q.defer();
       getAllApps()
         .success(function (data) {
-          apps.list = data.data;
-          updateAppNames();
-          apps.loaded = true;
+          angular.copy(data.data, apps.list);
           deferred.resolve(data);
         })
         .error(function (error) {
-          apps.loaded = false;
           deferred.reject(error);
         });
 
       return deferred.promise;
     };
-
-    function updateAppNames() {
-      apps.names = [];
-      apps.list.forEach(function (item) {
-        apps.names.push(item.Name);
-        apps.status[item.Name] = item.DatabaseStatus;
-      });
-      apps.names.sort();
-    }
 
     self.add = function (name, title) {
       var deferred = $q.defer();
@@ -65,16 +46,16 @@
 
     // App
 
-    self.currentApp = null;
+    self.currentApp = {};
+
+    self.resetCurrentApp = function () {
+      angular.copy({}, self.currentApp);
+    };
 
     self.isExampleApp = function (app) {
       if (!app || !app.Name) return false;
       return app.Name === 'todo' + AuthService.getUserId();
       //return (app.Name.substring(0, 4) === 'todo')
-    };
-
-    self.getAppStatus = function (appName) {
-      return apps.status[appName];
     };
 
     self.getApp = function (appName) {
@@ -92,10 +73,9 @@
     };
 
     function setCurrentApp (data) {
-      self.currentApp = data;
+      angular.copy(data, self.currentApp);
       self.currentApp.databaseName =
         data.Database_Source ? DatabaseNamesService.getDBSource(data.Database_Connection.Database_Source) : undefined;
-      self.currentApp.myStatus = {status: data.DatabaseStatus, oldStatus: apps.status[self.currentApp.Name]};
       stopRefreshDBStatus();
 
       if (self.currentApp.DatabaseStatus == 2)
@@ -108,8 +88,10 @@
     }
 
     function getAppStatus() {
-      if (!self.currentApp)
+      if (_.isEmpty(self.currentApp)) {
         stopRefreshDBStatus();
+        return;
+      }
       getApp(self.currentApp.Name)
         .success(function (result) {
           if (result && result.DatabaseStatus != 2) {

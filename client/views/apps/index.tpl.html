@@ -83,23 +83,15 @@
           <div class="panel-body app-panel-body">
             <div class="body-height">{{ ::app.Title }}</div>
             <div class="app-panel-body-link">
-              <a href="" ng-click="index.goToLink(app.Name)" ng-if="!index.exampleApp(app) && app.DatabaseStatus === 1">
+              <a href="" ng-click="index.goToLink(app)" ng-if="app.DatabaseStatus == 1">
                 <i class="ti-star"></i>
-                REST API Playground
-              </a>
-              <a href="" ng-click="index.todoExample(app.Name)" ng-if="index.exampleApp(app) && app.DatabaseStatus === 1">
-                  <i class="ti-star"></i>
-                  Todo Example page
+                {{index.getGoToLink(app).linkTitle}}
               </a>
               <div ng-if="app.DatabaseStatus !== 1">&nbsp;</div>
             </div>
-            <button ng-click="index.appManage(app)" ng-if="!index.exampleApp(app) || app.DatabaseStatus === 1"
-                    class="btn btn-default btn-w-md btn-block">
-              <span ng-bind="app.DatabaseStatus == 1 ? 'Manage App' : 'Complete DB Connection'"></span>
-            </button>
-            <button ng-click="index.appManage(app)" ng-if="index.exampleApp(app) && app.DatabaseStatus !== 1"
-                    class="btn btn-primary btn-w-md btn-block" data-style="expand-right">
-              Build Example App
+            <button ng-click="index.appManage(app)"
+                    class="btn btn-default btn-w-md btn-block" data-style="expand-right">
+              {{index.getAppManageTitle(app)}}
             </button>
 
           </div>

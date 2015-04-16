@@ -14,7 +14,7 @@
       })
       .state('playground.orm', {
         url: '/orm',
-        controller: 'Playground as play',
+        controller: 'OrmController as play',
         templateUrl: 'views/api_playground/orm.html'
       })
       .state('playground.orm-config', {
