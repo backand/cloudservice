@@ -40,22 +40,7 @@ angular.module('backand.apps')
      */
     self.appManage = function (app) {
       usSpinnerService.spin("loading");
-      //check app status
-
-      if (app.DatabaseStatus == 1)
-        $state.go('app.show', {appName: app.Name});
-      else {
-        if (self.exampleApp(app)) {
-          if (app.DatabaseStatus == 2) {
-            $state.go('playground.todo', {appName: app.Name})
-          } else {
-            $state.go('database.example', {appName: app.Name});
-          }
-        }
-        else {
-          $state.go('database.edit', {appName: app.Name});
-        }
-      }
+      $state.go('app', {appName: app.Name});
     };
 
     /**
@@ -66,12 +51,32 @@ angular.module('backand.apps')
       $state.go('app.edit', {appName: appName});
     };
 
-    self.goToLink = function (appName) {
-      $state.go('playground.show', {appName: appName});
+    self.goToLink = function (app) {
+      $state.go(self.getGoToLink(app).state, {appName: app.Name});
     };
 
-    self.todoExample = function (appName) {
-      $state.go('playground.todo', {appName: appName});
+    self.getGoToLink = function (app) {
+      if (AppsService.isExampleApp(app))
+        return {
+          state: 'playground.todo',
+          linkTitle: 'Todo Example page'
+        };
+      else {
+        return {
+          state: 'playground.show',
+          linkTitle: 'REST API Playground'
+        }
+      }
+    };
+
+    self.getAppManageTitle = function (app) {
+      if (app.DatabaseStatus == 2)
+        return 'Connecting to Database';
+      if (app.DatabaseStatus == 1)
+        return 'Manage App';
+      if (AppsService.isExampleApp(app))
+        return 'Build Example App';
+      return 'Complete DB Connection';
     };
 
     self.namePattern = /^\w+$/;

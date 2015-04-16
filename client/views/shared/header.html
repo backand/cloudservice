@@ -25,9 +25,9 @@
         <div class="input-group">
           <span class="input-group-addon">App: &nbsp;</span>
           <div class="ui-select" style="font-weight: bold;">
-            <select ng-model="header.currApp"
+            <select ng-model="header.currentAppName"
                     ng-change="header.goToApp()"
-                    ng-options="app as app.Name for app in header.apps.list | orderBy:'Name'">
+                    ng-options="app.Name as app.Name for app in header.apps.list | orderBy:'Name'">
             </select>
           </div>
           <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}" style="position: relative;left: 150px;top: -18px;"></div>

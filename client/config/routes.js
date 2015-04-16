@@ -41,17 +41,41 @@ angular.module('backand.routes', []).
         url: '',
         parent: 'session',
         abstract: true,
-        template: '<ui-view autoscroll="true"/>'
+        template: '<ui-view autoscroll="true"/>',
+        onEnter: function (AppsService) {
+          AppsService.resetCurrentApp();
+        }
       })
       .state('app', {
         url: 'app/:appName',
         parent: 'session',
-        abstract: true,
         template: '<ui-view autoscroll="true"/>',
         resolve: {
           appItem: ['AppsService', '$stateParams', function (AppsService, $stateParams) {
               return AppsService.getApp($stateParams.appName);
           }]
+        },
+        controller: function ($state, appItem, AppsService, usSpinnerService) {
+          var state;
+          var appStatus = appItem.DatabaseStatus;
+          if ($state.current.name === 'app') {
+            if (appStatus == 2) {
+              state = 'docs.get-started';
+            }
+            else if (appStatus == 0) {
+              state = 'database.edit';
+            }
+            else if (AppsService.isExampleApp(appItem)) {
+              state = 'playground.todo'
+            }
+            else {
+              state = 'app.show';
+            }
+            $state.go(state)
+              .then(function () {
+                usSpinnerService.stop('loading-app');
+              });
+          }
         }
       })
       .state('database', {
