@@ -49,7 +49,11 @@
         {
           heading: 'Data',
           route: '^.data'
-        },/*
+        },
+        {
+          heading: 'REST API',
+          route: '^.restapi'
+        }/*
         {
           heading: 'Config Log',
           route: 'tables.columns.log'

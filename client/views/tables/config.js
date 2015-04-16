@@ -54,9 +54,10 @@
         templateUrl: 'views/tables/data/data.html',
         controller: 'ViewData as data'
       })
-      .state('tables.columns.log', {
-        url: '/log',
-        templateUrl: 'views/tables/log/log.html'
+      .state('tables.columns.restapi', {
+        url: '/restapi',
+        templateUrl: 'views/tables/restapi/restapi.html',
+        controller: 'RestAPITab as rest'
       });
   }
 

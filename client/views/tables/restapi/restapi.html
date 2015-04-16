@@ -1,0 +1,20 @@
+<section class="page-form-ele page ng-scope">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>REST API</strong>
+            <div us-spinner spinner-key="loading" spinner-start-active></div>
+        </div>
+        <div class="panel-body">
+          <div class="row col-sm-10 col-sm-offset-1">
+            <section class="panel panel-box">
+            <h5 class="panel-item">
+              Click on 'Try it out!' to see the JSON result and the endpoint URL.
+            </h5>
+            </section>
+          </div>
+          <div class="row col-sm-12" ng-bind-html="rest.urlPrefix()">
+              <!--<iframe id="restIfrmae" src="//www.modubiz.us:4019/misc/rest-api/index.html?useToken=true#!/Database_Table_Data" style="height:578px;width:1028px;border: none"></iframe>-->
+          </div>
+        </div>
+    </div>
+</section>
+

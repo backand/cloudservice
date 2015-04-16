@@ -1,18 +1,18 @@
 (function () {
   'use strict';
 
-  angular.module('backand.playground')
-    .controller('Playground', ["CONSTS", 'SessionService', '$state', 'usSpinnerService', '$sce', Playground]);
+  angular.module('backand')
+    .controller('RestAPITab', ["CONSTS", 'SessionService', '$state', 'usSpinnerService', '$sce','ColumnsService', RestAPITab]);
 
-  function Playground(CONSTS, SessionService, $state, usSpinnerService, $sce) {
+  function RestAPITab(CONSTS, SessionService, $state, usSpinnerService, $sce, ColumnsService) {
     var self = this;
     var token = SessionService.getToken();
     var appName = $state.params.appName;
 
     self.urlPrefix = function(){
-      return $sce.trustAsHtml('<iframe id="restIfrmae" src="'
-      + CONSTS.playgroundUrl
-      + 'index.html?useToken=true" style="height:578px;width:100%;border: none"></iframe>');
+        return $sce.trustAsHtml('<iframe id="restIfrmae" src="'
+        + CONSTS.playgroundUrl
+        + 'index.html?tableName='+ ColumnsService.tableName + '&useToken=true#!/Objects/objects_name_get" style="height:578px;width:100%;border: none"></iframe>');
     };
 
     window.addEventListener('message', function (e) {
