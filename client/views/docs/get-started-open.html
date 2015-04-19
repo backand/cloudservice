@@ -124,19 +124,19 @@
 
           <li>
             <h3>Read data from your database</h3>
-            <h5>You can access Backand's API endpoints using $http requests from your Angular project.<br/>
-              In the following example, we create a function called tableData that uses the DataService API endpoint
-              to fetch data from your database, which is returned in JSON format.</h5>
-            <pre><code>
+              <h5>
+                  You can access Backand's API endpoints using $http requests from your Angular project.<br />
+                  In the following example, we create a function called getList that uses the DataService API endpoint to fetch data from your database, which is returned in JSON format.
+              </h5>
+              <pre><code>
       //dataService.js
       function dataService($http, Backand) {
         var self = this;
-
-        //get the table name and optional parameters
-        self.tableData = function(tableName, pageSize, pageNumber, sort, filter) {
+        //get the object name and optional parameters
+        self.getList = function(name, pageSize, pageNumber, sort, filter) {
           return $http({
             method: 'GET',
-            url: Backand.configuration.apiUrl + '/1/table/data/' + tableName,
+            url: Backand.configuration.apiUrl + '/1/objects/' + name,
             params: {
               pageSize: pageSize || 20,
               pageNumber: pageNumber || 1,
@@ -146,7 +146,7 @@
           });
         }
       }
-            </code></pre>
+    </code></pre>
             <h5>Using $http you can call to any of the CRUD URLs, trigger server side actions, and manage users.
                   All API calls and expected parameters can be reviewed and tested in Backand's API Playground.</h5>
           </li>

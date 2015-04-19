@@ -2,18 +2,25 @@
   'use strict';
 
   angular.module('backand.playground')
-    .controller('Playground', ["CONSTS", 'SessionService', '$state', 'usSpinnerService', '$sce', Playground]);
+    .controller('Playground', ["CONSTS", 'SessionService', '$state', 'usSpinnerService', '$sce', '$scope', Playground]);
 
-  function Playground(CONSTS, SessionService, $state, usSpinnerService, $sce) {
+  function Playground(CONSTS, SessionService, $state, usSpinnerService, $sce, $scope) {
     var self = this;
     var token = SessionService.getToken();
     var appName = $state.params.appName;
 
-    self.urlPrefix = function(){
-      return $sce.trustAsHtml('<iframe id="restIfrmae" src="'
+    self.urlPrefix = $sce.trustAsHtml('<iframe id="restIfrmae" src="'
       + CONSTS.playgroundUrl
       + 'index.html?useToken=true" style="height:578px;width:100%;border: none"></iframe>');
-    };
+    
+    $scope.$on('$destroy', function () {
+        // Make sure that the interval is destroyed too
+        var iframe = angular.element('#restIfrmae');
+        if (iframe && iframe.length > 0) {
+            iframe[0].src = "javascript:void";
+        }
+    });
+
 
     window.addEventListener('message', function (e) {
       var eventName = e.data[0];
