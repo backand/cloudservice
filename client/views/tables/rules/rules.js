@@ -388,7 +388,7 @@
     function showLog(response) {
       self.test.logMessages = [];
       response.data.data.forEach(function (log) {
-        self.test.logMessages.push({text: log.FreeText, isError: log.LogType === '501', time: log.Time});
+        self.test.logMessages.push({text: log.FreeText, isError: log.LogType == 501, time: log.Time});
       });
       self.test.testLoading = false;
     }
