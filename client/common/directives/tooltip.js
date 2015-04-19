@@ -15,6 +15,6 @@
     };
   }
 
-  angular.module('app')
+  angular.module('common.directives')
     .directive('baTooltip', ['$translate', baTooltip]);
 })();

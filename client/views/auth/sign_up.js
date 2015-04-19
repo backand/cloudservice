@@ -1,7 +1,7 @@
 
 (function  () {
 
-  angular.module('app')
+  angular.module('backand')
     .controller('SignUpController',["$scope",'AuthService','$state','SessionService','$timeout','$analytics', 'AppsService', SignUpController]);
 
   function SignUpController($scope,AuthService,$state,SessionService,$timeout,$analytics, AppsService){
@@ -23,7 +23,7 @@
                   //create todos sample app
                   var exampleAppName = 'todo' + AuthService.getUserId();
                   if(exampleAppName != 'todo0'){
-                    AppsService.add(exampleAppName, 'Todo List - Example App')
+                    AppsService.add(exampleAppName, 'My First App - Todo list example')
                       .then(
                       $state.go('apps.index')
                     );

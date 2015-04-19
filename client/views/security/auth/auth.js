@@ -7,16 +7,15 @@
 
     var self = this;
     (function init() {
-      self.appName = SecurityService.appName = AppsService.appName = $state.params.name;
+      self.appName = SecurityService.appName = AppsService.appName = $state.params.appName;
       self.data = {settings: {}, allowAnonymous: false};
       self.updateAppAuth = updateAppAuth;
-      //secureLevel= "RegisteredUsers";
       loadConfigurationData();
 
     }());
 
     function loadConfigurationData() {
-      AppsService.getCurrentApp(self.appName).then(setDbInfo, errorHandler);
+      setDbInfo(AppsService.currentApp);
 
       SecurityService.getRoles().then(rolesSuccessHandler, errorHandler);
     }
@@ -43,7 +42,7 @@
     }
 
     self.goTo = function(state) {
-      $state.go(state, {name: this.appName});
+      $state.go(state);
     };
 
     function updateAppAuth(newVal, oldVal) {
@@ -78,7 +77,7 @@
     }
   }
 
-  angular.module('app')
+  angular.module('backand')
     .controller('SecurityAuth', [
       '$state',
       'NotificationService',

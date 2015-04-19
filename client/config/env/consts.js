@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('app.consts', [])
+  angular.module('backand.consts', [])
     .constant('CONSTS', @@consts);
 
 })();

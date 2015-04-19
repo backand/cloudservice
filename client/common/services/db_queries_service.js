@@ -8,6 +8,7 @@
     var configUrl = 'config/';
     var getPromise = null;
     var currentApp = null;
+    self._queries = [];
 
     self.getQueries = function(appName) {
       if (!getPromise || currentApp != appName) {
@@ -17,7 +18,7 @@
             self._queries = data.data.data;
             return self._queries;
           }
-          , function (err) {
+          , function () {
             NotificationService.add('error', 'cant get DB queries');
           });
       }
@@ -129,6 +130,6 @@
 
 
   angular.module('common.services')
-    .service('DbQueriesService',['$http','CONSTS', 'NotificationService', DbQueriesService]);
+    .service('DbQueriesService',['$http', 'CONSTS', 'NotificationService', DbQueriesService]);
 
 })();

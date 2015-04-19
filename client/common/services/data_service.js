@@ -1,13 +1,11 @@
 (function() {
-  function DataService($http, CONSTS, NotificationService, AppState) {
+  function DataService($http, CONSTS, AppsService) {
     var self = this;
     self.get = function(tableName, size, page, sort) {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/1/table/data/' + tableName,
-        headers: {
-          'AppName': AppState.get()
-        },
+        headers: { 'AppName': AppsService.currentApp.Name },
         params: {
           'pageSize': String(size),
           'pageNumber': String(page),
@@ -20,14 +18,12 @@
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/1/table/data/' + tableName + '/' + record.Id,
-        headers: {
-          'AppName': AppState.get()
-        },
+        headers: { 'AppName': AppsService.currentApp.Name },
         data: record
       });
     };
   }
   angular.module('common.services')
-    .service('DataService', ['$http', 'CONSTS', 'NotificationService','AppState', DataService]);
+    .service('DataService', ['$http', 'CONSTS', 'AppsService', DataService]);
 
 })();

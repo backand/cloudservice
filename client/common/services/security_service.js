@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function SecurityService($http, $q, CONSTS) {
+  function SecurityService($http, CONSTS) {
     var self = this;
     self.appName = null;
     self.usersTableName = 'v_durados_user';
@@ -9,57 +9,48 @@
     self.workspaceTableName = '/1/workspace';
     self.dbDataUrl = '/1/table/data/';
 
+    function getHttp (method, isConfig, tableName, id){
+      var url = (isConfig) ? '' : self.dbDataUrl;
+      return {
+        method: method,
+        url: CONSTS.appUrl + url + tableName + (id ? '/' + id : ''),
+        headers: { AppName: self.appName }
+      }
+    }
 
     self.getData = function (tableName, size, page, sort, isConfig, filter) {
       var sortParam = '';
-      var url = (isConfig) ? '' : self.dbDataUrl;
       var filterParam = filter || '';
       size = !size ? 20 : size;
       page = !page ? 1 : page;
       if (sort)
         sortParam = sort;
-      return $http({
-        method: 'GET',
-        url: CONSTS.appUrl + url + tableName,
-        headers: {AppName: self.appName},
-        params: {
-          'pageSize': String(size),
-          'pageNumber': String(page),
-          'sort': sortParam,
-          'filter': filterParam
-        }
-      });
+
+      var http = getHttp('GET', isConfig, tableName);
+      http.params = {
+        'pageSize': String(size),
+        'pageNumber': String(page),
+        'sort': sortParam,
+        'filter': filterParam
+      };
+      return $http(http);
     };
 
     self.updateData = function (tableName, rowData, pk, isConfig) {
-      var url = (isConfig) ? '' : self.dbDataUrl;
       var id = (!pk) ? rowData.ID : pk;
-      return $http({
-        method: 'PUT',
-        url: CONSTS.appUrl + url + tableName + '/' + id,
-        headers: {AppName: self.appName},
-        data: rowData
-      });
+      var http = getHttp('PUT', isConfig, tableName, id);
+      http.data = rowData;
+      return $http(http);
     };
 
     self.postData = function (tableName, rowData, isConfig) {
-      var url = (isConfig) ? '' : self.dbDataUrl;
-      return $http({
-        method: 'POST',
-        url: CONSTS.appUrl + url + tableName + '/',
-        headers: {AppName: self.appName},
-        data: rowData
-      });
+      var http = getHttp('POST', isConfig, tableName);
+      http.data = rowData;
+      return $http(http);
     };
 
     self.deleteData = function (tableName, Id, isConfig) {
-      var url = (isConfig) ? '' : self.dbDataUrl;
-      return $http({
-        method: 'DELETE',
-        url: CONSTS.appUrl + url + tableName + '/' + Id,
-        headers: {AppName: self.appName}
-
-      });
+      return $http(getHttp('DELETE', isConfig, tableName, Id));
     };
 
     self.getUsers = function (size, page, sort, filter) {
@@ -110,5 +101,5 @@
   }
 
   angular.module('common.services')
-    .service('SecurityService', ['$http', '$q', 'CONSTS', SecurityService]);
+    .service('SecurityService', ['$http', 'CONSTS', SecurityService]);
 })();

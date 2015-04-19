@@ -14,8 +14,10 @@
     self.get = function () {
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + baseUrl +'?filter=[{fieldName:"viewTable", operator:"in", value:'+self.tableId+'}]&sort=[{fieldName:"name", order:"asc"}]',
-        headers: {AppName: self.appName}
+        url: CONSTS.appUrl + baseUrl
+          + '?filter=[{fieldName:"viewTable", operator:"in", value:'
+          + self.tableId + '}]&sort=[{fieldName:"name", order:"asc"}]',
+        headers: { AppName: self.appName }
       });
     };
 
@@ -23,7 +25,7 @@
       return $http({
         method: 'GET',
         url : CONSTS.appUrl + baseUrl+ '/' + id,
-        headers: {AppName: self.appName}
+        headers: { AppName: self.appName }
       })
     };
 
@@ -31,8 +33,8 @@
       return $http({
         method: 'POST',
         url : CONSTS.appUrl + baseUrl,
-        data: rule,
-        headers: {AppName: self.appName}
+        headers: { AppName: self.appName },
+        data: rule
       })
     };
 
@@ -40,8 +42,8 @@
       return $http({
         method: 'PUT',
         url : CONSTS.appUrl + baseUrl+ '/' + rule.__metadata.id,
-        data: rule,
-        headers: {AppName: self.appName}
+        headers: { AppName: self.appName },
+        data: rule
       })
     };
 
@@ -49,8 +51,8 @@
       return $http({
         method: 'DELETE',
         url : CONSTS.appUrl + baseUrl+ '/' + rule.__metadata.id,
-        data: rule,
-        headers: {AppName: self.appName}
+        headers: { AppName: self.appName },
+        data: rule
       })
     };
 
@@ -78,6 +80,6 @@
 
   }
 
-  angular.module('app')
+  angular.module('common.services')
     .service('RulesService', ['$http', 'CONSTS', RulesService]);
 }());

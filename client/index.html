@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="en" ng-controller="MainController as main" ng-cloak>
+<html lang="en" ng-cloak>
 
 <head>
   <meta charset="utf-8" />
@@ -28,8 +28,17 @@
   <script type="text/javascript" id="inspectletjs">
     window.__insp = window.__insp || [];
     __insp.push(['wid', 1397418671]);
-    (function() {
-      function __ldinsp(){var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); }
+    (function () {
+      function __ldinsp() {
+        var insp = document.createElement('script');
+        insp.type = 'text/javascript';
+        insp.async = true;
+        insp.id = "inspsync";
+        insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js';
+        var x = document.getElementsByTagName('script')[0];
+        x.parentNode.insertBefore(insp, x);
+      }
+
       if (window.attachEvent) window.attachEvent('onload', __ldinsp);
       else window.addEventListener('load', __ldinsp, false);
     })();
@@ -44,26 +53,43 @@
   </script>
   <!-- Start of Woopra Code -->
   <script>
-    (function(){
-      var t,i,e,n=window,o=document,a=arguments,s="script",r=["config","track","identify","visit","push","call","trackForm","trackClick"],c=function(){var t,i=this;for(i._e=[],t=0;r.length>t;t++)(function(t){i[t]=function(){return i._e.push([t].concat(Array.prototype.slice.call(arguments,0))),i}})(r[t])};for(n._w=n._w||{},t=0;a.length>t;t++)n._w[a[t]]=n[a[t]]=n[a[t]]||new c;i=o.createElement(s),i.async=1,i.src="//static.woopra.com/js/w.js",e=o.getElementsByTagName(s)[0],e.parentNode.insertBefore(i,e)
-    })("woopra");woopra.config({ domain: 'backand.com' });
+
+    (function () {
+      var t, i, e, n = window, o = document, a = arguments, s = "script", r = ["config", "track", "identify", "visit", "push", "call", "trackForm", "trackClick"], c = function () {
+        var t, i = this;
+        for (i._e = [], t = 0; r.length > t; t++)(function (t) {
+          i[t] = function () {
+            return i._e.push([t].concat(Array.prototype.slice.call(arguments, 0))), i
+          }
+        })(r[t])
+      };
+      for (n._w = n._w || {}, t = 0; a.length > t; t++)n._w[a[t]] = n[a[t]] = n[a[t]] || new c;
+      i = o.createElement(s), i.async = 1, i.src = "//static.woopra.com/js/w.js", e = o.getElementsByTagName(s)[0], e.parentNode.insertBefore(i, e)
+    })("woopra");
+    woopra.config({domain: 'backand.com',cookie_name: 'back_woop'});
 
   </script>
   <!-- End of Woopra Code -->
+
+  <!-- Start of Intercom Code -->
+  <script>
+//    window.intercomSettings = {
+//      widget: {
+//        activator: "[href$='intercom.io']"
+//      },
+//      app_id: "ufkkj816"
+//    };
+//
+//    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://static.intercomcdn.com/intercom.v1.js';var x=d.getElementsByTagName('script')[0];
+//      x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+  </script>
+  <!-- Start of Intercom Code -->
+
 </head>
 
-<body id="app" class="app" ng-class="{'nav-collapsed-min' : main.hideNav()}" custom-page>
-
-  <section ng-if="main.getCurrentUser()" data-ng-include=" 'views/shared/header.html' " id="header" class="header-container ng-scope header-fixed bg-white"> </section>
-  <div class="main-container">
-    <aside ng-if="main.getCurrentUser()" ng-hide="main.hideNav()" data-ng-include=" 'views/shared/nav.html' " id="nav-container" class="nav-container ng-scope nav-fixed nav-vertical bg-dark"> </aside>
-    <div id="content" class="content-container">
-      <toaster-container></toaster-container>
-      <section ui-view class="view-container">
-        <span us-spinner spinner-key="spinner-1"></span>
-      </section>
-    </div>
-  </div>
+<body>
+<toaster-container></toaster-container>
+<ui-view></ui-view>
 
   <!-- build:js assets/js/vendor.js -->
   <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
@@ -99,6 +125,7 @@
   <script type="text/javascript" src="vendor/ngstorage/ngStorage.js"></script>
   <script type="text/javascript" src="vendor/angulartics/dist/angulartics.min.js"></script>
   <script type="text/javascript" src="vendor/angulartics/dist/angulartics-woopra.min.js"></script>
+  <script type="text/javascript" src="vendor/angulartics/dist/angulartics-intercom.min.js"></script>
   <!-- endbuild -->
 
   <!-- build:js assets/js/main.js -->
@@ -119,13 +146,13 @@
   <script type="text/javascript" src="common/services/security_matrix_service.js"></script>
   <script type="text/javascript" src="common/services/confirm_popup_service.js"></script>
   <script type="text/javascript" src="common/services/db_queries_service.js"></script>
-  <script type="text/javascript" src="common/services/app_state_service.js"></script>
   <script type="text/javascript" src="common/services/layout_service.js"></script>
 
   <script type="text/javascript" src="config/routes.js"></script>
   <script type="text/javascript" src="config/consts.js"></script>
   <script type="text/javascript" src="config/tooltips.js"></script>
 
+  <script type="text/javascript" src="views/shared/main_controller.js"></script>
   <script type="text/javascript" src="views/shared/nav_controller.js"></script>
   <script type="text/javascript" src="views/shared/header.controller.js"></script>
   <script type="text/javascript" src="views/auth/sign_in.js"></script>
@@ -144,12 +171,13 @@
 
   <script type="text/javascript" src="views/backoffice/config.js"></script>
   <script type="text/javascript" src="views/backoffice/template.js"></script>
-  <script type="text/javascript" src="views/backoffice/show.js"></script>
 
   <script type="text/javascript" src="views/api_playground/config.js"></script>
   <script type="text/javascript" src="views/api_playground/show.js"></script>
   <script type="text/javascript" src="views/api_playground/todo.js"></script>
-  <script type="text/javascript" src="views/api_playground/docs.js"></script>
+
+  <script type="text/javascript" src="views/docs/config.js"></script>
+  <script type="text/javascript" src="views/docs/docs.js"></script>
 
   <script type="text/javascript" src="views/log/config.js"></script>
   <script type="text/javascript" src="views/log/log.js"></script>
@@ -165,7 +193,6 @@
   <script type="text/javascript" src="views/database/config.js"></script>
   <script type="text/javascript" src="views/database/show.js"></script>
   <script type="text/javascript" src="views/database/edit.js"></script>
-  <script type="text/javascript" src="views/database/add.js"></script>
   <script type="text/javascript" src="views/database/todo_example.js"></script>
 
   <script type="text/javascript" src="views/db_queries/config.js"></script>
@@ -174,8 +201,8 @@
   <script type="text/javascript" src="views/tables/config.js"></script>
   <script type="text/javascript" src="views/tables/show.js"></script>
   <script type="text/javascript" src="views/tables/show_single_table.js"></script>
+  <script type="text/javascript" src="views/tables/restapi/restapi.js"></script>
 
-  <script type="text/javascript" src="common/directives/custom_page.js"></script>
   <script type="text/javascript" src="common/directives/theme.js"></script>
   <script type="text/javascript" src="common/directives/log_list.js"></script>
   <script type="text/javascript" src="common/directives/match.js"></script>

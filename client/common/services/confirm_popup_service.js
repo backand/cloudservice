@@ -15,6 +15,10 @@
       self.modalScope = $rootScope.$new(true);
     }());
 
+    self.setTitle = function(title){
+      self.modalScope.Title = title;
+    }
+
     /**
      * launce modal with custom scope and
      * configuration
@@ -48,6 +52,6 @@
     }
   }
 
-  angular.module('app')
+  angular.module('common.services')
     .service('ConfirmationPopup', ['$modal', '$rootScope', ConfirmationPopupService])
 }());

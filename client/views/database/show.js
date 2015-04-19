@@ -1,26 +1,19 @@
 (function  () {
   'use strict';
-  angular.module('app.database')
-    .controller('DatabaseShow',["$scope",'$state','AppsService','usSpinnerService','NotificationService','DatabaseService','DatabaseNamesService',DatabaseShow]);
+  angular.module('backand.database')
+    .controller('DatabaseShow', ['$state', 'AppsService', 'usSpinnerService', 'DatabaseService', 'DatabaseNamesService', DatabaseShow]);
 
-  function DatabaseShow($scope,$state,AppsService,usSpinnerService,NotificationService,DatabaseService,DatabaseNamesService){
+  function DatabaseShow($state, AppsService, usSpinnerService, DatabaseService, DatabaseNamesService) {
     var self = this;
 
-    this.appName = $state.params.name;
-    var currentApp;
-    AppsService.getCurrentApp($state.params.name)
-      .then(function(data) {
-        currentApp = data;
-        checkDatabaseStatuse();
-        //self.dataName = currentApp.databaseName;
-      },function(err) {
-        NotificationService('error','cant get current app info');
-      });
+    this.appName = $state.params.appName;
+    var currentApp = AppsService.currentApp;
+    checkDatabaseStatuse();
 
     function checkDatabaseStatuse() {
       usSpinnerService.spin("loading");
       //not connected to DB:
-        DatabaseService.getDBInfo($state.params.name)
+        DatabaseService.getDBInfo($state.params.appName)
           .success(function(dataIn){
             self.data = {};
             self.data.Database_Source = dataIn.Database_Source;
@@ -39,10 +32,8 @@
           })
     }
 
-    this.dataSources = DatabaseService.getDataSources();
-
     this.getPassword = function() {
-      DatabaseService.getAppPassword($state.params.name)
+      DatabaseService.getAppPassword($state.params.appName)
         .success(function(data) {
           self.data.password = data;
         });
@@ -53,15 +44,15 @@
     };
 
     this.edit = function() {
-      $state.go('database.edit', ({name:$state.params.name}));
+      $state.go('database.edit');
     };
 
     this.back = function() {
-      $state.go('apps.show', ({name:$state.params.name}));
+      $state.go('app.show');
     };
 
     this.sync = function(toSync) {
-      $state.go('tables.show', ({name:$state.params.name, sync: toSync}));
+      $state.go('tables.show', ({sync: toSync}));
     };
   }
 }());

@@ -23,6 +23,7 @@
   h3.rule-group-title {
     font-weight: bold;
     margin-top:10px;
+    text-transform: uppercase;
   }
   h3.rule-group-title:hover {
     cursor: pointer;
@@ -67,6 +68,7 @@
   }
   .rules-names-list {
     list-style: none;
+    //list-style-type: decimal;
     li {
       border: 1px solid #d3d3d3;
       margin: 10px 0 10px -40px;
@@ -97,6 +99,7 @@
   border-right-color: #DDD;
   border-right-style: solid;
   border-right-width: 1px;
+  padding-left: 2px;
 }
 
 .test-column{
@@ -116,6 +119,8 @@
 
   .rule-group-title {
     padding-top: 10px;
+    text-transform: uppercase;
+
     a{
       font-size: 150%;
       color: #333;
@@ -124,6 +129,9 @@
 
   .rule-sub-title {
     padding-top: 10px;
+    padding-left: 17px;
+    text-transform: uppercase;
+
     a {
       font-size: 120%;
       color: #333;
@@ -143,18 +151,66 @@
     }
   }
 
+  .rule-small-btn {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+    width: 24px;
+    height: 24px;
+    padding-bottom: 4px;
+
+    &:hover {
+      color: #FFFFFF;
+    }
+  }
+
   .rules-sub-items-list {
     list-style: none;
     padding-left: 15px;
     .rules-names-list {
       list-style: none;
-      padding-left: 35px;
+      padding-left: 25px;
+
       .rule-name {
-        border: none;
-        margin: 0;
-        padding: 1px 1px;
-        font-size:120%;
-        word-wrap:break-word;
+        width: 100%;
+        overflow: hidden;
+        margin: 5px;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 0;
+        vertical-align: middle;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        position: relative;
+        line-height: 18px;
+        border: 1px solid #e0e0e0;
+        list-style: decimal;
+
+        &:before {
+          box-sizing: border-box;
+          content: " ";
+          line-height: 0;
+          position: absolute;
+          top: 0;
+          right: -26px;
+          border: 16px solid transparent;
+          border-left: 10px solid #428bca;
+        }
+        &:hover {
+          overflow: visible;
+          line-height: 20px;
+          touch-action: manipulation;
+          cursor: pointer;
+          -webkit-user-select: none;
+          color: #fff;
+          background-color: #428bca;
+          border-color: #357ebd;
+          border: 0;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
       }
     }
   }

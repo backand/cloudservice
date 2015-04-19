@@ -1,17 +1,19 @@
 (function  () {
     'use strict';
 
-angular.module('app.apps')
-  .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval', 'AppState', 'usSpinnerService', 'LayoutService', '$analytics', 'AuthService', AppsIndexController]);
+angular.module('backand.apps')
+  .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
+    'usSpinnerService', 'LayoutService', '$analytics', 'AuthService', AppsIndexController]);
 
-  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval, AppState, usSpinnerService, LayoutService, $analytics, AuthService) {
+  function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
+                                usSpinnerService, LayoutService, $analytics, AuthService) {
 
     var self = this;
     self.loading = false;
     var stop;
 
     (function () {
-      self.apps = appsList.data.data;
+      self.apps = appsList.data;
     }());
 
     self.addApp = function() {
@@ -23,12 +25,12 @@ angular.module('app.apps')
         .then(function(data) {
           $analytics.eventTrack('createdApp', {});
           NotificationService.add('success', 'App was added successfully');
-          AppState.set(self.appName);
-          $state.go('database.edit', { name: self.appName });
+          $state.go('database.edit', { appName: self.appName });
         },
         function(err) {
           self.loading = false;
-          NotificationService.add('error', err);
+          // the error message already shows
+          //NotificationService.add('error', err);
         })
     };
 
@@ -38,20 +40,7 @@ angular.module('app.apps')
      */
     self.appManage = function (app) {
       usSpinnerService.spin("loading");
-      //check app status
-      AppState.set(app.Name);
-
-      if (app.DatabaseStatus == 1)
-        $state.go('apps.show', {name: app.Name});
-      else {
-        if (app.Name === 'todo' + AuthService.getUserId()) {
-        //if (app.Name.substring(0,4) === 'todo') {
-          $state.go('database.example', {name: app.Name});
-        }
-        else {
-          $state.go('database.edit', {name: app.Name});
-        }
-      }
+      $state.go('app', {appName: app.Name});
     };
 
     /**
@@ -59,18 +48,35 @@ angular.module('app.apps')
      * @param appName
      */
     self.appSettings = function (appName) {
-      AppState.set(appName);
-      $state.go('apps.edit', {name: appName});
+      $state.go('app.edit', {appName: appName});
     };
 
-    self.getStarted = function (appName) {
-      AppState.set(appName);
-      $state.go('playground.get-started', {name: appName});
+    self.goToLink = function (app) {
+      $state.go(self.getGoToLink(app).state, {appName: app.Name});
     };
 
-    self.todoExample = function (appName) {
-      AppState.set(appName);
-      $state.go('playground.todo', {name: appName});
+    self.getGoToLink = function (app) {
+      if (AppsService.isExampleApp(app))
+        return {
+          state: 'playground.todo',
+          linkTitle: 'Todo Example page'
+        };
+      else {
+        return {
+          state: 'playground.show',
+          linkTitle: 'REST API Playground'
+        }
+      }
+    };
+
+    self.getAppManageTitle = function (app) {
+      if (app.DatabaseStatus == 2)
+        return 'Connecting to Database';
+      if (app.DatabaseStatus == 1)
+        return 'Manage App';
+      if (AppsService.isExampleApp(app))
+        return 'Build Example App';
+      return 'Complete DB Connection';
     };
 
     self.namePattern = /^\w+$/;
@@ -101,13 +107,13 @@ angular.module('app.apps')
     }
 
     self.exampleApp = function(app){
-      return app.Name === 'todo' + AuthService.getUserId();
-    }
+      return AppsService.isExampleApp(app);
+    };
 
     stop = $interval(function() {
       AppsService.all()
         .then(function(apps) {
-          self.apps = apps.data.data;
+          self.apps = apps.data;
         },
         function(error) {
           stopRefresh();

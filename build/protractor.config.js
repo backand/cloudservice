@@ -1,8 +1,7 @@
 'use strict';
 
-var baseDir = 'client';
 //this is the port the application is running on
-var port =  3000;
+var port =  3001;
 
 exports.config = {
   jasmineNodeOpts: {
@@ -11,12 +10,18 @@ exports.config = {
   },
 
   specs: [
-    baseDir + '/test/e2e/**/*.scenario.js'
+    '../test/e2e/**/*.scenario.js'
   ],
 
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'chrome',
+    'chromeOptions': {
+      'args': ['--incognito']
+    }    
   },
   seleniumArgs: ['-browserTimeout=60'],
-  baseUrl: 'http://127.0.0.1:'+port
+  baseUrl: 'http://127.0.0.1:'+port,
+  onPrepare: function () {
+    global.helpers = require('../test/e2e/helpers.js');
+  }
 };

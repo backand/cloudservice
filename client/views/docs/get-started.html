@@ -3,19 +3,8 @@
     <div class="panel-heading"><strong>AngularJS Quickstart</strong></div>
     <div class="panel-body">
       <div class="row col-sm-10 col-sm-offset-1">
-        <section class="panel panel-box">
-          <div class="panel-item bg-info">
-            <h2 ng-if="docs.isNew !== 'new'" style="text-align:center;">Follow these steps to integrate Backand into your existing Angular project. If you do not yet have an Angular project, download the <a ui-sref="kickstart-open" style="color:#FE4E00 ;text-decoration: underline; font-weight: normal;">kickstart seed</a> project with Backand inside.</h2>
-            <h2 ng-if="docs.isNew === 'new'" style="text-align:center;">We're creating your app and it will take only 1 more minute...<br/> In the mean time let's start connect your Angular app to backand. If you do not yet have an Angular project, download the <a ui-sref="kickstart-open" style="color:#FE4E00 ;text-decoration: underline; font-weight: normal;">kickstart seed</a> project with Backand inside.</h2>
-          </div>
-        </section>
-        <br/>
-        <div class="text-center">
-          <iframe width="427" height="255" src="https://www.youtube.com/embed/8M9frWFlxh4?rel=0" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <br/>
-
         <h1>5 easy steps to include Backand in your Angular project</h1>
+        <h2><a href="" video-modal url="'https://www.youtube.com/embed/IU_qp2yzU9Q?rel=0'" title="'AngularJS Quickstart'"><i class="ti-youtube"></i> watch video</a></h2>
         <br/>
         <h3>1. Add the Backand scripts</h3>
 
@@ -38,8 +27,10 @@
         <br />
         <h3>3. Connect your Backand app</h3>
         <h5>
-          We can inject the Backand service into any controller - simply call Backand.signin(...) in your controller to gain access.<br />
-          In this example, we sign into Backand in the SignInCtrl controller's signIn method. When we are successfully signed in, we save the authentication token into a cookie.
+          We can inject the Backand service into any controller - simply call Backand.signin(...)
+          in your controller to gain access.<br />
+          In this example, we sign into Backand in the SignInCtrl controller's signIn method.
+          When we are successfully signed in, we save the authentication token into a cookie.
         </h5>
     <pre><code>
       // SignInCtrl.js
@@ -61,13 +52,15 @@
         <h5>The appName parameter is your application's name as specified in Backand's cloud service.</h5>
         <br />
         <h3>4. Configure secure calls to Backand's REST API</h3>
-        <h5>Backand uses OAuth3 authentication, which requires that you include the authentication token in every HTTP call.
-          To do this, use one of the following methods to add the token to the header's "Authorization" parameter - simply choose the method most relevant to your project.</h5>
+        <h5>Backand uses OAuth3 authentication, which requires that you include the authentication token
+          in every HTTP call.
+          To do this, use one of the following methods to add the token to the header's "Authorization" parameter -
+          simply choose the method most relevant to your project.</h5>
     <pre><code>
       //Option 1: Add a call to the Backand SDK in the app's config to add the authentication token to the header
       myApp.config(function (Backand) {
         Backand.setDefaultHeader();
-      })
+      }
 
       //Option 2: Use an Angular HTTP Interceptor to add the authentication token to each HTTP request
       function httpInterceptor($q, $log, $cookieStore) {
@@ -83,7 +76,8 @@
         <br />
         <h3>5. Read data from your database</h3>
         <h5>You can access Backand's API endpoints using $http requests from your Angular project.<br/>
-          In the following example, we create a function called tableData that uses the DataService API endpoint to fetch data from your database, which is returned in JSON format.</h5>
+          In the following example, we create a function called tableData that uses the DataService API endpoint
+          to fetch data from your database, which is returned in JSON format.</h5>
     <pre><code>
       //dataService.js
       function dataService($http, Backand) {
@@ -104,15 +98,27 @@
         }
       }
     </code></pre>
-        <h5>Using $http you can call to any of the CRUD URLs, trigger server side actions, and manage users. All API calls and expected parameters can be reviewed and tested in Backand's API Playground.</h5>
+        <h5>Using $http you can call to any of the CRUD URLs, trigger server side actions, and manage users.
+          All API calls and expected parameters can be reviewed and tested in Backand's API Playground.</h5>
         <br />
         <h3>Done. It's that simple</h3>
-        <h5>In the above example, we easily logged-in to the Backand service, and wrote functionality that can retrieve data from your database.<br/>
-          Using the above code, you can simply modify the URL endpoints to hit all of the relevant API functionality available from your application's playground - simply copy the URL, adjust the parameters per step 5, and you are set!</h5>
+        <h5>In the above example, we easily logged-in to the Backand service, and wrote functionality that can
+          retrieve data from your database.<br/>
+          Using the above code, you can simply modify the URL endpoints to hit all of the relevant API functionality
+          available from your application's playground - simply copy the URL, adjust the parameters per step 5, and you are set!</h5>
 
-        <h5><b>In your Angular application, you are the rock star - Backand is just here to help you rise and shine. Have fun!</b></h5>
+        <h5><b>In your Angular application, you are the rock star - Backand is just here to help you rise and shine.
+          Have fun!</b></h5>
+        <br/><br/>
+        <div class="text-center">
+          <iframe width="854"
+                  height="510"
+                  src="https://www.youtube.com/embed/IU_qp2yzU9Q?rel=0"
+                  frameborder="0" allowfullscreen>
+
+          </iframe>
+        </div>
       </div>
-      <br/>
     </div>
   </div>
 </section>

@@ -1,0 +1,180 @@
+<section class="page-form-ele page ng-scope">
+  <div class="panel panel-default">
+    <div class="panel-heading"><strong>API Documentation</strong></div>
+    <div class="panel-body">
+      <div class="row col-sm-10 col-sm-offset-1">
+        <h1>
+          API Description
+        </h1>
+
+        <p>
+          With Backand implementation of OAuth2 authentication you need first to sends the username,
+          password and appname (application name) and receives an authentication token that is used for all further
+          communication with Backand.<br/>
+          By using a cookie to persist the authentication token you will be able to access and use
+          Backand's REST API.
+        </p>
+
+        <h2>
+          Using Backand REST API
+        </h2>
+
+        <p>With the authentication configurations settled you can perform all the CRUD operations:</p>
+        <br/>
+
+        <h3>
+          List of Items
+        </h3>
+        <br/>
+
+        <p>Call <code>/table/data/{name}</code> with the following parameters to get a list of rows:</p>
+
+        <ul class="task-list">
+          <li><p><strong>pageSize</strong> - The number of returned items in each getList call, default 20.</p></li>
+          <li><p><strong>pageNumber</strong> - The page number starting with 1, default 1.</p></li>
+          <li><p><strong>filter</strong> - An array where each item has the properties fieldName,
+            operator and value. The operator options depend on the field type.</p></li>
+          <li><p><strong>sort</strong> - An array where each item has the properties fieldName and order.
+            The order options are "asc" or "desc".</p></li>
+          <li><p><strong>search</strong> - Free text filter search.</p></li>
+          <li><p><strong>deep</strong> - When set to true, brings the related parent rows in the
+            relatedTables property.</p></li>
+          <li><p></p><strong>withSelectOptions</strong> - When set to true, get a text value collection to
+            load select options according to parent relations.
+          </li>
+          </li>
+        </ul>
+
+            <pre>
+              self.readAll = function (tableName, pageSize, pageNumber, filter, sort) {
+                  return $http({
+                      method: 'GET',
+                      url: Backand.configuration.apiUrl + '/1/table/data/' + tableName
+                      params: {
+                        pageSize: pageSize,
+                        pageNumber: pageNumber,
+                        sort: sort,
+                        filter: filter
+                      }
+                  });
+              };
+            </pre>
+
+        <br/>
+
+        <h3>
+          Read
+        </h3>
+        <br/>
+
+        <p>Call <code>/table/data/{name}/{id}</code> with a specific primary key id and with the following
+          parameters to get a specific row:</p>
+
+        <ul class="task-list">
+          <li><p><strong>id</strong> - The id is the primary kay value of a table row </p></li>
+          <li><p><strong>deep</strong> - When set to true, brings the related parent and child rows</p></li>
+        </ul>
+
+            <pre>
+              self.readOne = function (tableName, id, deep) {
+                  return $http({
+                      method: 'GET',
+                      url: Backand.configuration.apiUrl + '/1/table/data/' + tableName + '/' + id
+                      params: {
+                        deep: deep
+                      }
+                  });
+              };
+            </pre>
+
+        <br/>
+
+        <h3>
+          Create
+        </h3>
+        <br/>
+
+        <p>Call <code>/table/data/{name}</code> POST with a new object to create, with the following parameters:</p>
+
+        <ul class="task-list">
+          <li>
+            <strong>returnObject</strong> - Set this to true when you have server side business rules
+            that causes additional changes to the object. In that case this request will return the created object
+          </li>
+        </ul>
+
+            <pre>
+              self.create = function (tableName, data, returnObject) {
+                  return $http({
+                      method: 'POST',
+                      url : Backand.configuration.apiUrl + '/1/table/data/' + tableName,
+                      data: data,
+                      params: {
+                        returnObject: returnObject
+                      }
+                  })
+              };
+            </pre>
+
+        <br/>
+
+        <h3>
+          Update
+        </h3>
+        <br/>
+
+        <p>Call <code>/table/data/{name}/{id}</code> PUT to update an existing object with the
+          following parameters:</p>
+
+        <ul class="task-list">
+          <li>
+            <strong>id</strong> - The id is the primary kay value of a table row
+            <strong>returnObject</strong> - Set this to true when you have server side business rules,
+            causing additional changes to the object. In this case the request will return the created object
+          </li>
+        </ul>
+
+            <pre>
+              self.update = function (tableName, id, data, returnObject) {
+                  return $http({
+                      method: 'PUT',
+                      url : Backand.configuration.apiUrl + '/1/table/data/' + tableName + '/' + id,
+                      data: data,
+                      params: {
+                        returnObject: returnObject
+                      }
+                  })
+              };
+            </pre>
+
+        <br/>
+
+        <h3>
+          Delete
+        </h3>
+        <br/>
+
+        <p>Call <code>/table/data/{name}/{id}</code> DELETE to remove an item:</p>
+        <ul class="task-list">
+          <li>
+            <strong>id</strong> - The id is the primary kay value of a table row
+          </li>
+        </ul>
+
+              <pre>
+                self.delete = function (tableName, id) {
+                    return $http({
+                        method: 'DELETE',
+                        url : Backand.configuration.apiUrl + '/1/table/data/' + tableName + '/' + id
+                    })
+                };
+              </pre>
+
+        <h2>Expirience more</h2>
+
+        <p>Review on <a href="https://github.com/backand/angular-yeoman-todos" target="_blank">github</a>
+          our Angular demo application</p>
+      </div>
+    </div>
+  </div>
+</section>

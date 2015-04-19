@@ -2,52 +2,48 @@
 (function  () {
 
   'use strict';
-  angular.module('app.apps')
-    .controller('AppsShowController',['$scope','appItem','AppsService','$sce','$state','AppState',AppsShowController]);
+  angular.module('backand.apps')
+    .controller('AppShowController',['$scope', 'AppsService', '$sce', '$state', AppShowController]);
 
-  function AppsShowController($scope,appItem,AppsService,$sce,$state,AppState){
+  function AppShowController($scope, AppsService, $sce, $state){
     var self = this;
 
-    var appData = appItem.data;
-    self.appName = appData.Name;
+    var app = AppsService.currentApp;
+    self.appName = app.Name;
     $scope.appName = self.appName;
 
-    AppState.set(self.appName);
-
-    AppsService.setCurrentApp(appItem.data);
     $scope.$root.$broadcast('fetchTables');
 
     //not connected to database :
-    if (appItem.data.DatabaseStatus !== 1) {
-      return $state.go('database.edit',{name: self.appName})
+    if (app.DatabaseStatus !== 1) {
+      return $state.go('database.edit', {name: self.appName})
     }
 
-    self.statisticsArray = appItem.data.stat;
+    self.statisticsArray = app.stat;
 
     self.logLimit = 7;
-    self.appTitle = appData.Title;
+    self.appTitle = app.Title;
     self.connectionStatus = '';
     self.alertMsg = '';
 
     self.goToLocation = function(href) {
-        window.open(href,'_blank');
+        window.open(href, '_blank');
     };
 
-    AppsService.appDbStat($state.params.name)
+    AppsService.appDbStat($state.params.appName)
       .then(function(data){
         if (data.data.tableCount == 0) {
-          var msg = 'Your database has no tables! go to <a href="#/database/template/' +
-            $state.params.name +
+          var msg = 'Your database has no tables! go to <a href="#/' + $state.params.appName + '/database/template/' +
             '">Database Templates</a> to populate the database or use any DB admin tool like Workbench or phpMyAdmin';
 
           self.alertMsg = $sce.trustAsHtml(msg);
-          AppsService.setAlert($state.params.name, msg)
+          AppsService.setAlert($state.params.appName, msg)
         }
       });
 
 
     self.setAlertStatus = function() {
-      AppsService.setAlert(self.appName,'');
+      AppsService.setAlert(self.appName, '');
       self.alertMsg = '';
     };
 
@@ -56,7 +52,7 @@
     });
 
 
-    self.updateAppName = function(){
+    self.updateAppName = function() {
       AppsService.update(self.appName, self.appTitle)
     }
   }

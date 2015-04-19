@@ -11,7 +11,7 @@ body {
         display: none;
     }
 
-    > .main-container {
+    & + .main-container {
         width: 100%;
         max-width: 100%;
         margin: 0;
@@ -19,6 +19,8 @@ body {
     }
 
     #content {
+        min-height: 100%;
+        overflow: hidden;
         z-index: 2;
         position: absolute;
         top: 0;

@@ -1,18 +1,18 @@
 (function() {
   'use strict';
 
-  angular.module('app.dbQueries', [])
+  angular.module('backand.dbQueries', [])
     .config(config);
 
   function config($stateProvider) {
     $stateProvider
       .state('dbQueries.newQuery', {
-        url: '/:name/new',
+        url: '/new',
         controller: 'DbQueryController as DbQuery',
         templateUrl: 'views/db_queries/query.html'
       })
       .state('dbQueries.query', {
-        url: '/:name/:queryId',
+        url: '/:queryId',
         controller: 'DbQueryController as DbQuery',
         templateUrl: 'views/db_queries/query.html'
       })

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function httpInterceptor($rootScope,$q, $log,SessionService,usSpinnerService,NotificationService,$injector) {
+  function httpInterceptor($q, SessionService, usSpinnerService, NotificationService, $injector) {
     return {
         request: function(config) {
           usSpinnerService.spin("spinner-1");
@@ -19,11 +19,11 @@
       responseError: function(rejection) {
         //if not sign in screen :
         usSpinnerService.stop("loading");
-        if ((rejection.config.url+"").indexOf('token') === -1){
+        if ((rejection.config.url + "").indexOf('token') === -1){
           if(rejection.data == null)
-            NotificationService.add("error","The service is temporary unavailable, please refresh the page in few seconds");
+            NotificationService.add("error", "The service is temporary unavailable, please refresh the page in few seconds");
           else
-            NotificationService.add("error",rejection.data);
+            NotificationService.add("error", rejection.data);
           if (rejection.status === 401) {
             SessionService.ClearCredentials();
             $injector.get('$state').transitionTo('sign_in');
@@ -36,5 +36,5 @@
   }
 
   angular.module('common.interceptors.http', [])
-    .factory('httpInterceptor', ['$rootScope','$q','$log','SessionService','usSpinnerService','NotificationService','$injector',httpInterceptor]);
+    .factory('httpInterceptor', ['$q', 'SessionService', 'usSpinnerService', 'NotificationService', '$injector', httpInterceptor]);
 })();

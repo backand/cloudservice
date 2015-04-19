@@ -1,5 +1,5 @@
 .panel-body .db-panel-body-explanation {
-  margin: 30px 10% 30px 10%;
+  margin: 30px 10% 30px 2%;
 }
 
 .panel-body .db-panel-body-description {
@@ -29,6 +29,12 @@
 .db-ace-title {
   text-transform: uppercase;
   font-size: larger;
+}
+
+.db-ace-example-title {
+  border: 1px solid transparent;
+  display: block;
+  padding: 10px 15px;
 }
 
 .db-panel-right-half {
@@ -89,6 +95,8 @@
 .db-types-title {
   text-transform: uppercase;
   font-size: 15px;
+  font-weight: 600;
+
 }
 
 .db-types {
@@ -113,6 +121,11 @@
   font-family: "Open Sans", sans-serif;
   font-style: italic;
   line-height: 30px;
+}
+
+.db-note {
+  background-color: #f3f3f3;
+  padding: 15px;
 }
 
 

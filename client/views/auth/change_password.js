@@ -1,6 +1,6 @@
 (function  () {
     'use strict';
-  angular.module('app')
+  angular.module('backand')
     .controller('changePasswordController',["$scope",'AuthService','$state','$location','NotificationService','$timeout',changePasswordController]);
 
   function changePasswordController($scope,AuthService,$state,$location,NotificationService,$timeout){

@@ -2,21 +2,46 @@
 (function  () {
     'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$interval', '$log', 'NotificationService', 'TablesService', 'DbQueriesService', 'AppState', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$interval', '$log', 'NotificationService', 'TablesService', 'DbQueriesService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService, DbQueriesService, AppState){
+  function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService, DbQueriesService){
     var self = this;
-    var stop;
 
     (function init() {
-      self.app = null;
-      self.tables = [];
-      self.queries = [];
+      self.app = AppsService.currentApp;
+      clearTables();
     }());
 
+    function clearTables() {
+      self.tables = [];
+      self.queries = [];
+    }
 
-    function loadTables(){
-      self.appName = AppState.get();//  $state.params.name
+    self.isExampleApp = function () {
+      return AppsService.isExampleApp(self.app);
+    };
+
+    self.showAppNav = function () {
+      if (!$state.params.appName)
+        return 'views/shared/nav.html';
+      if (!self.app)
+        return null;
+      if (self.app.DatabaseStatus == 0 || self.app.DatabaseStatus == 2)
+        return 'views/shared/nav_connect_db.html';
+      return 'views/shared/nav_app.html';
+    };
+
+
+    $scope.$on('fetchTables', fetchTables);
+    $scope.$on('appname:saved', fetchTables);
+
+    function fetchTables() {
+      clearTables();
+      loadTables();
+    }
+
+    function loadTables() {
+      self.appName = $state.params.appName;
       if (self.appName == undefined)
         return;
       TablesService.get(self.appName).then(
@@ -30,7 +55,7 @@
               self.dbEmpty = false;
             }
 
-            loadDbQueries();
+            fetchDbQueries();
           }
         },
         function (data) {
@@ -39,65 +64,58 @@
       );
     }
 
-    self.goTo = function(state) {
-      if (this.app.DatabaseStatus === 1) {
-        $state.go(state, {name: this.appName});
+    function successDbStats(data){
+      if (data.data) {
+        self.dbEmpty = data.data.tableCount == 0;
       }
-    };
+    }
 
-    self.goToAlways = function(state) {
-      $state.go(state, {name: this.appName});
-    };
+    function fetchDbQueries() {
+      DbQueriesService.getQueries($state.params.appName).then(
+        function (data) {
+          self.queries = data;
+        },
+        function (data) {
+          $log.debug("DbQueriesService failure", data);
+        }
+      );
+    }
+
+    $scope.$on('$stateChangeSuccess', function() {
+      self.state = $state.current.name;
+      self.appName = $state.params.appName;
+      loadApp();
+    });
+
+    $scope.$on('AppDbReady', loadApp);
 
     function loadApp() {
       if (typeof self.appName === 'undefined') {
-        AppState.reset();
         return;
       }
-      AppState.set(self.appName);
-
-      AppsService.getCurrentApp(self.appName).then(successGetCurrentApp, errorGetCurrentApp);
+      AppsService.getApp(self.appName)
+        .then(successGetCurrentApp);
     }
 
     function successGetCurrentApp(data){
       self.app = data;
       self.DatabaseStatus = self.app.DatabaseStatus;
-      var oldStatus = self.app.myStatus.oldStatus ? self.app.myStatus.oldStatus : 0;
-      //checkChanges(oldStatus);
       if (self.DatabaseStatus == 0)
         self.tables = [];
-      else if(self.DatabaseStatus == 1 && self.tables.length == 0) //only load tables when it's empty
+      else if(self.DatabaseStatus == 1)
         loadTables();
     }
-
-    function errorGetCurrentApp()
-    {
-      stopRefresh();
-    }
-
-
-    $scope.$on('$stateChangeSuccess', function() {
-      self.state = $state.current.name;
-      self.appName = $state.params.name;
-
-      stopRefresh();
-
-      loadApp();
-
-    });
-
-    $scope.$on('AppIsReady', loadApp);
 
     self.isTablesActive = function() {
       return $state.current.name.indexOf('tables.columns') != -1;
     };
 
     self.getDBStatus = function() {
-      if (self.app === null) {
+      if (_.isEmpty(self.app)) {
         return 'unknown';
       }
 
-      switch(parseInt(self.app.myStatus.status)) {
+      switch(parseInt(self.app.DatabaseStatus)) {
         case 0:
         case 2:
           return 'warning';
@@ -108,69 +126,21 @@
       }
     };
 
+    self.goTo = function(state) {
+      if (self.app.DatabaseStatus === 1) {
+        $state.go(state);
+      }
+    };
+
+    self.goToAlways = function(state) {
+      $state.go(state);
+    };
+
     self.goToLocation = function(href) {
         if (self.app.DatabaseStatus === 1) {
             window.open(href, '_blank');
         }
     };
-
-    self.isGeneralState = function () {
-      return !$state.params.name;
-    };
-
-    function checkChanges(oldStatus) {
-      if (oldStatus === undefined) return;
-
-      var newStatus = parseInt(self.app.myStatus.status);
-      oldStatus = parseInt(oldStatus);
-
-      if (newStatus === oldStatus) {
-        return;
-      }
-
-      switch (newStatus) {
-        case 0 :
-          NotificationService.add('error', 'Database became disconnected');
-          break;
-        case 1 :
-          NotificationService.add('success', 'Database connected');
-          break;
-        case 2 :
-          NotificationService.add('info', 'Database connection became pending');
-          break;
-      }
-    }
-
-    function stopRefresh() {
-      if (angular.isDefined(stop)) {
-        $interval.cancel(stop);
-        stop = undefined;
-      }
-    }
-
-    $scope.$on('$destroy', function() {
-      stopRefresh();
-    });
-
-    function successDbStats(data){
-      if (data.data) {
-        self.dbEmpty = data.data.tableCount == 0;
-      }
-    }
-
-    self.clearTables = function () {
-      self.tables = [];
-      self.queries = [];
-    };
-
-    self.fetchTables = function () {
-      self.clearTables();
-      loadTables();
-    };
-
-    $scope.$on('clearTables', self.clearTables);
-    $scope.$on('fetchTables', self.fetchTables);
-    $scope.$on('appname:saved', self.fetchTables);
 
     self.showTable = function(table) {
       var path = 'tables.columns.fields';
@@ -178,47 +148,21 @@
         path = $state.current.name;
       }
       $state.go(path, {
-        name: $state.params.name,
         tableName: table.name,
         tableId: table.__metadata.id
       });
     };
 
-    self.fetchDbQueries = function () {
-      loadDbQueries();
-    };
-
-    function loadDbQueries() {
-      DbQueriesService.getQueries($state.params.name).then(
-        function (data) {
-          self.queries = data;
-        },
-        function (data) {
-          $log.debug("DbQueriesService failure", data);
-        }
-      );
-    }
-
     self.showDbQuery = function(query) {
       var params = {
-        name: $state.params.name,
         queryId: query.__metadata.id
       };
       $state.go('dbQueries.query', params);
     };
 
     self.newDbQuery = function() {
-      var params = {
-        name: $state.params.name
-      };
-      $state.go('dbQueries.newQuery', params);
+      $state.go('dbQueries.newQuery');
     };
 
-    self.showExample = function(example) {
-      if($state.params.name)
-        return ($state.params.name.substring(0, 4).toLowerCase() == example);
-      else
-        return false;
-    }
   }
 }());

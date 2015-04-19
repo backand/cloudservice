@@ -1,0 +1,29 @@
+<div class="nav-wrapper">
+  <ul id="nav1" class="nav"
+      data-slim-scroll
+      data-collapse-nav>
+    <li ui-sref-active="active">
+      <a ui-sref="apps.index"> <i class="ti-layers-alt"></i><span>My Apps</span> </a>
+    </li>
+
+    <li ui-sref-active="active" ng-hide="nav.app.DatabaseStatus == 2">
+      <a ng-if="!nav.isExampleApp()" ui-sref="database.edit"> <i class="ti-star"></i><span>Connect to Database</span></a>
+      <a ng-if="nav.isExampleApp()" ui-sref="database.example"> <i class="ti-star"></i><span>Connect to Database</span></a>
+    </li>
+
+    <li ui-sref-active="active">
+      <a ui-sref="docs.get-started">
+        <i class="ti-star"></i><span>Getting Started</span>
+      </a>
+    </li>
+
+    <li ui-sref-active="active">
+      <a ui-sref="docs.kickstart"> <i class="ti-star"></i><span>Kickstart Tutorial</span></a>
+    </li>
+
+    <li ui-sref-active="active">
+      <a ui-sref="docs.api-desc"> <i class="ti-star"></i><span>API Documentation</span></a>
+    </li>
+
+  </ul>
+</div>
