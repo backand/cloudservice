@@ -181,6 +181,9 @@
      */
     function workspaceSuccessHandler(data) {
       self.workspaces = data.data.data;
+      if (self.new && self.workspaces.length > 0) {
+        self.currentST = self.workspaces[0].__metadata.id;
+      }
     }
 
 

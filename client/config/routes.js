@@ -97,7 +97,7 @@ angular.module('backand.routes', []).
         template: '<ui-view autoscroll="true"/>'
       })
       .state('tables', {
-        url: '/tables',
+        url: '/objects',
         parent: 'app',
         abstract: true,
         template: '<div ui-view></div>'
@@ -115,7 +115,7 @@ angular.module('backand.routes', []).
         template: '<div ui-view></div>'
       })
       .state('dbQueries', {
-        url: '/dbQueries',
+        url: '/queries',
         parent: 'app',
         abstract: true,
         template: '<div ui-view></div>'
