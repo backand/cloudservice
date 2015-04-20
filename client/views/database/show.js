@@ -6,7 +6,7 @@
   function DatabaseShow($state, AppsService, usSpinnerService, DatabaseService, DatabaseNamesService) {
     var self = this;
 
-    this.appName = $state.params.appName;
+    self.appName = $state.params.appName;
     var currentApp = AppsService.currentApp;
     checkDatabaseStatuse();
 
@@ -32,26 +32,30 @@
           })
     }
 
-    this.getPassword = function() {
-      DatabaseService.getAppPassword($state.params.appName)
+    self.getPassword = function() {
+      DatabaseService.getAppPassword(self.appName)
         .success(function(data) {
           self.data.password = data;
         });
     };
 
-    this.currentTab = function() {
+    self.displayButton = function() {
+      return !AppsService.isExampleApp(self.appName);
+    }
+
+    self.currentTab = function() {
       return currentApp.databaseName;
     };
 
-    this.edit = function() {
+    self.edit = function() {
       $state.go('database.edit');
     };
 
-    this.back = function() {
+    self.back = function() {
       $state.go('app.show');
     };
 
-    this.sync = function(toSync) {
+    self.sync = function(toSync) {
       $state.go('tables.show', ({sync: toSync}));
     };
   }

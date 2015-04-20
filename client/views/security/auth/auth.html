@@ -87,7 +87,7 @@
               <label for="inputUrl1" class="control-label strong">Custom Registration Page URL</label>
 
               <div class="form-group">
-                <input type="text" class="form-control" id="inputUrl1" placeholder="/app/sign-up.html"
+                <input type="text" class="form-control" id="inputUrl1" placeholder="http://www.myappdomain.com/sign-up.html"
                        ng-model-options="{ updateOn: 'blur' ,debounce: 400 }" ng-keyup="cancel($event)"
                        ng-model="auth.data.settings.registrationRedirectUrl">
 
@@ -99,7 +99,7 @@
 
               <div class="form-group">
                 <input type="text" class="form-control" id="inputUrl2" ng-model-options="{ updateOn: 'blur' ,debounce: 400 }"
-                       placeholder="/app/sign-in.html"
+                       placeholder="http://www.myappdomain.com/sign-in.html"
                        ng-keyup="cancel($event)" ng-model="auth.data.settings.signInRedirectUrl">
 
                 <div class="field-description">Redirect page after user has verified his email in the sign up process

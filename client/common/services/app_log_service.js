@@ -60,7 +60,7 @@
     };
 
     self.getAppActivity = function(appName, size, page, isException, sort){
-      var filterParam = '[{fieldName:"LogType", operator:"equals", value:"' + isException ? '1' : '3' + '"}]';
+      var filterParam = '[{fieldName:"LogType", operator:"equals", value:"' + (isException ? '1' : '3') + '"}]';
 
       return $http({
         method: 'GET',

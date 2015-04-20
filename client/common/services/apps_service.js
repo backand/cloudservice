@@ -52,7 +52,7 @@
       angular.copy({}, self.currentApp);
     };
 
-    self.isExampleApp = function (app) {
+      self.isExampleApp = function (app) {
       if (!app || !app.Name) return false;
       return app.Name === 'todo' + AuthService.getUserId();
       //return (app.Name.substring(0, 4) === 'todo')
@@ -112,7 +112,7 @@
     self.update = function (name, data) {
       return updateApp(name, data)
         .then(function () {
-          self.getApp(data.Name)
+          self.getApp(name)
         });
     };
 

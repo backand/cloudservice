@@ -9,15 +9,15 @@
     var token = SessionService.getToken();
     var appName = $state.params.appName;
 
-    self.urlPrefix = $sce.trustAsHtml('<iframe id="restIfrmae" src="'
+    self.urlPrefix = $sce.trustAsHtml('<iframe id="restIframe" src="'
       + CONSTS.playgroundUrl
-      + 'index.html?useToken=true" style="height:578px;width:100%;border: none"></iframe>');
-    
+      + 'index.html?useToken=true#!/Objects" style="height:578px;width:100%;border: none"></iframe>');
+
     $scope.$on('$destroy', function () {
-        // Make sure that the interval is destroyed too
-        var iframe = angular.element('#restIfrmae');
+        // clear the iframe
+        var iframe = angular.element('#restIframe');
         if (iframe && iframe.length > 0) {
-            iframe[0].src = "javascript:void";
+            iframe[0].src = "javascript:;";
         }
     });
 

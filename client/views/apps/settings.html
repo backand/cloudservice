@@ -1,17 +1,17 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> App Settings</strong>
+      <strong> General App Settings</strong>
       <a href="javascript:;" class="btn btn-lg pull-right" style="margin-top: -10px;" ng-click="settings.delete()"><i class="ti-trash"></i></a>
     </div>
     <div class="panel-body">
       <form role="form" role="form" ng-submit="settings.submitForm()">
         <div class="form-group">
-          <label for="name">Name</label>
+          <label for="name">App Name</label>
           <input type="text" class="form-control" id="name" ng-model="settings.appName" required ng-disabled="false">
         </div>
         <div class="form-group">
-          <label for="title">Title</label>
+          <label for="title">App Title</label>
           <input type="text" class="form-control" id="title" ng-model="settings.appTitle" required>
         </div>
         <div class="form-group">
@@ -24,7 +24,7 @@
             </div>
           </div>
            <div class="form-group">
-            <label for="rows">Default List Page Rows</label>
+            <label for="rows">Default number of items per Page</label>
             <input type="number" class="form-control" id="rows" data-ng-model="settings.defaultPageSize" data-min=5 data-max=1000 required>
           </div>
 

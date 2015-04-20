@@ -3,14 +3,13 @@
     <div class="panel-heading"><strong>Quickstart Guide</strong></div>
     <div class="panel-body">
 
-      <br/>
       <div class="quickstart-sidebar">
 
         <div class="quickstart-sidebox" id="kickstart-sidebox">
           <div class="quickstart-kickstart">
             <img src="../assets/images/docs_pages/icon-quickstart.png" />
-            <div class="quickstart-sidebox-title">Don't have an existing app?</div><br/>
-            <div class="quickstart-sidebox-text">We've got a <b>Kickstarter project</b> to get you on your way!</div><br/>
+            <div class="quickstart-sidebox-title">Don't have an Angular project?</div><br/>
+            <div class="quickstart-sidebox-text">We've got a <b>kickstart project</b> to get you on your way!</div><br/>
             <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToKickstart()">Get Started</button>
           </div>
         </div>
@@ -19,10 +18,10 @@
         <div class="quickstart-sidebox" id="video-sidebox">
           <div class="quickstart-kickstart">
             <img src="../assets/images/docs_pages/icon-video.png" />
-            <div class="quickstart-sidebox-title">Browse our Video Tutorials</div><br/>
+            <div class="quickstart-sidebox-title">Browse our Video Tutorial</div><br/>
             <button class="btn btn-lg btn-success quickstart-sidebox-button"
                     video-modal url="'https://www.youtube.com/embed/8M9frWFlxh4?rel=0&autoplay=1'"
-                    title="'AngularJS Quickstart'">Youtube Playlist</button>
+                    title="'AngularJS Quickstart'">Play Video</button>
           </div>
         </div>
 
@@ -33,13 +32,15 @@
         <div class="quickstart-connecting-db" ng-show="docs.isNew()">
           <h3>
             We're creating your database and will notify you when it's ready.<br/>
-            In the meantime, let's connect your application to the new database.
+            In the meantime, you can review below how to integrate your new app with Angular...
           </h3>
           <div us-spinner spinner-key="connecting-app-to-db"></div>
+          <br/>
+          <br/>
         </div>
-        <br/>
-        <br/>
 
+        <h2 style="margin-left: 60px;">5 easy steps to include Backand in your Angular project:</h2>
+        <br/>
         <ol>
 
           <li>

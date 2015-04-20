@@ -20,7 +20,7 @@
      * init the data
      */
     (function init() {
-      isException = ($state.$current.url.prefix.indexOf('/exception/') > -1);
+      isException = ($state.$current.url.source.indexOf('/exception') > -1);
       if (isException)
         self.title ='APP Exceptions';
       else

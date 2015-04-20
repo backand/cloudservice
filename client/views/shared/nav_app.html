@@ -8,34 +8,6 @@
     </a>
   </li>
 
-  <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-    <a href="">
-      <i class="icon-databsase-icon"></i>
-      <span>Database</span>
-      <span class="status status-{{nav.getDBStatus()}} pull-left"></span>
-      <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
-    </a>
-    <ul>
-      <li ng-if="nav.DatabaseStatus == 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('database.show')" href="">
-          <i class="ti-wand"></i>
-          <span>Configuration</span>
-        </a>
-      </li>
-      <li ng-if="nav.DatabaseStatus == 0" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goToAlways('database.edit')" href="">
-          <i class="ti-wand"></i>
-          <span>Connect</span>
-        </a>
-      </li>
-      <!--<li ng-class="{active: nav.state == 'database.add-tables', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('database.add-tables')" href="">
-          <i class="ti-file"></i>
-          <span>Templates</span>
-        </a>
-      </li>-->
-    </ul>
-  </li>
 
   <li ng-class="{active: nav.state == 'playground.orm'}">
     <a href="">
@@ -100,7 +72,7 @@
        ng-click="nav.tables.length == 0 ? nav.goTo('tables.notables') : {}"
        href="">
       <i class="ti-view-grid"></i>
-      <span>Database Tables</span>
+      <span>Objects</span>
       <i class="ti-angle-double-right pull-right"
          ng-show="nav.tables.length > 0"
          style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
@@ -118,7 +90,7 @@
   <li ng-class="{active: nav.state == 'dbQueries', disabled: nav.DatabaseStatus != 1}" >
     <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.loadDbQueries()" href="">
       <i class="ti-write"></i>
-      <span>Database Queries</span>
+      <span>Queries</span>
       <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;" ng-if="nav.DatabaseStatus == 1"></i>
     </a>
     <ul>
@@ -193,12 +165,43 @@
       </li>
     </ul>
   </li>
-  <li ng-class="{active: nav.state == 'app.edit', disabled: nav.DatabaseStatus != 1}">
-    <a ng-click="nav.goTo('app.edit')" href="">
-      <i class="ti-settings"></i>
-      <span>App Settings</span>
-    </a>
-  </li>
+
+
+    <li ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+      <a href="">
+        <i class="ti-settings"></i>
+        <span>Settings</span>
+        <span class="status status-{{nav.getDBStatus()}} pull-left"></span>
+        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.state == 'app.edit', disabled: nav.DatabaseStatus != 1}">
+          <a ng-click="nav.goTo('app.edit')" href="">
+            <i class="ti-wand"></i>
+            <span>General</span>
+          </a>
+        </li>
+        <li ng-if="nav.DatabaseStatus == 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('database.show')" href="">
+            <i class="icon-databsase-icon"></i>
+            <span>Database</span>
+          </a>
+        </li>
+        <li ng-if="nav.DatabaseStatus == 0" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+          <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goToAlways('database.edit')" href="">
+            <i class="ti-wand"></i>
+            <span>Connect</span>
+          </a>
+        </li>
+        <!--<li ng-class="{active: nav.state == 'database.add-tables', disabled: nav.DatabaseStatus != 1}">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('database.add-tables')" href="">
+            <i class="ti-file"></i>
+            <span>Templates</span>
+          </a>
+        </li>-->
+      </ul>
+    </li>
+
   <li ng-class="{active: nav.state == 'backoffice.edit', disabled: nav.DatabaseStatus != 1}">
     <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  href="">
       <i class="icon-backoffice-icon"></i>
@@ -226,12 +229,12 @@
         </a>
       </li>
 
-      <li ng-class="{active: nav.state == 'backoffice.code'}">
-        <a ng-click="nav.goToAlways('backoffice.code')" href="">
-          <i class="icon-file-code-o"></i>
-          <span>Code Example</span>
-        </a>
-      </li>
+      <!--<li ng-class="{active: nav.state == 'backoffice.code'}">-->
+        <!--<a ng-click="nav.goToAlways('backoffice.code')" href="">-->
+          <!--<i class="icon-file-code-o"></i>-->
+          <!--<span>Code Example</span>-->
+        <!--</a>-->
+      <!--</li>-->
     </ul>
   </li>
 </ul>

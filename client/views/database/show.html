@@ -109,7 +109,7 @@
                 <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <br/>
-                <button class="btn btn-success btn-lg btn-w-lg" ng-click="dbshow.edit()">Edit Database Connection</button>
+                <button class="btn btn-success btn-lg btn-w-lg" ng-if="dbshow.displayButton()" ng-click="dbshow.edit()">Edit Database Connection</button>
                 </div>
                 </div>
               </form>
@@ -126,7 +126,7 @@
                         <li><a href="//www.sequelpro.com/" target="_blank">Sequel Pro</a></li>
                         <li><a href="//www.heidisql.com/" target="_blank">HeidiSQL</a></li>
                     </ul>
-                    <br/>In order to sync your database schema changes into Backand, go to <b>Database Tables</b> and click <b>Sync with Database</b>.
+                    <br/>In order to sync your database schema changes into Backand, go to <b>Objects</b> and click <b>Sync with Database</b>.
                     <br/><br/>>> To populate data into your database use our <a href="http://{{dbshow.appName}}.backand.net" target="_blank">Back Office</a>
                     <!--<br/>Go to <a ng-click="dbshow.sync(0)" href="">Database Table</a> and click <button type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary" ng-click="dbshow.sync(1)">Sync Tables</button>-->
                     <!--after you update your schema to sync your changes into Backand.-->

@@ -1,8 +1,8 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-        <strong> Database Tables  </strong>
-        <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="tables.sync()" ladda="tables.syncing" data-style="expand-right" style="margin-left: 50px;">Sync Tables</button>
+        <strong> Objects  </strong>
+        <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="tables.sync()" ladda="tables.syncing" data-style="expand-right" style="margin-left: 50px;">Sync Objects</button>
 
         <li class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="tables.alertClass" style="margin-left: 10px;">
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -42,7 +42,7 @@
                 </tr>
                 </tbody>
             </table>
-            <div ng-show="tables.tables.length == 0" class="label-info col-xs-2">No Tables</div>
+            <div ng-show="tables.tables.length == 0" class="label-info col-xs-2">No Objects</div>
         </div>
     </div>
   </section>
