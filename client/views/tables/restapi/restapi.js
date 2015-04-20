@@ -8,20 +8,24 @@
     var self = this;
     var token = SessionService.getToken();
     var appName = $state.params.appName;
+    var tableName = ColumnsService.tableName;
 
     self.urlPrefix = $sce.trustAsHtml('<iframe id="restIframe" src="'
         + CONSTS.playgroundUrl
-        + 'index.html?tableName='+ ColumnsService.tableName + '&useToken=true&split=true#!/Objects" style="height:578px;width:100%;border: none"></iframe>');
+        + 'index.html?tableName='+ tableName + '&useToken=true&split=true#!/Objects" style="height:578px;width:100%;border: none"></iframe>');
 
     $scope.$on('$destroy', function () {
       // clear the iframe
+      window.removeEventListener('message', eventListener, false);
       var iframe = angular.element('#restIframe');
       if (iframe && iframe.length > 0) {
-        iframe[0].src = "javascript:;";
+        iframe[0].src = "javascript:void(0);";
       }
     });
 
-    window.addEventListener('message', function (e) {
+    window.addEventListener('message', eventListener, false);
+
+    function eventListener(e){
       var eventName = e.data[0];
       var data = e.data[1];
       switch (eventName) {
@@ -39,7 +43,7 @@
           usSpinnerService.stop("loading");
           break;
       }
-    }, false);
+    }
   }
 
 

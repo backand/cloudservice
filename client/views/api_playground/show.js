@@ -14,15 +14,19 @@
       + 'index.html?useToken=true#!/Objects" style="height:578px;width:100%;border: none"></iframe>');
 
     $scope.$on('$destroy', function () {
-        // clear the iframe
-        var iframe = angular.element('#restIframe');
-        if (iframe && iframe.length > 0) {
-            iframe[0].src = "javascript:;";
-        }
+      window.removeEventListener('message', eventListener, false);
+      // clear the iframe
+      var iframe = angular.element('#restIframe');
+      if (iframe && iframe.length > 0) {
+        iframe[0].src = "javascript:void(0);";
+      }
+
     });
 
 
-    window.addEventListener('message', function (e) {
+    window.addEventListener('message', eventListener, false);
+
+    function eventListener(e){
       var eventName = e.data[0];
       var data = e.data[1];
       switch (eventName) {
@@ -40,7 +44,7 @@
           usSpinnerService.stop("loading");
           break;
       }
-    }, false);
+    }
   }
 
 
