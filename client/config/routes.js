@@ -22,7 +22,7 @@ angular.module('backand.routes', []).
         controller : 'SignInController as sign'
       })
       .state('change_password', {
-        url: '/apps/#/change_password',
+        url: '/change_password',
         templateUrl: 'views/auth/change_password.html',
         controller : 'changePasswordController as change'
       })
