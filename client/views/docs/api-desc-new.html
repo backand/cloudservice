@@ -60,7 +60,8 @@
                 </p>
                 <h3 id="roles">Roles & Secutity Templates</h3>
                 <p>
-
+                    Each user has role. When you created your app, you automatically assigned with an "Admin" role. The "Admin" role is a special role that allows you to make configuration change in your app through the Backand administration tools. Other from that, the roles are used to define the CRUD abilities of the Objects and Queries. Each Object and Query is associeted with a Security Template. In the security template you assigened each Role with CRUD abilities, meaning, the ability to call create, read, update and delete actions. This cunfiguration is found in Security & Auth --> Security Template page.
+                    After you specify the Security Template of an Object or Query you may overide the security template and provide specific CRUD abilities for each role. When a user with an insafficient role tries to access an Object or Query a 403 (Forbidden) error response is returned.
                 </p>
                 <h2>Custom Actions</h2>
                 For the purpose of security, integration, performance, notification and data integrity you can perform server side activities called Actions. There are two ways to initiate actions either through a direct request which is called "On Demand" or based upon a data writing event which is a create, update or delete an item. The action is associated with a specific Object which is compatible to a spesific table so you can find the Action definition in Object --> {name} page in the Actions tab.
