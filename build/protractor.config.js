@@ -17,7 +17,9 @@ exports.config = {
     'browserName': 'chrome',
     'chromeOptions': {
       'args': ['--incognito']
-    }    
+    },
+    shardTestFiles: true,
+    maxInstances: 2
   },
   seleniumArgs: ['-browserTimeout=60'],
   baseUrl: 'http://127.0.0.1:'+port,

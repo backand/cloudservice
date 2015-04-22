@@ -1,9 +1,9 @@
 (function  () {
     'use strict';
   angular.module('backand')
-    .controller('changePasswordController',["$scope",'AuthService','$state','$location','NotificationService','$timeout',changePasswordController]);
+    .controller('changePasswordController', ['AuthService', '$state', '$location', 'NotificationService', '$timeout', changePasswordController]);
 
-  function changePasswordController($scope,AuthService,$state,$location,NotificationService,$timeout){
+  function changePasswordController(AuthService, $state, $location, NotificationService, $timeout){
     var self = this;
     this.loading = false;
 

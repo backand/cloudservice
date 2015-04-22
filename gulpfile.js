@@ -205,6 +205,7 @@ gulp.task('serve', ['env:dev', 'build'], function() {
     browser: ['google chrome'],
     notify: false,
     port: 3001,
+    ghostMode: false,
     logPrefix: pkg.name,
     server: {
       baseDir: ['build', 'client'],

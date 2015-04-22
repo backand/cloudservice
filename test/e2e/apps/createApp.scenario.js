@@ -8,31 +8,42 @@ var invalidApp = apps.invalidApp;
 var existingApp = apps.existingApp;
 
 describe('create app scenario', function() {
-  beforeEach(function() {
+  beforeEach(function () {
     signInPage.ensureSignedIn();
     app = apps.getRandomApp();
+    browser.ignoreSynchronization = false;
   });
 
-  it('should allow to create a valid app', function() {
+  it('should allow to create a valid app', function () {
     appsPage.newApp.create(app);
     // TODO: expect success notification
-    expect(databaseEditPage.title.isDisplayed()).toBeTruthy();
+    expect(databaseEditPage.hooks.title).toBeDisplayed();
+
+    databaseEditPage.actions.createCustomDatabase().then(function() {
+      browser.ignoreSynchronization = true;
+      expect(element(by.testHook('docs.quickstart.title'))).toBeDisplayed();
+    }).then(function () {
+      browser.ignoreSynchronization = false;
+    });
+  });
+});
+
+describe('create invalid app scenario', function() {
+  beforeEach(function() {
+    signInPage.ensureSignedIn();
   });
 
   it('should not allow to create invalid apps', function() {
-    expect(appsPage.newApp.createButton).toBeDisabled();
-    
+    expect(appsPage.hooks.createButton).toBeDisabled();
+
     appsPage.newApp.fillIn(invalidApp);
-    expect(appsPage.newApp.createButton).toBeDisabled();
-    
-    expect(appsPage.newApp.errorLabel).toBeDisplayed();
+    expect(appsPage.hooks.createButton).toBeDisabled();
+
+    expect(appsPage.hooks.errorLabel).toBeDisplayed();
 
     appsPage.newApp.fillIn(existingApp);
-    expect(appsPage.newApp.errorLabel).not.toBeDisplayed();
-    expect(appsPage.newApp.createButton).not.toBeDisabled();
-
-    appsPage.newApp.createButton.click();
-    // TODO: expect error notification
+    expect(appsPage.hooks.errorLabel).not.toBeDisplayed();
+    expect(appsPage.hooks.createButton).not.toBeDisabled();
   });
 
 });
