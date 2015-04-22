@@ -22,6 +22,15 @@
         data: record
       });
     };
+
+    self.post = function(tableName, record) {
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/table/data/' + tableName,
+        headers: { 'AppName': AppsService.currentApp.Name },
+        data: record
+      });
+    };
   }
   angular.module('common.services')
     .service('DataService', ['$http', 'CONSTS', 'AppsService', DataService]);

@@ -66,11 +66,12 @@
       </div>
 
       <div class="col-lg-4 col-md-4 col-sm-6 app-panel"
-           ng-repeat="app in index.apps track by app.__metadata.id">
+           ng-repeat="app in index.apps track by app.__metadata.id"
+           test-hook="apps.app-panel">
 
         <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
           <span ng-if="app.DatabaseStatus === 2" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
-          <div class="ui-ribbon-wrapper">
+          <div class="ui-ribbon-wrapper" test-hook="apps.app-panel.ribbon">
             <div class="ui-ribbon" ng-if="app.DatabaseStatus === 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index.getRibboninfo(app).text }}</div>
             <div class="ui-ribbon" ng-if="app.DatabaseStatus !== 2">{{ index.getRibboninfo(app).text }}</div>
           </div>
@@ -83,14 +84,18 @@
           <div class="panel-body app-panel-body">
             <div class="body-height">{{ ::app.Title }}</div>
             <div class="app-panel-body-link">
-              <a href="" ng-click="index.goToLink(app)" ng-if="app.DatabaseStatus == 1">
+              <a href="" ng-click="index.goToLink(app)"
+                 ng-if="app.DatabaseStatus == 1"
+                 test-hook="apps.app-panel.link">
                 <i class="ti-star"></i>
                 {{index.getGoToLink(app).linkTitle}}
               </a>
               <div ng-if="app.DatabaseStatus !== 1">&nbsp;</div>
             </div>
             <button ng-click="index.appManage(app)"
-                    class="btn btn-default btn-w-md btn-block" data-style="expand-right">
+                    class="btn btn-default btn-w-md btn-block"
+                    data-style="expand-right"
+                    test-hook="apps.app-panel.manage-button">
               {{index.getAppManageTitle(app)}}
             </button>
 

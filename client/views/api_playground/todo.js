@@ -5,9 +5,9 @@
   'use strict';
 
   angular.module('backand.playground')
-    .controller('TodoCtrl', ['$http', 'SessionService', 'usSpinnerService', '$state', 'AppsService', 'CONSTS', TodoCtrl]);
+    .controller('TodoCtrl', ['ExampleAppService', 'SessionService', 'usSpinnerService', '$state', 'AppsService', 'CONSTS', TodoCtrl]);
 
-  function TodoCtrl($http, SessionService, usSpinnerService, $state, AppsService, CONSTS) {
+  function TodoCtrl(ExampleAppService, SessionService, usSpinnerService, $state, AppsService, CONSTS) {
 
     var self = this;
     self.isNew = function () {
@@ -38,21 +38,10 @@
     var token = SessionService.getToken();
     //self.iFrameSrc = 'http://localhost:9000/#/'; //http://s3.amazonaws.com/todosample.backand.net/index.html
 
-    self.codeFiles = [
-      {name: 'index.html', type: 'html'},
-      {name: 'main.html', type: 'html'},
-      {name: 'main.js', type: 'javascript'},
-      {name: 'todo_service.js', type: 'javascript'},
-      {name: 'theme.css', type: 'css'},
-      {name: 'model.json', type: 'json'}
-    ];
-
+    self.codeFiles = ExampleAppService.codeFiles;
 
     self.getFile = function (file) {
-      $http({
-        method: 'GET',
-        url: 'examples/todo/' + file.name
-      })
+      ExampleAppService.getFile(file.name)
         .then(function (result) {
           if (typeof result.data === "object")
             self.todoHTML = angular.toJson(result.data, true);

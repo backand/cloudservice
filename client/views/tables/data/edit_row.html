@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{data.editRowData.id ? 'Edit Row (Id: ' + data.editRowData.id + ')': 'New Row'}}</h3>
+</div>
+<div class="modal-body edit-row-modal">
+  <!--<div ng-repeat="item in data.editRowData.entities">{{item.key}}, {{item.value}}, {{item.type}}</div>-->
+  <form role="form" ng-submit="data.saveRow()" name="data.editRowForm" novalidate>
+    <fieldset ng-disabled="false">
+      <div class="form-group" ng-repeat="item in data.editRowData.entities">
+        <label for="{{item.key}}_{{item.type}}">{{data.getLabel(item.key)}}</label>
+        <div ng-switch on="item.type">
+          <input ng-switch-when="text" type="text" class="form-control" id="{{item.key}}_text" name="item.key" ng-model="item.value" />
+          <textarea ng-switch-when="textarea" class="form-control" id="{{item.key}}_textarea" name="item.key" ng-model="item.value" />
+          <input ng-switch-when="checkbox" type="checkbox" class="form-control" id="{{item.key}}_checkbox" name="item.key" ng-model="item.value" />
+          <!--<span ng-switch-when="myDateTime" editable-date="item.value">{{item.value | date:"MM/dd/yyyy"}}</span>-->
+          <div ng-switch-when="dateTime">
+          <input type="date" class="editable-has-buttons editable-input form-control" ng-model="item.value" />
+            <input type="time" class="editable-has-buttons editable-input form-control" ng-model="item.value" />
+        </div></div>
+        <!--<div ng-show="DbQuery.queryForm.name.$error.pattern" class="input-error">no spaces or %$#@^&* allowed</div>-->
+      </div>
+    </fieldset>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" ng-click="data.saveRow()" ng-show="data.editRowData.id">Save</button>
+  <button class="btn btn-success" ng-click="data.saveRow()" ng-hide="data.editRowData.id">Save & Edit</button>
+  <button class="btn btn-success" ng-click="data.saveAndNew()" ng-hide="data.editRowData.id">Save & New</button>
+  <button class="btn btn-danger" ng-click="data.cancelEditRow()">Cancel</button>
+</div>
