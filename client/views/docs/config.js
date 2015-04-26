@@ -36,7 +36,7 @@
       })
       .state('docs.api-desc', {
         parent: 'app',
-        url: '/docs/api',
+        url: 'api',
         templateUrl: 'views/docs/api-desc.html'
       })
       .state('docs.api-desc-open', {
