@@ -16,12 +16,12 @@
         parent: 'app',
         url: '/docs/start',
         controller: 'Docs as docs',
-        templateUrl: 'views/docs/get-started-open.html'
+        templateUrl: 'views/docs/get_started_open.html'
       })
       .state('docs.getting-started-open', {
         parent: 'apps',
         url: 'start',
-        templateUrl: 'views/docs/get-started-open.html',
+        templateUrl: 'views/docs/get_started_open.html',
         controller: 'Docs as docs'
       })
       .state('docs.kickstart', {
@@ -32,17 +32,19 @@
       .state('docs.kickstart-open', {
         parent: 'apps',
         url: 'kickstart',
-        templateUrl: 'views/docs/kickstart-open.html'
+        templateUrl: 'views/docs/kickstart_open.html'
       })
       .state('docs.api-desc', {
         parent: 'app',
-        url: 'api',
-        templateUrl: 'views/docs/api-desc.html'
+        url: '/docs/api',
+        templateUrl: 'views/docs/api_desc.html',
+        controller: 'Desc as desc'
       })
       .state('docs.api-desc-open', {
         parent: 'apps',
         url: 'api',
-        templateUrl: 'views/docs/api-desc.html'
+        templateUrl: 'views/docs/api_desc.html',
+        controller: 'Desc as desc'
       })
   }
 

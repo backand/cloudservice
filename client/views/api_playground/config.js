@@ -19,11 +19,11 @@
       })
       .state('playground.orm-config', {
         url: '/orm/config',
-        templateUrl: 'views/api_playground/orm-config.html'
+        templateUrl: 'views/api_playground/orm_config.html'
       })
       .state('playground.orm-usage', {
         url: '/orm/usage',
-        templateUrl: 'views/api_playground/orm-usage.html'
+        templateUrl: 'views/api_playground/orm_usage.html'
       })
       .state('playground.todo', {
         url: '/todo',

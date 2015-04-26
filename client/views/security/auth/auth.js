@@ -8,6 +8,11 @@
     var self = this;
     (function init() {
       self.appName = SecurityService.appName = AppsService.appName = $state.params.appName;
+      //enable here the rules tab only for 'v_durados_user'
+      RulesService.appName = DictionaryService.appName = self.appName;
+      RulesService.tableId = 4;
+      DictionaryService.tableName = 'v_durados_user';
+
       self.data = {settings: {}, allowAnonymous: false};
       self.updateAppAuth = updateAppAuth;
       loadConfigurationData();
@@ -15,13 +20,12 @@
     }());
 
     function loadConfigurationData() {
-      setDbInfo(AppsService.currentApp);
-
       SecurityService.getRoles().then(rolesSuccessHandler, errorHandler);
     }
 
     function rolesSuccessHandler(data) {
       self.roles = data.data.data;
+      setDbInfo(AppsService.currentApp);
     }
 
     function setDbInfo(data) {
@@ -31,10 +35,6 @@
       AppsService.appKeys(self.appName).then(setKeysInfo, errorHandler);
       $scope.$watch('auth', updateAppAuth, true);
 
-      //enable here the rules tab only for 'v_durados_user'
-      RulesService.appName = DictionaryService.appName = self.appName;
-      RulesService.tableId = 4;
-      DictionaryService.tableName = 'v_durados_user';
     }
 
     function setKeysInfo(data){

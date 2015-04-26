@@ -8,33 +8,34 @@
         <div class="panel-heading"><strong>API Documentation</strong></div>
         <div class="panel-body">
             <div class="row col-sm-10 col-sm-offset-1">
-                <h1>Backand Basics</h1>
-                <h2>What is Backand</h2>
+                <h1>Topics</h1>
+              <ul>
+                <h4><li><a href="" ng-click="desc.scrollTo('SecurityConcept')">Security Concept</a></li></h4>
+                <h4><li><a href="" ng-click="desc.scrollTo('CustomActions')">Custom Actions</a></li></h4>
+                <h4><li><a href="" ng-click="desc.scrollTo('APIDescription')">API Description</a></li></h4>
+              </ul>
+                <h1>What is Backand</h1>
                 <p>
                     Backand's goal is to free up the front end development of web applications by providing a rich, robust, and scalable back end with minimal impact on the development process. The key feature offered by Backand is the <a target="_blank" href="http://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a>, but most application back ends require more than just object management. Backand provides you with most of what your application needs automatically, offering features like tracking data changes, logging, role-based security, back-office connectivity, and much more. You can even create your own server side actions with JavaScript, running custom server side queries and easily integrating with third party services.
                 </p>
-                <h2>Backand ORM</h2>
+                <h3>Backand ORM</h3>
                 <p>
                     Backand <a target="_blank" href="http://en.wikipedia.org/wiki/Object-relational_mapping">ORM</a> automatically provides you with a REST API to perform <a target="_blank" href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations against your database. You can connect an existing database you already have, or create a new database with the Backand dashboard. When you create a database at Backand it is automatically populated in Amazon's AWS Relational Database Service (<a target="_blank" href="http://aws.amazon.com/rds/">AWS RDS</a>), providing an isolated database server that you can scale automatically, or even use in other applications entirely independent of Backand. Even though Backand focuses on software services as opposed to platform services, when you register a database with Backand it is truly <b>your</b> database.
                 </p>
-                <!--<h3>
-                    Model Definition
-                </h3>
-                <p></p>-->
                 <h3>
                     SQL and NoSQL - The Best of Both Worlds
                 </h3>
                 <p>
                     Through the flexibility of Backand's API, you have the ability to work with your data at whatever level you desire. You can perform basic <a target="_blank" href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations in a couple ways. In one way you can mimic a SQL database by simply returning a shallow representation of the object, with foreign key references remaining as simple IDs in the response data. However, you can also perform deep queries that resolve all of the underlying data objects into a single set of response data, giving you the level of object detail that you often see with NoSQL databases. With a simple parameter change, you can switch between the two patterns at will!
                 </p>
-                <h2>Security Concept</h2>
+                <h1 id="SecurityConcept">Security Concept</h1>
                 <h3>Authentication</h3>
                 <p>
-                    The default authentication setup for Backand applications relies on <a target="_blank" href="http://oauth.net/2/">OAuth2</a> to provide tokenized authentication. By logging in with your username (your email address), your password, and your app name, you receive an authentication token that is valid for 24 hours. This token is required for all communication with Backand, and as such we highly recommend that you use Backand's angular infrastructure to help you save the access token. Using the <a target="_blank" href="https://docs.angularjs.org/api/ngCookies">ngCookies</a>  wrapper, you can adjust the default request header to include your current access token, greatly easing the process of securing your API communications. Backand also offers <a ng-href="\#/api#anonymous">Anonymous Access</a>, which allows you to access your application without the need to authenticate via username and password.
+                    The default authentication setup for Backand applications relies on <a target="_blank" href="http://oauth.net/2/">OAuth2</a> to provide tokenized authentication. By logging in with your username (your email address), your password, and your app name, you receive an authentication token that is valid for 24 hours. This token is required for all communication with Backand, and as such we highly recommend that you use Backand's angular infrastructure to help you save the access token. Using the <a target="_blank" href="https://docs.angularjs.org/api/ngCookies">ngCookies</a>  wrapper, you can adjust the default request header to include your current access token, greatly easing the process of securing your API communications. Backand also offers <a href="" ng-click="desc.scrollTo('anonymous')">Anonymous Access</a>, which allows you to access your application without the need to authenticate via username and password.
                 </p>
                 <h3>Sign Up</h3>
                 <p>
-                    Registering with Backand, and creating an application, automatically sets you as a user with an "Admin" role in your new project (see <a ng-href="\#/api#roles">Roles</a> for more info). By default your applicaation is marked private, which means that only users that you have personally invited can sign up for your app. This can be changed in the dashboard by setting your application to Public in the Security & Auth --> Configuration menu. Setting your application to public allows any user to register for - and use - your application. These users are assigned a default role, which needs to be configured when you enable public usage of your app (see <a ng-href="\#/api#roles">Roles</a> for more details). For security reasons you cannot change the role of a user through API calls - this can only be accomplished either by having an admin change the appropriate settings on the Security & Auth -> Users page, or by creating a custom server-side action that performs this task.
+                    Registering with Backand, and creating an application, automatically sets you as a user with an "Admin" role in your new project (see <a href="" ng-click="desc.scrollTo('roles')">Roles</a> for more info). By default your applicaation is marked private, which means that only users that you have personally invited can sign up for your app. This can be changed in the dashboard by setting your application to Public in the Security & Auth --> Configuration menu. Setting your application to public allows any user to register for - and use - your application. These users are assigned a default role, which needs to be configured when you enable public usage of your app (see <a href="" ng-click="desc.scrollTo('roles')">Roles</a> for more details). For security reasons you cannot change the role of a user through API calls - this can only be accomplished either by having an admin change the appropriate settings on the Security & Auth -> Users page, or by creating a custom server-side action that performs this task.
                     For a private application the registration steps are as follow:
                     <ul>
                         <li>First, set your application's registration page on the Security & Auth --> Configuration page.</li>
@@ -44,7 +45,7 @@
                         <li>After the user submits their registration, Backand sends a verification email to authenticate the user's identity</li>
                         <li>After the user clicks on the link in the verification email, Backand completes the registration process and redirects to the "Custom Verified Email Page" URL for your application. Configure this on the Security & Auth --> Configuration page</li>
                     </ul>
-                    <a ng-href="\#/api#api-sign-up">Here</a> is the api of the Sign Up
+                    <a href="" ng-click="desc.scrollTo('api-sign-up')">Here</a> is the api of the Sign Up
 
                 </p>
                 <h3>Remove user from the app</h3>
@@ -53,7 +54,7 @@
                 </p>
                 <h3 id="anonymous">Anonymous Access</h3>
                 <p>
-                    If you wish to enable anonymous access to your application, you need to perform a couple steps. First, you need to turn on the Anonymous Access option in you application's settings. Once that's done, you are given the option to create an AnonymousToken value. By passing this value in a request header (e.g. AnonymousToken=&lt;your token here&gt;) you can perform api actions for your application. finally, you need to set the default role of an anonymous user within your application's settings (see <a ng-href="\#/api#roles">Roles</a> for more info).
+                    If you wish to enable anonymous access to your application, you need to perform a couple steps. First, you need to turn on the Anonymous Access option in you application's settings. Once that's done, you are given the option to create an AnonymousToken value. By passing this value in a request header (e.g. AnonymousToken=&lt;your token here&gt;) you can perform api actions for your application. finally, you need to set the default role of an anonymous user within your application's settings (see <a href="" ng-click="desc.scrollTo('roles')">Roles</a> for more info).
                 </p>
                 <h3>Link your app's users with Backand's users</h3>
                 <p>
@@ -66,7 +67,7 @@
                 <p>
                     While Security Templates provide reusable permissions platforms that can be spread across a number of roles, you can also override security template settings and provide specific permissions for each individual role. This allows you to have more granular control over the CRUD actions that can be performed by the users in your system. When a user with insufficient security access tries to perform an action for which they do not have permission, a 403 (Forbidden) error response is returned.
                 </p>
-                <h2>Custom Actions</h2>
+                <h1 id="CustomActions">Custom Actions</h1>
                 <p>
 
                     In Backand's system, you can create server-side activites called Actions. These actions can be used for the purpose of security, integration, performance, notification and data integrity, among others, providing you with more flexibility in your app's design. There are two types of Actions that can be created. The first are initiated via a direct web request. These are known as "On Demand" actions. Additionally, you can create automated actions that take place based upon a data interaction event. These automated actions can occur whenever you create, update, or delete an item in your system. On Demand actions are associated with a specific object, and can be found on the Object --> {name} page in the Actions tab. The automated Create, Update and Delete actions are associated with a specific object that is compatible with a specific row in a table, while On Demand actions make association with a specific role optional.
@@ -119,27 +120,20 @@ function backandCallback(userInput, dbRow, parameters, userProfile) {
                 </p>
 
 
-                    <h2>Queries</h2>
+                    <h1>Queries</h1>
                     <p>
                         You can create and call your own custom queries in your application. You can use parameters as tokens that will be replaced with the actual parameter values, similar to how Custom Actions work. You can create your own filters, sorting, and paging, as well as use aggregation to summarize information.
                     </p>
-                    <!--<h2>Back Office</h2>-->
-                    <h2>
-                        API Description
-                    </h2>
-
-                    <h3>
-                        Security & Authentication
-                    </h3>
-
+                    <h1 id="APIDescription">API Description</h1>
+                    <h3>Security & Authentication</h3>
                 <p>
                     Backand provides role-based security that allows you to determine specific permissions for each group of users. Backand uses <a target="_blank" href="http://oauth.net/2/">OAuth2</a> authentication to identify users. Backand's implementation of OAuth2 authentication requires you to send the username, password, and appname (application name). In response, you receive an authentication token that must be supplied for all further communication with Backand.
-                </p> 
+                </p>
                 <p>
 
                     You can either provide this token with each request, or use a cookie to persist the authentication token (recommended). Providing this token is required to use Backand's REST API. We have prepared a Backand Provider that will help you the authentication activities. Start by including the Backand SDK script files in your app:
                     </p>
-                
+
                     <pre><code class="html hljs">
       &lt;!-- We use client cookies to save the REST API token --&gt;
       &lt;script src="//code.angularjs.org/1.3.0/angular-cookies.min.js"&gt;&lt;/script&gt;
@@ -154,9 +148,8 @@ function backandCallback(userInput, dbRow, parameters, userProfile) {
       angular.module('YOUR-APP-NAME', ['backand', 'ngCookies'])
     </code></pre>
                     <p>
+                        Once this is complete, you are ready to sign in to Backand, for other users to sign up to your app read about it <a  href="" ng-click="desc.scrollTo('api-sign-up')">here</a>. There is also an option for anonymous access, read about it <a href="" ng-click="desc.scrollTo('anonymous')">here</a>.
 
-                        Once this is complete, you are ready to sign in to Backand, for other users to sign up to your app read about it <a ng-href="\#/api#api-sign-up">here</a>.There is also an option for anonymous access, read about it <a ng-href="\#/api#anonymous">here</a>.
-                    
                     </p>
                     <br />
                     <h4 id="sign_in">
@@ -254,7 +247,7 @@ function backandCallback(userInput, dbRow, parameters, userProfile) {
                         If you want to allow anonymous users to access the application (i.e. without username and password), you can use the AnonymousToken parameter:
                     </p>
                     <pre><code>
-      
+
       // Use an Angular HTTP Interceptor to add the anonymous token to each HTTP request
       function httpInterceptor($q, $log) {
         return {
