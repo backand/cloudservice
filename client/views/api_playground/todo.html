@@ -1,7 +1,7 @@
 <section class="page-form-ele page ng-scope">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <strong>Todo list example page</strong>
+      <strong test-hook="example.playground.title">Todo list example page</strong>
   </div>
 
   <div class="panel-body">
@@ -39,7 +39,7 @@
         </div>
         <div class="row col-md-5">
 
-          <div ng-hide="todo.iframeReady()" class="iframe-substitute">
+          <div ng-hide="todo.iframeReady()" class="iframe-substitute" test-hook="example.playground.iframe-substitute">
             <div >
               <div class="iframe-substitute-message">Please wait a few minutes while the application is been created.</div><br/><br/>
               <div us-spinner spinner-key="loading-iframe" us-spinner="{length:10, radius: 10}" style="position: relative;"></div><br/><br/>

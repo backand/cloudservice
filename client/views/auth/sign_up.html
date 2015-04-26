@@ -29,6 +29,7 @@
                            class="form-control input-lg"
                            placeholder="Full Name"
                            name="uFullFirst"
+                           test-hook="signup.name"
                            ng-model="signup.fullName"
                            ng-model-options="{debounce: 500}"
                            required>
@@ -44,6 +45,7 @@
                            class="form-control input-lg"
                            placeholder="Email (Username)"
                            name="uEmail"
+                           test-hook="signup.email"
                            ng-model="signup.email"
                            ng-model-options="{updateOn: 'blur'}"
                            ng-focus="emailInput.focus = true"
@@ -66,6 +68,7 @@
                            class="form-control input-lg"
                            placeholder="Password"
                            name="Upassword"
+                           test-hook="signup.password"
                            ng-model="signup.password"
                            ng-model-options="{debounce: 500}"
 
@@ -91,6 +94,7 @@
                            class="form-control input-lg"
                            placeholder="Re-type Password"
                            name="confirm_password"
+                           test-hook="signup.password-confirm"
                            match="signup.password"
                            ng-model="signup.repassword"
                            ng-model-options="{debounce: 500}"
@@ -114,6 +118,7 @@
                   <div class="divider"></div>
                   <button type="submit"
                           ng-disabled="form.$invalid"
+                          test-hook="signup.signup"
                           class="blue-button btn btn-lg"
                           ladda="signup.loading" data-style="expand-right">Sign up
                   </button>

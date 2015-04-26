@@ -95,7 +95,6 @@
       getApp(self.currentApp.Name)
         .success(function (result) {
           if (result && result.DatabaseStatus != 2) {
-            stopRefreshDBStatus();
             setCurrentApp(result);
             $rootScope.$broadcast('AppDbReady', result.Name);
           }

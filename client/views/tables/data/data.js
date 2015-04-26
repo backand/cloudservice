@@ -10,6 +10,7 @@
       'ColumnsService',
       'DataService',
       '$scope',
+      '$modal',
       'usSpinnerService',
       '$timeout',
       '$rootScope',
@@ -17,8 +18,11 @@
       ViewData
     ]);
 
-  function ViewData(NotificationService, ColumnsService, DataService, $scope, usSpinnerService, $timeout, $rootScope, tableName) {
+  function ViewData(NotificationService, ColumnsService, DataService, $scope, $modal, usSpinnerService, $timeout, $rootScope, tableName) {
     var self = this;
+
+    $scope.$scope = $scope; //for ui-grid inner scope
+
     self.tableName = tableName;
     self.title = '';
     self.sort = '';
@@ -37,6 +41,10 @@
     (function init() {
       getData();
     }());
+
+    self.createData = function (data) {
+      DataService.post(tableName, data);
+    };
 
     self.gridOptions = {
       enablePaginationControls: false,
@@ -80,6 +88,7 @@
 
     function successColumnsHandler (data) {
       self.columnDefs = data.fields;
+      getEditRowData();
     }
 
     function successDataHandler(response) {
@@ -100,8 +109,17 @@
           cellTemplate: getCellEditTemplate(columnInfo)
         }
       });
+
+      self.gridOptions.columnDefs.unshift({
+        width: 30,
+        name: ' ',
+        enableSorting: false,
+        enableColumnMenu: false,
+        cellTemplate: '<div class="grid-edit" ng-click="getExternalScopes().data.editRow($event, row)"><i class="ti-pencil"/></div>'
+      });
+
       if(_.last(self.gridOptions.columnDefs))
-        _.last(self.gridOptions.columnDefs).minWidth = 286;
+        _.last(self.gridOptions.columnDefs).minWidth = 286; //for edit widget to be shown properly
 
       self.gridOptions.totalItems = response.data.totalRows;
 
@@ -124,40 +142,26 @@
       NotificationService.add('error', message);
       usSpinnerService.stop("loading");
     }
+
     function getCellEditTemplate (column) {
       if (column.name === 'Id') return undefined;
-      var type = 'text';
-      var calllbackOptions = ' onbeforesave="$root.data.onUpdateRowCell(row, col, $data)"';
-      switch (column.type) {
-        case 'Numeric':
-          type = 'text'; // Also floats, so can't use number
-          break;
-        case 'DateTime':
-          return '<span class="ui-grid-cell-contents" editable-date="MODEL_COL_FIELD" '
-                  + calllbackOptions
-                  + '>{{COL_FIELD | date:"MM/dd/yyyy" CUSTOM_FILTERS }}</span>'
-                  + '<span class="ui-grid-cell-contents" editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" '
-                  + calllbackOptions
-                  + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span>';
-          break;
-        case 'ShortText':
-          type = 'text';
-          break;
-        case 'SingleSelect':
-          break;
-        case 'LongText':
-          type = 'textarea';
-          break;
-        case 'Boolean':
-          type = 'checkbox';
-          break;
-        default:
-          type = 'text'
-      }
+      var callbackOptions = ' onbeforesave="$root.data.onUpdateRowCell(row, col, $data)"';
+
+      var type = getFieldType(column.type);
+
+      if (type == 'dateTime')
+        return '<span class="ui-grid-cell-contents" editable-date="MODEL_COL_FIELD" '
+          + callbackOptions
+          + '>{{COL_FIELD | date:"MM/dd/yyyy" CUSTOM_FILTERS }}</span>'
+          + '<span class="ui-grid-cell-contents" editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" '
+          + callbackOptions
+          + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span>';
+
       return '<div class="ui-grid-cell-contents" editable-' + type + '="MODEL_COL_FIELD" '
-        + calllbackOptions
+        + callbackOptions
         + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
     }
+
     self.onUpdateRowCell = function(row, col, newValue) {
       var updatedObject = angular.copy(row.entity);
       updatedObject[col.name] = newValue;
@@ -172,6 +176,104 @@
           });
         }
       });
+    }
+
+    function getFieldType(type) {
+      switch (type) {
+        case 'Numeric':
+          return 'text'; // Also floats, so can't use number
+        case 'DateTime':
+          return 'dateTime';
+        case 'ShortText':
+          return 'text';
+        case 'SingleSelect':
+          return null;
+        case 'LongText':
+          return 'textarea';
+        case 'Boolean':
+          return 'checkbox';
+        default:
+          return 'text'
+      }
+    }
+
+
+    // edit row modal
+
+    self.getLabel = function (text) {
+      return text.replace(/_/g, ' ');
+    };
+
+    self.newRow = function () {
+      getEditRowEntity();
+      openModal();
+    };
+
+    self.editRow = function (event, rowItem) {
+      getEditRowEntity(rowItem);
+      openModal();
+    };
+
+    function getEditRowEntity(rowItem) {
+      self.editRowData.id = rowItem ? rowItem.entity.__metadata.id : null;
+      self.editRowData.entities = [];
+      self.editRowData.form.forEach(function (formItem) {
+        self.editRowData.entities.push({
+          key: formItem.key,
+          value: rowItem ? rowItem.entity[formItem.key] : null,
+          type: formItem.type
+        });
+      });
+    }
+
+    function resetEditRowData() {
+      self.editRowData = {
+        form: []
+      };
+    }
+
+    function getEditRowData () {
+      resetEditRowData();
+      self.columnDefs.forEach(function (column) {
+        if (column.name != 'Id') {
+          self.editRowData.form.push({
+            key: column.name,
+            type: getFieldType(column.type)
+          });
+        }
+      });
+    }
+
+    function openModal () {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/data/edit_row.html'
+      });
+
+      self.saveRow = function () {
+        var record = {};
+        self.editRowData.entities.forEach(function (entity) {
+          if (entity.value !== null)
+            record[entity.key] = entity.value;
+        });
+
+        if (self.editRowData.id) {
+          record.Id = self.editRowData.id;
+          return DataService.update(self.tableName, record)
+            .then(modalInstance.close);
+        }
+        else
+          return DataService.post(self.tableName, record)
+            .then(modalInstance.close);
+      };
+
+      self.saveAndNew = function () {
+        self.saveRow()
+          .then(self.newRow)
+      };
+
+      self.cancelEditRow = function () {
+        modalInstance.dismiss('cancel');
+      };
     }
   }
 }());

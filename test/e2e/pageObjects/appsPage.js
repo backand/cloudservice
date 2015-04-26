@@ -1,28 +1,51 @@
 'use strict';
 
 function AppsPage() {
-  this._init = function() {
-    this._initNewApp();
+  var self = this;
+  self._init = function() {
+    self._initNewApp();
   };
 
-  this._initNewApp = function() {
-    this.newApp = {
-      nameInput: element(by.testHook('apps.new-app.name')),
-      titleInput: element(by.testHook('apps.new-app.title')),
-      createButton: element(by.testHook('apps.new-app.create')),
-      errorLabel: element(by.testHook('apps.new-app.error')),
+  self.hooks = {
+    nameInput: element(by.testHook('apps.new-app.name')),
+    titleInput: element(by.testHook('apps.new-app.title')),
+    createButton: element(by.testHook('apps.new-app.create')),
+    errorLabel: element(by.testHook('apps.new-app.error')),
+
+    appPanels: element.all(by.testHook('apps.app-panel')),
+    appPanelsRibbon: element(by.testHook('apps.app-panel.ribbon')),
+
+    getFirstPanelRibbon: function () {
+      return self.hooks.appPanels.first().element(by.testHook('apps.app-panel.ribbon'));
+    },
+    getFirstPanelLink: function () {
+      return self.hooks.appPanels.first().element(by.testHook('apps.app-panel.link'));
+    },
+    getFirstPanelManageButton: function () {
+      return self.hooks.appPanels.first().element(by.testHook('apps.app-panel.manage-button'));
+    }
+  };
+
+  self.actions = {
+    clickFirstPanelManageButton: function () {
+      return self.hooks.getFirstPanelManageButton().click();
+    }
+  };
+
+  self._initNewApp = function() {
+    self.newApp = {
       fillIn: function(app) {
-        if (app.name) helpers.fillInput(this.nameInput, app.name);
-        if (app.title) helpers.fillInput(this.titleInput, app.title);
+        if (app.name) helpers.fillInput(self.hooks.nameInput, app.name);
+        if (app.title) helpers.fillInput(self.hooks.titleInput, app.title);
       },
       create: function(app) {
         this.fillIn(app);
-        this.createButton.click();
+        self.hooks.createButton.click();
       }
     };
   };
 
-  this._init();
+  self._init();
 }
 
 module.exports = new AppsPage();

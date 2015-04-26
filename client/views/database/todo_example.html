@@ -2,7 +2,7 @@
 
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> Todo list App Example</strong>
+      <strong test-hook="example.database.title"> Todo list App Example</strong>
 
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
@@ -41,7 +41,8 @@
           <div class="form-group">
             <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
                     ladda="dbtodo.loading" data-style="expand-right"
-                    ng-click="dbtodo.create()">Build
+                    ng-click="dbtodo.create()"
+              test-hook="example.database.connect">Build
             </button>
             <br/>
           </div>

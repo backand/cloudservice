@@ -11,7 +11,8 @@
       <ul class="db-nav db-nav-tabs"
           ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
         <li ng-class="{active: dbedit.template === dbedit.customTemplate}" class="pull-left">
-          <a ng-click="dbedit.customize()" href="" tooltip="{{ ::dbedit.customTemplate.description }}">
+          <a ng-click="dbedit.customize()" href=""
+             tooltip="{{ ::dbedit.customTemplate.description }}" test-hook="database-edit.json.custom">
             {{dbedit.customTemplate.title}}
           </a></li>
 
@@ -45,7 +46,8 @@
       <div>
         <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
                 ladda="dbedit.loading" data-style="expand-right"
-                ng-click="dbedit.create()">
+                ng-click="dbedit.create()"
+                test-hook="database-edit.create">
           Create
         </button>
       </div>
