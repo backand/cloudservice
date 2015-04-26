@@ -14,6 +14,7 @@ angular.module('backand.apps')
 
     (function () {
       self.apps = appsList.data;
+      self.showJumbo = LayoutService.showJumbo();
     }());
 
     self.addApp = function() {
@@ -132,16 +133,14 @@ angular.module('backand.apps')
       stopRefresh();
     });
 
-    self.showJumbo = function () {
-      return LayoutService.showJumbo();
-    };
-
     self.closeJumbo = function () {
       LayoutService.closeJumbo();
+      self.showJumbo = false;
     };
 
     self.openJumbo = function () {
       LayoutService.openJumbo();
+      self.showJumbo = true;
     };
 
     self.setUserId = function (x) {

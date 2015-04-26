@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function SessionService($rootScope, $cookieStore, JacoRecorder) {
+  function SessionService(CONSTS, $cookieStore) {
     var self = this;
 
     this.currentUser = $cookieStore.get('globals') ? $cookieStore.get('globals').currentUser : undefined;
@@ -42,8 +42,8 @@
         __insp.push(['identify', user.currentUser.username]);
       if(window.Intercom)
         window.Intercom('boot', {
-          app_id: "ufkkj816",
-          name: user.currentUser.userId,
+          app_id: CONSTS.IntercomAppId,
+          name: user.currentUser.username,
           email: user.currentUser.username,
           created_at: new Date().getTime()
         });
@@ -56,5 +56,5 @@
   }
 
   angular.module('common.services', ['ngCookies'])
-    .service('SessionService', ['$rootScope', '$cookieStore', SessionService])
+    .service('SessionService', ['CONSTS', '$cookieStore', SessionService])
 })();

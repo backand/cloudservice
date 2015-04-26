@@ -1,4 +1,5 @@
 {
   "appUrl":"https://api.backand.com:8079",
-  "playgroundUrl":"//s3.amazonaws.com/demo.backand.net/misc/rest-api/"
+  "playgroundUrl":"//s3.amazonaws.com/demo.backand.net/misc/rest-api/",
+  "IntercomAppId":"ufkkj816"
 }

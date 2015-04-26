@@ -4,11 +4,18 @@
   function LayoutService($localStorage, AuthService) {
 
     var self = this;
-    $localStorage.backand[AuthService.getUserId()] =
-      $localStorage.backand[AuthService.getUserId()] || {};
+    $localStorage.backand = $localStorage.backand || {};
+    $localStorage.backand[AuthService.getUserId()] = $localStorage.backand[AuthService.getUserId()] || {};
 
     self.showJumbo = function () {
+        $localStorage.backand = $localStorage.backand || {};
+        if(!$localStorage.backand[AuthService.getUserId()] || !angular.isDefined($localStorage.backand[AuthService.getUserId()].hideJumbo)){
+          $localStorage.backand[AuthService.getUserId()] = $localStorage.backand[AuthService.getUserId()] || {};
+          self.openJumbo();
+        }
+
       return !$localStorage.backand[AuthService.getUserId()].hideJumbo;
+
     };
 
     self.closeJumbo = function () {

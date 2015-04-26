@@ -8,6 +8,10 @@
   function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location) {
     var self = this;
 
+    (function () {
+      self.showJumbo = LayoutService.showJumbo();
+    }());
+
     self.apps = AppsService.apps;
     self.currentAppName = AppsService.currentApp.Name;
 
@@ -21,7 +25,7 @@
     };
 
     self.hideAppList = function () {
-      return $state.current.name === 'apps.index' && LayoutService.showJumbo();
+      return $state.current.name === 'apps.index' && self.showJumbo;
     };
 
     self.getCurrentUser = function () {

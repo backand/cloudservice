@@ -5,8 +5,12 @@
 
     var self = this;
 
+    (function () {
+      self.showJumbo = LayoutService.showJumbo();
+    }());
+
     self.hideNav = function () {
-      return ($state.current.name == 'apps.index' && LayoutService.showJumbo())
+      return ($state.current.name == 'apps.index' && self.showJumbo)
     };
 
     self.getAppName = function () {
