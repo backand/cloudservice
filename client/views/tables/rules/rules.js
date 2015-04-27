@@ -115,7 +115,7 @@
         });
     };
 
-    self.saveAction = function () {
+    self.saveAction = function (withTest) {
       self.saving = true;
       self.testUrl = '';
       var ruleToSend = replaceSpecialCharInCode(self.action);
@@ -127,6 +127,9 @@
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
           self.saving = false;
+          if(withTest)
+            self.testData();
+          self.requestTestForm = true; //always open test after save on demand action
         }, function() {self.saving = false;});
     };
 
@@ -181,7 +184,7 @@
       title: 'Action',
       namePattern: /^\w+[\w ].*$/,
       dataActions: [
-        {value: 'OnDemand', label: 'On demand - Execute from REST API', level1: 0, level2: 0},
+        {value: 'OnDemand', label: 'On demand - Execute via REST API', level1: 0, level2: 0},
         {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 1, level2: 0},
         {value: 'AfterCreateBeforeCommit', label: 'Create - During data saved before it committed', level1: 1, level2: 1},
         {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 1, level2: 2},
@@ -195,7 +198,7 @@
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
         {value: 'Notify', label: 'Send Email'},
-        {value: 'Execute', label: 'Transactional database script'}
+        {value: 'Execute', label: 'Transactional sql script'}
       ],
       dictionaryItems: {},
       insertAtChar: insertTokenAtChar,

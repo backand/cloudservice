@@ -61,11 +61,12 @@
       var parameters = angular.copy(test.parameters);
       if (debug)
         parameters['$$debug$$'] =  true;
+      var rowId = test.rowId || '';
       return encodeURI(
         CONSTS.appUrl +
         self.tableRuleUrl +
         self.tableName + '/' +
-        test.rowId +
+        rowId +
         '?name=' + rule.name +
         '&parameters=' + JSON.stringify(parameters));
     };

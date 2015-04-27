@@ -17,7 +17,7 @@
      * init the data
      */
     (function init() {
-      isAdmin = ($state.$current.url.prefix.indexOf('/history/') == -1);
+      isAdmin = ($state.$current.url.source.indexOf('/history') == -1);
       if(isAdmin){
         self.title ='Log Configuration';
         self.names = {ViewName: 'Entity Name', PK:'Entity Id', FieldName:'Property Name'};

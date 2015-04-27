@@ -1,6 +1,8 @@
 <div id="grid-container">
     <div us-spinner spinner-key="loading" spinner-start-active></div>
-    <button class="btn btn-success" ng-click="data.newRow()">+ New Row</button><br/><br/>
+    <button class="btn btn-success" ng-if="false" ng-click="data.newRow()">+ New Row</button>
+    <button class="btn btn-default pull-right" ng-click="data.refresh()">Refresh Data</button>
+    <br/><br/>
     <div ui-grid="data.gridOptions"
          class="datagrid" ui-grid-resize-columns
          external-scopes="$scope"

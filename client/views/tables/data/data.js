@@ -46,6 +46,10 @@
       DataService.post(tableName, data);
     };
 
+    self.refresh = function(){
+      getData();
+    }
+
     self.gridOptions = {
       enablePaginationControls: false,
       useExternalSorting: true,
@@ -64,6 +68,8 @@
         });
       }
     };
+
+
 
     $scope.$watchGroup([
         'data.paginationOptions.pageNumber',
@@ -139,12 +145,16 @@
     };
 
     function errorHandler(error, message) {
-      NotificationService.add('error', message);
       usSpinnerService.stop("loading");
+      NotificationService.add('error', message);
     }
 
     function getCellEditTemplate (column) {
-      if (column.name === 'Id') return undefined;
+      if (column.form.hideInEdit || column.form.disableInEdit) return undefined;
+
+      //var show =  !column.form.hideInCreate : !column.form.hideInEdit,
+      //var disabled: scope.isNew ? field.form.disableInCreate : field.form.disableInEdit,
+
       var callbackOptions = ' onbeforesave="$root.data.onUpdateRowCell(row, col, $data)"';
 
       var type = getFieldType(column.type);
@@ -235,7 +245,7 @@
     function getEditRowData () {
       resetEditRowData();
       self.columnDefs.forEach(function (column) {
-        if (column.name != 'Id') {
+        if (!column.form.hideInCreate && !column.form.disableInCreate && column.type != 'MultiSelect') {
           self.editRowData.form.push({
             key: column.name,
             type: getFieldType(column.type)
@@ -264,7 +274,9 @@
         else
           return DataService.post(self.tableName, record)
             .then(modalInstance.close);
+
       };
+
 
       self.saveAndNew = function () {
         self.saveRow()

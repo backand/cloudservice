@@ -14,37 +14,44 @@
 
   <hr>
   <div class="form-group">
-    <label>Row ID</label>
-    <input type="number" min="0"
+    <label>Row Id (Optional)</label>
+    <input type="number"
+           id="rowId"
            class="form-control"
            ng-model="rules.test.rowId">
   </div>
 
-  <hr>
-
-  <label>HTTP Request URL:</label>
-  <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
-  <br/>
-
   <div class="row">
-    <div class="col-xs-4 col-md-6" style="height: 30px;"
-         us-spinner spinner-key="testing-action" us-spinner="{length:10, radius: 10}"></div>
-    <div class="col-md-6 pull-right">
+    <div class="col-md-12">
       <button type="button"
+              style="margin-left: 20px;"
               class="btn btn-success pull-right"
               data-style="expand-right" ladda="rules.test.testLoading"
               ng-disabled="!rules.allowTest()"
               ng-click="rules.testData()">Test Action
       </button>
+
+      <button type="button"
+              style=""
+              class="btn btn-primary pull-right"
+              data-style="expand-right" ladda="rules.saving"
+              ng-disabled="rules.allowTest()"
+              ng-click="rules.saveAction(true);">Save & Test
+      </button>
     </div>
   </div>
+
+  <hr/>
+
+  <label>Request URL:</label>
+  <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
 
   <div ng-show="!rules.allowTest()">** Must save first to enable Test</div>
 </ng-form>
 
 <div ng-if="rules.test.result">
   <hr/>
-  <label>Test Result:</label>
+  <label>Response Body:</label>
   <br/>
   {{ rules.test.result | json }}
   <br/>
@@ -54,7 +61,7 @@
 
 <div ng-if="rules.test.result">
   <hr/>
-  <label>Console:</label>
+  <label>Debug Console:</label>
   <br/>
 
   <table class="table log-table">
