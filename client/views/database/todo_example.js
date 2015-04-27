@@ -1,9 +1,10 @@
 (function  () {
   'use strict';
   angular.module('backand.database')
-    .controller('DatabaseTodoExample', ['$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', '$http', '$scope','$analytics', DatabaseTodoExample]);
+    .controller('DatabaseTodoExample', ['$state', 'DatabaseNamesService', 'NotificationService', 'DatabaseService', '$http',
+      '$scope','$analytics','$intercom', DatabaseTodoExample]);
 
-  function DatabaseTodoExample($state, DatabaseNamesService, NotificationService, DatabaseService, $http, $scope, $analytics) {
+  function DatabaseTodoExample($state, DatabaseNamesService, NotificationService, DatabaseService, $http, $scope, $analytics, $intercom) {
 
     var self = this;
 
@@ -29,6 +30,7 @@
         .success(function(data) {
           NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
           $analytics.eventTrack('create todo', {name: self.appName});
+          $intercom.trackEvent('create todo',{name: self.appName});
           $state.go('playground.todo');
         })
         .error(function(err) {

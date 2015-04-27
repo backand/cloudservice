@@ -2,10 +2,10 @@
   'use strict';
 angular.module('backand.database')
   .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService',
-    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$analytics', DatabaseEdit]);
+    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$analytics','$intercom', DatabaseEdit]);
 
   function DatabaseEdit($scope, $http, AppsService, $stateParams, $state, DatabaseNamesService,
-                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $analytics) {
+                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $analytics, $intercom) {
 
     var self = this;
     var currentApp = AppsService.currentApp;
@@ -90,6 +90,8 @@ angular.module('backand.database')
             $analytics.eventTrack('create app', {schema: self.template.schema});
           else
             $analytics.eventTrack('create app', {app: self.template.appName});
+
+          $intercom.trackEvent('create app',{app: self.template.appName});
           $state.go('docs.get-started');
         })
         .error(function (err) {

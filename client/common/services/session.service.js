@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function SessionService(CONSTS, $cookieStore) {
+  function SessionService(CONSTS, $cookieStore, $intercom) {
     var self = this;
 
     this.currentUser = $cookieStore.get('globals') ? $cookieStore.get('globals').currentUser : undefined;
@@ -40,8 +40,8 @@
         woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
       if (typeof __insp != 'undefined')
         __insp.push(['identify', user.currentUser.username]);
-      if(window.Intercom)
-        window.Intercom('boot', {
+      if($intercom)
+        $intercom.boot({
           app_id: CONSTS.IntercomAppId,
           name: user.currentUser.username,
           email: user.currentUser.username,
@@ -56,5 +56,5 @@
   }
 
   angular.module('common.services', ['ngCookies'])
-    .service('SessionService', ['CONSTS', '$cookieStore', SessionService])
+    .service('SessionService', ['CONSTS', '$cookieStore','$intercom', SessionService])
 })();

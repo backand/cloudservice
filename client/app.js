@@ -60,10 +60,14 @@
     'angled-windows.directives',
     'ngStorage',
     'angulartics',
-    'angulartics.woopra'
+    'angulartics.woopra',
+    'ngIntercom'
   ])
     .config(['ngClipProvider', function (ngClipProvider) {
       ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");
+    }])
+    .config(['$intercomProvider','CONSTS', function ($intercomProvider,CONSTS) {
+      $intercomProvider.asyncLoading(true).appID(CONSTS.IntercomAppId);
     }])
     .run(run)
     .value('version', '1.0.1');

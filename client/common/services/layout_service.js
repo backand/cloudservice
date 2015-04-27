@@ -4,26 +4,28 @@
   function LayoutService($localStorage, AuthService) {
 
     var self = this;
+    self.userId = AuthService.getUserId();
     $localStorage.backand = $localStorage.backand || {};
-    $localStorage.backand[AuthService.getUserId()] = $localStorage.backand[AuthService.getUserId()] || {};
+    $localStorage.backand[self.userId] = $localStorage.backand[self.userId] || {};
+
 
     self.showJumbo = function () {
         $localStorage.backand = $localStorage.backand || {};
-        if(!$localStorage.backand[AuthService.getUserId()] || !angular.isDefined($localStorage.backand[AuthService.getUserId()].hideJumbo)){
-          $localStorage.backand[AuthService.getUserId()] = $localStorage.backand[AuthService.getUserId()] || {};
+        if(!$localStorage.backand[self.userId] || !angular.isDefined($localStorage.backand[self.userId].hideJumbo)){
+          $localStorage.backand[self.userId] = $localStorage.backand[self.userId] || {};
           self.openJumbo();
         }
 
-      return !$localStorage.backand[AuthService.getUserId()].hideJumbo;
+      return !$localStorage.backand[self.userId].hideJumbo;
 
     };
 
     self.closeJumbo = function () {
-      $localStorage.backand[AuthService.getUserId()].hideJumbo = true;
+      $localStorage.backand[self.userId].hideJumbo = true;
     };
 
     self.openJumbo = function () {
-      $localStorage.backand[AuthService.getUserId()].hideJumbo = false;
+      $localStorage.backand[self.userId].hideJumbo = false;
     };
 
   }

@@ -2,9 +2,9 @@
 (function () {
 
   angular.module('backand')
-    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', '$analytics', 'AppsService', SignUpController]);
+    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', '$analytics', 'AppsService','$intercom','CONSTS', SignUpController]);
 
-  function SignUpController(AuthService, $state, SessionService, $timeout, $analytics, AppsService){
+  function SignUpController(AuthService, $state, SessionService, $timeout, $analytics, AppsService, $intercom, CONSTS){
     var self = this;
 
 
@@ -15,11 +15,18 @@
     this.signUp = function () {
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
-
         .success(function (data) {
           $analytics.eventTrack('signup', {});
+          if($intercom){
+            $intercom.boot({
+              app_id: CONSTS.IntercomAppId,
+              name: self.fullName,
+              email: self.email,
+              signed_up_at: new Date().getTime()
+            });
+            $intercom.trackEvent('signup',{});
+          }
           AuthService.signIn(self.email, self.password)
-
               .success(function (data) {
                   SessionService.setCredentials(data, self.email);
                   //create todos sample app
