@@ -1,14 +1,14 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> Users </strong>
+      <strong> {{users.title}} </strong>
 
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
-    <div class="panel-body" ng-controller="SecurityUsers as users">
+    <div class="panel-body">
       <br>
 
-      <div class="row">
+      <div class="row" ng-if="users.adminMode">
         <div class="form-group col-sm-7">
           <input type="text" class="form-control col-sm-7" id="inviteAdminEmails" ng-model="users.invitedAdmins"
                  placeholder="Admin Email Address -  Use comma for multiple users"/></div>
@@ -18,9 +18,8 @@
                   ng-click="users.inviteAdmins()">Invite Admin User(s)
           </button>
         </div>
-        <br>
-        <br>
-
+      </div>
+      <div class="row" ng-if="!users.adminMode">
         <div class=" form-group col-sm-7">
           <label for="inviteUsersEmails"></label> Invite users to access the application with role
           '{{users.defaultUserRole}}'. If "Public App"
@@ -35,13 +34,17 @@
           <button type="button" ng-disabled="!users.invitedUsers || users.registrationRedirectUrl == ''" id="addUserInvites" class="btn btn-success"
                   ng-click="users.inviteUsers()">Invite User(s)</button>
         </div>
+
+        <div class="form-group col-sm-7">
+          <div class="field-description" ng-if="users.registrationRedirectUrl == ''">Note: Invite users is enabled only when the registration page is ready. To update the custom registration page URL go to <a href="" ng-click="users.goTo('security.auth')">Security Configuration</a></div>
+        </div>
+        <br/>
       </div>
-      <div class="field-description" ng-if="users.registrationRedirectUrl == ''">Note: Invite users is enabled only when the registration page is ready. To update the custom registration page URL go to <a href="" ng-click="users.goTo('security.auth')">Security Configuration</a></div>
-      <br/>
+
       <div class="actions-bar row">
         <div class="col-md-8">
-          <h2 class="page-name">Users</h2>
-          <h4 class="page-description">Mange your users here - To update user's details double click in the cell</h4>
+          <h3 class="page-name">{{users.title}}</h3>
+          <h4 class="page-description">Mange your {{users.title}} here - To update user's details double click in the cell</h4>
         </div>
         <div class="col-md-4 form-inline form-action-top ">
           <div class="input-group ">

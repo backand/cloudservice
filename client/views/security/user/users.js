@@ -24,6 +24,9 @@
       self.invitedAdmins = '';
       self.sort = '[{fieldName:"Username", order:"desc"}]';
 
+      self.adminMode = ($state.$current.url.source.indexOf('/team') > -1);;
+      self.title = self.adminMode ? 'Team' : 'Users';
+
       self.gridOptions.rowEditWaitInterval = 200;
       self.paginationOptions = {
         pageNumber: 1,
@@ -56,24 +59,22 @@
       $scope.$watch(function () {
         if (self.paginationOptions)
           return self.paginationOptions.pageNumber
-      }, getUsers);
+      }, getRoles);
 
-      getUsers();
+      getRoles();
 
       //get the default role for invited users
       successApp(AppsService.currentApp);
 
     }());
 
-    function getUsers() {
+    function getRoles(){
       usSpinnerService.spin('loading');
-      SecurityService.getUsers(
-        self.paginationOptions.pageSize,
-        self.paginationOptions.pageNumber,
-        self.sort,
-        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
-        .then(usersSuccessHandler, errorHandler);
-
+      if (self.roles == null)
+        SecurityService.getRoles()
+          .then(rolesSuccessHandler, errorHandler);
+      else
+        getUsers();
     }
 
     function rolesSuccessHandler(data) {
@@ -81,26 +82,37 @@
       self.gridOptions.columnDefs[3].editDropdownOptionsArray = self.roles;
 
       $scope.modal.roles = self.roles;
-      usSpinnerService.stop('loading');
+      getUsers();
 
     }
+
+    function getUsers() {
+      var roleFilter = self.adminMode ? 'Admin' : _.without(_.map(self.roles, 'Name'),'Admin').join(',');
+
+      SecurityService.getUsers(
+        self.paginationOptions.pageSize,
+        self.paginationOptions.pageNumber,
+        self.sort,
+        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
+        '{fieldName:"Role", operator:"in", value:",' + roleFilter + '"}]')
+        .then(usersSuccessHandler, errorHandler);
+
+        //The , before the filter is a bug
+    }
+
 
     function usersSuccessHandler(data) {
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
       self.roleFieldName = self.gridOptions.data[0] && self.gridOptions.data[0].Role ? 'Role' : self.roleFieldName;
       self.gridOptions.columnDefs[3].name = self.roleFieldName;
-      if (self.roles == null)
-        SecurityService.getRoles()
-          .then(rolesSuccessHandler, errorHandler);
-      else
-        usSpinnerService.stop('loading');
+
+      usSpinnerService.stop('loading');
     }
 
     function usersDeleteSuccessHandler(data) {
-      NotificationService.add('error', "row was deleted");
-
-      getUsers();
+      //NotificationService.add('error', "row was deleted");
+      getRoles();
     }
 
     function successApp(data){
@@ -166,7 +178,7 @@
         /* if(sortColumns[0].name != 'Username')
          self.gridOptions.columnDefs[0].sort.direction = '';*/
         self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
-        getUsers();
+        getRoles();
       });
 
     };
@@ -253,7 +265,7 @@
           LastName: name[1]
         };
         SetDataUserRole(user, userRole);
-        SecurityService.postUser(user).then(getUsers, errorHandler);
+        SecurityService.postUser(user).then(getRoles, errorHandler);
       }
 
       if (emails_string)
@@ -302,7 +314,7 @@
 
         };
         SetDataUserRole(data, user.durados_User_Role.Name);
-        SecurityService.postUser(data).then(getUsers);
+        SecurityService.postUser(data).then(getRoles);
         modalInstance.close();
       }
     }

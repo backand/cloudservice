@@ -3,7 +3,7 @@
   function TodoService($http, $cookieStore, Backand) {
 
     var self = this;
-    var baseUrl = '/1/table/data/';
+    var baseUrl = '/1/objects/';
 
     self.tableName = null;
 

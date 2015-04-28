@@ -11,6 +11,11 @@
         controller: 'SecurityUsers as users',
         templateUrl: 'views/security/user/users.html'
       })
+      .state('security.team', {
+        url: '/team',
+        controller: 'SecurityUsers as users',
+        templateUrl: 'views/security/user/users.html'
+      })
       .state('security.templates', {
         url: '/templates',
         controller: 'SecurityWorkspace as securityws',
