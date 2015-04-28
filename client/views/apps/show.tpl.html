@@ -45,7 +45,7 @@
             <div class="app-log">
               <h4 class="">TOOLS AND KNOWLEDGE BASE</h4>
 
-              <section ui-sref="app.playground.show({name: show.appName})" class="data-panel">
+              <section ui-sref="playground.show({name: show.appName})" class="data-panel">
                 <div class="panel-icon">
                   <i class="icon-rest-api-icon text-huge"></i>
                 </div>
@@ -55,23 +55,23 @@
                 </div>
               </section>
 
-                <section ui-sref="app.playground.orm({name: show.appName})" class="data-panel data-panel-success">
+                <section ui-sref="docs.api-desc({name: show.appName})" class="data-panel data-panel-success">
                     <div class="panel-icon">
                         <i class="icon-orm-icon text-huge"></i>
                     </div>
                     <div class="panel-data">
-                        <h4>ORM Playground</h4>
-                        <p>Test your app with Backand's ORM</p>
+                        <h4>Documentation</h4>
+                        <p>Review Backand's documentation</p>
                     </div>
                 </section>
 
-                <section  class="data-panel" ng-click="show.goToLocation('http://' + show.appName + '.backand.net')">
+                <section  class="data-panel" ui-sref="database.show({name: show.appName})">
                     <div class="panel-icon">
-                        <i class="icon-backoffice-icon text-huge"></i>
+                        <i class="icon-databsase-icon text-huge"></i>
                     </div>
                     <div class="panel-data">
-                        <h4>Back Office</h4>
-                        <p>Work with Backand's automatic Back Office</p>
+                        <h4>Database</h4>
+                        <p>Manage your database connection</p>
                     </div>
                 </section>
             </div>
