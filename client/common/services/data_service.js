@@ -31,6 +31,15 @@
         data: record
       });
     };
+
+    self.delete = function(tableName, record) {
+      return $http({
+        method: 'DELETE',
+        url: CONSTS.appUrl + '/1/table/data/' + tableName + '/' + record.Id,
+        headers: { 'AppName': AppsService.currentApp.Name },
+        data: record
+      });
+    };
   }
   angular.module('common.services')
     .service('DataService', ['$http', 'CONSTS', 'AppsService', DataService]);

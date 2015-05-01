@@ -15,10 +15,11 @@
       '$timeout',
       '$rootScope',
       'tableName',
+      'ConfirmationPopup',
       ViewData
     ]);
 
-  function ViewData(NotificationService, ColumnsService, DataService, $scope, $modal, usSpinnerService, $timeout, $rootScope, tableName) {
+  function ViewData(NotificationService, ColumnsService, DataService, $scope, $modal, usSpinnerService, $timeout, $rootScope, tableName, ConfirmationPopup) {
     var self = this;
 
     $scope.$scope = $scope; //for ui-grid inner scope
@@ -86,10 +87,12 @@
 
       ColumnsService.get(false)
         .then(successColumnsHandler, errorHandler)
-        .then(function () {
-          return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort);
-        })
+        .then(loadData)
         .then(successDataHandler, errorHandler);
+    }
+
+    function loadData() {
+      return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort);
     }
 
     function successColumnsHandler (data) {
@@ -118,10 +121,20 @@
 
       self.gridOptions.columnDefs.unshift({
         width: 30,
-        name: ' ',
+        name: 'delete',
+        displayName: '',
         enableSorting: false,
         enableColumnMenu: false,
-        cellTemplate: '<div class="grid-edit" ng-click="getExternalScopes().data.editRow($event, row)"><i class="ti-pencil"/></div>'
+        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().data.deleteRow($event, row)"><i class="ti-trash"/></div>'
+      });
+
+      self.gridOptions.columnDefs.unshift({
+        width: 30,
+        name: 'edit',
+        displayName: '',
+        enableSorting: false,
+        enableColumnMenu: false,
+        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().data.editRow($event, row)"><i class="ti-pencil"/></div>'
       });
 
       if(_.last(self.gridOptions.columnDefs))
@@ -175,7 +188,11 @@
     self.onUpdateRowCell = function(row, col, newValue) {
       var updatedObject = angular.copy(row.entity);
       updatedObject[col.name] = newValue;
-      return DataService.update(self.tableName, updatedObject);
+      var updatePromise = DataService.update(self.tableName, updatedObject);
+      updatePromise
+        .then(loadData)
+        .then(successDataHandler);
+      return updatePromise;
     };
 
     function fixDatesInData() {
@@ -196,8 +213,6 @@
           return 'dateTime';
         case 'ShortText':
           return 'text';
-        case 'SingleSelect':
-          return null;
         case 'LongText':
           return 'textarea';
         case 'Boolean':
@@ -230,6 +245,8 @@
       self.editRowData.form.forEach(function (formItem) {
         self.editRowData.entities.push({
           key: formItem.key,
+          hide: formItem.hideInCreate && !rowItem || formItem.hideInEdit && rowItem,
+          disable: formItem.disable || formItem.disableInCreate && !rowItem || formItem.disableInEdit && rowItem,
           value: rowItem ? rowItem.entity[formItem.key] : null,
           type: formItem.type
         });
@@ -245,12 +262,15 @@
     function getEditRowData () {
       resetEditRowData();
       self.columnDefs.forEach(function (column) {
-        if (!column.form.hideInCreate && !column.form.disableInCreate && column.type != 'MultiSelect') {
-          self.editRowData.form.push({
-            key: column.name,
-            type: getFieldType(column.type)
-          });
-        }
+        self.editRowData.form.push({
+          disableInCreate: column.form.disableInCreate,
+          hideInCreate: column.form.hideInCreate,
+          disableInEdit: column.form.disableInEdit,
+          hideInEdit: column.form.hideInEdit,
+          disable: column.type === 'MultiSelect',
+          key: column.name,
+          type: getFieldType(column.type)
+        });
       });
     }
 
@@ -266,14 +286,23 @@
             record[entity.key] = entity.value;
         });
 
+        var savePromise;
+
         if (self.editRowData.id) {
-          record.Id = self.editRowData.id;
-          return DataService.update(self.tableName, record)
+          savePromise = DataService.update(self.tableName, record)
             .then(modalInstance.close);
         }
-        else
-          return DataService.post(self.tableName, record)
+        else {
+          $timeout(function() { usSpinnerService.spin("loading") });
+          savePromise = DataService.post(self.tableName, record)
             .then(modalInstance.close);
+        }
+
+        savePromise
+          .then(loadData)
+          .then(successDataHandler);
+
+        return savePromise;
 
       };
 
@@ -287,5 +316,17 @@
         modalInstance.dismiss('cancel');
       };
     }
+    
+    self.deleteRow = function (event, rowItem) {
+      ConfirmationPopup.confirm('Are you sure you want to delete the object?')
+        .then(function (result) {
+          if (!result)
+            return;
+          $timeout(function() { usSpinnerService.spin("loading") });
+          DataService.delete(self.tableName, rowItem.entity)
+            .then(loadData)
+            .then(successDataHandler);
+        });
+    };    
   }
 }());
