@@ -247,7 +247,8 @@
           key: formItem.key,
           hide: formItem.hideInCreate && !rowItem || formItem.hideInEdit && rowItem,
           disable: formItem.disable || formItem.disableInCreate && !rowItem || formItem.disableInEdit && rowItem,
-          value: rowItem ? rowItem.entity[formItem.key] : null,
+          required: formItem.required,
+          value: rowItem ? rowItem.entity[formItem.key] : formItem.defaultValue,
           type: formItem.type
         });
       });
@@ -268,6 +269,8 @@
           disableInEdit: column.form.disableInEdit,
           hideInEdit: column.form.hideInEdit,
           disable: column.type === 'MultiSelect',
+          required: column.advancedLayout.required,
+          defaultValue: column.advancedLayout.defaultValue,
           key: column.name,
           type: getFieldType(column.type)
         });
@@ -281,6 +284,7 @@
 
       self.saveRow = function () {
         var record = {};
+        self.savingRow = true;
         self.editRowData.entities.forEach(function (entity) {
           if (entity.value !== null)
             record[entity.key] = entity.value;
@@ -293,10 +297,16 @@
             .then(modalInstance.close);
         }
         else {
-          $timeout(function() { usSpinnerService.spin("loading") });
           savePromise = DataService.post(self.tableName, record)
-            .then(modalInstance.close);
+            .then(modalInstance.close)
+            .then(function() {
+              $timeout(function() { usSpinnerService.spin("loading") });              
+            })
         }
+        savePromise
+          .finally(function() {
+            self.savingRow = false;
+          });
 
         savePromise
           .then(loadData)
