@@ -1,32 +1,15 @@
-<strong ng-bind="dictionaryItems.headings.tokens"></strong>
-<ul class="list-unstyled">
-  <li ng-repeat="token in dictionaryItems.data.tokens"
-      ng-click="anchorParams.insertAtChar(inputId ,token.token)"
-      ng-bind="token.label"
-      style="cursor:pointer;">
-  </li>
-</ul>
+<div ng-repeat="dictionarySection in anchorParams.dictionarySections">
+  <strong>{{ dictionarySection }}</strong>
+  <ul class="list-unstyled">
+    <li ng-repeat="item in anchorParams.getDictionaryItems(dictionarySection)"
+        ng-click="anchorParams.insertAtChar(inputId, item.token)"
+        style="cursor:pointer;">{{item.label}}
 
-<hr/>
-<strong ng-bind="dictionaryItems.headings.parameters"></strong>
-<ul class="list-unstyled">
-  <li ng-repeat="token in dictionaryItems.data.parameters"
-      ng-click="anchorParams.insertAtChar(inputId ,token.token)"
-      ng-bind="token.label"
-      style="cursor:pointer;">
-  </li>
-</ul>
+      <!--<a ng-show="prevNeeded"
+      class="pull-right" href=""
+      ng-click="anchorParams.insertAtChar(inputId, 'prev:' + prop.token); $event.stopPropagation()">prev value</a>-->
+    </li>
+  </ul>
 
-
-<hr/>
-<strong ng-bind="dictionaryItems.headings.props"></strong>
-<ul class="list-unstyled">
-  <li ng-repeat="prop in dictionaryItems.data.props"
-      ng-click="anchorParams.insertAtChar(inputId, prop.token)"
-      style="cursor:pointer;">{{prop.label}}
-
-    <a ng-show="prevNeeded"
-       class="pull-right" href=""
-       ng-click="anchorParams.insertAtChar(inputId, 'prev:' + prop.token); $event.stopPropagation()">prev value</a>
-  </li>
-</ul>
+  <hr/>
+</div>

@@ -27,7 +27,6 @@
     AppLogService) {
 
     var self = this;
-    var appName;
     /**
      * init an empty items array on scope
      * register an event listener.
@@ -183,24 +182,12 @@
     $scope.modal = {
       title: 'Action',
       namePattern: /^\w+[\w ].*$/,
-      dataActions: [
-        {value: 'OnDemand', label: 'On demand - Execute via REST API', level1: 0, level2: 0},
-        {value: 'BeforeCreate', label: 'Create - Before adding data', level1: 1, level2: 0},
-        {value: 'AfterCreateBeforeCommit', label: 'Create - During data saved before it committed', level1: 1, level2: 1},
-        {value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 1, level2: 2},
-        {value: 'BeforeEdit', label: 'Update - Before update data', level1: 2, level2: 0},
-        {value: 'AfterEditBeforeCommit', label: 'Update - During data saved before it committed', level1: 2, level2: 1},
-        {value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 2, level2: 2},
-        {value: 'BeforeDelete', label: 'Delete - Before delete', level1: 3, level2: 0},
-        {value: 'AfterDeleteBeforeCommit',label: 'Delete - During record deleted but before it committed',level1: 3,level2: 1},
-        {value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2},
-      ],
+      dataActions: RulesService.dataActions,
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
         {value: 'Notify', label: 'Send Email'},
         {value: 'Execute', label: 'Transactional sql script'}
       ],
-      dictionaryItems: {},
       insertAtChar: insertTokenAtChar,
       digest: digestIn,
       toggleGroup: toggleGroup,
@@ -212,9 +199,15 @@
       showAnchorCondition: isEditMode,
       toggleAngledWindow: $scope.modal.toggleGroup,
       showAngledWindow: $scope.modal.isCurGroup,
-      dictionaryItems: $scope.modal.dictionaryItems,
+      dictionaryItems: self.dictionaryItems,
       insertAtChar: insertTokenAtChar,
-      template : "views/tables/rules/dictionary_window.html"
+      template : "views/tables/rules/dictionary_window.html",
+      dictionarySections: ['userInput', 'dbRow', 'parameters', 'userProfile'],
+      getDictionaryItems: getDictionaryItems
+    };
+
+    self.getDictionary = function (crudAction) {
+      return self.dictionaryItems[crudAction]
     };
 
     function isEditMode() {
@@ -258,23 +251,37 @@
       angular.element()
     }
 
+
+    /**
+     * ajax call to get the rules list
+     */
+    function getRules() {
+      self.dictionaryItems = {parameters: []};
+      var crud = ['create', 'update', 'delete'];
+      crud.forEach(function (crudAction) {
+        DictionaryService.get(crudAction)
+          .then(function (data) {
+            populateDictionaryItems(crudAction, data.data)
+          });
+      });
+      RulesService.get().then(buildTree, errorHandler);
+    }
+
     /**
      * success handle for getting dictionary items
      * @param data
      */
-    function populateDictionaryItems(data) {
-      var raw = data.data;
-      var keys = Object.keys(raw);
-      $scope.modal.dictionaryItems.headings = {
-        tokens: keys[0],
-        props: keys[1],
-        parameters: 'Parameters'
+    function populateDictionaryItems(crudAction, data) {
+      self.dictionaryItems[crudAction] = {
+        userInput: data.userInput,
+        userProfile: data.systemTokens,
+        dbRow: data[RulesService.tableName]
       };
-      $scope.modal.dictionaryItems.data = {
-        tokens: raw[keys[0]],
-        props: raw[keys[1]],
-        parameters: []
-      };
+    }
+
+    function getDictionaryItems (dictionarySection) {
+      if (dictionarySection === 'parameters') return self.dictionaryItems.parameters;
+      return self.dictionaryItems[_.find(RulesService.dataActions, {value: self.action.dataAction}).crud][dictionarySection];
     }
 
     function buildParametersDictionary() {
@@ -284,7 +291,7 @@
           keys.push({token: param, label: param})
         })
       }
-      $scope.modal.dictionaryItems.data.parameters =  keys;
+      self.dictionaryItems.parameters = keys;
     }
 
     /**
@@ -404,13 +411,6 @@
     function loadDbType() {
     }
 
-    /**
-     * ajax call to get the rules list
-     */
-    function getRules() {
-      DictionaryService.get("create").then(populateDictionaryItems);
-      RulesService.get().then(buildTree, errorHandler);
-    }
 
     self.treeSign = function (item) {
       return item.items.length === 0 ? '' : ( item.visible ? '-' : '+' );
