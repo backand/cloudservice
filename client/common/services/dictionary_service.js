@@ -14,10 +14,10 @@
     self.appName = null;
     self.tableName = null;
 
-    self.get = function () {
+    self.get = function (crud) {
       return $http({
           method: 'GET',
-          url: CONSTS.appUrl + baseUrl + self.tableName + '/?deep=true&withSystemTokens=true',
+          url: CONSTS.appUrl + baseUrl + self.tableName + '/?deep=true&withSystemTokens=true&crud=' + crud,
           headers: { AppName: self.appName }
         })
       }

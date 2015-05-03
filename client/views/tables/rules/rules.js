@@ -408,7 +408,7 @@
      * ajax call to get the rules list
      */
     function getRules() {
-      DictionaryService.get().then(populateDictionaryItems);
+      DictionaryService.get("create").then(populateDictionaryItems);
       RulesService.get().then(buildTree, errorHandler);
     }
 

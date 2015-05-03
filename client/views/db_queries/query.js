@@ -191,7 +191,7 @@
       DictionaryService.appName = self.appName;
       DictionaryService.tableName = 'v_durados_user'; //used just any table - we just need the system tokens
 
-      DictionaryService.get().then(function (data) {
+      DictionaryService.get("read").then(function (data) {
         var raw = data.data;
         var keys = Object.keys(raw);
         self.dictionaryItems = {

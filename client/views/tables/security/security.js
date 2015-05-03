@@ -65,7 +65,7 @@
      * Read the list of workspaces
      */
     function getWorkspaces() {
-      DictionaryService.get().then(populateDictionaryItems);
+      DictionaryService.get("read").then(populateDictionaryItems);
 
       if (self.workspaces == null) {
         SecurityService.appName =
