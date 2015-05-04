@@ -51,8 +51,11 @@ angular.module('backand.routes', []).
         parent: 'session',
         template: '<ui-view autoscroll="true"/>',
         resolve: {
-          appItem: ['AppsService', '$stateParams', function (AppsService, $stateParams) {
-              return AppsService.getApp($stateParams.appName);
+          appItem: ['AppsService', '$stateParams', '$state', function (AppsService, $stateParams, $state) {
+              return AppsService.getApp($stateParams.appName)
+                .catch(function (error) {
+                  $state.go('apps.index');
+                });
           }]
         },
         controller: function ($state, appItem, AppsService, usSpinnerService) {

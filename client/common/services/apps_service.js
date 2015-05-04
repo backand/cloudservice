@@ -111,7 +111,7 @@
     self.update = function (name, data) {
       return updateApp(name, data)
         .then(function () {
-          self.getApp(name)
+          self.getApp(data.Name || name)
         });
     };
 
@@ -120,7 +120,7 @@
     };
 
     self.delete = function (name) {
-      deleteApp(name)
+      return deleteApp(name)
         .then(function () {
           if (self.currentApp.Name === name)
             self.currentApp = null;

@@ -29,6 +29,8 @@
         }
       };
       AppsService.update(self.globalAppName, data).then(submitSuccess, errorHandler);
+      if (self.globalAppName != self.appName)
+        $state.go('apps.index');
     };
 
     function submitSuccess() {
@@ -44,6 +46,7 @@
         .then(function (result) {
           if (!result)
             return;
+          self.loading = true;
           AppsService.delete(self.globalAppName).then(deleteSuccess, errorHandler);
           $state.go('apps.index');
         })

@@ -36,10 +36,6 @@ angular.module('backand.database')
       }
     }
 
-    self.currentTab = function () {
-      return self.dataName;
-    };
-
     function checkDatabaseStatus() {
         usSpinnerService.spin("loading");
         DatabaseService.getDBInfo($state.params.appName)
@@ -226,6 +222,33 @@ angular.module('backand.database')
     function getTokenAtCursor () {
       var position = self.ace.editor.getCursorPosition();
       return self.ace.editor.session.getTokenAt(position.row, position.column).value;
+    }
+
+    self.chooseDb = function (dbName) {
+      if (self.dbConnected)
+      {
+        self.Confirmation('Changing database is not allowed for connected app.');
+        return;
+      }
+      switch (dbName) {
+        case 'mysql':
+          self.dataName = 'mysql';
+          return;
+        case 'postgresql':
+          self.dataName = 'postgresql';
+          self.data.usingSsh = false;
+          return;
+        case 'sqlserver':
+          self.dataName = 'sqlserver';
+          self.data.usingSsh = false;
+          return;
+        case 'oracle':
+          self.Confirmation('Oracle is available only in the Enterprise edition.');
+          return;
+        case 'mongodb':
+          self.Confirmation('Sorry but mongoDB is in closed Beta');
+          return;
+      }
     }
 
   }

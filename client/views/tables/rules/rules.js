@@ -272,10 +272,11 @@
      * @param data
      */
     function populateDictionaryItems(crudAction, data) {
+      var tableName = $stateParams.tableId ? RulesService.tableName : 'v_durados_User';
       self.dictionaryItems[crudAction] = {
         userInput: data.userInput,
         userProfile: data.systemTokens,
-        dbRow: data[RulesService.tableName]
+        dbRow: data[tableName]
       };
     }
 

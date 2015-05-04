@@ -5,30 +5,45 @@
       <div class="db-panel-body-description">
         <p>Select a database model example to use as the starting point for your app's database,<br/>
           or add your own model by editing the model in the "Custom" tab.</p>
+        <p><strong>ID is added to all objects automatically, please do not add it yourself.</strong></p>
       </div>
       <br/>
 
-      <ul class="db-nav db-nav-tabs"
-          ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
-        <li ng-class="{active: dbedit.template === dbedit.customTemplate}" class="pull-left">
-          <a ng-click="dbedit.customize()" href=""
-             tooltip="{{ ::dbedit.customTemplate.description }}" test-hook="database-edit.json.custom">
-            {{dbedit.customTemplate.title}}
-          </a></li>
+      <div class="row">
 
+        <div class="col-xs-3 db-nav-position-bottom">
+          <ul class="db-nav db-nav-tabs "
+              ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
+            <li ng-class="{active: dbedit.template === dbedit.customTemplate}" class="pull-left">
+              <a ng-click="dbedit.customize()" href=""
+                 tooltip="{{ ::dbedit.customTemplate.description }}" test-hook="database-edit.json.custom">
+                {{dbedit.customTemplate.title}}
+              </a>
+            </li>
+          </ul>
+        </div>
 
-        <li ng-class="{active: dbedit.template === template}"
-            ng-repeat="template in dbedit.templates | orderBy:'order'" class="pull-right">
-          <a ng-click="dbedit.showFile(template)" href="" tooltip="{{ ::template.description }}">
-            {{ ::template.title}}
-          </a></li>
-        <li class="db-ace-example-title pull-right">
-          Examples:
-        </li>
-      </ul>
+        <div class="col-xs-9 pull-right">
+          <ul class="db-nav db-nav-tabs pull-right "
+              ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
+
+            <li class="db-ace-example-title">
+              Examples:
+            </li>
+            <li ng-class="{active: dbedit.template === template}"
+                ng-repeat="template in dbedit.templates | orderBy:'order'" class="">
+              <a ng-click="dbedit.showFile(template)" href="" tooltip="{{ ::template.description }}">
+                {{ ::template.title}}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
 
     </div>
   </div>
+
   <div class="row">
     <div class="col-md-8 col-lg-9">
       <div
@@ -43,6 +58,7 @@
 
       </div>
       <br/>
+
       <div>
         <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
                 ladda="dbedit.loading" data-style="expand-right"

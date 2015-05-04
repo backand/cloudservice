@@ -41,10 +41,6 @@
 
     self.displayButton = function() {
       return !AppsService.isExampleApp(self.appName);
-    }
-
-    self.currentTab = function() {
-      return currentApp.databaseName;
     };
 
     self.edit = function() {

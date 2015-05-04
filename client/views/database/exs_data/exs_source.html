@@ -5,7 +5,7 @@
     <div class="row">
 
       <a class="icon-box col-md-2 col-md-offset-1" >
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'mysql'}" ng-click ="dbedit.dataName = 'mysql'">
+        <div class="icon-container" ng-class="{active : dbedit.dataName === 'mysql'}" ng-click="dbedit.chooseDb('mysql')">
           <img src="assets/images/mysql.png" style="vertical-align: inherit;"/>
         </div>
         <div class="desc-container">
@@ -15,8 +15,7 @@
 
       <a class="icon-box col-md-2">
         <div class="icon-container"
-             ng-class="{active : dbedit.currentTab() === 'postgresql'}"
-             ng-click ="[dbedit.dataName = 'postgresql',dbedit.data.usingSsh = false]">
+             ng-class="{active : dbedit.dataName === 'postgresql'}" ng-click="dbedit.chooseDb('postgresql')">
           <img src="assets/images/postgresql.jpg" style="vertical-align: inherit;"/>
         </div>
         <div class="desc-container">
@@ -25,7 +24,7 @@
       </a>
 
       <a class="icon-box col-md-2">
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'sqlserver' || dbedit.currentTab() === 'sqlazure'}" ng-click ="[dbedit.dataName = 'sqlserver',dbedit.data.usingSsh = false]">
+        <div class="icon-container" ng-class="{active : dbedit.dataName === 'sqlserver' || dbedit.dataName === 'sqlazure'}" ng-click="dbedit.chooseDb('sqlserver')">
           <img src="assets/images/sqlserver.png" style="vertical-align: inherit;"/>
         </div>
         <div class="desc-container">
@@ -34,7 +33,7 @@
       </a>
 
       <a class="icon-box col-md-2" >
-        <div class="icon-container" ng-class="{active : dbedit.currentTab() === 'oracle'}" ng-click="dbedit.Confirmation('Oracle is available only in the Enterprise edition.');" >
+        <div class="icon-container" ng-class="{active : dbedit.dataName === 'oracle'}" ng-click="dbedit.chooseDb('oracle')">
           <img src="assets/images/oracle.jpg" style="vertical-align: inherit;"/>
         </div>
         <div class="desc-container">
@@ -43,7 +42,7 @@
       </a>
 
       <a class="icon-box col-md-2"  >
-        <div class="icon-container" ng-click="dbedit.Confirmation('Sorry but mongoDB is in closed Beta');" ng-class="{active : false}" style="border: none;" >
+        <div class="icon-container" ng-class="{active : false}" style="border: none;" ng-click="dbedit.chooseDb('mongodb')">
           <img src="assets/images/mongodb.png"/>
         </div>
         <div class="desc-container">

@@ -1,171 +1,205 @@
 <!--<div ng-if="!rule">-->
-  <!--<p>Here you can define actions that will run on triggers (hooks).</p>-->
+<!--<p>Here you can define actions that will run on triggers (hooks).</p>-->
 <!--</div>-->
 <div ng-if="rules.action">
-<div class="header row">
-  <div class="col-xs-6">
-  <h3 class="title">{{modal.title}} - {{rules.action.name}}</h3>
-    </div>
-  <div class="col-xs-6">
-
-  <button ng-show="rules.allowEditAction()"
-          ng-click="rules.editAction()"
-          class="btn btn-primary pull-right with-margin">
-    Edit Action
-  </button>
-
-  <!--<button ng-show="rules.action.__metadata && rules.editMode" ng-click="rules.deleteAction()" class="btn btn-danger pull-right with-margin">Delete</button>-->
-    <div ng-show="rules.editMode">
-  <button ng-show="rules.newRuleForm.$pristine" ng-click="rules.doneEdit()" class="btn btn-default pull-right with-margin">Done</button>
-  <button ng-show="!rules.newRuleForm.$pristine" ng-click="rules.cancelEdit()" class="btn btn-default pull-right with-margin">Cancel</button>
-  <button ng-click="rules.saveAction()"
-          ng-disabled="rules.newRuleForm.$invalid"
-          class="btn btn-primary pull-right with-margin"
-          ladda="rules.saving" data-style="expand-right">Save</button>
-  </div>
-  </div>
-  <br/>
-  <div class="col-xs-12">
-    <button name="testCode"
-            ng-show="rules.allowTestForm()"
-            class="pull-right btn btn-success btn-xs with-margin"
-            ng-click="rules.toggleTestForm()">
-      {{ rules.requestTestForm ? '<< Hide Test' : 'Test Action >>'}}
-    </button>
-  </div>
-</div>
-
-<div class="clearfix">
-
   <form name="rules.newRuleForm" insert-at-caret novalidate>
-    <fieldset ng-disabled="!rules.editMode">
+    <div class="header row">
+      <div class="col-xs-9">
+        <div class="form-inline" name="rules.newRuleForm">
+          <div class="form-group"
+               ng-class="{ 'has-error': rules.newRuleForm.ruleName.$invalid &&  rules.newRuleForm.ruleName.$dirty}">
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12"
-         ng-class="{ 'has-error': rules.newRuleForm.eventTrigger.$invalid && rules.newRuleForm.eventTrigger.$dirty}">
-      <label>Event Trigger</label>
-      <ba-tooltip tooltip-text="Select the event that will trigger the action: on-demand via REST API or by CRUD request" tooltip-placement="right" class=""></ba-tooltip>
-      <select class="form-control"
-              ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
-              ng-model="rules.action.dataAction"
-              ng-model-options="{debounce:{default:100}}">
-        <option value="">Select trigger...</option>
-      </select>
+            <label for="ruleName"><h3 class="title">{{modal.title}} - </h3></label>
+
+            <input type="text"
+                   id="ruleName"
+                   name="ruleName"
+                   class="rule-name form-control"
+                   ng-model="rules.action.name"
+                   ng-model-options="{debounce:{default:100}}"
+                   required
+                   ng-pattern="modal.namePattern"
+                   placeholder="name your action"
+                   ng-disabled="!rules.editMode">
+            <ba-tooltip tooltip-text="Use the action name in the request URL query string of the REST API"
+                        tooltip-placement="right" class=""></ba-tooltip>
+
+            <div ng-show="rules.newRuleForm.ruleName.$error.pattern" class="input-error">no spaces or %$#@^&* allowed
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-3">
+
+        <button ng-show="rules.allowEditAction()"
+                ng-click="rules.editAction()"
+                class="btn btn-primary pull-right with-margin">
+          Edit Action
+        </button>
+
+        <!--<button ng-show="rules.action.__metadata && rules.editMode" ng-click="rules.deleteAction()" class="btn btn-danger pull-right with-margin">Delete</button>-->
+        <div ng-show="rules.editMode">
+          <button ng-show="rules.newRuleForm.$pristine" ng-click="rules.doneEdit()"
+                  class="btn btn-default pull-right with-margin">Done
+          </button>
+          <button ng-show="!rules.newRuleForm.$pristine" ng-click="rules.cancelEdit()"
+                  class="btn btn-default pull-right with-margin">Cancel
+          </button>
+          <button ng-click="rules.saveAction()"
+                  ng-disabled="rules.newRuleForm.$invalid"
+                  class="btn btn-primary pull-right with-margin"
+                  ladda="rules.saving" data-style="expand-right">Save
+          </button>
+        </div>
+      </div>
+      <br/>
+
+      <div class="col-xs-12">
+        <button name="testCode"
+                ng-show="rules.allowTestForm()"
+                class="pull-right btn btn-success btn-xs with-margin"
+                ng-click="rules.toggleTestForm()">
+          {{ rules.requestTestForm ? '<< Hide Test' : 'Test Action >>'}}
+        </button>
+      </div>
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.dataAction">
-      <label>Input Parameters</label>
-      <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right" class=""></ba-tooltip>
-      <input type="text"
-             ng-blur="modal.buildParameters()"
-             name="inputParameters"
-             class="form-control"
-             ng-model="rules.action.inputParameters"
-             ng-model-options="{debounce:{default:100}}"
-             ng-pattern**="/^[a-zA-Z0-9 ]*$/"
-             placeholder="input1,input2,....">
-      <span ng-show="">{{rules.action.inputParameters.$error.pattern}} Not a valid value!</span>
-    </div>
+    <div class="clearfix">
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.dataAction"
-         ng-class="{ 'has-error': rules.newRuleForm.action.$invalid &&  rules.newRuleForm.action.$dirty }">
-
-      <label for="workflowAction">Type</label>
-        <ba-tooltip tooltip-text="Select if you would like to run JavaScipt code, send email or execute database transaction script" tooltip-placement="right" class=""></ba-tooltip>
-        <select class="form-control"
-              name="action"
-              id="workflowAction"
-              required
-              ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
-              ng-model="rules.action.workflowAction">
-        <option value="">Select what to do...</option>
-      </select>
-    </div>
-
-    <div ng-switch="rules.action.workflowAction">
-
-      <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction">
-
-      <!-- notify options -->
-      <div ng-switch-when="Notify">
-
-
-        <div class="form-group col-lg-6 col-md-6 col-sm-6"
-             ng-class="{ 'has-error': rules.newRuleForm.emailTo.$invalid && rules.newRuleForm.emailTo.$dirty}">
-
-          <label for="emailTo">To:</label>
-          <bknd-anchor anchor-params="rules.anchorParams"
-                       window-title="Email Recipient"
-                       input-id="emailTo"></bknd-anchor>
-          <input type="text"
-                 required
-                 name="emailTo"
-                 id="emailTo"
-                 ng-model="rules.action.to"
-                 class="form-control"/>
-        </div>
-
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="emailCc">Cc:</label>
-
-          <bknd-anchor anchor-params="rules.anchorParams"
-                       window-title="Email - CC"
-                       input-id="emailCc"></bknd-anchor>
-
-          <input type="text"
-                 id="emailCc"
-                 ng-model="rules.action.cc"
-                 class="form-control"/>
-        </div>
-
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="emailBcc">Bcc:</label>
-
-          <bknd-anchor anchor-params="rules.anchorParams"
-                       window-title="Email - BCC"
-                       input-id="emailBcc"></bknd-anchor>
-
-          <input type="text"
-                 id="emailBcc"
-                 ng-model="rules.action.bcc"
-                 class="form-control"/>
-        </div>
-
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-
-          <label for="emailFrom">From:</label>
-
-          <input type="text"
-                 id="emailFrom"
-                 ng-model="rules.action.from"
-                 placeholder="Leave empty for default"
-                 class="form-control"/>
-        </div>
+      <fieldset ng-disabled="!rules.editMode">
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': rules.newRuleForm.emailSubject.$invalid && rules.newRuleForm.emailSubject.$dirty }">
-
-          <label for="emailSubject">Subject:</label>
-
-          <bknd-anchor anchor-params="rules.anchorParams"
-                       window-title="Email Subject"
-                       input-id="emailSubject"></bknd-anchor>
-
-          <input type="text"
-                 required
-                 name="emailSubject"
-                 id="emailSubject"
-                 ng-model="rules.action.subject"
-                 class="form-control"/>
+             ng-class="{ 'has-error': rules.newRuleForm.eventTrigger.$invalid && rules.newRuleForm.eventTrigger.$dirty}">
+          <label>Event Trigger</label>
+          <ba-tooltip
+            tooltip-text="Select the event that will trigger the action: on-demand via REST API or by CRUD request"
+            tooltip-placement="right" class=""></ba-tooltip>
+          <select class="form-control"
+                  ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
+                  ng-model="rules.action.dataAction"
+                  ng-model-options="{debounce:{default:100}}">
+            <option value="">Select trigger...</option>
+          </select>
         </div>
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': rules.newRuleForm.notifyMessage.$invalid }">
+        <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.dataAction"
+             ng-class="{ 'has-error': rules.newRuleForm.action.$invalid &&  rules.newRuleForm.action.$dirty }">
 
-          <label for="emailMessage">Message:</label>
+          <label for="workflowAction">Type</label>
+          <ba-tooltip
+            tooltip-text="Select if you would like to run JavaScipt code, send email or execute database transaction script"
+            tooltip-placement="right" class=""></ba-tooltip>
+          <select class="form-control"
+                  name="action"
+                  id="workflowAction"
+                  required
+                  ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
+                  ng-model="rules.action.workflowAction">
+            <option value="">Select what to do...</option>
+          </select>
+        </div>
 
-          <bknd-anchor anchor-params="rules.anchorParams"
-                       window-title="Email Message"
-                       input-id="emailMessage"></bknd-anchor>
+        <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction">
+          <label>Input Parameters</label>
+          <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
+                      class=""></ba-tooltip>
+          <input type="text"
+                 ng-blur="modal.buildParameters()"
+                 name="inputParameters"
+                 class="form-control"
+                 ng-model="rules.action.inputParameters"
+                 ng-model-options="{debounce:{default:100}}"
+                 ng-pattern**="/^[a-zA-Z0-9 ]*$/"
+                 placeholder="input1,input2,....">
+          <span ng-show="">{{rules.action.inputParameters.$error.pattern}} Not a valid value!</span>
+        </div>
+
+        <div ng-switch="rules.action.workflowAction">
+
+          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction">
+
+            <!-- notify options -->
+            <div ng-switch-when="Notify">
+
+
+              <div class="form-group col-lg-6 col-md-6 col-sm-6"
+                   ng-class="{ 'has-error': rules.newRuleForm.emailTo.$invalid && rules.newRuleForm.emailTo.$dirty}">
+
+                <label for="emailTo">To:</label>
+                <bknd-anchor anchor-params="rules.anchorParams"
+                             window-title="Email Recipient"
+                             input-id="emailTo"></bknd-anchor>
+                <input type="text"
+                       required
+                       name="emailTo"
+                       id="emailTo"
+                       ng-model="rules.action.to"
+                       class="form-control"/>
+              </div>
+
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="emailCc">Cc:</label>
+
+                <bknd-anchor anchor-params="rules.anchorParams"
+                             window-title="Email - CC"
+                             input-id="emailCc"></bknd-anchor>
+
+                <input type="text"
+                       id="emailCc"
+                       ng-model="rules.action.cc"
+                       class="form-control"/>
+              </div>
+
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="emailBcc">Bcc:</label>
+
+                <bknd-anchor anchor-params="rules.anchorParams"
+                             window-title="Email - BCC"
+                             input-id="emailBcc"></bknd-anchor>
+
+                <input type="text"
+                       id="emailBcc"
+                       ng-model="rules.action.bcc"
+                       class="form-control"/>
+              </div>
+
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+
+                <label for="emailFrom">From:</label>
+
+                <input type="text"
+                       id="emailFrom"
+                       ng-model="rules.action.from"
+                       placeholder="Leave empty for default"
+                       class="form-control"/>
+              </div>
+
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{ 'has-error': rules.newRuleForm.emailSubject.$invalid && rules.newRuleForm.emailSubject.$dirty }">
+
+                <label for="emailSubject">Subject:</label>
+
+                <bknd-anchor anchor-params="rules.anchorParams"
+                             window-title="Email Subject"
+                             input-id="emailSubject"></bknd-anchor>
+
+                <input type="text"
+                       required
+                       name="emailSubject"
+                       id="emailSubject"
+                       ng-model="rules.action.subject"
+                       class="form-control"/>
+              </div>
+
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{ 'has-error': rules.newRuleForm.notifyMessage.$invalid }">
+
+                <label for="emailMessage">Message:</label>
+
+                <bknd-anchor anchor-params="rules.anchorParams"
+                             window-title="Email Message"
+                             input-id="emailMessage"></bknd-anchor>
 
           <textarea class="form-control"
                     name="emailMessage"
@@ -174,129 +208,131 @@
                     style="resize: vertical" rows="10"
                     on-update="modal.digest()">
           </textarea>
-        </div>
+              </div>
 
-      </div>
-      <!--./notify -->
+            </div>
+            <!--./notify -->
 
-      <div ng-switch-when="Validate">
+            <div ng-switch-when="Validate">
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6"
-             ng-class="{ 'has-error': rules.newRuleForm.validateExp1.$invalid }">
-          <label for="validateExp1">Expression:</label>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6"
+                   ng-class="{ 'has-error': rules.newRuleForm.validateExp1.$invalid }">
+                <label for="validateExp1">Expression:</label>
           <textarea class="form-control"
                     required
                     name="validateExp1"
                     id="validateExp1"
                     ng-model="rules.action.validateCommand1"
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="validateMessage1">Validation Failed Message:</label>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="validateMessage1">Validation Failed Message:</label>
           <textarea class="form-control"
                     id="validateMessage1"
                     ng-model="rules.action.validateMessage1"
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="validateCommand2">Expression:</label>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="validateCommand2">Expression:</label>
           <textarea class="form-control"
                     id="validateCommand2"
                     ng-model="rules.action.validateCommand2"
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="validateMessage2">Validation Failed Message:</label>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="validateMessage2">Validation Failed Message:</label>
           <textarea class="form-control"
                     id="validateMessage2"
                     ng-model="rules.action.validateMessage2"
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="validateCommand3">Expression:</label>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="validateCommand3">Expression:</label>
           <textarea class="form-control"
                     id="validateCommand3"
                     ng-model="rules.action.validateCommand3"
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="validateMessage3">Validation Failed Message:</label>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="validateMessage3">Validation Failed Message:</label>
           <textarea class="form-control"
                     id="validateMessage3"
                     ng-model="rules.action.validateMessage3"
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label id="validateCommand4">Expression:</label>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="validateCommand4">Expression:</label>
           <textarea class="form-control"
                     id="validateCommand4"
                     ng-model="rules.action.validateCommand4"
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-        <div class="form-group col-lg-6 col-md-6 col-sm-6">
-          <label for="validateMessage4">Validation Failed Message:</label>
+              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                <label for="validateMessage4">Validation Failed Message:</label>
           <textarea class="form-control"
                     id="validateMessage4"
                     ng-model="rules.action.validateMessage4"
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-      </div>
-      <!--./validate-->
+            </div>
+            <!--./validate-->
 
-      <div ng-switch-when="Execute">
+            <div ng-switch-when="Execute">
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': rules.newRuleForm.sqlCommand.$invalid}">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{ 'has-error': rules.newRuleForm.sqlCommand.$invalid}">
 
-          <label for="sqlCommand">Sql Script</label>
-          <ba-tooltip tooltip-text="The script uses SQL syntax and allows you to update other tables" tooltip-placement="right" class=""></ba-tooltip>
+                <label for="sqlCommand">Sql Script</label>
+                <ba-tooltip tooltip-text="The script uses SQL syntax and allows you to update other tables"
+                            tooltip-placement="right" class=""></ba-tooltip>
 
-          <bknd-anchor anchor-params="rules.anchorParams"
-                       window-title="SQL Command"
-                       input-id="sqlCommand"></bknd-anchor>
+                <bknd-anchor anchor-params="rules.anchorParams"
+                             window-title="SQL Command"
+                             input-id="sqlCommand"></bknd-anchor>
 
-          <div
-            ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
-            class="form-control"
-            name="sqlCommand"
-            id="sqlCommand"
-            ng-model="rules.action.command"
-            required
-            style="resize: vertical">
-          </div>
-        </div>
+                <div
+                  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
+                  class="form-control"
+                  name="sqlCommand"
+                  id="sqlCommand"
+                  ng-model="rules.action.command"
+                  required
+                  style="resize: vertical">
+                </div>
+              </div>
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': rules.newRuleForm.sqlMessage.$invalid}">
-          <label for="sqlMessage">Message:</label>
-          <ba-tooltip tooltip-text="Returned message in case the sql script failed" tooltip-placement="right" class=""></ba-tooltip>
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{ 'has-error': rules.newRuleForm.sqlMessage.$invalid}">
+                <label for="sqlMessage">Message:</label>
+                <ba-tooltip tooltip-text="Returned message in case the sql script failed" tooltip-placement="right"
+                            class=""></ba-tooltip>
 
           <textarea class="form-control"
                     ng-model="rules.action.executeMessage"
                     name="sqlMessage"
                     id="sqlMessage"
                     style="resize: vertical"></textarea>
-        </div>
-      </div>
+              </div>
+            </div>
 
-      <div ng-switch-when="WebService">
+            <div ng-switch-when="WebService">
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': rules.newRuleForm.webService.$invalid }">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{ 'has-error': rules.newRuleForm.webService.$invalid }">
 
-          <label for="webService">Web Service URL:</label>
+                <label for="webService">Web Service URL:</label>
 
-          <bknd-anchor anchor-params="rules.anchorParams"
-                       window-title="Web Service URL"
-                       input-id="webService"></bknd-anchor>
+                <bknd-anchor anchor-params="rules.anchorParams"
+                             window-title="Web Service URL"
+                             input-id="webService"></bknd-anchor>
 
           <textarea class="form-control"
                     name="webService"
@@ -304,87 +340,79 @@
                     ng-model="rules.action.webServiceUrl"
                     required
                     style="resize: vertical"></textarea>
-        </div>
+              </div>
 
-
-      </div>
-        <!--code-->
-      <div ng-switch-when="JavaScript">
-
-        <div ng-class="{ 'has-error': rules.newRuleForm.code.$invalid }">
-
-          <div class="form-group ">
-            <label for="code">JavaScript Code</label>
-
-            <div  ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', firstLineNumber: 7, rendererOptions: { fontSize: 15 }}"
-                  class="form-control ace-rule"
-                  name="code"
-                  id="code"
-                  ng-model="rules.action.code"
-                  required
-                  ng-pattern="codeRegex"
-                  ng-keydown = "modal.handleTabKey($event)"
-                  style="resize: vertical; ">
 
             </div>
+            <!--code-->
+            <div ng-switch-when="JavaScript">
 
-            <div ng-messages="rules.newRuleForm.code.$error">
-              <div ng-message="pattern" class="text-danger">Code is not ok!</div>
+              <div ng-class="{ 'has-error': rules.newRuleForm.code.$invalid }">
+
+                <div class="form-group ">
+                  <label for="code">JavaScript Code</label>
+
+                  <div
+                    ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', firstLineNumber: 7, rendererOptions: { fontSize: 15 }}"
+                    class="form-control ace-rule"
+                    name="code"
+                    id="code"
+                    ng-model="rules.action.code"
+                    required
+                    ng-pattern="codeRegex"
+                    ng-keydown="modal.handleTabKey($event)"
+                    style="resize: vertical; ">
+
+                  </div>
+
+                  <div ng-messages="rules.newRuleForm.code.$error">
+                    <div ng-message="pattern" class="text-danger">Code is not ok!</div>
+                  </div>
+                </div>
+              </div>
             </div>
+            <!-- end switch -->
+          </div>
+          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction"
+               ng-class="{ 'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty }">
+            <label for="whereCondition">Where Condition</label>
+            <ba-tooltip tooltip-text="SQL where clause that determines if the action will be performed"
+                        tooltip-placement="right" class=""></ba-tooltip>
+
+            <bknd-anchor anchor-params="rules.anchorParams"
+                         window-title="Where Condition"
+                         input-id="whereCondition"
+                         prev-needed="true"></bknd-anchor>
+
+            <div ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
+                 id="whereCondition"
+                 required
+                 name="whereCondition"
+                 class="form-control ace-action-where"
+                 placeholder=""
+                 ng-model="rules.action.whereCondition"
+                 ng-model-options="{debounce:{default:100}}"
+                 style="resize: vertical">
+            </div>
+            <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
+          </div>
+
+          <div class="modal-footer" ng-show="rules.action && rules.editMode">
+            <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid" ng-click="rules.saveAction()"
+                    ladda="rules.saving" data-style="expand-right">Save
+            </button>
+            <button class="btn btn-danger pull-left" ng-click="rules.deleteAction()" ng-if="rules.action.__metadata">
+              Delete
+            </button>
+            <button ng-show="rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.doneEdit()">Done
+            </button>
+            <button ng-show="!rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.cancelEdit()">
+              Cancel
+            </button>
           </div>
         </div>
-      </div>
-    <!-- end switch -->
-    </div>
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.dataAction" ng-class="{ 'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty }">
-      <label for="whereCondition">Where Condition</label>
-      <ba-tooltip tooltip-text="SQL where clause that determines if the action will be performed" tooltip-placement="right" class=""></ba-tooltip>
-
-      <bknd-anchor anchor-params="rules.anchorParams"
-                   window-title="Where Condition"
-                   input-id="whereCondition"
-                   prev-needed="true"></bknd-anchor>
-
-      <div  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
-            id="whereCondition"
-            required
-            name="whereCondition"
-            class="form-control ace-action-where"
-            placeholder=""
-            ng-model="rules.action.whereCondition"
-            ng-model-options="{debounce:{default:100}}"
-            style="resize: vertical">
-      </div>
-      <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
-    </div>
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction"
-         ng-class="{ 'has-error': rules.newRuleForm.ruleName.$invalid &&  rules.newRuleForm.ruleName.$dirty}">
-
-      <label for="ruleName">Action Name</label>
-      <ba-tooltip tooltip-text="Use the action name in the request URL query string of the REST API" tooltip-placement="right" class=""></ba-tooltip>
-
-      <input type="text"
-             id="ruleName"
-             name="ruleName"
-             class="form-control"
-             ng-model="rules.action.name"
-             ng-model-options="{debounce:{default:100}}"
-             required
-             ng-pattern="modal.namePattern"
-             placeholder="name your action">
-      <div ng-show="rules.newRuleForm.ruleName.$error.pattern" class="input-error">no spaces or %$#@^&* allowed</div>
+      </fieldset>
 
     </div>
-
-    <div class="modal-footer" ng-show="rules.action && rules.editMode">
-      <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid" ng-click="rules.saveAction()" ladda="rules.saving" data-style="expand-right">Save</button>
-      <button class="btn btn-danger pull-left" ng-click="rules.deleteAction()" ng-if="rules.action.__metadata">Delete</button>
-      <button ng-show="rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.doneEdit()">Done</button>
-      <button ng-show="!rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.cancelEdit()">Cancel</button>
-    </div>
-  </div>
-    </fieldset>
   </form>
-
-</div>
 </div>
