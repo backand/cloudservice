@@ -36,23 +36,29 @@
     </ul>
 
     <ul class="nav-right pull-right list-unstyled">
-        <li class="dropdown text-normal nav-profile">
-            <a ng-click="header.showUserDropdown = !header.showUserDropdown; $event.stopPropagation();"
-               href="" class="dropdown-toggle" data-toggle="dropdown" style="padding-top: 15px;padding-right: 30px;">
-                <span>
-                    <i class="ti-user"></i>
-                    <span>{{::header.getCurrentUser().username}}</span>
-                </span>
-            </a>
-            <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
-                <li>
-                    <a href="" ng-click="header.logout()">
-                        <i class="ti-export"></i>
-                        <span>Log Out</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+      <li class="dropdown text-normal nav-profile">
+          <a ng-click="header.showUserDropdown = !header.showUserDropdown; $event.stopPropagation();"
+             href="" class="dropdown-toggle header-item" data-toggle="dropdown">
+              <span>
+                  <i class="ti-user"></i>
+                  <span>{{::header.getCurrentUser().username}}</span>
+              </span>
+          </a>
+          <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
+              <li>
+                  <a href="" ng-click="header.logout()">
+                      <i class="ti-export"></i>
+                      <span>Log Out</span>
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li>
+        <a href="" ng-click="header.openVideoModal()" class="header-item header-video-btn">
+          <img class="header-video-img" src="assets/images/docs_pages/video-tutorials-button.png" />
+          <span class="header-video-title">Video Tutorials</span>
+        </a>
+      </li>
     </ul>
   </div>
 </header>

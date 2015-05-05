@@ -3,9 +3,9 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', HeaderController]);
+    ["$scope", 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', HeaderController]);
 
-  function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location) {
+  function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal) {
     var self = this;
 
     (function () {
@@ -36,6 +36,20 @@
       SessionService.ClearCredentials();
       $location.path("/sign_in")
     };
+
+    self.openVideoModal = function () {
+      $modal.open({
+        templateUrl: 'views/shared/video_tutorials.html',
+        windowTemplateUrl: 'views/shared/video_tutorials_window.html',
+        controller: 'VideoController as videoCtrl',
+        backdropClass: 'video-bg'
+      })
+    };
+
+    self.closeVideoModal = function () {
+      self.showVideoModal = false;
+    };
+
   }
 
 
