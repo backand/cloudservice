@@ -13,6 +13,9 @@
       '$stateParams',
       'AppsService',
       'AppLogService',
+      'DataService',
+      'ObjectsService',
+      'usSpinnerService',
       RulesController]);
 
   function RulesController(
@@ -24,7 +27,10 @@
     DictionaryService,
     $stateParams,
     AppsService,
-    AppLogService) {
+    AppLogService,
+    DataService,
+    ObjectsService,
+    usSpinnerService) {
 
     var self = this;
     /**
@@ -98,9 +104,9 @@
 
     self.clearTest = function () {
       self.test = {
-        parameters: {},
-        rowId: ''
+        parameters: {}
       };
+      self.getLastRow();
     };
 
     self.doneEdit = function () {
@@ -152,8 +158,7 @@
 
     self.allowTestForm = function () {
       var allow = self.action &&
-        self.action.__metadata &&
-        self.action.dataAction === 'OnDemand';
+        self.action.__metadata;
       return allow;
     };
 
@@ -365,11 +370,50 @@
       return ruleToSend;
     }
 
+    self.getLastRow = function () {
+      usSpinnerService.spin('loading-row');
+      return DataService.get(RulesService.tableName, 1, 1, '[{"fieldName": "Id", "order": "desc"}]')
+        .then(function (data) {
+          setTestRowData(data.data.data[0]);
+          self.lastRowId = self.test.rowId = data.data.data[0].Id;
+        }, function () {
+          errorTestRowData('No data found');
+        });
+    };
+
+    self.getRow = function (id) {
+      usSpinnerService.spin('loading-row');
+      return ObjectsService.getObject(AppsService.currentApp.Name, RulesService.tableName, id)
+        .then(function (data) {
+          setTestRowData(data.data);
+        }, function () {
+          errorTestRowData('No data exists with the specified ID');
+        });
+    };
+
+    function setTestRowData(data) {
+      usSpinnerService.stop('loading-row');
+      self.testRowObjectNotification = null;
+      self.rowData = JSON.stringify(data, null, '\t');
+    }
+
+    function errorTestRowData (errorMessage) {
+      setTestRowData();
+      self.testRowObjectNotification = errorMessage;
+    }
+
     self.getInputParameters = function () {
       var inputParameters = [];
       if (self.action && self.action.inputParameters)
         inputParameters = self.action.inputParameters.replace(/ /g, '').split(',');
       return inputParameters;
+    };
+
+    self.ace = {
+      onLoad: function(_editor) {
+        self.ace.editor = _editor;
+        _editor.$blockScrolling = Infinity;
+      }
     };
 
     self.testData = function () {
@@ -382,9 +426,9 @@
       if (self.test)
         return self.test.rowId
     }, function(newVal, oldVal) {
-        if(newVal === 0)
-          self.test.rowId = '';
-      });
+        if (typeof newVal != 'undefined' && newVal !== null)
+          self.getRow(newVal);
+    });
 
     function getLog(response) {
       self.test.result = response.data;
@@ -517,6 +561,14 @@
             }]
         }];
 
+      self.dataActionToType = {};
+
+      self.items.forEach(function (type) {
+        type.items.forEach(function (item) {
+          self.dataActionToType[item.dataAction] = type.title;
+        })
+      });
+
       //build the tree
       angular.forEach(self.ruleList, function (value, key) {
         var obj = {name: value.name};
@@ -530,6 +582,11 @@
       });
 
     }
+
+    self.getDataActionType = function () {
+      if (self.action)
+        return self.dataActionToType[self.action.dataAction];
+    };
 
     self.copyUrlParams = {
       getUrl: getTestUrl,

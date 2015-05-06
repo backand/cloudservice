@@ -13,13 +13,32 @@
   </div>
 
   <hr>
-  <div class="form-group">
-    <label>Row Id (Optional)</label>
+  <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
+    <label>Row Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
     <input type="number"
+           name="rowId"
            id="rowId"
            class="form-control"
-           ng-model="rules.test.rowId">
+           max="{{rules.lastRowId}}"
+           ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
   </div>
+
+  <div class="form-group">
+    <label for="rowData">Row Data</label>
+    <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
+    <div
+      ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+      class="form-control ace-db-template"
+      name="rowData"
+      id="rowData"
+      ng-model="rules.rowData"
+      required
+      ng-pattern="codeRegex"
+      style="resize: vertical; height: 200px;">
+  </div>
+    <div ng-show="rules.testRowObjectNotification" class="text-danger">{{rules.testRowObjectNotification}}</div>
+
+  <hr>
 
   <div class="row">
     <div class="col-md-12">
