@@ -16,6 +16,7 @@
       'DataService',
       'ObjectsService',
       'usSpinnerService',
+      'ColumnsService',
       RulesController]);
 
   function RulesController(
@@ -30,7 +31,8 @@
     AppLogService,
     DataService,
     ObjectsService,
-    usSpinnerService) {
+    usSpinnerService,
+    ColumnsService) {
 
     var self = this;
     /**
@@ -41,7 +43,6 @@
     (function init() {
 
       self.items = [];
-      loadDbType();
       getRules();
     }());
 
@@ -67,12 +68,12 @@
 
       self.clearTest();
       self.editAction();
-};
+    };
 
     self.showAction = function (actionName) {
       var action = getRuleByName(actionName);
-      refreshAction(action);
-      self.clearTest();
+      refreshAction(action)
+        .then(self.clearTest);
     };
 
     function refreshAction(action) {
@@ -82,13 +83,14 @@
       if (self.newRuleForm)
         self.newRuleForm.$setPristine();
       if (action && action.__metadata) {
-        RulesService.getRule(action.__metadata.id).then(loadAction, errorHandler); }
+        return RulesService.getRule(action.__metadata.id).then(loadAction, errorHandler);
+      }
       else {
-        self.action = null; }
+        self.action = null;
+      }
     }
 
-    function loadAction(data)
-    {
+    function loadAction(data) {
       self.action = data.data;
     }
 
@@ -106,8 +108,15 @@
       self.test = {
         parameters: {}
       };
-      self.getLastRow();
+      getTestRow();
     };
+
+    function getTestRow() {
+      if (self.getDataActionType() === 'Create')
+        self.getNewRow();
+      else
+        self.getLastRow();
+    }
 
     self.doneEdit = function () {
       refreshAction(self.action);
@@ -123,6 +132,7 @@
     self.saveAction = function (withTest) {
       self.saving = true;
       self.testUrl = '';
+      getTestRow();
       var ruleToSend = replaceSpecialCharInCode(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
@@ -132,10 +142,12 @@
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
           self.saving = false;
-          if(withTest)
+          if (withTest)
             self.testData();
           self.requestTestForm = true; //always open test after save on demand action
-        }, function() {self.saving = false;});
+        }, function () {
+          self.saving = false;
+        });
     };
 
     function updateOrPostNew(action, isUpdate) {
@@ -147,8 +159,8 @@
 
     self.deleteAction = function () {
       ConfirmationPopup.confirm('Are sure you want to delete this rule?')
-        .then(function(result){
-          if(result){
+        .then(function (result) {
+          if (result) {
             RulesService.remove(self.action)
               .then(getRules)
               .then(refreshAction);
@@ -170,7 +182,7 @@
       return (self.requestTestForm && self.allowTestForm());
     };
 
-    self.allowTest = function() {
+    self.allowTest = function () {
       var allow = self.newRuleForm && self.newRuleForm.$pristine;
       return allow;
     };
@@ -178,7 +190,7 @@
     $scope.ace = {
       dbType: AppsService.currentApp.databaseName == 'mysql' && 'mysql' || 'pgsql',
       editors: {},
-      onLoad: function(_editor) {
+      onLoad: function (_editor) {
         $scope.ace.editors[_editor.container.id] = _editor;
         _editor.$blockScrolling = Infinity;
       }
@@ -206,7 +218,7 @@
       showAngledWindow: $scope.modal.isCurGroup,
       dictionaryItems: self.dictionaryItems,
       insertAtChar: insertTokenAtChar,
-      template : "views/tables/rules/dictionary_window.html",
+      template: "views/tables/rules/dictionary_window.html",
       dictionarySections: ['userInput', 'dbRow', 'parameters', 'userProfile'],
       getDictionaryItems: getDictionaryItems
     };
@@ -242,17 +254,17 @@
       // Handle case of ace editor:
       var aceEditor = $scope.ace.editors[elementId];
       if (aceEditor) {
-        setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
+        setTimeout(function () { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
           aceEditor.insert("{{" + token + "}}");
         })
       }
-    // Handle regular text field using place-at-char directive:
+      // Handle regular text field using place-at-char directive:
       else {
         $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, "{{" + token + "}}"]);
       }
     }
 
-    function digestIn(){
+    function digestIn() {
       angular.element()
     }
 
@@ -277,23 +289,28 @@
      * @param data
      */
     function populateDictionaryItems(crudAction, data) {
-      var tableName = $stateParams.tableId ? RulesService.tableName : 'v_durados_User';
       self.dictionaryItems[crudAction] = {
         userInput: data.userInput,
         userProfile: data.systemTokens,
-        dbRow: data[tableName]
+        dbRow: data[getTableName()]
       };
     }
 
-    function getDictionaryItems (dictionarySection) {
+    function getTableName() {
+      return $stateParams.tableId ? RulesService.tableName : 'v_durados_User';
+    }
+
+    self.getTableName = getTableName;
+
+    function getDictionaryItems(dictionarySection) {
       if (dictionarySection === 'parameters') return self.dictionaryItems.parameters;
       return self.dictionaryItems[_.find(RulesService.dataActions, {value: self.action.dataAction}).crud][dictionarySection];
     }
 
     function buildParametersDictionary() {
       var keys = [];
-      if(self.action.inputParameters){
-        angular.forEach(self.action.inputParameters.replace(/ /g, '').split(','), function (param){
+      if (self.action.inputParameters) {
+        angular.forEach(self.action.inputParameters.replace(/ /g, '').split(','), function (param) {
           keys.push({token: param, label: param})
         })
       }
@@ -317,9 +334,9 @@
       })[0])
     }
 
-    $scope.modal.handleTabKey = function(e){
+    $scope.modal.handleTabKey = function (e) {
       // get caret position/selection
-      if(e.keyCode === 9) { // tab was pressed
+      if (e.keyCode === 9) { // tab was pressed
         var start = e.currentTarget.selectionStart;
         var end = e.currentTarget.selectionEnd;
 
@@ -328,8 +345,8 @@
 
         // set textarea value to: text before caret + tab + text after caret
         target.value = value.substring(0, start)
-        + "\t"
-        + value.substring(end);
+          + "\t"
+          + value.substring(end);
 
         // put caret at right position again (add one for the tab)
         e.currentTarget.selectionStart = e.currentTarget.selectionEnd = start + 1;
@@ -364,15 +381,42 @@
       return RulesService.update(rule);
     }
 
-    function replaceSpecialCharInCode(rule){
+    function replaceSpecialCharInCode(rule) {
       var ruleToSend = angular.copy(rule);
       ruleToSend.code = ruleToSend.code.replace(/\+/g, "%2B");
       return ruleToSend;
     }
 
+    function getDefaultValue(type) {
+      switch (type) {
+        case 'Numeric':
+          return 0; // Also floats, so can't use number
+        case 'DateTime':
+          return new Date();
+        case 'ShortText':
+        case 'LongText':
+          return 'text';
+        case 'Boolean':
+          return false;
+        default:
+          return 'text';
+      }
+    }
+
+    self.getNewRow = function () {
+      ColumnsService.get()
+        .then(function (data) {
+          var newRow = {};
+          data.fields.forEach(function (field) {
+            newRow[field.databaseName] = getDefaultValue(field.type);
+          });
+          setTestRowData(newRow);
+        })
+    };
+
     self.getLastRow = function () {
       usSpinnerService.spin('loading-row');
-      return DataService.get(RulesService.tableName, 1, 1, '[{"fieldName": "Id", "order": "desc"}]')
+      return DataService.get(getTableName(), 1, 1, '[{"fieldName": "Id", "order": "desc"}]')
         .then(function (data) {
           setTestRowData(data.data.data[0]);
           self.lastRowId = self.test.rowId = data.data.data[0].Id;
@@ -394,10 +438,10 @@
     function setTestRowData(data) {
       usSpinnerService.stop('loading-row');
       self.testRowObjectNotification = null;
-      self.rowData = JSON.stringify(data, null, '\t');
+      self.rowData = JSON.stringify(_.omit(data, ['__metadata', 'Id']), null, '\t');
     }
 
-    function errorTestRowData (errorMessage) {
+    function errorTestRowData(errorMessage) {
       setTestRowData();
       self.testRowObjectNotification = errorMessage;
     }
@@ -410,7 +454,7 @@
     };
 
     self.ace = {
-      onLoad: function(_editor) {
+      onLoad: function (_editor) {
         self.ace.editor = _editor;
         _editor.$blockScrolling = Infinity;
       }
@@ -418,22 +462,22 @@
 
     self.testData = function () {
       self.test.testLoading = true;
-      RulesService.testRule(self.action, self.test)
+      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData)
         .then(getLog, errorHandler);
     };
 
     $scope.$watch(function () {
       if (self.test)
         return self.test.rowId
-    }, function(newVal, oldVal) {
-        if (typeof newVal != 'undefined' && newVal !== null)
-          self.getRow(newVal);
+    }, function (newVal, oldVal) {
+      if (typeof newVal != 'undefined' && newVal !== null)
+        self.getRow(newVal);
     });
 
     function getLog(response) {
       self.test.result = response.data;
       var guid = response.headers('Action-Guid');
-      self.testUrl = RulesService.getTestUrl(self.action, self.test);
+      self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType());
       self.inputParametersForm.$setPristine();
       self.testUrlCopied = false;
       AppLogService.getActionLog($stateParams.appName, guid)
@@ -447,15 +491,6 @@
       });
       self.test.testLoading = false;
     }
-
-
-    /**
-     * reset the current active rule on scope
-     */
-
-    function loadDbType() {
-    }
-
 
     self.treeSign = function (item) {
       return item.items.length === 0 ? '' : ( item.visible ? '-' : '+' );
@@ -594,15 +629,15 @@
       getTestForm: getRuleForm
     };
 
-    function getInputParametersForm () {
+    function getInputParametersForm() {
       return self.inputParametersForm;
     }
 
-    function getRuleForm () {
+    function getRuleForm() {
       return self.newRuleForm;
     }
 
-    function getTestUrl () {
+    function getTestUrl() {
       return self.testUrl;
     }
 
@@ -610,14 +645,14 @@
 
     var backandCallbackConstCode = {
       start: '/* globals\n\  $http - service for AJAX calls - $http({method:"GET",url:CONSTS.apiUrl + "/1/objects/yourObject" , headers: {"Authorization":userProfile.token}});\n' +
-        '  CONSTS - CONSTS.apiUrl for Backands API URL\n' +
-        '\*/\n' +
+      '  CONSTS - CONSTS.apiUrl for Backands API URL\n' +
+      '\*/\n' +
       '\'use strict\';\n' +
       'function backandCallback(userInput, dbRow, parameters, userProfile) {',
-      end:   '}'
+      end: '}'
     };
 
-  /**
+    /**
      * delegate errors to the notification service
      * @param error
      * @param message

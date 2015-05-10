@@ -4,7 +4,7 @@
 
     var self= this;
     var baseUrl = '/1/businessRule';
-    self.tableRuleUrl = '/1/table/action/';
+    self.tableRuleUrl = '/1/table/';
     var logUrl = '/1/view/data/durados_Log';
 
     self.appName = null;
@@ -70,7 +70,7 @@
     };
 
 
-    self.getTestUrl = function (rule, test, debug) {
+    self.getTestUrl = function (rule, test, actionType, tableName, debug) {
       var parameters = angular.copy(test.parameters);
       if (debug)
         parameters['$$debug$$'] =  true;
@@ -78,18 +78,40 @@
       return encodeURI(
         CONSTS.appUrl +
         self.tableRuleUrl +
-        self.tableName + '/' +
+        ((actionType === 'On Demand') ? 'action/' : 'data/') +
+        tableName + '/' +
         rowId +
-        '?name=' + rule.name +
-        '&parameters=' + JSON.stringify(parameters));
+        ((actionType === 'On Demand') ? '?name=' + rule.name + '&parameters=' + JSON.stringify(parameters) : ''));
     };
 
-    self.testRule = function (rule, test) {
-      return $http({
-        method: 'GET',
-        url : self.getTestUrl(rule, test, true),
+    self.testRule = function (rule, test, actionType, tableName, rowData) {
+      var method;
+      switch (actionType) {
+        case 'Create':
+          method = 'POST';
+          break;
+        case 'Update':
+          method = 'PUT';
+          break;
+        case 'Delete':
+          method = 'DELETE';
+          break;
+        case 'On Demand':
+        default:
+          method = 'GET';
+          break;
+      }
+
+      var http = {
+        method: method,
+        url : self.getTestUrl(rule, test, actionType, tableName, true),
         headers: { AppName: self.appName }
-      })
+      };
+
+      if (actionType === 'Create' || actionType === 'Update')
+        http.data = rowData;
+
+      return $http(http);
     };
 
   }
