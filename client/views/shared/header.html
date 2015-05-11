@@ -41,10 +41,11 @@
              href="" class="dropdown-toggle header-item" data-toggle="dropdown">
               <span>
                   <i class="ti-user"></i>
-                  <span>{{::header.getCurrentUser().username}}</span>
+                  <span class="bknd-username">{{::header.getCurrentUser().username}}</span>
               </span>
           </a>
           <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
+              <li class="bknd-username"><a>{{::header.getCurrentUser().username}}</a></li>
               <li>
                   <a href="" ng-click="header.logout()">
                       <i class="ti-export"></i>
