@@ -408,7 +408,8 @@
         .then(function (data) {
           var newRow = {};
           data.fields.forEach(function (field) {
-            newRow[field.databaseName] = getDefaultValue(field.type);
+            if (field.type !== 'MultiSelect' && !field.form.hideInCreate)
+              newRow[field.databaseName] = getDefaultValue(field.type);
           });
           setTestRowData(newRow);
         })
@@ -438,7 +439,7 @@
     function setTestRowData(data) {
       usSpinnerService.stop('loading-row');
       self.testRowObjectNotification = null;
-      self.rowData = JSON.stringify(_.omit(data, ['__metadata', 'Id']), null, '\t');
+      self.rowData = JSON.stringify(_.omit(data, ['__metadata']), null, '\t');
     }
 
     function errorTestRowData(errorMessage) {
@@ -477,7 +478,7 @@
     function getLog(response) {
       self.test.result = response.data;
       var guid = response.headers('Action-Guid');
-      self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType());
+      self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName());
       self.inputParametersForm.$setPristine();
       self.testUrlCopied = false;
       AppLogService.getActionLog($stateParams.appName, guid)

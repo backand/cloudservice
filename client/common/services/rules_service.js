@@ -71,7 +71,7 @@
 
 
     self.getTestUrl = function (rule, test, actionType, tableName, debug) {
-      var parameters = angular.copy(test.parameters);
+      var parameters = actionType === 'On Demand' ? {} : angular.copy(test.parameters);
       if (debug)
         parameters['$$debug$$'] =  true;
       var rowId = test.rowId || '';
@@ -81,7 +81,7 @@
         ((actionType === 'On Demand') ? 'action/' : 'data/') +
         tableName + '/' +
         rowId +
-        ((actionType === 'On Demand') ? '?name=' + rule.name + '&parameters=' + JSON.stringify(parameters) : ''));
+        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') + 'parameters=' + JSON.stringify(parameters));
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData) {
