@@ -19,20 +19,19 @@
       'ColumnsService',
       RulesController]);
 
-  function RulesController(
-    $scope,
-    ConfirmationPopup,
-    $filter,
-    RulesService,
-    NotificationService,
-    DictionaryService,
-    $stateParams,
-    AppsService,
-    AppLogService,
-    DataService,
-    ObjectsService,
-    usSpinnerService,
-    ColumnsService) {
+  function RulesController($scope,
+                           ConfirmationPopup,
+                           $filter,
+                           RulesService,
+                           NotificationService,
+                           DictionaryService,
+                           $stateParams,
+                           AppsService,
+                           AppLogService,
+                           DataService,
+                           ObjectsService,
+                           usSpinnerService,
+                           ColumnsService) {
 
     var self = this;
     /**
@@ -115,7 +114,7 @@
       if (self.getDataActionType() === 'Create')
         self.getNewRow();
       else
-        self.getLastRow();
+        self.getFirstRow();
     }
 
     self.doneEdit = function () {
@@ -415,12 +414,12 @@
         })
     };
 
-    self.getLastRow = function () {
+    self.getFirstRow = function () {
       usSpinnerService.spin('loading-row');
-      return DataService.get(getTableName(), 1, 1, '[{"fieldName": "Id", "order": "desc"}]')
+      return DataService.get(getTableName(), 1, 1, '')
         .then(function (data) {
           setTestRowData(data.data.data[0]);
-          self.lastRowId = self.test.rowId = data.data.data[0].Id;
+          self.test.rowId = parseInt(data.data.data[0].__metadata.id);
         }, function () {
           errorTestRowData('No data found');
         });
@@ -432,7 +431,7 @@
         .then(function (data) {
           setTestRowData(data.data);
         }, function () {
-          errorTestRowData('No data exists with the specified ID');
+          errorTestRowData('No data exists with the specified row ID');
         });
     };
 
@@ -461,6 +460,22 @@
       }
     };
 
+    $scope.$watch(function () {
+      if (self.action)
+        return self.getDataActionType();
+    }, function (newVal, oldVal) {
+      if (self.ace && self.ace.editor) {
+        if (newVal === 'On Demand' || newVal === 'Delete') {
+          self.ace.editor.setReadOnly(true);
+          self.ace.message = '- read only';
+        }
+        else {
+          self.ace.message = '- please edit';
+          self.ace.editor.setReadOnly(false);
+        }
+      }
+    });
+
     self.testData = function () {
       self.test.testLoading = true;
       RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData)
@@ -476,6 +491,7 @@
     });
 
     function getLog(response) {
+      self.test.resultStatus = {code: response.status, text: response.statusText};
       self.test.result = response.data;
       var guid = response.headers('Action-Guid');
       self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName());

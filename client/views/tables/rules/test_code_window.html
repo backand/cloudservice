@@ -24,7 +24,7 @@
   </div>
 
   <div class="form-group">
-    <label for="rowData">Row Data</label>
+    <label for="rowData">Row Data {{ rules.ace.message }}</label>
     <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
     <div
       ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
@@ -69,8 +69,9 @@
   <div ng-show="!rules.allowTest()">** Must save first to enable Test</div>
 </ng-form>
 
-<div ng-if="rules.test.result">
+<div ng-if="rules.test.resultStatus">
   <hr/>
+  <label>Response Status: {{ rules.test.resultStatus.code }} - {{ rules.test.resultStatus.text }}</label>
   <label>Response Body:</label>
   <br/>
   {{ rules.test.result | json }}
@@ -79,7 +80,7 @@
 </div>
 
 
-<div ng-if="rules.test.result">
+<div ng-if="rules.test.resultStatus">
   <hr/>
   <label>Debug Console:</label>
   <br/>
@@ -88,7 +89,8 @@
     <tbody>
     <tr ng-repeat="message in rules.test.logMessages | orderBy: 'time' "
         ng-class="{'text-danger': message.isError}">
-      <td><span class="log-icon" ng-bind="message.isError? 'X' : '>' "></span> {{ message.text }}</td>
+      <td class="log-icon" ng-bind="message.isError? 'X' : '>' "></td>
+      <td class="log-text">{{ message.text }}</td>
     </tr>
     </tbody>
   </table>
