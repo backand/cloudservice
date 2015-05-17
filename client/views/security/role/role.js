@@ -3,11 +3,11 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup,$modal,$stateParams, $log, NotificationService, SecurityService, $scope) {
+  function SecurityUsers(ConfirmationPopup, CONSTS, $stateParams, $log, NotificationService, SecurityService, $scope) {
 
     var self = this;
 
-    self.tableName='durados_UserRole';
+    self.tableName = CONSTS.backandRoleObject;
     self.open = newRole;
 
     self.gridOptions= {};
@@ -90,7 +90,7 @@
   angular.module('backand')
     .controller('SecurityUsers', [
       'ConfirmationPopup',
-      '$modal',
+      'CONSTS',
       '$stateParams',
       '$log',
       'NotificationService',

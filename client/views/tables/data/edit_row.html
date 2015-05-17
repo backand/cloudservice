@@ -8,13 +8,13 @@
       <div class="form-group" ng-repeat="item in data.editRowData.entities" ng-if="!item.hide">
         <label for="{{item.key}}_{{item.type}}">{{data.getLabel(item.key)}}<span ng-if="item.required"> *</span></label>
         <div ng-switch on="item.type">
-          <input ng-switch-when="text" type="text" class="form-control" id="{{item.key}}_text" name="item.key" ng-model="item.value" ng-required="item.required" ng-disabled="item.disabled"/>
-          <textarea ng-switch-when="textarea" class="form-control" id="{{item.key}}_textarea" name="item.key" ng-model="item.value" ng-required="item.required" ng-disabled="item.disabled"/>
-          <input ng-switch-when="checkbox" type="checkbox" class="form-control" id="{{item.key}}_checkbox" name="item.key" ng-model="item.value" ng-required="item.required" ng-disabled="item.disabled"/>
+          <input ng-switch-when="text" type="text" class="form-control" id="{{item.key}}_text" name="item.key" ng-model="item.value" ng-required="item.required" ng-disabled="item.disable"/>
+          <textarea ng-switch-when="textarea" class="form-control" id="{{item.key}}_textarea" name="item.key" ng-model="item.value" ng-required="item.required" ng-disabled="item.disable"/>
+          <input ng-switch-when="checkbox" type="checkbox" class="form-control" id="{{item.key}}_checkbox" name="item.key" ng-model="item.value" ng-required="item.required" ng-disabled="item.disable"/>
           <!--<span ng-switch-when="myDateTime" editable-date="item.value">{{item.value | date:"MM/dd/yyyy"}}</span>-->
           <div ng-switch-when="dateTime">
-          <input type="date" class="editable-has-buttons editable-input form-control" ng-model="item.value" ng-required="item.required" ng-disabled="item.disabled" />
-          <input type="time" class="editable-has-buttons editable-input form-control" ng-model="item.value" ng-required="item.required" ng-disabled="item.disabled" />
+          <input type="date" class="editable-has-buttons editable-input form-control" ng-model="item.value" ng-required="item.required" ng-disabled="item.disable" />
+          <input type="time" class="editable-has-buttons editable-input form-control" ng-model="item.value" ng-required="item.required" ng-disabled="item.disable" />
         </div></div>
         <!--<div ng-show="DbQuery.queryForm.name.$error.pattern" class="input-error">no spaces or %$#@^&* allowed</div>-->
       </div>
@@ -23,7 +23,7 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-success" ladda="data.savingRow" ng-click="data.saveRow()" ng-if="data.editRowData.id" ng-disabled="data.editRowForm.$invalid">Save</button>
-  <button class="btn btn-success" ladda="data.savingRow" ng-click="data.saveRow()" ng-if="!data.editRowData.id"  ng-disabled="data.editRowForm.$invalid">Save & Edit</button>
+  <button class="btn btn-success" ladda="data.savingRow" ng-click="data.saveRow()" ng-if="!data.editRowData.id"  ng-disabled="data.editRowForm.$invalid">Save</button>
   <button class="btn btn-success" ladda="data.savingRow" ng-click="data.saveAndNew()" ng-if="!data.editRowData.id"  ng-disabled="data.editRowForm.$invalid">Save & New</button>
   <button class="btn btn-default" ng-click="data.cancelEditRow()">Cancel</button>
 </div>

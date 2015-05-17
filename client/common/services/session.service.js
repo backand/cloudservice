@@ -41,7 +41,7 @@
       if (typeof __insp != 'undefined')
         __insp.push(['identify', user.currentUser.username]);
       if($intercom)
-        $intercom.boot({
+        $intercom.update({
           app_id: CONSTS.IntercomAppId,
           name: user.currentUser.username,
           email: user.currentUser.username,
@@ -52,6 +52,8 @@
     this.ClearCredentials = function () {
       $cookieStore.remove('globals');
       self.currentUser = undefined;
+      if($intercom)
+        $intercom.shutdown();
     };
   }
 

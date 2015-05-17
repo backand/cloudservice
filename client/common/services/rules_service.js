@@ -4,8 +4,8 @@
 
     var self= this;
     var baseUrl = '/1/businessRule';
-    self.tableRuleUrl = '/1/table/';
-    var logUrl = '/1/view/data/durados_Log';
+    self.tableRuleUrl = '/1/objects/';
+    var logUrl = '/1/objects/durados_Log';
 
     self.appName = null;
     self.tableId = null;
@@ -78,7 +78,7 @@
       return encodeURI(
         CONSTS.appUrl +
         self.tableRuleUrl +
-        ((actionType === 'On Demand') ? 'action/' : 'data/') +
+        ((actionType === 'On Demand') ? 'action/' : '') +
         tableName + '/' +
         rowId +
         ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') + 'parameters=' + JSON.stringify(parameters));

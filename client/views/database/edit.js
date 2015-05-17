@@ -83,9 +83,9 @@ angular.module('backand.database')
         .success(function (data) {
           NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
           if(useSchema)
-            $analytics.eventTrack('create app', {schema: self.template.schema});
+            $analytics.eventTrack('CreatedNewDB', {schema: self.template.schema});
           else
-            $analytics.eventTrack('create app', {app: self.template.appName});
+            $analytics.eventTrack('CreatedNewDB', {app: self.template.appName});
 
           $intercom.trackEvent('create app',{app: self.template.appName});
           $state.go('docs.get-started');
@@ -115,7 +115,8 @@ angular.module('backand.database')
       else {
           DatabaseService.connect2DB($state.params.appName, self.data)
               .success(function (data) {
-              $analytics.eventTrack('connectExisting', {product: self.data.product});
+              $analytics.eventTrack('ConnectedExistingDB', {product: self.data.product});
+              $intercom.trackEvent('ConnectedExistingDB',{product: self.data.product});
 
               NotificationService.add('info', 'Connecting to the database...');
                   $state.go('docs.get-started')

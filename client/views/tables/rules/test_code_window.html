@@ -1,4 +1,4 @@
-<h3>Test query parameters</h3>
+<h3>Test Action</h3>
 <br/>
 <ng-form role="form" name="rules.inputParametersForm" novalidate>
 
@@ -14,7 +14,7 @@
 
   <hr>
   <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
-    <label>Row Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
+    <label>Item Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
     <input type="number"
            name="rowId"
            id="rowId"
@@ -24,7 +24,7 @@
   </div>
 
   <div class="form-group">
-    <label for="rowData">Row Data {{ rules.ace.message }}</label>
+    <label for="rowData">{{ rules.ace.message }}</label>
     <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
     <div
       ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
@@ -47,7 +47,7 @@
               style="margin-left: 20px;"
               class="btn btn-success pull-right"
               data-style="expand-right" ladda="rules.test.testLoading"
-              ng-disabled="!rules.allowTest()"
+              ng-disabled="!rules.allowTest() || !rules.allowTestEditMode"
               ng-click="rules.testData()">Test Action
       </button>
 
@@ -58,6 +58,9 @@
               ng-disabled="rules.allowTest()"
               ng-click="rules.saveAction(true);">Save & Test
       </button>
+
+      <div ng-show="!rules.allowTest()">** Must save first to enable Test</div>
+      <div ng-show="!rules.allowTestEditMode">** Must have data first. Click Data tab to add new rows.</div>
     </div>
   </div>
 
@@ -66,12 +69,15 @@
   <label>Request URL:</label>
   <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
 
-  <div ng-show="!rules.allowTest()">** Must save first to enable Test</div>
+
 </ng-form>
 
 <div ng-if="rules.test.resultStatus">
   <hr/>
-  <label>Response Status: {{ rules.test.resultStatus.code }} - {{ rules.test.resultStatus.text }}</label>
+  <label>Response Status:</label>
+  <br/>
+  {{ rules.test.resultStatus.code }} - {{ rules.test.resultStatus.text }}
+  <br/><br/>
   <label>Response Body:</label>
   <br/>
   {{ rules.test.result | json }}

@@ -17,6 +17,9 @@
       'ObjectsService',
       'usSpinnerService',
       'ColumnsService',
+      'CONSTS',
+      '$intercom',
+      '$analytics',
       RulesController]);
 
   function RulesController($scope,
@@ -31,7 +34,10 @@
                            DataService,
                            ObjectsService,
                            usSpinnerService,
-                           ColumnsService) {
+                           ColumnsService,
+                           CONSTS,
+                           $intercom,
+                           $analytics) {
 
     var self = this;
     /**
@@ -40,7 +46,7 @@
      * init the open modal
      */
     (function init() {
-
+      self.isNewAction = false;
       self.items = [];
       getRules();
     }());
@@ -67,9 +73,11 @@
 
       self.clearTest();
       self.editAction();
+      self.isNewAction = true;
     };
 
     self.showAction = function (actionName) {
+      self.isNewAction = false;
       var action = getRuleByName(actionName);
       refreshAction(action)
         .then(self.clearTest);
@@ -131,7 +139,7 @@
     self.saveAction = function (withTest) {
       self.saving = true;
       self.testUrl = '';
-      getTestRow();
+
       var ruleToSend = replaceSpecialCharInCode(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
@@ -140,7 +148,12 @@
             self.test.parameters = {};
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
+
+          $intercom.trackEvent('AddedRule',{rule: self.action.name});
+          $analytics.eventTrack('AddedRule', {rule: self.action.name});
+
           self.saving = false;
+          self.isNewAction = false;
           if (withTest)
             self.testData();
           self.requestTestForm = true; //always open test after save on demand action
@@ -182,8 +195,12 @@
     };
 
     self.allowTest = function () {
-      var allow = self.newRuleForm && self.newRuleForm.$pristine;
-      return allow;
+
+      if(self.test)
+        self.allowTestEditMode = self.test.rowId != null || (self.test.rowId == null && self.getDataActionType() != 'Delete' && self.getDataActionType() != 'Update');
+
+      return self.newRuleForm && self.newRuleForm.$pristine;
+
     };
 
     $scope.ace = {
@@ -296,7 +313,7 @@
     }
 
     function getTableName() {
-      return $stateParams.tableId ? RulesService.tableName : 'v_durados_User';
+      return $stateParams.tableId ? RulesService.tableName : CONSTS.backandUserObject;
     }
 
     self.getTableName = getTableName;
@@ -403,6 +420,7 @@
     }
 
     self.getNewRow = function () {
+      ColumnsService.tableName = getTableName();
       ColumnsService.get()
         .then(function (data) {
           var newRow = {};
@@ -418,20 +436,31 @@
       usSpinnerService.spin('loading-row');
       return DataService.get(getTableName(), 1, 1, '')
         .then(function (data) {
-          setTestRowData(data.data.data[0]);
-          self.test.rowId = parseInt(data.data.data[0].__metadata.id);
+          if(data.data.data.length>0){
+            setTestRowData(data.data.data[0]);
+            self.test.rowId = parseInt(data.data.data[0].__metadata.id);
+          }
+          else
+            self.test.rowId = null;
         }, function () {
           errorTestRowData('No data found');
         });
     };
 
     self.getRow = function (id) {
+      if(id == null || id == ''){
+        self.testRowObjectNotification = null;
+        self.rowData = '';
+        usSpinnerService.stop('loading-row');
+        return;
+      }
       usSpinnerService.spin('loading-row');
-      return ObjectsService.getObject(AppsService.currentApp.Name, RulesService.tableName, id)
+
+      return ObjectsService.getObject(AppsService.currentApp.Name, getTableName(), id)
         .then(function (data) {
           setTestRowData(data.data);
         }, function () {
-          errorTestRowData('No data exists with the specified row ID');
+          errorTestRowData('No data exists with the specified Item Id');
         });
     };
 
@@ -467,16 +496,17 @@
       if (self.ace && self.ace.editor) {
         if (newVal === 'On Demand' || newVal === 'Delete') {
           self.ace.editor.setReadOnly(true);
-          self.ace.message = '- read only';
+          self.ace.message = 'Item data (read only)';
         }
         else {
-          self.ace.message = '- please edit';
+          self.ace.message = 'Data to send in the test';
           self.ace.editor.setReadOnly(false);
         }
       }
     });
 
     self.testData = function () {
+      //getTestRow();
       self.test.testLoading = true;
       RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData)
         .then(getLog, errorHandler);
@@ -486,7 +516,7 @@
       if (self.test)
         return self.test.rowId
     }, function (newVal, oldVal) {
-      if (typeof newVal != 'undefined' && newVal !== null)
+      if (typeof newVal != 'undefined' && newVal !== oldVal)
         self.getRow(newVal);
     });
 

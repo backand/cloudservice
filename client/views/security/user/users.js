@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService) {
+  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, $intercom, $analytics) {
 
     var self = this;
 
@@ -214,6 +214,8 @@
     };
 
     self.inviteAdmins = function () {
+      $intercom.trackEvent('AddedAdmin',{admins: self.invitedAdmins});
+      $analytics.eventTrack('AddedAdmin', {admins: self.invitedAdmins});
       self.inviteUsers(self.invitedAdmins, 'Admin');
     };
 
@@ -333,6 +335,8 @@
       '$scope',
       'SessionService',
       'AppsService',
+      '$intercom',
+      '$analytics',
       SecurityUsers
     ]);
 

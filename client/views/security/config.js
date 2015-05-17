@@ -26,10 +26,10 @@
         controller: 'SecurityAuth as auth',
         templateUrl: 'views/security/auth/auth.html',
         resolve: {
-          tableName: function ($stateParams, RulesService, DictionaryService) {
+          tableName: function ($stateParams, RulesService, DictionaryService, CONSTS) {
             DictionaryService.appName = RulesService.appName;
             RulesService.tableId = 4;
-            DictionaryService.tableName = 'v_durados_user';
+            DictionaryService.tableName = CONSTS.backandUserObject;
             return DictionaryService.tableName;
           }
         }

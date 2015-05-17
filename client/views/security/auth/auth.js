@@ -3,15 +3,15 @@
  */
 (function () {
 
-  function SecurityAuth($state, NotificationService, SecurityService, AppsService, RulesService, DictionaryService, $scope) {
+  function SecurityAuth($state, NotificationService, SecurityService, AppsService, RulesService, DictionaryService, $scope, CONSTS) {
 
     var self = this;
     (function init() {
       self.appName = SecurityService.appName = AppsService.appName = $state.params.appName;
-      //enable here the rules tab only for 'v_durados_user'
+      //enable here the rules tab only for 'backandUsers'
       RulesService.appName = DictionaryService.appName = self.appName;
       RulesService.tableId = 4;
-      DictionaryService.tableName = 'v_durados_user';
+      DictionaryService.tableName = CONSTS.backandUserObject;
 
       self.data = {settings: {}, allowAnonymous: false};
       self.updateAppAuth = updateAppAuth;
@@ -86,6 +86,7 @@
       'RulesService',
       'DictionaryService',
       '$scope',
+      'CONSTS',
       SecurityAuth
     ]);
 

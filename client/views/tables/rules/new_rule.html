@@ -19,7 +19,7 @@
                    ng-model-options="{debounce:{default:100}}"
                    required
                    ng-pattern="modal.namePattern"
-                   placeholder="name your action"
+                   placeholder="Name your action"
                    ng-disabled="!rules.editMode">
             <ba-tooltip tooltip-text="Use the action name in the request URL query string of the REST API"
                         tooltip-placement="right" class=""></ba-tooltip>
@@ -55,9 +55,9 @@
       </div>
       <br/>
 
-      <div class="col-xs-12">
+      <div class="col-xs-12">111{{rules.isNewAction}}
         <button name="testCode"
-
+                ng-show="!rules.isNewAction"
                 class="pull-right btn btn-success btn-xs with-margin"
                 ng-click="rules.toggleTestForm()">
           {{ rules.requestTestForm ? '<< Hide Test' : 'Test Action >>'}}

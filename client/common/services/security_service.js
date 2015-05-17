@@ -4,8 +4,8 @@
   function SecurityService($http, CONSTS) {
     var self = this;
     self.appName = null;
-    self.usersTableName = 'v_durados_user';
-    self.rolesTableName = 'durados_UserRole';
+    self.usersTableName = CONSTS.backandUserObject;
+    self.rolesTableName = CONSTS.backandRoleObject;
     self.workspaceTableName = '/1/workspace';
     self.dbDataUrl = '/1/table/data/';
 

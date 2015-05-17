@@ -16,7 +16,7 @@
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
         .success(function (data) {
-          $analytics.eventTrack('signup', {});
+          $analytics.eventTrack('SignedUp', {});
           if($intercom){
             $intercom.boot({
               app_id: CONSTS.IntercomAppId,
@@ -24,7 +24,7 @@
               email: self.email,
               signed_up_at: new Date().getTime()
             });
-            $intercom.trackEvent('signup',{});
+            $intercom.trackEvent('SignedUp',{});
           }
           AuthService.signIn(self.email, self.password)
               .success(function (data) {

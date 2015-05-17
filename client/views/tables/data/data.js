@@ -83,7 +83,7 @@
     }
 
     function getData() {
-      $timeout(function() { usSpinnerService.spin("loading") });
+      usSpinnerService.spin("loading");
 
       ColumnsService.get(false)
         .then(successColumnsHandler, errorHandler)
@@ -188,7 +188,7 @@
     self.onUpdateRowCell = function(row, col, newValue) {
       var updatedObject = angular.copy(row.entity);
       updatedObject[col.name] = newValue;
-      var updatePromise = DataService.update(self.tableName, updatedObject);
+      var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id);
       updatePromise
         .then(loadData)
         .then(successDataHandler);
@@ -215,6 +215,8 @@
           return 'text';
         case 'LongText':
           return 'textarea';
+        case 'Boolean':
+          return 'checkbox';
         case 'Boolean':
           return 'checkbox';
         default:
@@ -293,14 +295,14 @@
         var savePromise;
 
         if (self.editRowData.id) {
-          savePromise = DataService.update(self.tableName, record)
+          savePromise = DataService.update(self.tableName, record, self.editRowData.id)
             .then(modalInstance.close);
         }
         else {
           savePromise = DataService.post(self.tableName, record)
             .then(modalInstance.close)
             .then(function() {
-              $timeout(function() { usSpinnerService.spin("loading") });              
+              usSpinnerService.spin("loading");
             })
         }
         savePromise
@@ -322,21 +324,22 @@
           .then(self.newRow)
       };
 
+
       self.cancelEditRow = function () {
         modalInstance.dismiss('cancel');
       };
     }
-    
+
     self.deleteRow = function (event, rowItem) {
       ConfirmationPopup.confirm('Are you sure you want to delete the object?')
         .then(function (result) {
           if (!result)
             return;
-          $timeout(function() { usSpinnerService.spin("loading") });
-          DataService.delete(self.tableName, rowItem.entity)
+          usSpinnerService.spin("loading");
+          DataService.delete(self.tableName, rowItem.entity, rowItem.entity.__metadata.id)
             .then(loadData)
             .then(successDataHandler);
         });
-    };    
+    };
   }
 }());

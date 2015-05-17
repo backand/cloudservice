@@ -24,9 +24,9 @@ angular.module('backand.apps')
 
       AppsService.add(self.appName, self.appTitle)
         .then(function(data) {
-          $analytics.eventTrack('createdApp', {appName: self.appName});
-          $intercom.trackEvent('createdApp',{appName: self.appName});
-          NotificationService.add('success', 'App was added successfully');
+          $analytics.eventTrack('CreatedApp', {appName: self.appName});
+          $intercom.trackEvent('CreatedApp',{appName: self.appName});
+          NotificationService.add('success', 'App was successfully created');
           $state.go('database.edit', { appName: self.appName });
         },
         function(err) {

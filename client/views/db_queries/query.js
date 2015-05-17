@@ -2,6 +2,7 @@
   'use strict';
   angular.module('backand.dbQueries')
     .controller('DbQueryController', [
+      'CONSTS',
       '$state',
       '$stateParams',
       'DbQueriesService',
@@ -12,7 +13,7 @@
       'AppsService',
       DbQueryController]);
 
-  function DbQueryController($state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService, AppsService) {
+  function DbQueryController(CONSTS, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService, AppsService) {
 
     var self = this;
     self.namePattern = /^\w+$/;
@@ -189,7 +190,7 @@
 
     function populateDictionaryItems() {
       DictionaryService.appName = self.appName;
-      DictionaryService.tableName = 'v_durados_user'; //used just any table - we just need the system tokens
+      DictionaryService.tableName = CONSTS.backandUserObject; //used just any table - we just need the system tokens
 
       DictionaryService.get("read").then(function (data) {
         var raw = data.data;
