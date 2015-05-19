@@ -22,7 +22,7 @@
      */
     (function init() {
       self.items = [];
-      getFields();
+      getFields(true);
       $scope.$on('appname:saved', reloadFields);
       $scope.$on('after:sync', afterSync);
     }());
@@ -37,9 +37,9 @@
     /**
      * ajax call to get the fields items
      */
-    function getFields() {
+    function getFields(force) {
       if(self.view == null && ColumnsService.tableName != null)
-        ColumnsService.get(false).then(successHandler, errorHandler)
+        ColumnsService.get(force).then(successHandler, errorHandler)
     }
 
     /**
