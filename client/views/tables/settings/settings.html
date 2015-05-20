@@ -19,7 +19,7 @@
       <div class="form-group form-group-half" >
         <label class="strong" for="dbName">Descriptive Column</label>
         <select class="form-control"
-                ng-options="field.name as field.displayName for field in fields.items"
+                ng-options="field.name as field.name for field in fields.items"
                 ng-model="fields.view.columnDisplayinTitle">
         </select>
         <div class="field-description">The descriptive column is used in MultiSelect and SingleSelect fields when this object has been selected as a "relatedTable"</div>

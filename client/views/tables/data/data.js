@@ -12,14 +12,13 @@
       '$scope',
       '$modal',
       'usSpinnerService',
-      '$timeout',
       '$rootScope',
       'tableName',
       'ConfirmationPopup',
       ViewData
     ]);
 
-  function ViewData(NotificationService, ColumnsService, DataService, $scope, $modal, usSpinnerService, $timeout, $rootScope, tableName, ConfirmationPopup) {
+  function ViewData(NotificationService, ColumnsService, DataService, $scope, $modal, usSpinnerService, $rootScope, tableName, ConfirmationPopup) {
     var self = this;
 
     $scope.$scope = $scope; //for ui-grid inner scope
@@ -40,16 +39,16 @@
      * init the data
      */
     (function init() {
-      getData();
+      getData(true);
     }());
 
     self.createData = function (data) {
       DataService.post(tableName, data);
     };
 
-    self.refresh = function(){
+    self.refresh = function () {
       getData();
-    }
+    };
 
     self.gridOptions = {
       enablePaginationControls: false,
@@ -82,10 +81,10 @@
         getData();
     }
 
-    function getData() {
-      usSpinnerService.spin("loading");
+    function getData(force) {
+      usSpinnerService.spin("loading-data");
 
-      ColumnsService.get(false)
+      ColumnsService.get(force)
         .then(successColumnsHandler, errorHandler)
         .then(loadData)
         .then(successDataHandler, errorHandler);
@@ -101,6 +100,12 @@
     }
 
     function successDataHandler(response) {
+      self.gridOptions.totalItems = response.data.totalRows;
+      if (self.gridOptions.totalItems === 0) {
+        usSpinnerService.stop("loading-data");
+        return;
+      }
+
       self.gridOptions.data = response.data.data;
       var columns = [];
       if (response.data.data.length > 0) {
@@ -140,10 +145,8 @@
       if(_.last(self.gridOptions.columnDefs))
         _.last(self.gridOptions.columnDefs).minWidth = 286; //for edit widget to be shown properly
 
-      self.gridOptions.totalItems = response.data.totalRows;
-
       setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
-      usSpinnerService.stop("loading");
+      usSpinnerService.stop("loading-data");
     }
 
     function refreshGridDisplay() {
@@ -158,7 +161,7 @@
     };
 
     function errorHandler(error, message) {
-      usSpinnerService.stop("loading");
+      usSpinnerService.stop("loading-data");
       NotificationService.add('error', message);
     }
 
@@ -173,12 +176,12 @@
       var type = getFieldType(column.type);
 
       if (type == 'dateTime')
-        return '<span class="ui-grid-cell-contents" editable-date="MODEL_COL_FIELD" '
+        return '<div class="ui-grid-cell-contents"><span editable-date="MODEL_COL_FIELD" '
           + callbackOptions
-          + '>{{COL_FIELD | date:"MM/dd/yyyy" CUSTOM_FILTERS }}</span>'
-          + '<span class="ui-grid-cell-contents" editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" '
+          + '>{{COL_FIELD | date:"MM/dd/yyyy" CUSTOM_FILTERS }}</span> '
+          + '<span editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" '
           + callbackOptions
-          + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span>';
+          + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 
       return '<div class="ui-grid-cell-contents" editable-' + type + '="MODEL_COL_FIELD" '
         + callbackOptions
@@ -215,8 +218,6 @@
           return 'text';
         case 'LongText':
           return 'textarea';
-        case 'Boolean':
-          return 'checkbox';
         case 'Boolean':
           return 'checkbox';
         default:
@@ -302,7 +303,7 @@
           savePromise = DataService.post(self.tableName, record)
             .then(modalInstance.close)
             .then(function() {
-              usSpinnerService.spin("loading");
+              usSpinnerService.spin("loading-data");
             })
         }
         savePromise
@@ -335,7 +336,7 @@
         .then(function (result) {
           if (!result)
             return;
-          usSpinnerService.spin("loading");
+          usSpinnerService.spin("loading-data");
           DataService.delete(self.tableName, rowItem.entity, rowItem.entity.__metadata.id)
             .then(loadData)
             .then(successDataHandler);
