@@ -11,6 +11,11 @@
         controller: 'TablesShow as tables',
         templateUrl: 'views/tables/no_tables.html'
       })
+      .state('tables.model', {
+        url: '/model',
+        controller: 'ModelController as Model',
+        templateUrl: 'views/tables/model.html'
+      })
       .state('tables.columns', {
         url: '/:tableId',
         controller: 'SingleTableShow as singleTable',
