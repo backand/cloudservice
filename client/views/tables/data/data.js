@@ -5,20 +5,31 @@
 
 
   angular.module('backand')
-    .controller('ViewData', [
+    .controller('ObjectDataController', [
       'NotificationService',
       'ColumnsService',
       'DataService',
       '$scope',
       '$modal',
       'usSpinnerService',
-      '$rootScope',
       'tableName',
       'ConfirmationPopup',
-      ViewData
+      '$filter',
+      ObjectDataController
     ]);
 
-  function ViewData(NotificationService, ColumnsService, DataService, $scope, $modal, usSpinnerService, $rootScope, tableName, ConfirmationPopup) {
+  function ObjectDataController(
+    NotificationService,
+    ColumnsService,
+    DataService,
+    $scope,
+    $modal,
+    usSpinnerService,
+    tableName,
+    ConfirmationPopup,
+    $filter
+  ) {
+
     var self = this;
 
     $scope.$scope = $scope; //for ui-grid inner scope
@@ -27,7 +38,6 @@
     self.title = '';
     self.sort = '';
     self.refreshOnce = false;
-    $rootScope.data = self;
 
     this.paginationOptions = {
       pageNumber: 1,
@@ -35,9 +45,6 @@
       pageSizes: [20, 50, 100, 1000]
     };
 
-    /**
-     * init the data
-     */
     (function init() {
       getData(true);
     }());
@@ -69,11 +76,9 @@
       }
     };
 
-
-
     $scope.$watchGroup([
-        'data.paginationOptions.pageNumber',
-        'data.paginationOptions.pageSize']
+        'ObjectData.paginationOptions.pageNumber',
+        'ObjectData.paginationOptions.pageSize']
       , getPageData);
 
     function getPageData(newVal, oldVal) {
@@ -124,29 +129,37 @@
         }
       });
 
-      self.gridOptions.columnDefs.unshift({
-        width: 30,
-        name: 'delete',
-        displayName: '',
-        enableSorting: false,
-        enableColumnMenu: false,
-        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().data.deleteRow($event, row)"><i class="ti-trash"/></div>'
-      });
-
-      self.gridOptions.columnDefs.unshift({
-        width: 30,
-        name: 'edit',
-        displayName: '',
-        enableSorting: false,
-        enableColumnMenu: false,
-        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().data.editRow($event, row)"><i class="ti-pencil"/></div>'
-      });
+      addActionColumns();
 
       if(_.last(self.gridOptions.columnDefs))
         _.last(self.gridOptions.columnDefs).minWidth = 286; //for edit widget to be shown properly
 
       setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
       usSpinnerService.stop("loading-data");
+    }
+
+    function addActionColumns() {
+
+      var actionColumnOptions = {
+        width: 30,
+        displayName: '',
+        enableSorting: false,
+        enableColumnMenu: false
+      };
+
+      var deleteColumnOptions = {
+        name: 'delete',
+        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().ObjectData.deleteRow($event, row)"><i class="ti-trash"/></div>'
+      };
+      angular.extend(deleteColumnOptions, actionColumnOptions);
+      self.gridOptions.columnDefs.unshift(deleteColumnOptions);
+
+      var editColumnOptions = {
+        name: 'edit',
+        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().ObjectData.editRow($event, row)"><i class="ti-pencil"/></div>'
+      };
+      angular.extend(editColumnOptions, actionColumnOptions);
+      self.gridOptions.columnDefs.unshift(editColumnOptions);
     }
 
     function refreshGridDisplay() {
@@ -168,10 +181,7 @@
     function getCellEditTemplate (column) {
       if (column.form.hideInEdit || column.form.disableInEdit) return undefined;
 
-      //var show =  !column.form.hideInCreate : !column.form.hideInEdit,
-      //var disabled: scope.isNew ? field.form.disableInCreate : field.form.disableInEdit,
-
-      var callbackOptions = ' onbeforesave="$root.data.onUpdateRowCell(row, col, $data)"';
+      var callbackOptions = ' onbeforesave="getExternalScopes().ObjectData.onUpdateRowCell(row, col, $data)"';
 
       var type = getFieldType(column.type);
 
@@ -183,10 +193,26 @@
           + callbackOptions
           + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 
+      if (!_.isEmpty(column.relatedViewName)) {
+        return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" ' +
+          'e-typeahead="item.value as item.value + \'. \' + item.label ' +
+          'for item in getExternalScopes().ObjectData.getAutocomplete(col.field, $viewValue)" '
+          + callbackOptions
+          + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
+      }
+
       return '<div class="ui-grid-cell-contents" editable-' + type + '="MODEL_COL_FIELD" '
         + callbackOptions
         + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
     }
+
+    self.getAutocomplete = function (columnName, term) {
+      return DataService.getAutocomplete(self.tableName, columnName, term)
+        .then(function(result) {
+          results = $filter('orderBy')(result.data, 'value');
+          return results;
+        });
+    };
 
     self.onUpdateRowCell = function(row, col, newValue) {
       var updatedObject = angular.copy(row.entity);
@@ -225,12 +251,7 @@
       }
     }
 
-
     // edit row modal
-
-    self.getLabel = function (text) {
-      return text.replace(/_/g, ' ');
-    };
 
     self.newRow = function () {
       getEditRowEntity();
@@ -252,7 +273,7 @@
           disable: formItem.disable || formItem.disableInCreate && !rowItem || formItem.disableInEdit && rowItem,
           required: formItem.required,
           value: rowItem ? rowItem.entity[formItem.key] : formItem.defaultValue,
-          type: formItem.type
+          type: _.isEmpty(formItem.relatedViewName) ? formItem.type : 'foreignKey'
         });
       });
     }
@@ -275,60 +296,36 @@
           required: column.advancedLayout.required,
           defaultValue: column.advancedLayout.defaultValue,
           key: column.name,
-          type: getFieldType(column.type)
+          type: getFieldType(column.type),
+          relatedViewName: column.relatedViewName
         });
       });
     }
 
     function openModal () {
       var modalInstance = $modal.open({
-        templateUrl: 'views/tables/data/edit_row.html'
+        templateUrl: 'views/tables/data/edit_row.html',
+        controller: 'EditRowController as EditRow',
+        resolve: {
+          editRowData: function () {
+            return self.editRowData;
+          },
+          tableName: function () {
+            return self.tableName;
+          }
+        }
       });
 
-      self.saveRow = function () {
-        var record = {};
-        self.savingRow = true;
-        self.editRowData.entities.forEach(function (entity) {
-          if (entity.value !== null)
-            record[entity.key] = entity.value;
-        });
-
-        var savePromise;
-
-        if (self.editRowData.id) {
-          savePromise = DataService.update(self.tableName, record, self.editRowData.id)
-            .then(modalInstance.close);
+      modalInstance.result.then(function (result) {
+        if (result.reopen) {
+          self.newRow();
         }
         else {
-          savePromise = DataService.post(self.tableName, record)
-            .then(modalInstance.close)
-            .then(function() {
-              usSpinnerService.spin("loading-data");
-            })
+          usSpinnerService.spin("loading-data");
         }
-        savePromise
-          .finally(function() {
-            self.savingRow = false;
-          });
-
-        savePromise
-          .then(loadData)
+        loadData()
           .then(successDataHandler);
-
-        return savePromise;
-
-      };
-
-
-      self.saveAndNew = function () {
-        self.saveRow()
-          .then(self.newRow)
-      };
-
-
-      self.cancelEditRow = function () {
-        modalInstance.dismiss('cancel');
-      };
+      });
     }
 
     self.deleteRow = function (event, rowItem) {

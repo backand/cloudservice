@@ -59,7 +59,7 @@
           route: 'tables.columns.log'
         }*/
       ];
-      RulesService.appName = ColumnsService.appName = DictionaryService.appName = SecurityService.appName = self.appName;
+      RulesService.appName = DictionaryService.appName = SecurityService.appName = self.appName;
       RulesService.tableId = self.tableId;
       $scope.$on('appname:updated', updateAppName);
       $scope.$on('appname:saved', loadColumns);

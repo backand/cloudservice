@@ -3,12 +3,12 @@
   'use strict';
 
   angular.module('common.directives')
-    .directive('match', ['$rootScope', function($rootScope) {
+    .directive('baMatch', ['$rootScope', function($rootScope) {
       return {
         require: '?ngModel',
         restrict: 'A',
         scope: {
-          match: '='
+          match: '=baMatch'
         },
         link: function(scope, elem, attrs, ctrl) {
           if(!ctrl) {

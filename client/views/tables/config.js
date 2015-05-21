@@ -52,7 +52,7 @@
       .state('tables.columns.data', {
         url: '/data',
         templateUrl: 'views/tables/data/data.html',
-        controller: 'ViewData as data'
+        controller: 'ObjectDataController as ObjectData'
       })
       .state('tables.columns.restapi', {
         url: '/restapi',

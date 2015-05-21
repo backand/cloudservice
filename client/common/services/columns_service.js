@@ -1,6 +1,6 @@
 (function() {
 
-  function ColumnsService($http, CONSTS, $q, NotificationService, $interval, $rootScope) {
+  function ColumnsService($http, CONSTS, $q, NotificationService, $interval, $rootScope, AppsService) {
 
     var self = this;
     var _tableConfig = null;
@@ -9,14 +9,13 @@
 
     self.commit = update;
     self.forceCommit = _update;
-    self.appName = null;
     self.tableName = null;
 
     self.sync = function() {
         return $http({
             method: 'GET',
             url: CONSTS.appUrl + '/1/app/sync',
-            headers: { AppName: self.appName }
+            headers: { 'AppName': AppsService.currentApp.Name }
         });
     };
 
@@ -45,11 +44,15 @@
       }
     };
 
-    function _get() {
+    self.getColumns = function (tableName) {
+      return _get(tableName);
+    };
+
+    function _get(tableName) {
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/table/config/' + self.tableName,
-        headers: { AppName: self.appName }
+        url: CONSTS.appUrl + '/1/table/config/' + (_.isEmpty(tableName) ? self.tableName : tableName),
+        headers: { 'AppName': AppsService.currentApp.Name }
       });
     }
 
@@ -72,7 +75,7 @@
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/1/table/config/' + table.__metadata.name,
-        headers: { AppName: self.appName },
+        headers: { 'AppName': AppsService.currentApp.Name },
         data: table
       });
     }
@@ -125,5 +128,5 @@
   }
 
   angular.module('common.services')
-    .service('ColumnsService', ['$http', 'CONSTS', '$q', 'NotificationService', '$interval', '$rootScope', ColumnsService]);
+    .service('ColumnsService', ['$http', 'CONSTS', '$q', 'NotificationService', '$interval', '$rootScope', 'AppsService', ColumnsService]);
 })();

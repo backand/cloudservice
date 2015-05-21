@@ -1,36 +1,36 @@
 <div id="grid-container">
     <us-spinner spinner-key="loading-data" spinner-start-active="1" style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
-    <button class="btn btn-success" ng-click="data.newRow()">+ New Row</button>
-    <button class="btn btn-default pull-right" ng-click="data.refresh()">Refresh Data</button>
+    <button class="btn btn-success" ng-click="ObjectData.newRow()">+ New Row</button>
+    <button class="btn btn-default pull-right" ng-click="ObjectData.refresh()">Refresh Data</button>
     <br/><br/>
-    <div ui-grid="data.gridOptions"
+    <div ui-grid="ObjectData.gridOptions"
          class="datagrid" ui-grid-resize-columns
          external-scopes="$scope"
-         ng-show="data.gridOptions.totalItems > 0">
+         ng-show="ObjectData.gridOptions.totalItems > 0">
     </div>
-    <div ng-show="data.gridOptions.totalItems == 0">
+    <div ng-show="ObjectData.gridOptions.totalItems == 0">
       <h3>No items found</h3>
     </div>
-    <div ng-show="data.gridOptions.totalItems > 0" class="row">
+    <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">
       <div class="col-md-5">
-        <pagination total-items="data.gridOptions.totalItems"
-                    ng-model="data.paginationOptions.pageNumber"
+        <pagination total-items="ObjectData.gridOptions.totalItems"
+                    ng-model="ObjectData.paginationOptions.pageNumber"
                     max-size="5"
                     class="pagination-sm"
                     boundary-links="true"
                     rotate="false"
-                    items-per-page="data.paginationOptions.pageSize"
+                    items-per-page="ObjectData.paginationOptions.pageSize"
                     previous-text="&lsaquo;"
                     next-text="&rsaquo;"></pagination>
       </div>
       <div class="col-md-2" style="margin-top:20px;">
         Page size:
-        <select class="ui-select" ng-model="data.paginationOptions.pageSize" >
-          <option ng-repeat="size in data.paginationOptions.pageSizes">{{size}}</option>
+        <select class="ui-select" ng-model="ObjectData.paginationOptions.pageSize" >
+          <option ng-repeat="size in ObjectData.paginationOptions.pageSizes">{{size}}</option>
         </select>
       </div>
       <div class="col-md-5" style="margin-top:20px;">
-        <span class="pull-right">Showing {{data.paginationOptions.pageSize * (data.paginationOptions.pageNumber-1) +1}} to {{data.pageMax(data.paginationOptions.pageSize, data.paginationOptions.pageNumber, data.gridOptions.totalItems)}} of {{data.gridOptions.totalItems}} rows</span>
+        <span class="pull-right">Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}} to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize, ObjectData.paginationOptions.pageNumber, ObjectData.gridOptions.totalItems)}} of {{ObjectData.gridOptions.totalItems}} rows</span>
       </div>
     </div>
 </div>
