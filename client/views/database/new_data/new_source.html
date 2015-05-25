@@ -5,9 +5,7 @@
       <div class="db-panel-body-description">
         <p>Select a database model example to use as the starting point for your app's database,<br/>
           or add your own model by editing the model in the "Custom" tab.</p>
-        <p><strong>ID is added to all objects automatically, please do not add it yourself.</strong></p>
       </div>
-      <br/>
 
       <div class="row">
 
@@ -38,14 +36,18 @@
             </li>
           </ul>
         </div>
-
       </div>
-
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-8 col-lg-9">
+      <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg btn-in-ace"
+              ladda="dbedit.loading" data-style="expand-right"
+              ng-click="dbedit.create()"
+              test-hook="database-edit.create">
+        Create
+      </button>
       <div
         ui-ace="{onLoad : dbedit.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
         class="form-control ace-db-template"
@@ -57,16 +59,8 @@
         style="resize: vertical; height: 500px;">
 
       </div>
-      <br/>
+      <p><strong>ID is added to all objects automatically, please do not add it yourself.</strong></p>
 
-      <div>
-        <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
-                ladda="dbedit.loading" data-style="expand-right"
-                ng-click="dbedit.create()"
-                test-hook="database-edit.create">
-          Create
-        </button>
-      </div>
     </div>
 
     <div class="col-md-4 col-lg-3">
