@@ -50,6 +50,9 @@
       if(oldVal == null)
         return;
 
+      if (self.authForm.$invalid)
+        return;
+
       if(newVal.data.allowAnonymous !== oldVal.data.allowAnonymous ||
         newVal.data.settings.defaultGuestRole !== oldVal.data.settings.defaultGuestRole ||
         newVal.data.settings.newUserDefaultRole !== oldVal.data.settings.newUserDefaultRole ||

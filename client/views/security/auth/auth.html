@@ -6,129 +6,138 @@
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
-      <div class="field-group">
-        <div class="group-inner">
-          <div class="form-group">
-            <label class="strong" for="allowAnonymousPublic">Anonymous Access</label>
-            <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-              <input id="allowAnonymousPublic" type="checkbox" ng-model="auth.data.allowAnonymous" checked=""><i></i>
-            </label>
-            <div class="field-description">Allow anonymous users to access the application</div>
-          </div>
-          <div class="row" ng-if="auth.data.allowAnonymous">
-            <div class="form-group col-md-4" ng-class="{ 'has-error': newRuleForm.to.$invalid }">
-              <label class="strong" for="AnonymousUserRole">Anonymous users assigned role:</label>
-              <select class="form-control"
-                      ng-options="role.Name as role.Name for role in auth.roles "
-                      id="AnonymousUserRole"
-                      ng-model="auth.data.settings.defaultGuestRole"
-                      ng-model-options="{debounce:{default:400}}"
-                      required>
-              </select>
-              <div class="field-description">
-                * The role can be changed any time after the registration vip API or from user page
+      <form name="auth.authForm" novalidate>
+        <div class="field-group">
+          <div class="group-inner">
+            <div class="form-group">
+              <label class="strong" for="allowAnonymousPublic">Anonymous Access</label>
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                <input id="allowAnonymousPublic" type="checkbox" ng-model="auth.data.allowAnonymous" checked=""><i></i>
+              </label>
+              <div class="field-description">Allow anonymous users to access the application</div>
+            </div>
+            <div class="row" ng-show="auth.data.allowAnonymous">
+              <div class="form-group col-md-4" ng-class="{ 'has-error': auth.authForm.AnonymousUserRole.$invalid }">
+                <label class="control-label strong" for="AnonymousUserRole">Anonymous users assigned role:</label>
+                <select class="form-control"
+                        ng-options="role.Name as role.Name for role in auth.roles "
+                        id="AnonymousUserRole"
+                        name="AnonymousUserRole"
+                        ng-model="auth.data.settings.defaultGuestRole"
+                        ng-model-options="{debounce:{default:400}}"
+                        ng-required="auth.data.allowAnonymous">
+                </select>
+                <div class="field-description">
+                  * The role can be changed any time after the registration vip API or from user page
+                </div>
+              </div>
+            </div>
+            <div class="row" ng-if="auth.data.allowAnonymous">
+              <div class="col-md-12">
+                <label for="anonymouskey" class="control-label strong">Anonymous Token</label>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="anonymouskey"
+                           ng-readonly="true"
+                           ng-model="auth.keys.anonymous">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" clip-copy="auth.keys.anonymous">Copy</button>
+                    </span>
+                  </div>
+                  <div class="field-description">
+                    Use this token when accessing the REST API without login (Anonymous access)
+                    (put the token in headers parameter AnonymousToken)
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row" ng-if="auth.data.allowAnonymous">
-            <div class="col-md-12">
-              <label for="anonymouskey" class="control-label strong">Anonymous Token</label>
+        </div>
+        <div class="field-group">
+          <div class="group-inner">
+            <div class="form-group">
+              <label class="strong" for="allowAnonymousPrivate">Public App</label>
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.settings.enableUserRegistration"
+                       checked=""><i></i>
+              </label>
+              <div class="field-description">
+                When enabled, any user can register with the application. When disabled, only invited users may register.
+                To invite users, go to the <a href="" ng-click="auth.goTo('security.users');">Users</a> page.
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4" ng-class="{ 'has-error': auth.authForm.PrivateAppRole.$invalid }">
+                <label class="control-label strong" for="PrivateAppRole">Invited users default assigned role:</label>
+                <select class="form-control"
+                        ng-options="role.Name as role.Name for role in auth.roles "
+                        id="PrivateAppRole"
+                        name="PrivateAppRole"
+                        ng-model="auth.data.settings.newUserDefaultRole"
+                        ng-model-options="{debounce:{default:400}}"
+                        ng-required="auth.data.settings.enableUserRegistration">
+                </select>
+                <div class="field-description">
+                  * The role can be changed any time after the registration vip API or from user page
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="group-inner">
+              <div class="form-group" ng-class="{ 'has-error': auth.authForm.inputUrl1.$error.url }">
+                <label for="inputUrl1" class="control-label strong">Custom Registration Page URL</label>
+
+                <div class="form-group">
+                  <input type="url" class="form-control"
+                         id="inputUrl1" name="inputUrl1" placeholder="http://www.myappdomain.com/sign-up.html"
+                         ng-model-options="{ updateOn: 'blur' ,debounce: 400 }"
+                         ng-keyup="cancel($event)"
+                         ng-model="auth.data.settings.registrationRedirectUrl">
+
+                  <div class="field-description">The registration page URL to be used in user invitation email</div>
+                </div>
+              </div>
+              <div class="form-group" ng-class="{ 'has-error': auth.authForm.inputUrl2.$error.url }">
+                <label for="inputUrl2" class="strong control-label">Custom Verified Email Page URL</label>
+
+                <div class="form-group">
+                  <input type="url" class="form-control"
+                         id="inputUrl2" name="inputUrl2"
+                         ng-model-options="{ updateOn: 'blur' ,debounce: 400 }"
+                         placeholder="http://www.myappdomain.com/sign-in.html"
+                         ng-keyup="cancel($event)"
+                         ng-model="auth.data.settings.signInRedirectUrl">
+
+                  <div class="field-description">Redirect page after user has verified his email in the sign up process
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="group-inner">
+            <div class="form-group">
+              <label for="inputUrl1" class="control-label strong">API Signup Token</label>
               <div class="form-group">
                 <div class="input-group">
-                  <input type="text" class="form-control" id="anonymouskey"
-                         ng-readonly="true"
-                         ng-model="auth.keys.anonymous">
+                  <input type="text" class="form-control" id="signupkey"
+                       ng-readonly="true"
+                       ng-model="auth.keys.signup">
                   <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" clip-copy="auth.keys.anonymous">Copy</button>
+                    <button class="btn btn-default" type="button" clip-copy="auth.keys.signup">Copy</button>
                   </span>
                 </div>
                 <div class="field-description">
-                  Use this token when accessing the REST API without login (Anonymous access)
-                  (put the token in headers parameter AnonymousToken)
+                  Use this token when registering a user via the sign-up REST API URL -
+                  /user/signup (put it in headers parameter SignUpToken)
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="field-group">
-        <div class="group-inner">
-          <div class="form-group">
-            <label class="strong" for="allowAnonymousPrivate">Public App</label>
-            <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-              <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.settings.enableUserRegistration"
-                     checked=""><i></i>
-            </label>
-            <div class="field-description">
-              When enabled, any user can register with the application. When disabled, only invited users may register.
-              To invite users, go to the <a href="" ng-click="auth.goTo('security.users');">Users</a> page.
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-md-4">
-              <label class="strong" for="PrivateAppRole">Invited users default assigned role:</label>
-              <select class="form-control"
-                      ng-options="role.Name as role.Name for role in auth.roles "
-                      id="PrivateAppRole"
-                      ng-model="auth.data.settings.newUserDefaultRole"
-                      ng-model-options="{debounce:{default:400}}"
-                      required>
-              </select>
-              <div class="field-description">
-                * The role can be changed any time after the registration vip API or from user page
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="field-group">
-        <div class="group-inner">
-            <div class="form-group">
-              <label for="inputUrl1" class="control-label strong">Custom Registration Page URL</label>
-
-              <div class="form-group">
-                <input type="text" class="form-control" id="inputUrl1" placeholder="http://www.myappdomain.com/sign-up.html"
-                       ng-model-options="{ updateOn: 'blur' ,debounce: 400 }" ng-keyup="cancel($event)"
-                       ng-model="auth.data.settings.registrationRedirectUrl">
-
-                <div class="field-description">The registration page URL to be used in user invitation email</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputUrl2" class="strong control-label">Custom Verified Email Page URL</label>
-
-              <div class="form-group">
-                <input type="text" class="form-control" id="inputUrl2" ng-model-options="{ updateOn: 'blur' ,debounce: 400 }"
-                       placeholder="http://www.myappdomain.com/sign-in.html"
-                       ng-keyup="cancel($event)" ng-model="auth.data.settings.signInRedirectUrl">
-
-                <div class="field-description">Redirect page after user has verified his email in the sign up process
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-      <div class="field-group">
-        <div class="group-inner">
-          <div class="form-group">
-            <label for="inputUrl1" class="control-label strong">API Signup Token</label>
-            <div class="form-group">
-              <div class="input-group">
-                <input type="text" class="form-control" id="signupkey"
-                     ng-readonly="true"
-                     ng-model="auth.keys.signup">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" clip-copy="auth.keys.signup">Copy</button>
-                </span>
-              </div>
-              <div class="field-description">
-                Use this token when registering a user via the sign-up REST API URL -
-                /user/signup (put it in headers parameter SignUpToken)
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </form>
       <div class="field-group">
         <div class="group-inner">
           <ng-include src="'views/tables/rules/rules.html'"></ng-include>
