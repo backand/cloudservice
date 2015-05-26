@@ -71,6 +71,10 @@ angular.module('backand.apps')
       }
     };
 
+    self.goToLocation = function(href) {
+        window.open(href, '_blank');
+    };
+
     self.getAppManageTitle = function (app) {
       if (app.DatabaseStatus == 2)
         return 'Connecting to Database';

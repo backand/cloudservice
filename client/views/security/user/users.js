@@ -194,10 +194,11 @@
      * Legacy support for old Role json name( the new is durados_User_Role and the old is Role
      * */
     function SetDataUserRole(data, role) {
-      if (self.roleFieldName == 'Role')
-        data.Role = role;
-      else
-        data.durados_User_Role = role;
+      data.Role = role;
+      //if (self.roleFieldName.toLowerCase() === 'durados_user_role')
+      //  data.durados_User_Role = role;
+      //else
+      //  data.Role = role;
     }
 
     /**
