@@ -29,7 +29,7 @@
         </a>
       </li>
       <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('docs.api-desc')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToLocation('http://docs.backand.com')" href="">
           <i class="icon-rest-api-icon"></i>
           <span>Documentation</span>
         </a>
@@ -82,12 +82,12 @@
          style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
     </a>
     <ul class="scrollbar ex4" id="ex4">
-      <li>
-        <a ui-sref="tables.model">
-          <i class="ti-gift"></i>
-          <span>Model</span>
-        </a>
-      </li>
+      <!--<li>-->
+        <!--<a ui-sref="tables.model">-->
+          <!--<i class="ti-gift"></i>-->
+          <!--<span>Model</span>-->
+        <!--</a>-->
+      <!--</li>-->
       <li ng-class="{active: false }" ng-repeat="table in nav.tables">
         <a ng-class="{disabled: false}"  ng-click="nav.showTable(table)" href="">
           <i class="ti-cloud"></i>

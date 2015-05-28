@@ -36,12 +36,17 @@
 
       if(window.JacoRecorder)
         window.JacoRecorder.identify(user.currentUser.username);
-      if (woopra)
-        woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
+      //if (woopra)
+      //  woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
+      if(analytics)
+        analytics.identify(user.currentUser.username, {
+          name: user.currentUser.username,
+          email: user.currentUser.username
+        });
       if (typeof __insp != 'undefined')
         __insp.push(['identify', user.currentUser.username]);
       if($intercom)
-        $intercom.update({
+        $intercom.boot({
           app_id: CONSTS.IntercomAppId,
           name: user.currentUser.username,
           email: user.currentUser.username,

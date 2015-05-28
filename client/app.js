@@ -60,7 +60,7 @@
     'angled-windows.directives',
     'ngStorage',
     'angulartics',
-    'angulartics.woopra',
+    'angulartics.segment.io',
     'ngIntercom'
   ])
     .config(['ngClipProvider', function (ngClipProvider) {

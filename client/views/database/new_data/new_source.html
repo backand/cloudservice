@@ -1,4 +1,4 @@
-<div class="db-footer">
+<div class="db-footer" data-ng-init="dbedit.loadOpt()">
   <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
         ladda="dbedit.loading" data-style="expand-right"
         ng-click="dbedit.create()"
@@ -61,7 +61,7 @@
         style="resize: vertical; height: 500px;">
 
       </div>
-      <p><strong>ID is added to all objects automatically, please do not add it yourself.</strong></p>
+      <p><strong>** Id is added to all objects automatically, please do not add it yourself</strong></p>
 
     </div>
 
