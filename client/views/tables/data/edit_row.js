@@ -50,12 +50,22 @@
       modalInstance.dismiss('cancel');
     };
 
-    self.getAutocomplete = function (columnName, term) {
-      return DataService.getAutocomplete(self.tableName, columnName, term)
+    self.getAutocomplete = function (columnName, query) {
+      return DataService.getAutocomplete(self.tableName, columnName, query)
         .then(function(result) {
           results = $filter('orderBy')(result.data, 'value');
           return results;
         });
+    };
+
+    self.getMultiAutocomplete = function (columnName, term, item) {
+      item.words = _.words(term, /[^, ]+/g);
+      var query = _.last(item.words);
+      return self.getAutocomplete(columnName, query);
+    };
+
+    self.onMultiSelect = function (item, $model) {
+      item.value = (item.words && item.words.length > 1 ? _.dropRight(item.words).join() + ',' : '') + $model
     };
 
   }

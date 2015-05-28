@@ -236,6 +236,10 @@
 
     function getFieldType(type) {
       switch (type) {
+        case 'MultiSelect':
+          return 'MultiSelect';
+        case 'SingleSelect':
+          return 'SingleSelect';
         case 'Numeric':
           return 'text'; // Also floats, so can't use number
         case 'DateTime':
@@ -273,7 +277,7 @@
           disable: formItem.disable || formItem.disableInCreate && !rowItem || formItem.disableInEdit && rowItem,
           required: formItem.required,
           value: rowItem ? rowItem.entity[formItem.key] : formItem.defaultValue,
-          type: _.isEmpty(formItem.relatedViewName) ? formItem.type : 'foreignKey'
+          type: formItem.type
         });
       });
     }
