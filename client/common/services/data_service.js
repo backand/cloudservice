@@ -58,6 +58,19 @@
         },
         headers: { AppName: AppsService.currentApp.Name }
       });
+    };
+
+    self.search = function (tableName, term, pageSize, pageNumber) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/objects/' + tableName,
+        params: {
+          search: term,
+          pageSize: pageSize || 20,
+          pageNumber: pageNumber || 1
+        },
+        headers: { AppName: AppsService.currentApp.Name }
+      });
     }
   }
 

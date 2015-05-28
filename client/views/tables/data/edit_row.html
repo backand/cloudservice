@@ -50,7 +50,8 @@
           <input ng-switch-when="SingleSelect"
                  type="text"
                  ng-model="item.value"
-                 typeahead="row.value as row.value + '. ' + row.label for row in EditRow.getAutocomplete(item.key, $viewValue)"
+                 typeahead="row.__metadata.id as EditRow.getSingleSelectLabel(row, item) for row in EditRow.getSingleAutocomplete(item, $viewValue)"
+                 typeahead-template-url="views/tables/data/select_row_template.html"
                  typeahead-editable="false"
                  class="form-control">
 

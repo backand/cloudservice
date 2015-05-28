@@ -193,6 +193,15 @@
           + callbackOptions
           + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 
+      if (type === 'SingleSelect')
+        return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" '
+          + 'e-typeahead="item.__metadata.id as getExternalScopes().ObjectData.getSingleSelectLabel(item, col) '
+          + 'for item in getExternalScopes().ObjectData.getSingleAutocomplete(col, $viewValue)" '
+          + 'e-typeahead-template-url="views/tables/data/select_row_template.html" '
+          + 'e-typeahead-editable="false" ' +
+          + callbackOptions
+          + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
+
       if (!_.isEmpty(column.relatedViewName)) {
         return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" ' +
           'e-typeahead="item.value as item.value + \'. \' + item.label ' +
@@ -205,6 +214,33 @@
         + callbackOptions
         + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
     }
+
+    self.getSingleSelectLabel = function (row, item) {
+      if (typeof row !== 'object')
+        return row;
+
+      var descriptive = self.relatedViews[item.field].descriptiveColumn;
+      var descriptiveLabel = row.__metadata.id + ': ' +  row[descriptive];
+
+      var fields=[];
+
+      _.forEach(row, function (value, key) {
+        if (key !== '__metadata' && key !== descriptive && !_.isEmpty(value)) {
+          fields.push({key: key, value: value});
+        }
+      });
+
+      return {descriptiveLabel: descriptiveLabel, fields: fields};
+    };
+
+    self.getSingleAutocomplete = function (item, query) {
+      return DataService.search(self.relatedViews[item.field].object, query)
+        .then(function(result) {
+          results = $filter('orderBy')(result.data.data, '__matadata.id');
+          return results;
+        });
+    };
+
 
     self.getAutocomplete = function (columnName, term) {
       return DataService.getAutocomplete(self.tableName, columnName, term)
@@ -277,7 +313,8 @@
           disable: formItem.disable || formItem.disableInCreate && !rowItem || formItem.disableInEdit && rowItem,
           required: formItem.required,
           value: rowItem ? rowItem.entity[formItem.key] : formItem.defaultValue,
-          type: formItem.type
+          type: formItem.type,
+          relatedView: formItem.relatedView
         });
       });
     }
@@ -286,12 +323,14 @@
       self.editRowData = {
         form: []
       };
+      self.relatedViews = {};
     }
 
     function getEditRowData () {
       resetEditRowData();
       self.columnDefs.forEach(function (column) {
-        self.editRowData.form.push({
+
+        var columnData = {
           disableInCreate: column.form.disableInCreate,
           hideInCreate: column.form.hideInCreate,
           disableInEdit: column.form.disableInEdit,
@@ -300,9 +339,23 @@
           required: column.advancedLayout.required,
           defaultValue: column.advancedLayout.defaultValue,
           key: column.name,
-          type: getFieldType(column.type),
-          relatedViewName: column.relatedViewName
-        });
+          type: getFieldType(column.type)
+        };
+
+        if (!_.isEmpty(column.relatedViewName)) {
+          ColumnsService.getColumns(column.relatedViewName)
+            .then(function (response) {
+              columnData.relatedView = {
+                object: column.relatedViewName,
+                descriptiveColumn: response.data.columnDisplayinTitle
+              };
+              self.relatedViews[column.name] = {object: column.relatedViewName,
+                descriptiveColumn: response.data.columnDisplayinTitle};
+            })
+        }
+
+        self.editRowData.form.push(columnData);
+
       });
     }
 

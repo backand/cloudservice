@@ -82,3 +82,11 @@
     display: inline-block;
   }
 }
+
+.tooltip.select-row-tooltip .tooltip-inner {
+  background-color: rgb(243, 243, 243);
+  color: black;
+  font-size: 14px;
+  text-align: left;
+  min-width: 350px;
+}

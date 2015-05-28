@@ -1,0 +1,5 @@
+<ul class="list-unstyled">
+  <li ng-repeat="field in match.label.fields">
+    {{field.key}}: <span ng-bind-html="field.value | typeaheadHighlight:query"></span>
+  </li>
+</ul>
