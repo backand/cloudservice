@@ -20,7 +20,7 @@
           grant_type : 'password',
           username : userName,
           password : password,
-          appname : 'www'
+          appname : CONSTS.mainAppName
         }
       }
       )};

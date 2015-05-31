@@ -149,7 +149,7 @@
     function getAllApps () {
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/admin/myApps?pageSize=50'
+        url: CONSTS.appUrl + '/admin/myApps?pageSize=200'
       })
     }
 

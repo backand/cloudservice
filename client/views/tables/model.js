@@ -1,16 +1,16 @@
 (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ModelController', ['AppsService', ModelController]);
+    .controller('ModelController', ['$scope','AppsService','ModelService','usSpinnerService','NotificationService', ModelController]);
 
-  function ModelController(AppsService) {
+  function ModelController($scope, AppsService, ModelService, usSpinnerService, NotificationService) {
 
     var self = this;
     var currentApp = AppsService.currentApp;
 
     self.appName = currentApp.Name;
 
-    self.fieldTypes = ['ShortText', 'LongText', 'DateTime', 'Numeric', 'Boolean', 'SingleSelect', 'MultiSelect'];
+    self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean', 'binary'];
 
     function init() {
       getSchema();
@@ -19,7 +19,13 @@
     init();
 
     function getSchema () {
-      self.schema = '{a: 1, b: 2}'
+      usSpinnerService.spin('loading');
+      ModelService.get(self.appName)
+        .then(function(data){
+          self.schema = angular.toJson(data.data, true);
+          usSpinnerService.stop('loading');
+        }, errorHandler)
+
     }
 
     self.ace = {
@@ -45,9 +51,21 @@
     }
 
     self.update = function() {
-
+      self.loading = true;
+      var schema = JSON.parse(self.schema)
+      ModelService.update(self.appName, schema)
+        .then(function(data){
+          self.schema = angular.toJson(data.data, true);
+          $scope.$root.$broadcast('fetchTables');
+          self.loading = false;
+      }, errorHandler)
     };
 
+    function errorHandler(error, message) {
+      NotificationService.add('error', message);
+      self.loading = false;
+      usSpinnerService.stop('loading');
+    }
   }
 
 }());
