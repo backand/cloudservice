@@ -193,22 +193,23 @@
           + callbackOptions
           + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 
-      if (type === 'SingleSelect')
-        return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" '
+      if (type === 'SingleSelect') type = 'text'; // todo: fix single-select
+/*        return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" '
           + 'e-typeahead="item.__metadata.id as getExternalScopes().ObjectData.getSingleSelectLabel(item, col) '
           + 'for item in getExternalScopes().ObjectData.getSingleAutocomplete(col, $viewValue)" '
           + 'e-typeahead-template-url="views/tables/data/select_row_template.html" '
           + 'e-typeahead-editable="false" ' +
           + callbackOptions
-          + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
+          + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';*/
 
-      if (!_.isEmpty(column.relatedViewName)) {
+      // Search of Multi-Select keys doesn't work currently
+      /*if (!_.isEmpty(column.relatedViewName)) {
         return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" ' +
           'e-typeahead="item.value as item.value + \'. \' + item.label ' +
           'for item in getExternalScopes().ObjectData.getAutocomplete(col.field, $viewValue)" '
           + callbackOptions
           + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
-      }
+      }*/
 
       return '<div class="ui-grid-cell-contents" editable-' + type + '="MODEL_COL_FIELD" '
         + callbackOptions
@@ -273,7 +274,7 @@
     function getFieldType(type) {
       switch (type) {
         case 'MultiSelect':
-          return 'MultiSelect';
+          return 'text'; // Search of Multi-Select keys doesn't work currently
         case 'SingleSelect':
           return 'SingleSelect';
         case 'Numeric':
