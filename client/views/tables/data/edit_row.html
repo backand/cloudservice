@@ -11,6 +11,7 @@
           {{EditRow.getLabel(item.key)}}<span ng-if="item.required"> *</span>
         </label>
         <div ng-switch on="item.type">
+
           <input ng-switch-when="text" type="text"
                  class="form-control"
                  id="{{item.key}}_text"
@@ -18,12 +19,14 @@
                  ng-model="item.value"
                  ng-required="item.required"
                  ng-disabled="item.disable"/>
+
           <textarea ng-switch-when="textarea"
                     class="form-control"
                     id="{{item.key}}_textarea"
                     name="item.key" ng-model="item.value"
                     ng-required="item.required"
                     ng-disabled="item.disable"/>
+
           <input ng-switch-when="checkbox" type="checkbox"
                  class="form-control"
                  id="{{item.key}}_checkbox"
@@ -31,6 +34,7 @@
                  ng-model="item.value"
                  ng-required="item.required"
                  ng-disabled="item.disable"/>
+
           <div ng-switch-when="dateTime">
             <input type="date"
                    class="editable-has-buttons editable-input form-control"
@@ -43,10 +47,21 @@
                    ng-required="item.required"
                    ng-disabled="item.disable" />
           </div>
-          <input ng-switch-when="foreignKey"
-            type="text" ng-model="item.value"
-            typeahead="row.value as row.value + '. ' + row.label for row in EditRow.getAutocomplete(item.key, $viewValue)"
-            class="form-control">
+          <input ng-switch-when="SingleSelect"
+                 type="text"
+                 ng-model="item.value"
+                 typeahead="row.__metadata.id as EditRow.getSingleSelectLabel(row, item) for row in EditRow.getSingleAutocomplete(item, $viewValue)"
+                 typeahead-template-url="views/tables/data/select_row_template.html"
+                 typeahead-editable="false"
+                 class="form-control">
+
+          <input ng-switch-when="MultiSelect"
+                 type="text"
+                 ng-model="item.value"
+                 typeahead="row.value as row.value + '. ' + row.label for row in EditRow.getMultiAutocomplete(item.key, $viewValue, item)"
+                 typeahead-editable="false"
+                 typeahead-on-select="EditRow.onMultiSelect(item, $model)"
+                 class="form-control">
         </div>
       </div>
     </fieldset>

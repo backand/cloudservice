@@ -50,12 +50,56 @@
       modalInstance.dismiss('cancel');
     };
 
-    self.getAutocomplete = function (columnName, term) {
-      return DataService.getAutocomplete(self.tableName, columnName, term)
+    self.getSingleSelectLabel = function (row, item) {
+      if (typeof row !== 'object')
+        return row;
+
+      var descriptive = item.relatedView.descriptiveColumn;
+      var descriptiveLabel = row.__metadata.id + ': ' +  row[descriptive];
+
+      var fields=[];
+
+      _.forEach(row, function (value, key) {
+        if (key !== '__metadata' && key !== descriptive && !_.isEmpty(value)) {
+          fields.push({key: key, value: value});
+        }
+      });
+
+      return {descriptiveLabel: descriptiveLabel, fields: fields};
+    };
+
+    self.getSingleAutocomplete = function (item, query) {
+      return DataService.search(item.relatedView.object, query)
+        .then(function(result) {
+          results = $filter('orderBy')(result.data.data, '__matadata.id');
+          return results;
+        });
+    };
+
+    self.getAutocomplete = function (columnName, query) {
+      return DataService.getAutocomplete(self.tableName, columnName, query)
         .then(function(result) {
           results = $filter('orderBy')(result.data, 'value');
           return results;
         });
+    };
+
+    self.getMultiSelectLabel = function (row) {
+      var label = '';
+      _.forEach(row, function (value, key) {
+        label += key + ': '+ value +'; ' ;
+      });
+      return label;
+    };
+
+    self.getMultiAutocomplete = function (columnName, term, item) {
+      item.words = _.words(term, /[^, ]+/g);
+      var query = _.last(item.words);
+      return self.getAutocomplete(columnName, query);
+    };
+
+    self.onMultiSelect = function (item, $model) {
+      item.value = (item.words && item.words.length > 1 ? _.dropRight(item.words).join() + ',' : '') + $model
     };
 
   }
