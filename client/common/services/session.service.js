@@ -1,6 +1,9 @@
 (function() {
   'use strict';
 
+  angular.module('common.services', ['ngCookies'])
+    .service('SessionService', ['CONSTS', '$cookieStore','$intercom', SessionService])
+
   function SessionService(CONSTS, $cookieStore, $intercom) {
     var self = this;
 
@@ -60,8 +63,14 @@
       if($intercom)
         $intercom.shutdown();
     };
+
+    self.getUserId = function () {
+      if(self.currentUser && self.currentUser.userId)
+        return self.currentUser.userId;
+      else
+        return 0;
+    };
+
   }
 
-  angular.module('common.services', ['ngCookies'])
-    .service('SessionService', ['CONSTS', '$cookieStore','$intercom', SessionService])
 })();

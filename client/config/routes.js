@@ -12,7 +12,7 @@ angular.module('backand.routes', []).
 
     $stateProvider
       .state('sign_up', {
-        url: '/sign_up',
+        url: '/sign_up?username&name&i',
         templateUrl: 'views/auth/sign_up.html',
         controller : 'SignUpController as signup'
       })
