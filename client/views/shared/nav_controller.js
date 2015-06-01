@@ -2,12 +2,13 @@
 (function  () {
     'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$interval', '$log', 'NotificationService', 'TablesService', 'DbQueriesService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$location', '$log', 'NotificationService', 'TablesService', 'DbQueriesService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $interval, $log, NotificationService, TablesService, DbQueriesService){
+  function NavCtrl($scope, $state, AppsService, $location, $log, NotificationService, TablesService, DbQueriesService){
     var self = this;
 
     (function init() {
+      self.showModel = ($location.host() == 'localhost');
       self.app = AppsService.currentApp;
       clearTables();
     }());
