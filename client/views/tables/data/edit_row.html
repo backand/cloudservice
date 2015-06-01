@@ -12,12 +12,14 @@
         </label>
         <div ng-switch on="item.type">
 
-          <textarea ng-switch-when="textarea"
-                    class="form-control"
+          <div ng-switch-when="textarea" class="input-group">
+            <span class="ti-text"></span>
+            <textarea class="form-control"
                     id="{{item.key}}_textarea"
                     name="item.key" ng-model="item.value"
                     ng-required="item.required"
-                    ng-disabled="item.disable"/>
+                    ng-disabled="item.disable" />
+          </div>
 
           <input ng-switch-when="checkbox" type="checkbox"
                  class="form-control"
@@ -27,25 +29,31 @@
                  ng-required="item.required"
                  ng-disabled="item.disable"/>
 
-          <div ng-switch-when="dateTime">
+          <div ng-switch-when="dateTime" class="input-group">
+            <span class="input-group-addon ti-calendar"></span>
             <input type="date"
                    class="editable-has-buttons editable-input form-control"
                    ng-model="item.value"
                    ng-required="item.required"
                    ng-disabled="item.disable" />
+            <span class="input-group-addon ti-time"></span>
             <input type="time"
                    class="editable-has-buttons editable-input form-control"
                    ng-model="item.value"
                    ng-required="item.required"
                    ng-disabled="item.disable" />
           </div>
-          <input ng-switch-when="SingleSelect"
-                 type="text"
-                 ng-model="item.value"
-                 typeahead="row.__metadata.id as EditRow.getSingleSelectLabel(row, item) for row in EditRow.getSingleAutocomplete(item, $viewValue)"
-                 typeahead-template-url="views/tables/data/select_row_template.html"
-                 typeahead-editable="false"
-                 class="form-control">
+
+          <div ng-switch-when="singleSelect" class="input-group">
+            <span class="input-group-addon ti-search"></span>
+            <input type="text"
+                   id="{{item.key}}_singleSelect"
+                   ng-model="item.value"
+                   typeahead="row.__metadata.id as EditRow.getSingleSelectLabel(row, item) for row in EditRow.getSingleAutocomplete(item, $viewValue)"
+                   typeahead-template-url="views/tables/data/select_row_template.html"
+                   typeahead-editable="false"
+                   class="form-control">
+          </div>
 
           <!--<input ng-switch-when="MultiSelect"
                  type="text"
@@ -56,13 +64,27 @@
                  class="form-control">-->
 
           <!-- text and MultiSelect-->
-          <input ng-switch-default type="text"
-                 class="form-control"
-                 id="{{item.key}}_text"
-                 name="item.key"
-                 ng-model="item.value"
-                 ng-required="item.required"
-                 ng-disabled="item.disable"/>
+          <div ng-switch-when="multiSelect" class="input-group">
+            <span class="input-group-addon"><ba-tooltip tooltip-text="comma separated values, i.e. 3,17,50" tooltip-placement="left"></ba-tooltip></span>
+            <input type="text"
+                   class="form-control"
+                   id="{{item.key}}_multiSelect"
+                   name="item.key"
+                   ng-model="item.value"
+                   ng-required="item.required"
+                   ng-disabled="item.disable"/>
+          </div>
+
+          <div ng-switch-default class="input-group">
+            <span class="input-group-addon ti-text"></span>
+            <input type="text"
+                   class="form-control"
+                   id="{{item.key}}_text"
+                   name="item.key"
+                   ng-model="item.value"
+                   ng-required="item.required"
+                   ng-disabled="item.disable"/>
+          </div>
         </div>
       </div>
     </fieldset>

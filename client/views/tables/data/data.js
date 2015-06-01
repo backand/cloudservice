@@ -193,7 +193,7 @@
           + callbackOptions
           + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 
-      if (type === 'SingleSelect') type = 'text'; // todo: fix single-select
+      if (type === 'singleSelect' || type === 'multiSelect') { type = 'text';} // todo: fix single-select
 /*        return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" '
           + 'e-typeahead="item.__metadata.id as getExternalScopes().ObjectData.getSingleSelectLabel(item, col) '
           + 'for item in getExternalScopes().ObjectData.getSingleAutocomplete(col, $viewValue)" '
@@ -274,9 +274,9 @@
     function getFieldType(type) {
       switch (type) {
         case 'MultiSelect':
-          return 'text'; // Search of Multi-Select keys doesn't work currently
+          return 'multiSelect'; // Search of Multi-Select keys doesn't work currently
         case 'SingleSelect':
-          return 'SingleSelect';
+          return 'singleSelect';
         case 'Numeric':
           return 'text'; // Also floats, so can't use number
         case 'DateTime':
