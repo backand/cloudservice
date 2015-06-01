@@ -1,10 +1,13 @@
 (function() {
   'use strict';
 
-  function LayoutService($localStorage, AuthService) {
+  angular.module('common.services')
+    .service('LayoutService',['$localStorage', 'SessionService', LayoutService]);
+
+  function LayoutService($localStorage, SessionService) {
 
     var self = this;
-    self.userId = AuthService.getUserId();
+    self.userId = SessionService.getUserId();
     $localStorage.backand = $localStorage.backand || {};
     $localStorage.backand[self.userId] = $localStorage.backand[self.userId] || {};
 
@@ -29,8 +32,5 @@
     };
 
   }
-
-  angular.module('common.services')
-    .service('LayoutService',['$localStorage', 'AuthService', LayoutService]);
 
 })();

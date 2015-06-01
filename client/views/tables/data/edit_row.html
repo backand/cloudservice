@@ -12,14 +12,6 @@
         </label>
         <div ng-switch on="item.type">
 
-          <input ng-switch-when="text" type="text"
-                 class="form-control"
-                 id="{{item.key}}_text"
-                 name="item.key"
-                 ng-model="item.value"
-                 ng-required="item.required"
-                 ng-disabled="item.disable"/>
-
           <textarea ng-switch-when="textarea"
                     class="form-control"
                     id="{{item.key}}_textarea"
@@ -55,13 +47,22 @@
                  typeahead-editable="false"
                  class="form-control">
 
-          <input ng-switch-when="MultiSelect"
+          <!--<input ng-switch-when="MultiSelect"
                  type="text"
                  ng-model="item.value"
                  typeahead="row.value as row.value + '. ' + row.label for row in EditRow.getMultiAutocomplete(item.key, $viewValue, item)"
                  typeahead-editable="false"
                  typeahead-on-select="EditRow.onMultiSelect(item, $model)"
-                 class="form-control">
+                 class="form-control">-->
+
+          <!-- text and MultiSelect-->
+          <input ng-switch-default type="text"
+                 class="form-control"
+                 id="{{item.key}}_text"
+                 name="item.key"
+                 ng-model="item.value"
+                 ng-required="item.required"
+                 ng-disabled="item.disable"/>
         </div>
       </div>
     </fieldset>

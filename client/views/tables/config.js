@@ -22,7 +22,7 @@
         templateUrl: 'views/tables/show_single_table.html',
         abstract: true,
         resolve: {
-          tableName: function (TablesService, RulesService, ColumnsService, DictionaryService, $stateParams) {
+          tableName: function (TablesService, RulesService, ColumnsService, DictionaryService, $stateParams, $q) {
             return TablesService.get($stateParams.appName)
             .then(function(tables) {
               var tableName = TablesService.getTableNameById(tables, $stateParams.tableId).name;

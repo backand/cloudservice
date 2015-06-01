@@ -1,7 +1,10 @@
 (function () {
   'use strict';
 
-  function AppsService($http, $q, CONSTS, DatabaseNamesService, $interval, $rootScope, AuthService) {
+  angular.module('common.services')
+    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', '$interval', '$rootScope', 'SessionService', AppsService]);
+
+  function AppsService($http, $q, CONSTS, DatabaseNamesService, $interval, $rootScope, SessionService) {
 
     var self = this;
 
@@ -54,7 +57,7 @@
 
       self.isExampleApp = function (app) {
       if (!app || !app.Name) return false;
-      return app.Name === 'todo' + AuthService.getUserId();
+      return app.Name === 'todo' + SessionService.getUserId();
       //return (app.Name.substring(0, 4) === 'todo')
     };
 
@@ -186,8 +189,5 @@
       });
     }
   }
-
-  angular.module('common.services')
-    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', '$interval', '$rootScope', 'AuthService', AppsService]);
 
 })();

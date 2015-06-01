@@ -5,27 +5,27 @@
 
     var self =this;
 
-    this.signIn = function (userName, password) {
+    self.signIn = function (userName, password) {
       return $http({
-        method: 'POST',
-        url: CONSTS.appUrl + '/token',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        transformRequest: function(obj) {
-          var str = [];
-          for(var p in obj)
-            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-          return str.join("&");
-        },
-        data: {
-          grant_type : 'password',
-          username : userName,
-          password : password,
-          appname : CONSTS.mainAppName
+          method: 'POST',
+          url: CONSTS.appUrl + '/token',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          transformRequest: function(obj) {
+            var str = [];
+            for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
+          data: {
+            grant_type : 'password',
+            username : userName,
+            password : password,
+            appname : CONSTS.mainAppName
+          }
         }
-      }
       )};
 
-    this.signUp = function (fullName, email, password) {
+    self.signUp = function (fullName, email, password) {
       return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/api/account/signUp',
@@ -38,26 +38,26 @@
         }
       )};
 
-    this.forgot = function (email) {
+    self.forgot = function (email) {
       return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/api/account/SendChangePasswordLink',
           data: {
-              username : email
+            username : email
           }
         }
       )};
 
-    this.resetPassword = function (password, id) {
+    self.resetPassword = function (password, id) {
       return $http({
-          method: 'POST',
-          url: CONSTS.appUrl + '/api/account/changePassword',
-          data: {
-            confirmPassword: password,
-            password: password,
-            token: id
-          }
-        });
+        method: 'POST',
+        url: CONSTS.appUrl + '/api/account/changePassword',
+        data: {
+          confirmPassword: password,
+          password: password,
+          token: id
+        }
+      });
     };
 
     self.getUserId = function () {
