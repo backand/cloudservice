@@ -336,7 +336,6 @@
           hideInCreate: column.form.hideInCreate,
           disableInEdit: column.form.disableInEdit,
           hideInEdit: column.form.hideInEdit,
-          disable: column.type === 'MultiSelect',
           required: column.advancedLayout.required,
           defaultValue: column.advancedLayout.defaultValue,
           key: column.name,

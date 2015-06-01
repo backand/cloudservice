@@ -18,7 +18,7 @@
                     id="{{item.key}}_textarea"
                     name="item.key" ng-model="item.value"
                     ng-required="item.required"
-                    ng-disabled="item.disable" />
+                    ng-disabled="item.disable"></textarea>
           </div>
 
           <input ng-switch-when="checkbox" type="checkbox"
@@ -45,14 +45,21 @@
           </div>
 
           <div ng-switch-when="singleSelect" class="input-group">
-            <span class="input-group-addon ti-search"></span>
+            <span ng-hide="loadingSingleSelect"
+                  class="input-group-addon ti-search"></span>
+            <span ng-show="loadingSingleSelect"
+                  class="input-group-addon"
+                  us-spinner="{lines: 9, radius:4, width:3, length: 2, position: 'relative'}"
+                  style="padding: 6px 18px 6px 19px;"></span>
             <input type="text"
                    id="{{item.key}}_singleSelect"
                    ng-model="item.value"
                    typeahead="row.__metadata.id as EditRow.getSingleSelectLabel(row, item) for row in EditRow.getSingleAutocomplete(item, $viewValue)"
                    typeahead-template-url="views/tables/data/select_row_template.html"
                    typeahead-editable="false"
-                   class="form-control">
+                   typeahead-loading="loadingSingleSelect"
+                   class="form-control"
+                   ng-disabled="item.disable">
           </div>
 
           <!--<input ng-switch-when="MultiSelect"
@@ -65,7 +72,9 @@
 
           <!-- text and MultiSelect-->
           <div ng-switch-when="multiSelect" class="input-group">
-            <span class="input-group-addon"><ba-tooltip tooltip-text="comma separated values, i.e. 3,17,50" tooltip-placement="left"></ba-tooltip></span>
+            <span class="input-group-addon">
+              <ba-tooltip tooltip-text="comma separated values, i.e. 3,17,50" tooltip-placement="left"></ba-tooltip>
+            </span>
             <input type="text"
                    class="form-control"
                    id="{{item.key}}_multiSelect"
