@@ -1,6 +1,6 @@
 {
   "mainAppName":"bko",
-  "appUrl":"http://ec2-52-5-45-182.compute-1.amazonaws.com:8099",
+  "appUrl":"http://api.backand.co:8099",
   "playgroundUrl": "//s3-us-west-2.amazonaws.com/demoqa.backand.net/",
   "IntercomAppId":"dvn78uv0",
   "backandUserObject": "backandUsers",
