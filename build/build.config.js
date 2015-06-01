@@ -32,5 +32,22 @@ module.exports = {
     ' */',
     ''
   ].join('\n'),
-  consts: 'client/config'
+  consts: 'client/config',
+  rsync: {
+    src: 'build/dist' + '/**',
+    options: {
+      destination: '~/public_html/apps/',
+      root: 'build/dist',
+      hostname: '198.46.81.190',
+      username: 'backan6',
+      incremental: true,
+      progress: true,
+      relative: true,
+      emptyDirectories: true,
+      recursive: true,
+      clean: true,
+      exclude: ['.DS_Store'],
+      include: []
+    }
+  }
 };

@@ -16,6 +16,7 @@ var proxy = require('proxy-middleware');
 var filelog = require('gulp-filelog');
 var replace = require('gulp-replace-task');
 var minifyCSS = require('gulp-minify-css');
+var rsync  = require('gulp-rsync');
 var _ = require('lodash');
 
 /* jshint camelcase:false*/
@@ -226,6 +227,12 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
     notify: false,
     server: [config.dist]
   });
+});
+
+//deploy the code into production
+gulp.task('rsync',['env:prod', 'build:dist'], function() {
+  return gulp.src(config.rsync.src)
+    .pipe(rsync(config.rsync.options));
 });
 
 function setEnv(env) {
