@@ -17,6 +17,7 @@
         self.fullName = $state.params.name;
         self.email = $state.params.username;
         self.password = Math.random().toString(36).substring(7);
+        self.repassword = self.password;
         $timeout(function() {
           self.signUp();
         }, 100);

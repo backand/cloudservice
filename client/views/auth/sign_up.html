@@ -31,7 +31,7 @@
                            name="uFullFirst"
                            test-hook="signup.name"
                            ng-model="signup.fullName"
-                           ng-model-options="{debounce: 500}"
+                           ng-model-options="{debounce: 300}"
                            required>
                   </div>
                 </div>
@@ -70,7 +70,7 @@
                            name="Upassword"
                            test-hook="signup.password"
                            ng-model="signup.password"
-                           ng-model-options="{debounce: 500}"
+                           ng-model-options="{debounce: 300}"
 
                            ng-minlength="6"
                            ng-maxlength="20"
@@ -97,7 +97,7 @@
                            test-hook="signup.password-confirm"
                            ba-match="signup.password"
                            ng-model="signup.repassword"
-                           ng-model-options="{debounce: 500}"
+                           ng-model-options="{debounce: 300}"
                            required>
                   </div>
 
