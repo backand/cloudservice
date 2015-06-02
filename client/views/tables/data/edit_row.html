@@ -12,14 +12,12 @@
         </label>
         <div ng-switch on="item.type">
 
-          <div ng-switch-when="textarea" class="input-group">
-            <span class="ti-text"></span>
-            <textarea class="form-control"
+          <textarea ng-switch-when="textarea"
+                    class="form-control"
                     id="{{item.key}}_textarea"
                     name="item.key" ng-model="item.value"
                     ng-required="item.required"
                     ng-disabled="item.disable"></textarea>
-          </div>
 
           <input ng-switch-when="checkbox" type="checkbox"
                  class="form-control"
@@ -78,6 +76,17 @@
             <input type="text"
                    class="form-control"
                    id="{{item.key}}_multiSelect"
+                   name="item.key"
+                   ng-model="item.value"
+                   ng-required="item.required"
+                   ng-disabled="item.disable"/>
+          </div>
+
+          <div ng-switch-when="numeric" class="input-group">
+            <span class="input-group-addon" style="min-width: 39px">0</span>
+            <input type="text"
+                   class="form-control"
+                   id="{{item.key}}_text"
                    name="item.key"
                    ng-model="item.value"
                    ng-required="item.required"

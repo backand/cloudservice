@@ -193,15 +193,18 @@
           + callbackOptions
           + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 
-      if (type === 'singleSelect' || type === 'multiSelect') { type = 'text';} // todo: fix single-select
-/*        return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" '
+      if (type === 'singleSelect') {
+        console.log('singleSelect', column);
+
+        return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" '
           + 'e-typeahead="item.__metadata.id as getExternalScopes().ObjectData.getSingleSelectLabel(item, col) '
           + 'for item in getExternalScopes().ObjectData.getSingleAutocomplete(col, $viewValue)" '
           + 'e-typeahead-template-url="views/tables/data/select_row_template.html" '
-          + 'e-typeahead-editable="false" ' +
-          + callbackOptions
-          + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';*/
+          + 'e-typeahead-editable="false" ' + callbackOptions
+          + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
+      }
 
+      if (type === 'multiSelect' || type === 'numeric') { type = 'text';} // todo: fix single-select
       // Search of Multi-Select keys doesn't work currently
       /*if (!_.isEmpty(column.relatedViewName)) {
         return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" ' +
@@ -278,7 +281,7 @@
         case 'SingleSelect':
           return 'singleSelect';
         case 'Numeric':
-          return 'text'; // Also floats, so can't use number
+          return 'numeric'; // Also floats, so can't use number
         case 'DateTime':
           return 'dateTime';
         case 'ShortText':

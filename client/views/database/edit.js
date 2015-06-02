@@ -142,6 +142,7 @@ angular.module('backand.database')
       onLoad: function(_editor) {
         self.ace.editor = _editor;
         _editor.$blockScrolling = Infinity;
+        _editor.getSession().setTabSize(2);
       }
     };
 
@@ -207,7 +208,7 @@ angular.module('backand.database')
 
     // Field Types
 
-    self.fieldTypes = ['ShortText', 'LongText', 'DateTime', 'Numeric', 'Boolean', 'SingleSelect', 'MultiSelect'];
+    self.fieldTypes = ['ShortText', 'LongText', 'DateTime', 'Numeric', 'Boolean', 'Object', 'Collection'];
 
     self.insertTypeAtChar = function (param) {
       var tokenAtCursor = getTokenAtCursor();
