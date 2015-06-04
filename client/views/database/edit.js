@@ -116,7 +116,7 @@ angular.module('backand.database')
           DatabaseService.connect2DB($state.params.appName, self.data)
               .success(function (data) {
               $analytics.eventTrack('ConnectedExistingDB', {product: self.data.product});
-              $intercom.trackEvent('ConnectedExistingDB',{product: self.data.product});
+              $intercom.trackEvent('ConnectedExistingDB', {product: self.data.product});
 
               NotificationService.add('info', 'Connecting to the database...');
                   $state.go('docs.get-started')
@@ -208,7 +208,7 @@ angular.module('backand.database')
 
     // Field Types
 
-    self.fieldTypes = ['ShortText', 'LongText', 'DateTime', 'Numeric', 'Boolean', 'Object', 'Collection'];
+    self.fieldTypes = ['ShortText', 'LongText', 'DateTime', 'Numeric', 'Boolean', 'SingleSelect', 'MultiSelect'];
 
     self.insertTypeAtChar = function (param) {
       var tokenAtCursor = getTokenAtCursor();
