@@ -58,7 +58,9 @@
         newVal.data.settings.newUserDefaultRole !== oldVal.data.settings.newUserDefaultRole ||
         newVal.data.settings.registrationRedirectUrl !== oldVal.data.settings.registrationRedirectUrl ||
         newVal.data.settings.signInRedirectUrl !== oldVal.data.settings.signInRedirectUrl ||
-        newVal.data.settings.enableUserRegistration !== oldVal.data.settings.enableUserRegistration
+        newVal.data.settings.enableUserRegistration !== oldVal.data.settings.enableUserRegistration ||
+        newVal.data.settings.forgotPasswordUrl !== oldVal.data.settings.forgotPasswordUrl ||
+        newVal.data.settings.signupEmailVerification !== oldVal.data.settings.signupEmailVerification
       ) {
         if (newVal.data.allowAnonymous)
           self.data.settings.secureLevel = "AllUsers";

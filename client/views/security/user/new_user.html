@@ -6,37 +6,46 @@
 
   <form novalidate name="newUserform">
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newUserform.email.$invalid }">
     <label>Email</label>
-    <input type="text"
+    <input type="email"
            class="form-control"
            ng-model="user.email"
            ng-model-options="{debounce:{default:400}}"
+           name="email"
            required
            placeholder="This will be the user's username">
+      <div class="text-danger" ng-show="newUserform.email.$error.email">
+        This is not a valid email
+      </div>
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newUserform.firstName.$invalid }">
       <label>First name</label>
       <input type="text"
+             name="firstName"
              class="form-control"
              ng-model="user.firstName"
              ng-model-options="{debounce:{default:400}}"
+             ng-maxlength="50"
              required>
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newUserform.lastName.$invalid }">
       <label>Last name</label>
       <input type="text"
+             name="lastName"
              class="form-control"
              ng-model="user.lastName"
              ng-model-options="{debounce:{default:400}}"
+             ng-maxlength="50"
              required>
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12" >
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newUserform.userRole.$invalid }">
       <label>User Role</label>
       <select class="form-control"
+              name="userRole"
               ng-model="user.role"
               ng-model-options="{debounce:{default:400}}"
               required>
@@ -44,7 +53,7 @@
       </select>
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newUserform.password.$invalid }">
       <label>Password</label>
       <input type="password"
              name="password"
@@ -57,12 +66,9 @@
       <div class="text-danger" ng-show="newUserform.password.$error.minlength">
         Password must be at least 6 characters
       </div>
-      <div class="text-danger" ng-show="newUserform.password.$error.email">
-        This is not a valid password
-      </div>
     </div>
 
-    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+    <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{ 'has-error': newUserform.confirm_password.$invalid }">
       <label>Confirm Password</label>
       <input type="password"
              name="confirm_password"
@@ -80,6 +86,6 @@
 </div>
 
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="closeModal(user)" ng-bind="modal.okButtonText"></button>
+  <button class="btn btn-primary" ng-disabled="newUserform.$invalid" ng-click="closeModal(user)" ng-bind="modal.okButtonText"></button>
   <button class="btn btn-default" ng-click="cancel()" ng-bind="modal.cancelButtonText"></button>
 </div>

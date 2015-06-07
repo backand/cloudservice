@@ -114,12 +114,33 @@
                   </div>
                 </div>
               </div>
+              <div class="form-group" ng-class="{ 'has-error': auth.authForm.inputUrl3.$error.url }">
+                <label for="inputUrl2" class="strong control-label">Custom Reset Password Page URL</label>
+                <div class="form-group">
+                  <input type="url" class="form-control"
+                         id="inputUrl3" name="inputUrl3"
+                         ng-model-options="{ updateOn: 'blur' ,debounce: 400 }"
+                         placeholder="http://www.myappdomain.com/reset-password.html"
+                         ng-keyup="cancel($event)"
+                         ng-model="auth.data.settings.forgotPasswordUrl">
+
+                  <div class="field-description">Redirect page after user got email in forgot password request
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
         <div class="field-group">
           <div class="group-inner">
             <div class="form-group">
-              <label for="inputUrl1" class="control-label strong">API Signup Token</label>
+              <label class="strong" for="allowAnonymousPublic">Sign-up Email Verification</label>
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                <input id="emailVerification" type="checkbox" ng-model="auth.data.settings.signupEmailVerification" checked=""><i></i>
+              </label>
+              <div class="field-description">When enabled, users will get email verification after sign-up</div>
+            </div>
+            <div class="form-group">
+              <label for="inputUrl1" class="control-label strong">API Sign-up Token</label>
               <div class="form-group">
                 <div class="input-group">
                   <input type="text" class="form-control" id="signupkey"

@@ -323,7 +323,7 @@
       });
 
       $scope.closeModal = function (user) {
-        SecurityService.postUser(user)
+        SecurityService.newUser(user)
           .then(function () {
             self.modalInstance.close();
             getRoles();

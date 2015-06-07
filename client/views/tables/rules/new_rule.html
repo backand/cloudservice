@@ -7,7 +7,7 @@
       <div class="col-xs-9">
         <div class="form-inline" name="rules.newRuleForm">
           <div class="form-group"
-               ng-class="{ 'has-error': rules.newRuleForm.ruleName.$invalid &&  rules.newRuleForm.ruleName.$dirty}">
+               ng-class="{ 'has-error': rules.newRuleForm.ruleName.$invalid}">
 
             <label for="ruleName"><h3 class="title">{{modal.title}} - </h3></label>
 
@@ -70,7 +70,7 @@
       <fieldset ng-disabled="!rules.editMode">
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': rules.newRuleForm.eventTrigger.$invalid && rules.newRuleForm.eventTrigger.$dirty}">
+             ng-class="{ 'has-error': rules.newRuleForm.eventTrigger.$invalid}">
           <label>Event Trigger</label>
           <ba-tooltip
             tooltip-text="Select the event that will trigger the action: on-demand via REST API or by CRUD request"
@@ -84,7 +84,7 @@
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.dataAction"
-             ng-class="{ 'has-error': rules.newRuleForm.action.$invalid &&  rules.newRuleForm.action.$dirty }">
+             ng-class="{ 'has-error': rules.newRuleForm.action.$invalid}">
 
           <label for="workflowAction">Type</label>
           <ba-tooltip
@@ -117,66 +117,72 @@
 
         <div ng-switch="rules.action.workflowAction">
 
-          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction">
+          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-if="rules.action.workflowAction">
 
             <!-- notify options -->
             <div ng-switch-when="Notify">
 
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{ 'has-error': rules.newRuleForm.emailTo.$invalid && rules.newRuleForm.emailTo.$dirty}">
+                   ng-class="{ 'has-error': rules.newRuleForm.emailTo.$invalid || rules.newRuleForm.emailTo.$error.email}">
 
                 <label for="emailTo">To:</label>
                 <bknd-anchor anchor-params="rules.anchorParams"
                              window-title="Email Recipient"
                              input-id="emailTo"></bknd-anchor>
-                <input type="text"
+                <input type="email"
                        required
                        name="emailTo"
                        id="emailTo"
                        ng-model="rules.action.to"
                        class="form-control"/>
+
               </div>
 
-              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+              <div class="form-group col-lg-6 col-md-6 col-sm-6"
+                   ng-class="{ 'has-error': rules.newRuleForm.emailCc.$invalid || rules.newRuleForm.emailCc.$error.email}">
                 <label for="emailCc">Cc:</label>
 
                 <bknd-anchor anchor-params="rules.anchorParams"
                              window-title="Email - CC"
                              input-id="emailCc"></bknd-anchor>
 
-                <input type="text"
+                <input type="email"
+                       name="emailCc"
                        id="emailCc"
                        ng-model="rules.action.cc"
                        class="form-control"/>
               </div>
 
-              <div class="form-group col-lg-6 col-md-6 col-sm-6">
+              <div class="form-group col-lg-6 col-md-6 col-sm-6"
+                   ng-class="{ 'has-error': rules.newRuleForm.emailBcc.$invalid || rules.newRuleForm.emailBcc.$error.email}">
                 <label for="emailBcc">Bcc:</label>
 
                 <bknd-anchor anchor-params="rules.anchorParams"
                              window-title="Email - BCC"
                              input-id="emailBcc"></bknd-anchor>
 
-                <input type="text"
+                <input type="email"
                        id="emailBcc"
+                       name="emailBcc"
                        ng-model="rules.action.bcc"
                        class="form-control"/>
               </div>
 
-              <div class="form-group col-lg-6 col-md-6 col-sm-6">
-
+              <div class="form-group col-lg-6 col-md-6 col-sm-6"
+                   ng-class="{ 'has-error': rules.newRuleForm.emailFrom.$invalid || rules.newRuleForm.emailFrom.$error.email}">
                 <label for="emailFrom">From:</label>
 
-                <input type="text"
+                <input type="email"
                        id="emailFrom"
+                       name="emailFrom"
                        ng-model="rules.action.from"
                        placeholder="Leave empty for default"
                        class="form-control"/>
               </div>
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
-                   ng-class="{ 'has-error': rules.newRuleForm.emailSubject.$invalid && rules.newRuleForm.emailSubject.$dirty }">
+                   ng-class="{ 'has-error': rules.newRuleForm.emailSubject.$invalid}">
 
                 <label for="emailSubject">Subject:</label>
 
@@ -189,6 +195,7 @@
                        name="emailSubject"
                        id="emailSubject"
                        ng-model="rules.action.subject"
+                       ng-maxlength="200"
                        class="form-control"/>
               </div>
 

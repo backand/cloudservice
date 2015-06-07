@@ -34,18 +34,20 @@ module.exports = {
   ].join('\n'),
   consts: 'client/config',
   rsync: {
-    src: 'build/dist' + '/**',
+    src: 'build/dist/**',
     options: {
       destination: '~/public_html/apps/',
       root: 'build/dist',
-      hostname: '198.46.81.190',
+      hostname: 'www.backand.com',
       username: 'backan6',
+      port: '2222',
       incremental: true,
       progress: true,
       relative: true,
       emptyDirectories: true,
       recursive: true,
       clean: true,
+      silent: true,
       exclude: ['.DS_Store'],
       include: []
     }

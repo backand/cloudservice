@@ -17,6 +17,7 @@ var filelog = require('gulp-filelog');
 var replace = require('gulp-replace-task');
 var minifyCSS = require('gulp-minify-css');
 var rsync  = require('gulp-rsync');
+var confirm = require('gulp-confirm');
 var _ = require('lodash');
 
 /* jshint camelcase:false*/
@@ -232,6 +233,10 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
 //deploy the code into production
 gulp.task('rsync',['env:prod', 'build:dist'], function() {
   return gulp.src(config.rsync.src)
+    .pipe(confirm({
+      question: 'Do you want to build to production?',
+      input: '_key:y' // Continue the flow if `y` key is pressed.
+    }))
     .pipe(rsync(config.rsync.options));
 });
 

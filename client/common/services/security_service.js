@@ -69,14 +69,17 @@
       return self.updateData(self.rolesTableName, role, pk);
     };
 
-    self.postUser = function (user) {
-      //return self.postData(self.usersTableName, user);
+    self.newUser = function (user) {
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + self.userUrl,
         headers: { AppName: self.appName },
         data: user
       })
+    }
+
+    self.postUser = function (user) {
+      return self.postData(self.usersTableName, user);
     };
 
     self.postRole = function (role) {
