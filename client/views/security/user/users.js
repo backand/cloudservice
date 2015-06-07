@@ -88,23 +88,12 @@
 
       var modalInstance = $modal.open({
         templateUrl: 'views/security/user/change_user_password.html',
-        controller: 'ChangeUserPasswordController as ChangeUserPassword'
-        /*resolve: {
-          rowData: function () {
-            return self.editRowData;
-          },
-          tableName: function () {
-            return self.tableName;
+        controller: 'ChangeUserPasswordController as ChangeUserPassword',
+        resolve: {
+          username: function () {
+            return row.entity.Username;
           }
-        }*/
-      });
-
-      modalInstance.result.then(function (result) {
-
-          //usSpinnerService.spin("loading-data");
-
-        //loadData()
-        //  .then(successDataHandler);
+        }
       });
     }
 

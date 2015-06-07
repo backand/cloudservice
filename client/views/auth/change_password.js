@@ -1,29 +1,22 @@
 (function  () {
-    'use strict';
+  'use strict';
   angular.module('backand')
-    .controller('changePasswordController', ['AuthService', '$state', '$location', 'NotificationService', '$timeout', changePasswordController]);
+    .controller('ChangePasswordController', ['AuthService', '$modalInstance', 'NotificationService', ChangePasswordController]);
 
-  function changePasswordController(AuthService, $state, $location, NotificationService, $timeout){
+  function ChangePasswordController(AuthService, $modalInstance, NotificationService){
     var self = this;
-    this.loading = false;
 
-    this.submit = function(){
-      this.loading = true;
-      AuthService.resetPassword(self.password, $location.search().id)
-        .success(function(data){
-          NotificationService.add('success', 'password changed');
-          $state.go('sign_in');
+    self.changePassword = function () {
+      AuthService.changePassword(self.userData.oldPassword, self.userData.newPassword)
+        .then(function () {
+          NotificationService.add('success', 'Password was changed');
+          $modalInstance.close();
         })
-          .error(function (data) {
-              self.loading = false;
-              self.error = data.error_description;
-              $timeout(function() {
-                  self.error = undefined;
-              }, 3000);
+    };
 
-          });
+    self.cancelChangePassword = function () {
+      $modalInstance.dismiss('cancel');
     }
-
 
   }
 }());

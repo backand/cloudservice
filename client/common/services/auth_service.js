@@ -64,6 +64,17 @@
       });
     };
 
+    self.changePassword = function (oldPassword, newPassword) {
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/user/changePassword',
+        data: {
+          oldPassword: oldPassword,
+          newPassword: newPassword
+        }
+      });
+    };
+
     self.getUserId = function () {
       if (SessionService.currentUser && SessionService.currentUser.userId)
         return SessionService.currentUser.userId;

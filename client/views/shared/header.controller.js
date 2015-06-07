@@ -51,6 +51,10 @@
     };
 
     self.changePassword = function () {
+      var modalInstance = $modal.open ({
+        templateUrl: 'views/auth/change_password.html',
+        controller: 'ChangePasswordController as ChangePassword'
+      })
     }
 
   }

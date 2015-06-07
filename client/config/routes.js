@@ -23,8 +23,8 @@ angular.module('backand.routes', []).
       })
       .state('change_password', {
         url: '/change_password',
-        templateUrl: 'views/auth/change_password.html',
-        controller : 'changePasswordController as change'
+        templateUrl: 'views/auth/reset_password.html',
+        controller : 'resetPasswordController as change'
       })
       .state('session', {
         url: '/',

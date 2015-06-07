@@ -101,8 +101,16 @@
 
     self.updateWorkspace = function (workspace) {
       return self.updateData(self.workspaceTableName, workspace, workspace.__metadata.id, true);
-
     };
+
+    self.setUserPassword = function (userData) {
+      return $http({
+        method: 'PUT',
+        url: CONSTS.appUrl + self.userUrl + '/password',
+        headers: { AppName: self.appName },
+        data: userData
+      });
+    }
   }
 
   angular.module('common.services')

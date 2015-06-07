@@ -1,15 +1,19 @@
 (function () {
 
   angular.module('backand')
-    .controller('ChangeUserPasswordController', ['$modalInstance', ChangeUserPasswordController]);
+    .controller('ChangeUserPasswordController', ['$modalInstance', 'SecurityService', 'username', 'NotificationService', ChangeUserPasswordController]);
 
-  function ChangeUserPasswordController(modalInstance) {
+  function ChangeUserPasswordController(modalInstance, SecurityService, username, NotificationService) {
     var self = this;
 
-    //self.rowData = rowData;
+    self.userData = {username: username};
 
     self.savePassword = function () {
-      modalInstance.close();
+      SecurityService.setUserPassword(self.userData)
+        .then(function () {
+          NotificationService.add('success', 'Password was changed');
+          modalInstance.close();
+        });
     };
 
     self.cancelNewPassword = function () {
