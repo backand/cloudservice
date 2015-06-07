@@ -8,6 +8,7 @@
     self.rolesTableName = CONSTS.backandRoleObject;
     self.workspaceTableName = '/1/workspace';
     self.dbDataUrl = '/1/table/data/';
+    self.userUrl = '/1/user';
 
     function getHttp (method, isConfig, tableName, id){
       var url = (isConfig) ? '' : self.dbDataUrl;
@@ -19,25 +20,24 @@
     }
 
     self.getData = function (tableName, size, page, sort, isConfig, filter) {
-      var sortParam = '';
-      var filterParam = filter || '';
-      size = !size ? 20 : size;
-      page = !page ? 1 : page;
-      if (sort)
-        sortParam = sort;
+      sort = sort || '';
+      filter = filter || '';
+      size = size || 20;
+      page = page || 1;
 
       var http = getHttp('GET', isConfig, tableName);
+
       http.params = {
         'pageSize': String(size),
         'pageNumber': String(page),
-        'sort': sortParam,
-        'filter': filterParam
+        'sort': sort,
+        'filter': filter
       };
       return $http(http);
     };
 
-    self.updateData = function (tableName, rowData, pk, isConfig) {
-      var id = (!pk) ? rowData.ID : pk;
+    self.updateData = function (tableName, rowData, id, isConfig) {
+      id = id || rowData.ID;
       var http = getHttp('PUT', isConfig, tableName, id);
       http.data = rowData;
       return $http(http);
@@ -54,7 +54,6 @@
     };
 
     self.getUsers = function (size, page, sort, filter) {
-
       return self.getData(self.usersTableName, size, page, '[{fieldName:"Username", order:"asc"}]', '', filter)
     };
 
@@ -65,22 +64,29 @@
     self.updateUser = function (user) {
       return self.updateData(self.usersTableName, user);
     };
-    self.updateRole = function (role, pk) {
 
+    self.updateRole = function (role, pk) {
       return self.updateData(self.rolesTableName, role, pk);
     };
 
     self.postUser = function (user) {
-      return self.postData(self.usersTableName, user);
+      //return self.postData(self.usersTableName, user);
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + self.userUrl,
+        headers: { AppName: self.appName },
+        data: user
+      })
     };
-    self.postRole = function (role) {
 
+    self.postRole = function (role) {
       return self.postData(self.rolesTableName, role);
     };
 
     self.deleteUser = function (Id) {
       return self.deleteData(self.usersTableName, Id);
     };
+
     self.deleteRole = function (Id) {
       return self.deleteData(self.rolesTableName, Id);
     };
@@ -91,7 +97,6 @@
     };
     self.postWorkspace = function (workspace) {
       return self.postData(self.workspaceTableName, workspace, true);
-
     };
 
     self.updateWorkspace = function (workspace) {

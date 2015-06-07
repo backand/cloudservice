@@ -21,22 +21,28 @@
       </div>
       <div class="row" ng-if="!users.adminMode">
         <div class=" form-group col-sm-7">
-          <label for="inviteUsersEmails"></label> Invite users to access the application with role
+          <label for="inviteUsersEmails"></label>Invite users to access the application with role
           '{{users.defaultUserRole}}'. If "Public App"
           is Off then this is the only way to add users to the app.</lable>
         </div>
 
         <div class=" form-group col-sm-7">
-          <input type="text" class="form-control  col-sm-7" id="inviteUsersEmails" ng-model="users.invitedUsers" ng-disabled="users.registrationRedirectUrl == ''"
+          <input type="text" class="form-control  col-sm-7" id="inviteUsersEmails" ng-model="users.invitedUsers"
+                 ng-disabled="users.registrationRedirectUrl == ''"
                  placeholder="Email Address -  Use comma for multiple users"/>
         </div>
         <div class="col-sm-3">
-          <button type="button" ng-disabled="!users.invitedUsers || users.registrationRedirectUrl == ''" id="addUserInvites" class="btn btn-success"
-                  ng-click="users.inviteUsers()">Invite User(s)</button>
+          <button type="button" ng-disabled="!users.invitedUsers || users.registrationRedirectUrl == ''"
+                  id="addUserInvites" class="btn btn-success"
+                  ng-click="users.inviteUsers()">Invite User(s)
+          </button>
         </div>
 
         <div class="form-group col-sm-7">
-          <div class="field-description" ng-if="users.registrationRedirectUrl == ''">Note: Invite users is enabled only when the registration page is ready. To update the custom registration page URL go to <a href="" ng-click="users.goTo('security.auth')">Security Configuration</a></div>
+          <div class="field-description" ng-if="users.registrationRedirectUrl == ''">Note: Invite users is enabled only
+            when the registration page is ready. To update the custom registration page URL go to <a href=""
+                                                                                                     ng-click="users.goTo('security.auth')">Security
+              Configuration</a></div>
         </div>
         <br/>
       </div>
@@ -44,28 +50,35 @@
       <div class="actions-bar row">
         <div class="col-md-8">
           <h3 class="page-name">{{users.title}}</h3>
-          <h4 class="page-description">Mange your {{users.title}} here - To update user's details double click in the cell</h4>
+          <h4 class="page-description">Mange your {{users.title}} here - To update user's details double click in the
+            cell</h4>
         </div>
-        <div class="col-md-4 form-inline form-action-top ">
-          <div class="input-group ">
-            <select class="form-control"
-                    ng-options="action for action in users.actions"
-                    ng-model="users.action"
-                    ng-model-options="{debounce:{default:400}}">
-              <option value="">Select Action...</option>
-            </select>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <button ng-hide="users.adminMode" class="btn btn-success" ng-click="users.open()">+ New User</button>
+          <div class="pull-right form-inline">
+            <div class="input-group ">
+              <select class="form-control"
+                      ng-options="action for action in users.actions"
+                      ng-model="users.action"
+                      ng-model-options="{debounce:{default:400}}">
+                <option value="">Select Action...</option>
+              </select>
               <span class="input-group-btn">
-                 <button class="btn btn-success" type="button" ng-click="users.delete()" ng-disabled="users.action==''">
+                 <button class="btn btn-success" type="button" ng-click="users.delete()" ng-disabled="users.action==''"
+                         style="padding-bottom: 7px;">
                    Go
                  </button>
               </span>
+            </div>
           </div>
         </div>
-
-
       </div>
+      <br/>
+
       <div us-spinner spinner-key="loading"></div>
-      <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection
+      <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection external-scopes="users.gridExternalScope"
            class="grid"></div>
       <!--pagination-->
       <div ng-show="users.gridOptions.totalItems == 0">

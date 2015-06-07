@@ -56,6 +56,22 @@
         ]
       };
 
+      self.gridExternalScope = {
+        changePassword: changePassword
+      };
+
+      if (!self.adminMode) {
+        self.gridOptions.columnDefs.unshift({
+          name: 'changePassword',
+          cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().changePassword($event, row)"><i class="ti-lock"/></div>',
+          width: 30,
+          displayName: '',
+          enableSorting: false,
+          enableColumnMenu: false,
+          enableCellEdit: false
+        });
+      }
+
       $scope.$watch(function () {
         if (self.paginationOptions)
           return self.paginationOptions.pageNumber
@@ -68,20 +84,48 @@
 
     }());
 
+    function changePassword (event, row) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'views/security/user/change_user_password.html',
+        controller: 'ChangeUserPasswordController as ChangeUserPassword'
+        /*resolve: {
+          rowData: function () {
+            return self.editRowData;
+          },
+          tableName: function () {
+            return self.tableName;
+          }
+        }*/
+      });
+
+      modalInstance.result.then(function (result) {
+
+          //usSpinnerService.spin("loading-data");
+
+        //loadData()
+        //  .then(successDataHandler);
+      });
+    }
+
     function getRoles(){
       usSpinnerService.spin('loading');
-      if (self.roles == null)
+      if (self.roles == null) {
         SecurityService.getRoles()
           .then(rolesSuccessHandler, errorHandler);
-      else
+      }
+      else {
         getUsers();
+      }
     }
 
     function rolesSuccessHandler(data) {
       self.roles = data.data.data;
-      self.gridOptions.columnDefs[3].editDropdownOptionsArray = self.roles;
+      self.gridOptions.columnDefs[self.adminMode ? 3 : 4].editDropdownOptionsArray = self.roles;
 
-      $scope.modal.roles = self.roles;
+      $scope.modal.roles = self.roles.map(function (role) {
+        return role.Name;
+      });
       getUsers();
 
     }
@@ -105,7 +149,7 @@
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
       self.roleFieldName = self.gridOptions.data[0] && self.gridOptions.data[0].Role ? 'Role' : self.roleFieldName;
-      self.gridOptions.columnDefs[3].name = self.roleFieldName;
+      self.gridOptions.columnDefs[self.adminMode ? 3 : 4].name = self.roleFieldName;
 
       usSpinnerService.stop('loading');
     }
@@ -250,11 +294,11 @@
       var email_array = emails.split(',');
 
       if (!self.validateEmail(email_array)) {
-        NotificationService.add('error', 'please fix the erroneous emails and try again')
+        NotificationService.add('error', 'please fix the erroneous emails and try again');
         return;
       }
       if (email_array.length > 20) {
-        NotificationService.add('error', 'The maximum emails allowed is 20.')
+        NotificationService.add('error', 'The maximum emails allowed is 20.');
         return;
       }
       for (var i = 0; i < email_array.length; i++) {
@@ -283,43 +327,26 @@
      * pass it a scope
      */
     function launchModal() {
-      var modalInstance = $modal.open({
+      self.modalInstance = $modal.open({
         templateUrl: 'views/security/user/new_user.html',
         backdrop: 'static',
         scope: $scope
       });
+
       $scope.closeModal = function (user) {
-        switch ($scope.modal.mode) {
-          case 'new':
-            postNewUser(user);
-            break;
-
-        }
-
+        SecurityService.postUser(user)
+          .then(function () {
+            self.modalInstance.close();
+            getRoles();
+          });
       };
       /**
        * close the modal window if user confirm
        */
       $scope.cancel = function () {
-        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to close this window?')
-          .then(function (result) {
-            result ? modalInstance.dismiss() : false;
-          })
-
+        self.modalInstance.dismiss();
       };
-      function postNewUser(user) {
-        var data = {
-          Email: user.Email,
-          IsApproved: true,
-          FirstName: user.FirstName,
-          LastName: user.LastName,
-          Username: user.Email
 
-        };
-        SetDataUserRole(data, user.durados_User_Role.Name);
-        SecurityService.postUser(data).then(getRoles);
-        modalInstance.close();
-      }
     }
 
   }

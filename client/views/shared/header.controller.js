@@ -50,6 +50,9 @@
       self.showVideoModal = false;
     };
 
+    self.changePassword = function () {
+    }
+
   }
 
 
