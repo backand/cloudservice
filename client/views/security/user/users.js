@@ -52,9 +52,11 @@
             editDropdownIdLabel: 'Name',
             editDropdownValueLabel: 'Name'
           },
-          {name: 'IsApproved', displayName: 'Approved', type: 'boolean'}
+          {name: 'IsApproved', displayName: 'Is Approved', type: 'boolean'},
+          {field: 'readyToSignin', displayName: 'Ready to sign-in', enableCellEdit: false}
         ]
       };
+
 
       self.gridExternalScope = {
         changePassword: changePassword
@@ -86,15 +88,21 @@
 
     function changePassword (event, row) {
 
-      var modalInstance = $modal.open({
-        templateUrl: 'views/security/user/change_user_password.html',
-        controller: 'ChangeUserPasswordController as ChangeUserPassword',
-        resolve: {
-          username: function () {
-            return row.entity.Username;
+      if(!row.entity.readyToSignin){
+        ConfirmationPopup.setTitle('Change Password');
+        ConfirmationPopup.confirm('Change password is only for users that ready for sign in','OK', '', true, false);
+      }
+      else {
+        var modalInstance = $modal.open({
+          templateUrl: 'views/security/user/change_user_password.html',
+          controller: 'ChangeUserPasswordController as ChangeUserPassword',
+          resolve: {
+            username: function () {
+              return row.entity.Username;
+            }
           }
-        }
-      });
+        });
+      }
     }
 
     function getRoles(){
@@ -159,6 +167,7 @@
 
     function newUser() {
       $scope.modal.mode = 'new';
+      $scope.modal.NewUser = true;
       launchModal();
     }
 
@@ -316,13 +325,40 @@
      * pass it a scope
      */
     function launchModal() {
+
       self.modalInstance = $modal.open({
         templateUrl: 'views/security/user/new_user.html',
         backdrop: 'static',
         scope: $scope
       });
 
+      $scope.changeEmail = function (user){
+        if(user.email){
+          SecurityService.userExists(user.email)
+          .then(function (data) {
+            $scope.modal.NewUser = !data.data.exists;
+          }, function(err){
+            console.log(err.data.Message)
+            // do nothing
+          })
+        }
+        else
+          $scope.modal.NewUser = true;
+      }
+
+      //$scope.$watch(
+      //  function () {
+      //    return self.user.email;
+      //  },
+      //  function (newVal, oldVal) {
+      //
+      //  }
+      //)
+
       $scope.closeModal = function (user) {
+        user.password = user.password || '';
+        user.confirmPassword = user.confirmPassword || '';
+
         SecurityService.newUser(user)
           .then(function () {
             self.modalInstance.close();

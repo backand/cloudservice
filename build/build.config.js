@@ -44,7 +44,7 @@ module.exports = {
       incremental: true,
       progress: true,
       relative: true,
-      emptyDirectories: true,
+      emptyDirectories: false,
       recursive: true,
       clean: true,
       silent: true,
