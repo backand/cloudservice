@@ -20,9 +20,11 @@
                    required
                    ng-pattern="modal.namePattern"
                    placeholder="Name your action"
-                   ng-disabled="!rules.editMode">
+                   ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
             <ba-tooltip tooltip-text="Use the action name in the request URL query string of the REST API"
                         tooltip-placement="right" class=""></ba-tooltip>
+
+            <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">The action name cannot be modified.</span>
 
             <div ng-show="rules.newRuleForm.ruleName.$error.pattern" class="input-error">no spaces or %$#@^&* allowed
             </div>

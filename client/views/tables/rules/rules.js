@@ -350,6 +350,12 @@
       })[0])
     }
 
+    var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval'];
+
+    self.isConstName = function (ruleName) {
+      return (self.getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);
+    };
+
     $scope.modal.handleTabKey = function (e) {
       // get caret position/selection
       if (e.keyCode === 9) { // tab was pressed
@@ -420,6 +426,18 @@
     }
 
     self.getNewRow = function () {
+
+      if (getTableName() === 'backandUsers') {
+        return setTestRowData({
+          email: "email",
+          firstName: "text",
+          lastName: "text",
+          role: "User",
+          password: "text",
+          confirmPassword: "text"
+        });
+      }
+
       ColumnsService.tableName = getTableName();
       ColumnsService.get()
         .then(function (data) {
