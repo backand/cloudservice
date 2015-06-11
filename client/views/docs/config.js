@@ -27,12 +27,14 @@
       .state('docs.kickstart', {
         parent: 'app',
         url: '/docs/kickstart',
-        templateUrl: 'views/docs/kickstart.html'
+        templateUrl: 'views/docs/kickstart.html',
+        controller: 'Docs as docs'
       })
       .state('docs.kickstart-open', {
         parent: 'apps',
         url: 'kickstart',
-        templateUrl: 'views/docs/kickstart_open.html'
+        templateUrl: 'views/docs/kickstart.html',
+        controller: 'Docs as docs'
       })
       .state('docs.api-desc', {
         parent: 'app',
