@@ -46,7 +46,7 @@ module.exports = {
       relative: true,
       emptyDirectories: false,
       recursive: true,
-      clean: true,
+      clean: false,
       silent: true,
       exclude: ['.DS_Store'],
       include: []
