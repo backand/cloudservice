@@ -32,6 +32,7 @@
       onLoad: function(_editor) {
         self.ace.editor = _editor;
         _editor.$blockScrolling = Infinity;
+        _editor.getSession().setTabSize(2);
       }
     };
 
