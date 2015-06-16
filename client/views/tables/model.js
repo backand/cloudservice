@@ -1,4 +1,4 @@
-(function  () {
+  (function  () {
   'use strict';
   angular.module('backand')
     .controller('ModelController', ['$scope', 'AppsService', 'ModelService', 'usSpinnerService', 'NotificationService', ModelController]);
@@ -60,8 +60,15 @@
           $scope.$root.$broadcast('fetchTables');
           self.loading = false;
         },
-        errorHandler)
+        modelErrorHandler)
     };
+
+    function modelErrorHandler(error, message){
+      getSchema();
+      $scope.$root.$broadcast('fetchTables');
+      self.loading = false;
+      usSpinnerService.stop('loading');
+    }
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
