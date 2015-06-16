@@ -2,33 +2,27 @@
   'use strict';
 
   angular.module('common.services', ['ngCookies'])
-    .service('SessionService', ['CONSTS', '$cookieStore','$intercom', SessionService])
+    .service('SessionService', ['CONSTS', '$cookieStore','$intercom', SessionService]);
 
   function SessionService(CONSTS, $cookieStore, $intercom) {
     var self = this;
 
-    this.currentUser = $cookieStore.get('globals') ? $cookieStore.get('globals').currentUser : undefined;
+    self.currentUser = $cookieStore.get('globals') ? $cookieStore.get('globals').currentUser : undefined;
 
-    this.getAuthHeader = function() {
-      if (!self.currentUser) {
-        return false
-      }
-      return 'bearer ' + self.currentUser.access_token;
+    self.getAuthHeader = function() {
+      return self.currentUser ? 'bearer ' + self.currentUser.access_token : false;
     };
 
-    this.getToken = function() {
-      if (!self.currentUser) {
-        return false
-      }
-      return self.currentUser.access_token;
+    self.getToken = function() {
+      return self.currentUser ? self.currentUser.access_token : false;
     };
 
 
-    this.setCredentials = function (serverData, username) {
+    self.setCredentials = function (serverData, username) {
       var user = {
         currentUser: {
           access_token : serverData.access_token,
-          username: username,
+          username: username || serverData.username,
           userId: serverData.userId
         }
       };
@@ -57,7 +51,7 @@
         });
     };
 
-    this.ClearCredentials = function () {
+    self.ClearCredentials = function () {
       $cookieStore.remove('globals');
       self.currentUser = undefined;
       if($intercom)
@@ -65,10 +59,7 @@
     };
 
     self.getUserId = function () {
-      if(self.currentUser && self.currentUser.userId)
-        return self.currentUser.userId;
-      else
-        return 0;
+      return (self.currentUser && self.currentUser.userId) ? self.currentUser.userId : 0;
     };
 
   }

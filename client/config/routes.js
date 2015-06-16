@@ -11,14 +11,22 @@ angular.module('backand.routes', []).
     $httpProvider.interceptors.push('httpInterceptor');
 
     $stateProvider
+      .state('auth', {
+        url: '',
+        templateUrl: 'views/auth/auth.html',
+        abstract: true,
+        controller : 'AuthController as Auth'
+      })
       .state('sign_up', {
-        url: '/sign_up?username&name&i',
+        parent: 'auth',
+        url: '/sign_up?username&name&i&token',
         templateUrl: 'views/auth/sign_up.html',
         controller : 'SignUpController as signup'
       })
       .state('sign_in', {
+        parent: 'auth',
         url: '/sign_in',
-        templateUrl: 'views/auth/sign_in.tpl.html',
+        templateUrl: 'views/auth/sign_in.html',
         controller : 'SignInController as sign'
       })
       .state('change_password', {
