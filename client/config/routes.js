@@ -138,8 +138,23 @@ function isStateForSignedOutUser(state) {
   return (state.name === 'sign_in' || state.name === 'sign_up' || state.name === 'change_password');
 }
 
-function run($rootScope, $state, SessionService) {
+function run($rootScope, $state, SessionService, NotificationService) {
+
   $rootScope.$on('$stateChangeStart', function (event, toState) {
+
+    var queryString = window.location.search.substring(1);
+
+    var dataLocation = queryString.indexOf('data=');
+    if (dataLocation > -1) {
+      var data = JSON.parse(decodeURIComponent(queryString.substring(dataLocation + 5)));
+      SessionService.setCredentials(data);
+    }
+
+    var errorLocation = queryString.indexOf('error=');
+    if (errorLocation > -1) {
+      NotificationService.add('error', JSON.parse(decodeURIComponent(queryString.substring(errorLocation + 6))).message);
+    }
+
     if (!SessionService.currentUser) {
       if (!isStateForSignedOutUser(toState)) {
         event.preventDefault();
