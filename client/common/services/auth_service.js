@@ -54,7 +54,8 @@
 
     self.socials = [
       {name: 'github', label: 'Github', url: 'www.github.com', css: 'github'},
-      {name: 'google', label: 'Google', url: 'www.google.com', css: 'google-plus'}
+      {name: 'google', label: 'Google', url: 'www.google.com', css: 'google-plus'},
+      {name: 'facebook', label: 'Facebook', url: 'www.facebook.com', css: 'facebook'}
     ];
 
     function getSocialUrl(social, isSignup) {
