@@ -66,10 +66,11 @@
     }
 
     self.socialLogin = function (social, isSignup) {
+      var returnAddress =  encodeURIComponent($window.location.href);
       $window.location.href = CONSTS.appUrl + '/1/' +
         getSocialUrl(social, isSignup) +
         '&appname=' + CONSTS.mainAppName +
-        '&returnAddress=' + $window.location.href
+        '&returnAddress=' + returnAddress;
     };
 
     self.resetPassword = function (password, id) {

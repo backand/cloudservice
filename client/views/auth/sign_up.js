@@ -8,7 +8,6 @@
     var self = this;
 
     (function init() {
-      SessionService.ClearCredentials();
       self.loading = false;
 
       //for automatic sign up

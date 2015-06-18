@@ -7,8 +7,6 @@
   function SignInController(AuthService, $state, SessionService, $timeout, $modal, NotificationService) {
     var self = this;
 
-    SessionService.ClearCredentials();
-
     this.loading = false;
 
     this.signIn = function () {

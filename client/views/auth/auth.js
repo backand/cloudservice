@@ -2,10 +2,16 @@
 (function  () {
 
   angular.module('backand')
-    .controller('AuthController', ['AuthService', AuthController]);
+    .controller('AuthController', ['AuthService', 'SessionService', 'NotificationService', '$state', AuthController]);
 
-  function AuthController(AuthService) {
+  function AuthController(AuthService, SessionService, NotificationService, $state) {
     var self = this;
+
+    SessionService.ClearCredentials();
+
+    if ($state.params.error) {
+      NotificationService.add('error', JSON.parse($state.params.error).message);
+    }
 
     self.socials = AuthService.socials;
 
