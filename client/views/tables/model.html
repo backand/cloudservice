@@ -1,0 +1,69 @@
+<section class="page-form-ele page ng-scope">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong test-hook="database-edit.title"> {{Model.appName}} - model configuration</strong>
+
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-10">
+          <div class="db-panel-body-explanation">
+            <h3>Edit the application model</h3>
+            <h4>Backand's model provides an abstraction layer on top of your database, giving you easy access to update the database schema.</h4>
+          </div>
+        </div>
+      </div>
+      <div class="db-tab-content">
+        <div class="row">
+          <div class="col-md-8 col-lg-9">
+            <div
+              ui-ace="{onLoad : Model.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+              class="form-control ace-db-template"
+              name="tableTemplate"
+              id="tableTemplate"
+              ng-model="Model.schema"
+              required
+              ng-pattern="codeRegex"
+              style="resize: vertical; height: 500px;">
+            </div>
+            <br/>
+            <div>
+              <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
+                      ladda="Model.loading" data-style="expand-right"
+                      ng-click="Model.update()"
+                      test-hook="database-edit.create">
+                Update
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-lg-3">
+            <span class="db-types-title">Field Types</span>
+            <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span>
+            <br/>
+
+            <div class="db-types" ng-repeat="fieldType in Model.fieldTypes" ng-click="Model.insertTypeAtChar(fieldType)"
+                 ng-mouseover="fieldHover = true">
+              <i class="ti-angle-left"></i>
+              {{fieldType}}
+            </div>
+            <br/>
+
+            <div class="db-note">
+              <p>
+                In <b>one to many relationship</b> between objects user and pets:</br>
+                In the many side of the relationship (object pets), we specify that each row relates to one row in the other object user.<br/>
+                <b>"owner": { "object": "user" }</b></br>
+                In the one side of the relationship (object user), we specify that each row relates to several rows in pets:<br/>
+                <b>"dogs": { "collection": "pet", "via": "owner" }</b>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

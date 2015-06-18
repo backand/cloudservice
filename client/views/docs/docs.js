@@ -20,6 +20,15 @@
       }
     };
 
+    self.goToQuickstart = function () {
+      if (_.isEmpty(AppsService.currentApp)) {
+        $state.go('docs.getting-started-open');
+      }
+      else {
+        $state.go('docs.get-started');
+      }
+    };
+
     self.isNew = function () {
       var isNew = !_.isEmpty(AppsService.currentApp) && AppsService.currentApp.DatabaseStatus == 2;
       if (isNew) {

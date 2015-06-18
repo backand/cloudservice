@@ -20,9 +20,11 @@
                    required
                    ng-pattern="modal.namePattern"
                    placeholder="Name your action"
-                   ng-disabled="!rules.editMode">
+                   ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
             <ba-tooltip tooltip-text="Use the action name in the request URL query string of the REST API"
                         tooltip-placement="right" class=""></ba-tooltip>
+
+            <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">The action name cannot be modified.</span>
 
             <div ng-show="rules.newRuleForm.ruleName.$error.pattern" class="input-error">no spaces or %$#@^&* allowed
             </div>
@@ -130,7 +132,7 @@
                 <bknd-anchor anchor-params="rules.anchorParams"
                              window-title="Email Recipient"
                              input-id="emailTo"></bknd-anchor>
-                <input type="email"
+                <input type="text"
                        required
                        name="emailTo"
                        id="emailTo"
@@ -147,7 +149,7 @@
                              window-title="Email - CC"
                              input-id="emailCc"></bknd-anchor>
 
-                <input type="email"
+                <input type="text"
                        name="emailCc"
                        id="emailCc"
                        ng-model="rules.action.cc"
@@ -162,7 +164,7 @@
                              window-title="Email - BCC"
                              input-id="emailBcc"></bknd-anchor>
 
-                <input type="email"
+                <input type="text"
                        id="emailBcc"
                        name="emailBcc"
                        ng-model="rules.action.bcc"
@@ -173,7 +175,7 @@
                    ng-class="{ 'has-error': rules.newRuleForm.emailFrom.$invalid || rules.newRuleForm.emailFrom.$error.email}">
                 <label for="emailFrom">From:</label>
 
-                <input type="email"
+                <input type="text"
                        id="emailFrom"
                        name="emailFrom"
                        ng-model="rules.action.from"

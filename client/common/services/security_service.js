@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function SecurityService($http, CONSTS) {
+  function SecurityService($http, CONSTS, $q) {
     var self = this;
     self.appName = null;
     self.usersTableName = CONSTS.backandUserObject;
@@ -78,6 +78,17 @@
       })
     }
 
+    self.userExists = function (username) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + self.userUrl + '/exists',
+        headers: { AppName: self.appName },
+        params: {
+          username: username
+        }
+      })
+    }
+
     self.postUser = function (user) {
       return self.postData(self.usersTableName, user);
     };
@@ -117,5 +128,5 @@
   }
 
   angular.module('common.services')
-    .service('SecurityService', ['$http', 'CONSTS', SecurityService]);
+    .service('SecurityService', ['$http', 'CONSTS','$q', SecurityService]);
 })();

@@ -1,10 +1,9 @@
-
 (function () {
 
   angular.module('backand')
-    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', '$analytics', 'AppsService','$intercom','CONSTS', SignUpController]);
+    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', '$analytics', '$intercom', 'CONSTS', SignUpController]);
 
-  function SignUpController(AuthService, $state, SessionService, $timeout, $analytics, AppsService, $intercom, CONSTS){
+  function SignUpController(AuthService, $state, SessionService, $timeout, $analytics, $intercom, CONSTS){
 
     var self = this;
 
@@ -41,15 +40,6 @@
           AuthService.signIn(self.email, self.password)
             .success(function (data) {
               SessionService.setCredentials(data, self.email);
-
-              //create todos sample app
-              var exampleAppName = 'todo' + AuthService.getUserId();
-              if (exampleAppName != 'todo0') {
-                AppsService.add(exampleAppName, 'My First App - Todo list example')
-                  .then(
-                  $state.go('apps.index')
-                );
-              }
             })
             .error(function (data) {
               self.loading = false;
@@ -69,9 +59,6 @@
         });
     }
   }
-
-
-
 
 }());
 

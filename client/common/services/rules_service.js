@@ -5,6 +5,7 @@
     var self= this;
     var baseUrl = '/1/businessRule';
     self.tableRuleUrl = '/1/objects/';
+    self.addUserUrl = '/1/user';
     var logUrl = '/1/objects/durados_Log';
 
     self.appName = null;
@@ -72,8 +73,17 @@
 
     self.getTestUrl = function (rule, test, actionType, tableName, debug) {
       var parameters = angular.copy(test.parameters);
-      if (debug)
+      if (debug) {
         parameters['$$debug$$'] =  true;
+      }
+
+      if (tableName === 'backandUsers' && actionType === 'Create') {
+        return encodeURI(
+          CONSTS.appUrl +
+          self.addUserUrl +
+          '?parameters=' + JSON.stringify(parameters));
+      }
+
       var rowId = test.rowId || '';
       return encodeURI(
         CONSTS.appUrl +
@@ -81,7 +91,8 @@
         ((actionType === 'On Demand') ? 'action/' : '') +
         tableName + '/' +
         rowId +
-        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') + 'parameters=' + JSON.stringify(parameters));
+        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') +
+        'parameters=' + JSON.stringify(parameters));
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData) {
@@ -108,8 +119,9 @@
         headers: { AppName: self.appName }
       };
 
-      if (actionType === 'Create' || actionType === 'Update')
+      if (actionType === 'Create' || actionType === 'Update') {
         http.data = rowData;
+      }
 
       return $http(http);
     };

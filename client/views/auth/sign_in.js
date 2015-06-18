@@ -2,9 +2,9 @@
 (function  () {
 
   angular.module('backand')
-    .controller('SignInController', ["$scope", 'AuthService', '$state', 'SessionService', '$timeout','$modal','NotificationService', SignInController]);
+    .controller('SignInController', ['AuthService', '$state', 'SessionService', '$timeout', '$modal', 'NotificationService', SignInController]);
 
-  function SignInController($scope, AuthService, $state, SessionService, $timeout, $modal, NotificationService) {
+  function SignInController(AuthService, $state, SessionService, $timeout, $modal, NotificationService) {
     var self = this;
 
     SessionService.ClearCredentials();

@@ -1,6 +1,3 @@
-/**
- * Refactored by nirkaufman on 1/4/15.
- */
 (function () {
 
 
@@ -194,7 +191,6 @@
           + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 
       if (type === 'singleSelect') {
-        console.log('singleSelect', column);
 
         return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" '
           + 'e-typeahead="item.__metadata.id as getExternalScopes().ObjectData.getSingleSelectLabel(item, col) '

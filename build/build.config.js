@@ -44,9 +44,9 @@ module.exports = {
       incremental: true,
       progress: true,
       relative: true,
-      emptyDirectories: true,
+      emptyDirectories: false,
       recursive: true,
-      clean: true,
+      clean: false,
       silent: true,
       exclude: ['.DS_Store'],
       include: []

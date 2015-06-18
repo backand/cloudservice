@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function AuthService($http, CONSTS, SessionService) {
+  function AuthService($http, CONSTS, SessionService, $window) {
 
     var self = this;
 
@@ -52,6 +52,26 @@
       )
     };
 
+    self.socials = [
+      {name: 'github', label: 'Github', url: 'www.github.com', css: 'github'},
+      {name: 'google', label: 'Google', url: 'www.google.com', css: 'google-plus'}
+    ];
+
+    function getSocialUrl(social, isSignup) {
+      var action = isSignup ? 'up' : 'in';
+      return 'user/socialSign' + action +
+        '?provider=' + social.label +
+        '&response_type=token&client_id=self&redirect_uri=' + social.url +
+        '&state=rcFNVUMsUOSNMJQZ%2bDTzmpqaGgSRGhUfUOyQHZl6gas%3d';
+    }
+
+    self.socialLogin = function (social, isSignup) {
+      $window.location.href = CONSTS.appUrl + '/1/' +
+        getSocialUrl(social, isSignup) +
+        '&appname=' + CONSTS.mainAppName +
+        '&returnAddress=' + $window.location.href
+    };
+
     self.resetPassword = function (password, id) {
       return $http({
         method: 'POST',
@@ -76,15 +96,12 @@
     };
 
     self.getUserId = function () {
-      if (SessionService.currentUser && SessionService.currentUser.userId)
-        return SessionService.currentUser.userId;
-      else
-        return 0;
+      return SessionService.getUserId();
     };
 
   }
 
   angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', 'SessionService', AuthService])
+    .service('AuthService', ['$http', 'CONSTS', 'SessionService', '$window', AuthService])
 
 })();

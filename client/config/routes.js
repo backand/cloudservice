@@ -11,14 +11,22 @@ angular.module('backand.routes', []).
     $httpProvider.interceptors.push('httpInterceptor');
 
     $stateProvider
+      .state('auth', {
+        url: '',
+        templateUrl: 'views/auth/auth.html',
+        abstract: true,
+        controller : 'AuthController as Auth'
+      })
       .state('sign_up', {
-        url: '/sign_up?username&name&i',
+        parent: 'auth',
+        url: '/sign_up?username&name&i&token',
         templateUrl: 'views/auth/sign_up.html',
         controller : 'SignUpController as signup'
       })
       .state('sign_in', {
+        parent: 'auth',
         url: '/sign_in',
-        templateUrl: 'views/auth/sign_in.tpl.html',
+        templateUrl: 'views/auth/sign_in.html',
         controller : 'SignInController as sign'
       })
       .state('change_password', {
@@ -130,8 +138,23 @@ function isStateForSignedOutUser(state) {
   return (state.name === 'sign_in' || state.name === 'sign_up' || state.name === 'change_password');
 }
 
-function run($rootScope, $state, SessionService) {
+function run($rootScope, $state, SessionService, NotificationService) {
+
   $rootScope.$on('$stateChangeStart', function (event, toState) {
+
+    var queryString = window.location.search.substring(1);
+
+    var dataLocation = queryString.indexOf('data=');
+    if (dataLocation > -1) {
+      var data = JSON.parse(decodeURIComponent(queryString.substring(dataLocation + 5)));
+      SessionService.setCredentials(data);
+    }
+
+    var errorLocation = queryString.indexOf('error=');
+    if (errorLocation > -1) {
+      NotificationService.add('error', JSON.parse(decodeURIComponent(queryString.substring(errorLocation + 6))).message);
+    }
+
     if (!SessionService.currentUser) {
       if (!isStateForSignedOutUser(toState)) {
         event.preventDefault();

@@ -2,8 +2,41 @@
   <div class="panel panel-default">
     <div class="panel-heading"><strong>backand-angular-kickstart</strong></div>
     <div class="panel-body">
-      <div class="row col-sm-10 col-sm-offset-1">
+
+      <div class="quickstart-sidebar">
+
+        <div class="quickstart-sidebox" id="kickstart-sidebox">
+          <div class="quickstart-kickstart">
+            <img src="../assets/images/docs_pages/icon-quickstart.png" />
+            <div class="quickstart-sidebox-title">Already have an Angular project?</div><br/>
+            <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your project:</div><br/>
+            <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToQuickstart()">Get Started</button>
+          </div>
+        </div>
+        <br/>
+
+        <div class="quickstart-sidebox" id="video-sidebox">
+          <div class="quickstart-kickstart">
+            <img src="../assets/images/docs_pages/icon-video.png" />
+            <div class="quickstart-sidebox-title">Watch our Video Tutorial</div><br/>
+            <button class="btn btn-lg btn-success quickstart-sidebox-button"
+                    video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'"
+                    title="'AngularJS Quickstart'">Play Video</button>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="quickstart-body">
         <h1>Follow these steps to install angular-kickstart with Backand inside</h1>
+
+        <section class="panel panel-box" ng-if="!docs.currentApp.Name">
+          <div class="panel-item bg-info">
+            <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
+              gulpjs based build system that scaffolds the project for you.</h3>
+          </div>
+        </section>
+
         <br/>
         <h2>Installation</h2>
         <h5>Install <b>node.js</b>. Then <b>sass</b>, <b>gulp</b> and <b>bower</b> if you haven't yet.</h5>
