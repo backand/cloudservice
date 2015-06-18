@@ -64,6 +64,11 @@ html {
             position: static;
             float: left;
             width: 220px;
+
+            &.ng-hide + .content-container {
+              margin-left: 0;
+            }
+
             // border-width: 0 1px 0 0;
             // border-style: solid;
             // border-color: darken($sidebar_bg, 10%);
@@ -146,7 +151,7 @@ html {
                             margin: 80px 0 0;
                         }
                     }
-                }            
+                }
             }
         }
     }

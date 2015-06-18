@@ -40,6 +40,10 @@
     width: 200px;
     margin: 0 auto;
 
+    @media (max-width: $screen-md) {
+      padding-bottom: 20px;
+    }
+
     &:hover {
       cursor: pointer;
       font-weight: bolder;
