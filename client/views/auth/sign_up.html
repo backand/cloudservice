@@ -1,117 +1,123 @@
-<form class="form-horizontal text-center ng-pristine ng-valid"
-      name="form"
-      ng-submit="signup.signUp()">
-  <fieldset>
-    <div class="form-group">
-      <div class="input-group input-group-first">
+<div class="signup-options signup-options-email">
+  Sign up using your email address
+</div>
+
+<div class="signup-email">
+  <form class="form-horizontal text-center ng-pristine ng-valid"
+        name="form"
+        ng-submit="signup.signUp()">
+    <fieldset>
+      <div class="form-group">
+        <div class="input-group input-group-first">
                                 <span class="input-group-addon">
                                     <span class="ti-user"></span>
                                 </span>
-        <input type="text"
-               class="form-control input-lg"
-               placeholder="Full Name"
-               name="uFullFirst"
-               test-hook="signup.name"
-               ng-model="signup.fullName"
-               ng-model-options="{debounce: 300}"
-               required>
+          <input type="text"
+                 class="form-control input-lg"
+                 placeholder="Full Name"
+                 name="uFullFirst"
+                 test-hook="signup.name"
+                 ng-model="signup.fullName"
+                 ng-model-options="{debounce: 300}"
+                 required>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <div class="input-group">
+      <div class="form-group">
+        <div class="input-group">
                                 <span class="input-group-addon">
                                     <span class="ti-email"></span>
                                 </span>
-        <input type="email"
-               class="form-control input-lg"
-               placeholder="Email (Username)"
-               name="uEmail"
-               test-hook="signup.email"
-               ng-model="signup.email"
-               ng-model-options="{updateOn: 'blur'}"
-               ng-focus="emailInput.focus = true"
-               ng-blur="emailInput.focus = false"
-               required>
+          <input type="email"
+                 class="form-control input-lg"
+                 placeholder="Email (Username)"
+                 name="uEmail"
+                 test-hook="signup.email"
+                 ng-model="signup.email"
+                 ng-model-options="{updateOn: 'blur'}"
+                 ng-focus="emailInput.focus = true"
+                 ng-blur="emailInput.focus = false"
+                 required>
 
+        </div>
+        <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false">
+          This is not a valid email
+        </div>
       </div>
-      <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false">
-        This is not a valid email
-      </div>
-    </div>
 
 
-    <div class="form-group">
-      <div class="input-group">
+      <div class="form-group">
+        <div class="input-group">
                                 <span class="input-group-addon">
                                     <span class="ti-lock"></span>
                                 </span>
-                    <input type="password"
-                           class="form-control input-lg"
-                           placeholder="Password"
-                           name="Upassword"
-                           test-hook="signup.password"
-                           ng-model="signup.password"
-                           ng-model-options="{debounce: 300}"
-                           ng-minlength="6"
-                           ng-maxlength="20"
-                           required>
-                  </div>
-                  <div class="text-danger" ng-show="form.Upassword.$error.minlength">
-                    Password must be at least 6 characters
-                  </div>
-                  <div class="text-danger" ng-show="form.Upassword.$error.email">
-                    This is not a valid password
-                  </div>
-                </div>
+          <input type="password"
+                 class="form-control input-lg"
+                 placeholder="Password"
+                 name="Upassword"
+                 test-hook="signup.password"
+                 ng-model="signup.password"
+                 ng-model-options="{debounce: 300}"
+                 ng-minlength="6"
+                 ng-maxlength="20"
+                 required>
+        </div>
+        <div class="text-danger" ng-show="form.Upassword.$error.minlength">
+          Password must be at least 6 characters
+        </div>
+        <div class="text-danger" ng-show="form.Upassword.$error.email">
+          This is not a valid password
+        </div>
+      </div>
 
 
-    <div class="form-group">
-      <div class="input-group">
+      <div class="form-group">
+        <div class="input-group">
                                 <span class="input-group-addon">
                                     <span class="ti-lock"></span>
                                 </span>
-        <input type="password"
-               class="form-control input-lg"
-               placeholder="Re-type Password"
-               name="confirm_password"
-               test-hook="signup.password-confirm"
-               ba-match="signup.password"
-               ng-model="signup.repassword"
-               ng-model-options="{debounce: 300}"
-               required>
+          <input type="password"
+                 class="form-control input-lg"
+                 placeholder="Re-type Password"
+                 name="confirm_password"
+                 test-hook="signup.password-confirm"
+                 ba-match="signup.password"
+                 ng-model="signup.repassword"
+                 ng-model-options="{debounce: 300}"
+                 required>
+        </div>
+
+        <div class="text-danger" ng-show="form.confirm_password.$error.match">
+          Please re-enter the same password as above
+        </div>
       </div>
 
-      <div class="text-danger" ng-show="form.confirm_password.$error.match">
-        Please re-enter the same password as above
+      <div class="divider divider-lg"></div>
+      <div class="form-group">
+
+        <p class="additional-info text-vsmall">
+          By clicking Sign up, you agree to Backand&apos;s
+          <a href="https://www.backand.com/terms-of-use" target="_blank">Terms of Service</a> and
+          <a href="https://www.backand.com/privacy-policy" target="_blank">Privacy Policy</a>
+        </p>
+
+        <div class="divider"></div>
+        <button type="submit"
+                ng-disabled="form.$invalid"
+                test-hook="signup.signup"
+                class="auth-button btn btn-lg"
+                ladda="signup.loading" data-style="expand-right">Sign up
+        </button>
       </div>
-    </div>
+      <div ng-show="signup.error" class="alert alert-danger">{{signup.error}}</div>
+    </fieldset>
+  </form>
 
-    <div class="divider divider-lg"></div>
-    <div class="form-group">
-
-      <p class="additional-info text-vsmall">
-        By clicking Sign up, you agree to Backand&apos;s
-        <a href="https://www.backand.com/terms-of-use" target="_blank">Terms of Service</a> and
-        <a href="https://www.backand.com/privacy-policy" target="_blank">Privacy Policy</a>
-      </p>
-
-      <div class="divider"></div>
-      <button type="submit"
-              ng-disabled="form.$invalid"
-              test-hook="signup.signup"
-              class="auth-button btn btn-lg"
-              ladda="signup.loading" data-style="expand-right">Sign up
-      </button>
-    </div>
-    <div ng-show="signup.error" class="alert alert-danger">{{signup.error}}</div>
-  </fieldset>
-</form>
-
-<div class="divider"></div>
-<section class="additional-info">
-  <p class="text-center">
-    <span>Already signed up?</span>
-    <strong><a ui-sref="sign_in">Log in now</a></strong>
-  </p>
-</section>
+  <div class="divider"></div>
+  <section class="additional-info">
+    <p class="text-center">
+      <span>Already signed up?</span>
+      <strong><a ui-sref="sign_in">Log in now</a></strong>
+    </p>
+  </section>
+</div>

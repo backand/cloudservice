@@ -67,7 +67,11 @@
     }
 
     self.socialLogin = function (social, isSignup) {
-      var returnAddress =  encodeURIComponent($window.location.href);
+      if (typeof social === 'string') {
+        social = _.find(self.socials, {name: social});
+      }
+
+      var returnAddress =  encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
       $window.location.href = CONSTS.appUrl + '/1/' +
         getSocialUrl(social, isSignup) +
         '&appname=' + CONSTS.mainAppName +

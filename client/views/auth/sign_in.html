@@ -1,67 +1,71 @@
-<form class="form-horizontal" name="form" ng-submit="sign.signIn()" novalidate>
-  <fieldset>
-    <div class="form-group">
-      <div class="input-group input-group-first">
+<div class="signup-options signup-options-email">
+  Sign in using your email address
+</div>
+
+<div class="signup-email">
+  <form class="form-horizontal" name="form" ng-submit="sign.signIn()" novalidate>
+    <fieldset>
+      <div class="form-group">
+        <div class="input-group input-group-first">
                 <span class="input-group-addon">
                   <span class="ti-email"></span>
                 </span>
-        <input type="email"
-               class="form-control input-lg"
-               name="uEmail"
-               placeholder="Username"
-               test-hook="signin.username"
-               ng-model="sign.userName"
-               ng-model-options="{updateOn: 'blur'}"
-               ng-focus="emailInput.focus = true"
-               ng-blur="emailInput.focus = false"
-               required>
-      </div>
-      <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false">
-        This is not a valid email.
-      </div>
+          <input type="email"
+                 class="form-control input-lg"
+                 name="uEmail"
+                 placeholder="Username"
+                 test-hook="signin.username"
+                 ng-model="sign.userName"
+                 ng-model-options="{updateOn: 'blur'}"
+                 ng-focus="emailInput.focus = true"
+                 ng-blur="emailInput.focus = false"
+                 required>
+        </div>
+        <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false">
+          This is not a valid email.
+        </div>
 
-    </div>
-    <div class="form-group">
-      <div class="input-group">
+      </div>
+      <div class="form-group">
+        <div class="input-group">
                 <span class="input-group-addon">
                   <span class="ti-lock"></span>
                 </span>
-        <input type="password"
-               class="form-control input-lg"
-               placeholder="Password"
-               test-hook="signin.password"
-               name="uPassword"
-               ng-model="sign.userPassword"
-               ng-model-options="{debounce: 500}"
-               required>
+          <input type="password"
+                 class="form-control input-lg"
+                 placeholder="Password"
+                 test-hook="signin.password"
+                 name="uPassword"
+                 ng-model="sign.userPassword"
+                 ng-model-options="{debounce: 500}"
+                 required>
+        </div>
+        <div class="text-danger" ng-show="form.uPassword.$error.email">
+          This is not a valid Password.
+        </div>
       </div>
-      <div class="text-danger" ng-show="form.uPassword.$error.email">
-        This is not a valid Password.
+      <br/>
+
+      <div class="text-right additional-info">
+        <a ng-click="sign.open()" href="">Forgot your password?</a>
       </div>
-    </div>
-    <br/>
-
-    <div class="text-right additional-info">
-      <a ng-click="sign.open()" href="">Forgot your password?</a>
-    </div>
-    <div class="divider divider-xl"></div>
-    <div class="form-group">
-      <button type="submit"
-              ng-disabled="form.$invalid"
-              class="auth-button btn btn-lg"
-              test-hook="signin.login"
-              ladda="sign.loading" data-style="expand-right">
-        Log in
-      </button>
-    </div>
-  </fieldset>
-  <div ng-show="sign.error" class="alert alert-danger">{{sign.error}}</div>
-</form>
-<div class="divider"></div>
-<section class="additional-info">
-  <p class="text-center">
-    <span>Don't have an account? </span>
-    <strong><a ui-sref="sign_up">Sign up</a></strong>
-  </p>
-</section>
-
+      <div class="divider divider-xl"></div>
+      <div class="form-group">
+        <button type="submit"
+                class="auth-button btn btn-lg"
+                test-hook="signin.login"
+                ladda="sign.loading" data-style="expand-right">
+          Sign in
+        </button>
+      </div>
+    </fieldset>
+    <div ng-show="sign.error" class="alert alert-danger">{{sign.error}}</div>
+  </form>
+  <div class="divider"></div>
+  <section class="additional-info">
+    <p class="text-center">
+      <span>Don't have an account? </span>
+      <strong><a ui-sref="sign_up">Sign up</a></strong>
+    </p>
+  </section>
+</div>
