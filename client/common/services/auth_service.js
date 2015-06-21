@@ -5,7 +5,10 @@
 
     var self = this;
 
-    self.signIn = function (userName, password) {
+    self.signIn = function (userData) {
+      userData.grant_type = 'password';
+      userData.appName = userData.appName || CONSTS.mainAppName;
+
       return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/token',
@@ -17,12 +20,7 @@
             }
             return str.join("&");
           },
-          data: {
-            grant_type: 'password',
-            username: userName,
-            password: password,
-            appname: CONSTS.mainAppName
-          }
+          data: userData
         }
       )
     };

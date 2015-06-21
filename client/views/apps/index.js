@@ -3,10 +3,10 @@
 
 angular.module('backand.apps')
   .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
-    'usSpinnerService', 'LayoutService', '$analytics', 'AuthService', '$intercom', AppsIndexController]);
+    'usSpinnerService', 'LayoutService', '$analytics', 'SessionService', '$intercom', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
-                                usSpinnerService, LayoutService, $analytics, AuthService, $intercom) {
+                                usSpinnerService, LayoutService, $analytics, SessionService, $intercom) {
 
     var self = this;
     self.loading = false;
@@ -17,7 +17,7 @@ angular.module('backand.apps')
       self.showJumbo = LayoutService.showJumbo();
 
       //create todos sample app
-      var userId = AuthService.getUserId();
+      var userId = SessionService.getUserId();
       if (userId != 0) {
         var exampleAppName = 'todo' + userId;
         if (!_.find(self.apps, {Name: exampleAppName})) {
@@ -157,10 +157,6 @@ angular.module('backand.apps')
       LayoutService.openJumbo();
       self.showJumbo = true;
     };
-
-    self.setUserId = function (x) {
-      AuthService.setUserId(x);
-    }
 
   }
 }());

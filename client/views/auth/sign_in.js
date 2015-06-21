@@ -11,7 +11,7 @@
 
     this.signIn = function () {
       self.loading = true;
-      AuthService.signIn(self.userName, self.userPassword)
+      AuthService.signIn({username: self.userName, password: self.userPassword})
         .success(function (data) {
           SessionService.setCredentials(data, self.userName);
           $state.go('apps.index');

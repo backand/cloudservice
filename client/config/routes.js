@@ -145,9 +145,19 @@ function run($rootScope, $state, SessionService, AuthService) {
     if (toParams.data) {
       var userData = JSON.parse(toParams.data);
       if (userData) {
-        SessionService.setCredentials(userData);
-        event.preventDefault();
-        $state.go('apps.index');
+        var tokenData = {
+          grant_type: 'password',
+          accessToken: userData.access_token,
+          appName: userData.appName
+        };
+
+        AuthService.signIn(tokenData)
+          .success(function (data) {
+            SessionService.setCredentials(data);
+            event.preventDefault();
+            $state.go('apps.index');
+          });
+
       }
     }
 
