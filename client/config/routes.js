@@ -132,19 +132,20 @@ angular.module('backand.routes', []).
         template: '<div ui-view></div>'
       });
   })
-  .run(['$rootScope', '$state', 'SessionService', 'AuthService', run]);
+  .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS', run]);
 
 function isStateForSignedOutUser(state) {
   return (state.name === 'sign_in' || state.name === 'sign_up' || state.name === 'change_password');
 }
 
-function run($rootScope, $state, SessionService, AuthService) {
+function run($rootScope, $state, SessionService, AuthService, CONSTS) {
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
     if (toParams.data) {
       var userData = JSON.parse(toParams.data);
       if (userData) {
+        event.preventDefault();
         var tokenData = {
           grant_type: 'password',
           accessToken: userData.access_token,
@@ -154,7 +155,6 @@ function run($rootScope, $state, SessionService, AuthService) {
         AuthService.signIn(tokenData)
           .success(function (data) {
             SessionService.setCredentials(data);
-            event.preventDefault();
             $state.go('apps.index');
           });
 
@@ -163,7 +163,7 @@ function run($rootScope, $state, SessionService, AuthService) {
 
     if (toParams.error) {
       var error = JSON.parse(toParams.error);
-      if (error.message === 'The user is not signed up to bko') {
+      if (error.message === 'The user is not signed up to ' + CONSTS.mainAppName) {
         event.preventDefault();
         AuthService.socialLogin(error.provider, true)
       }
