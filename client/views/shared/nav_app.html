@@ -67,7 +67,7 @@
       </li>
     </ul>
   </li>
-  <li ng-class="{active: nav.isTablesActive(), disabled: nav.DatabaseStatus != 1}" ng-show="!nav.dbEmpty">
+  <li ng-class="{active: nav.isTablesActive(), disabled: nav.DatabaseStatus != 1}">
     <a ng-class="{disabled: nav.DatabaseStatus != 1}"
        ng-click="nav.tables.length == 0 ? nav.goTo('tables.notables') : {}"
        href="">
@@ -78,7 +78,6 @@
       Each object's page contains fields settings, server side actions, security, data-entry and REST API. "
                   tooltip-placement="right"></ba-tooltip>
       <i class="ti-angle-double-right pull-right"
-         ng-show="nav.tables.length > 0"
          style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
     </a>
     <ul class="scrollbar ex4" id="ex4">

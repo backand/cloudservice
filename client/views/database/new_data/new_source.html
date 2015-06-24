@@ -77,8 +77,16 @@
       </div>
       <br/>
 
-      <div class="db-types-note">For <b>SingleSelect</b> and <b>MultiSelect</b> you need to specify
-        <b>RelatedTable</b>
+      <div class="db-note">
+        <p>
+          In <b>one to many relationship</b> between objects user and pets:</br>
+          In the many side of the relationship (object pets), we specify that each row relates to one row in the
+          other object user.<br/>
+          <b>"owner": { "object": "user" }</b></br>
+          In the one side of the relationship (object user), we specify that each row relates to several rows in
+          pets:<br/>
+          <b>"dogs": { "collection": "pet", "via": "owner" }</b>
+        </p>
       </div>
       <br/>
 

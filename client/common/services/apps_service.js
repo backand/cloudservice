@@ -81,8 +81,10 @@
         data.Database_Source ? DatabaseNamesService.getDBSource(data.Database_Connection.Database_Source) : undefined;
       stopRefreshDBStatus();
 
-      if (self.currentApp.DatabaseStatus == 2)
+      if (self.currentApp.DatabaseStatus == 2) {
+        self.currentAppStatus = 2;
         startRefreshDBStatus();
+      }
     }
 
     var refreshDBStatus;
@@ -97,7 +99,8 @@
       }
       getApp(self.currentApp.Name)
         .success(function (result) {
-          if (result && result.DatabaseStatus != 2) {
+          if (result && result.DatabaseStatus != 2 && self.currentAppStatus === 2) {
+            self.currentAppStatus = 1;
             setCurrentApp(result);
             $rootScope.$broadcast('AppDbReady', result.Name);
           }

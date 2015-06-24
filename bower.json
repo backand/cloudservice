@@ -31,7 +31,8 @@
     "ngstorage": "~0.3.0",
     "angulartics": "~0.17.2",
     "angular-intercom": "~2.0.4",
-    "fontawesome": "~4.3.0"
+    "fontawesome": "~4.3.0",
+    "ace-diff": "https://github.com/benkeen/ace-diff.git"
   },
   "devDependencies": {
     "angular-mocks": "1.3.0"

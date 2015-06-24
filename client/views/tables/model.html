@@ -1,3 +1,11 @@
+<div class="db-footer">
+  <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
+          ladda="Model.loading" data-style="expand-right"
+          ng-click="Model.update()">
+    Update
+  </button>
+</div>
+
 <section class="page-form-ele page ng-scope">
 
   <section class="panel panel-default">
@@ -11,32 +19,23 @@
         <div class="col-xs-10">
           <div class="db-panel-body-explanation">
             <h3>Edit the application model</h3>
-            <h4>Backand's model provides an abstraction layer on top of your database, giving you easy access to update the database schema.</h4>
+            <h4>Backand's model provides an abstraction layer on top of your database, giving you easy access to update
+              the database schema.</h4>
           </div>
         </div>
       </div>
       <div class="db-tab-content">
         <div class="row">
           <div class="col-md-8 col-lg-9">
-            <div
-              ui-ace="{onLoad : Model.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
-              class="form-control ace-db-template"
-              name="tableTemplate"
-              id="tableTemplate"
-              ng-model="Model.schema"
-              required
-              ng-pattern="codeRegex"
-              style="resize: vertical; height: 500px;">
-            </div>
-            <br/>
-            <div>
-              <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
-                      ladda="Model.loading" data-style="expand-right"
-                      ng-click="Model.update()"
-                      test-hook="database-edit.create">
-                Update
-              </button>
-            </div>
+            <span>Current model (read-only)</span>
+            <span class="pull-right">Edit model</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8 col-lg-9">
+
+            <ba-ace-diff ace-diff-options="Model.aceDiffOptions" right-editor="Model.schemaEditor"></ba-ace-diff>
+
           </div>
 
           <div class="col-md-4 col-lg-3">
@@ -54,15 +53,19 @@
             <div class="db-note">
               <p>
                 In <b>one to many relationship</b> between objects user and pets:</br>
-                In the many side of the relationship (object pets), we specify that each row relates to one row in the other object user.<br/>
+                In the many side of the relationship (object pets), we specify that each row relates to one row in the
+                other object user.<br/>
                 <b>"owner": { "object": "user" }</b></br>
-                In the one side of the relationship (object user), we specify that each row relates to several rows in pets:<br/>
+                In the one side of the relationship (object user), we specify that each row relates to several rows in
+                pets:<br/>
                 <b>"dogs": { "collection": "pet", "via": "owner" }</b>
               </p>
             </div>
 
           </div>
         </div>
+        <p><strong>** Id is added to all objects automatically, please do not add it yourself</strong></p>
+
       </div>
     </div>
   </section>

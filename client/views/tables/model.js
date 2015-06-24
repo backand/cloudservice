@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ModelController', ['$scope', 'AppsService', 'ModelService', 'usSpinnerService', 'NotificationService', ModelController]);
+    .controller('ModelController', ['$rootScope', '$scope', 'AppsService', 'ModelService', 'usSpinnerService', 'NotificationService', 'DatabaseService', ModelController]);
 
-  function ModelController($scope, AppsService, ModelService, usSpinnerService, NotificationService) {
+  function ModelController($rootScope, $scope, AppsService, ModelService, usSpinnerService, NotificationService, DatabaseService) {
 
     var self = this;
     var currentApp = AppsService.currentApp;
@@ -11,6 +11,20 @@
     self.appName = currentApp.Name;
 
     self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean', 'binary'];
+    self.schemaEditor = null;
+
+    self.aceDiffOptions = {
+      onLoad : function(editor) {
+        editor.$blockScrolling = Infinity;
+        editor.getSession().setTabSize(2);
+      },
+      theme:'ace/theme/monokai',
+      mode: 'ace/mode/json',
+      left: {
+        editable: false
+      },
+      right: {}
+    };
 
     function init() {
       getSchema();
@@ -22,19 +36,29 @@
       usSpinnerService.spin('loading');
       ModelService.get(self.appName)
         .then(function (data) {
-          self.schema = angular.toJson(data.data, true);
+          updateSchema(data);
           usSpinnerService.stop('loading');
         },
         errorHandler)
     }
 
-    self.ace = {
-      onLoad: function(_editor) {
-        self.ace.editor = _editor;
-        _editor.$blockScrolling = Infinity;
-        _editor.getSession().setTabSize(2);
-      }
-    };
+    // save schema in local storage
+    function saveCustomSchema (schema) {
+      DatabaseService.saveCustomSchema(self.appName, schema);
+    }
+
+    $scope.$watch(function () {
+      if (self.schemaEditor)
+        return self.schemaEditor.getValue()
+    }, saveCustomSchema);
+
+    function updateSchema (data) {
+      self.schema = angular.toJson(data.data, true);
+      self.aceDiffOptions.left.content = self.schema;
+      // get schema from local storage if exists
+      self.aceDiffOptions.right.content = DatabaseService.getCustomSchema(self.appName) || self.schema;
+      $rootScope.$broadcast('ace-update');
+    }
 
     self.insertTypeAtChar = function (param) {
       var tokenAtCursor = getTokenAtCursor();
@@ -42,23 +66,23 @@
         param = '"' + param + '"';
 
       setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
-        self.ace.editor.insert(param);
+        self.schemaEditor.insert(param);
       });
     };
 
     function getTokenAtCursor () {
-      var position = self.ace.editor.getCursorPosition();
-      var token = self.ace.editor.session.getTokenAt(position.row, position.column);
+      var position = self.schemaEditor.getCursorPosition();
+      var token = self.schemaEditor.session.getTokenAt(position.row, position.column);
       if (token !== null) return token.value;
     }
 
     self.update = function() {
       self.loading = true;
-      var schema = JSON.parse(self.schema);
+      var schema = JSON.parse(self.schemaEditor.getValue());
       ModelService.update(self.appName, schema)
         .then(function(data){
-          self.schema = angular.toJson(data.data, true);
-          $scope.$root.$broadcast('fetchTables');
+          updateSchema(data);
+          $rootScope.$broadcast('fetchTables');
           self.loading = false;
         },
         modelErrorHandler)
@@ -66,7 +90,7 @@
 
     function modelErrorHandler(error, message){
       getSchema();
-      $scope.$root.$broadcast('fetchTables');
+      $rootScope.$broadcast('fetchTables');
       self.loading = false;
       usSpinnerService.stop('loading');
     }
