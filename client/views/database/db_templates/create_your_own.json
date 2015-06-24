@@ -1,9 +1,9 @@
 [
   {
     "name": "items",
-    "fields": [
-        {"name":"name", "type":"ShortText"},
-        {"name":"description", "type":"LongText"}
-    ]
+    "fields": {
+      "name": {"type": "string"},
+      "description": {"type": "string"}
+    }
   }
 ]

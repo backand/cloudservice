@@ -153,7 +153,7 @@ angular.module('backand.database')
         description: 'Schema mode for game shop management store'},
       {order:2, title: "Email Campaigns", filename: 'ecommerce_campaign', appName: 'Email-campaign-MySql',
         description: 'Advanced schema model for building e-commerce campaign app'},
-      {order:1, title: "Advertisement Agency", filename: 'advertising_system', appName: 'Advertising-System',
+      {order:1, title: "Advertisement Agency", filename: 'ad_system', appName: 'Advertising-System',
         description: 'Complex schema model to support advertising agency app'}
     ];
 
