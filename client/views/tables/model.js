@@ -23,7 +23,9 @@
       right: {
         editable: false
       },
-      left: {}
+      left: {
+        copyLinkEnabled: false
+      }
     };
 
     function init() {
@@ -78,7 +80,13 @@
 
     self.update = function() {
       self.loading = true;
-      var schema = JSON.parse(self.schemaEditor.getValue());
+      try {
+        var schema = JSON.parse(self.schemaEditor.getValue());
+      } catch (err) {
+        NotificationService.add('error', 'JSON is not properly formatted');
+        self.loading = false;
+        return;
+      }
       ModelService.update(self.appName, schema)
         .then(function(data){
           updateSchema(data);
