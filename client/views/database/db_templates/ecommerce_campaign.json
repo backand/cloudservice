@@ -1,245 +1,235 @@
 [
   {
-    "name": "email_campaign",
-    "fields": [
-      {
-        "name": "product_category_code",
-        "type": "ShortText"
+    "name": "campaign_customer",
+    "fields": {
+      "customer": {
+        "object": "customer"
       },
-      {
-        "name": "campaign_name",
-        "type": "ShortText"
+      "email_campaign": {
+        "object": "email_campaign"
       },
-      {
-        "name": "start_date",
-        "type": "DateTime"
-      },
-      {
-        "name": "end_date",
-        "type": "DateTime"
-      },
-      {
-        "name": "target_population",
-        "type": "LongText"
-      },
-      {
-        "name": "objective",
-        "type": "LongText"
+      "campaign_outcome": {
+        "object": "campaign_outcome"
       }
-    ]
-  },
-  {
-    "name": "payment_method",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
-      },
-      {
-        "name": "description",
-        "type": "LongText"
-      }
-    ]
-  },
-  {
-    "name": "customer",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
-      },
-      {
-        "name": "payment_method_id",
-        "type": "SingleSelect",
-        "relatedTable": "payment_method"
-      },
-      {
-        "name": "phone",
-        "type": "ShortText"
-      },
-      {
-        "name": "email",
-        "type": "ShortText"
-      },
-      {
-        "name": "address",
-        "type": "ShortText"
-      },
-      {
-        "name": "login",
-        "type": "ShortText"
-      },
-      {
-        "name": "password",
-        "type": "ShortText"
-      },
-      {
-        "name": "details",
-        "type": "LongText"
-      }
-    ]
+    }
   },
   {
     "name": "campaign_outcome",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
+    "fields": {
+      "name": {
+        "type": "string"
       },
-      {
-        "name": "description",
-        "type": "LongText"
+      "description": {
+        "type": "text"
+      },
+      "campaign_customer": {
+        "collection": "campaign_customer",
+        "via": "campaign_outcome"
       }
-    ]
+    }
   },
   {
-    "name": "campaign_customer",
-    "fields": [
-      {
-        "name": "customer_id",
-        "type": "SingleSelect",
-        "relatedTable": "customer"
+    "name": "customer",
+    "fields": {
+      "payment_method": {
+        "object": "shipping_method"
       },
-      {
-        "name": "email_campaign_id",
-        "type": "SingleSelect",
-        "relatedTable": "email_campaign"
+      "name": {
+        "type": "string"
       },
-      {
-        "name": "campaign_outcome_id",
-        "type": "SingleSelect",
-        "relatedTable": "campaign_outcome"
+      "phone": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string"
+      },
+      "address": {
+        "type": "string"
+      },
+      "login": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "details": {
+        "type": "text"
+      },
+      "campaign_customer": {
+        "collection": "campaign_customer",
+        "via": "customer"
+      },
+      "customer_order": {
+        "collection": "customer_order",
+        "via": "customer"
       }
-    ]
-  },
-  {
-    "name": "order_status",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
-      },
-      {
-        "name": "description",
-        "type": "LongText"
-      }
-    ]
-  },
-  {
-    "name": "shipping_method",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
-      },
-      {
-        "name": "shipping_charges",
-        "type": "Numeric"
-      }
-    ]
+    }
   },
   {
     "name": "customer_order",
-    "fields": [
-      {
-        "name": "customer_id",
-        "type": "SingleSelect",
-        "relatedTable": "customer"
+    "fields": {
+      "customer": {
+        "object": "customer"
       },
-      {
-        "name": "order_status_id",
-        "type": "SingleSelect",
-        "relatedTable": "order_status"
+      "order_status": {
+        "object": "order_status"
       },
-      {
-        "name": "shipping_method_id",
-        "type": "SingleSelect",
-        "relatedTable": "shipping_method"
+      "create_date": {
+        "type": "datetime"
       },
-      {
-        "name": "create_date",
-        "type": "DateTime"
+      "shipping_method": {
+        "object": "shipping_method"
       },
-      {
-        "name": "delivered_date",
-        "type": "DateTime"
+      "delivered_date": {
+        "type": "datetime"
       },
-      {
-        "name": "shipping_charges",
-        "type": "Numeric"
+      "shipping_charges": {
+        "type": "float"
       },
-      {
-        "name": "details",
-        "type": "LongText"
+      "details": {
+        "type": "text"
+      },
+      "order_product": {
+        "collection": "order_product",
+        "via": "customer_order"
       }
-    ]
+    }
   },
   {
-    "name": "product_category",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
+    "name": "email_campaign",
+    "fields": {
+      "product_category_code": {
+        "type": "string"
       },
-      {
-        "name": "description",
-        "type": "LongText"
+      "campaign_name": {
+        "type": "string"
+      },
+      "start_date": {
+        "type": "datetime"
+      },
+      "end_date": {
+        "type": "datetime"
+      },
+      "target_population": {
+        "type": "text"
+      },
+      "objective": {
+        "type": "text"
+      },
+      "campaign_customer": {
+        "collection": "campaign_customer",
+        "via": "email_campaign"
       }
-    ]
-  },
-  {
-    "name": "product",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
-      },
-      {
-        "name": "product_category_id",
-        "type": "SingleSelect",
-        "relatedTable": "product_category"
-      },
-      {
-        "name": "details",
-        "type": "LongText"
-      }
-    ]
+    }
   },
   {
     "name": "item_status",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
+    "fields": {
+      "name": {
+        "type": "string"
       },
-      {
-        "name": "description",
-        "type": "LongText"
+      "description": {
+        "type": "text"
+      },
+      "order_product": {
+        "collection": "order_product",
+        "via": "item_status"
       }
-    ]
+    }
   },
   {
     "name": "order_product",
-    "fields": [
-      {
-        "name": "product_id",
-        "type": "SingleSelect",
-        "relatedTable": "product"
+    "fields": {
+      "product": {
+        "object": "product"
       },
-      {
-        "name": "customer_order_id",
-        "type": "SingleSelect",
-        "relatedTable": "customer_order"
+      "customer_order": {
+        "object": "customer_order"
       },
-      {
-        "name": "item_status_id",
-        "type": "SingleSelect",
-        "relatedTable": "item_status"
+      "quantity": {
+        "type": "float"
       },
-      {
-        "name": "quantity",
-        "type": "Numeric"
+      "item_status": {
+        "object": "item_status"
       }
-    ]
+    }
+  },
+  {
+    "name": "order_status",
+    "fields": {
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "customer_order": {
+        "collection": "customer_order",
+        "via": "order_status"
+      }
+    }
+  },
+  {
+    "name": "payment_method",
+    "fields": {
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      }
+    }
+  },
+  {
+    "name": "product",
+    "fields": {
+      "product_category": {
+        "object": "product_category"
+      },
+      "name": {
+        "type": "string"
+      },
+      "details": {
+        "type": "text"
+      },
+      "order_product": {
+        "collection": "order_product",
+        "via": "product"
+      }
+    }
+  },
+  {
+    "name": "product_category",
+    "fields": {
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "product": {
+        "collection": "product",
+        "via": "product_category"
+      }
+    }
+  },
+  {
+    "name": "shipping_method",
+    "fields": {
+      "name": {
+        "type": "string"
+      },
+      "shipping_charges": {
+        "type": "float"
+      },
+      "customer": {
+        "collection": "customer",
+        "via": "payment_method"
+      },
+      "customer_order": {
+        "collection": "customer_order",
+        "via": "shipping_method"
+      }
+    }
   }
 ]

@@ -18,6 +18,13 @@
         $localStorage.backand[appName].customSchema = schema;
     };
 
+    self.removeCustomSchema = function(appName) {
+      if (!$localStorage.backand[appName])
+        $localStorage.backand[appName] = {};
+        $localStorage.backand[appName].customSchema = null;
+    };
+
+
     this.updateTemplate = function(name, templateId) {
       return $http({
         method: 'PUT',

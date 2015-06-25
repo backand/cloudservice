@@ -3,6 +3,8 @@
 </div>
 
 <div class="signup-email">
+<div ng-show="sign.error" class="alert alert-danger auth-alert">
+  <img src="assets/images/auth_pages/warning.png">{{sign.error}}</div>
   <form class="form-horizontal" name="form" ng-submit="sign.signIn()" novalidate>
     <fieldset>
       <div class="form-group">
@@ -46,7 +48,7 @@
       </div>
       <br/>
 
-      <div class="text-right additional-info">
+      <div class="text-right text-danger">
         <a ng-click="sign.open()" href="">Forgot your password?</a>
       </div>
       <div class="divider divider-xl"></div>
@@ -59,7 +61,6 @@
         </button>
       </div>
     </fieldset>
-    <div ng-show="sign.error" class="alert alert-danger">{{sign.error}}</div>
   </form>
   <div class="divider"></div>
   <section class="additional-info">

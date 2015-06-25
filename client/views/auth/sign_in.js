@@ -11,6 +11,7 @@
 
     this.signIn = function () {
       self.loading = true;
+      self.error = undefined;
       AuthService.signIn({username: self.userName, password: self.userPassword})
         .success(function (data) {
           SessionService.setCredentials(data, self.userName);
@@ -19,10 +20,6 @@
         .error(function (data) {
           self.loading = false;
           self.error = data.error_description;
-          $timeout(function () {
-            self.error = undefined;
-          }, 3000);
-
         });
     };
 

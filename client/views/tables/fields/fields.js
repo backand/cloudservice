@@ -15,6 +15,16 @@
 
     var self = this;
 
+    self.newTypes = {
+      ShortText: 'string',
+      LongText: 'text',
+      Numeric: 'float',
+      DateTime: 'datetime',
+      Boolean: 'boolean',
+      SingleSelect: 'object',
+      MultiSelect: 'collection'
+    };
+
     /**
      * init an empty items array, send an ajax
      * call to populate the items array and

@@ -66,10 +66,12 @@ angular.module('backand.database')
 
       if (self.isCustomMode()) {
         try {
-          if(!angular.isDefined(self.template.schema))
+          if (!angular.isDefined(self.template.schema)) {
             schema = null;
-          else
+          }
+          else {
             schema = JSON.parse(self.template.schema);
+          }
           useSchema = true;
         }
         catch (err) {
@@ -77,7 +79,10 @@ angular.module('backand.database')
           self.loading = false;
           return;
         }
+      } else {
+        DatabaseService.removeCustomSchema(self.appName);
       }
+
 
         DatabaseService.createDB($state.params.appName, product, self.template.appName, schema)
         .success(function (data) {
@@ -100,6 +105,7 @@ angular.module('backand.database')
     self.sumbitForm = function() {
       self.loading = true;
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
+      DatabaseService.removeCustomSchema(self.appName);
 
       if(self.dbConnected) //connected
       {
@@ -197,6 +203,7 @@ angular.module('backand.database')
 
     self.customize();
 
+    // save to local storage
     function saveCustomSchema (schema) {
        DatabaseService.saveCustomSchema(self.appName, schema);
     }
