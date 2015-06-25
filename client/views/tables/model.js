@@ -20,10 +20,10 @@
       },
       theme:'ace/theme/monokai',
       mode: 'ace/mode/json',
-      left: {
+      right: {
         editable: false
       },
-      right: {}
+      left: {}
     };
 
     function init() {
@@ -54,9 +54,9 @@
 
     function updateSchema (data) {
       self.schema = angular.toJson(data.data, true);
-      self.aceDiffOptions.left.content = self.schema;
+      self.aceDiffOptions.right.content = self.schema;
       // get schema from local storage if exists
-      self.aceDiffOptions.right.content = DatabaseService.getCustomSchema(self.appName) || self.schema;
+      self.aceDiffOptions.left.content = DatabaseService.getCustomSchema(self.appName) || self.schema;
       $rootScope.$broadcast('ace-update');
     }
 

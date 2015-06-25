@@ -7,7 +7,6 @@
 </div>
 
 <section class="page-form-ele page ng-scope">
-
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong test-hook="database-edit.title"> {{Model.appName}} - model configuration</strong>
@@ -15,27 +14,23 @@
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
-      <div class="row">
-        <div class="col-xs-10">
+      <div class="" style="margin-left: 20px; height: 650px;">
+        <div class="row">
           <div class="db-panel-body-explanation">
             <h3>Edit the application model</h3>
             <h4>Backand's model provides an abstraction layer on top of your database, giving you easy access to update
               the database schema.</h4>
           </div>
         </div>
-      </div>
-      <div class="db-tab-content">
         <div class="row">
           <div class="col-md-8 col-lg-9">
-            <span>Current model (read-only)</span>
-            <span class="pull-right">Edit model</span>
+            <span style="font-size: large;">Edit model</span>
+            <span style="font-size: large;" class="pull-right">Current model (read-only)</span>
           </div>
         </div>
         <div class="row">
           <div class="col-md-8 col-lg-9">
-
-            <ba-ace-diff ace-diff-options="Model.aceDiffOptions" right-editor="Model.schemaEditor"></ba-ace-diff>
-
+            <ba-ace-diff ace-diff-options="Model.aceDiffOptions" left-editor="Model.schemaEditor"></ba-ace-diff>
           </div>
 
           <div class="col-md-4 col-lg-3">
@@ -65,7 +60,6 @@
           </div>
         </div>
         <p><strong>** Id is added to all objects automatically, please do not add it yourself</strong></p>
-
       </div>
     </div>
   </section>
