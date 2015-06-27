@@ -2,8 +2,8 @@
   <section class="panel panel-default">
     <div class="panel-heading database-heading">
       <strong style="text-transform:none"> Object - {{singleTable.tableName}} </strong>
-      <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="singleTable.sync()" ladda="singleTable.syncing" data-style="expand-right" style="margin-left: 50px;">Sync with Database</button>
-      <span ng-click="singleTable.showMessages = !singleTable.showMessages" class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="singleTable.alertClass" style="margin-left: 10px;">
+      <button ng-if="!singleTable.isLocal" id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="singleTable.sync()" ladda="singleTable.syncing" data-style="expand-right" style="margin-left: 50px;">Sync with Database</button>
+      <span ng-if="!singleTable.isLocal" ng-click="singleTable.showMessages = !singleTable.showMessages" class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="singleTable.alertClass" style="margin-left: 10px;">
           <i class="ti-bell" ></i>
         <div ng-show="singleTable.showMessages" class="dropdown-menu with-arrow hovering-menu panel panel-default">
           <div class="panel-heading">

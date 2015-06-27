@@ -1,9 +1,20 @@
 <div class="db-footer">
   <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
           ladda="Model.loading" data-style="expand-right"
-          ng-click="Model.update()">
-    Update
-  </button>
+          ng-click="Model.update()">Update</button>
+  <button class="btn btn-info btn-lg btn-w-lg pull-right"
+          ng-click="Model.showHelp()">Help</button>
+</div>
+
+<div ng-cloak>
+  <angled-window ng-show="Model.showHelpDialog"
+                 title="Help"
+                 id="help"
+                 grouping="w"
+                 close-function="Model.showHelpDialog=false"
+                 style="z-index: 10; left: calc(50% - 200px);">
+    <div ng-include="'views/docs/orm_help.html'"></div>
+  </angled-window>
 </div>
 
 <section class="page-form-ele page ng-scope">
@@ -19,7 +30,7 @@
           <div class="db-panel-body-explanation">
             <h3>Edit the application model</h3>
             <h4>Backand's model provides an abstraction layer on top of your database, giving you easy access to update
-              the database schema.</h4>
+              the database schema - <a href="" ng-click="Model.showHelp()">Need help ?</a></h4>
           </div>
         </div>
         <div class="row">

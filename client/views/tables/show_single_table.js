@@ -12,11 +12,12 @@
       'NotificationService',
       '$rootScope',
       'tableName',
+      'AppsService',
       SingleTableShow
     ]);
 
   function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService,
-                           NotificationService, $rootScope, tableName) {
+                           NotificationService, $rootScope, tableName, AppsService) {
 
     var self = this;
 
@@ -63,6 +64,7 @@
       RulesService.tableId = self.tableId;
       $scope.$on('appname:updated', updateAppName);
       $scope.$on('appname:saved', loadColumns);
+      self.isLocal = AppsService.currentApp.connectionSource === 'local';
 
       loadColumns();
 

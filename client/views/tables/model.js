@@ -6,12 +6,16 @@
   function ModelController($rootScope, $scope, AppsService, ModelService, usSpinnerService, NotificationService, DatabaseService) {
 
     var self = this;
-    var currentApp = AppsService.currentApp;
 
-    self.appName = currentApp.Name;
+    function init() {
+      var currentApp = AppsService.currentApp;
+      self.appName = currentApp.Name;
+      self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean'];
+      self.schemaEditor = null;
+      self.showHelpDialog = false;
 
-    self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean', 'binary'];
-    self.schemaEditor = null;
+      getSchema();
+    }
 
     self.aceDiffOptions = {
       onLoad : function(editor) {
@@ -28,11 +32,9 @@
       }
     };
 
-    function init() {
-      getSchema();
+    self.showHelp = function(){
+      self.showHelpDialog = true;
     }
-
-    init();
 
     function getSchema () {
       usSpinnerService.spin('loading');
@@ -108,6 +110,8 @@
       self.loading = false;
       usSpinnerService.stop('loading');
     }
+
+    init();
   }
 
 }());

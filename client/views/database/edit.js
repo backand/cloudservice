@@ -215,7 +215,7 @@ angular.module('backand.database')
 
     // Field Types
 
-    self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean', 'binary'];
+    self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean'];
 
     self.insertTypeAtChar = function (param) {
       var tokenAtCursor = getTokenAtCursor();

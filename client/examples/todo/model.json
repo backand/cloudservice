@@ -1,15 +1,14 @@
 [
   {
-    "name": "todo",
-    "fields": [
-      {
-        "name": "description",
-        "type": "ShortText"
+    "name": "items",
+    "fields": {
+      "description": {
+        "type": "string"
       },
-      {
-        "name": "completed",
-        "type": "Boolean"
+      "completed": {
+        "type": "boolean"
       }
-    ]
+    }
   }
 ]
+
