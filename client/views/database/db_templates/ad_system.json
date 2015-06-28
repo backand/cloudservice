@@ -1,127 +1,138 @@
 [
   {
-    "name": "channel_type",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
+    "name": "advertisement",
+    "fields": {
+      "agency": {
+        "object": "agency"
       },
-      {
-        "name": "description",
-        "type": "LongText"
+      "channel": {
+        "object": "channel"
+      },
+      "marketing_campaign": {
+        "object": "marketing_campaign"
       }
-    ]
-  },
-  {
-    "name": "channel",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
-      },
-      {
-        "name": "description",
-        "type": "LongText"
-      },
-      {
-        "name": "channel_type_",
-        "type": "SingleSelect",
-        "relatedTable": "channel_type"
-      }
-    ]
+    }
   },
   {
     "name": "agency",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
+    "fields": {
+      "name": {
+        "type": "string"
       },
-      {
-        "name": "description",
-        "type": "LongText"
+      "description": {
+        "type": "text"
+      },
+      "advertisement": {
+        "collection": "advertisement",
+        "via": "agency"
+      },
+      "invoice": {
+        "collection": "invoice",
+        "via": "agency"
       }
-    ]
+    }
   },
   {
-    "name": "marketing_campaign",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
+    "name": "channel",
+    "fields": {
+      "channel_type": {
+        "object": "channel_type"
       },
-      {
-        "name": "description",
-        "type": "LongText"
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "advertisement": {
+        "collection": "advertisement",
+        "via": "channel"
       }
-    ]
+    }
   },
   {
-    "name": "advertisement",
-    "fields": [
-      {
-        "name": "agency_",
-        "type": "SingleSelect",
-        "relatedTable": "agency"
+    "name": "channel_type",
+    "fields": {
+      "name": {
+        "type": "string"
       },
-      {
-        "name": "marketing_campaign_",
-        "type": "SingleSelect",
-        "relatedTable": "marketing_campaign"
+      "description": {
+        "type": "text"
       },
-      {
-        "name": "channel_",
-        "type": "SingleSelect",
-        "relatedTable": "channel"
+      "channel": {
+        "collection": "channel",
+        "via": "channel_type"
       }
-    ]
+    }
   },
   {
-    "name": "response",
-    "fields": [
-      {
-        "name": "advertisement_",
-        "type": "SingleSelect",
-        "relatedTable": "advertisement"
+    "name": "client",
+    "fields": {
+      "Name": {
+        "type": "string"
       },
-      {
-        "name": "response_tag_",
-        "type": "SingleSelect",
-        "relatedTable": "response_tag"
-      }
-    ]
-  },
-  {
-    "name": "invoice_status",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
+      "Ordinal": {
+        "type": "float"
       },
-      {
-        "name": "description",
-        "type": "LongText"
+      "invoice": {
+        "collection": "invoice",
+        "via": "client"
       }
-    ]
+    }
   },
   {
     "name": "invoice",
-    "fields": [
-      {
-        "name": "agency_",
-        "type": "SingleSelect",
-        "relatedTable": "agency"
+    "fields": {
+      "agency": {
+        "object": "agency"
       },
-      {
-        "name": "client_",
-        "type": "SingleSelect",
-        "relatedTable": "client"
+      "client": {
+        "object": "client"
       },
-      {
-        "name": "invoice_status_",
-        "type": "SingleSelect",
-        "relatedTable": "invoice_status"
+      "invoice_status": {
+        "object": "invoice_status"
       }
-    ]
+    }
+  },
+  {
+    "name": "invoice_status",
+    "fields": {
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "invoice": {
+        "collection": "invoice",
+        "via": "invoice_status"
+      }
+    }
+  },
+  {
+    "name": "items",
+    "fields": {
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      }
+    }
+  },
+  {
+    "name": "marketing_campaign",
+    "fields": {
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "text"
+      },
+      "advertisement": {
+        "collection": "advertisement",
+        "via": "marketing_campaign"
+      }
+    }
   }
 ]

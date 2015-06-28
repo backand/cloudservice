@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ModelController', ['$rootScope', '$scope', 'AppsService', 'ModelService', 'usSpinnerService', 'NotificationService', 'DatabaseService', ModelController]);
+    .controller('ModelController', ['$scope', 'AppsService', 'ModelService', 'usSpinnerService', 'NotificationService', 'DatabaseService', '$modal', ModelController]);
 
-  function ModelController($rootScope, $scope, AppsService, ModelService, usSpinnerService, NotificationService, DatabaseService) {
+  function ModelController($scope, AppsService, ModelService, usSpinnerService, NotificationService, DatabaseService, $modal) {
 
     var self = this;
 
@@ -12,6 +12,7 @@
       self.appName = currentApp.Name;
       self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean'];
       self.schemaEditor = null;
+      self.oldSchemaEditor = null;
       self.showHelpDialog = false;
 
       getSchema();
@@ -34,7 +35,7 @@
 
     self.showHelp = function(){
       self.showHelpDialog = true;
-    }
+    };
 
     function getSchema () {
       usSpinnerService.spin('loading');
@@ -61,7 +62,7 @@
       self.aceDiffOptions.right.content = self.schema;
       // get schema from local storage if exists
       self.aceDiffOptions.left.content = DatabaseService.getCustomSchema(self.appName) || self.schema;
-      $rootScope.$broadcast('ace-update');
+      $scope.$root.$broadcast('ace-update');
     }
 
     self.insertTypeAtChar = function (param) {
@@ -80,27 +81,55 @@
       if (token !== null) return token.value;
     }
 
-    self.update = function() {
+    self.saveSchema = function() {
       self.loading = true;
       try {
+        var oldSchema = JSON.parse(self.oldSchemaEditor.getValue());
         var schema = JSON.parse(self.schemaEditor.getValue());
       } catch (err) {
         NotificationService.add('error', 'JSON is not properly formatted');
         self.loading = false;
         return;
       }
-      ModelService.update(self.appName, schema)
-        .then(function(data){
-          updateSchema(data);
-          $rootScope.$broadcast('fetchTables');
+      ModelService.validate(self.appName, schema, oldSchema)
+        .then(function (response) {
           self.loading = false;
-        },
-        modelErrorHandler)
+          openValidationModal(response)
+        }, modelErrorHandler)
+        .then(function (result) {
+          if (result) {
+            self.loading = true;
+            ModelService.update(self.appName, schema)
+              .then(function (data) {
+                updateSchema(data);
+                $scope.$root.$broadcast('fetchTables');
+                self.loading = false;
+              },
+              modelErrorHandler)
+          }
+        }
+      )
     };
+
+    function openValidationModal (response) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/model/confirm_update.html',
+        controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          validationResponse: function () {
+            return response.data;
+          }
+        }
+      });
+
+      return modalInstance.result;
+    }
 
     function modelErrorHandler(error, message){
       getSchema();
-      $rootScope.$broadcast('fetchTables');
+      $scope.$root.$broadcast('fetchTables');
       self.loading = false;
       usSpinnerService.stop('loading');
     }

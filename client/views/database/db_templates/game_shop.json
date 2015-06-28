@@ -1,95 +1,115 @@
 [
   {
-    "name": "user",
-    "fields": [
-      {
-        "name": "username",
-        "type": "ShortText"
+    "name": "order_item",
+    "fields": {
+      "product_Id": {
+        "object": "product"
       },
-      {
-        "name": "password",
-        "type": "ShortText"
-      },
-      {
-        "name": "name",
-        "type": "ShortText"
-      },
-      {
-        "name": "email",
-        "type": "ShortText"
-      },
-      {
-        "name": "is_approved",
-        "type": "Boolean"
-      },
-      {
-        "name": "details",
-        "type": "LongText"
+      "order_Id": {
+        "object": "user_order"
       }
-    ]
+    }
+  },
+  {
+    "name": "order_status",
+    "fields": {
+      "Name": {
+        "type": "string"
+      },
+      "Ordinal": {
+        "type": "float"
+      },
+      "user_order": {
+        "collection": "user_order",
+        "via": "status_Id"
+      }
+    }
   },
   {
     "name": "product",
-    "fields": [
-      {
-        "name": "name",
-        "type": "ShortText"
+    "fields": {
+      "type_Id": {
+        "object": "product_type"
       },
-      {
-        "name": "type",
-        "type": "SingleSelect",
-        "relatedTable": "product_type"
+      "name": {
+        "type": "string"
       },
-      {
-        "name": "memory_spec",
-        "type": "Numeric"
+      "memory_spec": {
+        "type": "float"
       },
-      {
-        "name": "num_of_playes",
-        "type": "Numeric"
+      "num_of_playes": {
+        "type": "float"
       },
-      {
-        "name": "description",
-        "type": "LongText"
+      "description": {
+        "type": "text"
       },
-      {
-        "name": "price",
-        "type": "Numeric"
+      "price": {
+        "type": "float"
+      },
+      "order_item": {
+        "collection": "order_item",
+        "via": "product_Id"
       }
-    ]
+    }
+  },
+  {
+    "name": "product_type",
+    "fields": {
+      "Name": {
+        "type": "string"
+      },
+      "Ordinal": {
+        "type": "float"
+      },
+      "product": {
+        "collection": "product",
+        "via": "type_Id"
+      }
+    }
+  },
+  {
+    "name": "user",
+    "fields": {
+      "username": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string"
+      },
+      "is_approved": {
+        "type": "boolean"
+      },
+      "details": {
+        "type": "text"
+      },
+      "user_order": {
+        "collection": "user_order",
+        "via": "user_Id"
+      }
+    }
   },
   {
     "name": "user_order",
-    "fields": [
-      {
-        "name": "user_id",
-        "type": "SingleSelect",
-        "relatedTable": "user"
+    "fields": {
+      "user_Id": {
+        "object": "user"
       },
-      {
-        "name": "status",
-        "type": "SingleSelect",
-        "relatedTable": "order_status"
+      "status_Id": {
+        "object": "order_status"
       },
-      {
-        "name": "order_date",
-        "type": "DateTime"
+      "order_date": {
+        "type": "datetime"
+      },
+      "order_item": {
+        "collection": "order_item",
+        "via": "order_Id"
       }
-    ]
-  },
-  {
-    "name": "order_item",
-    "fields": [
-      {
-        "name": "order_id",
-        "type": "SingleSelect",
-        "relatedTable": "user_order"
-      },
-      {
-        "name": "product_id",
-        "type": "SingleSelect",
-        "relatedTable": "product"
-      }
-    ]
+    }
   }
 ]

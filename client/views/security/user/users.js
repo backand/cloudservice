@@ -89,8 +89,7 @@
     function changePassword (event, row) {
 
       if(!row.entity.readyToSignin){
-        ConfirmationPopup.setTitle('Change Password');
-        ConfirmationPopup.confirm('Change password is only for users that ready for sign in','OK', '', true, false);
+        ConfirmationPopup.confirm('Change password is only for users that ready for sign in','OK', '', true, false, 'Change Password');
       }
       else {
         var modalInstance = $modal.open({

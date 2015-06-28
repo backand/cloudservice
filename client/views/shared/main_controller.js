@@ -20,9 +20,8 @@
     };
 
     $scope.$on('AppDbReady', function (event, appName) {
-      ConfirmationPopup.setTitle('Your app ' + appName + ' is ready');
       ConfirmationPopup.confirm('You can start by reviewing the REST API of your model in the Playground page. ' +
-      'You can find the page under "Docs & API" in the navigation bar.', 'Ok', '', true, false);
+      'You can find the page under "Docs & API" in the navigation bar.', 'Ok', '', true, false, 'Your app ' + appName + ' is ready');
     });
   }
 

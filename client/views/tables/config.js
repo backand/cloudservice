@@ -14,7 +14,7 @@
       .state('tables.model', {
         url: '/model',
         controller: 'ModelController as Model',
-        templateUrl: 'views/tables/model.html'
+        templateUrl: 'views/tables/model/model.html'
       })
       .state('tables.columns', {
         url: '/:tableId',

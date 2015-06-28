@@ -22,6 +22,15 @@
       });
     };
 
+    self.validate = function (appName, schema, oldSchema) {
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/model/validate',
+        headers: { AppName: appName },
+        data: {newSchema: schema, oldSchema: oldSchema, severity: 0}
+      });
+    };
+
   }
 
   angular.module('common.services')

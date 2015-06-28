@@ -1,7 +1,7 @@
 <div class="db-footer">
-  <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
+  <button type="submit" class="btn btn-success btn-lg btn-w-lg"
           ladda="Model.loading" data-style="expand-right"
-          ng-click="Model.update()">Update</button>
+          ng-click="Model.saveSchema()">Update</button>
   <button class="btn btn-info btn-lg btn-w-lg pull-right"
           ng-click="Model.showHelp()">Help</button>
 </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="row">
           <div class="col-md-8 col-lg-9">
-            <ba-ace-diff ace-diff-options="Model.aceDiffOptions" left-editor="Model.schemaEditor"></ba-ace-diff>
+            <ba-ace-diff ace-diff-options="Model.aceDiffOptions" left-editor="Model.schemaEditor" right-editor="Model.oldSchemaEditor"></ba-ace-diff>
           </div>
 
           <div class="col-md-4 col-lg-3">
