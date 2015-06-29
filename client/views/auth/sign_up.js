@@ -1,9 +1,9 @@
 (function () {
 
   angular.module('backand')
-    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', '$analytics', '$intercom', 'CONSTS', SignUpController]);
+    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', SignUpController]);
 
-  function SignUpController(AuthService, $state, SessionService, $timeout, $analytics, $intercom, CONSTS){
+  function SignUpController(AuthService, $state, SessionService, $timeout){
 
     var self = this;
 
@@ -26,19 +26,11 @@
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
         .success(function (data) {
-          $analytics.eventTrack('SignedUp', {"name": self.fullName});
-          if($intercom){
-            $intercom.boot({
-              app_id: CONSTS.IntercomAppId,
-              name: self.fullName,
-              email: self.email,
-              signed_up_at: new Date().getTime()
-            });
-            $intercom.trackEvent('SignedUp',{"name": self.fullName});
-          }
-          AuthService.signIn(self.email, self.password)
+          AuthService.trackSignupEvent(self.fullName, self.email);
+          AuthService.signIn({username: self.email, password: self.password})
             .success(function (data) {
               SessionService.setCredentials(data, self.email);
+              $state.go('apps.index');
             })
             .error(function (data) {
               self.loading = false;

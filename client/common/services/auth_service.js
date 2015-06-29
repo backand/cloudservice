@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function AuthService($http, CONSTS, SessionService, $window) {
+  function AuthService($http, CONSTS, SessionService, $window, $analytics, $intercom) {
 
     var self = this;
 
@@ -51,9 +51,9 @@
     };
 
     self.socials = [
-      {name: 'github', label: 'Github', url: 'www.github.com', css: 'github'},
-      {name: 'google', label: 'Google', url: 'www.google.com', css: 'google-plus'},
-      {name: 'facebook', label: 'Facebook', url: 'www.facebook.com', css: 'facebook'}
+      {name: 'github', label: 'Github', url: 'www.github.com', css: 'github', id:1},
+      {name: 'google', label: 'Google', url: 'www.google.com', css: 'google-plus', id:2},
+      {name: 'facebook', label: 'Facebook', url: 'www.facebook.com', css: 'facebook', id:3}
     ];
 
     function getSocialUrl(social, isSignup) {
@@ -69,11 +69,19 @@
         social = _.find(self.socials, {name: social});
       }
 
+      //monitor when users click on social
+      var st = '?st=0';
+      if(isSignup)
+      {
+        //send indication if it coming from sign-up
+        st = "?st=" + social.id;
+      }
+
       var returnAddress =  encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
       $window.location.href = CONSTS.appUrl + '/1/' +
         getSocialUrl(social, isSignup) +
         '&appname=' + CONSTS.mainAppName +
-        '&returnAddress=' + returnAddress;
+        '&returnAddress=' + returnAddress + st;
     };
 
     self.resetPassword = function (password, id) {
@@ -103,9 +111,29 @@
       return SessionService.getUserId();
     };
 
+    self.trackSignupEvent = function(fullName, email, sId){
+
+      var social = _.find(self.socials, {id: Number(sId)});
+      var socialName = social ? social.name : 'self';
+
+      $analytics.eventTrack('SignedUp', {name: fullName});
+      $analytics.eventTrack('SocialSignedUp', {provider: socialName});
+
+      if($intercom){
+        $intercom.boot({
+          app_id: CONSTS.IntercomAppId,
+          name: fullName,
+          email: email,
+          signed_up_at: new Date().getTime()
+        });
+        $intercom.trackEvent('SignedUp',{name: fullName});
+        $intercom.trackEvent('SocialSignedUp',{provider: socialName});
+      }
+    }
+
   }
 
   angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', 'SessionService', '$window', AuthService])
+    .service('AuthService', ['$http', 'CONSTS', 'SessionService', '$window','$analytics', '$intercom', AuthService])
 
 })();

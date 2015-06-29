@@ -28,7 +28,7 @@
           title: 'Errors in Model',
           message: 'Please fix the following errors in the model:',
           cssClass: 'danger',
-          cancelButton: 'return'
+          cancelButton: 'Return'
         };
         self.notifications = self.validationResponse.warnings;
         break;
@@ -38,16 +38,16 @@
           title: 'Model is Valid',
           cssClass: 'success',
           okButton: 'OK',
-          cancelButton: 'cancel'
+          cancelButton: 'Cancel'
         };
         if (self.notifications) {
           self.text.message = 'The Model is valid.<br>' +
             'The following parts of the model, including the data they contain, will be permanently deleted.<br>' +
-            'Please click Ok to proceed';
+            'Click Ok to proceed';
           self.text.cssClass = 'danger';
           self.text.title = 'Warning';
         } else {
-          self.text.message = 'Please click Ok to proceed';
+          self.text.message = 'Click Ok to proceed';
         }
         break;
 
@@ -56,19 +56,19 @@
               title: 'Warning',
               cssClass: 'danger',
               okButton: 'OK',
-              cancelButton: 'cancel'
+              cancelButton: 'Cancel'
             };
         if (self.notifications) {
           self.text.message = 'The Model is valid.<br>' +
             'The following parts of the model, including the data they contain, will be permanently deleted.<br>' +
             'Changes made to the model include changes to fields types.<br>' +
             'Those changes may result in a loss or corruption of data.<br>' +
-            'Please click Ok to proceed';
+            'Click Ok to proceed';
         } else {
           self.text.message = 'The Model is valid.<br>' +
             'Changes made to the model include changes to fields types.<br>' +
             'Those changes may result in a loss or corruption of data.<br>' +
-            'Please click Ok to proceed';
+            'Click Ok to proceed';
         }
         break;
     }

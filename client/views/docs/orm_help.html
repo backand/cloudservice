@@ -2,6 +2,47 @@
   <div class="panel panel-default">
     <div class="panel-heading"><strong>Model Definition with JSON</strong></div>
     <div class="panel-body">
+      <h4><u>Example</u></h4>
+<pre><code>[
+  {
+    "name": "tasks",
+    "fields": {
+      "description": {
+        "type": "string"
+      },
+      "completed": {
+        "type": "boolean"
+      },
+      "members": {
+        "collection": "members",
+        "via": "task"
+      }
+    }
+  },
+  {
+    "name": "members",
+    "fields": {
+      "name": {
+        "type": "string"
+      },
+      "task": {
+        "object": "tasks"
+      }
+    }
+  }
+]
+</code></pre>
+      <h4><u>Clarifications</u></h4>
+      <h5>
+        - In addition to the fields supplied by the user, Backand defines one more field as primary key:<br/>
+        <ul>
+          <li>"id" - integer - primary key</li>
+        </ul>
+      </h5>
+      <h5>
+        - Rename to fields can be done only from th Fields tab. Renaming the field or the object in the model will delete the data associated with that field or object.
+      </h5>
+      <h4><u>Definitions</u></h4>
         <h5>
         The model represent a database schema that is defined as a JSON array of one or more objects (Table) definitions:
         </h5>
@@ -9,19 +50,15 @@
         <h5>
         An object definition is a JSON object with a name and a fields definition:
         </h5>
-<pre><code>&lt;object&gt; = { 'name':  &lt;string&gt;, 'fields' : &lt;fields&gt; }</code></pre>
+<pre><code>&lt;object&gt; = { "name":  &lt;string&gt;, "fields" : &lt;fields&gt; }</code></pre>
         <h5>
             The fields definition is a JSON object, with an attribute for each field:
         </h5>
-<pre><code>&lt;fields&gt; =  { 'field1' : &lt;field&gt;, 'field2': &lt;field&gt;, ... }</code></pre>
+<pre><code>&lt;fields&gt; =  { "field1" : &lt;field&gt;, "field2": &lt;field&gt;, ... }</code></pre>
         <h5>
-              In addition to the fields supplied by the user, Backand defines one more standard attribute:<br/>
-          <ul>
-            <li>'id' - integer - primary key</li>
-          </ul>
               A field is defined by its type and a set of optional properties. The field definition is a JSON object:
         </h5>
-<pre><code>&lt;field&gt; = { 'type': &lt;type&gt;, &lt;optional properties }</code></pre>
+<pre><code>&lt;field&gt; = { "type": &lt;type&gt;, &lt;optional properties&gt;}</code></pre>
         <h5>
             The type of a field is one of the following:<br/>
           <ul>
@@ -35,29 +72,29 @@
         <!--<h5>
             We can optionally defined a field as required (`NOT NULL`) or not:
         </h5>
-<pre><code>'required': &lt;boolean value&gt;</pre></code>
+<pre><code>"required": &lt;boolean value&gt;</pre></code>
         <h5>
-            Where a boolean value is `true` or `false`.
+            Where a boolean value is true or false.
         </h5>-->
         <!--<h5>
             And set its default value:
         </h5>
-<pre><code>'defaultValue': &lt;value&gt;</pre></code>
+<pre><code>"defaultValue": &lt;value&gt;</pre></code>
         <h5>
           Where `&lt;value&gt;` is of the type of the field.
         </h5>-->
 
-        <h3>One-to-Many Relationship</h3>
+        <h4><u>One-to-Many Relationship</u></h4>
         <h5>
           One-to-many relationship between tables are specified by means of relationship fields. A relationship field will generate appropriate foreign relationship fields in the corresponding relations.<br/><br/>
           Say we have a one to many relationship between tables R and S. Here for each row in R there are many corresponding rows in S.<br/><br/>
           In the many side of the relationship (object S), we specify that each row relates to one row in the other object R.
         </h5>
-<pre><code>'myR' : { 'object' : R }</pre></code>
+<pre><code>"myR" : { "object" : "R" }</pre></code>
         <h5>
           In the one side of the relationship (object R), we specify that each row relates to several rows in S:
         </h5>
-<pre><code>'Rs' : { 'collection': 'S', 'via' : 'myR' }</pre></code>
+<pre><code>"Rs" : { "collection": "S", "via" : "myR" }</pre></code>
         <h5>
           In the database, we will have a foreign relationship constraint from S to R, represented by a foreign key field `myR` in the object S. This field will hold the key of the corresponding row in R for each row in S.<br/>
           As an example, consider a database describing pet ownership. It has two tables, `user` and `pet`.<br/>
@@ -66,11 +103,11 @@
           <br/>
           The `user` object will have a `pets` a relationship field:
         </h5>
-<pre><code>'pets': { 'collection': 'pet', 'via': 'owner' }</pre></code>
+<pre><code>"pets": { "collection": "pet", "via": "owner" }</pre></code>
         <h5>
           The `pet` table will have an owner `owner` a relationship field:
         </h5>
-<pre><code>'owner': { 'object': 'person' }</pre></code>
+<pre><code>"owner": { "object": "person" }</pre></code>
         <br/>
         <br/>
 

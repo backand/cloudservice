@@ -12,7 +12,7 @@ angular.module('backand.routes', []).
 
     $stateProvider
       .state('auth', {
-        url: '?data&error',
+        url: '?data&error&st',
         templateUrl: 'views/auth/auth.html',
         abstract: true,
         controller : 'AuthController as Auth'
@@ -151,6 +151,9 @@ function run($rootScope, $state, SessionService, AuthService, CONSTS) {
           accessToken: userData.access_token,
           appName: userData.appName
         };
+        if(toParams.st != '0') { //this is sign up
+          AuthService.trackSignupEvent(tokenData.username, tokenData.username, toParams.st);
+        }
 
         AuthService.signIn(tokenData)
           .success(function (data) {
