@@ -9,7 +9,7 @@
       <br>
 
       <ul>
-        <li ng-repeat="notification in ConfirmModelUpdate.notifications">{{ notification }}</li>
+        <li ng-repeat="notification in ConfirmModelUpdate.notifications">{{ notification | newTerminology }}</li>
       </ul>
     </div>
 
@@ -27,10 +27,11 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-success" ng-if="ConfirmModelUpdate.text.okButton"
-              ng-click="ConfirmModelUpdate.closeValidationModal(true)">{{ ConfirmModelUpdate.text.okButton }}
+              ng-click="ConfirmModelUpdate.closeValidationModal(true)">
+        {{ ConfirmModelUpdate.text.okButton }}
       </button>
-      <button class="btn btn-primary" ng-click="ConfirmModelUpdate.closeValidationModal(false)">{{
-        ConfirmModelUpdate.text.cancelButton }}
+      <button class="btn btn-primary" ng-click="ConfirmModelUpdate.closeValidationModal(false)">
+        {{ ConfirmModelUpdate.text.cancelButton }}
       </button>
     </div>
   </div>

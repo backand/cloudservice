@@ -1,8 +1,10 @@
+$ace-height: 550px;
+
 .model-edit-ace-diff #flex-container.ace-diff-container {
-  height: 500px;
+  height: $ace-height;
   div.ace_editor {
     font-size: 15px;
-    height: 500px;
+    height: $ace-height;
   }
 
   #acediff-right-editor {
@@ -24,4 +26,18 @@
   .modal-footer {
     padding-bottom: 0;
   }
+}
+
+.model-diff-container {
+  height: $ace-height;
+  margin-left: 15px;
+  margin-right: -15px;
+}
+
+.model-types-container {
+  padding-left: 30px;
+}
+
+.panel-body {
+  margin-left: 20px;
 }

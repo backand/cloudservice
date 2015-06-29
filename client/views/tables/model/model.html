@@ -23,10 +23,9 @@
     <div class="panel-heading">
       <strong test-hook="database-edit.title"> {{Model.appName}} - model configuration</strong>
 
-      <div us-spinner spinner-key="loading" spinner-start-active></div>
+      <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     </div>
     <div class="panel-body">
-      <div class="" style="margin-left: 20px; height: 650px;">
         <div class="row">
           <div class="db-panel-body-explanation">
             <h3>Edit the application model</h3>
@@ -34,24 +33,30 @@
               the database schema - <a href="" ng-click="Model.showHelp()">Need help?</a></h4>
           </div>
         </div>
+
         <div class="row">
           <div class="col-md-8 col-lg-9">
             <span style="font-size: large;">Edit model</span>
             <a href="" ng-click="Model.toggleShowDiff()">{{Model.showDiffs ? 'hide' : 'show'}} diff</a>
+
             <span style="font-size: large;" class="pull-right">Current model (read-only)</span>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-8 col-lg-9">
-            <ba-ace-diff ace-diff-options="Model.aceDiffOptions"
-                         differ="Model.differ"
-                         left-editor="Model.schemaEditor"
-                         right-editor="Model.oldSchemaEditor"
-                         class="model-edit-ace-diff">
-            </ba-ace-diff>
+          <div class="col-md-8 col-lg-9 ">
+            <div class="model-diff-container">
+              <ba-ace-diff ace-diff-options="Model.aceDiffOptions"
+                           differ="Model.differ"
+                           left-editor="Model.schemaEditor"
+                           right-editor="Model.oldSchemaEditor"
+                           class="model-edit-ace-diff">
+              </ba-ace-diff>
+            </div>
+            <p><strong>** Id is added to all objects automatically, please do not add it yourself</strong></p>
+
           </div>
 
-          <div class="col-md-4 col-lg-3">
+          <div class="col-md-4 col-lg-3 model-types-container">
             <span class="db-types-title">Field Types</span>
             <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span>
             <br/>
@@ -76,8 +81,6 @@
             </div>
 
           </div>
-        </div>
-        <p><strong>** Id is added to all objects automatically, please do not add it yourself</strong></p>
       </div>
     </div>
   </section>
