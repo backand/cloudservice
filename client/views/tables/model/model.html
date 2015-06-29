@@ -1,7 +1,7 @@
 <div class="db-footer">
   <button type="submit" class="btn btn-success btn-lg btn-w-lg"
           ladda="Model.loading" data-style="expand-right"
-          ng-click="Model.saveSchema()">Update</button>
+          ng-click="Model.saveSchema()">Validate & Update</button>
   <button class="btn btn-info btn-lg btn-w-lg pull-right"
           ng-click="Model.showHelp()">Help</button>
 </div>
@@ -12,7 +12,8 @@
                  id="help"
                  grouping="w"
                  close-function="Model.showHelpDialog=false"
-                 style="z-index: 10; left: calc(50% - 200px);">
+                 rolled-up="true"
+                 css-class="model-help">
     <div ng-include="'views/docs/orm_help.html'"></div>
   </angled-window>
 </div>
@@ -36,12 +37,18 @@
         <div class="row">
           <div class="col-md-8 col-lg-9">
             <span style="font-size: large;">Edit model</span>
+            <a href="" ng-click="Model.toggleShowDiff()">{{Model.showDiffs ? 'hide' : 'show'}} diff</a>
             <span style="font-size: large;" class="pull-right">Current model (read-only)</span>
           </div>
         </div>
         <div class="row">
           <div class="col-md-8 col-lg-9">
-            <ba-ace-diff ace-diff-options="Model.aceDiffOptions" left-editor="Model.schemaEditor" right-editor="Model.oldSchemaEditor" class="model-edit-ace-diff"></ba-ace-diff>
+            <ba-ace-diff ace-diff-options="Model.aceDiffOptions"
+                         differ="Model.differ"
+                         left-editor="Model.schemaEditor"
+                         right-editor="Model.oldSchemaEditor"
+                         class="model-edit-ace-diff">
+            </ba-ace-diff>
           </div>
 
           <div class="col-md-4 col-lg-3">

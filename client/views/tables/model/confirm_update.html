@@ -1,25 +1,37 @@
-<div class="modal-header">
-  <h3>{{ ConfirmModelUpdate.text.title }}</h3>
-</div>
-<div class="modal-body">
-  <span>
-      <label><span>{{ ConfirmModelUpdate.text.message }}</span></label>
-  </span>
-  <br>
-
-  <ul>
-    <li ng-repeat="notification in ConfirmModelUpdate.notifications">{{ notification }}</li>
-  </ul>
-
-  <a href="" ng-if="ConfirmModelUpdate.validationResponse.alter" ng-click="ConfirmModelUpdate.detailsOpen = !ConfirmModelUpdate.detailsOpen">{{ ConfirmModelUpdate.detailsOpen ? 'less' : 'more'}} details</a>
-  <div ng-show="ConfirmModelUpdate.detailsOpen">
-    <label>The following operations will be performed:</label>
-    <ul>
-      <li ng-repeat="alter in ConfirmModelUpdate.validationResponse.alter">{{alter}}</li>
-    </ul>
+<div class="model-validation panel panel-primary">
+  <div class="panel-heading">
+    <h4 class="panel-title">Model Validation</h4>
   </div>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-primary" ng-if="ConfirmModelUpdate.text.okButton" ng-click="ConfirmModelUpdate.closeValidationModal(true)">{{ ConfirmModelUpdate.text.okButton }}</button>
-  <button class="btn btn-default" ng-click="ConfirmModelUpdate.closeValidationModal(false)">{{ ConfirmModelUpdate.text.cancelButton }}</button>
+  <div class="panel-body">
+    <div class="callout" ng-class="'callout-' + ConfirmModelUpdate.text.cssClass">
+      <h4>{{ ConfirmModelUpdate.text.title }}</h4>
+      <label ng-bind-html="ConfirmModelUpdate.text.message"></label>
+      <br>
+
+      <ul>
+        <li ng-repeat="notification in ConfirmModelUpdate.notifications">{{ notification }}</li>
+      </ul>
+    </div>
+
+    <a href=""
+       ng-if="ConfirmModelUpdate.details"
+       ng-click="ConfirmModelUpdate.detailsOpen = !ConfirmModelUpdate.detailsOpen">
+      {{ ConfirmModelUpdate.detailsOpen ? 'less' : 'more'}} details
+    </a>
+
+    <div class="callout callout-info" ng-show="ConfirmModelUpdate.detailsOpen">
+      <label>The following operations will be performed:</label>
+      <ul>
+        <li ng-repeat="alter in ConfirmModelUpdate.validationResponse.alter">{{alter}}</li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" ng-if="ConfirmModelUpdate.text.okButton"
+              ng-click="ConfirmModelUpdate.closeValidationModal(true)">{{ ConfirmModelUpdate.text.okButton }}
+      </button>
+      <button class="btn btn-primary" ng-click="ConfirmModelUpdate.closeValidationModal(false)">{{
+        ConfirmModelUpdate.text.cancelButton }}
+      </button>
+    </div>
+  </div>
 </div>

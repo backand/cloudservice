@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ModelController', ['$scope', 'AppsService', 'ModelService', 'usSpinnerService', 'NotificationService', 'DatabaseService', '$modal', ModelController]);
+    .controller('ModelController', ['$scope', 'AppsService', 'ModelService', 'usSpinnerService', 'NotificationService', 'DatabaseService', '$modal', '$q', ModelController]);
 
-  function ModelController($scope, AppsService, ModelService, usSpinnerService, NotificationService, DatabaseService, $modal) {
+  function ModelController($scope, AppsService, ModelService, usSpinnerService, NotificationService, DatabaseService, $modal, $q) {
 
     var self = this;
 
@@ -14,6 +14,7 @@
       self.schemaEditor = null;
       self.oldSchemaEditor = null;
       self.showHelpDialog = false;
+      self.showDiffs = true;
 
       getSchema();
     }
@@ -31,6 +32,11 @@
       left: {
         copyLinkEnabled: false
       }
+    };
+
+    self.toggleShowDiff = function () {
+      self.showDiffs = !self.showDiffs;
+      self.differ.setOptions({showDiffs: self.showDiffs});
     };
 
     self.showHelp = function(){
@@ -83,6 +89,7 @@
 
     self.saveSchema = function() {
       self.loading = true;
+
       try {
         var oldSchema = JSON.parse(self.oldSchemaEditor.getValue());
         var schema = JSON.parse(self.schemaEditor.getValue());
@@ -91,24 +98,25 @@
         self.loading = false;
         return;
       }
+
       ModelService.validate(self.appName, schema, oldSchema)
         .then(function (response) {
+            self.loading = false;
+            return openValidationModal(response)
+        })
+        .then(function (result) {
+          if (result) {
+            self.loading = true;
+            return ModelService.update(self.appName, schema)
+          }
+          return $q.reject(null);
+        })
+        .then(function (data) {
+          updateSchema(data);
+          $scope.$root.$broadcast('fetchTables');
           self.loading = false;
-          openValidationModal(response)
-            .then(function (result) {
-            if (result) {
-              self.loading = true;
-              ModelService.update(self.appName, schema)
-                .then(function (data) {
-                  updateSchema(data);
-                  $scope.$root.$broadcast('fetchTables');
-                  self.loading = false;
-                },
-                modelErrorHandler)
-            }
-          }, modelErrorHandler)
-        }
-      )
+        })
+        .catch(modelErrorHandler);
     };
 
     function openValidationModal (response) {

@@ -8,7 +8,8 @@
       scope: {
         leftEditor: '=?',
         rightEditor: '=?',
-        aceDiffOptions: '=?'
+        aceDiffOptions: '=?',
+        differ: '=?'
       },
       link: function ($scope) {
 
@@ -16,9 +17,9 @@
 
           editor.on('change', function (data) {
             editorSettings.content = editor.getValue();
-            _.defer(function () {
+            _.debounce(function () {
               $scope.$digest();
-            });
+            }, 400);
           });
 
           $scope.$on('ace-update', function () {

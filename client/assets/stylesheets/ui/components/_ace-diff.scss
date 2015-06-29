@@ -1,15 +1,3 @@
-.model-edit-ace-diff #flex-container.ace-diff-container {
-  height: 500px;
-  div.ace_editor {
-    font-size: 15px;
-    height: 500px;
-  }
-
-  #acediff-right-editor {
-    opacity: 0.9;
-  }
-}
-
 #flex-container {
   display: flex;
   display: -webkit-flex;

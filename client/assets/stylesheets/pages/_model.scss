@@ -1,0 +1,27 @@
+.model-edit-ace-diff #flex-container.ace-diff-container {
+  height: 500px;
+  div.ace_editor {
+    font-size: 15px;
+    height: 500px;
+  }
+
+  #acediff-right-editor {
+    opacity: 0.9;
+  }
+}
+
+.model-help.angled-window  {
+  left: calc(50% - 200px);
+  .angled-window-body-content {
+    height: 600px;
+  }
+}
+
+.model-validation.panel {
+  margin-bottom: 0;
+  word-wrap: break-word;
+
+  .modal-footer {
+    padding-bottom: 0;
+  }
+}

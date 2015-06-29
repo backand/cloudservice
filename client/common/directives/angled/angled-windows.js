@@ -36,7 +36,9 @@ angular.module('angled-windows.directives',['ngSanitize','ngAnimate','angled-dra
 				grouping : '@grouping', // windows group for organizing z-index
 				status : '=status', // status bar messages bi-directional
         closeFunction: '&closeFunction',
-        dictionaryItems: '='
+        dictionaryItems: '=',
+        rolledUp: '=?',
+        cssClass: '@?'
 			},
 			compile : function(tEl,tAttrs,transFn){
 				return {
@@ -69,7 +71,6 @@ angular.module('angled-windows.directives',['ngSanitize','ngAnimate','angled-dra
 							scope.grouping = el.attr('grouping');
 						});
 
-						scope.rolledUp = false;
 						scope.dragOpts = {
 							handle: 'div.panel-heading',
 							opacity: 0.75
@@ -78,6 +79,14 @@ angular.module('angled-windows.directives',['ngSanitize','ngAnimate','angled-dra
 							handles: 'se',
 							alsoResize: '#windowBodyContent_' + scope.id
 						}; // end resizeOpts
+
+            if (angular.isDefined(scope.cssClass)){
+              $animate.addClass(el, scope.cssClass)
+            }
+
+            if (angular.equals(scope.rolledUp, true)) {
+              $animate.addClass(el, 'rolled-up');
+            }
 					}, // end pre
 					post : function(scope,el,attrs){ // ~link function
 
