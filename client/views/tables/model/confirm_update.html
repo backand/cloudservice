@@ -11,8 +11,8 @@
     <li ng-repeat="notification in ConfirmModelUpdate.notifications">{{ notification }}</li>
   </ul>
 
-  <a href="" ng-if="ConfirmModelUpdate.validationResponse.alter" ng-click="detailsOpen = !detailsOpen">{{ detailsOpen ? 'less' : 'more'}} details</a>
-  <div ng-show="detailsOpen">
+  <a href="" ng-if="ConfirmModelUpdate.validationResponse.alter" ng-click="ConfirmModelUpdate.detailsOpen = !ConfirmModelUpdate.detailsOpen">{{ ConfirmModelUpdate.detailsOpen ? 'less' : 'more'}} details</a>
+  <div ng-show="ConfirmModelUpdate.detailsOpen">
     <label>The following operations will be performed:</label>
     <ul>
       <li ng-repeat="alter in ConfirmModelUpdate.validationResponse.alter">{{alter}}</li>

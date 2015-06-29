@@ -95,18 +95,18 @@
         .then(function (response) {
           self.loading = false;
           openValidationModal(response)
-        }, modelErrorHandler)
-        .then(function (result) {
-          if (result) {
-            self.loading = true;
-            ModelService.update(self.appName, schema)
-              .then(function (data) {
-                updateSchema(data);
-                $scope.$root.$broadcast('fetchTables');
-                self.loading = false;
-              },
-              modelErrorHandler)
-          }
+            .then(function (result) {
+            if (result) {
+              self.loading = true;
+              ModelService.update(self.appName, schema)
+                .then(function (data) {
+                  updateSchema(data);
+                  $scope.$root.$broadcast('fetchTables');
+                  self.loading = false;
+                },
+                modelErrorHandler)
+            }
+          }, modelErrorHandler)
         }
       )
     };
