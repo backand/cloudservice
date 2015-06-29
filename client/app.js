@@ -45,6 +45,7 @@
     'theme.directives',
     'common.services',
     'common.filters.uppercase',
+    'common.filters.newTerminology',
     'common.interceptors.http',
     'controllers',
     'templates',

@@ -13,7 +13,9 @@
 
     self.validationResponse = validationResponse;
 
-    self.notifications = _.flatten(_.map(validationResponse.notifications));
+    self.notifications =
+      _.map(_.flatten(_.map(validationResponse.notifications)),
+      angular.toJson);
     if (_.isEmpty(self.notifications)) {
       self.notifications = null;
     }
@@ -28,6 +30,7 @@
           cssClass: 'danger',
           cancelButton: 'return'
         };
+        self.notifications = self.validationResponse.warnings;
         break;
 
       case 'always':
