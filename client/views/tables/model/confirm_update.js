@@ -28,8 +28,8 @@
           cssClass: 'danger',
           cancelButton: 'return'
         };
-        self.notifications = self.validationResponse.warnings;
         break;
+
       case 'always':
         self.text = {
           title: 'Model is Valid',
@@ -40,14 +40,14 @@
         if (self.notifications) {
           self.text.message = 'The Model is valid.<br>' +
             'The following parts of the model, including the data they contain, will be permanently deleted.<br>' +
-            'Proceed anyway?';
-          self.notifications = self.validationResponse.notifications.droppedTables;
+            'Please click Ok to proceed';
           self.text.cssClass = 'danger';
           self.text.title = 'Warning';
         } else {
           self.text.message = 'Please click Ok to proceed';
         }
         break;
+
       case 'data':
             self.text = {
               title: 'Warning',
@@ -60,13 +60,12 @@
             'The following parts of the model, including the data they contain, will be permanently deleted.<br>' +
             'Changes made to the model include changes to fields types.<br>' +
             'Those changes may result in a loss or corruption of data.<br>' +
-            'Proceed anyway?';
-          self.notifications = self.validationResponse.notifications;
+            'Please click Ok to proceed';
         } else {
           self.text.message = 'The Model is valid.<br>' +
             'Changes made to the model include changes to fields types.<br>' +
             'Those changes may result in a loss or corruption of data.<br>' +
-            'Proceed anyway?';
+            'Please click Ok to proceed';
         }
         break;
     }
