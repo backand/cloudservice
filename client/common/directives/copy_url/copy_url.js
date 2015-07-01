@@ -10,38 +10,41 @@
       scope: {
         copyUrlParams: '='
       },
-      link: function ($scope) {
+      bindToController: true,
+      controllerAs: 'copyUrl',
+      controller: function () {
+        var self = this;
 
         function formsExist () {
-          return ($scope.copyUrlParams.getInputForm() &&
-            $scope.copyUrlParams.getTestForm())
+          return (self.copyUrlParams.getInputForm() &&
+            self.copyUrlParams.getTestForm())
         }
         function formsPristine () {
-          return ($scope.copyUrlParams.getInputForm().$pristine &&
-          $scope.copyUrlParams.getTestForm().$pristine)
+          return (self.copyUrlParams.getInputForm().$pristine &&
+          self.copyUrlParams.getTestForm().$pristine)
         }
 
-        $scope.getUrl = function () {
+        self.getUrl = function () {
           if (!formsExist())
             return '';
-          $scope.url =
-            formsPristine() ? $scope.copyUrlParams.getUrl() : '';
-          return $scope.url;
+          self.url =
+            formsPristine() ? self.copyUrlParams.getUrl() : '';
+          return self.url;
         };
 
-        $scope.isUrlCopied = function () {
+        self.isUrlCopied = function () {
           if (!formsExist())
             return false;
-          $scope.urlCopied =
-            $scope.urlCopied && $scope.isUrlAvailable();
-          return $scope.urlCopied;
+          self.urlCopied =
+            self.urlCopied && self.isUrlAvailable();
+          return self.urlCopied;
         };
 
-        $scope.isUrlAvailable = function () {
+        self.isUrlAvailable = function () {
           if (!formsExist())
             return false;
-          $scope.urlAvailable = !_.isEmpty($scope.url) && formsPristine();
-          return $scope.urlAvailable;
+          self.urlAvailable = !_.isEmpty(self.url) && formsPristine();
+          return self.urlAvailable;
         };
       },
       templateUrl: 'common/directives/copy_url/copy_url.html'

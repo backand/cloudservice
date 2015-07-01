@@ -2,12 +2,12 @@
   <input type="text"
          class="request-url"
          ng-readonly="true"
-         ng-value="getUrl()">
-  <button clip-copy="url"
-          clip-click="urlCopied = true"
+         ng-value="copyUrl.getUrl()">
+  <button clip-copy="copyUrl.url"
+          clip-click="copyUrl.urlCopied = true"
           no-propogate
           class="btn btn-xs request-url-copy"
-          ng-class="{ 'btn-success' : isUrlCopied(), 'btn-primary' : isUrlAvailable()}"
+          ng-class="{ 'btn-success' : copyUrl.isUrlCopied(), 'btn-primary' : copyUrl.isUrlAvailable()}"
           tooltip="copy to clipboard">
     <span class="ti-clipboard"></span>
   </button>

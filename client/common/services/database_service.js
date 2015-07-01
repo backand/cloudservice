@@ -8,7 +8,12 @@
     self.getCustomSchema = function (appName) {
       if (!$localStorage.backand[appName])
         $localStorage.backand[appName] = {};
-      return $localStorage.backand[appName].customSchema;
+      var customSchema =  $localStorage.backand[appName].customSchema;
+      try {
+        customSchema = angular.toJson(JSON.parse(customSchema), true);
+      } finally {
+        return customSchema;
+      }
     };
 
     self.saveCustomSchema = function(appName, schema) {

@@ -1,11 +1,11 @@
 (function  () {
   'use strict';
 angular.module('backand.database')
-  .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$stateParams', '$state', 'DatabaseNamesService',
-    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$analytics','$intercom', DatabaseEdit]);
+  .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$state', 'DatabaseNamesService',
+    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$modal', '$analytics', '$intercom', DatabaseEdit]);
 
-  function DatabaseEdit($scope, $http, AppsService, $stateParams, $state, DatabaseNamesService,
-                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $analytics, $intercom) {
+  function DatabaseEdit($scope, $http, AppsService, $state, DatabaseNamesService,
+                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $modal, $analytics, $intercom) {
 
     var self = this;
     var currentApp = AppsService.currentApp;
@@ -16,7 +16,7 @@ angular.module('backand.database')
       if (currentApp.DatabaseStatus == 2)
         $state.go('docs.get-started');
       self.databaseStatus = null;
-      self.appName = $stateParams.appName;
+      self.appName = $state.params.appName;
       self.loading = false;
       self.showHelp = false;
       getCurrentApp();
@@ -97,8 +97,30 @@ angular.module('backand.database')
         })
         .error(function (err) {
             self.loading = false;
+            openValidationModal(err)
         })
     };
+
+    function openValidationModal (error) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/model/confirm_update.html',
+        controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          validationResponse: function () {
+            var validationResponse = {
+              valid: 'never',
+              warnings: error.split(/\(\d+\)/)
+            };
+            validationResponse.warnings.shift();
+            return validationResponse;
+          }
+        }
+      });
+
+      return modalInstance.result;
+    }
 
     self.dataSources = DatabaseService.getDataSources();
 
