@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function httpInterceptor($q, SessionService, usSpinnerService, NotificationService, $injector) {
+  function httpInterceptor($q, SessionService, usSpinnerService, NotificationService, $injector, CONSTS) {
     return {
         request: function(config) {
           usSpinnerService.spin("spinner-1");
@@ -20,10 +20,11 @@
         //if not sign in screen :
         usSpinnerService.stop("loading");
         if ((rejection.config.url + "").indexOf('token') === -1){
-          if(rejection.data == null)
+          if(rejection.data == null) {
             NotificationService.add("error", "The service is temporary unavailable, please refresh the page in few seconds");
-          else
+          } else if (!avoidInterception('responseError', rejection)) {
             NotificationService.add("error", rejection.data);
+          }
           if (rejection.status === 401) {
             SessionService.ClearCredentials();
             $injector.get('$state').transitionTo('sign_in');
@@ -33,8 +34,18 @@
           return $q.reject(rejection);
       }
     };
+
+    function avoidInterception (type, httpPackage) {
+      if (type === 'responseError') {
+        // model error in create DB - replaced with modal specifying the errors
+        if (httpPackage.config.method === 'POST' &&
+          _.startsWith(httpPackage.config.url, CONSTS.appUrl + '/admin/myAppConnection/') &&
+          _.startsWith(httpPackage.data, 'Invalid schema:')) return true;
+      }
+    }
   }
 
+
   angular.module('common.interceptors.http', [])
-    .factory('httpInterceptor', ['$q', 'SessionService', 'usSpinnerService', 'NotificationService', '$injector', httpInterceptor]);
+    .factory('httpInterceptor', ['$q', 'SessionService', 'usSpinnerService', 'NotificationService', '$injector', 'CONSTS', httpInterceptor]);
 })();
