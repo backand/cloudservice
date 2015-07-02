@@ -14,7 +14,7 @@ angular.module('backand.database')
       if (AppsService.isExampleApp(currentApp))
         $state.go('database.example');
       if (currentApp.DatabaseStatus == 2)
-        $state.go('docs.get-started');
+        $state.go('docs.kickstart');
       self.databaseStatus = null;
       self.appName = $state.params.appName;
       self.loading = false;
@@ -93,7 +93,7 @@ angular.module('backand.database')
             $analytics.eventTrack('CreatedNewDB', {app: self.template.appName});
 
           $intercom.trackEvent('create app',{app: self.template.appName});
-          $state.go('docs.get-started');
+          $state.go('docs.kickstart');
         })
         .error(function (err) {
             self.loading = false;
@@ -162,6 +162,7 @@ angular.module('backand.database')
 
     self.Confirmation = function(msg){
       ConfirmationPopup.confirm(msg, 'Ok', '', true, false);
+
     };
 
     // Ace Templates

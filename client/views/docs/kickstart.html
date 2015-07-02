@@ -28,6 +28,15 @@
 
 
       <div class="quickstart-body">
+        <div class="quickstart-connecting-db" ng-show="docs.isNew()">
+          <h3>
+            We're creating your database and will notify you when it's ready.<br/>
+            In the meantime, you can review below how to setup new app with angular-kickstart...
+          </h3>
+          <div us-spinner spinner-key="connecting-app-to-db"></div>
+          <br/>
+          <br/>
+        </div>
         <h1>Follow these steps to install angular-kickstart with Backand inside</h1>
 
         <section class="panel panel-box" ng-if="!docs.currentApp.Name">
