@@ -14,12 +14,13 @@
     self.validationResponse = validationResponse;
 
     self.notifications =
-      _.map(_.flatten(_.map(validationResponse.notifications)),
-      angular.toJson);
+      _.uniq(_.map(_.flatten(_.map(validationResponse.notifications)),
+      angular.toJson));
     if (_.isEmpty(self.notifications)) {
       self.notifications = null;
     }
 
+    self.validationResponse.alter = _.uniq(self.validationResponse.alter);
     self.details = !_.isEmpty(self.validationResponse.alter);
 
     switch (self.validationResponse.valid) {
@@ -30,7 +31,7 @@
           cssClass: 'danger',
           cancelButton: 'Return'
         };
-        self.notifications = self.validationResponse.warnings;
+        self.notifications = _.uniq(self.validationResponse.warnings);
         break;
 
       case 'always':

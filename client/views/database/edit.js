@@ -83,7 +83,6 @@ angular.module('backand.database')
         DatabaseService.removeCustomSchema(self.appName);
       }
 
-
         DatabaseService.createDB($state.params.appName, product, self.template.appName, schema)
         .success(function (data) {
           NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');

@@ -2,9 +2,9 @@
 (function  () {
 
   angular.module('backand')
-    .controller('SignInController', ['AuthService', '$state', 'SessionService', '$timeout', '$modal', 'NotificationService', SignInController]);
+    .controller('SignInController', ['AuthService', '$state', 'SessionService', '$modal', 'NotificationService', SignInController]);
 
-  function SignInController(AuthService, $state, SessionService, $timeout, $modal, NotificationService) {
+  function SignInController(AuthService, $state, SessionService, $modal, NotificationService) {
     var self = this;
 
     this.loading = false;
