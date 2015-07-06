@@ -117,7 +117,7 @@
 
             </div>
 
-            <div class="right-col">
+            <div class="right-col" ng-if="!dbshow.isLocal">
              <h4><i class="ti-comment-alt"></i>  <strong> Database Admin</strong></h4>
                     <p>To make changes to your database's schema (such as adding tables or columns), use one of the following tools:<br/>
                     <ul>
@@ -127,10 +127,16 @@
                         <li><a href="//www.heidisql.com/" target="_blank">HeidiSQL</a></li>
                     </ul>
                     <br/>In order to sync your database schema changes into Backand, go to <b>Objects</b> and click <b>Sync with Database</b>.
-                    <br/><br/>>> To populate data into your database use our <a href="http://{{dbshow.appName}}.backand.net" target="_blank">Back Office</a>
+                    <!--<br/><br/>>> To populate data into your database use our <a href="http://{{dbshow.appName}}.backand.net" target="_blank">Back Office</a>-->
                     <!--<br/>Go to <a ng-click="dbshow.sync(0)" href="">Database Table</a> and click <button type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary" ng-click="dbshow.sync(1)">Sync Tables</button>-->
                     <!--after you update your schema to sync your changes into Backand.-->
                     </p>
+          </div>
+          <div class="right-col" ng-if="dbshow.isLocal">
+            <h4><i class="ti-comment-alt"></i>  <strong> Database Admin</strong></h4>
+            <p>
+            To make changes to your database's schema (such as adding tables or columns) use only the JSON Model under the Objects menu.
+            </p>
           </div>
         </div>
       </div>

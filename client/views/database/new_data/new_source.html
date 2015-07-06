@@ -2,9 +2,21 @@
   <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg"
         ladda="dbedit.loading" data-style="expand-right"
         ng-click="dbedit.create()"
-        test-hook="database-edit.create">
-    Create
-  </button>
+        test-hook="database-edit.create">Create</button>
+  <button class="btn btn-info btn-lg btn-w-lg pull-right"
+          ng-click="dbedit.showHelp()">Help</button>
+</div>
+<div ng-cloak>
+  <angled-window ng-show="dbedit.showHelpDialog"
+                 title="Help"
+                 id="help"
+                 grouping="w"
+                 close-function="dbedit.showHelpDialog=false"
+                 rolled-up="false"
+                 css-class="model-help"
+                  style="top:100px;">
+    <div ng-include="'views/docs/orm_help.html'"></div>
+  </angled-window>
 </div>
 <div class="db-tab-content">
 
@@ -12,7 +24,7 @@
     <div class="col-md-8 col-lg-9">
       <div class="db-panel-body-description">
         <p>Select a database model example to use as the starting point for your app's database,<br/>
-          or add your own model by editing the model in the "Custom" tab.</p>
+          or add your own model by editing the model in the "Custom" tab - <a href="" ng-click="dbedit.showHelp()">Need help?</a></h4></p>
       </div>
 
       <div class="row">

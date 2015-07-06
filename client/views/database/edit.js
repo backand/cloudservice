@@ -19,6 +19,7 @@ angular.module('backand.database')
       self.appName = $state.params.appName;
       self.loading = false;
       self.showHelp = false;
+      self.showHelpDialog = false;
       getCurrentApp();
     }());
 
@@ -120,6 +121,10 @@ angular.module('backand.database')
 
       return modalInstance.result;
     }
+
+    self.showHelp = function(){
+      self.showHelpDialog = true;
+    };
 
     self.dataSources = DatabaseService.getDataSources();
 

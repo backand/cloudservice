@@ -8,6 +8,7 @@
 
     self.appName = $state.params.appName;
     var currentApp = AppsService.currentApp;
+    self.isLocal = currentApp.connectionSource === 'local';
     checkDatabaseStatuse();
 
     function checkDatabaseStatuse() {
