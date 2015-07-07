@@ -361,21 +361,20 @@
                 <div class="form-group ">
                   <label for="code">JavaScript Code</label>
 
-                  <div
-                    ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', firstLineNumber: 7, rendererOptions: { fontSize: 15 }}"
+                  <input
+                    ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"
                     class="form-control ace-rule"
                     name="code"
                     id="code"
                     ng-model="rules.action.code"
                     required
-                    ng-pattern="codeRegex"
+                    ng-pattern="rules.codeRegex"
                     ng-keydown="modal.handleTabKey($event)"
                     style="resize: vertical; ">
-
-                  </div>
+                  </input>
 
                   <div ng-messages="rules.newRuleForm.code.$error">
-                    <div ng-message="pattern" class="text-danger">Code is not ok!</div>
+                    <div ng-message="pattern" class="text-danger">Please use the original function signature.</div>
                   </div>
                 </div>
               </div>

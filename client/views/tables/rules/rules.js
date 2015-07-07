@@ -709,7 +709,7 @@
       return self.testUrl;
     }
 
-    self.codeRegex = /^\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow,\s*parameters\s*,\s*userProfile\s*\)\s*\{(.|[\r\n])*}\s*$/;
+    self.codeRegex = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
 
     var backandCallbackConstCode = {
       start: '/* globals\n\  $http - service for AJAX calls - $http({method:"GET",url:CONSTS.apiUrl + "/1/objects/yourObject" , headers: {"Authorization":userProfile.token}});\n' +

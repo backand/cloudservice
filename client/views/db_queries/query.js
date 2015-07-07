@@ -110,6 +110,15 @@
       self.query.allowSelectRoles = allowSelectRolesArray.join(',');
     }
 
+    function replaceSpecialCharInQuery(query) {
+      var queryToSend = angular.copy(query);
+      _.forOwn(queryToSend, function (value, key) {
+        if (typeof value === 'string')
+          queryToSend[key] = value.replace(/\+/g, "%2B");
+      });
+      return queryToSend;
+    }
+
     self.saveQuery = function () {
       self.loading = true;
       self.queryUrl = '';
@@ -117,7 +126,8 @@
       self.query.workspaceID = Number(self.currentST);
 
       rolesToString();
-      DbQueriesService.saveQuery(self.query)
+      var queryToSend = replaceSpecialCharInQuery(self.query);
+      DbQueriesService.saveQuery(queryToSend)
         .then(reload);
     };
 
