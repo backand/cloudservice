@@ -405,7 +405,9 @@
 
     function replaceSpecialCharInCode(rule) {
       var ruleToSend = angular.copy(rule);
-      ruleToSend.code = ruleToSend.code.replace(/\+/g, "%2B");
+      _.forOwn(ruleToSend, function (value, key) {
+        ruleToSend[key] = value.replace(/\+/g, "%2B");
+      });
       return ruleToSend;
     }
 
