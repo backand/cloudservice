@@ -309,7 +309,7 @@
       self.editRowData.form.forEach(function (formItem) {
         self.editRowData.entities.push({
           key: formItem.key,
-          hide: formItem.hideInCreate && !rowItem || formItem.hideInEdit && rowItem,
+          hide: formItem.hideInCreate && !rowItem || formItem.hideInEdit && rowItem || formItem.type === 'multiSelect',
           disable: formItem.disable || formItem.disableInCreate && !rowItem || formItem.disableInEdit && rowItem,
           required: formItem.required,
           value: rowItem ? rowItem.entity[formItem.key] : formItem.defaultValue,

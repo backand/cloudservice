@@ -120,24 +120,25 @@
       self.gridOptions.columnDefs[self.adminMode ? 3 : 4].editDropdownOptionsArray = self.roles;
 
       $scope.modal.roles = self.roles.map(function (role) {
-        return role.Name;
+          return role.Name;
       });
       getUsers();
 
     }
 
     function getUsers() {
-      var roleFilter = self.adminMode ? 'Admin' : _.without(_.map(self.roles, 'Name'),'Admin').join(',');
+      //var roleFilter = self.adminMode ? 'Admin' : _.without(_.map(self.roles, 'Name'),'Admin').join(',');
 
       SecurityService.getUsers(
         self.paginationOptions.pageSize,
         self.paginationOptions.pageNumber,
         self.sort,
-        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
-        '{fieldName:"Role", operator:"in", value:",' + roleFilter + '"}]')
+        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
         .then(usersSuccessHandler, errorHandler);
 
         //The , before the filter is a bug
+      //'[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
+      //'{fieldName:"Role", operator:"in", value:",' + roleFilter + '"}]')
     }
 
 
