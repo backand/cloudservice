@@ -11,9 +11,19 @@
       'DictionaryService',
       'SecurityService',
       'AppsService',
+      'EscapeSpecialChars',
       DbQueryController]);
 
-  function DbQueryController(CONSTS, $state, $stateParams, DbQueriesService, ConfirmationPopup, NotificationService, DictionaryService, SecurityService, AppsService) {
+  function DbQueryController(CONSTS,
+                             $state,
+                             $stateParams,
+                             DbQueriesService,
+                             ConfirmationPopup,
+                             NotificationService,
+                             DictionaryService,
+                             SecurityService,
+                             AppsService,
+                             EscapeSpecialChars) {
 
     var self = this;
     self.namePattern = /^\w+$/;
@@ -110,15 +120,6 @@
       self.query.allowSelectRoles = allowSelectRolesArray.join(',');
     }
 
-    function replaceSpecialCharInQuery(query) {
-      var queryToSend = angular.copy(query);
-      _.forOwn(queryToSend, function (value, key) {
-        if (typeof value === 'string')
-          queryToSend[key] = value.replace(/\+/g, "%2B");
-      });
-      return queryToSend;
-    }
-
     self.saveQuery = function () {
       self.loading = true;
       self.queryUrl = '';
@@ -126,7 +127,7 @@
       self.query.workspaceID = Number(self.currentST);
 
       rolesToString();
-      var queryToSend = replaceSpecialCharInQuery(self.query);
+      var queryToSend = EscapeSpecialChars(self.query);
       DbQueriesService.saveQuery(queryToSend)
         .then(reload);
     };

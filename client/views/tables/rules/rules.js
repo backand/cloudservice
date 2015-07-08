@@ -20,6 +20,7 @@
       'CONSTS',
       '$intercom',
       '$analytics',
+      'EscapeSpecialChars',
       RulesController]);
 
   function RulesController($scope,
@@ -37,7 +38,8 @@
                            ColumnsService,
                            CONSTS,
                            $intercom,
-                           $analytics) {
+                           $analytics,
+                           EscapeSpecialChars) {
 
     var self = this;
     /**
@@ -140,7 +142,7 @@
       self.saving = true;
       self.testUrl = '';
 
-      var ruleToSend = replaceSpecialCharInCode(self.action);
+      var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
         .then(function () {
@@ -401,15 +403,6 @@
      */
     function updateRule(rule) {
       return RulesService.update(rule);
-    }
-
-    function replaceSpecialCharInCode(rule) {
-      var ruleToSend = angular.copy(rule);
-      _.forOwn(ruleToSend, function (value, key) {
-        if (typeof value === 'string')
-          ruleToSend[key] = value.replace(/\+/g, "%2B");
-      });
-      return ruleToSend;
     }
 
     function getDefaultValue(type) {
