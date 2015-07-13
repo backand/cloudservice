@@ -182,6 +182,9 @@
 
       var type = getFieldType(column.type);
 
+      if(type === 'multiSelect')
+        return undefined;
+
       if (type == 'dateTime')
         return '<div class="ui-grid-cell-contents"><span editable-date="MODEL_COL_FIELD" '
           + callbackOptions
@@ -200,7 +203,7 @@
           + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
       }
 
-      if (type === 'multiSelect' || type === 'numeric') { type = 'text';} // todo: fix single-select
+      if (type === 'numeric') { type = 'text';} // todo: fix single-select
       // Search of Multi-Select keys doesn't work currently
       /*if (!_.isEmpty(column.relatedViewName)) {
         return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" ' +

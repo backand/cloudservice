@@ -127,15 +127,25 @@
     }
 
     function getUsers() {
-      //var roleFilter = self.adminMode ? 'Admin' : _.without(_.map(self.roles, 'Name'),'Admin').join(',');
+      //var roleFilter = self.adminMode ? 'Admin' : '%';//_.without(_.map(self.roles, 'Name'),'Admin').join(',');
 
+      if(self.adminMode){
       SecurityService.getUsers(
         self.paginationOptions.pageSize,
         self.paginationOptions.pageNumber,
         self.sort,
-        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
+        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
+        '{fieldName:"Role", operator:"in", value:",Admin"}]')
         .then(usersSuccessHandler, errorHandler);
-
+      }
+      else {
+        SecurityService.getUsers(
+          self.paginationOptions.pageSize,
+          self.paginationOptions.pageNumber,
+          self.sort,
+          '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
+          .then(usersSuccessHandler, errorHandler);
+      }
         //The , before the filter is a bug
       //'[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
       //'{fieldName:"Role", operator:"in", value:",' + roleFilter + '"}]')

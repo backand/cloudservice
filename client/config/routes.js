@@ -2,7 +2,6 @@
 
 angular.module('backand.routes', []).
   config(function($stateProvider, $urlRouterProvider, $uiViewScrollProvider, $logProvider, $httpProvider) {
-
     $urlRouterProvider.otherwise('/');
     $uiViewScrollProvider.useAnchorScroll();
 

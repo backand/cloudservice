@@ -82,7 +82,11 @@
         getSocialUrl(social, isSignup) +
         '&appname=' + CONSTS.mainAppName +
         '&returnAddress=' + returnAddress + st;
+
     };
+
+
+
 
     self.resetPassword = function (password, id) {
       return $http({

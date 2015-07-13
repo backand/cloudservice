@@ -50,7 +50,7 @@
   &lt;script src=&quot;//code.angularjs.org/1.3.14/angular-cookies.min.js&quot;&gt;&lt;/script&gt;
 
   &lt;!-- Backand SDK for Angular --&gt;
-  &lt;script src=&quot;//cdn.backand.net/backand/dist/1.6.0/backand.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;//cdn.backand.net/backand/dist/1.6.1/backand.min.js&quot;&gt;&lt;/script&gt;
             </code></pre>
             <h5>Include the above code in your index.html file.</h5>
             <br />
@@ -75,8 +75,8 @@
   //Update Angular configuration section
   myApp.config(function (BackandProvider) {
       BackandProvider.manageDefaultHeaders();
-      BackandProvider.setAnonymousToken('Your Anonymous Token');
-      BackandProvider.setSignUpToken('Your SignUp Token');
+      //BackandProvider.setAnonymousToken('Your Anonymous Token');
+      //BackandProvider.setSignUpToken('Your SignUp Token');
   })
             </code></pre>
             manageDefaultHeaders - add Backand's token to "Authorization" header<br/>

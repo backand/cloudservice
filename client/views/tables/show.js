@@ -44,7 +44,7 @@
 
         }, function (err) {
           self.syncing = false;
-          NotificationService.add('error', 'Can not sync tables');
+          NotificationService.add('error', 'Cannot sync tables');
         });
     }
   }

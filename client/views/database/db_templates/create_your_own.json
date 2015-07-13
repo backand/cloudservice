@@ -15,7 +15,6 @@
       "email": {"type": "string"},
       "firstName": {"type": "string"},
       "lastName": {"type": "string"},
-      "role": {"type": "string"},
       "items": {
         "collection": "items",
         "via": "user"
