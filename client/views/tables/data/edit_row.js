@@ -34,11 +34,13 @@
 
       if (self.editRowData.id) {
         DataService.update(self.tableName, record, self.editRowData.id)
-          .then(modalInstance.close);
+          .then(function(){modalInstance.close})
+          .finally(function() {self.savingRow = false;});
       }
       else {
         DataService.post(self.tableName, record)
-          .then(modalInstance.close.bind(this, {reopen: reopen}));
+          .then(function(){modalInstance.close.bind(this, {reopen: reopen})})
+          .finally(function() {self.savingRow = false;});
       }
     };
 
