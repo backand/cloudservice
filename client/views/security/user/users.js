@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, $intercom, $analytics) {
+  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, $analytics) {//yrv-intercome'$intercom',
 
     var self = this;
 
@@ -267,7 +267,8 @@
     };
 
     self.inviteAdmins = function () {
-      $intercom.trackEvent('AddedAdmin',{admins: self.invitedAdmins});
+     // $intercom.trackEvent('AddedAdmin',{admins: self.invitedAdmins});
+      analytics.identify(SessionService.getUserId(),{});
       $analytics.eventTrack('AddedAdmin', {admins: self.invitedAdmins});
       self.inviteUsers(self.invitedAdmins, 'Admin');
     };
@@ -398,7 +399,7 @@
       '$scope',
       'SessionService',
       'AppsService',
-      '$intercom',
+      //yrv-intercome'$intercom',
       '$analytics',
       SecurityUsers
     ]);

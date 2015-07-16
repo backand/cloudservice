@@ -2,10 +2,10 @@
   'use strict';
 angular.module('backand.database')
   .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$state', 'DatabaseNamesService',
-    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$modal', '$analytics', '$intercom', DatabaseEdit]);
+    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$modal', 'SessionService','$analytics', DatabaseEdit]);//yrv-intercome'$intercom',
 
   function DatabaseEdit($scope, $http, AppsService, $state, DatabaseNamesService,
-                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $modal, $analytics, $intercom) {
+                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $modal,SessionService, $analytics) {//yrv-intercome'$intercom',
 
     var self = this;
     var currentApp = AppsService.currentApp;
@@ -87,12 +87,14 @@ angular.module('backand.database')
         DatabaseService.createDB($state.params.appName, product, self.template.appName, schema)
         .success(function (data) {
           NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
+            analytics.identify(SessionService.getUserId(),{});
           if(useSchema)
             $analytics.eventTrack('CreatedNewDB', {schema: self.template.schema});
           else
             $analytics.eventTrack('CreatedNewDB', {app: self.template.appName});
 
-          $intercom.trackEvent('create app',{app: self.template.appName});
+
+            $analytics.eventTrack('create app', {app: self.template.appName});//yrv-intercome'$intercom', $intercom.trackEvent('create app',{app: self.template.appName});
           $state.go('docs.kickstart');
         })
         .error(function (err) {
@@ -147,8 +149,9 @@ angular.module('backand.database')
       else {
           DatabaseService.connect2DB($state.params.appName, self.data)
               .success(function (data) {
+              analytics.identify(SessionService.getUserId(),{});
               $analytics.eventTrack('ConnectedExistingDB', {product: self.data.product});
-              $intercom.trackEvent('ConnectedExistingDB', {product: self.data.product});
+              //$intercom.trackEvent('ConnectedExistingDB', {product: self.data.product});
 
               NotificationService.add('info', 'Connecting to the database...');
                   $state.go('docs.get-started')

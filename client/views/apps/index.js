@@ -3,10 +3,10 @@
 
 angular.module('backand.apps')
   .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
-    'usSpinnerService', 'LayoutService', '$analytics', 'SessionService', '$intercom', AppsIndexController]);
+    'usSpinnerService', 'LayoutService', '$analytics', 'SessionService',  AppsIndexController]);//yrv-intercome'$intercom',
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
-                                usSpinnerService, LayoutService, $analytics, SessionService, $intercom) {
+                                usSpinnerService, LayoutService, $analytics, SessionService) {//yrv-intercome, $intercom
 
     var self = this;
     self.loading = false;
@@ -34,8 +34,9 @@ angular.module('backand.apps')
 
       AppsService.add(self.appName, self.appTitle)
         .then(function(data) {
+          analytics.identify(SessionService.getUserId(),{});
           $analytics.eventTrack('CreatedApp', {appName: self.appName});
-          $intercom.trackEvent('CreatedApp',{appName: self.appName});
+          //$intercom.trackEvent('CreatedApp',{appName: self.appName});
           NotificationService.add('success', 'App was successfully created');
           $state.go('database.edit', { appName: self.appName });
         },

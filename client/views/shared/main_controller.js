@@ -1,14 +1,14 @@
 (function () {
   'use strict';
 
-  function MainController($scope, $state, LayoutService, ConfirmationPopup, $intercom) {
+  function MainController($scope, $state, LayoutService, ConfirmationPopup) {//yrv-intercome'$intercom',
 
     var self = this;
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
-      if($intercom)
-        $intercom.update();
+      /*if($intercom)
+        $intercom.update();*///yrv-intercome'$intercom',
     }());
 
     self.hideNav = function () {
@@ -26,6 +26,6 @@
   }
 
   angular.module('backand')
-    .controller('MainController', ['$scope', '$state', 'LayoutService', 'ConfirmationPopup', '$intercom', MainController]);
+    .controller('MainController', ['$scope', '$state', 'LayoutService', 'ConfirmationPopup',  MainController]);//yrv-intercome'$intercom',
 
 })();

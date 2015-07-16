@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function AuthService($http, CONSTS, SessionService, $window, $analytics, $intercom) {
+  function AuthService($http, CONSTS, SessionService, $window, $analytics) {//yrv-intercome'$intercom',
 
     var self = this;
 
@@ -119,25 +119,32 @@
 
       var social = _.find(self.socials, {id: Number(sId)});
       var socialName = social ? social.name : 'self';
-
+      analytics.identify(self.getUserId(), {
+        name: fullName,
+        email: email,
+        signed_up_at: new Date().getTime()
+      });
       $analytics.eventTrack('SignedUp', {name: fullName});
       $analytics.eventTrack('SocialSignedUp', {provider: socialName});
 
-      if($intercom){
+     /* if($intercom){
         $intercom.boot({
           app_id: CONSTS.IntercomAppId,
           name: fullName,
-          email: email,
+          email: analytics.identify('12345', {
+      name: 'Jake Peterson',
+      email: 'friends@segment.com'
+      });,
           signed_up_at: new Date().getTime()
         });
         $intercom.trackEvent('SignedUp',{name: fullName});
         $intercom.trackEvent('SocialSignedUp',{provider: socialName});
-      }
+      }*/
     }
 
   }
 
   angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', 'SessionService', '$window','$analytics', '$intercom', AuthService])
+    .service('AuthService', ['$http', 'CONSTS', 'SessionService', '$window','$analytics',  AuthService])//yrv-intercome'$intercom',
 
 })();
