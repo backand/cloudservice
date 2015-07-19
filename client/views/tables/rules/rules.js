@@ -18,7 +18,6 @@
       'usSpinnerService',
       'ColumnsService',
       'CONSTS',
-      //yrv-intercome'$intercom',
       'SessionService',
       '$analytics',
       'EscapeSpecialChars',
@@ -38,7 +37,6 @@
                            usSpinnerService,
                            ColumnsService,
                            CONSTS,
-                           //yrv-intercome'$intercom',
                            SessionService,
                            $analytics,
                            EscapeSpecialChars) {
@@ -153,9 +151,7 @@
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
-         // $intercom.trackEvent('AddedRule',{rule: self.action.name});
-          analytics.identify(SessionService.getUserId(),{});
-          $analytics.eventTrack('AddedRule', {rule: self.action.name});
+          SessionService.track('AddedRule', {rule: self.action.name});
 
           self.saving = false;
           self.isNewAction = false;

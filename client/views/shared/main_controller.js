@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function MainController($scope, $state, LayoutService, ConfirmationPopup) {//yrv-intercome'$intercom',
+  function MainController($scope, $state, LayoutService, ConfirmationPopup) {
 
     var self = this;
 
@@ -26,6 +26,6 @@
   }
 
   angular.module('backand')
-    .controller('MainController', ['$scope', '$state', 'LayoutService', 'ConfirmationPopup',  MainController]);//yrv-intercome'$intercom',
+    .controller('MainController', ['$scope', '$state', 'LayoutService', 'ConfirmationPopup',  MainController]);
 
 })();

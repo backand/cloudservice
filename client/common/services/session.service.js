@@ -35,13 +35,7 @@
         window.JacoRecorder.identify(user.currentUser.username);
       //if (woopra)
       //  woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
-      if(analytics)
-        analytics.identify(self.getUserId(), {
-          name: user.currentUser.username,
-          email: user.currentUser.username,
-          createdAt: new Date().getTime()
-        });
-      $analytics.eventTrack('session', {name: user.currentUser.username});
+      self.track('session',{name: user.currentUser.username})
       if (typeof __insp != 'undefined')
         __insp.push(['identify', user.currentUser.username]);
       /*if($intercom)
@@ -64,6 +58,16 @@
       return (self.currentUser && self.currentUser.userId) ? self.currentUser.userId : 0;
     };
 
+    self.track = function (eventName,eventObject)
+    {
+      if (analytics)
+        analytics.identify(self.currentUser.username, {
+          name: self.currentUser.username,
+          email: self.currentUser.username,
+          createdAt: new Date().getTime()
+        });
+      $analytics.eventTrack(eventName ,eventObject);
+    }
   }
 
 })();

@@ -6,10 +6,7 @@
   function SignUpController(AuthService, $state, SessionService, $timeout){
 
     var self = this;
-    self.fullName = "yrv07";
-    self.email = "yrv07@devitout.com";
-    self.password = "123456";
-    self.repassword = "123456";
+
     (function init() {
       self.loading = false;
 
@@ -33,8 +30,9 @@
           AuthService.signIn({username: self.email, password: self.password})
             .success(function (data) {
               SessionService.setCredentials(data, self.email);
+
               if(analytics)
-                analytics.identify(SessionService.getUserId(), {
+                analytics.identify(self.email, {
                   name: self.fullName,
                   email: self.email,
                   createdAt: new Date().getTime()
