@@ -407,6 +407,7 @@
     function getDefaultValue(type) {
       switch (type) {
         case 'Numeric':
+        case 'SingleSelect':
           return 0; // Also floats, so can't use number
         case 'DateTime':
           return new Date();
@@ -439,7 +440,7 @@
           var newRow = {};
           data.fields.forEach(function (field) {
             if (field.type !== 'MultiSelect' && !field.form.hideInCreate)
-              newRow[field.databaseName] = getDefaultValue(field.type);
+              newRow[field.name] = getDefaultValue(field.type);
           });
           setTestRowData(newRow);
         })
