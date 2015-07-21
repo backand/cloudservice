@@ -7,8 +7,6 @@
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
-      /*if($intercom)
-        $intercom.update();*///yrv-intercome'$intercom',
     }());
 
     self.hideNav = function () {

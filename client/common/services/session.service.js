@@ -38,20 +38,11 @@
       self.track('session',{name: user.currentUser.username})
       if (typeof __insp != 'undefined')
         __insp.push(['identify', user.currentUser.username]);
-      /*if($intercom)
-        $intercom.boot({
-          app_id: CONSTS.IntercomAppId,
-          name: user.currentUser.username,
-          email: user.currentUser.username,
-          created_at: new Date().getTime()
-        });*/
     };
 
     self.ClearCredentials = function () {
       $cookieStore.remove('globals');
       self.currentUser = undefined;
-     /* if($intercom)
-        $intercom.shutdown();*/
     };
 
     self.getUserId = function () {

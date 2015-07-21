@@ -407,7 +407,6 @@
     function getDefaultValue(type) {
       switch (type) {
         case 'Numeric':
-        case 'SingleSelect':
           return 0; // Also floats, so can't use number
         case 'DateTime':
           return new Date();
@@ -416,6 +415,8 @@
           return 'text';
         case 'Boolean':
           return false;
+        case 'SingleSelect':
+          return null;
         default:
           return 'text';
       }
