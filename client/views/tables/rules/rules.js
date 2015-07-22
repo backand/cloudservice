@@ -509,6 +509,7 @@
         return self.getDataActionType();
     }, function (newVal, oldVal) {
       if (self.ace && self.ace.editor) {
+        self.clearTest(); //clear the data
         if (newVal === 'On Demand' || newVal === 'Delete') {
           self.ace.editor.setReadOnly(true);
           self.ace.message = 'Item data (read only)';
