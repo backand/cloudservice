@@ -34,13 +34,22 @@
 
       if (self.editRowData.id) {
         DataService.update(self.tableName, record, self.editRowData.id)
-          .then(function(){modalInstance.close})
-          .finally(function() {self.savingRow = false;});
+          .then(function(){
+            modalInstance.close();
+          })
+          .finally(function(){
+            self.savingRow = false;
+          });
       }
       else {
         DataService.post(self.tableName, record)
-          .then(function(){modalInstance.close.bind(this, {reopen: reopen})})
-          .finally(function() {self.savingRow = false;});
+          .then(function(){
+            //modalInstance.close.bind(this, {reopen: reopen})
+            modalInstance.close({reopen: reopen})
+          })
+          .finally(function(){
+            self.savingRow = false;
+          });
       }
     };
 

@@ -376,7 +376,7 @@
       });
 
       modalInstance.result.then(function (result) {
-        if (result.reopen) {
+        if (result && result.reopen) {
           self.newRow();
         }
         else {
