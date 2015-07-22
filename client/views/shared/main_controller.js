@@ -1,14 +1,12 @@
 (function () {
   'use strict';
 
-  function MainController($scope, $state, LayoutService, ConfirmationPopup, $intercom) {
+  function MainController($scope, $state, LayoutService, ConfirmationPopup) {
 
     var self = this;
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
-      if($intercom)
-        $intercom.update();
     }());
 
     self.hideNav = function () {
@@ -26,6 +24,6 @@
   }
 
   angular.module('backand')
-    .controller('MainController', ['$scope', '$state', 'LayoutService', 'ConfirmationPopup', '$intercom', MainController]);
+    .controller('MainController', ['$scope', '$state', 'LayoutService', 'ConfirmationPopup',  MainController]);
 
 })();

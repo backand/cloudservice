@@ -26,10 +26,18 @@
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
         .success(function (data) {
-          AuthService.trackSignupEvent(self.fullName, self.email);
+
           AuthService.signIn({username: self.email, password: self.password})
             .success(function (data) {
               SessionService.setCredentials(data, self.email);
+
+              if(analytics)
+                analytics.identify(self.email, {
+                  name: self.fullName,
+                  email: self.email,
+                  createdAt: new Date().getTime()
+                });
+              AuthService.trackSignupEvent(self.fullName, self.email);
               $state.go('apps.index');
             })
             .error(function (data) {

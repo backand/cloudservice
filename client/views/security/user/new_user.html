@@ -53,8 +53,8 @@
         <option ng-repeat="role in modal.roles">{{role}}</option>
       </select>
     </div>
-    <div class="text-danger form-group col-lg-12 col-md-12 col-sm-12" ng-if="!modal.NewUser">
-      ** User is already registered in another Backand app.
+    <div class="text-info form-group col-lg-12 col-md-12 col-sm-12" ng-if="!modal.NewUser">
+      ** No need for password, user is already registered in another Backand app.
       <ba-tooltip tooltip-text="Backand using single sign on, means user sign up once and can be assigned to many apps" tooltip-placement="right" class=""></ba-tooltip>
     </div>
 

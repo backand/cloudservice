@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function AuthService($http, CONSTS, SessionService, $window, $analytics, $intercom) {
+  function AuthService($http, CONSTS, SessionService, $window, $analytics) {
 
     var self = this;
 
@@ -82,7 +82,11 @@
         getSocialUrl(social, isSignup) +
         '&appname=' + CONSTS.mainAppName +
         '&returnAddress=' + returnAddress + st;
+
     };
+
+
+
 
     self.resetPassword = function (password, id) {
       return $http({
@@ -115,25 +119,19 @@
 
       var social = _.find(self.socials, {id: Number(sId)});
       var socialName = social ? social.name : 'self';
-
+      analytics.identify(email, {
+        name: fullName,
+        email: email,
+        signed_up_at: new Date().getTime()
+      });
       $analytics.eventTrack('SignedUp', {name: fullName});
       $analytics.eventTrack('SocialSignedUp', {provider: socialName});
 
-      if($intercom){
-        $intercom.boot({
-          app_id: CONSTS.IntercomAppId,
-          name: fullName,
-          email: email,
-          signed_up_at: new Date().getTime()
-        });
-        $intercom.trackEvent('SignedUp',{name: fullName});
-        $intercom.trackEvent('SocialSignedUp',{provider: socialName});
-      }
     }
 
   }
 
   angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', 'SessionService', '$window','$analytics', '$intercom', AuthService])
+    .service('AuthService', ['$http', 'CONSTS', 'SessionService', '$window','$analytics',  AuthService])
 
 })();

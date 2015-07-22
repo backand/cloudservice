@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, $intercom, $analytics) {
+  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, $analytics) {
 
     var self = this;
 
@@ -127,15 +127,25 @@
     }
 
     function getUsers() {
-      //var roleFilter = self.adminMode ? 'Admin' : _.without(_.map(self.roles, 'Name'),'Admin').join(',');
+      //var roleFilter = self.adminMode ? 'Admin' : '%';//_.without(_.map(self.roles, 'Name'),'Admin').join(',');
 
+      if(self.adminMode){
       SecurityService.getUsers(
         self.paginationOptions.pageSize,
         self.paginationOptions.pageNumber,
         self.sort,
-        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
+        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
+        '{fieldName:"Role", operator:"in", value:",Admin"}]')
         .then(usersSuccessHandler, errorHandler);
-
+      }
+      else {
+        SecurityService.getUsers(
+          self.paginationOptions.pageSize,
+          self.paginationOptions.pageNumber,
+          self.sort,
+          '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
+          .then(usersSuccessHandler, errorHandler);
+      }
         //The , before the filter is a bug
       //'[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
       //'{fieldName:"Role", operator:"in", value:",' + roleFilter + '"}]')
@@ -257,8 +267,8 @@
     };
 
     self.inviteAdmins = function () {
-      $intercom.trackEvent('AddedAdmin',{admins: self.invitedAdmins});
-      $analytics.eventTrack('AddedAdmin', {admins: self.invitedAdmins});
+
+      SessionService.track('AddedAdmin', {admins: self.invitedAdmins});
       self.inviteUsers(self.invitedAdmins, 'Admin');
     };
 
@@ -388,7 +398,6 @@
       '$scope',
       'SessionService',
       'AppsService',
-      '$intercom',
       '$analytics',
       SecurityUsers
     ]);

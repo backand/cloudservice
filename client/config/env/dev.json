@@ -2,7 +2,7 @@
   "mainAppName":"bko",
   "appUrl":"http://api.backand.co:8099",
   "playgroundUrl": "//s3-us-west-2.amazonaws.com/demoqa.backand.net/",
-  "IntercomAppId":"dvn78uv0",
+  "IntercomAppId":"dvn78u",
   "backandUserObject": "backandUsers",
   "backandRoleObject": "backandRoles"
 }

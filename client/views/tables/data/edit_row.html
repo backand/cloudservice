@@ -7,7 +7,7 @@
   <form role="form" ng-submit="EditRow.saveRow()" name="EditRow.editRowForm" novalidate>
     <fieldset>
       <div class="form-group" ng-repeat="item in EditRow.editRowData.entities" ng-if="!item.hide">
-        <label for="{{item.key}}_{{item.type}}">
+        <label for="{{item.key}}_{{item.type}}" style="text-transform: none;">
           {{EditRow.getLabel(item.key)}}<span ng-if="item.required"> *</span>
         </label>
         <div ng-switch on="item.type">

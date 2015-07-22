@@ -18,7 +18,7 @@
       'usSpinnerService',
       'ColumnsService',
       'CONSTS',
-      '$intercom',
+      'SessionService',
       '$analytics',
       'EscapeSpecialChars',
       RulesController]);
@@ -37,7 +37,7 @@
                            usSpinnerService,
                            ColumnsService,
                            CONSTS,
-                           $intercom,
+                           SessionService,
                            $analytics,
                            EscapeSpecialChars) {
 
@@ -151,8 +151,7 @@
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
-          $intercom.trackEvent('AddedRule',{rule: self.action.name});
-          $analytics.eventTrack('AddedRule', {rule: self.action.name});
+          SessionService.track('AddedRule', {rule: self.action.name});
 
           self.saving = false;
           self.isNewAction = false;
@@ -416,6 +415,8 @@
           return 'text';
         case 'Boolean':
           return false;
+        case 'SingleSelect':
+          return null;
         default:
           return 'text';
       }
@@ -440,7 +441,7 @@
           var newRow = {};
           data.fields.forEach(function (field) {
             if (field.type !== 'MultiSelect' && !field.form.hideInCreate)
-              newRow[field.databaseName] = getDefaultValue(field.type);
+              newRow[field.name] = getDefaultValue(field.type);
           });
           setTestRowData(newRow);
         })
