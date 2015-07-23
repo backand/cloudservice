@@ -370,7 +370,7 @@
               <div ng-class="{ 'has-error': rules.newRuleForm.code.$invalid }">
 
                 <div class="form-group ">
-                  <label for="code">JavaScript Code</label> <a ng-show="rules.editMode" href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
+                  <label for="code">JavaScript Code</label> <a href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
 
                   <input
                     ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"
