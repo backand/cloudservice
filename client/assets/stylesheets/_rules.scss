@@ -256,3 +256,11 @@
   margin: 2px;
   vertical-align: middle;
 }
+
+
+.js-code-help.angled-window  {
+  left: calc(50% - 200px);
+  .angled-window-body-content {
+    height: 600px;
+  }
+}

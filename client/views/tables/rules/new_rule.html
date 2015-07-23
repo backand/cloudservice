@@ -2,6 +2,17 @@
 <!--<p>Here you can define actions that will run on triggers (hooks).</p>-->
 <!--</div>-->
 <div ng-if="rules.action">
+  <div ng-cloak>
+    <angled-window ng-show="rules.showJsCodeHelpDialog"
+                   title="Help - JavaScript Code"
+                   id="help"
+                   grouping="w"
+                   close-function="rules.showJsCodeHelpDialog = false"
+                   rolled-up="false"
+                   css-class="js-code-help">
+      <div ng-include="'views/tables/rules/js_code_help.html'"></div>
+    </angled-window>
+  </div>
   <form name="rules.newRuleForm" insert-at-caret novalidate>
     <div class="header row">
       <div class="col-xs-9">
@@ -359,7 +370,7 @@
               <div ng-class="{ 'has-error': rules.newRuleForm.code.$invalid }">
 
                 <div class="form-group ">
-                  <label for="code">JavaScript Code</label>
+                  <label for="code">JavaScript Code</label> <a ng-show="rules.editMode" href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
 
                   <input
                     ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"

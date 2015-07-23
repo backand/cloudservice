@@ -50,6 +50,7 @@
     (function init() {
       self.isNewAction = false;
       self.items = [];
+      self.showJsCodeHelpDialog = false;
       getRules();
     }());
 
@@ -61,6 +62,7 @@
     };
 
     self.newAction = function (trigger) {
+      self.showJsCodeHelpDialog = false;
       self.action = {
         whereCondition: 'true',
         code: backandCallbackConstCode.start + '\n' +
@@ -79,6 +81,7 @@
     };
 
     self.showAction = function (actionName) {
+      self.showJsCodeHelpDialog = false;
       self.isNewAction = false;
       var action = getRuleByName(actionName);
       refreshAction(action)
@@ -88,6 +91,7 @@
     function refreshAction(action) {
       self.editMode = false;
       self.requestTestForm = false;
+      self.showJsCodeHelpDialog = false;
       $scope.modal.toggleGroup();
       if (self.newRuleForm)
         self.newRuleForm.$setPristine();
@@ -171,6 +175,7 @@
     }
 
     self.deleteAction = function () {
+      self.showJsCodeHelpDialog = false;
       ConfirmationPopup.confirm('Are sure you want to delete this rule?')
         .then(function (result) {
           if (result) {
