@@ -8,8 +8,17 @@
 
     var self = this;
 
-    self.currentApp = AppsService.currentApp;
-    usSpinnerService.spin("connecting-app-to-db");
+    (function init() {
+      usSpinnerService.spin("connecting-app-to-db");
+      self.currentApp = AppsService.currentApp;
+      if(self.currentApp.Name)
+        AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
+
+    }());
+
+    function setKeysInfo(data){
+      self.keys = data.data;
+    }
 
     self.goToKickstart = function () {
       if (_.isEmpty(AppsService.currentApp)) {
