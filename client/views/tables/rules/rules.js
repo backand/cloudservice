@@ -694,11 +694,17 @@
     };
 
     function setTestActionTitle() {
-      self.testActionTitle =
-        self.action ?
-        "Test " + self.getDataActionType() :
-        "Test Action";
-    }
+      var text = "Test Action";
+      if (self.action){
+        if(self.getDataActionType() === 'On Demand'){
+          text = "Test " + self.getDataActionType() + " Action";
+        }
+        else{
+          text = "Test " + self.getDataActionType() + " Trigger";
+        }
+      }
+      self.testActionTitle = text;
+    };
 
     self.copyUrlParams = {
       getUrl: getTestUrl,
