@@ -51,7 +51,6 @@
       self.isNewAction = false;
       self.items = [];
       self.showJsCodeHelpDialog = false;
-      //self.testActionTitle = "Test Action111";
       setTestActionTitle();
       getRules();
     }());
@@ -695,12 +694,11 @@
     };
 
     function setTestActionTitle() {
-      var text = "Test Action";
-      if (self.action)
-        text = "Test" + self.getDataActionType();
-
-      self.testActionTitle = text;
-    };
+      self.testActionTitle =
+        self.action ?
+        "Test " + self.getDataActionType() :
+        "Test Action";
+    }
 
     self.copyUrlParams = {
       getUrl: getTestUrl,
