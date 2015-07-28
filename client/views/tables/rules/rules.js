@@ -51,6 +51,8 @@
       self.isNewAction = false;
       self.items = [];
       self.showJsCodeHelpDialog = false;
+      //self.testActionTitle = "Test Action111";
+      setTestActionTitle();
       getRules();
     }());
 
@@ -122,6 +124,7 @@
         parameters: {}
       };
       getTestRow();
+      setTestActionTitle();
     };
 
     function getTestRow() {
@@ -689,6 +692,14 @@
     self.getDataActionType = function () {
       if (self.action)
         return self.dataActionToType[self.action.dataAction];
+    };
+
+    function setTestActionTitle() {
+      var text = "Test Action";
+      if (self.action)
+        text = "Test" + self.getDataActionType();
+
+      self.testActionTitle = text;
     };
 
     self.copyUrlParams = {
