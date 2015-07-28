@@ -47,13 +47,13 @@
      * register an event listener.
      * init the open modal
      */
-    (function init() {
+    function init() {
       self.isNewAction = false;
       self.items = [];
       self.showJsCodeHelpDialog = false;
       setTestActionTitle();
       getRules();
-    }());
+    }
 
     var defaultRule = {
       'viewTable': RulesService.tableId,
@@ -695,16 +695,15 @@
 
     function setTestActionTitle() {
       var text = "Test Action";
-      if (self.action){
-        if(self.getDataActionType() === 'On Demand'){
-          text = "Test " + self.getDataActionType() + " Action";
-        }
-        else{
-          text = "Test " + self.getDataActionType() + " Trigger";
-        }
+
+      if (self.action) {
+        var dataActionType = self.getDataActionType();
+        text = "Test " + dataActionType;
+        text += dataActionType === 'On Demand' ? " Action" : " Trigger";
       }
+
       self.testActionTitle = text;
-    };
+    }
 
     self.copyUrlParams = {
       getUrl: getTestUrl,
@@ -744,5 +743,7 @@
       NotificationService.add('error', message);
       self.test.testLoading = false;
     }
+
+    init();
   }
 }());
