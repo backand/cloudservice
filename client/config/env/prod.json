@@ -1,6 +1,6 @@
 {
   "mainAppName":"bko",
-  "appUrl":"https://api.backand.com:8079",
+  "appUrl":"https://api.backand.com",
   "playgroundUrl":"//s3.amazonaws.com/demo.backand.net/misc/rest-api/",
   "IntercomAppId":"ufkkj816",
   "backandUserObject": "backandUsers",

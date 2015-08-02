@@ -21,7 +21,7 @@
         usSpinnerService.stop("loading");
         if ((rejection.config.url + "").indexOf('token') === -1){
           if(rejection.data == null) {
-            NotificationService.add("error", "The service is temporary unavailable, please refresh the page in few seconds");
+            NotificationService.add("error", "An error occurred while communicating with the server, please refresh the page in few seconds");
           } else if (!avoidInterception('responseError', rejection)) {
             NotificationService.add("error", rejection.data);
           }
@@ -41,6 +41,8 @@
         if (httpPackage.config.method === 'POST' &&
           _.startsWith(httpPackage.config.url, CONSTS.appUrl + '/admin/myAppConnection/') &&
           _.startsWith(httpPackage.data, 'Invalid schema:')) return true;
+
+        if(_.startsWith(httpPackage.data, 'Blob is not ready yet')) return true;
       }
     }
   }
