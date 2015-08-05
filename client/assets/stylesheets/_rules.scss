@@ -264,3 +264,32 @@
     height: 600px;
   }
 }
+
+.ace-full-screen
+{
+  .ace_editor {
+    font-size: 15px;
+    height: 713px;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: calc(100% - 50px);
+  }
+  .full-screen-button {
+    z-index: 1000;
+    position: fixed;
+    top: 60px;
+    right: 30px;
+  }
+}
+
+.full-screen-button {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  z-index: 10;
+}
+
+

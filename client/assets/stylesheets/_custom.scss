@@ -486,6 +486,14 @@ fieldset[disabled] .form-control.ace-monokai {
     background-color: #272822;
 }
 
+.ace_editor {
+  resize: vertical;
+}
+
+.ace-diff-container .ace_editor {
+  resize: none;
+}
+
 button.with-margin {
   margin: 3px;
 }

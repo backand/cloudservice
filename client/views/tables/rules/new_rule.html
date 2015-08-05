@@ -369,7 +369,7 @@
 
               <div ng-class="{ 'has-error': rules.newRuleForm.code.$invalid }">
 
-                <div class="form-group ">
+                <div class="form-group" ng-class="{'ace-full-screen': aceFullScreen}">
                   <label for="code">JavaScript Code</label> <a href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
 
                   <input
@@ -383,6 +383,10 @@
                     ng-keydown="modal.handleTabKey($event)"
                     style="resize: vertical; ">
                   </input>
+                  <button ng-show="rules.editMode"
+                          class="btn btn-sm btn-primary full-screen-button"
+                          ng-click="aceFullScreen = !aceFullScreen">
+                    {{ aceFullScreen ? 'Back' : 'Full Screen' }}</button>
 
                   <div ng-messages="rules.newRuleForm.code.$error">
                     <div ng-message="pattern" class="text-danger">Please use the original function signature.</div>
