@@ -70,7 +70,6 @@
       })
     };
 
-
     self.getTestUrl = function (rule, test, actionType, tableName, debug) {
       var parameters = angular.copy(test.parameters);
       if (debug) {
@@ -96,6 +95,11 @@
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData) {
+      return $http(self.getTestHttp(rule, test, actionType, tableName, rowData, true))
+    };
+
+
+    self.getTestHttp = function (rule, test, actionType, tableName, rowData, debug) {
       var method;
       switch (actionType) {
         case 'Create':
@@ -115,7 +119,7 @@
 
       var http = {
         method: method,
-        url : self.getTestUrl(rule, test, actionType, tableName, true),
+        url : self.getTestUrl(rule, test, actionType, tableName, debug),
         headers: { AppName: self.appName }
       };
 
@@ -123,7 +127,7 @@
         http.data = rowData;
       }
 
-      return $http(http);
+      return http;
     };
 
   }

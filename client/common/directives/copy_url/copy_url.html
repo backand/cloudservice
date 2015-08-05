@@ -1,8 +1,21 @@
 <div>
-  <input type="text"
-         class="request-url"
-         ng-readonly="true"
-         ng-value="copyUrl.getUrl()">
+  <span ng-switch on="copyUrl.type">
+
+    <textarea ng-switch-when="textarea"
+              rows="7"
+              class="request-url"
+              ng-readonly="true"
+              ng-bind="copyUrl.getUrl()"
+              style="resize: vertical">
+    </textarea>
+
+    <input ng-switch-default
+           type="text"
+           class="request-url"
+           ng-readonly="true"
+           ng-value="copyUrl.getUrl()">
+  </span>
+
   <button clip-copy="copyUrl.url"
           clip-click="copyUrl.urlCopied = true"
           no-propogate

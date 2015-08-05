@@ -147,12 +147,13 @@
     self.saveAction = function (withTest) {
       self.saving = true;
       self.testUrl = '';
+      self.testHttp = '';
 
       var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
         .then(function () {
-          if (self.newRuleForm.inputParameters.$dirty)
+          if (!withTest && self.newRuleForm.inputParameters.$dirty)
             self.test.parameters = {};
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
@@ -548,8 +549,10 @@
       self.test.result = response.data;
       var guid = response.headers('Action-Guid');
       self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName());
+      self.testHttp = angular.toJson(RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName()), true);
       self.inputParametersForm.$setPristine();
       self.testUrlCopied = false;
+      self.testHttpCopied = false;
       AppLogService.getActionLog($stateParams.appName, guid)
         .then(showLog, errorHandler);
     }
@@ -711,6 +714,12 @@
       getTestForm: getRuleForm
     };
 
+    self.copyHttpParams = {
+      getUrl: getTestHttp,
+      getInputForm: getInputParametersForm,
+      getTestForm: getRuleForm
+    };
+
     function getInputParametersForm() {
       return self.inputParametersForm;
     }
@@ -721,6 +730,10 @@
 
     function getTestUrl() {
       return self.testUrl;
+    }
+
+    function getTestHttp() {
+      return self.testHttp;
     }
 
     self.codeRegex = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
