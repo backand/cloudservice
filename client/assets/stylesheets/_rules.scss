@@ -269,13 +269,12 @@
 {
   .ace_editor {
     font-size: 15px;
-    height: 713px;
     position: fixed;
     top: 50px;
     left: 0;
     z-index: 1000;
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 50px) !important;
   }
   .full-screen-button {
     z-index: 1000;

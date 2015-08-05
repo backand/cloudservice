@@ -372,7 +372,7 @@
                 <div class="form-group" ng-class="{'ace-full-screen': aceFullScreen}">
                   <label for="code">JavaScript Code</label> <a href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
 
-                  <input
+                  <div
                     ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"
                     class="form-control ace-rule"
                     name="code"
@@ -382,13 +382,15 @@
                     ng-pattern="rules.codeRegex"
                     ng-keydown="modal.handleTabKey($event)"
                     style="resize: vertical; ">
-                  </input>
+                  </div>
                   <button ng-show="rules.editMode"
                           class="btn btn-sm btn-primary full-screen-button"
                           ng-click="aceFullScreen = !aceFullScreen">
                     {{ aceFullScreen ? 'Back' : 'Full Screen' }}</button>
 
-                  <div ng-messages="rules.newRuleForm.code.$error">
+                  <!-- workaround: ui-ace doesn't work well in input, ng-pattern doesn't work on div-->
+                  <input ng-hide="true" name="codeHidden" ng-model="rules.action.code" ng-pattern="rules.codeRegex">
+                  <div ng-messages="rules.newRuleForm.codeHidden.$error">
                     <div ng-message="pattern" class="text-danger">Please use the original function signature.</div>
                   </div>
                 </div>
