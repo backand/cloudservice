@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function AuthService($http, CONSTS, SessionService, $window, $analytics) {
+  function AuthService($http, CONSTS, SessionService, SocialProvidersService, $window, $analytics) {
 
     var self = this;
 
@@ -50,11 +50,7 @@
       )
     };
 
-    self.socials = [
-      {name: 'github', label: 'Github', url: 'www.github.com', css: 'github', id:1},
-      {name: 'google', label: 'Google', url: 'www.google.com', css: 'google-plus', id:2},
-      {name: 'facebook', label: 'Facebook', url: 'www.facebook.com', css: 'facebook', id:3}
-    ];
+    self.socials = SocialProvidersService.socialProviders;
 
     function getSocialUrl(social, isSignup) {
       var action = isSignup ? 'up' : 'in';
@@ -132,6 +128,6 @@
   }
 
   angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', 'SessionService', '$window','$analytics',  AuthService])
+    .service('AuthService', ['$http', 'CONSTS', 'SessionService', 'SocialProvidersService', '$window', '$analytics', AuthService])
 
 })();
