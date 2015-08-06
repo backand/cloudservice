@@ -80,7 +80,7 @@
         return encodeURI(
           CONSTS.appUrl +
           self.addUserUrl +
-          '?parameters=' + JSON.stringify(parameters));
+          (debug ? '?parameters=' + JSON.stringify(parameters) : ''));
       }
 
       var rowId = test.rowId || '';
@@ -91,7 +91,7 @@
         tableName + '/' +
         rowId +
         ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') +
-        'parameters=' + JSON.stringify(parameters));
+        (debug ? '?parameters=' + JSON.stringify(parameters) : ''));
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData) {
@@ -119,12 +119,14 @@
 
       var http = {
         method: method,
-        url : self.getTestUrl(rule, test, actionType, tableName, debug),
-        headers: { AppName: self.appName }
+        url : self.getTestUrl(rule, test, actionType, tableName, debug)
       };
+      debug ?
+        http.headers = { AppName: self.appName } :
+        http.params = {parameters: test.parameters};
 
       if (actionType === 'Create' || actionType === 'Update') {
-        http.data = rowData;
+        http.data = angular.fromJson(rowData);
       }
 
       return http;

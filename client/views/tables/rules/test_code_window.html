@@ -12,7 +12,7 @@
            ng-model="rules.test.parameters[inputParam]">
   </div>
 
-  <hr>
+  <hr class="narrow-top-margin">
   <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
     <label>Item Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
     <input type="number"
@@ -39,12 +39,10 @@
     <div ng-show="rules.testRowObjectNotification" class="text-danger">{{rules.testRowObjectNotification}}</div>
     </div>
 
-  <hr>
-
   <div class="row">
     <div class="col-md-12">
       <button type="button"
-              style="margin-left: 20px;"
+              style="margin-left: 20px; margin-bottom: 3px"
               class="btn btn-success pull-right"
               data-style="expand-right" ladda="rules.test.testLoading"
               ng-disabled="!rules.allowTest() || !rules.allowTestEditMode"
@@ -64,17 +62,6 @@
     </div>
   </div>
 
-  <hr/>
-
-  <label>Request URL:</label>
-  <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
-
-  <br/>
-  <label>Request $http:</label>
-  <bknd-copy-url type="textarea" copy-url-params="rules.copyHttpParams"></bknd-copy-url>
-
-</ng-form>
-
 <div ng-if="rules.test.resultStatus">
   <hr/>
   <label>Response Status:</label>
@@ -90,7 +77,7 @@
 
 
 <div ng-if="rules.test.resultStatus">
-  <hr/>
+  <hr class="narrow-top-margin"/>
   <label>Debug Console:</label>
   <br/>
 
@@ -105,3 +92,12 @@
   </table>
 
 </div>
+
+  <label>Request URL:</label>
+  <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
+
+  <br/>
+  <label>Request $http:</label>
+  <bknd-copy-url type="textarea" copy-url-params="rules.copyHttpParams"></bknd-copy-url>
+
+</ng-form>

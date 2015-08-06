@@ -13,12 +13,13 @@
       <div ng-include="'views/tables/rules/js_code_help.html'"></div>
     </angled-window>
   </div>
-  <form name="rules.newRuleForm" insert-at-caret novalidate>
+  <form name="rules.newRuleForm" insert-at-caret novalidate
+        ng-model-options="{updateOn: 'default blur', debounce: {'default': 250, blur: 0}}">
     <div class="header row">
       <div class="col-xs-9">
         <div class="form-inline" name="rules.newRuleForm">
           <div class="form-group"
-               ng-class="{ 'has-error': rules.newRuleForm.ruleName.$invalid}">
+               ng-class="{'has-error': rules.newRuleForm.ruleName.$invalid}">
 
             <label for="ruleName"><h3 class="title">{{modal.title}} - </h3></label>
 
@@ -27,7 +28,6 @@
                    name="ruleName"
                    class="rule-name form-control"
                    ng-model="rules.action.name"
-                   ng-model-options="{debounce:{default:100}}"
                    required
                    ng-pattern="modal.namePattern"
                    placeholder="Name your action"
@@ -45,20 +45,20 @@
       </div>
       <div class="col-xs-3">
 
-        <button ng-show="rules.allowEditAction()"
+        <input type="button" ng-show="rules.allowEditAction()"
                 ng-click="rules.editAction()"
-                class="btn btn-primary pull-right with-margin">
-          Edit Action
-        </button>
+                class="btn btn-primary pull-right with-margin"
+          value="Edit Action">
+        </input>
 
         <!--<button ng-show="rules.action.__metadata && rules.editMode" ng-click="rules.deleteAction()" class="btn btn-danger pull-right with-margin">Delete</button>-->
         <div ng-show="rules.editMode">
-          <button ng-show="rules.newRuleForm.$pristine" ng-click="rules.doneEdit()"
-                  class="btn btn-default pull-right with-margin">Done
-          </button>
-          <button ng-show="!rules.newRuleForm.$pristine" ng-click="rules.cancelEdit()"
-                  class="btn btn-default pull-right with-margin">Cancel
-          </button>
+          <input type="button"
+                 ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
+                 class="btn btn-default pull-right with-margin"
+                 value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel' }}">
+          </input>
+
           <button ng-click="rules.saveAction()"
                   ng-disabled="rules.newRuleForm.$invalid"
                   class="btn btn-primary pull-right with-margin"
@@ -69,12 +69,12 @@
       <br/>
 
       <div class="col-xs-12">
-        <button name="testCode"
-                ng-show="!rules.isNewAction"
-                class="pull-right btn btn-success btn-xs with-margin"
-                ng-click="rules.toggleTestForm()">
-          {{ rules.requestTestForm ? '<< Hide Test' : 'Test Action >>'}}
-        </button>
+        <input type="button" name="testCode"
+               ng-show="!rules.isNewAction"
+               class="pull-right btn btn-success btn-xs with-margin"
+               ng-click="rules.toggleTestForm()"
+               value="{{ rules.requestTestForm ? '<< Hide Test' : 'Test Action >>'}}">
+        </input>
       </div>
     </div>
 
@@ -83,21 +83,20 @@
       <fieldset ng-disabled="!rules.editMode">
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{ 'has-error': rules.newRuleForm.eventTrigger.$invalid}">
+             ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}">
           <label>Event Trigger</label>
           <ba-tooltip
             tooltip-text="Select the event that will trigger the action: on-demand via REST API or by CRUD request"
             tooltip-placement="right" class=""></ba-tooltip>
           <select class="form-control"
                   ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
-                  ng-model="rules.action.dataAction"
-                  ng-model-options="{debounce:{default:100}}">
+                  ng-model="rules.action.dataAction">
             <option value="">Select trigger...</option>
           </select>
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.dataAction"
-             ng-class="{ 'has-error': rules.newRuleForm.action.$invalid}">
+             ng-class="{'has-error': rules.newRuleForm.action.$invalid}">
 
           <label for="workflowAction">Type</label>
           <ba-tooltip
@@ -109,11 +108,13 @@
                   required
                   ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
                   ng-model="rules.action.workflowAction">
+                  ng-model-options="{debounce: 0}">
             <option value="">Select what to do...</option>
           </select>
         </div>
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction">
+        <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction"
+             ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
           <label>Input Parameters</label>
           <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
                       class=""></ba-tooltip>
@@ -122,10 +123,11 @@
                  name="inputParameters"
                  class="form-control"
                  ng-model="rules.action.inputParameters"
-                 ng-model-options="{debounce:{default:100}}"
-                 ng-pattern**="/^[a-zA-Z0-9 ]*$/"
+                 ng-pattern="/^[\d\w\s,]*$/"
                  placeholder="input1,input2,....">
-          <span ng-show="">{{rules.action.inputParameters.$error.pattern}} Not a valid value!</span>
+          <div ng-messages="rules.newRuleForm.inputParameters.$error">
+            <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore</div>
+          </div>
         </div>
 
         <div ng-switch="rules.action.workflowAction">
@@ -137,7 +139,7 @@
 
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{ 'has-error': rules.newRuleForm.emailTo.$invalid || rules.newRuleForm.emailTo.$error.email}">
+                   ng-class="{'has-error': rules.newRuleForm.emailTo.$invalid || rules.newRuleForm.emailTo.$error.email}">
 
                 <label for="emailTo">To:</label>
                 <bknd-anchor anchor-params="rules.anchorParams"
@@ -153,7 +155,7 @@
               </div>
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{ 'has-error': rules.newRuleForm.emailCc.$invalid || rules.newRuleForm.emailCc.$error.email}">
+                   ng-class="{'has-error': rules.newRuleForm.emailCc.$invalid || rules.newRuleForm.emailCc.$error.email}">
                 <label for="emailCc">Cc:</label>
 
                 <bknd-anchor anchor-params="rules.anchorParams"
@@ -168,7 +170,7 @@
               </div>
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{ 'has-error': rules.newRuleForm.emailBcc.$invalid || rules.newRuleForm.emailBcc.$error.email}">
+                   ng-class="{'has-error': rules.newRuleForm.emailBcc.$invalid || rules.newRuleForm.emailBcc.$error.email}">
                 <label for="emailBcc">Bcc:</label>
 
                 <bknd-anchor anchor-params="rules.anchorParams"
@@ -183,7 +185,7 @@
               </div>
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{ 'has-error': rules.newRuleForm.emailFrom.$invalid || rules.newRuleForm.emailFrom.$error.email}">
+                   ng-class="{'has-error': rules.newRuleForm.emailFrom.$invalid || rules.newRuleForm.emailFrom.$error.email}">
                 <label for="emailFrom">From:</label>
 
                 <input type="text"
@@ -195,7 +197,7 @@
               </div>
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
-                   ng-class="{ 'has-error': rules.newRuleForm.emailSubject.$invalid}">
+                   ng-class="{'has-error': rules.newRuleForm.emailSubject.$invalid}">
 
                 <label for="emailSubject">Subject:</label>
 
@@ -213,7 +215,7 @@
               </div>
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
-                   ng-class="{ 'has-error': rules.newRuleForm.notifyMessage.$invalid }">
+                   ng-class="{'has-error': rules.newRuleForm.notifyMessage.$invalid}">
 
                 <label for="emailMessage">Message:</label>
 
@@ -236,7 +238,7 @@
             <div ng-switch-when="Validate">
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{ 'has-error': rules.newRuleForm.validateExp1.$invalid }">
+                   ng-class="{'has-error': rules.newRuleForm.validateExp1.$invalid}">
                 <label for="validateExp1">Expression:</label>
           <textarea class="form-control"
                     required
@@ -308,7 +310,7 @@
             <div ng-switch-when="Execute">
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
-                   ng-class="{ 'has-error': rules.newRuleForm.sqlCommand.$invalid}">
+                   ng-class="{'has-error': rules.newRuleForm.sqlCommand.$invalid}">
 
                 <label for="sqlCommand">Sql Script</label>
                 <ba-tooltip tooltip-text="The script uses SQL syntax and allows you to update other tables"
@@ -330,7 +332,7 @@
               </div>
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
-                   ng-class="{ 'has-error': rules.newRuleForm.sqlMessage.$invalid}">
+                   ng-class="{'has-error': rules.newRuleForm.sqlMessage.$invalid}">
                 <label for="sqlMessage">Message:</label>
                 <ba-tooltip tooltip-text="Returned message in case the sql script failed" tooltip-placement="right"
                             class=""></ba-tooltip>
@@ -346,7 +348,7 @@
             <div ng-switch-when="WebService">
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
-                   ng-class="{ 'has-error': rules.newRuleForm.webService.$invalid }">
+                   ng-class="{'has-error': rules.newRuleForm.webService.$invalid}">
 
                 <label for="webService">Web Service URL:</label>
 
@@ -367,9 +369,9 @@
             <!--code-->
             <div ng-switch-when="JavaScript">
 
-              <div ng-class="{ 'has-error': rules.newRuleForm.code.$invalid }">
+              <div ng-class="{'has-error': rules.newRuleForm.code.$invalid}">
 
-                <div class="form-group" ng-class="{'ace-full-screen': aceFullScreen}">
+                <div class="form-group" ng-class="{'ace-full-screen': aceFullScreen, 'ace-show-test': rules.requestTestForm}">
                   <label for="code">JavaScript Code</label> <a href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
 
                   <div
@@ -383,10 +385,10 @@
                     ng-keydown="modal.handleTabKey($event)"
                     style="resize: vertical; ">
                   </div>
-                  <button ng-show="rules.editMode"
-                          class="btn btn-sm btn-primary full-screen-button"
-                          ng-click="aceFullScreen = !aceFullScreen">
-                    {{ aceFullScreen ? 'Back' : 'Full Screen' }}</button>
+                  <input type="button" ng-show="rules.editMode"
+                         class="btn btn-sm btn-primary full-screen-button"
+                         ng-click="aceFullScreen = !aceFullScreen"
+                         value="{{ aceFullScreen ? 'Back' : 'Full Screen' }}">
 
                   <!-- workaround: ui-ace doesn't work well in input, ng-pattern doesn't work on div-->
                   <input ng-hide="true" name="codeHidden" ng-model="rules.action.code" ng-pattern="rules.codeRegex">
@@ -399,7 +401,7 @@
             <!-- end switch -->
           </div>
           <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction"
-               ng-class="{ 'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty }">
+               ng-class="{'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty}">
             <label for="whereCondition">Where Condition</label>
             <ba-tooltip tooltip-text="SQL where clause that determines if the action will be performed"
                         tooltip-placement="right" class=""></ba-tooltip>
@@ -416,7 +418,6 @@
                  class="form-control ace-action-where"
                  placeholder=""
                  ng-model="rules.action.whereCondition"
-                 ng-model-options="{debounce:{default:100}}"
                  style="resize: vertical">
             </div>
             <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
@@ -426,14 +427,17 @@
             <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid" ng-click="rules.saveAction()"
                     ladda="rules.saving" data-style="expand-right">Save
             </button>
-            <button class="btn btn-danger pull-left" ng-click="rules.deleteAction()" ng-if="rules.action.__metadata">
-              Delete
-            </button>
-            <button ng-show="rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.doneEdit()">Done
-            </button>
-            <button ng-show="!rules.newRuleForm.$pristine" class="btn btn-default" ng-click="rules.cancelEdit()">
-              Cancel
-            </button>
+            <input type="button"
+                   class="btn btn-danger pull-left"
+                   ng-click="rules.deleteAction()"
+                   ng-if="rules.action.__metadata"
+                   value="Delete">
+            </input>
+            <input type="button"
+                   class="btn btn-default"
+                   ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
+                   value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">
+            </input>
           </div>
         </div>
       </fieldset>

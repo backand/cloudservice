@@ -549,12 +549,21 @@
       self.test.result = response.data;
       var guid = response.headers('Action-Guid');
       self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName());
-      self.testHttp = angular.toJson(RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName()), true);
+      self.testHttp = stringifyHttp(RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData));
       self.inputParametersForm.$setPristine();
       self.testUrlCopied = false;
       self.testHttpCopied = false;
       AppLogService.getActionLog($stateParams.appName, guid)
         .then(showLog, errorHandler);
+    }
+
+    function stringifyHttp (http) {
+      var stringifiedHttp = 'return $http (' + angular.toJson(http, true) + ');';
+      stringifiedHttp = stringifiedHttp.replace(/"([\d\w\s]+)"\s*:/g, '$1:');
+      stringifiedHttp = stringifiedHttp.replace(/"/g, "'");
+      stringifiedHttp = stringifiedHttp.replace("'https://api.backand.com", "Backand.getApiUrl() + '");
+
+      return stringifiedHttp;
     }
 
     function showLog(response) {
