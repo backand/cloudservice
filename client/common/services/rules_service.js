@@ -90,7 +90,7 @@
         ((actionType === 'On Demand') ? 'action/' : '') +
         tableName + '/' +
         rowId +
-        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') +
+        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '') +
         (debug ? '?parameters=' + JSON.stringify(parameters) : ''));
     };
 
