@@ -114,16 +114,28 @@
       })
     };
 
-    self.getQueryUrl = function (queryName, parameters) {
-      return encodeURI(CONSTS.appUrl + baseUrl + 'data/' + queryName + '?parameters=' + JSON.stringify(parameters));
+    self.getQueryUrl = function (queryName, parameters, withParams) {
+      return encodeURI(CONSTS.appUrl + baseUrl + 'data/' + queryName +
+        ((withParams && !_.isEmpty(parameters)) ? '?parameters=' + JSON.stringify(parameters) : ''));
     };
 
-    self.runQuery = function (currentApp, queryName, parameters) {
-      return $http({
+    self.getQueryHttp = function (queryName, parameters, runQuery) {
+      var http = {
         method: 'GET',
         url: self.getQueryUrl(queryName, parameters),
-        headers: { AppName: currentApp }
-      });
+        params: {
+          parameters: parameters
+        }
+      };
+
+      runQuery ? http.headers = { AppName: currentApp } : null;
+
+      return http;
+
+    };
+
+    self.runQuery = function (queryName, parameters) {
+      return $http(self.getQueryHttp(queryName, parameters, true));
     }
 
   }

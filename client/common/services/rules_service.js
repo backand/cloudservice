@@ -70,7 +70,8 @@
       })
     };
 
-    self.getTestUrl = function (rule, test, actionType, tableName, debug) {
+    self.getTestUrl = function (rule, test, actionType, tableName, debug, fromGetHttp) {
+      var onDemand = actionType === 'On Demand';
       var parameters = angular.copy(test.parameters);
       if (debug) {
         parameters['$$debug$$'] =  true;
@@ -84,14 +85,22 @@
       }
 
       var rowId = test.rowId || '';
-      return encodeURI(
-        CONSTS.appUrl +
+
+      var uri = CONSTS.appUrl +
         self.tableRuleUrl +
-        ((actionType === 'On Demand') ? 'action/' : '') +
+        (onDemand ? 'action/' : '') +
         tableName + '/' +
-        rowId +
-        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') +
-        (debug ? 'parameters=' + JSON.stringify(parameters) : ''));
+        rowId;
+
+      if (fromGetHttp && !debug) {
+        return encodeURI(uri);
+      }
+
+      return encodeURI(uri +
+        ((onDemand || debug) ? '?' : '') +
+        ( onDemand ? 'name=' + rule.name : '') +
+        ((onDemand && !_.isEmpty(parameters)) ? '&' : '') +
+        (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData) {
@@ -119,11 +128,14 @@
 
       var http = {
         method: method,
-        url : self.getTestUrl(rule, test, actionType, tableName, debug)
+        url : self.getTestUrl(rule, test, actionType, tableName, debug, true)
       };
       debug ?
         http.headers = { AppName: self.appName } :
-        http.params = {parameters: test.parameters};
+        http.params = {
+          name: rule.name,
+          parameters: test.parameters
+        };
 
       if (actionType === 'Create' || actionType === 'Update') {
         http.data = angular.fromJson(rowData);

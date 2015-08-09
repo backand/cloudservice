@@ -43,6 +43,12 @@
       getTestForm: getQueryForm
     };
 
+    self.copyHttpParams = {
+      getUrl: getQueryHttp,
+      getInputForm: getInputParametersForm,
+      getTestForm: getQueryForm
+    };
+
     function getInputParametersForm () {
       return self.inputParametersForm;
     }
@@ -53,6 +59,10 @@
 
     function getQueryUrl () {
       return self.queryUrl;
+    }
+
+    function getQueryHttp () {
+      return self.queryHttp;
     }
 
     init();
@@ -123,6 +133,7 @@
     self.saveQuery = function () {
       self.loading = true;
       self.queryUrl = '';
+      self.queryHttp = '';
       self.openParamsModal = false;
       self.query.workspaceID = Number(self.currentST);
 
@@ -243,7 +254,8 @@
       if (!self.query.__metadata)
         return;
       self.testLoading = true;
-      DbQueriesService.runQuery(self.appName, self.query.name, self.inputValues).then(successQueryHandler, errorHandler);
+      DbQueriesService.runQuery(self.query.name, self.inputValues)
+        .then(successQueryHandler, errorHandler);
     };
 
     function successQueryHandler(data) {
@@ -259,11 +271,21 @@
       });
       self.gridOptions.totalItems = data.data.length;
 
-      self.queryUrl = DbQueriesService.getQueryUrl(self.query.name, self.inputValues);
+      self.queryUrl = DbQueriesService.getQueryUrl(self.query.name, self.inputValues, true);
+      self.queryHttp = stringifyHttp(DbQueriesService.getQueryHttp(self.query.name, self.inputValues));
       self.inputParametersForm.$setPristine();
       self.queryUrlCopied = false;
 
       self.testLoading = false;
+    }
+
+    function stringifyHttp (http) {
+      var stringifiedHttp = 'return $http (' + angular.toJson(http, true) + ');';
+      stringifiedHttp = stringifiedHttp.replace(/"([\d\w\s]+)"\s*:/g, '$1:');
+      stringifiedHttp = stringifiedHttp.replace(/"/g, "'");
+      stringifiedHttp = stringifiedHttp.replace("'https://api.backand.com", "Backand.getApiUrl() + '");
+
+      return stringifiedHttp;
     }
 
     function errorHandler(error, message) {

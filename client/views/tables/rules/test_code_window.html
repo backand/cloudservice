@@ -93,8 +93,10 @@
 
 </div>
 
-  <label>Request URL:</label>
-  <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
+  <div ng-show="rules.getDataActionType() === 'On Demand'">
+    <label>Request URL:</label>
+    <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
+  </div>
 
   <br/>
   <label>Request $http:</label>
