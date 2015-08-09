@@ -8,7 +8,8 @@
     return {
       restrict: 'E',
       scope: {
-        copyUrlParams: '='
+        copyUrlParams: '=',
+        type: '@'
       },
       bindToController: true,
       controllerAs: 'copyUrl',

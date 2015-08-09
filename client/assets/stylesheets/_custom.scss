@@ -486,7 +486,15 @@ fieldset[disabled] .form-control.ace-monokai {
     background-color: #272822;
 }
 
-button.with-margin {
+.ace_editor {
+  resize: vertical;
+}
+
+.ace-diff-container .ace_editor {
+  resize: none;
+}
+
+button.with-margin, input.with-margin{
   margin: 3px;
 }
 
@@ -530,4 +538,12 @@ button.with-margin {
   .iframe-substitute-submessage {
     font-size: 22px;
   }
+}
+
+.input-group-btn .btn {
+  height: 34px;
+}
+
+hr.narrow-top-margin {
+  margin-top: 10px;
 }

@@ -47,12 +47,13 @@
      * register an event listener.
      * init the open modal
      */
-    (function init() {
+    function init() {
       self.isNewAction = false;
       self.items = [];
       self.showJsCodeHelpDialog = false;
+      setTestActionTitle();
       getRules();
-    }());
+    }
 
     var defaultRule = {
       'viewTable': RulesService.tableId,
@@ -122,6 +123,7 @@
         parameters: {}
       };
       getTestRow();
+      setTestActionTitle();
     };
 
     function getTestRow() {
@@ -145,12 +147,13 @@
     self.saveAction = function (withTest) {
       self.saving = true;
       self.testUrl = '';
+      self.testHttp = '';
 
       var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
         .then(function () {
-          if (self.newRuleForm.inputParameters.$dirty)
+          if (!withTest && self.newRuleForm.inputParameters.$dirty)
             self.test.parameters = {};
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
@@ -546,10 +549,21 @@
       self.test.result = response.data;
       var guid = response.headers('Action-Guid');
       self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName());
+      self.testHttp = stringifyHttp(RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData));
       self.inputParametersForm.$setPristine();
       self.testUrlCopied = false;
+      self.testHttpCopied = false;
       AppLogService.getActionLog($stateParams.appName, guid)
         .then(showLog, errorHandler);
+    }
+
+    function stringifyHttp (http) {
+      var stringifiedHttp = 'return $http (' + angular.toJson(http, true) + ');';
+      stringifiedHttp = stringifiedHttp.replace(/"([\d\w\s]+)"\s*:/g, '$1:');
+      stringifiedHttp = stringifiedHttp.replace(/"/g, "'");
+      stringifiedHttp = stringifiedHttp.replace("'https://api.backand.com", "Backand.getApiUrl() + '");
+
+      return stringifiedHttp;
     }
 
     function showLog(response) {
@@ -691,8 +705,26 @@
         return self.dataActionToType[self.action.dataAction];
     };
 
+    function setTestActionTitle() {
+      var text = "Test Action";
+
+      if (self.action) {
+        var dataActionType = self.getDataActionType();
+        text = "Test " + dataActionType;
+        text += dataActionType === 'On Demand' ? " Action" : " Trigger";
+      }
+
+      self.testActionTitle = text;
+    }
+
     self.copyUrlParams = {
       getUrl: getTestUrl,
+      getInputForm: getInputParametersForm,
+      getTestForm: getRuleForm
+    };
+
+    self.copyHttpParams = {
+      getUrl: getTestHttp,
       getInputForm: getInputParametersForm,
       getTestForm: getRuleForm
     };
@@ -707,6 +739,10 @@
 
     function getTestUrl() {
       return self.testUrl;
+    }
+
+    function getTestHttp() {
+      return self.testHttp;
     }
 
     self.codeRegex = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
@@ -729,5 +765,7 @@
       NotificationService.add('error', message);
       self.test.testLoading = false;
     }
+
+    init();
   }
 }());

@@ -139,23 +139,6 @@
               </label>
               <div class="field-description">When enabled, users will get email verification after sign-up</div>
             </div>
-            <div class="form-group">
-              <label for="inputUrl1" class="control-label strong">API Sign-up Token</label>
-              <div class="form-group">
-                <div class="input-group">
-                  <input type="text" class="form-control" id="signupkey"
-                       ng-readonly="true"
-                       ng-model="auth.keys.signup">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" clip-copy="auth.keys.signup">Copy</button>
-                  </span>
-                </div>
-                <div class="field-description">
-                  Use this token when registering a user via the sign-up REST API URL -
-                  /user/signup (put it in headers parameter SignUpToken)
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </form>

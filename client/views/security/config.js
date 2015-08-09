@@ -21,6 +21,16 @@
         controller: 'SecurityWorkspace as securityws',
         templateUrl: 'views/security/workspace/workspace.html'
       })
+      .state('security.keys', {
+        url: '/social_and_keys',
+        controller: 'KeysController as keys',
+        templateUrl: 'views/security/social_and_keys/social_and_keys.html',
+        resolve: {
+          socialProviders: ['SocialProvidersService', function (SocialProvidersService) {
+            return SocialProvidersService.socialProviders;
+          }]
+        }
+      })
       .state('security.auth', {
         url: '/auth',
         controller: 'SecurityAuth as auth',
