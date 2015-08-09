@@ -71,6 +71,7 @@
     };
 
     self.getTestUrl = function (rule, test, actionType, tableName, debug) {
+      var onDemand = actionType === 'On Demand';
       var parameters = angular.copy(test.parameters);
       if (debug) {
         parameters['$$debug$$'] =  true;
@@ -87,10 +88,12 @@
       return encodeURI(
         CONSTS.appUrl +
         self.tableRuleUrl +
-        ((actionType === 'On Demand') ? 'action/' : '') +
+        (onDemand ? 'action/' : '') +
         tableName + '/' +
         rowId +
-        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') +
+        ((onDemand || debug) ? '?' : '') +
+        (onDemand ? 'name=' + rule.name : '') +
+        ((onDemand && debug) ? '&' : '') +
         (debug ? 'parameters=' + JSON.stringify(parameters) : ''));
     };
 
