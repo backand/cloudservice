@@ -90,8 +90,8 @@
         ((actionType === 'On Demand') ? 'action/' : '') +
         tableName + '/' +
         rowId +
-        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '') +
-        (debug ? '?parameters=' + JSON.stringify(parameters) : ''));
+        ((actionType === 'On Demand') ? '?name=' + rule.name + '&' : '?') +
+        (debug ? 'parameters=' + JSON.stringify(parameters) : ''));
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData) {
