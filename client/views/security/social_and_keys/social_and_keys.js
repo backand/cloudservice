@@ -19,7 +19,8 @@
     self.displayedTokens = [
       {
         name: 'general',
-        label: 'General'
+        label: 'Master',
+        description: 'Use this token to access without username and password. The master token must sent with the user\'s token'
       },
       {
         name: 'signup',

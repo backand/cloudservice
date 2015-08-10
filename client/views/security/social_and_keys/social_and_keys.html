@@ -1,59 +1,10 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> Social Sign-in </strong>
-
+      <strong> Social & Keys </strong>
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
-      <form name="keys.socialForm" novalidate ng-model-options="{updateOn: 'blur default', debounce: {'default': 250, 'blur': 0 }}">
-        <div class="field-group" ng-repeat="socialProvider in keys.socialProviders">
-          <div class="group-inner">
-            <div class="social-provider-title" ng-class="socialProvider.name + '-title'">
-              <label class="strong" for="{{::socialProvider.name}}-switch">
-                <i class="fa social-provider-icon" ng-class="'fa-' + socialProvider.css"></i> <span>{{ ::socialProvider.label }}</span></label>
-              <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-                <input id="{{::socialProvider.name}}-switch"
-                       type="checkbox"
-                       ng-model="socialProvider.enable"
-                       ng-change="keys.updateSettings()">
-                <i></i>
-              </label>
-              <!--<div class="field-description">Allow anonymous users to access the application</div>-->
-            </div>
-            <div class="row" ng-show="socialProvider.enable">
-              <div class="col-md-5 social-keys-container">
-                <div class="form-group">
-                  <label for="{{::socialProvider.name}}-secret-key" class="control-label">{{ ::socialProvider.label }} Secret Key</label>
-                  <input type="text"
-                         class="form-control"
-                         id="{{::socialProvider.name}}-secret-key"
-                         ng-model="socialProvider.clientSecret"
-                         ng-change="keys.updateSettings()">
-                </div>
-                <div class="form-group">
-                  <label for="{{::socialProvider.name}}-api-key" class="control-label">{{ ::socialProvider.label }} Secret Key</label>
-                  <input type="text"
-                         class="form-control"
-                         id="{{::socialProvider.name}}-api-key"
-                         ng-model="socialProvider.clientId"
-                         ng-change="keys.updateSettings()">
-                </div>
-              </div>
-              <div class="col-md-5 col-md-offset-2">
-                <div class="social-provider-container">
-                  <div class="social-provider-help">
-                    <div class="social-provider-help-title">Configuring Your {{socialProvider.label}} App</div>
-                    To get started with {{ ::socialProvider.label }} authentication,
-                    you need to first create a new {{ ::socialProvider.label }} application.
-                    <a href="{{ ::socialProvider.helpUrl}}" target="_blank">Learn more</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
       <div class="field-group" ng-repeat="displayedToken in keys.displayedTokens">
         <div class="group-inner">
           <div class="form-group">
@@ -78,6 +29,54 @@
           </div>
         </div>
       </div>
+      <form name="keys.socialForm" novalidate ng-model-options="{updateOn: 'blur default', debounce: {'default': 250, 'blur': 0 }}">
+        <div class="field-group" ng-repeat="socialProvider in keys.socialProviders">
+          <div class="group-inner">
+            <div class="social-provider-title" ng-class="socialProvider.name + '-title'">
+              <label class="strong" for="{{::socialProvider.name}}-switch">
+                <i class="fa social-provider-icon" ng-class="'fa-' + socialProvider.css"></i> <span>{{ ::socialProvider.label }}</span></label>
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                <input id="{{::socialProvider.name}}-switch"
+                       type="checkbox"
+                       ng-model="socialProvider.enable"
+                       ng-change="keys.updateSettings()">
+                <i></i>
+              </label>
+              <!--<div class="field-description">Allow anonymous users to access the application</div>-->
+            </div>
+            <div class="row" ng-show="socialProvider.enable">
+              <div class="col-md-5 social-keys-container">
+                <div class="form-group">
+                  <label for="{{::socialProvider.name}}-secret-key" class="control-label">Client secret</label>
+                  <input type="text"
+                         class="form-control"
+                         id="{{::socialProvider.name}}-secret-key"
+                         ng-model="socialProvider.clientSecret"
+                         ng-change="keys.updateSettings()">
+                </div>
+                <div class="form-group">
+                  <label for="{{::socialProvider.name}}-api-key" class="control-label">Client ID</label>
+                  <input type="text"
+                         class="form-control"
+                         id="{{::socialProvider.name}}-api-key"
+                         ng-model="socialProvider.clientId"
+                         ng-change="keys.updateSettings()">
+                </div>
+              </div>
+              <div class="col-md-5 col-md-offset-2">
+                <div class="social-provider-container">
+                  <div class="social-provider-help">
+                    <div class="social-provider-help-title">Configuring Your {{socialProvider.label}} App</div>
+                    To get started with {{ ::socialProvider.label }} authentication,
+                    you need to first create a new {{ ::socialProvider.label }} application.
+                    <a href="{{ ::socialProvider.helpUrl}}" target="_blank">Learn more</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </section>
 </section>
