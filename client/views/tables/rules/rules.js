@@ -124,6 +124,7 @@
       };
       getTestRow();
       setTestActionTitle();
+      buildParametersDictionary();
     };
 
     function getTestRow() {
@@ -138,7 +139,7 @@
     };
 
     self.cancelEdit = function () {
-      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
+      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
         .then(function (result) {
           result ? refreshAction(self.action) : false;
         });
@@ -223,7 +224,7 @@
 
     $scope.modal = {
       title: 'Action',
-      namePattern: /^\w+[\w ].*$/,
+      namePattern: /^\w+[\w ]*$/,
       dataActions: RulesService.dataActions,
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
@@ -335,8 +336,11 @@
     function buildParametersDictionary() {
       var keys = [];
       if (self.action.inputParameters) {
-        angular.forEach(self.action.inputParameters.replace(/ /g, '').split(','), function (param) {
-          keys.push({token: param, label: param})
+        self.test.inputParametersArray = self.action.inputParameters.replace(/ /g, '').split(',');
+        self.test.parameters = {};
+        angular.forEach(self.test.inputParametersArray, function (param) {
+          keys.push({token: param, label: param});
+          self.test.parameters[param] = '';
         })
       }
       self.dictionaryItems.parameters = keys;
@@ -498,12 +502,19 @@
       self.testRowObjectNotification = errorMessage;
     }
 
-    self.getInputParameters = function () {
-      var inputParameters = [];
-      if (self.action && self.action.inputParameters)
-        inputParameters = self.action.inputParameters.replace(/ /g, '').split(',');
-      return inputParameters;
-    };
+    //self.getInputParameters = function () {
+    //  var inputParameters = [];
+    //  if (self.action && self.action.inputParameters)
+    //    inputParameters = self.action.inputParameters.replace(/ /g, '').split(',');
+    //  //check if the parameter exists or not
+    //  //angular.forEach(self.test.parameters, function(param){
+    //  //  var ip = _.find(inputParameters, function(inputParam){ return inputParam === param });
+    //  //  if(!ip)
+    //  //    self.test.parameters.splice(param,1);
+    //  //});
+    //  self.test.parameters = angular.copy(inputParameters);
+    //};
+
 
     self.ace = {
       onLoad: function (_editor) {

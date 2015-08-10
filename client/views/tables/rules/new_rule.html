@@ -37,7 +37,8 @@
 
             <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">The action name cannot be modified.</span>
 
-            <div ng-show="rules.newRuleForm.ruleName.$error.pattern" class="input-error">no spaces or %$#@^&* allowed
+            <div ng-messages="rules.newRuleForm.ruleName.$error">
+              <div ng-message="pattern" class="text-danger">Use only letters, numbers, space or underscore</div>
             </div>
 
           </div>

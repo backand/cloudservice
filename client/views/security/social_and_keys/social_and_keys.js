@@ -35,6 +35,8 @@
         settings.forEach(function (setting) {
           socialProvider[setting] = AppsService.currentApp.settings[getSettingKey(setting, socialProvider)];
         });
+        syncSocialKeys(socialProvider);
+        setUseBackandApp(socialProvider);
       })
     }
 
@@ -48,11 +50,37 @@
       self.tokens = data.data;
     }
 
+    self.useBackandAppChange = function (socialProvider) {
+      if (socialProvider.useBackandApp) {
+        socialProvider.clientSecret = socialProvider.clientId = null;
+      }
+      else {
+        angular.extend(socialProvider, socialProvider.temp);
+      }
+      self.updateSettings();
+    };
+
+    function syncSocialKeys (socialProvider) {
+      if (socialProvider.clientSecret && socialProvider.clientId) {
+        socialProvider.temp = {
+          clientSecret: socialProvider.clientSecret,
+          clientId: socialProvider.clientId
+        }
+      }
+    }
+
+    function setUseBackandApp (socialProvider) {
+      if (!socialProvider.clientSecret && !socialProvider.clientId) {
+        socialProvider.useBackandApp = true;
+      }
+    }
+
     self.updateSettings = function () {
       self.errorUpdate = false;
       var appSettings = {};
 
       self.socialProviders.forEach(function (socialProvider) {
+        syncSocialKeys(socialProvider);
         settings.forEach(function (setting) {
           appSettings[getSettingKey(setting, socialProvider)] = socialProvider[setting];
         });
