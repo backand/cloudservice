@@ -138,7 +138,7 @@
     };
 
     self.cancelEdit = function () {
-      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
+      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
         .then(function (result) {
           result ? refreshAction(self.action) : false;
         });
@@ -223,7 +223,7 @@
 
     $scope.modal = {
       title: 'Action',
-      namePattern: /^\w+[\w ].*$/,
+      namePattern: /^\w+[\w ]*$/,
       dataActions: RulesService.dataActions,
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},

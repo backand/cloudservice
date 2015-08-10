@@ -24,9 +24,22 @@
             <div class="row" ng-show="socialProvider.enable">
               <div class="col-md-5 social-keys-container">
                 <div class="form-group">
+                  <label for="{{::socialProvider.name}}-use-backand">
+                    Use Back& app for signing in with {{ ::socialProvider.label }}
+                  </label>
+                  <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                    <input id="{{::socialProvider.name}}-use-backand"
+                           type="checkbox"
+                           ng-model="socialProvider.useBackandApp"
+                           ng-change="keys.useBackandAppChange(socialProvider)">
+                    <i></i>
+                  </label>
+                </div>
+                <div class="form-group">
                   <label for="{{::socialProvider.name}}-secret-key" class="control-label">{{ ::socialProvider.label }} Secret Key</label>
                   <input type="text"
                          class="form-control"
+                         ng-disabled="socialProvider.useBackandApp"
                          id="{{::socialProvider.name}}-secret-key"
                          ng-model="socialProvider.clientSecret"
                          ng-change="keys.updateSettings()">
@@ -35,6 +48,7 @@
                   <label for="{{::socialProvider.name}}-api-key" class="control-label">{{ ::socialProvider.label }} Secret Key</label>
                   <input type="text"
                          class="form-control"
+                         ng-disabled="socialProvider.useBackandApp"
                          id="{{::socialProvider.name}}-api-key"
                          ng-model="socialProvider.clientId"
                          ng-change="keys.updateSettings()">
