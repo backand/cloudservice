@@ -122,6 +122,7 @@
         return {
           minWidth: 80,
           name: column,
+          displayName: column,
           cellTemplate: getCellEditTemplate(columnInfo)
         }
       });

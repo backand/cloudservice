@@ -224,7 +224,6 @@
 
     $scope.modal = {
       title: 'Action',
-      namePattern: /^\w+[\w ]*$/,
       dataActions: RulesService.dataActions,
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
@@ -756,7 +755,12 @@
       return self.testHttp;
     }
 
-    self.codeRegex = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
+    self.namePattern = /^\w+[\w ]*$/;
+    // list of parameters:
+    // each parameter starts with letter or '_' and may contain also numbers
+    // the list should start and end with parameters, delimited by ',', allowing spaces (not within a parameter)
+    self.paramsPattern = /^\s*(?:(?:[A-Za-z_]\w*)(?:\s*,\s*)?)*(?:(?:[A-Za-z_]\w*)\s*)$/;
+    self.codePattern = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
 
     var backandCallbackConstCode = {
       start: '/* globals\n\  $http - Service for AJAX calls \n' +

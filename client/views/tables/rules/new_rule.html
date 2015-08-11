@@ -29,7 +29,7 @@
                    class="rule-name form-control"
                    ng-model="rules.action.name"
                    required
-                   ng-pattern="modal.namePattern"
+                   ng-pattern="rules.namePattern"
                    placeholder="Name your action"
                    ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
             <ba-tooltip tooltip-text="Use the action name in the request URL query string of the REST API"
@@ -124,10 +124,10 @@
                  name="inputParameters"
                  class="form-control"
                  ng-model="rules.action.inputParameters"
-                 ng-pattern="/^[\d\w\s,]*$/"
+                 ng-pattern="rules.paramsPattern"
                  placeholder="input1,input2,....">
           <div ng-messages="rules.newRuleForm.inputParameters.$error">
-            <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore</div>
+            <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.</div>
           </div>
         </div>
 
@@ -382,7 +382,7 @@
                     id="code"
                     ng-model="rules.action.code"
                     required
-                    ng-pattern="rules.codeRegex"
+                    ng-pattern="rules.codePattern"
                     ng-keydown="modal.handleTabKey($event)"
                     style="resize: vertical; ">
                   </div>
@@ -392,7 +392,7 @@
                          value="{{ aceFullScreen ? 'Minimize' : 'Maximize' }}">
 
                   <!-- workaround: ui-ace doesn't work well in input, ng-pattern doesn't work on div-->
-                  <input ng-hide="true" name="codeHidden" ng-model="rules.action.code" ng-pattern="rules.codeRegex">
+                  <input ng-hide="true" name="codeHidden" ng-model="rules.action.code" ng-pattern="rules.codePattern">
                   <div ng-messages="rules.newRuleForm.codeHidden.$error">
                     <div ng-message="pattern" class="text-danger">Please use the original function signature.</div>
                   </div>
