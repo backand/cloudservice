@@ -38,7 +38,8 @@
                   createdAt: new Date().getTime()
                 });
               AuthService.trackSignupEvent(self.fullName, self.email);
-              $state.go('apps.index');
+              var requestedState = SessionService.getRequestedState();
+              $state.go(requestedState.state || 'apps.index', requestedState.params);
             })
             .error(function (data) {
               self.loading = false;

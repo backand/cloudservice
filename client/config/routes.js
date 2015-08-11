@@ -157,7 +157,10 @@ function run($rootScope, $state, SessionService, AuthService, CONSTS) {
         AuthService.signIn(tokenData)
           .success(function (data) {
             SessionService.setCredentials(data);
-            $state.go('apps.index');
+            // requestedState will be empty because the app was redirected to.
+            // This will change when social sign in will happen with pop up
+            var requestedState = SessionService.getRequestedState();
+            $state.go(requestedState.state || 'apps.index', requestedState.params);
           });
 
       }
@@ -174,6 +177,7 @@ function run($rootScope, $state, SessionService, AuthService, CONSTS) {
     if (!SessionService.currentUser) {
       if (!isStateForSignedOutUser(toState)) {
         event.preventDefault();
+        SessionService.setRequestedState(toState, toParams);
         $state.go('sign_in');
       }
     } else {
