@@ -20,15 +20,16 @@
         //if not sign in screen :
         usSpinnerService.stop("loading");
         if ((rejection.config.url + "").indexOf('token') === -1){
+          if (rejection.status === 401) {
+            SessionService.ClearCredentials();
+            NotificationService.add('warning','Logon credentials have expired, please re-login')
+            $injector.get('$state').transitionTo('sign_in');
+            return $q.reject(rejection);
+          }
           if(rejection.data == null) {
             NotificationService.add("error", "An error occurred while communicating with the server, please refresh the page in few seconds");
           } else if (!avoidInterception('responseError', rejection)) {
             NotificationService.add("error", rejection.data);
-          }
-          if (rejection.status === 401) {
-            SessionService.ClearCredentials();
-            $injector.get('$state').transitionTo('sign_in');
-            return $q.reject(rejection);
           }
         }
           return $q.reject(rejection);
