@@ -1,6 +1,3 @@
-<!--<div ng-if="!rule">-->
-<!--<p>Here you can define actions that will run on triggers (hooks).</p>-->
-<!--</div>-->
 <div ng-if="rules.action">
   <div ng-cloak>
     <angled-window ng-show="rules.showJsCodeHelpDialog"
@@ -13,10 +10,10 @@
       <div ng-include="'views/tables/rules/js_code_help.html'"></div>
     </angled-window>
   </div>
-  <form name="rules.newRuleForm" insert-at-caret novalidate
-        ng-model-options="{updateOn: 'default blur', debounce: {'default': 250, blur: 0}}">
+  <form name="rules.newRuleForm" insert-at-caret novalidate ng-submit="rules.saveAction()"
+        ng-model-options="{updateOn: 'default blur', debounce: {'default': 300, blur: 0}}">
     <div class="header row">
-      <div class="col-xs-9">
+      <div class="col-md-8">
         <div class="form-inline" name="rules.newRuleForm">
           <div class="form-group"
                ng-class="{'has-error': rules.newRuleForm.ruleName.$invalid}">
@@ -44,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-3">
+      <div class="col-md-4">
 
         <input type="button" ng-show="rules.allowEditAction()"
                 ng-click="rules.editAction()"
@@ -52,7 +49,6 @@
           value="Edit Action">
         </input>
 
-        <!--<button ng-show="rules.action.__metadata && rules.editMode" ng-click="rules.deleteAction()" class="btn btn-danger pull-right with-margin">Delete</button>-->
         <div ng-show="rules.editMode">
           <input type="button"
                  ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
@@ -60,8 +56,7 @@
                  value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel' }}">
           </input>
 
-          <button ng-click="rules.saveAction()"
-                  ng-disabled="rules.newRuleForm.$invalid"
+          <button ng-disabled="rules.newRuleForm.$invalid"
                   class="btn btn-primary pull-right with-margin"
                   ladda="rules.saving" data-style="expand-right">Save
           </button>
@@ -120,7 +115,7 @@
           <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
                       class=""></ba-tooltip>
           <input type="text"
-                 ng-blur="modal.buildParameters()"
+                 ng-change="modal.buildParameters()"
                  name="inputParameters"
                  class="form-control"
                  ng-model="rules.action.inputParameters"
@@ -140,7 +135,7 @@
 
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{'has-error': rules.newRuleForm.emailTo.$invalid || rules.newRuleForm.emailTo.$error.email}">
+                   ng-class="{'has-error': rules.newRuleForm.emailTo.$invalid}">
 
                 <label for="emailTo">To:</label>
                 <bknd-anchor anchor-params="rules.anchorParams"
@@ -156,7 +151,7 @@
               </div>
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{'has-error': rules.newRuleForm.emailCc.$invalid || rules.newRuleForm.emailCc.$error.email}">
+                   ng-class="{'has-error': rules.newRuleForm.emailCc.$invalid}">
                 <label for="emailCc">Cc:</label>
 
                 <bknd-anchor anchor-params="rules.anchorParams"
@@ -171,7 +166,7 @@
               </div>
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{'has-error': rules.newRuleForm.emailBcc.$invalid || rules.newRuleForm.emailBcc.$error.email}">
+                   ng-class="{'has-error': rules.newRuleForm.emailBcc.$invalid}">
                 <label for="emailBcc">Bcc:</label>
 
                 <bknd-anchor anchor-params="rules.anchorParams"
@@ -186,7 +181,7 @@
               </div>
 
               <div class="form-group col-lg-6 col-md-6 col-sm-6"
-                   ng-class="{'has-error': rules.newRuleForm.emailFrom.$invalid || rules.newRuleForm.emailFrom.$error.email}">
+                   ng-class="{'has-error': rules.newRuleForm.emailFrom.$invalid}">
                 <label for="emailFrom">From:</label>
 
                 <input type="text"
@@ -425,7 +420,7 @@
           </div>
 
           <div class="modal-footer" ng-show="rules.action && rules.editMode">
-            <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid" ng-click="rules.saveAction()"
+            <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid"
                     ladda="rules.saving" data-style="expand-right">Save
             </button>
             <input type="button"
