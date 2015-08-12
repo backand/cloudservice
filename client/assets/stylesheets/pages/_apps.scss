@@ -1,3 +1,6 @@
+#apps-page.panel-body  {
+  margin-left:0;
+}
 .apps-jumbo {
   background: url("/assets/images/apps_page/background.jpg");
   background-size:cover;
@@ -53,10 +56,17 @@
       width:100%;
       font-size:14px;
 
+      & > div {
+        padding:0;
+      }
+
 
     }
     @media screen and (max-width:400px) {
+      width:80%;
+      margin:0 auto;
       & > div {
+        margin-bottom:15px;
         width:100%;
         img {
           float:left;
@@ -68,6 +78,9 @@
         }
         .apps-jumbo-section-title {
             text-align:left;
+            float:left;
+            margin-left:10px;
+            
           }
       }
     }

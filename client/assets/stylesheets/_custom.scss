@@ -563,15 +563,16 @@ hr.narrow-top-margin {
 }
 
 .notice {
+  margin-left:-15px;
+  margin-right:-15px;
   background:#f9eebd;
   padding:10px;
 
 }
 .info-panel-row {
   padding:0;
-  padding-right:30px;
 }
-.tab {
+.info-panel .tab {
   padding:10px 20px;
   display:inline-block;
   margin-right:5px;
@@ -585,5 +586,10 @@ hr.narrow-top-margin {
     width:50%;
     float:left;
 
+  }
+  .current{
+    text-align:right;
+    margin-right:0;
+    width:50%;
   }
 }
