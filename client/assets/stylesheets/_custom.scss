@@ -547,3 +547,19 @@ button.with-margin, input.with-margin{
 hr.narrow-top-margin {
   margin-top: 10px;
 }
+
+
+
+/**************************************************************************************************/
+/*                                            Quickstart docs                                        */
+/**************************************************************************************************/
+
+
+.panel-heading {
+  padding:20px;
+  h2 {
+    margin:0;
+    font-weight:200;
+    text-transform: none;
+  }
+}
