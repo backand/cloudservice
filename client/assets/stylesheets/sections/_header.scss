@@ -374,6 +374,32 @@
   span.bknd-username {
     display: none;
   }
+@media screen and (max-width:770px) {
+   span.bknd-username {
+    display:inline-block;
+    }
+   .top-header {
+    .nav-right {
+        float:none !important;
+        width:100%;
+        text-align:left;
+        position:relative;
+
+        & > li.nav-profile {
+            float:none;
+            text-align:left;
+        }
+        .header-video-btn {
+            position:absolute !important;
+            top:0;
+            right:0;
+        }
+
+    }
+   
+  } 
+    
+}
   .header-container > .top-header .dropdown-menu .bknd-username {
     display: inline;
   }
