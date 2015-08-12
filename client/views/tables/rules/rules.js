@@ -147,27 +147,30 @@
 
     self.saveAction = function (withTest) {
       self.saving = true;
+      withTest ? self.savingAndTesting = true : null;
       self.testUrl = '';
       self.testHttp = '';
+      buildParametersDictionary();
+      self.action.inputParameters = _.trimRight(self.action.inputParameters, ',');
 
       var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
         .then(function () {
-          if (!withTest && self.newRuleForm.inputParameters.$dirty)
-            self.test.parameters = {};
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
           SessionService.track('AddedRule', {rule: self.action.name});
 
           self.saving = false;
+          self.savingAndTesting = false;
           self.isNewAction = false;
           if (withTest)
             self.testData();
           self.requestTestForm = true; //always open test after save on demand action
         }, function () {
           self.saving = false;
+          self.savingAndTesting = false;
         });
     };
 
@@ -335,11 +338,12 @@
     function buildParametersDictionary() {
       var keys = [];
       if (self.action.inputParameters) {
-        self.test.inputParametersArray = self.action.inputParameters.replace(/ /g, '').split(',');
-        self.test.parameters = {};
+        self.test.inputParametersArray = _.compact(self.action.inputParameters.replace(/ /g, '').split(','));
+        // remove properties that don't exist in the array
+        self.test.parameters = _.pick(self.test.parameters, self.test.inputParametersArray);
         angular.forEach(self.test.inputParametersArray, function (param) {
           keys.push({token: param, label: param});
-          self.test.parameters[param] = '';
+          self.test.parameters[param] = self.test.parameters[param] || '';
         })
       }
       self.dictionaryItems.parameters = keys;
@@ -759,7 +763,7 @@
     // list of parameters:
     // each parameter starts with letter or '_' and may contain also numbers
     // the list should start and end with parameters, delimited by ',', allowing spaces (not within a parameter)
-    self.paramsPattern = /^\s*(?:(?:[A-Za-z_]\w*)(?:\s*,\s*)?)*(?:(?:[A-Za-z_]\w*)\s*)$/;
+    self.paramsPattern = /^\s*(?:(?:[A-Za-z_]\w*)(?:\s*,\s*)?)*$/;
     self.codePattern = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
 
     var backandCallbackConstCode = {

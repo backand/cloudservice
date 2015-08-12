@@ -1,6 +1,6 @@
 <h3>Test Action</h3>
 <br/>
-<ng-form role="form" name="rules.inputParametersForm" novalidate>
+<form role="form" name="rules.inputParametersForm" novalidate>
 
   <label>Parameters</label>
 
@@ -41,20 +41,20 @@
 
   <div class="row">
     <div class="col-md-12">
-      <button type="button"
+      <button type="submit"
               style="margin-left: 20px; margin-bottom: 3px"
               class="btn btn-success pull-right"
               data-style="expand-right" ladda="rules.test.testLoading"
               ng-disabled="!rules.allowTest() || !rules.allowTestEditMode"
-              ng-click="rules.testData();"> {{rules.testActionTitle}}
+              ng-click="rules.testData()"> {{rules.testActionTitle}}
       </button>
 
       <button type="button"
               style=""
               class="btn btn-primary pull-right"
-              data-style="expand-right" ladda="rules.saving"
+              data-style="expand-right" ladda="rules.savingAndTesting"
               ng-disabled="rules.allowTest()"
-              ng-click="rules.saveAction(true);">Save & Test
+              ng-click="rules.saveAction(true)">Save & Test
       </button>
 
       <div ng-show="!rules.allowTest()">** Must save first to enable Test</div>
@@ -102,4 +102,4 @@
   <label>Request $http:</label>
   <bknd-copy-url type="textarea" copy-url-params="rules.copyHttpParams"></bknd-copy-url>
 
-</ng-form>
+</form>
