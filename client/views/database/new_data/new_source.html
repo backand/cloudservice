@@ -3,7 +3,7 @@
         ladda="dbedit.loading" data-style="expand-right"
         ng-click="dbedit.create()"
         test-hook="database-edit.create">Next</button>
-  <button class="btn btn-info btn-lg btn-w-lg pull-right"
+  <button class="btn btn-info btn-lg btn-w-lg "
           ng-click="dbedit.showHelp()">Help</button>
 </div>
 <div ng-cloak>
@@ -73,13 +73,14 @@
         style="resize: vertical; height: 500px;">
 
       </div>
-      <p><strong>** Id is added to all objects automatically, please do not add it yourself</strong></p>
+      <div class="notice">Id is added to all objects automatically, please do not add it yourself</div>
 
     </div>
 
     <div class="col-md-4 col-lg-3">
-      <span class="db-types-title">Field Types</span>
+      <div class="db-types-title"><span>Field Types</span>
       <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span>
+      </div>
       <br/>
 
       <div class="db-types" ng-repeat="fieldType in dbedit.fieldTypes" ng-click="dbedit.insertTypeAtChar(fieldType)"

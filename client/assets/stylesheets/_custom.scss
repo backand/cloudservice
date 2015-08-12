@@ -507,9 +507,7 @@ button.with-margin, input.with-margin{
   overflow: auto;
 }
 
-.panel-body .panel-body-explanation {
-  margin: 30px 10% 30px 10%;
-}
+
 
 .panel-body .panel-body-description {
   font-size: 16px;
@@ -561,5 +559,31 @@ hr.narrow-top-margin {
     margin:0;
     font-weight:200;
     text-transform: none;
+  }
+}
+
+.notice {
+  background:#f9eebd;
+  padding:10px;
+
+}
+.info-panel-row {
+  padding:0;
+  padding-right:30px;
+}
+.tab {
+  padding:10px 20px;
+  display:inline-block;
+  margin-right:5px;
+  border:1px solid #ddd;
+  border-bottom:none;
+  border-radius:5px 5px 0px 0px;
+}
+
+.info-panel {
+  .side {
+    width:50%;
+    float:left;
+
   }
 }
