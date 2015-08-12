@@ -139,6 +139,8 @@
             //
             .nav-left,
             .nav-right {
+                width:50%;
+                float:left;
                 font-size: 16px;
                 line-height: $header_line_height;
 
@@ -237,12 +239,18 @@
             //
             .nav-right {
                 padding: 0;
+                position:relative;
+                text-align:right;
                 > li {
+                    float:none;
+
+                    display:inline-block;
                     > a {
                         text-align: center;
                         border-left: 1px solid $header-border;
 
                         &.header-video-btn {
+                            
                           text-transform: uppercase;
                           color: white;
                           font-size: 14px;
@@ -374,13 +382,11 @@
   span.bknd-username {
     display: none;
   }
-@media screen and (max-width:770px) {
-   span.bknd-username {
-    display:inline-block;
-    }
+@media screen and (max-width:550px) {
+   
    .top-header {
     .nav-right {
-        float:none !important;
+        
         width:100%;
         text-align:left;
         position:relative;
@@ -389,11 +395,7 @@
             float:none;
             text-align:left;
         }
-        .header-video-btn {
-            position:absolute !important;
-            top:0;
-            right:0;
-        }
+        
 
     }
    
@@ -413,4 +415,17 @@
 
 
 
-
+@media screen and (max-width:500px) {
+    .nav-left{
+        width:60% !important;
+    }
+    .nav-right {
+        width:40% !important;
+    }
+    
+}
+@media screen and (max-width:380px) {
+    .top-nav .search-box .input-group-addon {
+        display:none;
+    }
+}

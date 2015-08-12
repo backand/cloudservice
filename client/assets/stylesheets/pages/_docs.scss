@@ -1,6 +1,11 @@
 .quickstart-body {
- 
+ float:left;
   margin-right: 350px;
+  @media screen and (max-width:1024px) {
+    margin-right:0;
+    float:none;
+    
+  }
 
   .quickstart-connecting-db {
     h3 {
@@ -56,6 +61,11 @@
 
 .quickstart-sidebar {
   float: right;
+  @media screen and (max-width:1025px) {
+    clear:both;
+    width:100%;
+
+  }
 
   .quickstart-sidebox {
     width: 270px;
@@ -63,13 +73,38 @@
     background-color: #333333;
     text-align: center;
     color: #fff;
+    position:relative;
+    padding-bottom:80px;
+    button.btn {
+      position:absolute;
+      bottom:10px;
+      left:5%;
+      right:5%;
+      width:90% !important;
+    }
+    @media screen and (max-width:1025px) {
+      width:48%;
+      margin:1%;
+      float:left;
+      min-height:500px;
+      
+
+    }
+    @media screen and (max-width:500px) {
+      min-height:none;
+      float:none;
+      margin-bottom:10px;
+      width:100%;
+    }
 
     &#kickstart-sidebox {
       background: url("/assets/images/docs_pages/box-bg.png");
+      background-size:cover;
     }
 
     &#video-sidebox {
       background: url("/assets/images/docs_pages/video-box-bg.png");
+      background-size:cover;
     }
 
     img {
@@ -86,8 +121,8 @@
     }
 
     .quickstart-sidebox-button {
-      margin: 5px;
-      width: calc(100% - 10px);
+      
+     
       height: 50px;
       text-transform: uppercase;
       font-size: 14px;
