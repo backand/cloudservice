@@ -131,47 +131,19 @@ angular.module('backand.routes', []).
         template: '<div ui-view></div>'
       });
   })
-  .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS', run]);
+  .run(['$rootScope', '$state', 'SessionService', run]);
 
 function isStateForSignedOutUser(state) {
   return (state.name === 'sign_in' || state.name === 'sign_up' || state.name === 'change_password');
 }
 
-function run($rootScope, $state, SessionService, AuthService, CONSTS) {
+function run($rootScope, $state, SessionService) {
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
-    if (toParams.data) {
-      var userData = JSON.parse(toParams.data);
-      if (userData) {
-        event.preventDefault();
-        var tokenData = {
-          grant_type: 'password',
-          accessToken: userData.access_token,
-          appName: userData.appName
-        };
-        if(toParams.st != '0') { //this is sign up
-          AuthService.trackSignupEvent(tokenData.username, tokenData.username, toParams.st);
-        }
-
-        AuthService.signIn(tokenData)
-          .success(function (data) {
-            SessionService.setCredentials(data);
-            // requestedState will be empty because the app was redirected to.
-            // This will change when social sign in will happen with pop up
-            var requestedState = SessionService.getRequestedState();
-            $state.go(requestedState.state || 'apps.index', requestedState.params);
-          });
-
-      }
-    }
-
-    if (toParams.error) {
-      var error = JSON.parse(toParams.error);
-      if (error.message === 'The user is not signed up to ' + CONSTS.mainAppName) {
-        event.preventDefault();
-        AuthService.socialLogin(error.provider, true)
-      }
+    if (toParams.data || toParams.error) {
+      event.preventDefault();
+      window.opener.postMessage(JSON.stringify(toParams), location.origin);
     }
 
     if (!SessionService.currentUser) {
