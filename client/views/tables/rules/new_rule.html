@@ -60,6 +60,13 @@
                   class="btn btn-primary pull-right with-margin"
                   ladda="rules.saving" data-style="expand-right">Save
           </button>
+          <input type="button"
+                 ng-click="rules.saveActionTemplate()"
+                 ng-disabled="rules.newRuleForm.$invalid"
+                 class="btn btn-primary pull-right with-margin"
+                 data-style="expand-right"
+                 value="Save Template">
+          </input>
         </div>
       </div>
       <br/>
@@ -103,10 +110,27 @@
                   id="workflowAction"
                   required
                   ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
-                  ng-model="rules.action.workflowAction">
-                  ng-model-options="{debounce: 0}">
+                  ng-model="rules.action.workflowAction"
+                  ng-model-options="{debounce: 0}"
+                  ng-change="rules.onSelectWorkflowAction()">
             <option value="">Select what to do...</option>
           </select>
+
+        </div>
+        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+          <div ng-show="rules.useTemplate">
+            <a href="" ng-repeat="template in rules.actionTemplates" ng-click="rules.templateToShow = template">
+              <span ng-hide="template.json.imageUrl">{{template.name}}</span>
+              <img class="action-template-icon" ng-show="template.json.imageUrl" ng-src="{{template.json.imageUrl}}">
+            </a>
+
+            <div ng-show="rules.templateToShow">
+              <h3><a href="" ng-click="rules.selectTemplate(rules.templateToShow)" class="strong">{{rules.templateToShow.name}}</a></h3>
+              <a href="" target="_blank">Documentation</a>
+              <p>{{rules.templateToShow.shortDescription}}</p>
+            </div>
+          </div>
+
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction"

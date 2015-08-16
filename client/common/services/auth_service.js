@@ -66,12 +66,7 @@
       }
 
       //monitor when users click on social
-      var st = '?st=0';
-      if(isSignup)
-      {
-        //send indication if it coming from sign-up
-        st = "?st=" + provider.id;
-      }
+      var st = '?st=' + (isSignup ? provider.id : '0');
 
       var returnAddress =  encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
 

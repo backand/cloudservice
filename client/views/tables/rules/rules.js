@@ -21,6 +21,7 @@
       'SessionService',
       '$analytics',
       'EscapeSpecialChars',
+      '$modal',
       RulesController]);
 
   function RulesController($scope,
@@ -39,7 +40,8 @@
                            CONSTS,
                            SessionService,
                            $analytics,
-                           EscapeSpecialChars) {
+                           EscapeSpecialChars,
+                           $modal) {
 
     var self = this;
     /**
@@ -53,7 +55,65 @@
       self.showJsCodeHelpDialog = false;
       setTestActionTitle();
       getRules();
+      self.getActionTemplates();
     }
+
+    self.onSelectWorkflowAction = function () {
+      if (self.action.workflowAction === 'Template') {
+        self.useTemplate = true;
+        self.action.workflowAction = null;
+      } else {
+        self.useTemplate = false;
+      }
+    };
+
+    self.getActionTemplates = function () {
+      return RulesService.getActionTemplates()
+        .then(function (result) {
+          self.actionTemplates = result.data.data;
+          self.actionTemplates.forEach(function (template) {
+            try {
+              template.json = angular.fromJson(template.json);
+            } catch (error) {
+              console.log(error);
+            }
+          })
+        });
+    };
+
+    self.selectTemplate = function (template) {
+      self.action.name = self.action.name || template.name;
+      _.assign(self.action, {
+        dataAction: template.action,
+        workflowAction: template.ruleType,
+        whereCondition: template.condition,
+        inputParameters: template.parameters,
+        code: template.code,
+        command: template.executeCommand,
+        executeMessage: template.executeMessage
+      });
+    };
+
+    self.saveActionTemplate = function () {
+      openModal();
+    };
+
+    function openModal () {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/rules/action_template_modal.html',
+        controller: 'ActionTemplateController as actionTemplateCtrl',
+        resolve: {
+          action: function () {
+            return self.action;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        self.getActionTemplates();
+      });
+    }
+
 
     var defaultRule = {
       'viewTable': RulesService.tableId,
@@ -93,6 +153,7 @@
       self.editMode = false;
       self.requestTestForm = false;
       self.showJsCodeHelpDialog = false;
+      self.useTemplate = false;
       $scope.modal.toggleGroup();
       if (self.newRuleForm)
         self.newRuleForm.$setPristine();
@@ -231,7 +292,8 @@
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
         {value: 'Notify', label: 'Send Email'},
-        {value: 'Execute', label: 'Transactional sql script'}
+        {value: 'Execute', label: 'Transactional sql script'},
+        {value: 'Template', label: '3rd Party Integrations'}
       ],
       insertAtChar: insertTokenAtChar,
       digest: digestIn,
