@@ -107,13 +107,13 @@
   .page-signin {
 
     .form-container.signup-container {
-      max-width: 50em;
+      max-width: 52em;
       border-radius: 2%;
       background-color: white;
       padding: 30px;
       position: relative;
       @media (min-width: $screen-sm) {
-        width: 50em;
+        width: 52em;
       }
 
       .dragon {
@@ -146,6 +146,10 @@
         color: #FE4A00;
         background-color: #f2f2f2;
         border-color: #f0f0f0;
+
+        img {
+          margin-right: 10px;
+        }
       }
 
       .text-danger {

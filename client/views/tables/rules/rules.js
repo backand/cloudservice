@@ -21,6 +21,7 @@
       'SessionService',
       '$analytics',
       'EscapeSpecialChars',
+      '$modal',
       RulesController]);
 
   function RulesController($scope,
@@ -39,7 +40,8 @@
                            CONSTS,
                            SessionService,
                            $analytics,
-                           EscapeSpecialChars) {
+                           EscapeSpecialChars,
+                           $modal) {
 
     var self = this;
     /**
@@ -53,7 +55,65 @@
       self.showJsCodeHelpDialog = false;
       setTestActionTitle();
       getRules();
+      self.getActionTemplates();
     }
+
+    self.onSelectWorkflowAction = function () {
+      if (self.action.workflowAction === 'Template') {
+        self.useTemplate = true;
+        self.action.workflowAction = null;
+      } else {
+        self.useTemplate = false;
+      }
+    };
+
+    self.getActionTemplates = function () {
+      return RulesService.getActionTemplates()
+        .then(function (result) {
+          self.actionTemplates = result.data.data;
+          self.actionTemplates.forEach(function (template) {
+            try {
+              template.json = angular.fromJson(template.json);
+            } catch (error) {
+              console.log(error);
+            }
+          })
+        });
+    };
+
+    self.selectTemplate = function (template) {
+      self.action.name = self.action.name || template.name;
+      _.assign(self.action, {
+        dataAction: template.action,
+        workflowAction: template.ruleType,
+        whereCondition: template.condition,
+        inputParameters: template.parameters,
+        code: template.code,
+        command: template.executeCommand,
+        executeMessage: template.executeMessage
+      });
+    };
+
+    self.saveActionTemplate = function () {
+      openModal();
+    };
+
+    function openModal () {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/rules/action_template_modal.html',
+        controller: 'ActionTemplateController as actionTemplateCtrl',
+        resolve: {
+          action: function () {
+            return self.action;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        self.getActionTemplates();
+      });
+    }
+
 
     var defaultRule = {
       'viewTable': RulesService.tableId,
@@ -93,6 +153,7 @@
       self.editMode = false;
       self.requestTestForm = false;
       self.showJsCodeHelpDialog = false;
+      self.useTemplate = false;
       $scope.modal.toggleGroup();
       if (self.newRuleForm)
         self.newRuleForm.$setPristine();
@@ -124,6 +185,7 @@
       };
       getTestRow();
       setTestActionTitle();
+      buildParametersDictionary();
     };
 
     function getTestRow() {
@@ -138,7 +200,7 @@
     };
 
     self.cancelEdit = function () {
-      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
+      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
         .then(function (result) {
           result ? refreshAction(self.action) : false;
         });
@@ -146,27 +208,30 @@
 
     self.saveAction = function (withTest) {
       self.saving = true;
+      withTest ? self.savingAndTesting = true : null;
       self.testUrl = '';
       self.testHttp = '';
+      buildParametersDictionary();
+      self.action.inputParameters = _.trimRight(self.action.inputParameters, ',');
 
       var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(getRules)
         .then(function () {
-          if (!withTest && self.newRuleForm.inputParameters.$dirty)
-            self.test.parameters = {};
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
           SessionService.track('AddedRule', {rule: self.action.name});
 
           self.saving = false;
+          self.savingAndTesting = false;
           self.isNewAction = false;
           if (withTest)
             self.testData();
           self.requestTestForm = true; //always open test after save on demand action
         }, function () {
           self.saving = false;
+          self.savingAndTesting = false;
         });
     };
 
@@ -223,12 +288,12 @@
 
     $scope.modal = {
       title: 'Action',
-      namePattern: /^\w+[\w ].*$/,
       dataActions: RulesService.dataActions,
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
         {value: 'Notify', label: 'Send Email'},
-        {value: 'Execute', label: 'Transactional sql script'}
+        {value: 'Execute', label: 'Transactional sql script'},
+        {value: 'Template', label: '3rd Party Integrations'}
       ],
       insertAtChar: insertTokenAtChar,
       digest: digestIn,
@@ -335,8 +400,12 @@
     function buildParametersDictionary() {
       var keys = [];
       if (self.action.inputParameters) {
-        angular.forEach(self.action.inputParameters.replace(/ /g, '').split(','), function (param) {
-          keys.push({token: param, label: param})
+        self.test.inputParametersArray = _.compact(self.action.inputParameters.replace(/ /g, '').split(','));
+        // remove properties that don't exist in the array
+        self.test.parameters = _.pick(self.test.parameters, self.test.inputParametersArray);
+        angular.forEach(self.test.inputParametersArray, function (param) {
+          keys.push({token: param, label: param});
+          self.test.parameters[param] = self.test.parameters[param] || '';
         })
       }
       self.dictionaryItems.parameters = keys;
@@ -498,12 +567,19 @@
       self.testRowObjectNotification = errorMessage;
     }
 
-    self.getInputParameters = function () {
-      var inputParameters = [];
-      if (self.action && self.action.inputParameters)
-        inputParameters = self.action.inputParameters.replace(/ /g, '').split(',');
-      return inputParameters;
-    };
+    //self.getInputParameters = function () {
+    //  var inputParameters = [];
+    //  if (self.action && self.action.inputParameters)
+    //    inputParameters = self.action.inputParameters.replace(/ /g, '').split(',');
+    //  //check if the parameter exists or not
+    //  //angular.forEach(self.test.parameters, function(param){
+    //  //  var ip = _.find(inputParameters, function(inputParam){ return inputParam === param });
+    //  //  if(!ip)
+    //  //    self.test.parameters.splice(param,1);
+    //  //});
+    //  self.test.parameters = angular.copy(inputParameters);
+    //};
+
 
     self.ace = {
       onLoad: function (_editor) {
@@ -745,10 +821,15 @@
       return self.testHttp;
     }
 
-    self.codeRegex = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
+    self.namePattern = /^\w+[\w ]*$/;
+    // list of parameters:
+    // each parameter starts with letter or '_' and may contain also numbers
+    // the list should start and end with parameters, delimited by ',', allowing spaces (not within a parameter)
+    self.paramsPattern = /^\s*(?:(?:[A-Za-z_]\w*)(?:\s*,\s*)?)*$/;
+    self.codePattern = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
 
     var backandCallbackConstCode = {
-      start: '/* globals\n\  $http - service for AJAX calls - $http({method:"GET",url:CONSTS.apiUrl + "/1/objects/yourObject" , headers: {"Authorization":userProfile.token}});\n' +
+      start: '/* globals\n\  $http - Service for AJAX calls \n' +
       '  CONSTS - CONSTS.apiUrl for Backands API URL\n' +
       '\*/\n' +
       '\'use strict\';\n' +

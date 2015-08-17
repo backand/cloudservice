@@ -2,7 +2,7 @@
   <button type="submit" class="btn btn-success btn-lg btn-w-lg"
           ladda="Model.loading" data-style="expand-right"
           ng-click="Model.saveSchema()">Validate & Update</button>
-  <button class="btn btn-info btn-lg btn-w-lg pull-right"
+  <button class="btn btn-info btn-lg btn-w-lg "
           ng-click="Model.showHelp()">Help</button>
 </div>
 
@@ -21,25 +21,34 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong test-hook="database-edit.title"> {{Model.appName}} - model configuration</strong>
+     <button type="submit" class="btn btn-success pull-right btn-lg btn-w-lg"
+          ladda="Model.loading" data-style="expand-right"
+          ng-click="Model.saveSchema()">Validate & Update</button>
 
+      <strong test-hook="database-edit.title"> {{Model.appName}} - model configuration</strong>
+      <h2>Edit the application model</h2>
+      
       <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     </div>
     <div class="panel-body">
         <div class="row">
           <div class="db-panel-body-explanation">
-            <h3>Edit the application model</h3>
+            
             <h4>Backand's model provides an abstraction layer on top of your database, giving you easy access to update
               the database schema - <a href="" ng-click="Model.showHelp()">Need help?</a></h4>
           </div>
         </div>
 
         <div class="row">
-          <div class="col-md-8 col-lg-9">
-            <span style="font-size: large;">Edit model</span>
-            <a href="" ng-click="Model.toggleShowDiff()">{{Model.showDiffs ? 'hide' : 'show'}} diff</a>
+          <div class="col-md-8 col-lg-9 info-panel-row">
+            <div class=" info-panel">
+              <div class="side edit"> <span class="tab">Edit model</span>
+            <a href="" ng-click="Model.toggleShowDiff()">{{Model.showDiffs ? 'hide' : 'show'}} diff</a></div>
+            <div class="side current"><span class="tab">Current model (read-only)</span></div>
+            </div>
+           
 
-            <span style="font-size: large;" class="pull-right">Current model (read-only)</span>
+            
           </div>
         </div>
         <div class="row">
@@ -52,13 +61,13 @@
                            class="model-edit-ace-diff">
               </ba-ace-diff>
             </div>
-            <p><strong>** Id is added to all objects automatically, please do not add it yourself</strong></p>
+            <p><div class="notice">Id is added to all objects automatically, please do not add it yourself</div></p>
 
           </div>
 
           <div class="col-md-4 col-lg-3 model-types-container">
-            <span class="db-types-title">Field Types</span>
-            <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span>
+            <div class="db-types-title"><span>Field Types</span>
+            <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span></div>
             <br/>
 
             <div class="db-types" ng-repeat="fieldType in Model.fieldTypes" ng-click="Model.insertTypeAtChar(fieldType)"

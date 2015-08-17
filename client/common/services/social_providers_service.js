@@ -20,7 +20,7 @@
         url: 'www.github.com',
         css: 'github',
         id: 1,
-        helpUrl: "http://github.com"
+        helpUrl: "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#github-app-configuration"
       },
       {
         name: 'google',
@@ -28,7 +28,7 @@
         url: 'www.google.com',
         css: 'google-plus',
         id: 2,
-        helpUrl: "http://google.com"
+        helpUrl: "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#google-app-configuration"
       },
       {
         name: 'facebook',
@@ -36,7 +36,9 @@
         url: 'www.facebook.com',
         css: 'facebook',
         id: 3,
-        helpUrl: "http://facebook.com"
+        helpUrl: "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#facebook-app-configuration",
+        clientIdTitle: 'App ID',
+        secretIdTitle: 'App Secret'
       }
     ];
 

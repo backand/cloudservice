@@ -2,10 +2,11 @@
   'use strict';
 
   angular.module('common.services', ['ngCookies'])
-    .service('SessionService', ['CONSTS', '$cookieStore','$analytics', SessionService]);
+    .service('SessionService', ['$cookieStore', '$analytics', SessionService]);
 
-  function SessionService(CONSTS, $cookieStore,$analytics) {
+  function SessionService($cookieStore, $analytics) {
     var self = this;
+    var requestedState = {};
 
     self.currentUser = $cookieStore.get('globals') ? $cookieStore.get('globals').currentUser : undefined;
 
@@ -47,6 +48,25 @@
 
     self.getUserId = function () {
       return (self.currentUser && self.currentUser.userId) ? self.currentUser.userId : 0;
+    };
+
+    self.setRequestedState = function (state, params) {
+      if (_.isEmpty(requestedState)) {
+        requestedState = {
+          state: state,
+          params: params
+        };
+      }
+    };
+
+    self.getRequestedState = function () {
+      var state = requestedState;
+      self.clearRequestedState();
+      return state;
+    };
+
+    self.clearRequestedState = function () {
+      requestedState = {};
     };
 
     self.track = function (eventName,eventObject)

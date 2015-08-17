@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function AuthService($http, CONSTS, SessionService, SocialProvidersService, $window, $analytics) {
+  function AuthService($http, CONSTS, SessionService, SocialProvidersService, $window, $q, $state, $analytics) {
 
     var self = this;
 
@@ -60,27 +60,74 @@
         '&state=rcFNVUMsUOSNMJQZ%2bDTzmpqaGgSRGhUfUOyQHZl6gas%3d';
     }
 
-    self.socialLogin = function (social, isSignup) {
-      if (typeof social === 'string') {
-        social = _.find(self.socials, {name: social});
+    self.socialLogin = function (provider, isSignup) {
+      if (typeof provider === 'string') {
+        provider = _.find(self.socials, {name: provider});
       }
 
       //monitor when users click on social
-      var st = '?st=0';
-      if(isSignup)
-      {
-        //send indication if it coming from sign-up
-        st = "?st=" + social.id;
-      }
+      var st = '?st=' + (isSignup ? provider.id : '0');
 
       var returnAddress =  encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
-      $window.location.href = CONSTS.appUrl + '/1/' +
-        getSocialUrl(social, isSignup) +
-        '&appname=' + CONSTS.mainAppName +
-        '&returnAddress=' + returnAddress + st;
 
+      self.loginPromise = $q.defer();
+
+      self.socialAuthWindow = window.open(
+        CONSTS.appUrl + '/1/' +
+        getSocialUrl(provider, isSignup) +
+        '&appname=' + CONSTS.mainAppName + '&returnAddress=' + returnAddress + st,
+        'id1', 'left=10, top=10, width=600, height=600');
+
+      window.addEventListener('message', setUserDataFromToken, false);
+      return self.loginPromise.promise;
     };
 
+    function setUserDataFromToken (message) {
+      self.socialAuthWindow.close();
+      self.socialAuthWindow = null;
+      if (message.origin !== location.origin) {
+        return;
+      }
+
+      var eventData = JSON.parse(message.data);
+      if (eventData.error) {
+        var errorData = JSON.parse(eventData.error);
+        if (errorData.message === 'The user is not signed up to ' + CONSTS.mainAppName) {
+          self.socialLogin(errorData.provider, true)
+        }
+        else {
+          var errorMessage = errorData.message + ' (signing in with ' + errorData.provider + ')';
+
+          self.loginPromise.reject({
+            data: errorMessage
+          });
+        }
+      } else if (eventData.data) {
+        return self.signInWithToken(JSON.parse(eventData.data), eventData.st);
+      } else {
+        self.loginPromise.reject();
+      }
+    }
+
+    self.signInWithToken = function (userData, st) {
+      var tokenData = {
+        grant_type: 'password',
+        accessToken: userData.access_token,
+        appName: userData.appName
+      };
+      if(st != '0') { //this is sign up
+        self.trackSignupEvent(tokenData.username, tokenData.username, st);
+      }
+
+      self.signIn(tokenData)
+        .success(function (data) {
+          SessionService.setCredentials(data);
+          // requestedState will be empty because the app was redirected to.
+          // This will change when social sign in will happen with pop up
+          var requestedState = SessionService.getRequestedState();
+          $state.go(requestedState.state || 'apps.index', requestedState.params);
+        });
+    };
 
 
 
@@ -128,6 +175,6 @@
   }
 
   angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', 'SessionService', 'SocialProvidersService', '$window', '$analytics', AuthService])
+    .service('AuthService', ['$http', 'CONSTS', 'SessionService', 'SocialProvidersService', '$window', '$q', '$state', '$analytics', AuthService])
 
 })();

@@ -6,19 +6,19 @@
     You can also read our quick start resources</div>
   </div>
   <div class="row apps-jumbo-sections">
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-4 col-sm-4">
       <div class="apps-jumbo-section-wrapper" ui-sref="docs.getting-started-open">
         <img src="assets/images/apps_page/icon-tutorial.png" alt=""/>
         <div class="apps-jumbo-section-title">Getting started guide</div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-4 col-sm-4">
       <div class="apps-jumbo-section-wrapper" ui-sref="docs.kickstart-open">
         <img src="assets/images/apps_page/icon-seed.png" alt=""/>
         <div class="apps-jumbo-section-title">Kickstart seed tutorial</div>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-4">
+    <div class="col-xs-4 col-sm-4">
       <div class="apps-jumbo-section-wrapper" ng-click="index.goToLocation('http://docs.backand.com')">
         <img src="assets/images/apps_page/icon-api.png" alt=""/>
         <div class="apps-jumbo-section-title">Documentation</div>
@@ -27,10 +27,10 @@
   </div>
 </div>
 <div class="page ng-scope">
-  <div class="panel-body">
+  <div class="panel-body" id="apps-page">
     <div class="row">
       <div us-spinner spinner-key="loading" spinner-start-active></div>
-      <div  class="col-lg-4 col-md-4 col-sm-6 app-panel" >
+      <div  class="col-lg-3 col-md-4 col-sm-6 app-panel" >
         <div class="panel panel-default ui-ribbon-container ui-ribbon-primary">
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">New</div>
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      <div class="col-lg-4 col-md-4 col-sm-6 app-panel"
+      <div class="col-lg-3 col-md-4 col-sm-6 app-panel"
            ng-repeat="app in index.apps track by app.__metadata.id"
            test-hook="apps.app-panel">
 

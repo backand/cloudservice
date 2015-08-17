@@ -139,6 +139,8 @@
             //
             .nav-left,
             .nav-right {
+                width:50%;
+                float:left;
                 font-size: 16px;
                 line-height: $header_line_height;
 
@@ -237,12 +239,18 @@
             //
             .nav-right {
                 padding: 0;
+                position:relative;
+                text-align:right;
                 > li {
+                    float:none;
+                    vertical-align:top;
+                    display:inline-block;
                     > a {
                         text-align: center;
                         border-left: 1px solid $header-border;
 
                         &.header-video-btn {
+                            
                           text-transform: uppercase;
                           color: white;
                           font-size: 14px;
@@ -374,6 +382,26 @@
   span.bknd-username {
     display: none;
   }
+@media screen and (max-width:550px) {
+   
+   .top-header {
+    .nav-right {
+        
+        width:100%;
+        text-align:left;
+        position:relative;
+
+        & > li.nav-profile {
+            float:none;
+            text-align:left;
+        }
+        
+
+    }
+   
+  } 
+    
+}
   .header-container > .top-header .dropdown-menu .bknd-username {
     display: inline;
   }
@@ -387,4 +415,17 @@
 
 
 
-
+@media screen and (max-width:500px) {
+    .nav-left{
+        width:58% !important;
+    }
+    .nav-right {
+        width:42% !important;
+    }
+    
+}
+@media screen and (max-width:380px) {
+    .top-nav .search-box .input-group-addon {
+        display:none;
+    }
+}

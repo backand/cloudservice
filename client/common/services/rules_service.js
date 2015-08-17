@@ -2,7 +2,7 @@
 
   function RulesService($http, CONSTS) {
 
-    var self= this;
+    var self = this;
     var baseUrl = '/1/businessRule';
     self.tableRuleUrl = '/1/objects/';
     self.addUserUrl = '/1/user';
@@ -68,6 +68,21 @@
         headers: { AppName: self.appName },
         data: rule
       })
+    };
+
+    self.getActionTemplates = function () {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/admin/actionTemplate'
+      });
+    };
+
+    self.saveActionTemplate = function (rule) {
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/admin/actionTemplate',
+        data: rule
+      });
     };
 
     self.getTestUrl = function (rule, test, actionType, tableName, debug, fromGetHttp) {
