@@ -58,6 +58,8 @@
       self.getActionTemplates();
     }
 
+    self.actionTemplateCategories = RulesService.actionTemplateCategories;
+
     self.onSelectWorkflowAction = function () {
       if (self.action.workflowAction === 'Template') {
         self.useTemplate = true;
@@ -70,19 +72,25 @@
     self.getActionTemplates = function () {
       return RulesService.getActionTemplates()
         .then(function (result) {
-          self.actionTemplates = result.data.data;
-          self.actionTemplates.forEach(function (template) {
+          self.actionTemplates = [];
+          result.data.data.forEach(function (template) {
             try {
               template.json = angular.fromJson(template.json);
+              if (!_.isEmpty(template.json.imageUrl)) {
+                self.actionTemplates.push(template);
+              }
             } catch (error) {
               console.log(error);
             }
-          })
+          });
         });
     };
 
     self.selectTemplate = function (template) {
-      self.action.name = self.action.name || template.name;
+      if (!self.action) {
+        self.newAction();
+      }
+      self.action.name = self.action.name || template.ruleName;
       _.assign(self.action, {
         dataAction: template.action,
         workflowAction: template.ruleType,

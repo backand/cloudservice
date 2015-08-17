@@ -58,6 +58,9 @@
         </li>
       </ul>
     </div>
+
+    <div ng-hide="rules.action" ng-include="'views/tables/rules/action_templates.html'"></div>
+
     <div ng-class="(!rules.editMode || rules.showTestForm()) ? 'col-xs-8 col-md-9' : 'col-xs-12'"
          class="actions-display"
          ng-include="'views/tables/rules/new_rule.html'"></div>

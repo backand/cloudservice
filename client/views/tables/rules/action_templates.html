@@ -1,0 +1,41 @@
+<div ng-cloak>
+  <angled-window ng-show="rules.showActionTemplateDocumentation"
+                 title="Documentation"
+                 id="documentation"
+                 grouping="w"
+                 close-function="rules.showActionTemplateDocumentation = false"
+                 rolled-up="false"
+                 css-class="action-template-documentation">
+    <div ng-bind-html="rules.templateToShow.documentation"></div>
+  </angled-window>
+</div>
+
+<div class="col-xs-8 col-md-9 action-template-container">
+  <div ng-repeat="category in rules.actionTemplateCategories track by category.id">
+    <div class="action-template-category">{{ ::category.label }}</div>
+    <!-- a ang img must be in the same line, otherwise space is inserted between them-->
+    <div class="action-template-icons-container">
+      <a href=""
+         ng-repeat="template in rules.actionTemplates track by template.id"
+         ng-click="rules.templateToShow = template"
+         ng-if="template.Category === category.id"><img class="action-template-icon"
+             ng-show="template.json.imageUrl"
+             ng-src="{{template.json.imageUrl}}"></a>
+
+    </div>
+
+    <div ng-show="rules.templateToShow && rules.templateToShow.Category === category.id"
+         class="action-template-description-container">
+      <img class="action-template-icon"
+           ng-src="{{rules.templateToShow.json.imageUrl}}">
+      <div class="action-template-text-container">
+        <span class="action-template-title" ng-click="rules.selectTemplate(rules.templateToShow)">{{rules.templateToShow.name}}</span>
+        <span ng-click="rules.showActionTemplateDocumentation = true"><i class="ti-help-alt"></i></span><br />
+        <span class="action-template-description">{{rules.templateToShow.shortDescription}}</span>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
