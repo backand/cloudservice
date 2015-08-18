@@ -20,11 +20,11 @@
       isAdmin = ($state.$current.url.source.indexOf('/history') == -1);
       if(isAdmin){
         self.title ='Log Configuration';
-        self.names = {ViewName: 'Entity Name', PK:'Entity Id', FieldName:'Property Name'};
+        self.names = {ViewName: 'Object Type', PK:'Object Name', FieldName:'Field Name', Action: 'Event'};
       }
       else {
         self.title ='Data History';
-        self.names = {ViewName: 'Table Name', PK:'Table PK', FieldName:'Column Name'};
+        self.names = {ViewName: 'Object Name', PK:'Object PK', FieldName:'Column Name', Action: 'Event'};
       }
     }());
 
@@ -35,9 +35,9 @@
       columnDefs: [
         {name: 'UpdateDate', field:'__metadata.dates.UpdateDate', displayName: 'Updated', type: 'date', sort: {direction: 'desc', priority:0} },
         {name: 'Username', displayName:'Updated By', field:'__metadata.descriptives.Username.label'},
-        {name: 'Action', field:'__metadata.descriptives.Action.label'},
-        {name: 'ViewName', displayName:self.names.ViewName},
-        {name: 'PK', displayName:self.names.PK},
+        {name: 'Action', field:'__metadata.descriptives.Action.label', displayName:self.names.Action},
+        {name: 'ViewName', field:'__metadata.descriptives.ViewName.label', displayName:self.names.ViewName},
+        {name: 'PK', field:'__metadata.descriptives.PK.label', displayName:self.names.PK},
         {name: 'FieldName', displayName:self.names.FieldName},
         {name: 'OldValue'},
         {name: 'NewValue'}
