@@ -25,6 +25,13 @@
       {crud: 'delete', value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2}
     ];
 
+    self.actionTemplateCategories = [
+      {id: 1, label: 'Mail'},
+      {id: 2, label: 'Payment Processing'},
+      {id: 3, label: 'File Storage'},
+      {id: null, label: 'Other'}
+    ];
+
     self.get = function () {
       return $http({
         method: 'GET',
