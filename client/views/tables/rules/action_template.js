@@ -20,6 +20,8 @@
       json: {}
     };
 
+    self.categories = RulesService.actionTemplateCategories;
+
     self.saveActionTemplate = function () {
       self.savingActionTemplate = true;
       self.actionTemplate.json = angular.toJson(self.actionTemplate.json);

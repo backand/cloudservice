@@ -24,6 +24,13 @@
 .angled-window > .panel {
   min-width: 220px;
   overflow: hidden;
+
+  .panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+  }
 }
 
 /** Minimum inside height and width, scroll content when needed **/

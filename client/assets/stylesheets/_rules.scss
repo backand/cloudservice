@@ -319,11 +319,80 @@ bknd-copy-url[type="textarea"] .request-url-copy {
   }
 }
 
+.action-template-container {
+  padding-top: 3px;
 
-.action-template-icon {
-  height: 60px;
-  width: 60px;
-  border: solid lightgray 1px;
-  border-radius: 10px;
-  padding: 5px;
+  .action-template-category {
+    padding-top: 10px;
+    margin-left: 3px;
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  .action-template-icon {
+    height: 60px;
+    width: 60px;
+    border: solid lightgray 1px;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 3px;
+  }
+
+  .action-template-icons-container {
+    max-height: 140px;
+    overflow: auto;
+  }
+
+  .action-template-description-container {
+    max-height: 140px;
+    overflow: auto;
+    margin: 10px 0;
+
+    img {
+      float: left;
+      margin-right: 5px;
+      margin-top: 0;
+    }
+
+    .action-template-text-container {
+      margin-top: 5px;
+      font-size: 18px;
+
+      .action-template-title {
+        padding: 4px;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1.1;
+        cursor: pointer;
+
+        &:hover {
+          border-radius: 5px;
+          background-color: #428bca;
+          color: #fff;
+        }
+      }
+
+      i {
+        cursor: pointer;
+      }
+
+      .action-template-description {
+        margin-left: 4px;
+
+      }
+    }
+  }
+
+}
+
+.action-template-documentation.angled-window  {
+  left: 170px;
+  z-index: 100;
+  max-width: 60%;
+
+  .angled-window-body-content {
+    padding: 20px;
+    margin: 0;
+    min-width: 300px;
+  }
 }
