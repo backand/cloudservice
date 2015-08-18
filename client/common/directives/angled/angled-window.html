@@ -2,11 +2,11 @@
   <div class="panel panel-primary">
     <div class="panel-heading cursor-move" id="windowHeading_{{id}}">
       <span class="pull-right">
-        <button class="btn btn-danger btn-xs" style="margin-left: 3px;" ng-click="closeFunction()">X</button>
+        <input type="button" class="btn btn-danger btn-xs" style="margin-left: 3px;" ng-click="closeFunction()" value="X"></input>
       </span>
       <span class="pull-right">
         <a type="button" id="windowMinimizeBtn_{{id}}" class="btn btn-primary btn-xs" ng-click="rollUp()">
-          <span class="glyphicon" ng-class="{false: 'glyphicon-chevron-up',true: 'glyphicon-chevron-down'}[rolledUp]"></span>
+          <span class="glyphicon" ng-class="rolledUp ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"></span>
         </a>
       </span>
       <span class="angled-window-title" ng-bind-html="title"></span>

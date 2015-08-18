@@ -40,9 +40,9 @@ angular.module('angled-windows.directives',['ngSanitize','ngAnimate','angled-dra
         rolledUp: '=?',
         cssClass: '@?'
 			},
-			compile : function(tEl,tAttrs,transFn){
+			compile : function(tEl, tAttrs, transFn){
 				return {
-					pre : function(scope,el,attrs){ // ~object setup
+					pre : function(scope, el, attrs){ // ~object setup
 
 						//== Variables ==//
 
