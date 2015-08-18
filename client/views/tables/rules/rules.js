@@ -61,11 +61,11 @@
     self.actionTemplateCategories = RulesService.actionTemplateCategories;
 
     self.onSelectWorkflowAction = function () {
-      if (self.action.workflowAction === 'Template') {
-        self.useTemplate = true;
-        self.action.workflowAction = null;
-      } else {
+      if (!self.isNewAction || self.action.workflowAction === 'Notify') {
         self.useTemplate = false;
+        self.showActionDetails = true;
+      } else {
+        self.useTemplate = self.action.workflowAction;
       }
     };
 
@@ -90,9 +90,11 @@
       if (!self.action) {
         self.newAction();
       }
+
       self.action.name = self.action.name || template.ruleName;
+      self.action.dataAction = self.action.dataAction || template.action || 'OnDemand';
+
       _.assign(self.action, {
-        dataAction: template.action,
         workflowAction: template.ruleType,
         whereCondition: template.condition,
         inputParameters: template.parameters,
@@ -100,13 +102,21 @@
         command: template.executeCommand,
         executeMessage: template.executeMessage
       });
+
+      self.showActionDetails = true;
+    };
+
+    self.clearActionTemplate = function () {
+      self.useTemplate = false;
+      self.templateToShow = null;
+      self.showActionTemplateDocumentation = false;
     };
 
     self.saveActionTemplate = function () {
-      openModal();
+      openActionTemplateModal();
     };
 
-    function openModal () {
+    function openActionTemplateModal () {
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/rules/action_template_modal.html',
         controller: 'ActionTemplateController as actionTemplateCtrl',
@@ -131,7 +141,9 @@
     };
 
     self.newAction = function (trigger) {
+      self.clearActionTemplate();
       self.showJsCodeHelpDialog = false;
+      self.showActionDetails = false;
       self.action = {
         whereCondition: 'true',
         code: backandCallbackConstCode.start + '\n' +
@@ -162,6 +174,7 @@
       self.requestTestForm = false;
       self.showJsCodeHelpDialog = false;
       self.useTemplate = false;
+      self.showActionDetails = true;
       $scope.modal.toggleGroup();
       if (self.newRuleForm)
         self.newRuleForm.$setPristine();
@@ -300,8 +313,7 @@
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
         {value: 'Notify', label: 'Send Email'},
-        {value: 'Execute', label: 'Transactional sql script'},
-        {value: 'Template', label: '3rd Party Integrations'}
+        {value: 'Execute', label: 'Transactional sql script'}
       ],
       insertAtChar: insertTokenAtChar,
       digest: digestIn,

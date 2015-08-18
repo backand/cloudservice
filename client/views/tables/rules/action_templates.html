@@ -18,7 +18,8 @@
       <a href=""
          ng-repeat="template in rules.actionTemplates track by template.id"
          ng-click="rules.templateToShow = template"
-         ng-if="template.Category === category.id"><img class="action-template-icon"
+         ng-show="template.Category === category.id && (!rules.action || rules.action.workflowAction === template.ruleType)"
+         ><img class="action-template-icon"
              ng-show="template.json.imageUrl"
              ng-src="{{template.json.imageUrl}}"></a>
 

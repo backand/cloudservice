@@ -1,0 +1,93 @@
+<div class="form-group col-lg-6 col-md-6 col-sm-6"
+     ng-class="{'has-error': rules.newRuleForm.emailTo.$invalid}">
+
+  <label for="emailTo">To:</label>
+  <bknd-anchor anchor-params="rules.anchorParams"
+               window-title="Email Recipient"
+               input-id="emailTo"></bknd-anchor>
+  <input type="text"
+         required
+         name="emailTo"
+         id="emailTo"
+         ng-model="rules.action.to"
+         class="form-control"/>
+
+</div>
+
+<div class="form-group col-lg-6 col-md-6 col-sm-6"
+     ng-class="{'has-error': rules.newRuleForm.emailCc.$invalid}">
+  <label for="emailCc">Cc:</label>
+
+  <bknd-anchor anchor-params="rules.anchorParams"
+               window-title="Email - CC"
+               input-id="emailCc"></bknd-anchor>
+
+  <input type="text"
+         name="emailCc"
+         id="emailCc"
+         ng-model="rules.action.cc"
+         class="form-control"/>
+</div>
+
+<div class="form-group col-lg-6 col-md-6 col-sm-6"
+     ng-class="{'has-error': rules.newRuleForm.emailBcc.$invalid}">
+  <label for="emailBcc">Bcc:</label>
+
+  <bknd-anchor anchor-params="rules.anchorParams"
+               window-title="Email - BCC"
+               input-id="emailBcc"></bknd-anchor>
+
+  <input type="text"
+         id="emailBcc"
+         name="emailBcc"
+         ng-model="rules.action.bcc"
+         class="form-control"/>
+</div>
+
+<div class="form-group col-lg-6 col-md-6 col-sm-6"
+     ng-class="{'has-error': rules.newRuleForm.emailFrom.$invalid}">
+  <label for="emailFrom">From:</label>
+
+  <input type="text"
+         id="emailFrom"
+         name="emailFrom"
+         ng-model="rules.action.from"
+         placeholder="Leave empty for default"
+         class="form-control"/>
+</div>
+
+<div class="form-group col-lg-12 col-md-12 col-sm-12"
+     ng-class="{'has-error': rules.newRuleForm.emailSubject.$invalid}">
+
+  <label for="emailSubject">Subject:</label>
+
+  <bknd-anchor anchor-params="rules.anchorParams"
+               window-title="Email Subject"
+               input-id="emailSubject"></bknd-anchor>
+
+  <input type="text"
+         required
+         name="emailSubject"
+         id="emailSubject"
+         ng-model="rules.action.subject"
+         ng-maxlength="200"
+         class="form-control"/>
+</div>
+
+<div class="form-group col-lg-12 col-md-12 col-sm-12"
+     ng-class="{'has-error': rules.newRuleForm.notifyMessage.$invalid}">
+
+  <label for="emailMessage">Message:</label>
+
+  <bknd-anchor anchor-params="rules.anchorParams"
+               window-title="Email Message"
+               input-id="emailMessage"></bknd-anchor>
+
+          <textarea class="form-control"
+                    name="emailMessage"
+                    id="emailMessage"
+                    ng-model="rules.action.notifyMessage"
+                    style="resize: vertical" rows="10"
+                    on-update="modal.digest()">
+          </textarea>
+</div>
