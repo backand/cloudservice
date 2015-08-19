@@ -58,7 +58,9 @@
       self.getActionTemplates();
     }
 
-    self.actionTemplateCategories = RulesService.actionTemplateCategories;
+    self.getCategoryLabel = function (id) {
+      return _.find(RulesService.actionTemplateCategories, {id: parseInt(id)}).label;
+    };
 
     self.onSelectWorkflowAction = function () {
       if (!self.isNewAction || self.action.workflowAction === 'Notify') {
@@ -72,16 +74,13 @@
     self.getActionTemplates = function () {
       return RulesService.getActionTemplates()
         .then(function (result) {
-          self.actionTemplates = [];
           result.data.data.forEach(function (template) {
             try {
               template.json = angular.fromJson(template.json);
-              if (!_.isEmpty(template.json.imageUrl)) {
-                self.actionTemplates.push(template);
-              }
             } catch (error) {
               console.log(error);
             }
+            self.actionTemplates = _.groupBy(_.sortBy(result.data.data, 'ordinal'), 'category');
           });
         });
     };

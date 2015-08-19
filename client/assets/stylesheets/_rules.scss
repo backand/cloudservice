@@ -329,6 +329,12 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     font-size: 18px;
   }
 
+  .action-template-icons-container {
+    max-height: 140px;
+    overflow: auto;
+
+  }
+
   .action-template-icon {
     height: 60px;
     width: 60px;
@@ -336,17 +342,27 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     border-radius: 10px;
     padding: 5px;
     margin: 3px;
+
   }
 
-  .action-template-icons-container {
-    max-height: 140px;
-    overflow: auto;
+  .action-template-active .action-template-icon {
+    box-shadow: 0 0 20px #4FA4E8;
   }
+
 
   .action-template-description-container {
     max-height: 140px;
     overflow: auto;
     margin: 10px 0;
+    padding: 10px 0;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+
+    &:hover .action-template-title {
+      border-radius: 4px;
+      background-color: #428bca;
+      color: #fff;
+    }
 
     img {
       float: left;
@@ -355,25 +371,22 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     }
 
     .action-template-text-container {
-      margin-top: 5px;
-      font-size: 18px;
+      font-size: 14px;
 
       .action-template-title {
-        padding: 4px;
+        padding: 0 4px;
         font-size: 24px;
         font-weight: 500;
         line-height: 1.1;
         cursor: pointer;
-
-        &:hover {
-          border-radius: 5px;
-          background-color: #428bca;
-          color: #fff;
-        }
       }
 
-      i {
+      .action-template-docs-link {
         cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
 
       .action-template-description {
