@@ -60,7 +60,7 @@
                   class="btn btn-primary pull-right with-margin"
                   ladda="rules.saving" data-style="expand-right">Save
           </button>
-          <input type="button"
+          <input type="button" ng-if="false"
                  ng-click="rules.saveActionTemplate()"
                  ng-disabled="rules.newRuleForm.$invalid"
                  class="btn btn-primary pull-right with-margin"
@@ -111,158 +111,153 @@
                   required
                   ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
                   ng-model="rules.action.workflowAction"
-                  ng-model-options="{debounce: 0}"
-                  ng-change="rules.onSelectWorkflowAction()">
+                  ng-model-options="{debounce: 0}">
             <option value="">Select what to do...</option>
           </select>
-
-        </div>
-        <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.isNewAction && rules.useTemplate">
-          <div ng-include="'views/tables/rules/action_templates.html'"></div>
         </div>
 
-        <div ng-show="rules.showActionDetails">
-          <div class="form-group col-lg-12 col-md-12 col-sm-12"
-               ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
-            <label>Input Parameters</label>
-            <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
-                        class=""></ba-tooltip>
-            <input type="text"
-                   ng-change="modal.buildParameters()"
-                   name="inputParameters"
-                   class="form-control"
-                   ng-model="rules.action.inputParameters"
-                   ng-pattern="rules.paramsPattern"
-                   placeholder="input1,input2,....">
-            <div ng-messages="rules.newRuleForm.inputParameters.$error">
-              <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.</div>
-            </div>
+        <div class="form-group col-lg-12 col-md-12 col-sm-12"
+             ng-show="rules.action.workflowAction"
+             ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
+          <label>Input Parameters</label>
+          <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
+                      class=""></ba-tooltip>
+          <input type="text"
+                 ng-change="modal.buildParameters()"
+                 name="inputParameters"
+                 class="form-control"
+                 ng-model="rules.action.inputParameters"
+                 ng-pattern="rules.paramsPattern"
+                 placeholder="input1,input2,....">
+          <div ng-messages="rules.newRuleForm.inputParameters.$error">
+            <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.</div>
           </div>
+        </div>
 
-          <div ng-switch="rules.action.workflowAction">
+        <div ng-switch="rules.action.workflowAction">
 
-            <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-if="rules.action.workflowAction">
+          <div class="form-group col-lg-12 col-md-12 col-sm-12"
+               ng-show="rules.action.workflowAction">
 
-              <!-- notify options -->
-              <div ng-switch-when="Notify">
-                <div ng-include="'views/tables/rules/email_form.html'"></div>
+            <!-- notify options -->
+            <div ng-switch-when="Notify">
+              <div ng-include="'views/tables/rules/email_form.html'"></div>
+            </div>
+            <!--./notify -->
+
+            <!-- execute SQL -->
+            <div ng-switch-when="Execute">
+
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{'has-error': rules.newRuleForm.sqlCommand.$invalid}">
+
+                <label for="sqlCommand">Sql Script</label>
+                <ba-tooltip tooltip-text="The script uses SQL syntax and allows you to update other tables"
+                            tooltip-placement="right" class=""></ba-tooltip>
+
+                <bknd-anchor anchor-params="rules.anchorParams"
+                             window-title="SQL Command"
+                             input-id="sqlCommand"></bknd-anchor>
+
+                <div
+                  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
+                  class="form-control"
+                  name="sqlCommand"
+                  id="sqlCommand"
+                  ng-model="rules.action.command"
+                  required
+                  style="resize: vertical">
+                </div>
               </div>
-              <!--./notify -->
 
-              <!-- execute SQL -->
-              <div ng-switch-when="Execute">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{'has-error': rules.newRuleForm.sqlMessage.$invalid}">
+                <label for="sqlMessage">Message:</label>
+                <ba-tooltip tooltip-text="Returned message in case the sql script failed" tooltip-placement="right"
+                            class=""></ba-tooltip>
 
-                <div class="form-group col-lg-12 col-md-12 col-sm-12"
-                     ng-class="{'has-error': rules.newRuleForm.sqlCommand.$invalid}">
+          <textarea class="form-control"
+                    ng-model="rules.action.executeMessage"
+                    name="sqlMessage"
+                    id="sqlMessage"
+                    style="resize: vertical"></textarea>
+              </div>
+            </div>
+            <!-- ./execute SQL-->
 
-                  <label for="sqlCommand">Sql Script</label>
-                  <ba-tooltip tooltip-text="The script uses SQL syntax and allows you to update other tables"
-                              tooltip-placement="right" class=""></ba-tooltip>
+            <!--code-->
+            <div ng-switch-when="JavaScript">
 
-                  <bknd-anchor anchor-params="rules.anchorParams"
-                               window-title="SQL Command"
-                               input-id="sqlCommand"></bknd-anchor>
+              <div ng-class="{'has-error': rules.newRuleForm.code.$invalid}">
+
+                <div class="form-group" ng-class="{'ace-full-screen': aceFullScreen, 'ace-show-test': rules.requestTestForm}">
+                  <label for="code">JavaScript Code</label> <a href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
 
                   <div
-                    ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
-                    class="form-control"
-                    name="sqlCommand"
-                    id="sqlCommand"
-                    ng-model="rules.action.command"
+                    ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"
+                    class="form-control ace-rule"
+                    name="code"
+                    id="code"
+                    ng-model="rules.action.code"
                     required
-                    style="resize: vertical">
+                    ng-pattern="rules.codePattern"
+                    ng-keydown="modal.handleTabKey($event)"
+                    style="resize: vertical; ">
                   </div>
-                </div>
+                  <input type="button" ng-show="rules.editMode"
+                         class="btn btn-sm btn-primary full-screen-button"
+                         ng-click="aceFullScreen = !aceFullScreen"
+                         value="{{ aceFullScreen ? 'Minimize' : 'Maximize' }}">
 
-                <div class="form-group col-lg-12 col-md-12 col-sm-12"
-                     ng-class="{'has-error': rules.newRuleForm.sqlMessage.$invalid}">
-                  <label for="sqlMessage">Message:</label>
-                  <ba-tooltip tooltip-text="Returned message in case the sql script failed" tooltip-placement="right"
-                              class=""></ba-tooltip>
-
-            <textarea class="form-control"
-                      ng-model="rules.action.executeMessage"
-                      name="sqlMessage"
-                      id="sqlMessage"
-                      style="resize: vertical"></textarea>
-                </div>
-              </div>
-              <!-- ./execute SQL-->
-
-              <!--code-->
-              <div ng-switch-when="JavaScript">
-
-                <div ng-class="{'has-error': rules.newRuleForm.code.$invalid}">
-
-                  <div class="form-group" ng-class="{'ace-full-screen': aceFullScreen, 'ace-show-test': rules.requestTestForm}">
-                    <label for="code">JavaScript Code</label> <a href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
-
-                    <div
-                      ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"
-                      class="form-control ace-rule"
-                      name="code"
-                      id="code"
-                      ng-model="rules.action.code"
-                      required
-                      ng-pattern="rules.codePattern"
-                      ng-keydown="modal.handleTabKey($event)"
-                      style="resize: vertical; ">
-                    </div>
-                    <input type="button" ng-show="rules.editMode"
-                           class="btn btn-sm btn-primary full-screen-button"
-                           ng-click="aceFullScreen = !aceFullScreen"
-                           value="{{ aceFullScreen ? 'Minimize' : 'Maximize' }}">
-
-                    <!-- workaround: ui-ace doesn't work well in input, ng-pattern doesn't work on div-->
-                    <input ng-hide="true" name="codeHidden" ng-model="rules.action.code" ng-pattern="rules.codePattern">
-                    <div ng-messages="rules.newRuleForm.codeHidden.$error">
-                      <div ng-message="pattern" class="text-danger">Please use the original function signature.</div>
-                    </div>
+                  <!-- workaround: ui-ace doesn't work well in input, ng-pattern doesn't work on div-->
+                  <input ng-hide="true" name="codeHidden" ng-model="rules.action.code" ng-pattern="rules.codePattern">
+                  <div ng-messages="rules.newRuleForm.codeHidden.$error">
+                    <div ng-message="pattern" class="text-danger">Please use the original function signature.</div>
                   </div>
                 </div>
               </div>
-              <!-- ./code -->
-              <!-- end switch -->
             </div>
-            <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction"
-                 ng-class="{'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty}">
-              <label for="whereCondition">Where Condition</label>
-              <ba-tooltip tooltip-text="SQL where clause that determines if the action will be performed"
-                          tooltip-placement="right" class=""></ba-tooltip>
+            <!-- ./code -->
+            <!-- end switch -->
+          </div>
+          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction"
+               ng-class="{'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty}">
+            <label for="whereCondition">Where Condition</label>
+            <ba-tooltip tooltip-text="SQL where clause that determines if the action will be performed"
+                        tooltip-placement="right" class=""></ba-tooltip>
 
-              <bknd-anchor anchor-params="rules.anchorParams"
-                           window-title="Where Condition"
-                           input-id="whereCondition"
-                           prev-needed="true"></bknd-anchor>
+            <bknd-anchor anchor-params="rules.anchorParams"
+                         window-title="Where Condition"
+                         input-id="whereCondition"
+                         prev-needed="true"></bknd-anchor>
 
-              <div ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
-                   id="whereCondition"
-                   required
-                   name="whereCondition"
-                   class="form-control ace-action-where"
-                   placeholder=""
-                   ng-model="rules.action.whereCondition"
-                   style="resize: vertical">
-              </div>
-              <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
+            <div ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
+                 id="whereCondition"
+                 required
+                 name="whereCondition"
+                 class="form-control ace-action-where"
+                 placeholder=""
+                 ng-model="rules.action.whereCondition"
+                 style="resize: vertical">
             </div>
+            <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
+          </div>
 
-            <div class="modal-footer" ng-show="rules.action && rules.editMode">
-              <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid"
-                      ladda="rules.saving" data-style="expand-right">Save
-              </button>
-              <input type="button"
-                     class="btn btn-danger pull-left"
-                     ng-click="rules.deleteAction()"
-                     ng-if="rules.action.__metadata"
-                     value="Delete">
-              </input>
-              <input type="button"
-                     class="btn btn-default"
-                     ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
-                     value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">
-              </input>
-            </div>
+          <div class="modal-footer" ng-show="rules.action && rules.editMode">
+            <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid"
+                    ladda="rules.saving" data-style="expand-right">Save
+            </button>
+            <input type="button"
+                   class="btn btn-danger pull-left"
+                   ng-click="rules.deleteAction()"
+                   ng-if="rules.action.__metadata"
+                   value="Delete">
+            </input>
+            <input type="button"
+                   class="btn btn-default"
+                   ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
+                   value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">
+            </input>
           </div>
         </div>
       </fieldset>

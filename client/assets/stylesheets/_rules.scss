@@ -357,6 +357,7 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     padding: 10px 0;
     border: 1px solid lightgray;
     border-radius: 4px;
+    cursor: pointer;
 
     &:hover .action-template-title {
       border-radius: 4px;
@@ -396,16 +397,4 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     }
   }
 
-}
-
-.action-template-documentation.angled-window  {
-  left: 170px;
-  z-index: 100;
-  max-width: 60%;
-
-  .angled-window-body-content {
-    padding: 20px;
-    margin: 0;
-    min-width: 300px;
-  }
 }

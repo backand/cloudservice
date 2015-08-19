@@ -51,7 +51,6 @@
      */
     function init() {
       self.isNewAction = false;
-      self.items = [];
       self.showJsCodeHelpDialog = false;
       setTestActionTitle();
       getRules();
@@ -60,16 +59,7 @@
 
     self.getCategoryLabel = function (id) {
       return _.find(RulesService.actionTemplateCategories, {id: parseInt(id)}).label;
-    };
-
-    self.onSelectWorkflowAction = function () {
-      if (!self.isNewAction || self.action.workflowAction === 'Notify') {
-        self.useTemplate = false;
-        self.showActionDetails = true;
-      } else {
-        self.useTemplate = self.action.workflowAction;
-      }
-    };
+     };
 
     self.getActionTemplates = function () {
       return RulesService.getActionTemplates()
@@ -101,14 +91,6 @@
         command: template.executeCommand,
         executeMessage: template.executeMessage
       });
-
-      self.showActionDetails = true;
-    };
-
-    self.clearActionTemplate = function () {
-      self.useTemplate = false;
-      self.templateToShow = null;
-      self.showActionTemplateDocumentation = false;
     };
 
     self.saveActionTemplate = function () {
@@ -140,9 +122,13 @@
     };
 
     self.newAction = function (trigger) {
-      self.clearActionTemplate();
+      if (self.action) {
+        refreshAction();
+        self.clearTest();
+        self.isNewAction = false;
+        return;
+      }
       self.showJsCodeHelpDialog = false;
-      self.showActionDetails = false;
       self.action = {
         whereCondition: 'true',
         code: backandCallbackConstCode.start + '\n' +
@@ -172,8 +158,6 @@
       self.editMode = false;
       self.requestTestForm = false;
       self.showJsCodeHelpDialog = false;
-      self.useTemplate = false;
-      self.showActionDetails = true;
       $scope.modal.toggleGroup();
       if (self.newRuleForm)
         self.newRuleForm.$setPristine();
@@ -418,7 +402,7 @@
 
     function buildParametersDictionary() {
       var keys = [];
-      if (self.action.inputParameters) {
+      if (self.action && self.action.inputParameters) {
         self.test.inputParametersArray = _.compact(self.action.inputParameters.replace(/ /g, '').split(','));
         // remove properties that don't exist in the array
         self.test.parameters = _.pick(self.test.parameters, self.test.inputParametersArray);
