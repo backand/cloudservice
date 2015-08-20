@@ -152,6 +152,13 @@
       });
     };
 
+    self.resetAppKey = function (appName, key) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/admin/myAppKeys/reset/' + appName + '/' + key
+      });
+    };
+
     function getAllApps () {
       return $http({
         method: 'GET',

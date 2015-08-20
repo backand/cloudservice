@@ -1,9 +1,9 @@
 (function () {
 
   angular.module('backand')
-    .controller('KeysController', ['NotificationService', 'AppsService', 'socialProviders', KeysController]);
+    .controller('KeysController', ['NotificationService', 'AppsService', 'socialProviders', 'ConfirmationPopup', KeysController]);
 
-  function KeysController(NotificationService, AppsService, socialProviders) {
+  function KeysController(NotificationService, AppsService, socialProviders, ConfirmationPopup) {
 
     var self = this;
     function init() {
@@ -29,6 +29,20 @@
         '/user/signup (put it in headers parameter SignUpToken)'
       }
     ];
+
+    self.resetKey = function(key){
+      ConfirmationPopup.confirm('After reset, you need to update all the relevant code associated with it.', 'Reset', 'Cancel')
+        .then(function (result) {
+          if (result) {
+            AppsService.resetAppKey(self.appName, key)
+              .then(function (response) {
+                self.tokens[key] = response.data;
+                self.reseted = key;
+              });
+
+          }
+        });
+    };
 
     function getAppSettings () {
       self.socialProviders.forEach(function (socialProvider) {

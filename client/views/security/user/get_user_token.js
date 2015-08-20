@@ -1,9 +1,9 @@
 (function () {
 
   angular.module('backand')
-    .controller('GetUserTokenController', ['$modalInstance', 'SecurityService', 'username', GetUserTokenController]);
+    .controller('GetUserTokenController', ['$modalInstance', 'SecurityService', 'username', 'ConfirmationPopup', GetUserTokenController]);
 
-  function GetUserTokenController(modalInstance, SecurityService, username) {
+  function GetUserTokenController(modalInstance, SecurityService, username, ConfirmationPopup) {
     var self = this;
 
     self.userData = {username: username};
@@ -24,9 +24,14 @@
     };
 
     self.resetToken = function () {
-      SecurityService.resetUserToken(self.userData.username)
-        .then(function (response) {
-          self.token = response.data;
+      ConfirmationPopup.confirm('After reset, you need to update all the relevant code associated with it.', 'Reset', 'Cancel')
+        .then(function (result) {
+          if (result) {
+            SecurityService.resetUserToken(self.userData.username)
+              .then(function (response) {
+                self.token = response.data;
+              });
+          }
         });
     };
   }

@@ -7,14 +7,26 @@
   <div class="modal-body clearfix">
 
     <div class="form-group col-lg-12 col-md-12 col-sm-12">
-      <input type="text"
-             name="token"
-             class="form-control"
-             ng-model="GetUserToken.token"
-             ng-model-options="{debounce:{default:400}}"
-             autofocus>
+
+      <div class="input-group">
+        <input type="text"
+               name="token"
+               class="form-control"
+               ng-model="GetUserToken.token"
+               ng-model-options="{debounce:{default:400}}"
+               ng-readonly="true"
+               autofocus>
+                <span class="input-group-btn">
+                  <button class="btn btn-default"
+                          type="button"
+                          clip-copy="GetUserToken.token"
+                          ng-click="GetUserToken.copied = true"
+                          ng-class="{'btn-success': GetUserToken.copied === true}">Copy</button>
+                </span>
+      </div>
+
     </div>
-    <div>
+    <div class="text-warning">
       <h3>Important</h3>
       <ul>
         <li>This key should only be used for server side activities.</li>
