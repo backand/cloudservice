@@ -57,15 +57,9 @@
         ]
       };
 
-
-      self.gridExternalScope = {
-        changePassword: changePassword,
-        getUserToken: getUserToken
-      };
-
       self.gridOptions.columnDefs.unshift({
         name: 'getUserToken',
-        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().getUserToken($event, row)"><i class="ti-key"/></div>',
+        cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.users.getUserToken($event, row)"><i class="ti-key"/></div>',
         width: 30,
         displayName: '',
         enableSorting: false,
@@ -76,7 +70,7 @@
       if (!self.adminMode) {
         self.gridOptions.columnDefs.unshift({
           name: 'changePassword',
-          cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().changePassword($event, row)"><i class="ti-lock"/></div>',
+          cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.users.changePassword($event, row)"><i class="ti-lock"/></div>',
           width: 30,
           displayName: '',
           enableSorting: false,
@@ -97,7 +91,7 @@
 
     }());
 
-    function changePassword (event, row) {
+    self.changePassword = function (event, row) {
 
       if(!row.entity.readyToSignin){
         ConfirmationPopup.confirm('Change password is only for users that ready for sign in','OK', '', true, false, 'Change Password');
@@ -113,9 +107,9 @@
           }
         });
       }
-    }
+    };
 
-    function getUserToken (event, row) {
+    self.getUserToken  = function (event, row) {
       var modalInstance = $modal.open({
         templateUrl: 'views/security/user/get_user_token.html',
         controller: 'GetUserTokenController as GetUserToken',
@@ -125,7 +119,7 @@
           }
         }
       });
-    }
+    };
 
     function getRoles(){
       usSpinnerService.spin('loading');

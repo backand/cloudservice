@@ -29,8 +29,6 @@
 
     var self = this;
 
-    $scope.$scope = $scope; //for ui-grid inner scope
-
     self.tableName = tableName;
     self.title = '';
     self.sort = '';
@@ -147,14 +145,14 @@
 
       var deleteColumnOptions = {
         name: 'delete',
-        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().ObjectData.deleteRow($event, row)"><i class="ti-trash"/></div>'
+        cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.ObjectData.deleteRow($event, row)"><i class="ti-trash"/></div>'
       };
       angular.extend(deleteColumnOptions, actionColumnOptions);
       self.gridOptions.columnDefs.unshift(deleteColumnOptions);
 
       var editColumnOptions = {
         name: 'edit',
-        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().ObjectData.editRow($event, row)"><i class="ti-pencil"/></div>'
+        cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.ObjectData.editRow($event, row)"><i class="ti-pencil"/></div>'
       };
       angular.extend(editColumnOptions, actionColumnOptions);
       self.gridOptions.columnDefs.unshift(editColumnOptions);
@@ -179,7 +177,7 @@
     function getCellEditTemplate (column) {
       if (column.form.hideInEdit || column.form.disableInEdit) return undefined;
 
-      var callbackOptions = ' onbeforesave="getExternalScopes().ObjectData.onUpdateRowCell(row, col, $data)"';
+      var callbackOptions = ' onbeforesave="grid.appScope.ObjectData.onUpdateRowCell(row, col, $data)"';
 
       var type = getFieldType(column.type);
 
@@ -197,8 +195,8 @@
       if (type === 'singleSelect') {
 
         return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" '
-          + 'e-typeahead="item.__metadata.id as getExternalScopes().ObjectData.getSingleSelectLabel(item, col) '
-          + 'for item in getExternalScopes().ObjectData.getSingleAutocomplete(col, $viewValue)" '
+          + 'e-typeahead="item.__metadata.id as grid.appScope.ObjectData.getSingleSelectLabel(item, col) '
+          + 'for item in grid.appScope.ObjectData.getSingleAutocomplete(col, $viewValue)" '
           + 'e-typeahead-template-url="views/tables/data/select_row_template.html" '
           + 'e-typeahead-editable="false" ' + callbackOptions
           + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
@@ -209,7 +207,7 @@
       /*if (!_.isEmpty(column.relatedViewName)) {
         return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" ' +
           'e-typeahead="item.value as item.value + \'. \' + item.label ' +
-          'for item in getExternalScopes().ObjectData.getAutocomplete(col.field, $viewValue)" '
+          'for item in grid.appScope.ObjectData.getAutocomplete(col.field, $viewValue)" '
           + callbackOptions
           + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
       }*/
