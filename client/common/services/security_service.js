@@ -125,6 +125,28 @@
         data: userData
       });
     }
+
+    self.getUserToken = function (username) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + self.userUrl + '/key',
+        headers: { AppName: self.appName },
+        params: {
+          username: username
+        }
+      })
+    }
+
+    self.resetUserToken = function (username) {
+      return $http({
+        method: 'PUT',
+        url: CONSTS.appUrl + self.userUrl + '/key/reset',
+        headers: { AppName: self.appName },
+        params: {
+          username: username
+        }
+      })
+    }
   }
 
   angular.module('common.services')

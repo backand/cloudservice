@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h3 class="modal-title">Key for {{GetUserToken.userData.username}}</h3>
+</div>
+
+<form novalidate name="GetUserTokenForm">
+
+  <div class="modal-body clearfix">
+
+    <div class="form-group col-lg-12 col-md-12 col-sm-12">
+      <input type="text"
+             name="token"
+             class="form-control"
+             ng-model="GetUserToken.token"
+             ng-model-options="{debounce:{default:400}}"
+             autofocus>
+    </div>
+    <div>
+      <h3>Important</h3>
+      <ul>
+        <li>This key should only be used for server side activities.</li>
+        <li>Keep this key secret.</li>
+        <li>When you reset the key you need to update all the relevant code associated with it.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn" ng-click="GetUserToken.resetToken()">Reset</button>
+    <button class="btn btn-default" ng-click="GetUserToken.closeGetToken()">Close</button>
+  </div>
+</form>

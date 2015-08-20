@@ -59,8 +59,19 @@
 
 
       self.gridExternalScope = {
-        changePassword: changePassword
+        changePassword: changePassword,
+        getUserToken: getUserToken
       };
+
+      self.gridOptions.columnDefs.unshift({
+        name: 'getUserToken',
+        cellTemplate: '<div class="grid-icon" ng-click="getExternalScopes().getUserToken($event, row)"><i class="ti-key"/></div>',
+        width: 30,
+        displayName: '',
+        enableSorting: false,
+        enableColumnMenu: false,
+        enableCellEdit: false
+      });
 
       if (!self.adminMode) {
         self.gridOptions.columnDefs.unshift({
@@ -102,6 +113,18 @@
           }
         });
       }
+    }
+
+    function getUserToken (event, row) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/security/user/get_user_token.html',
+        controller: 'GetUserTokenController as GetUserToken',
+        resolve: {
+          username: function () {
+            return row.entity.Username;
+          }
+        }
+      });
     }
 
     function getRoles(){
