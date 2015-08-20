@@ -25,30 +25,28 @@
     };
 
     self.saveRow = function (reopen) {
+      reopen ? self.savingRowAndNew = true : self.savingRow = true;
       var record = {};
-      self.savingRow = true;
       self.editRowData.entities.forEach(function (entity) {
-        if (entity.value !== null)
-          record[entity.key] = entity.value;
+        record[entity.key] = entity.value;
       });
 
       if (self.editRowData.id) {
         DataService.update(self.tableName, record, self.editRowData.id)
-          .then(function(){
-            modalInstance.close();
-          })
-          .finally(function(){
+          .then(modalInstance.close)
+          .finally(function () {
             self.savingRow = false;
+            self.savingRowAndNew = false;
           });
       }
       else {
         DataService.post(self.tableName, record)
-          .then(function(){
-            //modalInstance.close.bind(this, {reopen: reopen})
+          .then(function () {
             modalInstance.close({reopen: reopen})
           })
-          .finally(function(){
+          .finally(function () {
             self.savingRow = false;
+            self.savingRowAndNew = false;
           });
       }
     };
@@ -110,7 +108,7 @@
     };
 
     self.onMultiSelect = function (item, $model) {
-      item.value = (item.words && item.words.length > 1 ? _.dropRight(item.words).join() + ',' : '') + $model
+      item.value = (item.words && item.words.length > 1 ? _.dropRight(item.words).join() + ',' : '') + $model;
     };
 
   }

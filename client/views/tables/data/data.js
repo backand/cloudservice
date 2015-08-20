@@ -255,7 +255,7 @@
     };
 
     self.onUpdateRowCell = function(row, col, newValue) {
-      var updatedObject = angular.copy(row.entity);
+      var updatedObject = {};
       updatedObject[col.name] = newValue;
       var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id);
       updatePromise
@@ -268,7 +268,8 @@
       self.columnDefs.forEach(function(columnDef) {
         if (columnDef.type == 'DateTime') {
           self.gridOptions.data.forEach(function(row) {
-            row[columnDef.name] = new Date(row[columnDef.name]);
+            var date = row[columnDef.name];
+            row[columnDef.name] = date ? new Date(date) : '- - - - - - -';
           });
         }
       });
