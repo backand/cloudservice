@@ -26,6 +26,7 @@
     ];
 
     self.actionTemplateCategories = [
+      {id: 0, label: 'Empty'},
       {id: 1, label: 'Mail'},
       {id: 2, label: 'Payment Processing'},
       {id: 3, label: 'File Storage'},

@@ -27,9 +27,11 @@
       ConfirmationPopup.confirm('After reset, you need to update all the relevant code associated with it.', 'Reset', 'Cancel')
         .then(function (result) {
           if (result) {
+            self.reseting = true;
             SecurityService.resetUserToken(self.userData.username)
               .then(function (response) {
                 self.token = response.data;
+                self.reseting = false;
               });
           }
         });
