@@ -59,7 +59,7 @@
 
     self.getCategoryLabel = function (id) {
       return _.find(RulesService.actionTemplateCategories, {id: parseInt(id)}).label;
-     };
+    };
 
     self.getActionTemplates = function () {
       return RulesService.getActionTemplates()
