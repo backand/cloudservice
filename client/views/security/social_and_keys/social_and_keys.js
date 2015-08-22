@@ -34,10 +34,12 @@
       ConfirmationPopup.confirm('After reset, you need to update all the relevant code associated with it.', 'Reset', 'Cancel')
         .then(function (result) {
           if (result) {
+            self.reseting = key;
             AppsService.resetAppKey(self.appName, key)
               .then(function (response) {
                 self.tokens[key] = response.data;
                 self.reseted = key;
+                self.reseting = false;
               });
 
           }

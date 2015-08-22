@@ -64,7 +64,7 @@
       };
 
       self.gridOptions.columnDefs.forEach(function (columnDef) {
-        columnDef.cellTemplate = '<div class="ui-grid-cell-contents" ng-click="grid.appScope.log.showCellData(COL_FIELD, col.displayName)">{{COL_FIELD}}</div>';
+        columnDef.cellTemplate = '<div class="ui-grid-cell-contents" style="cursor: pointer;" ng-click="grid.appScope.log.showCellData(COL_FIELD, col.displayName)">{{COL_FIELD}}</div>';
       })
     }
 

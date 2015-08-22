@@ -175,7 +175,7 @@
     }
 
     function getCellEditTemplate (column) {
-      if (column.form.hideInEdit || column.form.disableInEdit) return undefined;
+      if (column.form.hideInEdit || column.form.disableInEdit || column.advancedLayout.excludeInUpdate) return undefined;
 
       var callbackOptions = ' onbeforesave="grid.appScope.ObjectData.onUpdateRowCell(row, col, $data)"';
 
@@ -334,9 +334,9 @@
       self.columnDefs.forEach(function (column) {
 
         var columnData = {
-          disableInCreate: column.form.disableInCreate,
+          disableInCreate: column.form.disableInCreate || column.advancedLayout.excludeInInsert,
           hideInCreate: column.form.hideInCreate,
-          disableInEdit: column.form.disableInEdit,
+          disableInEdit: column.form.disableInEdit || column.advancedLayout.excludeInUpdate,
           hideInEdit: column.form.hideInEdit,
           required: column.advancedLayout.required,
           defaultValue: column.advancedLayout.defaultValue,

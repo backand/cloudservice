@@ -19,6 +19,7 @@
                           type="button"
                           clip-copy="keys.tokens[displayedToken.name]"
                           ng-click="keys.resetKey(displayedToken.name);"
+                          ladda="keys.reseting === displayedToken.name"
                           ng-class="{'btn-success': keys.reseted === displayedToken.name}">Reset</button>
                   <button class="btn btn-default"
                           type="button"
