@@ -120,6 +120,10 @@
     };
 
     function openValidationModal (response) {
+
+      var editorCursorPosition = self.schemaEditor.getCursorPosition();
+      editorCursorPosition.row = editorCursorPosition.row + 1;
+
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/model/confirm_update.html',
         controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
@@ -132,7 +136,12 @@
         }
       });
 
-      return modalInstance.result;
+      return modalInstance.result.then(function () {
+        self.gotoLine = {
+          editor: self.schemaEditor,
+          position: editorCursorPosition
+        };
+      });
     }
 
     function modelErrorHandler(error, message){

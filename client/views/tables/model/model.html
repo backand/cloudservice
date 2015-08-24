@@ -27,13 +27,13 @@
 
       <strong test-hook="database-edit.title"> {{Model.appName}} - model configuration</strong>
       <h2>Edit the application model</h2>
-      
+
       <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     </div>
     <div class="panel-body">
         <div class="row">
           <div class="db-panel-body-explanation">
-            
+
             <h4>Backand's model provides an abstraction layer on top of your database, giving you easy access to update
               the database schema - <a href="" ng-click="Model.showHelp()">Need help?</a></h4>
           </div>
@@ -46,11 +46,9 @@
             <a href="" ng-click="Model.toggleShowDiff()">{{Model.showDiffs ? 'hide' : 'show'}} diff</a></div>
             <div class="side current"><span class="tab">Current model (read-only)</span></div>
             </div>
-           
-
-            
           </div>
         </div>
+
         <div class="row">
           <div class="col-md-8 col-lg-9 ">
             <div class="model-diff-container">
@@ -58,6 +56,7 @@
                            differ="Model.differ"
                            left-editor="Model.schemaEditor"
                            right-editor="Model.oldSchemaEditor"
+                           goto-line="Model.gotoLine"
                            class="model-edit-ace-diff">
               </ba-ace-diff>
             </div>

@@ -1,15 +1,16 @@
 (function () {
 
   angular.module('common.directives')
-    .directive('baAceDiff', baAceDiff);
+    .directive('baAceDiff', ['$timeout', baAceDiff]);
 
-  function baAceDiff() {
+  function baAceDiff($timeout) {
     return {
       scope: {
         leftEditor: '=?',
         rightEditor: '=?',
         aceDiffOptions: '=?',
-        differ: '=?'
+        differ: '=?',
+        gotoLine: '=?'
       },
       link: function ($scope) {
 
@@ -29,6 +30,17 @@
           });
           $scope.aceDiffOptions.onLoad(editor)
         }
+
+        function gotoLine(gotoLineData) {
+          if (gotoLineData && gotoLineData.editor && gotoLineData.position) {
+            gotoLineData.editor.focus();
+            gotoLineData.editor.gotoLine(gotoLineData.position.row, gotoLineData.position.column);
+          }
+        }
+
+        $scope.$watch('gotoLine', function () {
+          $timeout(gotoLine.bind(this, $scope.gotoLine), 450);
+        });
 
         angular.element(document).ready(function () {
           $scope.differ = new AceDiff($scope.aceDiffOptions);
