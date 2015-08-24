@@ -13,6 +13,7 @@
       self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean'];
       self.schemaEditor = null;
       self.oldSchemaEditor = null;
+      self.editorControl = {};
       self.showHelpDialog = false;
       self.showDiffs = true;
 
@@ -39,8 +40,13 @@
       self.differ.setOptions({showDiffs: self.showDiffs});
     };
 
-    self.showHelp = function(){
+    self.showHelp = function () {
       self.showHelpDialog = true;
+    };
+
+    self.closeHelp = function () {
+      self.showHelpDialog = false;
+      setCursorPosition();
     };
 
     function getSchema () {
@@ -119,10 +125,11 @@
         .catch(modelErrorHandler);
     };
 
-    function openValidationModal (response) {
+    function setCursorPosition () {
+      self.editorControl.gotoLine(self.schemaEditor);
+    }
 
-      var editorCursorPosition = self.schemaEditor.getCursorPosition();
-      editorCursorPosition.row = editorCursorPosition.row + 1;
+    function openValidationModal (response) {
 
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/model/confirm_update.html',
@@ -136,12 +143,8 @@
         }
       });
 
-      return modalInstance.result.then(function () {
-        self.gotoLine = {
-          editor: self.schemaEditor,
-          position: editorCursorPosition
-        };
-      });
+      return modalInstance.result
+        .then(setCursorPosition);
     }
 
     function modelErrorHandler(error, message){

@@ -11,7 +11,7 @@
                        title="Help"
                        id="help"
                        grouping="w"
-                       close-function="Model.showHelpDialog=false"
+                       close-function="Model.closeHelp()"
                        rolled-up="false"
                        css-class="model-help">
   <div ng-include="'views/docs/orm_help.html'"></div>
@@ -56,7 +56,7 @@
                            differ="Model.differ"
                            left-editor="Model.schemaEditor"
                            right-editor="Model.oldSchemaEditor"
-                           goto-line="Model.gotoLine"
+                           control="Model.editorControl"
                            class="model-edit-ace-diff">
               </ba-ace-diff>
             </div>

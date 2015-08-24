@@ -10,7 +10,7 @@
         rightEditor: '=?',
         aceDiffOptions: '=?',
         differ: '=?',
-        gotoLine: '=?'
+        control: '=?'
       },
       link: function ($scope) {
 
@@ -20,7 +20,7 @@
             editorSettings.content = editor.getValue();
             _.debounce(function () {
               $scope.$digest();
-            }, 400);
+            }, 350);
           });
 
           $scope.$on('ace-update', function () {
@@ -31,16 +31,17 @@
           $scope.aceDiffOptions.onLoad(editor)
         }
 
-        function gotoLine(gotoLineData) {
-          if (gotoLineData && gotoLineData.editor && gotoLineData.position) {
-            gotoLineData.editor.focus();
-            gotoLineData.editor.gotoLine(gotoLineData.position.row, gotoLineData.position.column);
-          }
-        }
+        if ($scope.control) {
+          $scope.control.gotoLine = function (editor) {
+            var lastCursorPosition = editor.getCursorPosition();
+            lastCursorPosition.row += 1;
 
-        $scope.$watch('gotoLine', function () {
-          $timeout(gotoLine.bind(this, $scope.gotoLine), 450);
-        });
+            $timeout(function () {
+              editor.focus();
+              editor.gotoLine(lastCursorPosition.row, lastCursorPosition.column);
+            }, 550);
+          };
+        }
 
         angular.element(document).ready(function () {
           $scope.differ = new AceDiff($scope.aceDiffOptions);
