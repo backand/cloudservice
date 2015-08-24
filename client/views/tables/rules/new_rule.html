@@ -83,7 +83,7 @@
 
     <div class="clearfix">
 
-      <fieldset ng-disabled="!rules.editMode">
+      <fieldset>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
              ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}">
@@ -93,7 +93,8 @@
             tooltip-placement="right" class=""></ba-tooltip>
           <select class="form-control"
                   ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
-                  ng-model="rules.action.dataAction">
+                  ng-model="rules.action.dataAction"
+                  ng-disabled="!rules.editMode">
             <option value="">Select trigger...</option>
           </select>
         </div>
@@ -111,7 +112,8 @@
                   required
                   ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
                   ng-model="rules.action.workflowAction"
-                  ng-model-options="{debounce: 0}">
+                  ng-model-options="{debounce: 0}"
+                  ng-disabled="!rules.editMode">
             <option value="">Select what to do...</option>
           </select>
         </div>
@@ -128,7 +130,8 @@
                  class="form-control"
                  ng-model="rules.action.inputParameters"
                  ng-pattern="rules.paramsPattern"
-                 placeholder="input1,input2,....">
+                 placeholder="input1,input2,...."
+                 ng-disabled="!rules.editMode">
           <div ng-messages="rules.newRuleForm.inputParameters.$error">
             <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.</div>
           </div>
@@ -166,7 +169,8 @@
                   id="sqlCommand"
                   ng-model="rules.action.command"
                   required
-                  style="resize: vertical">
+                  style="resize: vertical"
+                  ng-readonly="!rules.editMode">
                 </div>
               </div>
 
@@ -180,7 +184,8 @@
                     ng-model="rules.action.executeMessage"
                     name="sqlMessage"
                     id="sqlMessage"
-                    style="resize: vertical"></textarea>
+                    style="resize: vertical"
+                    ng-disabled="!rules.editMode"></textarea>
               </div>
             </div>
             <!-- ./execute SQL-->
@@ -202,7 +207,8 @@
                     required
                     ng-pattern="rules.codePattern"
                     ng-keydown="modal.handleTabKey($event)"
-                    style="resize: vertical; ">
+                    style="resize: vertical; "
+                    ng-readonly="!rules.editMode">
                   </div>
                   <input type="button" ng-show="rules.editMode"
                          class="btn btn-sm btn-primary full-screen-button"
@@ -238,7 +244,8 @@
                  class="form-control ace-action-where"
                  placeholder=""
                  ng-model="rules.action.whereCondition"
-                 style="resize: vertical">
+                 style="resize: vertical"
+                 ng-readonly="!rules.editMode">
             </div>
             <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
           </div>
