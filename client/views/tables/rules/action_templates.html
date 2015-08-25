@@ -17,8 +17,6 @@
     <div ng-show="rules.templateToShow && rules.templateToShow.category == categoryId"
          ng-click="rules.selectTemplate(rules.templateToShow)"
          class="action-template-description-container">
-      <img class="action-template-icon"
-           ng-src="{{rules.templateToShow.json.imageUrl}}">
       <div class="action-template-text-container">
         <span class="action-template-title">{{rules.templateToShow.name}}</span>
         <a ng-href="{{rules.templateToShow.json.docsUrl}}" target="_blank" class="action-template-docs-link" ng-click="$event.stopPropagation();">

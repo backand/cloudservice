@@ -332,70 +332,75 @@ bknd-copy-url[type="textarea"] .request-url-copy {
 
   .action-template-icons-container {
     max-height: 140px;
-    
     clear:both;
+
     a {
       display:block;
       float:left;
     }
-
   }
 
   .action-template-icon {
-    //height: 60px;
-
-    //width: 60px;
     border: solid lightgray 1px;
     border-radius: 10px;
     padding: 5px;
     display:block;
     margin: 3px;
+
     &:hover {
       border: 1px solid #4FA4E8;
-
     }
-
   }
+
   .action-template-active {
     position:relative;
-     &:after {
-        content: " ";
-        width: 20px;
-        height: 20px;
-        display: block;
-        background: white;
-        transform: rotate(-45deg);
-        position: absolute;
-        bottom: -25px;
-        left: 50%;
-        margin-left: -10px;
-        border-top: 1px solid #ddd;
-        border-right: 1px solid #ddd;
+
+    &:before, &:after {
+      content: " ";
+      width: 0px;
+      height: 0px;
+      display: inline-block;
+      position: absolute;
+      left: 50%;
+      margin-left: -15px;
+      border-bottom: 15px solid;
+      border-right: 15px solid transparent;
+      border-left: 15px solid transparent;
+    }
+
+    &:before {
+      background: white;
+      bottom: -15px;
+      border-bottom-color: #ddd;
+    }
+
+    &:after {
+      bottom: -17px;
+      border-bottom-color: white;
     }
   }
+
   .action-template-active .action-template-icon {
     border: 1px solid #4FA4E8;
     position:relative;
-   
   }
 
 
   .action-template-description-container {
-        max-height: 140px;
-      overflow: auto;
-      margin: 10px;
-      padding: 10px;
-      border: 1px solid lightgray;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 15px;
-      margin-left:5px;
-      border-radius:10px;
-      clear: both;
-      display: block;
-      float: left;
-      width: 99%;
-
+    max-height: 140px;
+    overflow: auto;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-left:5px;
+    border-radius:10px;
+    clear: both;
+    display: block;
+    float: left;
+    width: 99%;
 
     &:hover .action-template-title {
       border-radius: 4px;
@@ -431,9 +436,7 @@ bknd-copy-url[type="textarea"] .request-url-copy {
 
       .action-template-description {
         margin-left: 4px;
-
       }
     }
   }
-
 }
