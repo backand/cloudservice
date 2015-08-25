@@ -1,7 +1,14 @@
 <div class="col-xs-8 col-md-9 action-template-container">
+  <h3>Add a New Action</h3>
+  <button ng-click="rules.newAction()"
+          id="new-rule-btn with-margin"
+          class="btn btn-lg new-action-button">
+    + New Blank Action
+  </button>
+  or use a 3rd party integration snippet:
   <div ng-repeat="(categoryId, templates) in rules.actionTemplates">
     <div class="action-template-category">{{ ::rules.getCategoryLabel(categoryId) }}</div>
-    <!-- a ang img must be in the same line, otherwise space is inserted between them-->
+    <!-- a and img elements must be in the same line, otherwise space is inserted between them-->
     <div class="action-template-icons-container">
       <a href=""
          ng-repeat="template in templates track by template.id"

@@ -7,10 +7,6 @@
   border-bottom: 1px solid #eeeeee;
 }
 
-#new-rule-btn {
-  margin-top: -15px;
-}
-
 .header .form-inline .form-group .rule-name {
   font-weight: 500;
   font-size: 24px;
@@ -123,6 +119,10 @@
   :hover {
     text-decoration: none;
     color: #333;
+  }
+
+  li:first-child .rule-group-title {
+    padding-top: 0;
   }
 
   .rule-group-title {
@@ -340,7 +340,7 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     }
   }
 
-  .action-template-icon {
+  .action-template-icon, .new-action-button {
     border: solid lightgray 1px;
     border-radius: 10px;
     padding: 5px;
@@ -350,6 +350,15 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     &:hover {
       border: 1px solid #4FA4E8;
     }
+  }
+
+  .new-action-button {
+    background: white;
+    padding: 14px;
+    margin: 15px 0;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
   }
 
   .action-template-active {
@@ -389,13 +398,10 @@ bknd-copy-url[type="textarea"] .request-url-copy {
   .action-template-description-container {
     max-height: 140px;
     overflow: auto;
-    margin: 10px;
+    margin: 15px 10px 15px 0;
     padding: 10px;
     border: 1px solid lightgray;
-    border-radius: 4px;
     cursor: pointer;
-    margin-top: 15px;
-    margin-left:5px;
     border-radius:10px;
     clear: both;
     display: block;
