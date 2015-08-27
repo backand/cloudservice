@@ -1,5 +1,7 @@
 <section class="" style="width: 650px;">
-
+  <div class="panel panel-default">
+    <div class="panel-heading"><strong>Server side JavaScript actions</strong></div>
+    <div class="panel-body">
   <p>You can run standard JavaScript on the server.
     It runs on the <a href="http://en.wikipedia.org/wiki/V8_(JavaScript_engine)">V8 engine</a>.
     To execute the JavaScript action, put your code into the following function:</p>
@@ -86,20 +88,24 @@
         </li>
       </ul>
     </li>
-    <li>CONSTS - CONSTS.apiUrl for Backands API URL</li>
-    <li><code>console.log(object)</code> and <code>console.error(object)</code>,
-      to debug your code Automated actions will have a response that matches the format
-      expected by the triggering call (such as the return value of a CREATE call).
-      On Demand actions, though, will return whatever is returned by the custom server code,
+    <li>CONSTS - CONSTS.apiUrl for Backand's API URL</li>
+    <li>Return values:<br/>
+      On Demand actions, will return whatever is returned by the custom server code,
       which can be any properly-formatted JSON.
+      Trigger actions will have a response that matches the format
+      expected by the triggering call (such as the return value of a CREATE call).
     </li>
   </ul>
-  <h2>Error Handling</h2>
+  <h3>Debugging</h3>
+    <p><code>console.log(object)</code> and <code>console.error(object)</code>
+    </p>
+  <h3>Error Handling</h3>
 
   <p>If your code results in an error (for example, if you write the following:
     <code>throw new Error("An error occurred!"))</code>,
     the request will return HTTP status 417,
     and the response body will contain the associated error message.
   </p>
-
+  </div>
+  </div>
 </section>
