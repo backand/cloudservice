@@ -2,10 +2,10 @@
   'use strict';
 angular.module('backand.database')
   .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$state', 'DatabaseNamesService',
-    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$modal', 'SessionService','$analytics', DatabaseEdit]);
+    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$modal', 'AnalyticsService', DatabaseEdit]);
 
   function DatabaseEdit($scope, $http, AppsService, $state, DatabaseNamesService,
-                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $modal,SessionService, $analytics) {
+                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $modal, AnalyticsService) {
 
     var self = this;
     var currentApp = AppsService.currentApp;
@@ -90,12 +90,12 @@ angular.module('backand.database')
 
 
           if(useSchema)
-            SessionService.track('CreatedNewDB', {schema: self.template.schema});
+            AnalyticsService.track('CreatedNewDB', {schema: self.template.schema});
           else
-            SessionService.track('CreatedNewDB', {app: self.template.appName});
+            AnalyticsService.track('CreatedNewDB', {app: self.template.appName});
 
 
-            SessionService.track('create app', {app: self.template.appName});
+            AnalyticsService.track('create app', {app: self.template.appName});
           $state.go('docs.kickstart');
         })
         .error(function (err) {
@@ -151,7 +151,7 @@ angular.module('backand.database')
           DatabaseService.connect2DB($state.params.appName, self.data)
               .success(function (data) {
 
-              SessionService.track('ConnectedExistingDB', {product: self.data.product});
+              AnalyticsService.track('ConnectedExistingDB', {product: self.data.product});
 
 
               NotificationService.add('info', 'Connecting to the database...');
@@ -289,7 +289,7 @@ angular.module('backand.database')
           self.Confirmation('Sorry but mongoDB is in closed Beta');
           return;
       }
-    }
+    };
 
     //Control the Create button text to replace the text
     self.loadOpt = function () {

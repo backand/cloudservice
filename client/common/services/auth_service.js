@@ -1,14 +1,50 @@
 (function () {
   'use strict';
 
-  function AuthService($http, CONSTS, SessionService, SocialProvidersService, $window, $q, $state, $analytics) {
+  angular.module('common.services')
+    .service('AuthService', ['SessionService', '$http', 'CONSTS', 'SocialProvidersService', '$window', '$q', 'AnalyticsService', 'HttpBufferService', AuthService]);
+
+
+  function AuthService(SessionService, $http, CONSTS, SocialProvidersService, $window, $q, AnalyticsService, HttpBufferService) {
 
     var self = this;
 
+    self.socials = SocialProvidersService.socialProviders;
+
+    var signingIn = false;
+
     self.signIn = function (userData) {
+      if (signingIn) return;
+      signingIn = true;
+
       userData.grant_type = 'password';
       userData.appName = userData.appName || CONSTS.mainAppName;
 
+      return signIn(userData)
+        .then(function (response) {
+          setCredentials(response.data, userData.username);
+          HttpBufferService.retryAll(updater);
+          return response.data;
+        })
+        .finally(function () {
+          signingIn = false;
+        });
+    };
+
+    self.signUp = function (fullName, email, password) {
+      return signUp(fullName, email, password)
+        .then(function () {
+          return self.signIn({username: email, password: password})
+        })
+        .then(function (response) {
+          setCredentials(response.data, email);
+          AnalyticsService.identify(fullName, email);
+          AnalyticsService.trackSignupEvent(fullName, email);
+          return response;
+        })
+    };
+
+    function signIn (userData) {
       return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/token',
@@ -16,16 +52,16 @@
           transformRequest: function (obj) {
             var str = [];
             for (var prop in obj) {
-              str.push(prop + "=" + obj[prop]);
+              str.push(prop + "=" + encodeURIComponent(obj[prop]));
             }
             return str.join("&");
           },
           data: userData
         }
       )
-    };
+    }
 
-    self.signUp = function (fullName, email, password) {
+    function signUp (fullName, email, password) {
       return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/api/account/signUp',
@@ -37,6 +73,18 @@
           }
         }
       )
+    }
+
+    function updater (request) {
+      request.headers['Authorization'] = SessionService.getAuthHeader();
+      return request;
+    }
+
+    self.refreshToken = function () {
+      return self.signIn({
+        username: SessionService.currentUser.username,
+        refreshToken: SessionService.currentUser.refresh_token
+      });
     };
 
     self.forgot = function (email) {
@@ -50,7 +98,6 @@
       )
     };
 
-    self.socials = SocialProvidersService.socialProviders;
 
     function getSocialUrl(social, isSignup) {
       var action = isSignup ? 'up' : 'in';
@@ -103,7 +150,10 @@
           });
         }
       } else if (eventData.data) {
-        return self.signInWithToken(JSON.parse(eventData.data), eventData.st);
+        return self.signInWithToken(JSON.parse(eventData.data), eventData.st)
+          .then(function (response) {
+            self.loginPromise.resolve(response);
+          });
       } else {
         self.loginPromise.reject();
       }
@@ -115,20 +165,16 @@
         accessToken: userData.access_token,
         appName: userData.appName
       };
+
       if(st != '0') { //this is sign up
-        self.trackSignupEvent(tokenData.username, tokenData.username, st);
+         AnalyticsService.trackSignupEvent(
+           tokenData.username,
+           tokenData.username,
+           _.find(self.socials, {id: Number(st)}));
       }
 
-      self.signIn(tokenData)
-        .success(function (data) {
-          SessionService.setCredentials(data);
-          // requestedState will be empty because the app was redirected to.
-          // This will change when social sign in will happen with pop up
-          var requestedState = SessionService.getRequestedState();
-          $state.go(requestedState.state || 'apps.index', requestedState.params);
-        });
+      return self.signIn(tokenData);
     };
-
 
 
     self.resetPassword = function (password, id) {
@@ -154,27 +200,17 @@
       });
     };
 
-    self.getUserId = function () {
-      return SessionService.getUserId();
+    function setCredentials (serverData, username) {
+      serverData.username = serverData.username || username;
+
+      SessionService.setCredentials(serverData);
+
+      AnalyticsService.jacoIdentify(serverData.username);
+      //AnalyticsService.woopraIdentify(currentUser.username, currentUser.username);
+      AnalyticsService.track('session', {name: serverData.username});
+      AnalyticsService.inspect(serverData.username);
     };
 
-    self.trackSignupEvent = function(fullName, email, sId){
-
-      var social = _.find(self.socials, {id: Number(sId)});
-      var socialName = social ? social.name : 'self';
-      analytics.identify(email, {
-        name: fullName,
-        email: email,
-        signed_up_at: new Date().getTime()
-      });
-      $analytics.eventTrack('SignedUp', {name: fullName});
-      $analytics.eventTrack('SocialSignedUp', {provider: socialName});
-
-    }
-
   }
-
-  angular.module('common.services')
-    .service('AuthService', ['$http', 'CONSTS', 'SessionService', 'SocialProvidersService', '$window', '$q', '$state', '$analytics', AuthService])
 
 })();

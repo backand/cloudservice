@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, $analytics) {
+  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, AnalyticsService) {
 
     var self = this;
 
@@ -285,7 +285,7 @@
 
     self.inviteAdmins = function () {
 
-      SessionService.track('AddedAdmin', {admins: self.invitedAdmins});
+      AnalyticsService.track('AddedAdmin', {admins: self.invitedAdmins});
       self.inviteUsers(self.invitedAdmins, 'Admin');
     };
 
@@ -371,16 +371,7 @@
         }
         else
           $scope.modal.NewUser = true;
-      }
-
-      //$scope.$watch(
-      //  function () {
-      //    return self.user.email;
-      //  },
-      //  function (newVal, oldVal) {
-      //
-      //  }
-      //)
+      };
 
       $scope.closeModal = function (user) {
         user.password = user.password || '';
@@ -415,7 +406,7 @@
       '$scope',
       'SessionService',
       'AppsService',
-      '$analytics',
+      'AnalyticsService',
       SecurityUsers
     ]);
 

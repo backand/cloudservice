@@ -18,8 +18,7 @@
       'usSpinnerService',
       'ColumnsService',
       'CONSTS',
-      'SessionService',
-      '$analytics',
+      'AnalyticsService',
       'EscapeSpecialChars',
       '$modal',
       RulesController]);
@@ -38,8 +37,7 @@
                            usSpinnerService,
                            ColumnsService,
                            CONSTS,
-                           SessionService,
-                           $analytics,
+                           AnalyticsService,
                            EscapeSpecialChars,
                            $modal) {
 
@@ -225,7 +223,7 @@
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
-          SessionService.track('AddedRule', {rule: self.action.name});
+          AnalyticsService.track('AddedRule', {rule: self.action.name});
 
           self.saving = false;
           self.savingAndTesting = false;
