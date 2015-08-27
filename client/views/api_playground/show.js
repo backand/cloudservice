@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('backand.playground')
-    .controller('Playground', ["CONSTS", 'SessionService', '$state', 'usSpinnerService', '$sce', '$scope', Playground]);
+    .controller('Playground', ['CONSTS', 'SessionService', '$state', 'usSpinnerService', '$sce', '$scope', Playground]);
 
   function Playground(CONSTS, SessionService, $state, usSpinnerService, $sce, $scope) {
     var self = this;
