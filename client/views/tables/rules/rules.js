@@ -19,7 +19,6 @@
       'ColumnsService',
       'CONSTS',
       'SessionService',
-      '$analytics',
       'EscapeSpecialChars',
       '$modal',
       RulesController]);
@@ -39,7 +38,6 @@
                            ColumnsService,
                            CONSTS,
                            SessionService,
-                           $analytics,
                            EscapeSpecialChars,
                            $modal) {
 
@@ -77,7 +75,7 @@
 
     self.selectTemplate = function (template) {
       if (!self.action) {
-        self.newAction();
+        self.newAction(null,template.name);
       }
 
       self.action.name = self.action.name || template.ruleName;
@@ -121,13 +119,15 @@
       'useSqlParser': true
     };
 
-    self.newAction = function (trigger) {
+    self.newAction = function (trigger, templateName) {
       if (self.action) {
         refreshAction();
         self.clearTest();
         self.isNewAction = false;
         return;
       }
+      SessionService.track('Template Selected', {template: templateName || "New Blank"});
+
       self.showJsCodeHelpDialog = false;
       self.action = {
         whereCondition: 'true',
