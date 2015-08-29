@@ -1,14 +1,17 @@
 (function() {
   'use strict';
 
-  function httpInterceptor($q, SessionService, usSpinnerService, NotificationService, $injector, CONSTS) {
+  angular.module('common.interceptors.http', [])
+    .factory('httpInterceptor', ['$q', 'SessionService', 'usSpinnerService', 'NotificationService', 'HttpBufferService', '$injector', 'CONSTS', httpInterceptor]);
+
+  function httpInterceptor($q, SessionService, usSpinnerService, NotificationService, HttpBufferService, $injector, CONSTS) {
     return {
-        request: function(config) {
-          usSpinnerService.spin("spinner-1");
-          if (SessionService.currentUser) {
-            config.headers['Authorization'] = SessionService.getAuthHeader();
-          }
-          return config;
+      request: function(config) {
+        usSpinnerService.spin("spinner-1");
+        if (SessionService.currentUser && SessionService.currentUser.access_token) {
+          config.headers['Authorization'] = SessionService.getAuthHeader();
+        }
+        return config;
       },
       requestError: function(rejection) {
         return $q.reject(rejection);
@@ -19,28 +22,48 @@
       responseError: function(rejection) {
         //if not sign in screen :
         usSpinnerService.stop("loading");
-        if ((rejection.config.url + "").indexOf('token') === -1) {
-          if (rejection.status === 401) {
-            SessionService.ClearCredentials();
-            NotificationService.add('warning', 'Logon credentials have expired, please re-login');
 
-            var state = $injector.get('$state');
-            if (state.current.name !== 'sign_in'
-              /*&& (rejection.ExceptionType === "BackAnd.Web.Api.Controllers.Filters.AuthorizationTokenExpiredException" ||
-              rejection.ExceptionMessage === "invalid or expired token")*/
-            ) {
-              SessionService.setRequestedState(state.current.name, state.params);
+        var state = $injector.get('$state');
+
+        if (rejection.config.url !== CONSTS.appUrl + '/token') {
+
+          if (rejection.status === 401) {
+
+            if (true) { // token expired
+              if (SessionService.currentUser && SessionService.currentUser.refresh_token) {
+
+                SessionService.clearToken();
+
+                var deferred = $q.defer();
+                HttpBufferService.append(rejection.config, deferred);
+
+                var authService = $injector.get('AuthService');
+                authService.refreshToken();
+
+                return deferred.promise;
+
+              } else { // no refresh token, sign in again and then go back to the current state
+                NotificationService.add('warning', 'Login credentials have expired, please sign in again');
+                SessionService.setRequestedState(state.current.name, state.params);
+                SessionService.clearCredentials(); // notification is shown in the next block
+                state.transitionTo('sign_in');
+                return $q.reject(rejection);
+              }
             }
-            state.transitionTo('sign_in');
-            return $q.reject(rejection);
           }
-          if(rejection.data == null) {
-            NotificationService.add("error", "An error occurred while communicating with the server, please refresh the page in few seconds");
-          } else if (!avoidInterception('responseError', rejection)) {
-            NotificationService.add("error", rejection.data);
-          }
+
+        } else {
+          SessionService.clearCredentials(); // notification is added in the next block
+          state.transitionTo('sign_in');
         }
-          return $q.reject(rejection);
+
+        if (rejection.data == null) {
+          NotificationService.add("error", "An error occurred while communicating with the server, please refresh the page in few seconds");
+        } else if (!avoidInterception('responseError', rejection)) {
+          NotificationService.add("error", rejection.data);
+        }
+
+        return $q.reject(rejection);
       }
     };
 
@@ -56,7 +79,4 @@
     }
   }
 
-
-  angular.module('common.interceptors.http', [])
-    .factory('httpInterceptor', ['$q', 'SessionService', 'usSpinnerService', 'NotificationService', '$injector', 'CONSTS', httpInterceptor]);
 })();

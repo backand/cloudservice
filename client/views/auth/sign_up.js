@@ -3,11 +3,11 @@
   angular.module('backand')
     .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', SignUpController]);
 
-  function SignUpController(AuthService, $state, SessionService, $timeout){
+  function SignUpController (AuthService, $state, SessionService, $timeout) {
 
     var self = this;
 
-    (function init() {
+    (function init () {
       self.loading = false;
 
       //for automatic sign up
@@ -25,39 +25,18 @@
     self.signUp = function () {
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
-        .success(function (data) {
-
-          AuthService.signIn({username: self.email, password: self.password})
-            .success(function (data) {
-              SessionService.setCredentials(data, self.email);
-
-              if(analytics)
-                analytics.identify(self.email, {
-                  name: self.fullName,
-                  email: self.email,
-                  createdAt: new Date().getTime()
-                });
-              AuthService.trackSignupEvent(self.fullName, self.email);
-              var requestedState = SessionService.getRequestedState();
-              $state.go(requestedState.state || 'apps.index', requestedState.params);
-            })
-            .error(function (data) {
-              self.loading = false;
-              self.error = data.error_description;
-              $timeout(function() {
-                self.error = undefined;
-              }, 3000);
-
-            });
+        .then(function (response) {
+            var requestedState = SessionService.getRequestedState();
+            $state.go(requestedState.state || 'apps.index', requestedState.params);
         })
-        .error(function (data) {
+        .catch(function (data) {
           self.loading = false;
           self.error = data.error_description;
           $timeout(function () {
             self.error = undefined;
           }, 3000);
-        });
-    }
+        })
+    };
   }
 
 }());

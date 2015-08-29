@@ -1,47 +1,24 @@
 (function() {
   'use strict';
 
-  angular.module('common.services', ['ngCookies'])
-    .service('SessionService', ['$cookieStore', '$analytics', SessionService]);
+  angular.module('common.services')
+    .service('SessionService', ['$cookieStore', '$injector', SessionService]);
 
-  function SessionService($cookieStore, $analytics) {
+  function SessionService($cookieStore, $injector) {
+
     var self = this;
+
     var requestedState = {};
+    var failedRequests = [];
 
     self.currentUser = $cookieStore.get('globals') ? $cookieStore.get('globals').currentUser : undefined;
 
-    self.getAuthHeader = function() {
-      return self.currentUser ? 'bearer ' + self.currentUser.access_token : false;
+    self.setCredentials = function (currentUser) {
+      self.currentUser = currentUser;
+      $cookieStore.put('globals', {currentUser: currentUser});
     };
 
-    self.getToken = function() {
-      return self.currentUser ? self.currentUser.access_token : false;
-    };
-
-
-    self.setCredentials = function (serverData, username) {
-      var user = {
-        currentUser: {
-          access_token : serverData.access_token,
-          username: username || serverData.username,
-          userId: serverData.userId
-        }
-      };
-
-      self.currentUser = user.currentUser;
-
-      $cookieStore.put('globals', user);
-
-      if(window.JacoRecorder)
-        window.JacoRecorder.identify(user.currentUser.username);
-      //if (woopra)
-      //  woopra.identify({ email: user.currentUser.username, id:user.currentUser.username });
-      self.track('session',{name: user.currentUser.username})
-      if (typeof __insp != 'undefined')
-        __insp.push(['identify', user.currentUser.username]);
-    };
-
-    self.ClearCredentials = function () {
+    self.clearCredentials = function () {
       $cookieStore.remove('globals');
       self.currentUser = undefined;
     };
@@ -49,6 +26,19 @@
     self.getUserId = function () {
       return (self.currentUser && self.currentUser.userId) ? self.currentUser.userId : 0;
     };
+
+    self.getAuthHeader = function() {
+      return self.currentUser && self.currentUser.access_token ? 'bearer ' + self.currentUser.access_token : false;
+    };
+
+    self.getToken = function() {
+      return self.currentUser ? self.currentUser.access_token : false;
+    };
+
+    self.clearToken = function() {
+      if (self.currentUser) self.currentUser.access_token = null;
+    };
+
 
     self.setRequestedState = function (state, params) {
       if (_.isEmpty(requestedState)) {
@@ -69,15 +59,26 @@
       requestedState = {};
     };
 
-    self.track = function (eventName,eventObject)
-    {
-      if (analytics)
-        analytics.identify(self.currentUser.username, {
-          name: self.currentUser.username,
-          email: self.currentUser.username,
-          createdAt: new Date().getTime()
-        });
-      $analytics.eventTrack(eventName ,eventObject);
+    self.addFailedRequest = function (request) {
+      failedRequests.push(request);
+    };
+
+    self.updateFailedRequestsAuth = function (newAuth) {
+      failedRequests.forEach(function (request) {
+        request.headers.Authorization = newAuth;
+      });
+    };
+
+    self.rerunFailedRequests = function () {
+      var http = $injector.get('$http');
+      failedRequests.forEach(function (request) {
+        http(request);
+      });
+      self.clearFailedRequests();
+    };
+
+    self.clearFailedRequests = function () {
+      failedRequests = [];
     }
   }
 

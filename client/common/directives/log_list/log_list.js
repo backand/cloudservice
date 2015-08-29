@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('common.directives',[])
+  angular.module('common.directives')
     .directive('logList', ['$rootScope','AppLogService', function($rootScope,AppLogService) {
       return {
         restrict: 'A',

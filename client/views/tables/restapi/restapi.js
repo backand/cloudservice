@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('backand')
-    .controller('RestAPITab', ["CONSTS", 'SessionService', '$state', 'usSpinnerService', '$sce','ColumnsService','$scope', RestAPITab]);
+    .controller('RestAPITab', ['CONSTS', 'SessionService', '$state', 'usSpinnerService', '$sce', 'ColumnsService', '$scope', RestAPITab]);
 
   function RestAPITab(CONSTS, SessionService, $state, usSpinnerService, $sce, ColumnsService, $scope) {
     var self = this;

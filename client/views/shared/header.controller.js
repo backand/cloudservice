@@ -3,7 +3,7 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ["$scope", 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', HeaderController]);
+    ['$scope', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', HeaderController]);
 
   function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal) {
     var self = this;
@@ -33,7 +33,7 @@
     };
 
     self.logout = function () {
-      SessionService.ClearCredentials();
+      SessionService.clearCredentials();
       $location.path("/sign_in")
     };
 

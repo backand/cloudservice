@@ -18,7 +18,7 @@
       'usSpinnerService',
       'ColumnsService',
       'CONSTS',
-      'SessionService',
+      'AnalyticsService',
       'EscapeSpecialChars',
       '$modal',
       RulesController]);
@@ -37,7 +37,7 @@
                            usSpinnerService,
                            ColumnsService,
                            CONSTS,
-                           SessionService,
+                           AnalyticsService,
                            EscapeSpecialChars,
                            $modal) {
 
@@ -126,7 +126,7 @@
         self.isNewAction = false;
         return;
       }
-      SessionService.track('Template Selected', {template: templateName || "New Blank"});
+      AnalyticsService.track('Template Selected', {template: templateName || "New Blank"});
 
       self.showJsCodeHelpDialog = false;
       self.action = {
@@ -225,7 +225,7 @@
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
-          SessionService.track('AddedRule', {rule: self.action.name});
+          AnalyticsService.track('AddedRule', {rule: self.action.name});
 
           self.saving = false;
           self.savingAndTesting = false;

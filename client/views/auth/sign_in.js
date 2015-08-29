@@ -7,24 +7,23 @@
   function SignInController(AuthService, $state, SessionService, $modal, NotificationService) {
     var self = this;
 
-    this.loading = false;
+    self.loading = false;
 
-    this.signIn = function () {
+    self.signIn = function () {
       self.loading = true;
       self.error = undefined;
       AuthService.signIn({username: self.userName, password: self.userPassword})
-        .success(function (data) {
-          SessionService.setCredentials(data, self.userName);
+        .then(function (response) {
           var requestedState = SessionService.getRequestedState();
           $state.go(requestedState.state || 'apps.index', requestedState.params);
         })
-        .error(function (data) {
+        .catch(function (response) {
           self.loading = false;
-          self.error = data.error_description;
+          self.error = response.data.error_description;
         });
     };
 
-    this.open = function () {
+    self.open = function () {
       self.modalOn = true;
       var modalInstance = $modal.open({
         templateUrl: 'views/auth/forgot_modal.html',
