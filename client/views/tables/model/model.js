@@ -143,8 +143,7 @@
         }
       });
 
-      return modalInstance.result
-        .then(setCursorPosition);
+      return modalInstance.result;
     }
 
     function modelErrorHandler(error, message){
