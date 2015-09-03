@@ -58,7 +58,7 @@
               <div class="col-md-5 social-keys-container">
                 <div class="form-group">
                   <label for="{{::socialProvider.name}}-use-backand">
-                    Use Back& app for signing in with {{ ::socialProvider.label }}
+                    Use your app for signing in with {{ ::socialProvider.label }}
                   </label>
                   <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
                     <input id="{{::socialProvider.name}}-use-backand"
@@ -72,7 +72,7 @@
                   <label for="{{::socialProvider.name}}-api-key" class="control-label">{{::socialProvider.clientIdTitle || 'Client ID'}}</label>
                   <input type="text"
                          class="form-control"
-                         ng-disabled="socialProvider.useBackandApp"
+                         ng-disabled="!socialProvider.useBackandApp"
                          id="{{::socialProvider.name}}-api-key"
                          ng-model="socialProvider.clientId"
                          ng-change="keys.updateSettings()">
@@ -81,7 +81,7 @@
                   <label for="{{::socialProvider.name}}-secret-key" class="control-label">{{::socialProvider.secretIdTitle || 'Client secret'}}</label>
                   <input type="text"
                          class="form-control"
-                         ng-disabled="socialProvider.useBackandApp"
+                         ng-disabled="!socialProvider.useBackandApp"
                          id="{{::socialProvider.name}}-secret-key"
                          ng-model="socialProvider.clientSecret"
                          ng-change="keys.updateSettings()">

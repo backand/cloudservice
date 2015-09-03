@@ -67,7 +67,7 @@
     }
 
     self.useBackandAppChange = function (socialProvider) {
-      if (socialProvider.useBackandApp) {
+      if (!socialProvider.useBackandApp) {
         socialProvider.clientSecret = socialProvider.clientId = null;
       }
       else {
@@ -87,8 +87,10 @@
 
     function setUseBackandApp (socialProvider) {
       if (!socialProvider.clientSecret && !socialProvider.clientId) {
-        socialProvider.useBackandApp = true;
+        socialProvider.useBackandApp = false;
       }
+      else
+        socialProvider.useBackandApp = true;
     }
 
     self.updateSettings = function () {
