@@ -78,10 +78,10 @@
       {
         var queryId = query.__metadata.id;
         return _put(query, queryId)
-        .then(function (data) {
+        .then(function (response) {
             NotificationService.add('success', 'Query saved');
-            _.assign(self.getQuery(queryId), query);
-            return data.data;
+            _.assign(self.getQuery(queryId), response.data);
+            return response.data;
           }
           , function (err) {
             NotificationService.add('error', "Can't get DB queries");

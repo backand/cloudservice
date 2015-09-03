@@ -37,7 +37,6 @@
           return self.signIn({username: email, password: password})
         })
         .then(function (response) {
-          setCredentials(response.data, email);
           AnalyticsService.identify(fullName, email);
           AnalyticsService.trackSignupEvent(fullName, email);
           return response;
