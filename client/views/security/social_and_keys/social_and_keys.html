@@ -58,7 +58,8 @@
               <div class="col-md-5 social-keys-container">
                 <div class="form-group">
                   <label for="{{::socialProvider.name}}-use-backand">
-                    Use your app for signing in with {{ ::socialProvider.label }}
+                    Use your credencials for signing in with {{ ::socialProvider.label }}
+                      <ba-tooltip tooltip-text="By default the credentials belongs to Backand, so your users will see Backand as the provider. We suggest you create new app in {{ ::socialProvider.label }} and provide your own credentials." tooltip-placement="right"></ba-tooltip>
                   </label>
                   <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
                     <input id="{{::socialProvider.name}}-use-backand"
