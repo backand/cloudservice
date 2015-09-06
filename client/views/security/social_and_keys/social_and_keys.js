@@ -6,6 +6,7 @@
   function KeysController(NotificationService, AppsService, socialProviders, ConfirmationPopup) {
 
     var self = this;
+
     function init() {
       self.socialProviders = angular.copy(socialProviders);
       self.appName = AppsService.currentApp.Name;
@@ -46,14 +47,25 @@
         });
     };
 
+    self.tokenExpirations = [
+      {label: 'never', seconds: false},
+      {label: 'ten hours', seconds: 36000},
+      {label: 'one day', seconds: 86400},
+      {label: 'one week', seconds: 604800},
+      {label: 'one month', seconds: 2592000}
+    ];
+
+    var TOKEN_EXPIRATION_WITH_REFRESH = 86400;
+
     function getAppSettings () {
       self.socialProviders.forEach(function (socialProvider) {
         settings.forEach(function (setting) {
           socialProvider[setting] = AppsService.currentApp.settings[getSettingKey(setting, socialProvider)];
         });
         syncSocialKeys(socialProvider);
-        setUseBackandApp(socialProvider);
-      })
+        setUseOwnApp(socialProvider);
+      });
+      setTokenExpiration();
     }
 
     function getSettingKey (setting, socialProvider) {
@@ -62,22 +74,27 @@
         socialProvider.name + _.capitalize(setting);
     }
 
+    function setTokenExpiration () {
+      self.useRefreshToken = AppsService.currentApp.settings.useRefreshToken;
+      self.tokenExpiration = self.useRefreshToken ? false : AppsService.currentApp.settings.tokenExpiration;
+    }
+
     function setKeysInfo(data){
       self.tokens = data.data;
     }
 
-    self.useBackandAppChange = function (socialProvider) {
-      if (!socialProvider.useBackandApp) {
+    self.useOwnAppChange = function (socialProvider) {
+      if (!socialProvider.useOwnApp) {
         socialProvider.clientSecret = socialProvider.clientId = null;
       }
       else {
         angular.extend(socialProvider, socialProvider.temp);
       }
-      self.updateSettings();
+      self.updateSocialSettings(socialProvider);
     };
 
     function syncSocialKeys (socialProvider) {
-      if (socialProvider.clientSecret && socialProvider.clientId) {
+      if (socialProvider.clientSecret || socialProvider.clientId) {
         socialProvider.temp = {
           clientSecret: socialProvider.clientSecret,
           clientId: socialProvider.clientId
@@ -85,27 +102,36 @@
       }
     }
 
-    function setUseBackandApp (socialProvider) {
-      if (!socialProvider.clientSecret && !socialProvider.clientId) {
-        socialProvider.useBackandApp = false;
-      }
-      else
-        socialProvider.useBackandApp = true;
+    function setUseOwnApp (socialProvider) {
+      socialProvider.useOwnApp = !!socialProvider.clientSecret || !!socialProvider.clientId;
     }
 
-    self.updateSettings = function () {
+    self.updateTokenExpire = function () {
       self.errorUpdate = false;
       var appSettings = {};
 
-      self.socialProviders.forEach(function (socialProvider) {
-        syncSocialKeys(socialProvider);
-        settings.forEach(function (setting) {
-          appSettings[getSettingKey(setting, socialProvider)] = socialProvider[setting];
-        });
+      appSettings.useRefreshToken = !self.tokenExpiration;
+      appSettings.tokenExpiration = self.tokenExpiration || TOKEN_EXPIRATION_WITH_REFRESH;
+
+      updateSettings(appSettings);
+    };
+
+    self.updateSocialSettings = function (socialProvider) {
+      self.errorUpdate = false;
+      var appSettings = {};
+
+      syncSocialKeys(socialProvider);
+      settings.forEach(function (setting) {
+        appSettings[getSettingKey(setting, socialProvider)] = socialProvider[setting];
       });
+
+      updateSettings(appSettings);
+    };
+
+    function updateSettings (appSettings) {
       AppsService.update(self.appName, {settings: appSettings})
         .then(updateSuccess, errorHandler);
-    };
+    }
 
     function updateSuccess() {
       NotificationService.add('success', 'Data saved');
