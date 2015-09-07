@@ -48,11 +48,11 @@
     };
 
     self.tokenExpirations = [
-      {label: 'never', seconds: false},
-      {label: 'ten hours', seconds: 36000},
-      {label: 'one day', seconds: 86400},
-      {label: 'one week', seconds: 604800},
-      {label: 'one month', seconds: 2592000}
+      {label: '10 Hours', seconds: 36000},
+      {label: '1 Day', seconds: 86400},
+      {label: '1 Week', seconds: 604800},
+      {label: '1 Month', seconds: 2592000},
+      {label: 'Never - Use Refresh Token', seconds: false}
     ];
 
     var TOKEN_EXPIRATION_WITH_REFRESH = 86400;

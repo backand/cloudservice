@@ -39,14 +39,18 @@
       <div class="field-group">
         <div class="group-inner">
           <div class="row">
-          <div class="form-group col-md-4">
-            <label class="control-label strong">Token Expiration</label>
-            <!--<div class="form-group">-->
-              <select class="form-control"
+            <div class="form-group col-md-5">
+                <label class="control-label strong">Session Length</label>
+                <!--<div class="form-group">-->
+                <select class="form-control"
                       required
                       ng-options="time.seconds as time.label for time in keys.tokenExpirations"
                       ng-model="keys.tokenExpiration"
                       ng-change="keys.updateTokenExpire()"></select>
+                <div class="field-description">
+                    The length of time that the session will remain valid. The expiration is set when calling /token API for signin.
+                    <ba-tooltip tooltip-text="New token value won't be affected until the user is re-login. When selecting 'Never - Use Refresh Token' the access token is set to 1 day but it can be reconnected using refresh token. Backand's SDK is handling the refresh token so no additional code is needed." tooltip-placement="right"></ba-tooltip>
+                </div>
             </div>
           </div>
         </div>
