@@ -7,10 +7,7 @@
       <h4>{{ ConfirmModelUpdate.text.title }}</h4>
       <label ng-bind-html="ConfirmModelUpdate.text.message"></label>
       <br>
-
-      <ul>
-        <li ng-repeat="notification in ConfirmModelUpdate.notifications">{{ notification | newTerminology }}</li>
-      </ul>
+      <ba-nested-container container="ConfirmModelUpdate.notifications"></ba-nested-container>
     </div>
 
     <a href=""

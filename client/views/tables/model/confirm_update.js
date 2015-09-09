@@ -66,6 +66,7 @@
             'Those changes may result in a loss or corruption of data.<br>' +
             'Click Ok to proceed';
         } else {
+          self.notifications = _.uniq(self.validationResponse.warnings);
           self.text.message = 'The Model is valid.<br>' +
             'Changes made to the model include changes to fields types.<br>' +
             'Those changes may result in a loss or corruption of data.<br>' +
