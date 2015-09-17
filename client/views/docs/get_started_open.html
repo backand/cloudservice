@@ -28,22 +28,18 @@
           <li>
             <h3>Add the Backand scripts</h3><br/>
             <pre><code class="html hljs">
-  &lt;!-- We use client cookies to save the REST API token --&gt;
-  &lt;script src=&quot;//code.angularjs.org/1.3.14/angular-cookies.min.js&quot;&gt;&lt;/script&gt;
-
   &lt;!-- Backand SDK for Angular --&gt;
-  &lt;script src=&quot;//cdn.backand.net/backand/dist/1.7.2/backand.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;//cdn.backand.net/backand/dist/1.8.0/backand.min.js&quot;&gt;&lt;/script&gt;
             </code></pre>
-            <p>Include the above code in your index.html file.</p>
+            <p>Include the above code in your index.html file. Make it above the project's code</p>
             <br />
           </li>
 
           <li>
-           <h3>Add the module dependency</h3>
-            <p>Add the backand and angular-cookies dependencies to your angular app definition</p>
+            <p>Add the backand and module dependencies to your angular app definition</p>
             <pre><code class="javascript">
   //app.js
-  angular.module('YOUR-APP-NAME', ['backand', 'ngCookies'])
+  angular.module('YOUR-APP-NAME', ['backand'])
             </code></pre>
             <br />
           </li>
@@ -56,14 +52,12 @@
             <pre><code>
   //Update Angular configuration section
   myApp.config(function (BackandProvider) {
-      BackandProvider.manageDefaultHeaders();
       BackandProvider.setAppName('{{docs.currentApp.Name || 'Your-App-Name'}}');
       //BackandProvider.setSignUpToken('{{docs.keys.signup || 'Your-SignUp-Token'}}');
       //BackandProvider.setAnonymousToken('{{docs.keys.anonymous || 'Your-Anonymous-Token'}}');
 
   })
             </code></pre>
-            manageDefaultHeaders - add Backand's token to "Authorization" header<br/>
             setAppName - set the app name to be used by the SDK<br/>
             setAnonymousToken - allow anonymous access if needed<br/>
             setSignUpToken - allow any user to register to the app

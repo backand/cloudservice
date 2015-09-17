@@ -20,11 +20,11 @@
       isAdmin = ($state.$current.url.source.indexOf('/history') == -1);
       if(isAdmin){
         self.title = 'Log Configuration';
-        self.names = {ViewName: 'Object Type', PK:'Object Name', FieldName: 'Field Name', Action: 'Event'};
+        self.names = {ViewName: 'Entity', PK:'Entity Name / Id', FieldName: 'Property Name', Action: 'Event'};
       }
       else {
         self.title = 'Data History';
-        self.names = {ViewName: 'Object Name', PK:'Object PK', FieldName: 'Column Name', Action: 'Event'};
+        self.names = {ViewName: 'Object Name', PK:'Object Id', FieldName: 'Field Name', Action: 'Event'};
       }
 
       setGridOptions();
