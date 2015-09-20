@@ -2,13 +2,15 @@
 (function  () {
 
   angular.module('backand')
-    .controller('AuthController', ['AuthService', 'SessionService', 'HttpBufferService', 'NotificationService', '$state', 'usSpinnerService', AuthController]);
+    .controller('AuthController', ['AuthService', 'SessionService', 'HttpBufferService', 'NotificationService', '$state', 'usSpinnerService', 'AuthLayoutService', AuthController]);
 
-  function AuthController(AuthService, SessionService, HttpBufferService, NotificationService, $state, usSpinnerService) {
+  function AuthController(AuthService, SessionService, HttpBufferService, NotificationService, $state, usSpinnerService, AuthLayoutService) {
     var self = this;
 
     self.flags = AuthService.flags;
     self.flags.authenticating = false;
+
+    self.template = AuthLayoutService.flags.landing && $state.is('sign_up') ? 'views/auth/auth_landing.html' : 'views/auth/auth_regular.html';
 
     SessionService.clearCredentials();
     // when entering login page, reject all pending http requests which were rejected with 401

@@ -1,0 +1,80 @@
+<div class="main-container body-wide auth-landing">
+  <div id="content" class="content-container auth-body">
+
+    <div class="page-signin">
+
+      <div class="signin-header">
+        <section class="logo text-center">
+          <a href="https://www.backand.com" class="ng-binding">
+            <img src="assets/images/logo-white.png"></a><span style="color: white">Landing page!!!</span>
+
+        </section>
+      </div>
+
+      <div class="signin-body first-signup-block">
+        <div class="container">
+          <div class="form-container signup-container">
+
+            <img class="dragon" src="/assets/images/auth_pages/dragon-signup.png">
+
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="signup-options">
+                  Sign in With
+                  <span class="social-signin-spinner" us-spinner spinner-key="socialSignin"></span>
+                </div>
+                <form class="signup-social">
+
+                  <a class="btn btn-block btn-social"
+                     ng-repeat="social in Auth.socials"
+                     ng-class="'btn-' + social.css"
+                     ng-click="Auth.socialLogin(social)" ng-disabled="Auth.flags.authenticating">
+                    <i class="fa" ng-class="'fa-' + social.css"></i> {{social.label}}
+                  </a>
+                </form>
+              </div>
+
+              <div class="col-sm-7">
+                <div ng-include="'views/auth/sign_up_landing.html'" ng-controller="SignUpController as signup"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="signin-body second-signup-block">
+        <div class="container">
+          <div class="form-container signup-container">
+
+            <img class="dragon" src="/assets/images/auth_pages/dragon-signup.png">
+
+            <div class="row">
+              <div class="col-sm-5">
+                <div class="signup-options">
+                  Sign in With
+                  <span class="social-signin-spinner" us-spinner spinner-key="socialSignin"></span>
+                </div>
+                <form class="signup-social">
+
+                  <a class="btn btn-block btn-social"
+                     ng-repeat="social in Auth.socials"
+                     ng-class="'btn-' + social.css"
+                     ng-click="Auth.socialLogin(social)" ng-disabled="Auth.flags.authenticating">
+                    <i class="fa" ng-class="'fa-' + social.css"></i> {{social.label}}
+                  </a>
+                </form>
+              </div>
+
+              <div class="col-sm-7">
+                <div ng-include="'views/auth/sign_up_landing.html'" ng-controller="SignUpController as signup"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
