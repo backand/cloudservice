@@ -25,7 +25,7 @@
       self.sort = '[{fieldName:"Username", order:"desc"}]';
 
       self.adminMode = ($state.$current.url.source.indexOf('/team') > -1);;
-      self.title = self.adminMode ? 'Team' : 'Users';
+      self.title = self.adminMode ? 'Team' : 'Registered Users';
 
       self.gridOptions.rowEditWaitInterval = 200;
       self.paginationOptions = {

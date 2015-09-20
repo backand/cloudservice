@@ -3,6 +3,7 @@
        ng-class="{'has-error': rules.newRuleForm.emailTo.$invalid}">
 
     <label for="emailTo">To:</label>
+    <ba-tooltip tooltip-text="Use ; (semi-colon) for multiple emails" tooltip-placement="right" class=""></ba-tooltip>
     <bknd-anchor anchor-params="rules.anchorParams"
                  window-title="Email Recipient"
                  input-id="emailTo"></bknd-anchor>
