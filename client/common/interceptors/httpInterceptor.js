@@ -29,7 +29,7 @@
 
           if (rejection.status === 401) {
 
-            if (true) { // token expired
+            if (rejection.data && rejection.data.Message === 'invalid or expired token') {
               if (SessionService.currentUser && SessionService.currentUser.refresh_token) {
 
                 SessionService.clearToken();
@@ -60,7 +60,7 @@
         if (rejection.data == null) {
           NotificationService.add("error", "An error occurred while communicating with the server, please refresh the page in few seconds");
         } else if (!avoidInterception('responseError', rejection)) {
-          NotificationService.add("error", rejection.data);
+          NotificationService.add("error", rejection.data.Message || rejection.data);
         }
 
         return $q.reject(rejection);
