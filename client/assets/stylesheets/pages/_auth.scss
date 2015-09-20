@@ -176,6 +176,13 @@
       }
     }
 
+    .social-signin-spinner {
+      position: relative;
+      float: right;
+      top: 14px;
+      left: -20px;
+    }
+
     .signup-social {
       padding-top: 20px;
       @media (max-width: $screen-sm) {

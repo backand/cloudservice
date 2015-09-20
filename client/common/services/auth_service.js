@@ -233,6 +233,7 @@
       if (angular.isDefined(checkSocialWindow)) {
         $interval.cancel(checkSocialWindow);
         checkSocialWindow = undefined;
+        self.loginPromise.reject('');
       }
     }
 

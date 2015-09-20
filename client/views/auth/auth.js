@@ -2,9 +2,9 @@
 (function  () {
 
   angular.module('backand')
-    .controller('AuthController', ['AuthService', 'SessionService', 'HttpBufferService', 'NotificationService', '$state', AuthController]);
+    .controller('AuthController', ['AuthService', 'SessionService', 'HttpBufferService', 'NotificationService', '$state', 'usSpinnerService', AuthController]);
 
-  function AuthController(AuthService, SessionService, HttpBufferService, NotificationService, $state) {
+  function AuthController(AuthService, SessionService, HttpBufferService, NotificationService, $state, usSpinnerService) {
     var self = this;
 
     self.flags = AuthService.flags;
@@ -22,6 +22,7 @@
 
     self.socialLogin = function (social) {
       self.flags.authenticating = true;
+      usSpinnerService.spin("socialSignin");
       AuthService.socialLogin(social)
         .then(function (response) {
           var requestedState = SessionService.getRequestedState();
@@ -29,7 +30,8 @@
         })
         .catch(function (error) {
           self.flags.authenticating = false;
-          NotificationService.add('error', error.data)
+          NotificationService.add('error', error.data);
+          usSpinnerService.stop("socialSignin");
         });
     }
 
