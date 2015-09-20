@@ -8,6 +8,7 @@
     var self = this;
 
     (function init () {
+      self.flags = AuthService.flags;
       self.loading = false;
 
       //for automatic sign up
@@ -23,6 +24,7 @@
     }());
 
     self.signUp = function () {
+      self.flags.authenticating = true;
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
         .then(function (response) {
@@ -30,6 +32,7 @@
             $state.go(requestedState.state || 'apps.index', requestedState.params);
         })
         .catch(function (data) {
+          self.flags.authenticating = false;
           self.loading = false;
           self.error = data.error_description;
           $timeout(function () {

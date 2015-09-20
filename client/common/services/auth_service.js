@@ -2,12 +2,16 @@
   'use strict';
 
   angular.module('common.services')
-    .service('AuthService', ['SessionService', '$http', 'CONSTS', 'SocialProvidersService', '$window', '$q', 'AnalyticsService', 'HttpBufferService', AuthService]);
+    .service('AuthService', ['SessionService', '$http', 'CONSTS', 'SocialProvidersService', '$window', '$q', 'AnalyticsService', 'HttpBufferService', '$interval', AuthService]);
 
 
-  function AuthService(SessionService, $http, CONSTS, SocialProvidersService, $window, $q, AnalyticsService, HttpBufferService) {
+  function AuthService (SessionService, $http, CONSTS, SocialProvidersService, $window, $q, AnalyticsService, HttpBufferService, $interval) {
 
     var self = this;
+
+    self.flags = {
+      authenticating: false
+    };
 
     self.socials = SocialProvidersService.socialProviders;
 
@@ -98,7 +102,7 @@
     };
 
 
-    function getSocialUrl(social, isSignup) {
+    function getSocialUrl (social, isSignup) {
       var action = isSignup ? 'up' : 'in';
       return 'user/socialSign' + action +
         '?provider=' + social.label +
@@ -107,6 +111,8 @@
     }
 
     self.socialLogin = function (provider, isSignup) {
+      startCheckingSocialWindow();
+
       if (typeof provider === 'string') {
         provider = _.find(self.socials, {name: provider});
       }
@@ -114,7 +120,7 @@
       //monitor when users click on social
       var st = '?st=' + (isSignup ? provider.id : '0');
 
-      var returnAddress =  encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
+      var returnAddress = encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
 
       self.loginPromise = $q.defer();
 
@@ -122,34 +128,37 @@
         CONSTS.appUrl + '/1/' +
         getSocialUrl(provider, isSignup) +
         '&appname=' + CONSTS.mainAppName + '&returnAddress=' + returnAddress + st,
-        'id1', 'left=10, top=10, width=600, height=600');
+        'socialSigninWindow', 'left=10, top=10, width=600, height=600');
 
       window.addEventListener('message', setUserDataFromToken, false);
       return self.loginPromise.promise;
     };
 
     function setUserDataFromToken (message) {
-      self.socialAuthWindow.close();
-      self.socialAuthWindow = null;
       if (message.origin !== location.origin) {
         return;
       }
 
+      self.socialAuthWindow.close();
+      self.socialAuthWindow = null;
+
       var eventData = JSON.parse(message.data);
       if (eventData.error) {
         var errorData = JSON.parse(eventData.error);
+
         if (errorData.message === 'The user is not signed up to ' + CONSTS.mainAppName) {
-          self.socialLogin(errorData.provider, true)
-        }
-        else {
+          self.socialLogin(errorData.provider, true);
+
+        } else {
           var errorMessage = errorData.message + ' (signing in with ' + errorData.provider + ')';
 
           self.loginPromise.reject({
             data: errorMessage
           });
         }
+
       } else if (eventData.data) {
-        return self.signInWithToken(JSON.parse(eventData.data), eventData.st)
+        return signInWithToken(JSON.parse(eventData.data), eventData.st)
           .then(function (response) {
             self.loginPromise.resolve(response);
           });
@@ -158,22 +167,22 @@
       }
     }
 
-    self.signInWithToken = function (userData, st) {
+    function signInWithToken (userData, st) {
       var tokenData = {
         grant_type: 'password',
         accessToken: userData.access_token,
         appName: userData.appName
       };
 
-      if(st != '0') { //this is sign up
-         AnalyticsService.trackSignupEvent(
-           tokenData.username,
-           tokenData.username,
-           _.find(self.socials, {id: Number(st)}));
+      if (st != '0') { //this is sign up
+        AnalyticsService.trackSignupEvent(
+          tokenData.username,
+          tokenData.username,
+          _.find(self.socials, {id: Number(st)}));
       }
 
       return self.signIn(tokenData);
-    };
+    }
 
 
     self.resetPassword = function (password, id) {
@@ -208,8 +217,31 @@
       //AnalyticsService.woopraIdentify(currentUser.username, currentUser.username);
       AnalyticsService.track('session', {name: serverData.username});
       AnalyticsService.inspect(serverData.username);
-    };
+    }
 
+
+    // checks whether the social login window was closed by the user.
+    // if so, sets flags.authenticating to false
+
+    var checkSocialWindow;
+
+    function startCheckingSocialWindow () {
+      checkSocialWindow = $interval(getSocialWindowStatus, 500);
+    }
+
+    function stopCheckingSocialWindow () {
+      if (angular.isDefined(checkSocialWindow)) {
+        $interval.cancel(checkSocialWindow);
+        checkSocialWindow = undefined;
+      }
+    }
+
+    function getSocialWindowStatus () {
+      if (self.socialAuthWindow && self.socialAuthWindow.closed) {
+        stopCheckingSocialWindow ();
+        self.flags.authenticating = false;
+      }
+    }
   }
 
 })();

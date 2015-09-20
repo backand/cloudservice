@@ -3,9 +3,9 @@
 </div>
 
 <div class="signup-email">
-<div ng-show="sign.error" class="alert alert-danger auth-alert">
-  <img src="assets/images/auth_pages/warning.png">{{sign.error}}</div>
-  <form class="form-horizontal" name="form" ng-submit="sign.signIn()" novalidate>
+<div ng-show="signin.error" class="alert alert-danger auth-alert">
+  <img src="assets/images/auth_pages/warning.png">{{signin.error}}</div>
+  <form class="form-horizontal" name="form" ng-submit="signin.signIn()" novalidate>
     <fieldset>
       <div class="form-group">
         <div class="input-group input-group-first">
@@ -17,7 +17,7 @@
                  name="uEmail"
                  placeholder="Email (Username)"
                  test-hook="signin.username"
-                 ng-model="sign.userName"
+                 ng-model="signin.userName"
                  ng-model-options="{updateOn: 'blur'}"
                  ng-focus="emailInput.focus = true"
                  ng-blur="emailInput.focus = false"
@@ -38,7 +38,7 @@
                  placeholder="Password"
                  test-hook="signin.password"
                  name="uPassword"
-                 ng-model="sign.userPassword"
+                 ng-model="signin.userPassword"
                  ng-model-options="{debounce: 500}"
                  required>
         </div>
@@ -49,14 +49,15 @@
       <br/>
 
       <div class="text-right text-danger">
-        <a ng-click="sign.open()" href="">Forgot your password?</a>
+        <a ng-click="signin.flags.authenticating ? null : signin.open()" href="">Forgot your password?</a>
       </div>
       <div class="divider divider-xl"></div>
       <div class="form-group">
         <button type="submit"
                 class="auth-button btn btn-lg"
                 test-hook="signin.login"
-                ladda="sign.loading" data-style="expand-right">
+                ng-disabled="signin.flags.authenticating"
+                ladda="signin.loading" data-style="expand-right">
           Sign in
         </button>
       </div>

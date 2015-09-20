@@ -22,15 +22,15 @@
                 <div class="signup-options">
                   Sign in With
                 </div>
-                <div class="signup-social">
+                <form class="signup-social">
 
                   <a class="btn btn-block btn-social"
                      ng-repeat="social in Auth.socials"
                      ng-class="'btn-' + social.css"
-                     ng-click="Auth.socialLogin(social)">
+                     ng-click="Auth.socialLogin(social)" ng-disabled="Auth.flags.authenticating">
                     <i class="fa" ng-class="'fa-' + social.css"></i> {{social.label}}
                   </a>
-                </div>
+                </form>
               </div>
 
               <div class="col-sm-7">

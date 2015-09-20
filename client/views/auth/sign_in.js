@@ -7,9 +7,11 @@
   function SignInController(AuthService, $state, SessionService, $modal, NotificationService) {
     var self = this;
 
+    self.flags = AuthService.flags;
     self.loading = false;
 
     self.signIn = function () {
+      self.flags.authenticating = true;
       self.loading = true;
       self.error = undefined;
       AuthService.signIn({username: self.userName, password: self.userPassword})
@@ -18,9 +20,10 @@
           $state.go(requestedState.state || 'apps.index', requestedState.params);
         })
         .catch(function (response) {
+          self.flags.authenticating = false;
           self.loading = false;
           self.error = response.data.error_description;
-        });
+        })
     };
 
     self.open = function () {

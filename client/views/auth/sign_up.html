@@ -103,7 +103,7 @@
 
         <div class="divider"></div>
         <button type="submit"
-                ng-disabled="form.$invalid"
+                ng-disabled="form.$invalid || signup.flags.authenticating"
                 test-hook="signup.signup"
                 class="auth-button btn btn-lg"
                 ladda="signup.loading" data-style="expand-right">Sign up

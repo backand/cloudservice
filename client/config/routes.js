@@ -26,7 +26,7 @@ angular.module('backand.routes', []).
         parent: 'auth',
         url: '/sign_in',
         templateUrl: 'views/auth/sign_in.html',
-        controller : 'SignInController as sign'
+        controller : 'SignInController as signin'
       })
       .state('change_password', {
         url: '/change_password',
