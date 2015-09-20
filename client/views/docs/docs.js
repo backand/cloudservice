@@ -11,7 +11,7 @@
     (function init() {
       usSpinnerService.spin("connecting-app-to-db");
       self.currentApp = AppsService.currentApp;
-      if(self.currentApp.Name)
+      if(self.currentApp.DatabaseStatus !== 0)
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
 
     }());
