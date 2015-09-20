@@ -134,7 +134,7 @@
 
     function rolesSuccessHandler(data) {
       self.roles = data.data.data;
-      self.gridOptions.columnDefs[self.adminMode ? 3 : 4].editDropdownOptionsArray = self.roles;
+      self.gridOptions.columnDefs[self.adminMode ? 4 : 5].editDropdownOptionsArray = self.roles;
 
       $scope.modal.roles = self.roles.map(function (role) {
           return role.Name;
@@ -173,7 +173,7 @@
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
       self.roleFieldName = self.gridOptions.data[0] && self.gridOptions.data[0].Role ? 'Role' : self.roleFieldName;
-      self.gridOptions.columnDefs[self.adminMode ? 3 : 4].name = self.roleFieldName;
+      self.gridOptions.columnDefs[self.adminMode ? 4 : 5].name = self.roleFieldName;
 
       usSpinnerService.stop('loading');
     }
