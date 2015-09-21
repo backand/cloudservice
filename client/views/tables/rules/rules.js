@@ -551,7 +551,7 @@
       }
       usSpinnerService.spin('loading-row');
 
-      return ObjectsService.getObject(AppsService.currentApp.Name, getTableName(), id)
+      return ObjectsService.getObject(getTableName(), id)
         .then(function (data) {
           setTestRowData(data.data);
         }, function () {
