@@ -1,14 +1,26 @@
 (function() {
-  function DataService($http, CONSTS, AppsService) {
+  function DataService($http, CONSTS, AppsService, stringifyHttp) {
     var self = this;
 
     self.log = [];
 
     function logAndExecute (http, log) {
+      var logItem = {};
       if (log) {
-        self.log.push(http);
+        logItem = {
+          requestJson: stringifyHttp(http),
+          requestUrl: http.url
+        };
+
+        self.log.push(logItem);
       }
-      return $http(http);
+      return $http(http)
+        .then(function (response) {
+          if (log && response.data) {
+            logItem.response = angular.toJson(response.data, true);
+          }
+          return response;
+        });
     }
 
     self.get = function(tableName, size, page, sort, filter, log) {
@@ -22,6 +34,15 @@
           'filter' : typeof(filter) === 'undefined' ? '' : filter,
           'sort' : sort
         }
+      };
+      return logAndExecute(http, log);
+    };
+
+    self.getItem = function(tableName, itemId, log) {
+      var http = {
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/objects/' + tableName + '/' + itemId,
+        headers: { 'AppName': AppsService.currentApp.Name }
       };
       return logAndExecute(http, log);
     };
@@ -88,6 +109,6 @@
   }
 
   angular.module('common.services')
-    .service('DataService', ['$http', 'CONSTS', 'AppsService', DataService]);
+    .service('DataService', ['$http', 'CONSTS', 'AppsService', 'stringifyHttp', DataService]);
 
 })();

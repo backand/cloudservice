@@ -42,15 +42,20 @@
     };
 
     (function init() {
-      getData(true);
+      getData(true, true);
     }());
+
+    self.toggleShowLog = function () {
+      self.showLog = !self.showLog;
+      setTimeout("$('#grid-container').trigger('resize');", 1);
+    };
 
     self.createData = function (data) {
       DataService.post(tableName, data, true);
     };
 
     self.refresh = function () {
-      getData();
+      getData(false, true);
     };
 
     self.gridOptions = {
@@ -258,7 +263,9 @@
       updatedObject[col.name] = newValue;
       var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id, true);
       updatePromise
-        .then(loadData)
+        .then(function () {
+          return loadData()
+        })
         .then(successDataHandler);
       return updatePromise;
     };
@@ -303,6 +310,7 @@
     };
 
     self.editRow = function (event, rowItem) {
+      DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true);
       getEditRowEntity(rowItem);
       openModal();
     };
@@ -395,7 +403,9 @@
             return;
           usSpinnerService.spin("loading-data");
           DataService.delete(self.tableName, rowItem.entity, rowItem.entity.__metadata.id, true)
-            .then(loadData)
+            .then(function () {
+              return loadData()
+            })
             .then(successDataHandler);
         });
     };

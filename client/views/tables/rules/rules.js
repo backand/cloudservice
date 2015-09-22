@@ -21,6 +21,7 @@
       'AnalyticsService',
       'EscapeSpecialChars',
       '$modal',
+      'stringifyHttp',
       RulesController]);
 
   function RulesController($scope,
@@ -39,7 +40,8 @@
                            CONSTS,
                            AnalyticsService,
                            EscapeSpecialChars,
-                           $modal) {
+                           $modal,
+                           stringifyHttp) {
 
     var self = this;
     /**
@@ -634,15 +636,6 @@
       self.testHttpCopied = false;
       AppLogService.getActionLog($stateParams.appName, guid)
         .then(showLog, errorHandler);
-    }
-
-    function stringifyHttp (http) {
-      var stringifiedHttp = 'return $http (' + angular.toJson(http, true) + ');';
-      stringifiedHttp = stringifiedHttp.replace(/"([\d\w\s]+)"\s*:/g, '$1:');
-      stringifiedHttp = stringifiedHttp.replace(/"/g, "'");
-      stringifiedHttp = stringifiedHttp.replace("'https://api.backand.com", "Backand.getApiUrl() + '");
-
-      return stringifiedHttp;
     }
 
     function showLog(response) {

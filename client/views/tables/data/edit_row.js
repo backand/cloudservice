@@ -34,7 +34,7 @@
       });
 
       if (self.editRowData.id) {
-        DataService.update(self.tableName, record, self.editRowData.id)
+        DataService.update(self.tableName, record, self.editRowData.id, true)
           .then(modalInstance.close)
           .finally(function () {
             self.savingRow = false;
@@ -42,7 +42,7 @@
           });
       }
       else {
-        DataService.post(self.tableName, record)
+        DataService.post(self.tableName, record, true)
           .then(function () {
             modalInstance.close({reopen: reopen})
           })

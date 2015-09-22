@@ -1,36 +1,56 @@
 <div id="grid-container">
     <us-spinner spinner-key="loading-data" spinner-start-active="1" style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
     <button class="btn btn-success" ng-click="ObjectData.newRow()">+ New Row</button>
+    <button class="btn btn-success" ng-click="ObjectData.toggleShowLog()">Show Http Log</button>
     <button class="btn btn-default pull-right" ng-click="ObjectData.refresh()">Refresh Data</button>
     <br/><br/>
-    <div ui-grid="ObjectData.gridOptions"
-         class="datagrid" ui-grid-resize-columns
-         external-scopes="$scope"
-         ng-show="ObjectData.gridOptions.totalItems > 0">
-    </div>
-    <div ng-show="ObjectData.gridOptions.totalItems == 0">
-      <h3>No items found</h3>
-    </div>
-    <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">
-      <div class="col-md-5">
-        <pagination total-items="ObjectData.gridOptions.totalItems"
-                    ng-model="ObjectData.paginationOptions.pageNumber"
-                    max-size="5"
-                    class="pagination-sm"
-                    boundary-links="true"
-                    rotate="false"
-                    items-per-page="ObjectData.paginationOptions.pageSize"
-                    previous-text="&lsaquo;"
-                    next-text="&rsaquo;"></pagination>
+  <div class="row">
+    <div ng-class="ObjectData.showLog ? 'col-md-8' : 'col-md-12'">
+      <div ui-grid="ObjectData.gridOptions"
+           class="datagrid" ui-grid-resize-columns
+           external-scopes="$scope"
+           ng-show="ObjectData.gridOptions.totalItems > 0">
       </div>
-      <div class="col-md-2" style="margin-top:20px;">
-        Page size:
-        <select class="ui-select" ng-model="ObjectData.paginationOptions.pageSize" >
-          <option ng-repeat="size in ObjectData.paginationOptions.pageSizes">{{size}}</option>
-        </select>
+      <div ng-show="ObjectData.gridOptions.totalItems == 0">
+        <h3>No items found</h3>
       </div>
-      <div class="col-md-5" style="margin-top:20px;">
-        <span class="pull-right">Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}} to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize, ObjectData.paginationOptions.pageNumber, ObjectData.gridOptions.totalItems)}} of {{ObjectData.gridOptions.totalItems}} rows</span>
+      <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">
+        <div class="col-md-5">
+          <pagination total-items="ObjectData.gridOptions.totalItems"
+                      ng-model="ObjectData.paginationOptions.pageNumber"
+                      max-size="5"
+                      class="pagination-sm"
+                      boundary-links="true"
+                      rotate="false"
+                      items-per-page="ObjectData.paginationOptions.pageSize"
+                      previous-text="&lsaquo;"
+                      next-text="&rsaquo;"></pagination>
+        </div>
+        <div class="col-md-2" style="margin-top:20px;">
+          Page size:
+          <select class="ui-select" ng-model="ObjectData.paginationOptions.pageSize" >
+            <option ng-repeat="size in ObjectData.paginationOptions.pageSizes">{{size}}</option>
+          </select>
+        </div>
+        <div class="col-md-5" style="margin-top:20px;">
+          <span class="pull-right">Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}} to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize, ObjectData.paginationOptions.pageNumber, ObjectData.gridOptions.totalItems)}} of {{ObjectData.gridOptions.totalItems}} rows</span>
+        </div>
       </div>
     </div>
+    <div ng-show="ObjectData.showLog" class="col-md-4">
+
+      <div class="object-data-log-container">
+        <div ng-repeat="httpRequest in ObjectData.httpRequestsLog track by $index">
+          <bknd-copy-box content="httpRequest.requestUrl"></bknd-copy-box>
+          <bknd-copy-box type="textarea" content="httpRequest.requestJson"></bknd-copy-box>
+          <textarea ng-show="httpRequest.response"
+                    class="request-url object-data-log-response"
+                    rows="7">
+            {{ ::httpRequest.response }}
+          </textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>

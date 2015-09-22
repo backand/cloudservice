@@ -1,3 +1,7 @@
-<a tooltip-template="'views/tables/data/select_row_tooltip.html'" tooltip-placement="right" tooltip-class="select-row-tooltip" tooltip-enable="match.label.fields.length > 0">
+<a tooltip-template="'views/tables/data/select_row_tooltip.html'"
+   tooltip-placement="right"
+   tooltip-class="select-row-tooltip"
+   tooltip-enable="match.label.fields.length > 0"
+   class="typeahead-select-row">
   <span ng-bind-html="match.label.descriptiveLabel | typeaheadHighlight:query"></span>
 </a>
