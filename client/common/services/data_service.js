@@ -2,8 +2,17 @@
   function DataService($http, CONSTS, AppsService) {
     var self = this;
 
-    self.get = function(tableName, size, page, sort, filter) {
-      return $http({
+    self.log = [];
+
+    function logAndExecute (http, log) {
+      if (log) {
+        self.log.push(http);
+      }
+      return $http(http);
+    }
+
+    self.get = function(tableName, size, page, sort, filter, log) {
+      var http = {
         method: 'GET',
         url: CONSTS.appUrl + '/1/objects/' + tableName,
         headers: { 'AppName': AppsService.currentApp.Name },
@@ -13,34 +22,38 @@
           'filter' : typeof(filter) === 'undefined' ? '' : filter,
           'sort' : sort
         }
-      });
+      };
+      return logAndExecute(http, log);
     };
 
-    self.update = function(tableName, record, id) {
-      return $http({
+    self.update = function(tableName, record, id, log) {
+      var http = {
         method: 'PUT',
         url: CONSTS.appUrl + '/1/objects/' + tableName + '/' + id,
         headers: { 'AppName': AppsService.currentApp.Name },
         data: record
-      });
+      };
+      return logAndExecute(http, log);
     };
 
-    self.post = function(tableName, record) {
-      return $http({
+    self.post = function(tableName, record, log) {
+      var http = {
         method: 'POST',
         url: CONSTS.appUrl + '/1/objects/' + tableName,
         headers: { 'AppName': AppsService.currentApp.Name },
         data: record
-      });
+      };
+      return logAndExecute(http, log);
     };
 
-    self.delete = function(tableName, record, id) {
-      return $http({
+    self.delete = function(tableName, record, id, log) {
+      var http = {
         method: 'DELETE',
         url: CONSTS.appUrl + '/1/objects/' + tableName + '/' + id,
         headers: { 'AppName': AppsService.currentApp.Name },
         data: record
-      });
+      };
+      return logAndExecute(http, log);
     };
 
     /**

@@ -33,6 +33,7 @@
     self.title = '';
     self.sort = '';
     self.refreshOnce = false;
+    self.httpRequestsLog = DataService.log;
 
     this.paginationOptions = {
       pageNumber: 1,
@@ -45,7 +46,7 @@
     }());
 
     self.createData = function (data) {
-      DataService.post(tableName, data);
+      DataService.post(tableName, data, true);
     };
 
     self.refresh = function () {
@@ -62,11 +63,8 @@
         //declare the events
 
         $scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
-          if (sortColumns[0])
-            self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
-          else
-            self.sort = '';
-          getData();
+          self.sort = sortColumns[0] ? '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]' : '';
+          getData(false, true);
         });
       }
     };
@@ -77,21 +75,24 @@
       , getPageData);
 
     function getPageData(newVal, oldVal) {
-      if (newVal !== oldVal)
-        getData();
+      if (newVal !== oldVal) {
+        getData(false, true);
+      }
     }
 
-    function getData(force) {
+    function getData(force, log) {
       usSpinnerService.spin("loading-data");
 
       ColumnsService.get(force)
         .then(successColumnsHandler, errorHandler)
-        .then(loadData)
+        .then(function () {
+          return loadData(log);
+        })
         .then(successDataHandler, errorHandler);
     }
 
-    function loadData() {
-      return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort);
+    function loadData(log) {
+      return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, null, log);
     }
 
     function successColumnsHandler (data) {
@@ -255,7 +256,7 @@
     self.onUpdateRowCell = function(row, col, newValue) {
       var updatedObject = {};
       updatedObject[col.name] = newValue;
-      var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id);
+      var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id, true);
       updatePromise
         .then(loadData)
         .then(successDataHandler);
@@ -393,7 +394,7 @@
           if (!result)
             return;
           usSpinnerService.spin("loading-data");
-          DataService.delete(self.tableName, rowItem.entity, rowItem.entity.__metadata.id)
+          DataService.delete(self.tableName, rowItem.entity, rowItem.entity.__metadata.id, true)
             .then(loadData)
             .then(successDataHandler);
         });
