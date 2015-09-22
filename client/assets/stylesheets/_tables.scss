@@ -90,3 +90,12 @@
   text-align: left;
   min-width: 350px;
 }
+
+.input-group .input-group-addon.addon-goto-object {
+  height: 34px;
+
+  &:hover {
+    background: white;
+    cursor: pointer
+  }
+}

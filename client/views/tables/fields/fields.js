@@ -11,7 +11,7 @@
    * @param NotificationService
    * @constructor
    */
-  function FieldsController($scope, ColumnsService, NotificationService) {
+  function FieldsController($scope, ColumnsService, TablesService, NotificationService) {
 
     var self = this;
 
@@ -36,6 +36,10 @@
       $scope.$on('appname:saved', reloadFields);
       $scope.$on('after:sync', afterSync);
     }());
+
+    self.getTableId = function (tableName) {
+      return TablesService.getTableByName(tableName).__metadata.id;
+    };
 
     /**
      * Force to load the view
@@ -90,5 +94,5 @@
   }
 
   angular.module('backand')
-    .controller('FieldsController', ['$scope', 'ColumnsService', 'NotificationService', FieldsController]);
+    .controller('FieldsController', ['$scope', 'ColumnsService', 'TablesService', 'NotificationService', FieldsController]);
 }());

@@ -27,8 +27,13 @@
                 </div>
                 <div class="form-group form-group-half" ng-if="field.relatedViewName !== ''">
                   <label class="strong">Related Object</label>
-                  <input ng-disabled="true" type="text" class="form-control"
-                         ng-model="field.relatedViewName">
+                  <div class="input-group">
+                    <input ng-disabled="true" type="text" class="form-control"
+                                        ng-model="field.relatedViewName">
+                    <span class="input-group-addon ti-angle-double-right addon-goto-object"
+                          ui-sref="tables.columns.fields({tableName: field.relatedViewName, tableId: fields.getTableId(field.relatedViewName)})">
+                    </span>
+                    </div>
                   <div class="field-description">One to many relationship object</div>
                 </div>
                 <div class="form-group form-group-half" ng-if="field.relatedViewName === ''">
