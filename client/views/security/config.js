@@ -34,7 +34,13 @@
       .state('security.auth', {
         url: '/auth',
         controller: 'SecurityAuth as auth',
-        templateUrl: 'views/security/auth/auth.html',
+        templateUrl: 'views/security/auth/auth.html'
+
+      })
+      .state('security.actions', {
+        url: '/actions',
+        controller: 'SecurityActions as actions',
+        templateUrl: 'views/security/actions/actions.html',
         resolve: {
           tableName: function ($stateParams, RulesService, DictionaryService, CONSTS) {
             DictionaryService.appName = RulesService.appName;

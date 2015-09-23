@@ -16,6 +16,7 @@
       self.dateFormat = appData.settings.defaultDateFormat;
       self.datesFormar = ['MM/dd/yyyy', 'dd/MM/yyyy'];
       self.defaultPageSize = appData.settings.defaultPageSize;
+      self.defaultLevelOfDept = appData.settings.defaultLevelOfDept;
     }());
 
     self.submitForm = function () {
@@ -25,7 +26,8 @@
         Title: self.appTitle,
         settings: {
           defaultDateFormat: self.dateFormat,
-          defaultPageSize: self.defaultPageSize
+          defaultPageSize: self.defaultPageSize,
+          defaultLevelOfDept: self.defaultLevelOfDept
         }
       };
       AppsService.update(self.globalAppName, data).then(submitSuccess, errorHandler);
@@ -52,8 +54,22 @@
         })
     };
 
+    self.reset = function () {
+      ConfirmationPopup.confirm('Are you sure you want to clear the cache?')
+        .then(function (result) {
+          if (!result)
+            return;
+          self.loading = true;
+          AppsService.reset(self.globalAppName).then(resetSuccess, errorHandler);
+        })
+    };
+
     function deleteSuccess() {
       NotificationService.add('success', 'The application was deleted');
+      self.loading = false;
+    }
+    function resetSuccess() {
+      NotificationService.add('success', 'The cache was cleared');
       self.loading = false;
     }
 

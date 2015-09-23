@@ -15,13 +15,13 @@
     self.dataActions = [
       {crud: 'update', value: 'OnDemand', label: 'On demand - Execute via REST API', level1: 0, level2: 0},
       {crud: 'create', value: 'BeforeCreate', label: 'Create - Before adding data', level1: 1, level2: 0},
-      {crud: 'create', value: 'AfterCreateBeforeCommit', label: 'Create - During data saved before it committed', level1: 1, level2: 1},
+      {crud: 'create', value: 'AfterCreateBeforeCommit', label: 'Create - After data saved but before it committed', level1: 1, level2: 1},
       {crud: 'create', value: 'AfterCreate', label: 'Create - After data saved and committed', level1: 1, level2: 2},
       {crud: 'update', value: 'BeforeEdit', label: 'Update - Before update data', level1: 2, level2: 0},
-      {crud: 'update', value: 'AfterEditBeforeCommit', label: 'Update - During data saved before it committed', level1: 2, level2: 1},
+      {crud: 'update', value: 'AfterEditBeforeCommit', label: 'Update - After data saved but before it committed', level1: 2, level2: 1},
       {crud: 'update', value: 'AfterEdit', label: 'Update - After data saved and committed', level1: 2, level2: 2},
       {crud: 'delete', value: 'BeforeDelete', label: 'Delete - Before delete', level1: 3, level2: 0},
-      {crud: 'delete', value: 'AfterDeleteBeforeCommit',label: 'Delete - During record deleted but before it committed',level1: 3,level2: 1},
+      {crud: 'delete', value: 'AfterDeleteBeforeCommit',label: 'Delete - After record deleted but before it committed',level1: 3,level2: 1},
       {crud: 'delete', value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2}
     ];
 

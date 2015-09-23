@@ -30,7 +30,8 @@
                   <div class="input-group">
                     <input ng-disabled="true" type="text" class="form-control"
                                         ng-model="field.relatedViewName">
-                    <span class="input-group-addon ti-angle-double-right addon-goto-object"
+                    <span style="color:#428bca;" class="input-group-addon ti-angle-double-right addon-goto-object"
+                          ng-disabled="false"
                           ui-sref="tables.columns.fields({tableName: field.relatedViewName, tableId: fields.getTableId(field.relatedViewName)})">
                     </span>
                     </div>

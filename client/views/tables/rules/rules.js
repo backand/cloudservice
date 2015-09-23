@@ -693,7 +693,7 @@
               visible: false,
               title: 'During',
               dataAction: 'AfterCreateBeforeCommit',
-              description: 'These actions execute while the object is being created, occurring during the same transaction context',
+              description: 'These actions execute after the object is being created and saved but before commit. The event occurring during the same transaction context',
               items: []
             },
             {
@@ -719,7 +719,7 @@
               visible: false,
               title: 'During',
               dataAction: 'AfterEditBeforeCommit',
-              description: 'These actions execute while the object is being updated, occurring during the same transaction context',
+              description: 'These actions execute while the object is being saved but before commit. The event occurring during the same transaction context',
               items: []
             },
             {
@@ -745,7 +745,7 @@
               visible: false,
               title: 'During',
               dataAction: 'AfterDeleteBeforeCommit',
-              description: 'These actions execute while the object is being deleted, occurring during the same transaction context',
+              description: 'These actions execute while the object is being deleted but before commit. This event occurring during the same transaction context',
               items: []
             },
             {
