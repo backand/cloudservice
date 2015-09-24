@@ -23,6 +23,10 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.ba-icon-security-actions:before {
+	content: "\e619";
+}
+
 .ba-icon-admins:before {
 	content: "\e601";
 }
