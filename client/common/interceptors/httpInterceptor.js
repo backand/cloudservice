@@ -69,6 +69,7 @@
 
     function avoidInterception (type, httpPackage) {
       if (type === 'responseError') {
+        if (httpPackage.config.config && httpPackage.config.config.ignoreError) return true;
         // model error in create DB - replaced with modal specifying the errors
         if (httpPackage.config.method === 'POST' &&
           _.startsWith(httpPackage.config.url, CONSTS.appUrl + '/admin/myAppConnection/') &&

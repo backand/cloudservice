@@ -1,36 +1,54 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> General App Settings</strong>
-      <a href="javascript:;" class="btn btn-lg pull-right" style="margin-top: -10px;" ng-click="settings.delete()"><i class="ti-trash"></i></a>
+      <strong> General Settings</strong>
+      <a href="javascript:;" title="Delete the App" class="btn btn-lg pull-right" style="margin-top: -10px;"
+         ng-click="settings.delete()"><i
+              class="glyphicon glyphicon-trash"></i></a>
+      <a href="javascript:;" title="Clear App's caching" class="btn btn-lg pull-right" style="margin-top: -10px;"
+         ng-click="settings.reset()"><i
+              class="glyphicon glyphicon-refresh"></i></a>
     </div>
     <div class="panel-body">
-      <form role="form" role="form" ng-submit="settings.submitForm()">
-        <div class="form-group">
+      <form role="form" name="settingsForm" insert-at-caret novalidate ng-submit="settings.submitForm()">
+        <div class="form-group" ng-class="{'has-error': settingsForm.name.$invalid}">
           <label for="name">App Name</label>
-          <input type="text" class="form-control" id="name" ng-model="settings.appName" required ng-disabled="false">
+          <input type="text" class="form-control" id="name" name="name" ng-model="settings.appName" required
+                 ng-disabled="false">
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': settingsForm.title.$invalid}">
           <label for="title">App Title</label>
-          <input type="text" class="form-control" id="title" ng-model="settings.appTitle" required>
+          <input type="text" class="form-control" id="title" name="title" ng-model="settings.appTitle" required>
         </div>
-        <div class="form-group">
-          <div class="form-group">
-            <label>Default Date Format</label>
-            <div>
-              <label class="ui-radio" ng-repeat="dates in settings.datesFormar">
-                <input name="dateFormat" type="radio" ng-value="dates" ng-model="settings.dateFormat" ><span>{{dates}}</span>
-              </label>
+        <div class="field-group">
+          <div class="group-inner">
+            <div class="form-group">
+              <label>Default Date Format</label>
+              <div>
+                <label class="ui-radio" ng-repeat="dates in settings.datesFormar">
+                  <input name="dateFormat" type="radio" ng-value="dates" ng-model="settings.dateFormat" ><span>{{dates}}</span>
+                </label>
+              </div>
             </div>
-          </div>
-           <div class="form-group">
-            <label for="rows">Default number of items per Page</label>
-            <input type="number" class="form-control" id="rows" data-ng-model="settings.defaultPageSize" data-min=5 data-max=1000 required>
+             <div class="form-group" ng-class="{'has-error': settingsForm.rows.$invalid}">
+              <label for="rows">Default Number of Items per API Request</label>
+              <input type="number" class="form-control" name="rows" id="rows" data-ng-model="settings.defaultPageSize"
+                     data-min=5
+                     data-max=1000 required>
+            </div>
+            <div class="form-group" ng-class="{'has-error': settingsForm.level.$invalid}">
+              <label for="level">Default Number of Levels when deep=true</label>
+              <input type="number" class="form-control" name="level" id="level"
+                     data-ng-model="settings.defaultLevelOfDept"
+                     data-min=1
+                     data-max=100 required>
+            </div>
           </div>
         </div>
         <br/>
         <div class="save-bar">
-         <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-lg btn-w-lg" ladda="settings.loading" data-style="expand-right">Save</button>
+         <button type="submit" ng-disabled="settingsForm.$invalid" class="btn btn-success btn-lg btn-w-lg"
+                 ladda="settings.loading" data-style="expand-right">Save</button>
         </div>
       </form>
     </div>

@@ -134,6 +134,12 @@
         })
     };
 
+    self.reset = function (name) {
+      return resetApp(name)
+        .then(function () {
+          self.all();
+        })
+    };
 
     // HTTP
 
@@ -196,6 +202,14 @@
       return $http({
         method: 'DELETE',
         url: CONSTS.appUrl + '/admin/myApps/' + name
+      });
+    }
+
+    function resetApp (appName) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/app/reload/',
+        headers: {AppName: appName}
       });
     }
   }

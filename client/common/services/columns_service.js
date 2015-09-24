@@ -21,9 +21,8 @@
 
     self.get = function (force) {
       var deferred = $q.defer();
-      var toForce = force || false;
-      if (toForce || _tableConfig == null || _preTableName == null || _preTableName != self.tableName) {
-          _get()
+      if (force || _tableConfig == null || _preTableName == null || _preTableName != self.tableName) {
+        _get()
           .success(function (data) {
             _tableConfig = data;
             _preTableName = self.tableName;
@@ -35,13 +34,11 @@
             deferred.reject(err);
           });
 
-        return deferred.promise;
-      }
-      else
-      {
+      } else {
         deferred.resolve(_tableConfig);
-        return deferred.promise;
       }
+
+      return deferred.promise;
     };
 
     self.getColumns = function (tableName) {

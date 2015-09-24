@@ -135,7 +135,7 @@
         <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.auth')" href="">
           <i class="ba-icon-configuration"></i>
           <span>Configuration</span>
-          <ba-tooltip tooltip-text="Setting your application to be public or private, configure sign-up emails and get API keys" tooltip-placement="right" class=""></ba-tooltip>
+          <ba-tooltip tooltip-text="Setting your application to be public or private" tooltip-placement="right" class=""></ba-tooltip>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'security.keys', disabled: nav.DatabaseStatus != 1}">
@@ -143,13 +143,6 @@
           <i class="ba-icon-keys"></i>
           <span>Social & Keys</span>
           <ba-tooltip tooltip-text="configure social sign-up and get API keys" tooltip-placement="right" class=""></ba-tooltip>
-        </a>
-      </li>
-      <li ng-class="{active: nav.state == 'security.templates', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.templates')" href="">
-          <i class="ba-icon-secruirty-templates"></i>
-          <span>Security Templates</span>
-          <ba-tooltip tooltip-text="Reusable permissions that allows you to have more granular control over the CRUD actions of each object" tooltip-placement="right" class=""></ba-tooltip>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'security.users', disabled: nav.DatabaseStatus != 1}">
@@ -164,6 +157,22 @@
           <i class="ba-icon-admins"></i>
           <span>Team</span>
           <ba-tooltip tooltip-text="Manage your administration team" tooltip-placement="right" class=""></ba-tooltip>
+        </a>
+      </li>
+      <li ng-class="{active: nav.state == 'security.actions', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.actions')" href="">
+          <i class="ba-icon-secruirty-templates"></i>
+          <span>Security Actions</span>
+          <ba-tooltip tooltip-text="Manage users actions, configure sign-up and social emails"
+                      tooltip-placement="right"
+                      class=""></ba-tooltip>
+        </a>
+      </li>
+      <li ng-class="{active: nav.state == 'security.templates', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.templates')" href="">
+          <i class="ba-icon-secruirty-templates"></i>
+          <span>Security Templates</span>
+          <ba-tooltip tooltip-text="Reusable permissions that allows you to have more granular control over the CRUD actions of each object" tooltip-placement="right" class=""></ba-tooltip>
         </a>
       </li>
     </ul>

@@ -33,8 +33,8 @@
     AppsService.appDbStat($state.params.appName)
       .then(function(data){
         if (data.data.tableCount == 0) {
-          var msg = 'Your database has no tables! go to <a href="#/' + $state.params.appName + '/database/template/' +
-            '">Database Templates</a> to populate the database or use any DB admin tool like Workbench or phpMyAdmin';
+          var msg = 'Your app has no objects! go to <a href="#/app/' + $state.params.appName + '/objects/model' +
+            '">Backand Model</a> to populate the app or use any DB admin tool like Workbench or phpMyAdmin';
 
           self.alertMsg = $sce.trustAsHtml(msg);
           AppsService.setAlert($state.params.appName, msg)

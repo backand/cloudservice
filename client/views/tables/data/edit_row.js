@@ -6,6 +6,7 @@
       'tableName',
       'editRowData',
       'DataService',
+      'ObjectsService',
       '$filter',
       EditRowController
     ]);
@@ -14,6 +15,7 @@
                              tableName,
                              editRowData,
                              DataService,
+                             ObjectsService,
                              $filter) {
     var self = this;
 
@@ -78,17 +80,28 @@
     };
 
     self.getSingleAutocomplete = function (item, query) {
+      var results;
       return DataService.search(item.relatedView.object, query)
         .then(function(result) {
           results = $filter('orderBy')(result.data.data, '__matadata.id');
           return results;
+        })
+        .then(function () {
+          return ObjectsService.getObject(item.relatedView.object, query, true);
+        })
+        .then(function (object) {
+          _.remove(results, {__metadata: {id : object.data.__metadata.id}});
+          results.unshift(object.data);
+          return results;
+        }, function () {
+          return results
         });
     };
 
     self.getAutocomplete = function (columnName, query) {
       return DataService.getAutocomplete(self.tableName, columnName, query)
         .then(function(result) {
-          results = $filter('orderBy')(result.data, 'value');
+          var results = $filter('orderBy')(result.data, 'value');
           return results;
         });
     };

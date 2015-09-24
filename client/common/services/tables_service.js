@@ -4,7 +4,7 @@
   function TablesService($http, $q, CONSTS) {
 
     var self = this;
-    var _tables = null;
+    self.tables = [];
 
     /**
      * Save the tables locally and return the promise
@@ -12,24 +12,19 @@
      * @returns {*|webdriver.promise.Promise}
      */
     self.get = function (appName) {
-      return _get(appName).then(function (data) {
-        _tables = data.data.data;
-        return _tables;
+      return _get(appName)
+        .then(function (data) {
+        angular.copy(data.data.data, self.tables);
+        return self.tables;
       })
-    };
-
-    self.tables = function (appName) {
-      if(_tables != null)
-      {
-        return $q.when(_tables);
-      }
-      else{
-        return self.get(appName);
-      }
     };
 
     self.getTableNameById = function (tables, id) {
       return _.findWhere(tables, {__metadata: {id: id}});
+    };
+
+    self.getTableByName = function (tableName) {
+      return _.findWhere(self.tables, {name: tableName});
     };
 
 

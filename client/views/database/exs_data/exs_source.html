@@ -89,8 +89,8 @@
         </div>
 
         <div class="form-group" ng-switch-when='postgresql'>
-          <label for="usingSsl" class="col-sm-4 control-label">Use SSL</label>
-
+          <label for="usingSsl" class="col-sm-4 control-label">Use SSL
+          </label>
           <div class="col-sm-8">
               <span class="ui-select" id="usingSsl">
                   <select name="usingSsl" class="Sitedropdown" ng-model="dbedit.data.usingSsl" require>
@@ -98,6 +98,8 @@
                       <option value=false>No</option>
                   </select>
               </span>
+              <span style="padding-left:28px;"><ba-tooltip tooltip-text="use 'Yes' for Heroku Postgre database"
+                           tooltip-placement="right"></ba-tooltip></span>
           </div>
         </div>
       </div>
