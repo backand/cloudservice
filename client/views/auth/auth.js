@@ -30,8 +30,10 @@
         })
         .catch(function (error) {
           self.flags.authenticating = false;
-          NotificationService.add('error', error.data.error_description ? error.data.error_description : error.data);
           usSpinnerService.stop("socialSignin");
+          if (error.data) {
+            NotificationService.add('error', error.data.error_description || error.data);
+          }
         });
     }
 
