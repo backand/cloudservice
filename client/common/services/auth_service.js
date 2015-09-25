@@ -122,7 +122,9 @@
 
       var returnAddress = encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
 
-      self.loginPromise = $q.defer();
+      if (!self.loginPromise) {
+        self.loginPromise = $q.defer();
+      }
 
       self.socialAuthWindow = window.open(
         CONSTS.appUrl + '/1/' +
@@ -139,6 +141,7 @@
         return;
       }
 
+      stopCheckingSocialWindow(true);
       self.socialAuthWindow.close();
       self.socialAuthWindow = null;
 
@@ -226,14 +229,18 @@
     var checkSocialWindow;
 
     function startCheckingSocialWindow () {
-      checkSocialWindow = $interval(getSocialWindowStatus, 500);
+      if (!checkSocialWindow)      {
+        checkSocialWindow = $interval(getSocialWindowStatus, 500);
+      }
     }
 
-    function stopCheckingSocialWindow () {
+    function stopCheckingSocialWindow (byService) {
       if (angular.isDefined(checkSocialWindow)) {
         $interval.cancel(checkSocialWindow);
         checkSocialWindow = undefined;
-        self.loginPromise.reject('');
+        if (!byService) {
+          self.loginPromise.reject('');
+        }
       }
     }
 
