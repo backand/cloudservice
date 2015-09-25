@@ -122,15 +122,16 @@
 
       var returnAddress = encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
 
-      if (!self.loginPromise) {
-        self.loginPromise = $q.defer();
-      }
+      self.loginPromise = $q.defer();
 
-      self.socialAuthWindow = window.open(
-        CONSTS.appUrl + '/1/' +
-        getSocialUrl(provider, isSignup) +
-        '&appname=' + CONSTS.mainAppName + '&returnAddress=' + returnAddress + st,
-        'socialSigninWindow', 'left=10, top=10, width=600, height=600');
+      var loginUrl = CONSTS.appUrl + '/1/' +
+          getSocialUrl(provider, isSignup) +
+          '&appname=' + CONSTS.mainAppName + '&returnAddress=' + returnAddress + st;
+      if (isSignup) {
+        $window.location = loginUrl;
+      } else {
+        self.socialAuthWindow = window.open(loginUrl, 'socialSigninWindow', 'left=10, top=10, width=600, height=600');
+      }
 
       window.addEventListener('message', setUserDataFromToken, false);
       return self.loginPromise.promise;

@@ -49,6 +49,9 @@
                 state.transitionTo('sign_in');
                 return $q.reject(rejection);
               }
+            } else {
+              SessionService.clearCredentials(); // notification is shown in the next block
+              state.transitionTo('sign_in');
             }
           }
 

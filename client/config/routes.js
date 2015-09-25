@@ -131,19 +131,28 @@ angular.module('backand.routes', []).
         template: '<div ui-view></div>'
       });
   })
-  .run(['$rootScope', '$state', 'SessionService', run]);
+  .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS', run]);
 
 function isStateForSignedOutUser(state) {
   return (state.name === 'sign_in' || state.name === 'sign_up' || state.name === 'change_password');
 }
 
-function run($rootScope, $state, SessionService) {
+function run($rootScope, $state, SessionService, AuthService, CONSTS) {
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
     if (toParams.data || toParams.error) {
       event.preventDefault();
-      window.opener.postMessage(JSON.stringify(toParams), location.origin);
+
+      if (toParams.error) {
+        var errorData = JSON.parse(toParams.error);
+
+        if (errorData.message === 'The user is not signed up to ' + CONSTS.mainAppName) {
+          AuthService.socialLogin(errorData.provider, true);
+        }
+      } else if (window.opener) {
+        window.opener.postMessage(JSON.stringify(toParams), location.origin);
+      }
     }
 
     if (!SessionService.currentUser) {
