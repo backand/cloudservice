@@ -60,7 +60,7 @@
         if (rejection.data == null) {
           NotificationService.add("error", "An error occurred while communicating with the server, please refresh the page in few seconds");
         } else if (!avoidInterception('responseError', rejection)) {
-          NotificationService.add("error", rejection.data.Message || rejection.data);
+          NotificationService.add("error", rejection.data.Message || rejection.data.error_description || rejection.data);
         }
 
         return $q.reject(rejection);
