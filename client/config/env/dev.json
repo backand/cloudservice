@@ -4,5 +4,6 @@
   "playgroundUrl": "//s3-us-west-2.amazonaws.com/demoqa.backand.net/",
   "IntercomAppId":"dvn78u",
   "backandUserObject": "backandUsers",
-  "backandRoleObject": "backandRoles"
+  "backandRoleObject": "backandRoles",
+  "env": "DEV"
 }

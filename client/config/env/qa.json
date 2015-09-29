@@ -1,3 +1,4 @@
 {
-  "appUrl":"http://api.backand.info:8098"
+  "appUrl":"http://api.backand.info:8098",
+  "env": "QA"
 }

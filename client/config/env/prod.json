@@ -4,5 +4,6 @@
   "playgroundUrl":"//s3.amazonaws.com/demo.backand.net/misc/rest-api/",
   "IntercomAppId":"ufkkj816",
   "backandUserObject": "backandUsers",
-  "backandRoleObject": "backandRoles"
+  "backandRoleObject": "backandRoles",
+  "env": "PROD"
 }
