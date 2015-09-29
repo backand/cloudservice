@@ -33,7 +33,7 @@
     self.title = '';
     self.sort = '';
     self.refreshOnce = false;
-    self.httpRequestsLog = DataService.log;
+    self.httpRequestsLog = DataService.log = [];
 
     this.paginationOptions = {
       pageNumber: 1,
