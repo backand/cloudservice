@@ -139,6 +139,10 @@ function isStateForSignedOutUser(state) {
 
 function run($rootScope, $state, SessionService, AuthService, CONSTS) {
 
+  if (CONSTS.env === 'DEV') {
+    $rootScope.$on("$stateChangeError", console.log.bind(console));
+  }
+
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
     if (toParams.data || toParams.error) {
