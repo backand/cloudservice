@@ -49,6 +49,13 @@
       setCursorPosition();
     };
 
+    self.reset = function(){
+      DatabaseService.removeCustomSchema(self.appName);
+
+      getSchema();
+
+    }
+
     function getSchema () {
       usSpinnerService.spin('loading');
       ModelService.get(self.appName)

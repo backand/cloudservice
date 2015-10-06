@@ -10,7 +10,8 @@
         $localStorage.backand[appName] = {};
       var customSchema =  $localStorage.backand[appName].customSchema;
       try {
-        customSchema = angular.toJson(JSON.parse(customSchema), true);
+        if(customSchema != null)
+          customSchema = angular.toJson(JSON.parse(customSchema), true);
       } finally {
         return customSchema;
       }

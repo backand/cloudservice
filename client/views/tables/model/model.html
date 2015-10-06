@@ -42,7 +42,11 @@
         <div class="row">
           <div class="col-md-8 col-lg-9 info-panel-row">
             <div class=" info-panel">
-              <div class="side edit"> <span class="tab">Edit model</span>
+              <div class="side edit"> <span class="tab">Edit model
+              <a href="" title="Update local changes with the current model" class="btn btn-sm"
+                 ng-click="Model.reset()"><i
+                      class="glyphicon glyphicon-refresh"></i></a>
+              </span>
             <a href="" ng-click="Model.toggleShowDiff()">{{Model.showDiffs ? 'hide' : 'show'}} diff</a></div>
             <div class="side current"><span class="tab">Current model (read-only)</span></div>
             </div>
