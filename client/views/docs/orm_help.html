@@ -3,30 +3,37 @@
     <div class="panel-heading"><strong>Model Definition with JSON</strong></div>
     <div class="panel-body">
       <h4><u>Example</u></h4>
-<pre><code>[
+<pre><code>
+[
   {
     "name": "tasks",
     "fields": {
+      "created_by": {
+        "object": "users"
+      },
       "description": {
         "type": "string"
       },
       "completed": {
         "type": "boolean"
-      },
-      "members": {
-        "collection": "members",
-        "via": "task"
       }
     }
   },
   {
-    "name": "members",
+    "name": "users",
     "fields": {
-      "name": {
+      "todo": {
+        "collection": "tasks",
+        "via": "created_by"
+      },
+      "email": {
         "type": "string"
       },
-      "task": {
-        "object": "tasks"
+      "firstName": {
+        "type": "string"
+      },
+      "lastName": {
+        "type": "string"
       }
     }
   }
@@ -70,42 +77,95 @@
         <h5>
             We can optionally defined a field as required (`NOT NULL`) or not:
         </h5>
-<pre><code>"required": &lt;boolean value&gt;</pre></code>
+<pre><code>"required": &lt;boolean value&gt;</code></pre>
         <h5>
             Where a boolean value is true or false.
         </h5>
         <h5>
             And set its default value:
         </h5>
-<pre><code>"defaultValue": &lt;value&gt;</pre></code>
+<pre><code>"defaultValue": &lt;value&gt;</code></pre>
         <h5>
           Where `&lt;value&gt;` is of the type of the field.
         </h5>
         <br/>
         <h4><u>One-to-Many Relationship</u></h4>
         <h5>
-          One-to-many relationship between tables are specified using relationship fields. A relationship field will generate the appropriate foreign-key relationship fields in the corresponding relation objects<br/><br/>
-          Say, for example, that we have a one to many relationship between tables R and S. This means that for each row in R, there are many potentially corresponding rows in S.<br/><br/>
-          In the 'many' side of the relationship (object S), we specify that each row relates to one row in the other object R by providing an object field link:
+          One-to-many relationship between objects are specified using relationship fields. A relationship field will generate the appropriate foreign-key relationship fields in the corresponding relation objects - <a href="http://docs.backand.com/en/latest/getting_started/objects/index.html#one-to-many-relationship" target="_blank">read more</a>.<br/><br/>
         </h5>
-<pre><code>"myR" : { "object" : "R" }</pre></code>
         <h5>
-          In the 'one' side of the relationship (object R), we specify that each row relates to several rows in S by providing a 'collection' field link, using a 'via' attribute to denote which field on the 'many' side (object S) fulfills the relationship:
+            In the example shown above, consider a model describing users' todo list. It has two objects, users and
+            tasks. Each user can have several tasks (todo), but a task has a single user associated with (created_by). Thus, the users-tasks relationship is a one to many relationship between users and tasks:
+          <br/><br/>
+          The 'users' object will have a 'todo' relationship field, which establishes the 'one' side of the relationship by creating a collection of tasks objects for each user:
         </h5>
-<pre><code>"Rs" : { "collection": "S", "via" : "myR" }</pre></code>
+<pre><code>"todo": {"collection": "tasks","via": "created_by"}</code></pre>
         <h5>
-          As an example, consider a database describing pet ownership. It has two tables, `person` and `pet`. Each person can own several pets, but a pet has a single owner. Thus, the person-pet relationship is a one to many relationship between person and pet:<br/>
-          <br/>
-          The 'person' object will have a 'pets' a relationship field, which establishes the 'one' side of the relationship by creating a collection of pet objects for each person in the database:
+          The 'tasks' object will have 'created_by' a relationship field, which establishes the 'many' side of the relationship by linking each task back to an individual user instance of type 'users':
         </h5>
-<pre><code>"pets": { "collection": "pet", "via": "owner" }</pre></code>
-        <h5>
-          The 'pet' table will have an 'owner' a relationship field, which establishes the 'many' side of the relationship by linking each pet back to an individual owner instance of type 'person':
-        </h5>
-<pre><code>"owner": { "object": "person" }</pre></code>
+<pre><code>"created_by": {"object": "users"}</code></pre>
         <br/>
-        <br/>
-
+        <h4><u>Many-to-Many Relationship</u></h4>
+        <h5>
+            Many-to-Many relationships between objects are added by adding a new object that has a one-to-many relationship with each object participating in the many-to-many relation - <a href="http://docs.backand.com/en/latest/getting_started/objects/index.html#many-to-many-relationship" target="_blank">read more</a>.<br/>
+        </h5>
+        <h5>
+            As an example, consider a different model describing tasks collaboration. It has two objects, users and
+            tasks. Each user can own several tasks, and each task can have several users associated with. Thus, the users-tasks relationship is many to many relationship between users and tasks.<br/>
+        </h5>
+        <h5>
+            To implement the many-to-many relationship we just need to add a new object - "users-tasks" - with
+            one-to-many relationships to both users and tasks objects.<br/>
+        </h5>
+        <h4><u>Example</u></h4>
+ <pre><code>
+[
+  {
+    "name": "tasks",
+    "fields": {
+      "users": {
+        "collection": "users-tasks",
+        "via": "task"
+      },
+      "description": {
+        "type": "string"
+      },
+      "completed": {
+        "type": "boolean"
+      }
+    }
+  },
+  {
+    "name": "users-tasks",
+    "fields": {
+      "task": {
+        "object": "tasks"
+      },
+      "user": {
+        "object": "users"
+      }
+    }
+  },
+  {
+    "name": "users",
+    "fields": {
+      "tasks": {
+        "collection": "users-tasks",
+        "via": "user"
+      },
+      "email": {
+        "type": "string"
+      },
+      "firstName": {
+        "type": "string"
+      },
+      "lastName": {
+        "type": "string"
+      }
+    }
+  }
+]
+</code></pre>
     </div>
   </div>
 </section>

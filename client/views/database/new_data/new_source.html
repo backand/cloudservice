@@ -92,13 +92,13 @@
 
       <div class="db-note">
         <p>
-          In <b>one to many relationship</b> between objects user and pets:</br>
-          In the many side of the relationship (object pets), we specify that each row relates to one row in the
-          other object user.<br/>
-          <b>"owner": { "object": "user" }</b></br>
-          In the one side of the relationship (object user), we specify that each row relates to several rows in
-          pets:<br/>
-          <b>"dogs": { "collection": "pet", "via": "owner" }</b>
+          In <b>one to many relationship</b> between objects users and items:</br>
+          In the many side of the relationship (object items), we specify that each row relates to one row in the
+          other object users.<br/>
+          <b>"user": { "object": "users" }</b></br>
+          In the one side of the relationship (object users), we specify that each row relates to several rows in
+          items:<br/>
+          <b>"items": { "collection": "items", "via": "user" }</b>
         </p>
       </div>
       <br/>
