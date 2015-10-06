@@ -1,42 +1,46 @@
 <div id="grid-container">
     <us-spinner spinner-key="loading-data" spinner-start-active="1" style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
     <button class="btn btn-success" ng-click="ObjectData.newRow()">+ New Row</button>
-    <button class="btn btn-success" ng-click="ObjectData.toggleShowLog()">Show Http Log</button>
-    <button class="btn btn-default pull-right" ng-click="ObjectData.refresh()">Refresh Data</button>
+  <button class="btn btn-info" ng-click="ObjectData.toggleShowLog()">
+    {{ ObjectData.showLog ? 'Close' : 'Show' }} Http Log</button>
+  <button class="btn btn-info" ng-click="ObjectData.toggleShowFilter()" ng-disabled="!ObjectData.filterReady">
+    {{ ObjectData.showFilter ? 'Close Filter' : 'Filter Data' }}</button>
+  <button class="btn btn-default pull-right" ng-click="ObjectData.refresh()">Refresh Data</button>
     <br/><br/>
   <div class="row">
-    <div ng-class="ObjectData.showLog ? 'col-md-8' : 'col-md-12'">
-      <div ui-grid="ObjectData.gridOptions"
-           class="datagrid" ui-grid-resize-columns
-           external-scopes="$scope"
-           ng-show="ObjectData.gridOptions.totalItems > 0">
+    <div ng-class="ObjectData.showLog || ObjectData.showFilter ? 'col-md-8' : 'col-md-12'">
+    <div ui-grid="ObjectData.gridOptions"
+         class="datagrid" ui-grid-resize-columns
+         external-scopes="$scope"
+         ng-show="ObjectData.gridOptions.totalItems > 0">
+    </div>
+    <div ng-show="ObjectData.gridOptions.totalItems == 0">
+      <h3>No items found</h3>
+    </div>
+    <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">
+      <div class="col-md-5">
+        <pagination total-items="ObjectData.gridOptions.totalItems"
+                    ng-model="ObjectData.paginationOptions.pageNumber"
+                    max-size="5"
+                    class="pagination-sm"
+                    boundary-links="true"
+                    rotate="false"
+                    items-per-page="ObjectData.paginationOptions.pageSize"
+                    previous-text="&lsaquo;"
+                    next-text="&rsaquo;"></pagination>
       </div>
-      <div ng-show="ObjectData.gridOptions.totalItems == 0">
-        <h3>No items found</h3>
+      <div class="col-md-2" style="margin-top:20px;">
+        Page size:
+        <select class="ui-select" ng-model="ObjectData.paginationOptions.pageSize" >
+          <option ng-repeat="size in ObjectData.paginationOptions.pageSizes">{{size}}</option>
+        </select>
       </div>
-      <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">
-        <div class="col-md-5">
-          <pagination total-items="ObjectData.gridOptions.totalItems"
-                      ng-model="ObjectData.paginationOptions.pageNumber"
-                      max-size="5"
-                      class="pagination-sm"
-                      boundary-links="true"
-                      rotate="false"
-                      items-per-page="ObjectData.paginationOptions.pageSize"
-                      previous-text="&lsaquo;"
-                      next-text="&rsaquo;"></pagination>
-        </div>
-        <div class="col-md-2" style="margin-top:20px;">
-          Page size:
-          <select class="ui-select" ng-model="ObjectData.paginationOptions.pageSize" >
-            <option ng-repeat="size in ObjectData.paginationOptions.pageSizes">{{size}}</option>
-          </select>
-        </div>
-        <div class="col-md-5" style="margin-top:20px;">
-          <span class="pull-right">Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}} to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize, ObjectData.paginationOptions.pageNumber, ObjectData.gridOptions.totalItems)}} of {{ObjectData.gridOptions.totalItems}} rows</span>
-        </div>
+      <div class="col-md-5" style="margin-top:20px;">
+        <span class="pull-right">Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}} to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize, ObjectData.paginationOptions.pageNumber, ObjectData.gridOptions.totalItems)}} of {{ObjectData.gridOptions.totalItems}} rows</span>
       </div>
     </div>
+</div>
+
     <div ng-show="ObjectData.showLog" class="col-md-4">
 
       <div class="object-data-log-container">
@@ -52,5 +56,19 @@
       </div>
 
     </div>
-  </div>
+
+    <div ng-show="ObjectData.showFilter" class="col-md-4">
+
+      <div class="object-data-filter-container">
+        <button class="btn btn-success" ng-click="ObjectData.filterData()">Filter</button>
+        <br/><br/>
+        <bknd-filter-form query="ObjectData.filterQuery"
+                          fields="ObjectData.filterOptions.fields"
+                          operators="ObjectData.filterOptions.operators"
+                          no-repeat="true">
+        </bknd-filter-form>
+      </div>
+    </div>
+
+    </div>
 </div>
