@@ -44,6 +44,11 @@
       getData(true);
     }());
 
+    self.toggleShowFilter = function () {
+      self.showFilter = !self.showFilter;
+      setTimeout("$('#grid-container').trigger('resize');", 1);
+    };
+
     self.createData = function (data) {
       DataService.post(tableName, data);
     };
@@ -96,6 +101,7 @@
 
     function successColumnsHandler (data) {
       self.columnDefs = data.fields;
+      getFilterOptions();
       getEditRowData();
     }
 
@@ -294,6 +300,19 @@
       }
     }
 
+    function getFieldTypeForFilter(type) {
+      switch (type) {
+        case 'MultiSelect':
+        case 'SingleSelect':
+          return 'select'; // Search of Multi-Select keys doesn't work currently
+        case 'ShortText':
+        case 'LongText':
+          return 'text';
+        default:
+          return type;
+      }
+    }
+
     // edit row modal
 
     self.newRow = function () {
@@ -398,5 +417,47 @@
             .then(successDataHandler);
         });
     };
+
+    // filter data
+
+    function getFilterOptions () {
+      self.filterOptions = {
+        fields: getFieldsForFilter(),
+        operators: {
+          text: ['equals', 'notEquals', 'startsWith', 'contains', 'notContains', 'empty', 'notEmpty'],
+          Numeric: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
+          DateTime: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
+          select: ['in'],
+          Boolean: ['is']
+        }
+      };
+      self.filterReady = true;
+    }
+
+    function getFieldsForFilter () {
+
+      return _.map(self.columnDefs, function (field) {
+        return {
+          name: field.name,
+          type: getFieldTypeForFilter(field.type),
+          originalType: field.type
+        };
+      });
+    }
+
+    self.filterData = function () {
+
+      var query = _.map(self.filterQuery, function (item) {
+        if (item.field && item.operator && item.value)
+        return {
+          fieldName: item.field.name,
+          operator: item.operator,
+          value: item.value
+        };
+      });
+
+      DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, _.compact(query))
+        .then(successDataHandler, errorHandler);
+    }
   }
 }());

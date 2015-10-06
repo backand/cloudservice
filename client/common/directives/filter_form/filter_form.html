@@ -1,0 +1,95 @@
+<form name="filterForm.form" ng-submit="filterForm.submit()" novalidate>
+  <div class="form-group">
+    <fieldset>
+      <div class="form-group" ng-repeat="predicate in filterForm.query track by $index">
+
+        <!-- Select field to filter by -->
+
+        <select ng-hide="predicate.field"
+                class="form-control"
+                ng-model="predicate.field"
+                ng-options="field.name for field in filterForm.fields"
+                ng-change="filterForm.onFieldSelected(predicate.field)"></select>
+
+        <!-- Field is selected - select operator and value -->
+
+        <div ng-show="predicate.field">
+          <i class="fa fa-close" ng-click="filterForm.removePredicate(predicate)"></i>
+          <label ng-bind="predicate.field.name"></label>
+
+          <!-- Operator -->
+
+          <select ng-show="filterForm.operators[predicate.field.type].length > 1"
+                  class="form-control"
+                  ng-model="predicate.operator"
+                  ng-options="operator for operator in filterForm.operators[predicate.field.type]"></select>
+          <span ng-show="filterForm.operators[predicate.field.type].length === 1">
+            {{ filterForm.operators[predicate.field.type][0] }}
+          </span>
+
+          <!-- Value -->
+
+          <span ng-hide="['empty', 'notEmpty'].indexOf(predicate.operator) !== -1" ng-switch on="predicate.field.type">
+
+            <input ng-switch-when="Boolean" type="checkbox"
+                   class="form-control"
+                   name="predicate.key"
+                   ng-model="predicate.value"/>
+
+            <div ng-switch-when="DateTime" class="input-group">
+              <span class="input-group-addon ti-calendar"></span>
+              <input type="date"
+                     class="editable-has-buttons editable-input form-control"
+                     ng-model="predicate.value"/>
+              <span class="input-group-addon ti-time"></span>
+              <input type="time"
+                     class="editable-has-buttons editable-input form-control"
+                     ng-model="predicate.value"/>
+            </div>
+
+            <div ng-switch-when="select" class="input-group">
+            <span ng-hide="loadingSingleSelect"
+                  class="input-group-addon ti-search"></span>
+            <span ng-show="loadingSingleSelect"
+                  class="input-group-addon"
+                  us-spinner="{lines: 9, radius:4, width:3, length: 2, position: 'relative'}"
+                  style="padding: 6px 18px 6px 19px;"></span>
+              <input type="text"
+                     ng-model="predicate.value"
+                     typeahead=""
+                     typeahead-template-url="views/tables/data/select_row_template.html"
+                     typeahead-editable="false"
+                     typeahead-loading="loadingSingleSelect"
+                     class="form-control"/>
+            </div>
+
+            <div ng-switch-when="Numeric" class="input-group">
+              <span class="input-group-addon" style="min-width: 39px">0</span>
+              <input type="text"
+                     class="form-control"
+                     name="predicate.key"
+                     ng-model="predicate.value"/>
+            </div>
+
+            <div ng-switch-default class="input-group">
+              <span class="input-group-addon ti-text"></span>
+              <input type="text"
+                     class="form-control"
+                     ng-model="predicate.value"/>
+            </div>
+            </span>
+
+          <!-- AND -->
+
+          <br/>
+          <button ng-show="$last && filterForm.fields.length > 0"
+                  class="btn btn-primary btn-sm"
+                  ng-click="filterForm.addRow()">+ AND
+          </button>
+          <span ng-show="!$last">AND</span>
+        </div>
+
+      </div>
+    </fieldset>
+  </div>
+</form>

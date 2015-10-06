@@ -1,8 +1,12 @@
 <div id="grid-container">
-    <us-spinner spinner-key="loading-data" spinner-start-active="1" style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
-    <button class="btn btn-success" ng-click="ObjectData.newRow()">+ New Row</button>
-    <button class="btn btn-default pull-right" ng-click="ObjectData.refresh()">Refresh Data</button>
-    <br/><br/>
+  <us-spinner spinner-key="loading-data" spinner-start-active="1" style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
+  <button class="btn btn-success" ng-click="ObjectData.newRow()">+ New Row</button>
+  <button class="btn btn-info" ng-click="ObjectData.toggleShowFilter()" ng-disabled="!ObjectData.filterReady">
+    {{ ObjectData.showFilter ? 'Close Filter' : 'Filter Data' }}</button>
+  <button class="btn btn-default pull-right" ng-click="ObjectData.refresh()">Refresh Data</button>
+  <br/><br/>
+  <div class="row">
+    <div ng-class="ObjectData.showFilter ? 'col-md-8' : 'col-md-12'">
     <div ui-grid="ObjectData.gridOptions"
          class="datagrid" ui-grid-resize-columns
          external-scopes="$scope"
@@ -33,4 +37,18 @@
         <span class="pull-right">Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}} to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize, ObjectData.paginationOptions.pageNumber, ObjectData.gridOptions.totalItems)}} of {{ObjectData.gridOptions.totalItems}} rows</span>
       </div>
     </div>
+  </div>
+  <div ng-show="ObjectData.showFilter" class="col-md-4">
+
+    <div class="object-data-filter-container">
+      <button class="btn btn-success" ng-click="ObjectData.filterData()">Filter</button>
+      <br/><br/>
+      <bknd-filter-form query="ObjectData.filterQuery"
+                        fields="ObjectData.filterOptions.fields"
+                        operators="ObjectData.filterOptions.operators"
+                        no-repeat="true">
+      </bknd-filter-form>
+      </div>
+    </div>
+  </div>
 </div>
