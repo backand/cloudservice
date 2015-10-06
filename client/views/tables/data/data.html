@@ -40,7 +40,7 @@
     <div ng-show="ObjectData.showLog" class="col-md-4">
 
       <div class="object-data-log-container">
-        <div ng-repeat="httpRequest in ObjectData.httpRequestsLog track by $index">
+        <div ng-repeat="httpRequest in ObjectData.httpRequestsLog | orderBy:id:reverse track by $index">
           <bknd-copy-box content="httpRequest.requestUrl"></bknd-copy-box>
           <bknd-copy-box type="textarea" content="httpRequest.requestJson"></bknd-copy-box>
           <textarea ng-show="httpRequest.response"
