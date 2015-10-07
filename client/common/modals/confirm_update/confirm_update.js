@@ -1,16 +1,19 @@
 (function () {
 
-  angular.module('backand')
+  angular.module('common.modals')
     .controller('ConfirmModelUpdateController', [
       '$modalInstance',
+      'itemName',
       'validationResponse',
       ConfirmModelUpdateController
     ]);
 
   function ConfirmModelUpdateController(modalInstance,
+                                        itemName,
                                         validationResponse) {
     var self = this;
 
+    self.itemName = itemName;
     self.validationResponse = validationResponse;
 
     self.notifications =
@@ -26,8 +29,8 @@
     switch (self.validationResponse.valid) {
       case 'never':
         self.text = {
-          title: 'Errors in Model',
-          message: 'Please fix the following errors in the model:',
+          title: 'Errors in ' + _.capitalize(self.itemName),
+          message: 'Please fix the following errors in the ' + self.itemName + ':',
           cssClass: 'danger',
           cancelButton: 'Return'
         };
@@ -36,14 +39,14 @@
 
       case 'always':
         self.text = {
-          title: 'Model is Valid',
+          title: _.capitalize(self.itemName) + ' is Valid',
           cssClass: 'success',
           okButton: 'OK',
           cancelButton: 'Cancel'
         };
         if (self.notifications) {
-          self.text.message = 'The Model is valid.<br>' +
-            'The following parts of the model, including the data they contain, will be permanently deleted.<br>' +
+          self.text.message = 'The ' + _.capitalize(self.itemName) + ' is valid.<br>' +
+            'The following parts of the ' + self.itemName + ', including the data they contain, will be permanently deleted.<br>' +
             'Click Ok to proceed';
           self.text.cssClass = 'danger';
           self.text.title = 'Warning';
@@ -60,15 +63,15 @@
               cancelButton: 'Cancel'
             };
         if (self.notifications) {
-          self.text.message = 'The Model is valid.<br>' +
-            'The following parts of the model, including the data they contain, will be permanently deleted.<br>' +
-            'Changes made to the model include changes to fields types.<br>' +
+          self.text.message = 'The ' + _.capitalize(self.itemName) + ' is valid.<br>' +
+            'The following parts of the ' + self.itemName + ', including the data they contain, will be permanently deleted.<br>' +
+            'Changes made to the ' + self.itemName + ' include changes to fields types.<br>' +
             'Those changes may result in a loss or corruption of data.<br>' +
             'Click Ok to proceed';
         } else {
           self.notifications = _.uniq(self.validationResponse.warnings);
-          self.text.message = 'The Model is valid.<br>' +
-            'Changes made to the model include changes to fields types.<br>' +
+          self.text.message = 'The ' +  _.capitalize(self.itemName) + ' is valid.<br>' +
+            'Changes made to the ' + self.itemName + ' include changes to fields types.<br>' +
             'Those changes may result in a loss or corruption of data.<br>' +
             'Click Ok to proceed';
         }

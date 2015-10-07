@@ -72,6 +72,8 @@
     }
 
     function getUserObjectFields () {
+      self.filter.emailField = null;
+      self.filter.userObjectFields = [];
       if (!self.filter.userObjectName) return;
       return ColumnsService.getColumns(self.filter.userObjectName)
         .then(function (result) {
@@ -93,17 +95,19 @@
           }
         })
     };
+
     function openValidationModal (response) {
 
       var modalInstance = $modal.open({
-        templateUrl: 'views/tables/model/confirm_update.html',
+        templateUrl: 'common/modals/confirm_update/confirm_update.html',
         controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
         backdrop: 'static',
         keyboard: false,
         resolve: {
           validationResponse: function () {
             return response.data;
-          }
+          },
+          itemName: function () { return 'query'; }
         }
       });
 
@@ -111,11 +115,14 @@
     }
 
     function updateFilter (result) {
-      var approve = true;
       if (!_.isEmpty(self.view.dataEditing.permanentFilter)) {
-        approve = ConfirmationPopup.confirm('Would you like to replace the current pre-defined filter?');
-      }
-      if (approve) {
+        return ConfirmationPopup.confirm('Would you like to replace the current pre-defined filter?')
+          .then(function (approve) {
+            if (approve) {
+              self.view.dataEditing.permanentFilter = result;
+            }
+          });
+      } else {
         self.view.dataEditing.permanentFilter = result;
       }
     }

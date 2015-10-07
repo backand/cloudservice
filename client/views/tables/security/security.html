@@ -12,7 +12,9 @@
                   class="form-control"
                   ng-model="security.filter.userObjectName"
                   ng-options="object.name as object.name for object in security.appObjects"
-                  ng-change="security.getUserObjectFields()" required></select>
+                  ng-change="security.getUserObjectFields()"
+                  required
+                  style="min-width: 130px;"></select>
         </div>
         object by
         <div class="form-group">
@@ -20,7 +22,9 @@
           <select id="emailField"
                   class="form-control"
                   ng-model="security.filter.emailField"
-                  ng-options="field.name as field.name for field in security.filter.userObjectFields" required></select>
+                  ng-options="field.name as field.name for field in security.filter.userObjectFields"
+                  required
+                  style="min-width: 130px;"></select>
         </div>
         field.
 

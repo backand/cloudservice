@@ -41,6 +41,7 @@
     'angular-ladda',
     'angularMoment',
     'ui.router.tabs',
+    'common.modals',
     'common.directives',
     'theme.directives',
     'common.services',
