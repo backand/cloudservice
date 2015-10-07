@@ -1,0 +1,35 @@
+{
+  "securityGeneral": {
+    "page": "security/auth",
+    "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#introduction"
+  },
+  "securityAnonymousAccess": {
+    "page": "security/auth",
+    "section": "Anonymous Access",
+    "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#anonymous-access"
+  },
+  "securitySignup": {
+    "page": "security/auth",
+    "section": "Public App",
+    "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#sign-up"
+  },
+  "socialAndKeysGeneral": {
+    "page": "security/social_and_keys",
+    "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#social-keys"
+  },
+  "socialAndKeysMasterToken": {
+    "page": "security/social_and_keys",
+    "section": "Master Token",
+    "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#master-token"
+  },
+  "socialAndKeysAPISignupToken": {
+    "page": "security/social_and_keys",
+    "section": "API Sign-up Token",
+    "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#api-signup-token"
+  },
+  "objectsModel": {
+    "page": "objects/model",
+    "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#introduction"
+  }
+
+}
