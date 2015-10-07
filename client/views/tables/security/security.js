@@ -1,11 +1,49 @@
 (function () {
 
-  function SecurityController($scope, $state, $filter, SecurityMatrixService, NotificationService, SecurityService, ColumnsService, DictionaryService) {
+  angular.module('backand')
+    .controller('SecurityController', [
+      '$scope',
+      '$state',
+      '$filter',
+      '$modal',
+      'SecurityMatrixService',
+      'NotificationService',
+      'SecurityService',
+      'ColumnsService',
+      'DictionaryService',
+      'TablesService',
+      'ConfirmationPopup',
+      'tableName',
+      SecurityController]);
+
+  function SecurityController(
+    $scope,
+    $state,
+    $filter,
+    $modal,
+    SecurityMatrixService,
+    NotificationService,
+    SecurityService,
+    ColumnsService,
+    DictionaryService,
+    TablesService,
+    ConfirmationPopup,
+    tableName) {
 
     var self = this;
 
     (function init() {
-      self.placeHolder = "'{{sys::username}}' = ProjectUserEmail"
+
+      self.getUserObjectFields = getUserObjectFields;
+      self.currentObjectName = tableName;
+      self.appObjects = TablesService.tables;
+      var userObject = getItemByRegex(self.appObjects, /user/i);
+      self.filter = {
+        userObjectName: userObject ? userObject.name : null
+      };
+      getUserObjectFields();
+
+      self.placeHolder = "'{{sys::username}}' = ProjectUserEmail";
       self._lastPermissions = null;
       self.workspaces = null;
       self.view = null;
@@ -26,6 +64,61 @@
       self.toggleOptions = toggleDictionary;
       self.insertAtChar= insertTokenAtChar;
     }());
+
+    function getItemByRegex (object, regex) {
+      return _.find(object, function(item) {
+        return regex.test(item.name);
+      });
+    }
+
+    function getUserObjectFields () {
+      if (!self.filter.userObjectName) return;
+      return ColumnsService.getColumns(self.filter.userObjectName)
+        .then(function (result) {
+          self.filter.userObjectFields = result.data.fields;
+          var emailField = getItemByRegex(result.data.fields, /email/i);
+          self.filter.emailField = emailField ? emailField.name : null;
+        })
+    }
+
+    self.getFilterCode = function () {
+      return SecurityService.getFilterCode(self.currentObjectName, self.filter.userObjectName, self.filter.emailField)
+        .then(function (response) {
+          self.filter.result = response.data.where;
+          return openValidationModal(response)
+        })
+        .then(function (result) {
+          if (result) {
+            updateFilter(self.filter.result)
+          }
+        })
+    };
+    function openValidationModal (response) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/model/confirm_update.html',
+        controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          validationResponse: function () {
+            return response.data;
+          }
+        }
+      });
+
+      return modalInstance.result;
+    }
+
+    function updateFilter (result) {
+      var approve = true;
+      if (!_.isEmpty(self.view.dataEditing.permanentFilter)) {
+        approve = ConfirmationPopup.confirm('Would you like to replace the current pre-defined filter?');
+      }
+      if (approve) {
+        self.view.dataEditing.permanentFilter = result;
+      }
+    }
 
     /**
      * switch the state of the dictionary window
@@ -188,6 +281,4 @@
 
   }
 
-  angular.module('backand')
-    .controller('SecurityController', ['$scope', '$state', '$filter', 'SecurityMatrixService', 'NotificationService', 'SecurityService', 'ColumnsService','DictionaryService', SecurityController]);
 }());

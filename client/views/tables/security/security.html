@@ -4,6 +4,29 @@
     <div class="col-lg-12 form-group">
       <label class="strong" for="PermanentFilter">Pre-defined Filter</label>
 
+      <form name="filterCodeForm" class="form-inline" ng-submit="security.getFilterCode()" novalidate>
+        Filter <b>{{ security.currentObjectName }}</b> for current user session based on
+        <div class="form-group">
+          <label class="sr-only" for="userObject">User Object</label>
+          <select id="userObject"
+                  class="form-control"
+                  ng-model="security.filter.userObjectName"
+                  ng-options="object.name as object.name for object in security.appObjects"
+                  ng-change="security.getUserObjectFields()" required></select>
+        </div>
+        object by
+        <div class="form-group">
+          <label class="sr-only" for="emailField">Email</label>
+          <select id="emailField"
+                  class="form-control"
+                  ng-model="security.filter.emailField"
+                  ng-options="field.name as field.name for field in security.filter.userObjectFields" required></select>
+        </div>
+        field.
+
+        <button class="btn btn-success pull-right" ng-disabled="filterCodeForm.$invalid">Get Code</button>
+      </form>
+
       <div class="pull-right">
         <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="security.toggleOptions()"></span>
       </div>

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function SecurityService($http, CONSTS, $q) {
+  function SecurityService($http, CONSTS) {
     var self = this;
     self.appName = null;
     self.usersTableName = CONSTS.backandUserObject;
@@ -76,7 +76,7 @@
         headers: { AppName: self.appName },
         data: user
       })
-    }
+    };
 
     self.userExists = function (username) {
       return $http({
@@ -87,7 +87,7 @@
           username: username
         }
       })
-    }
+    };
 
     self.postUser = function (user) {
       return self.postData(self.usersTableName, user);
@@ -124,7 +124,7 @@
         headers: { AppName: self.appName },
         data: userData
       });
-    }
+    };
 
     self.getUserToken = function (username) {
       return $http({
@@ -135,7 +135,7 @@
           username: username
         }
       })
-    }
+    };
 
     self.resetUserToken = function (username) {
       return $http({
@@ -146,9 +146,22 @@
           username: username
         }
       })
+    };
+
+    self.getFilterCode = function (objectToUpdate, usersObject, emailField) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/table/predefined/' + objectToUpdate,
+        params: {
+          usersObjectName: usersObject,
+          emailFieldName: emailField,
+          maxLevel: 3
+        },
+        headers: { AppName: self.appName }
+      })
     }
   }
 
   angular.module('common.services')
-    .service('SecurityService', ['$http', 'CONSTS','$q', SecurityService]);
+    .service('SecurityService', ['$http', 'CONSTS', SecurityService]);
 })();
