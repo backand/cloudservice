@@ -1,22 +1,22 @@
 <div>
 
-  <div class="row security-header">
-    <div class="col-lg-12 form-group">
-      <label class="strong" for="PermanentFilter">Pre-defined Filter</label>
+    <div class="row security-header">
+        <div class="col-lg-12 form-group">
+            <label class="strong" for="PermanentFilter">Pre-defined Filter</label>
 
-      <div class="pull-right">
-        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="security.toggleOptions()"></span>
-      </div>
-      <div ng-cloak>
-        <angled-window ng-show="security.dictionaryState"
-                       id="{{winId}}"
-                       title="App Tokens"
-                       grouping="w"
-                       close-function="security.toggleOptions()"
-                       style="left: 550px; top: -50px; height:400px;">
-          <div ng-include="'views/tables/security/pre_defined_window.html'"></div>
-        </angled-window>
-      </div>
+            <div class="pull-right">
+                <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="security.toggleOptions()"></span>
+            </div>
+            <div ng-cloak>
+                <angled-window ng-show="security.dictionaryState"
+                               id="{{winId}}"
+                               title="App Tokens"
+                               grouping="w"
+                               close-function="security.toggleOptions()"
+                               style="left: 550px; top: -50px; height:400px;">
+                    <div ng-include="'views/tables/security/pre_defined_window.html'"></div>
+                </angled-window>
+            </div>
 
       <textarea id="PermanentFilter" ng-model="security.view.dataEditing.permanentFilter"
                 name="PermanentFilter"
@@ -24,36 +24,41 @@
                 ng-blur="security.savePermanentFilter()"
                 placeholder="{{security.placeHolder}}"
                 insert-at-caret></textarea>
-      <div class="field-description">
-        The pre-defined filter is used to load data based on rules that can not be overwritten.
-        For example, load only the projects associated with the current logged in user
-      </div>
+            <div class="field-description">
+                The pre-defined filter can be used to add additional restrictions to load data associated with the user
+                session
+                <ba-help-link key="preDefinedFilter"></ba-help-link>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="row security-header">
-    <div class="col-lg-2">
-    <label class="strong" >Security Template</label>
-      <select class="form-control"
-              ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
-              ng-model="security.currentST"
-              ng-disabled="security.view.permissions.overrideinheritable">
-      </select>
+    <div class="row security-header">
+        <div class="col-lg-12">
+            <label class="strong" >Security Template</label>
+            <select class="form-control"
+                    ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
+                    ng-model="security.currentST"
+                    ng-disabled="security.view.permissions.overrideinheritable">
+            </select>
+            <div class="field-description">
+                The current security template of the object. By override it you define a specific settings to this object
+                <ba-help-link key="objectSecurityTemplate"></ba-help-link>
+            </div>
+        </div>
+        <div class="col-lg-12" style="padding-top: 20px;">
+            <div class="strong"><label> Override the Security Template</label>
+                <label class="ui-switch ui-switch-success ui-switch-sm pull-right" for="override-checkbox">
+                    <input id="override-checkbox" type="checkbox" ng-model="security.view.permissions.overrideinheritable"/><i></i>
+                </label>
+            </div>
+            <security-matrix security-template="security.sTemplate"
+                             override="security.view.permissions.overrideinheritable"
+                             on-update="security.templateChanged(template)"
+                             on-role-add="security.templateRoleAdd(role)"
+                             on-role-rename="security.templateRoleRename(role, newRole)"
+                             on-role-remove="security.templateRoleRemove(role)">
+            </security-matrix>
+        </div>
     </div>
-    <div class="col-lg-2">
-      <div class="override-template"><label> override</label>
-        <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
-          <input id="override-checkbox" type="checkbox" ng-model="security.view.permissions.overrideinheritable"/><i></i>
-        </label>
-      </div>
-    </div>
-  </div>
-  <security-matrix security-template="security.sTemplate"
-                   override="security.view.permissions.overrideinheritable"
-                   on-update="security.templateChanged(template)"
-                   on-role-add="security.templateRoleAdd(role)"
-                   on-role-rename="security.templateRoleRename(role, newRole)"
-                   on-role-remove="security.templateRoleRemove(role)"
-    ></security-matrix>
 
 </div>

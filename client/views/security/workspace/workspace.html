@@ -2,10 +2,17 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> Security templates </strong>
-    <div us-spinner spinner-key="loading" spinner-start-active></div>
+
+        <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
+      <div>Security template is used to set the permissions on objects. You can create new
+          templates, update existing templates, and rename security templates as you see fit
+          <ba-help-link key="securityTemplates"></ba-help-link>
+      </div>
+      <br/>
       <button class="btn btn-primary ng-scope ladda-button" ladda="securityws.processingNewWS" data-style="expand-right"  ng-click="securityws.addWorkspace()">+ Add Security Template</button>
+      <br/><br/>
       <div class="ui-tab-container ui-tab-vertical"
            style="height:500px; overflow:auto">
         <tabset class="ui-tab workspace">
