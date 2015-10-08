@@ -2,10 +2,17 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> Security Actions </strong>
-
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
+      <div>
+        The actions on this page, much like those on the other pages of the application, allow you to define custom
+        actions to occur at each point in the CRUD conversation against an object, or when called by
+        on demand action.<br/>
+        <b>**note:</b> These actions, though, are tied specifically to the internal Backand
+        Users object only
+        <ba-help-link key="securityActions"></ba-help-link>
+      </div>
       <div class="field-group">
         <div class="group-inner">
           <ng-include src="'views/tables/rules/rules.html'"></ng-include>
