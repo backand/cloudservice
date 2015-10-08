@@ -6,10 +6,14 @@
       restrict: 'E',
       scope: {
         key: '@',
+        withText: '@?',
         target: '@?'
       },
       controller: function ($scope) {
         $scope.target = $scope.target || 'bkhelp';
+        $scope.withText = $scope.withText || true;
+
+        $scope.readMore = ($scope.withText != 'false') ? "- read more" : "";
 
         var locations = {
           "securityGeneral": {
@@ -26,6 +30,11 @@
             "section": "Public App",
             "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#sign-up"
           },
+          "customPages":{
+            "page":"security/auth",
+            "section":"Custom Registration Page URL",
+            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#custom-pages"
+          },
           "emailVerification":{
             "page":"security/auth",
             "section": "Sign-up Email Verification",
@@ -33,7 +42,7 @@
           },
           "socialAndKeysGeneral": {
             "page": "security/social_and_keys",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#social-keys"
+            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#social-configuration"
           },
           "socialAndKeysMasterToken": {
             "page": "security/social_and_keys",
@@ -45,6 +54,25 @@
             "section": "API Sign-up Token",
             "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#api-signup-token"
           },
+          "socialAndKeysFacebook": {
+            "page": "security/social_and_keys",
+            "section": "Facebook",
+            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#facebook-app-configuration"
+          },
+          "socialAndKeysGoogle": {
+            "page": "security/social_and_keys",
+            "section": "Google",
+            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#google-app-configuration"
+          },
+          "refreshToken":{
+            "page": "security/social_and_keys",
+            "url":"http://docs.backand.com/en/latest/getting_started/sdk/index.html#managerefreshtoken"
+          },
+          "socialAndKeysGithub": {
+            "page": "security/social_and_keys",
+            "section": "Github",
+            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#github-app-configuration"
+          },
           "objectsModel": {
             "page": "objects/model",
             "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#introduction"
@@ -52,13 +80,45 @@
           "preDefinedFilter":{
             "page":"objects/security",
             "url":"http://docs.backand.com/en/latest/getting_started/objects/index.html#pre-defined-filter"
+          },
+          "objectSecurityTemplate":{
+            "page":"objects/security",
+            "url":"http://docs.backand.com/en/latest/apidocs/security/index.html#roles-security-templates"
+          },
+          "registeredUsers":{
+            "page":"security/users",
+            "url":"http://docs.backand.com/en/latest/apidocs/security/index.html#link-your-apps-users-with-backands-registered-users"
+          },
+          "adminUsers":{
+            "page":"security/team",
+            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#team"
+          },
+          "securityActions":{
+            "page":"security/actions",
+            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#security-actions"
+          },
+          "securityTemplates":{
+            "page":"security/actions",
+            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#security-templates"
+          },
+          "logConfiguration":{
+            "page":"log/config",
+            "url":"http://docs.backand.com/en/latest/getting_started/log/index.html#configuration"
+          },
+          "dataHistory":{
+            "page":"log/config",
+            "url":"http://docs.backand.com/en/latest/getting_started/log/index.html#data-history"
+          },
+          "appException":{
+            "page":"log/exception",
+            "url":"http://docs.backand.com/en/latest/getting_started/log/index.html#server-side-exceptions"
           }
         }
 
         $scope.location = locations[$scope.key].url || 'http://docs.backand.com';
 
       },
-      template: '<a href="{{location}}" target="{{target}}" style="text-decoration: none;margin-left: 5px;"><i class="ti-help-alt"></i></a>'
+      template: '<a href="{{location}}" target="{{target}}" style="text-decoration: none;">{{readMore}}&nbsp;<i class="ti-help-alt"></i></a>'
     };
   }
 

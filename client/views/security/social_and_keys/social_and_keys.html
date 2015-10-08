@@ -30,6 +30,7 @@
               </div>
               <div class="field-description">
                 {{ ::displayedToken.description }}
+                <ba-help-link key="{{displayedToken.helpKey}}"></ba-help-link>
               </div>
             </div>
           </div>
@@ -39,7 +40,7 @@
       <div class="field-group">
         <div class="group-inner">
           <div class="row">
-            <div class="form-group col-md-5">
+            <div class="form-group col-md-12">
                 <label class="control-label strong">Session Length</label>
                 <!--<div class="form-group">-->
                 <select class="form-control"
@@ -48,8 +49,12 @@
                       ng-model="keys.tokenExpiration"
                       ng-change="keys.updateTokenExpire()"></select>
                 <div class="field-description">
-                    The length of time that the session will remain valid. The expiration is set when calling /token API for signin.
-                    <ba-tooltip tooltip-text="New token value won't be affected until the user is re-login. When selecting 'Never - Use Refresh Token' the access token is set to 1 day but it can be reconnected using refresh token. Backand's SDK is handling the refresh token so no additional code is needed." tooltip-placement="right"></ba-tooltip>
+                    The length of time that the session will remain valid. The expiration is set when calling /token
+                    API for sign-in
+                    <span style="color:red;"><ba-tooltip
+                        tooltip-text="New token value won't be affected until the user is re-login. When selecting 'Never - Use Refresh Token' the access token is set to 1 day but it can be reconnected using refresh token. Backand's SDK is handling the refresh token so no additional code is needed." tooltip-placement="right"></ba-tooltip></span>
+                    . To setup the SDK
+                    <ba-help-link key="refreshToken"></ba-help-link>
                 </div>
             </div>
           </div>
@@ -59,7 +64,8 @@
       <div class="field-group">
         <div class="group-inner">
           <div class="form-group">
-            <label class="control-label strong">Social Configuration</label>
+            <label class="control-label strong">Social Configuration</label><ba-help-link key="socialAndKeysGeneral"
+                                                                                          with-text="false"></ba-help-link>
             <form name="keys.socialForm" novalidate ng-model-options="{updateOn: 'blur default', debounce: {'default': 250, 'blur': 0 }}">
               <div class="field-group" ng-repeat="socialProvider in keys.socialProviders">
                 <div class="group-inner">
@@ -113,8 +119,8 @@
                         <div class="social-provider-help">
                           <div class="social-provider-help-title">Configuring Your {{socialProvider.label}} App</div>
                           To get started with {{ ::socialProvider.label }} authentication,
-                          you need to first create a new {{ ::socialProvider.label }} application.
-                          <a href="{{ ::socialProvider.helpUrl}}" target="_blank">Learn more</a>
+                          you need to first create a new {{ ::socialProvider.label }} app
+                            <ba-help-link key="{{::socialProvider.helpUrl}}"></ba-help-link>
                         </div>
                       </div>
                     </div>

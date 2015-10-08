@@ -2,7 +2,7 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> Configuration </strong>
-        <ba-help-link key="securityGeneral"></ba-help-link>
+        <ba-help-link key="securityGeneral" with-text="false"></ba-help-link>
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
@@ -10,11 +10,12 @@
         <div class="field-group">
           <div class="group-inner">
             <div class="form-group">
-              <label class="strong" for="allowAnonymousPublic">Anonymous Access</label><ba-help-link key="securityAnonymousAccess"></ba-help-link>
+              <label class="strong" for="allowAnonymousPublic">Anonymous Access</label>
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
                 <input id="allowAnonymousPublic" type="checkbox" ng-model="auth.data.allowAnonymous" checked=""><i></i>
               </label>
               <div class="field-description">When set to True anyone can access the app without username and password
+                  <ba-help-link key="securityAnonymousAccess"></ba-help-link>
               </div>
             </div>
             <div class="row" ng-show="auth.data.allowAnonymous">
@@ -57,14 +58,15 @@
         <div class="field-group">
           <div class="group-inner">
             <div class="form-group">
-              <label class="strong" for="allowAnonymousPrivate">Public App</label><ba-help-link key="securitySignup"></ba-help-link>
+              <label class="strong" for="allowAnonymousPrivate">Public App</label>
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
                 <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.settings.enableUserRegistration"
                        checked=""><i></i>
               </label>
               <div class="field-description">
                 When enabled, any user can register with the application. When disabled, only invited users may register.
-                To invite users, go to the <a href="" ng-click="auth.goTo('security.users');">Users</a> page.
+                To invite users, go to the <a href="" ng-click="auth.goTo('security.users');">Users</a> page
+                  <ba-help-link key="securitySignup"></ba-help-link>
               </div>
             </div>
             <div class="form-group" ng-class="{ 'has-error': auth.authForm.PrivateAppRole.$invalid }">
@@ -95,7 +97,9 @@
                          ng-keyup="cancel($event)"
                          ng-model="auth.data.settings.registrationRedirectUrl">
 
-                  <div class="field-description">The registration page URL to be used in user invitation email</div>
+                  <div class="field-description">The registration page URL to be used in user invitation email
+                      <ba-help-link key="customPages"></ba-help-link>
+                  </div>
                 </div>
               </div>
               <div class="form-group" ng-class="{ 'has-error': auth.authForm.inputUrl2.$error.url }">
@@ -110,6 +114,7 @@
                          ng-model="auth.data.settings.signInRedirectUrl">
 
                   <div class="field-description">Redirect page after user has verified his email in the sign up process
+                      <ba-help-link key="customPages"></ba-help-link>
                   </div>
                 </div>
               </div>
@@ -132,11 +137,13 @@
         <div class="field-group">
           <div class="group-inner">
             <div class="form-group">
-              <label class="strong" for="allowAnonymousPublic">Sign-up Email Verification</label><ba-help-link key="emailVerification"></ba-help-link>
+              <label class="strong" for="allowAnonymousPublic">Sign-up Email Verification</label>
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
                 <input id="emailVerification" type="checkbox" ng-model="auth.data.settings.signupEmailVerification" checked=""><i></i>
               </label>
-              <div class="field-description">When enabled, users are sent a verification email by Backand which they must use to verify their account</div>
+              <div class="field-description">When enabled, users are sent a verification email by Backand which they must use to verify their account
+                  <ba-help-link key="emailVerification"></ba-help-link>
+              </div>
             </div>
           </div>
         </div>

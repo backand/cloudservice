@@ -20,10 +20,12 @@
       isAdmin = ($state.$current.url.source.indexOf('/history') == -1);
       if(isAdmin){
         self.title = 'Log Configuration';
+        self.helpKey = 'logConfiguration';
         self.names = {ViewName: 'Entity', PK:'Entity Name / Id', FieldName: 'Property Name', Action: 'Event'};
       }
       else {
         self.title = 'Data History';
+        self.helpKey = 'dataHistory';
         self.names = {ViewName: 'Object Name', PK:'Object Id', FieldName: 'Field Name', Action: 'Event'};
       }
 

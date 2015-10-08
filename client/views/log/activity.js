@@ -21,10 +21,13 @@
      */
     (function init() {
       isException = ($state.$current.url.source.indexOf('/exception') > -1);
-      if (isException)
+      if (isException){
         self.title ='APP Exceptions';
-      else
+        self.helpKey = 'appException';
+      }
+      else {
         self.title ='APP Activity';
+      }
     }());
 
     this.gridOptions = {
