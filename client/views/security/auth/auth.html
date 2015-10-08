@@ -1,8 +1,8 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong> Authentication </strong>
-
+      <strong> Configuration </strong>
+        <ba-help-link key="securityGeneral"></ba-help-link>
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
     <div class="panel-body">
@@ -10,11 +10,12 @@
         <div class="field-group">
           <div class="group-inner">
             <div class="form-group">
-              <label class="strong" for="allowAnonymousPublic">Anonymous Access</label>
+              <label class="strong" for="allowAnonymousPublic">Anonymous Access</label><ba-help-link key="securityAnonymousAccess"></ba-help-link>
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
                 <input id="allowAnonymousPublic" type="checkbox" ng-model="auth.data.allowAnonymous" checked=""><i></i>
               </label>
-              <div class="field-description">Allow anonymous users to access the application</div>
+              <div class="field-description">When set to True anyone can access the app without username and password
+              </div>
             </div>
             <div class="row" ng-show="auth.data.allowAnonymous">
               <div class="form-group col-md-4" ng-class="{ 'has-error': auth.authForm.AnonymousUserRole.$invalid }">
@@ -28,7 +29,7 @@
                         ng-required="auth.data.allowAnonymous">
                 </select>
                 <div class="field-description">
-                  * The role can be changed any time after the registration vip API or from user page
+                  * The role can be changed any time after the registration via API or from user page
                 </div>
               </div>
             </div>
@@ -56,7 +57,7 @@
         <div class="field-group">
           <div class="group-inner">
             <div class="form-group">
-              <label class="strong" for="allowAnonymousPrivate">Public App</label>
+              <label class="strong" for="allowAnonymousPrivate">Public App</label><ba-help-link key="securitySignup"></ba-help-link>
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
                 <input id="allowAnonymousPrivate" type="checkbox" ng-model="auth.data.settings.enableUserRegistration"
                        checked=""><i></i>
@@ -66,22 +67,20 @@
                 To invite users, go to the <a href="" ng-click="auth.goTo('security.users');">Users</a> page.
               </div>
             </div>
-            <div class="row">
-              <div class="form-group col-md-4" ng-class="{ 'has-error': auth.authForm.PrivateAppRole.$invalid }">
-                <label class="control-label strong" for="PrivateAppRole">Invited users default assigned role:</label>
-                <select class="form-control"
-                        ng-options="role.Name as role.Name for role in auth.roles "
-                        id="PrivateAppRole"
-                        name="PrivateAppRole"
-                        ng-model="auth.data.settings.newUserDefaultRole"
-                        ng-model-options="{debounce:{default:400}}"
-                        ng-required="auth.data.settings.enableUserRegistration">
-                </select>
-                <div class="field-description">
-                  * The role can be changed any time after the registration vip API or from user page
-                </div>
-              </div>
+            <div class="form-group" ng-class="{ 'has-error': auth.authForm.PrivateAppRole.$invalid }">
+            <label class="control-label strong" for="PrivateAppRole">Invited users default assigned role:</label>
+            <select class="form-control"
+                    ng-options="role.Name as role.Name for role in auth.roles "
+                    id="PrivateAppRole"
+                    name="PrivateAppRole"
+                    ng-model="auth.data.settings.newUserDefaultRole"
+                    ng-model-options="{debounce:{default:400}}"
+                    ng-required="auth.data.settings.enableUserRegistration">
+            </select>
+            <div class="field-description">
+              * The role can be changed any time after the registration vip API or from user page
             </div>
+              </div>
           </div>
         </div>
         <div class="field-group">
@@ -133,11 +132,11 @@
         <div class="field-group">
           <div class="group-inner">
             <div class="form-group">
-              <label class="strong" for="allowAnonymousPublic">Sign-up Email Verification</label>
+              <label class="strong" for="allowAnonymousPublic">Sign-up Email Verification</label><ba-help-link key="emailVerification"></ba-help-link>
               <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
                 <input id="emailVerification" type="checkbox" ng-model="auth.data.settings.signupEmailVerification" checked=""><i></i>
               </label>
-              <div class="field-description">When enabled, users will get email verification after sign-up</div>
+              <div class="field-description">When enabled, users are sent a verification email by Backand which they must use to verify their account</div>
             </div>
           </div>
         </div>
