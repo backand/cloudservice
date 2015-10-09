@@ -13,8 +13,6 @@
         $scope.target = $scope.target || 'bkhelp';
         $scope.withText = $scope.withText || true;
 
-        $scope.readMore = ($scope.withText != 'false') ? "- read more" : "";
-
         var locations = {
           "securityGeneral": {
             "page": "security/auth",
@@ -117,8 +115,17 @@
 
         $scope.location = locations[$scope.key].url || 'http://docs.backand.com';
 
+        if($scope.withText != 'false'){
+          $scope.readMore = '- read more';
+          $scope.iconClass = 'ba-icon-external-link';
+        }
+        else {
+          $scope.readMore = '';
+          $scope.iconClass = 'ti-help-alt';
+        }
+
       },
-      template: '<a href="{{location}}" target="{{target}}" style="text-decoration: none;">{{readMore}}&nbsp;<i class="ti-help-alt"></i></a>'
+      template: '<a href="{{location}}" target="{{target}}" style="text-decoration: none;">{{readMore}}&nbsp;<i class="{{iconClass}}"></i></a>'
     };
   }
 
