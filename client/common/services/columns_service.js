@@ -10,6 +10,7 @@
     self.commit = update;
     self.forceCommit = _update;
     self.tableName = null;
+    self.tables = {};
 
     self.sync = function() {
         return $http({
@@ -41,8 +42,15 @@
       return deferred.promise;
     };
 
-    self.getColumns = function (tableName) {
-      return _get(tableName);
+    self.getColumns = function (tableName, force) {
+      if (!force && self.tables.tableName) {
+        return $q.when(self.tables.tableName);
+      }
+      return _get(tableName)
+        .then(function (result) {
+          self.tables.tableName = result.data;
+          return result;
+        });
     };
 
     function _get(tableName) {

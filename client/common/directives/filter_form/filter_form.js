@@ -1,13 +1,17 @@
 (function() {
   'use strict';
 
+  angular.module('common.directives')
+    .directive('bkndFilterForm', [bkndFilterForm]);
+
   function bkndFilterForm () {
     return {
       scope: {
         noRepeat: '@',
         query: '=',
         fields: '=',
-        operators: '='
+        operators: '=',
+        onSubmit: '&'
       },
       bindToController: true,
       controllerAs: 'filterForm',
@@ -41,8 +45,24 @@
       }
     };
 
+    self.submit = function () {
+      self.loadingFilterResults = true;
+      self.query.forEach(function (queryItem) {
+        if (!queryItem.field) return;
+
+        var operatorsForType = self.operators[queryItem.field.type];
+
+        queryItem.operator = queryItem.operator ||
+          operatorsForType.indexOf('equals') !== -1 ? 'equals' : operatorsForType[0];
+        queryItem.value = queryItem.value || '';
+      });
+
+      return self.onSubmit()
+        .finally(function () {
+          self.loadingFilterResults = false;
+      })
+    }
+
   }
 
-  angular.module('common.directives')
-    .directive('bkndFilterForm', bkndFilterForm);
 })();

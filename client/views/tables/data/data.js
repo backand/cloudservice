@@ -48,13 +48,13 @@
     self.toggleShowLog = function () {
       self.showFilter = false;
       self.showLog = !self.showLog;
-      setTimeout("$('#grid-container').trigger('resize');", 1);
+      resizeGrid();
     };
 
     self.toggleShowFilter = function () {
       self.showLog = false;
       self.showFilter = !self.showFilter;
-      setTimeout("$('#grid-container').trigger('resize');", 1);
+      resizeGrid();
     };
 
     self.createData = function (data) {
@@ -174,7 +174,7 @@
 
     function refreshGridDisplay() {
       if (!self.refreshOnce) {
-        setTimeout("$('#grid-container').trigger('resize');", 1); //resize the tab to fix the width issue with UI grid
+        resizeGrid();
         self.refreshOnce = true;
       }
     }
@@ -231,7 +231,7 @@
         + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
     }
 
-    self.getSingleSelectLabel = function (row, item) {
+    /*self.getSingleSelectLabel = function (row, item) {
       if (typeof row !== 'object')
         return row;
 
@@ -247,7 +247,7 @@
       });
 
       return {descriptiveLabel: descriptiveLabel, fields: fields};
-    };
+    };*/
 
     self.getSingleAutocomplete = function (item, query) {
       return DataService.search(self.relatedViews[item.field].object, query)
@@ -313,6 +313,7 @@
     function getFieldTypeForFilter(type) {
       switch (type) {
         case 'MultiSelect':
+          return null;
         case 'SingleSelect':
           return 'select'; // Search of Multi-Select keys doesn't work currently
         case 'ShortText':
@@ -449,28 +450,47 @@
 
     function getFieldsForFilter () {
 
-      return _.map(self.columnDefs, function (field) {
-        return {
+      var fields = _.map(self.columnDefs, function (field) {
+        var fieldData = {
           name: field.name,
           type: getFieldTypeForFilter(field.type),
-          originalType: field.type
+          originalType: field.type,
         };
+
+        if (field.type === 'SingleSelect' && !_.isEmpty(field.relatedViewName)) {
+          ColumnsService.getColumns(field.relatedViewName)
+            .then(function (response) {
+              fieldData.relatedView = {
+                object: field.relatedViewName,
+                descriptiveColumn: response.data.columnDisplayinTitle
+              };
+            })
+        }
+        return fieldData;
       });
+
+      _.remove(fields, {type: null});
+      return fields;
     }
 
     self.filterData = function () {
-
       var query = _.map(self.filterQuery, function (item) {
-        if (item.field && item.operator && item.value)
-        return {
-          fieldName: item.field.name,
-          operator: item.operator,
-          value: item.value
-        };
+        if (item.field) {
+          return {
+            fieldName: item.field.name,
+            operator: item.operator || 'equals',
+            value: item.value || '',
+          };
+        }
       });
 
-      DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, _.compact(query))
+      return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, _.compact(query))
         .then(successDataHandler, errorHandler);
+    };
+
+    //resize the tab to fix the width issue with UI grid
+    function resizeGrid () {
+      setTimeout("$('#grid-container').trigger('resize');", 50);
     }
   }
 }());

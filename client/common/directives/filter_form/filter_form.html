@@ -1,4 +1,7 @@
-<form name="filterForm.form" ng-submit="filterForm.submit()" novalidate>
+<form name="filterForm.form" ng-submit="filterForm.submit()" novalidate class="bknd-filter-form">
+  <button class="btn btn-success" ladda="filterForm.loadingFilterResults" data-style="expand-right">Filter</button>
+  <br/><br/>
+
   <div class="form-group">
     <fieldset>
       <div class="form-group" ng-repeat="predicate in filterForm.query track by $index">
@@ -36,31 +39,23 @@
                    name="predicate.key"
                    ng-model="predicate.value"/>
 
-            <div ng-switch-when="DateTime" class="input-group">
-              <span class="input-group-addon ti-calendar"></span>
-              <input type="date"
-                     class="editable-has-buttons editable-input form-control"
-                     ng-model="predicate.value"/>
-              <span class="input-group-addon ti-time"></span>
-              <input type="time"
-                     class="editable-has-buttons editable-input form-control"
-                     ng-model="predicate.value"/>
+            <div ng-switch-when="DateTime" class="filter-form-date">
+              <div class="input-group">
+                <span class="input-group-addon ti-calendar"></span>
+                <input type="date"
+                       class="editable-has-buttons editable-input form-control"
+                       ng-model="predicate.value"/>
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon ti-time"></span>
+                <input type="time"
+                       class="editable-has-buttons editable-input form-control"
+                       ng-model="predicate.value"/>
+              </div>
             </div>
 
             <div ng-switch-when="select" class="input-group">
-            <span ng-hide="loadingSingleSelect"
-                  class="input-group-addon ti-search"></span>
-            <span ng-show="loadingSingleSelect"
-                  class="input-group-addon"
-                  us-spinner="{lines: 9, radius:4, width:3, length: 2, position: 'relative'}"
-                  style="padding: 6px 18px 6px 19px;"></span>
-              <input type="text"
-                     ng-model="predicate.value"
-                     typeahead=""
-                     typeahead-template-url="views/tables/data/select_row_template.html"
-                     typeahead-editable="false"
-                     typeahead-loading="loadingSingleSelect"
-                     class="form-control"/>
+              <div bknd-single-select-typeahead item="predicate" field="predicate.field"></div>
             </div>
 
             <div ng-switch-when="Numeric" class="input-group">
@@ -82,10 +77,10 @@
           <!-- AND -->
 
           <br/>
-          <button ng-show="$last && filterForm.fields.length > 0"
-                  class="btn btn-primary btn-sm"
-                  ng-click="filterForm.addRow()">+ AND
-          </button>
+          <input type="button" ng-show="$last && filterForm.fields.length > 0"
+                 class="btn btn-primary btn-sm"
+                 ng-click="filterForm.addRow()" value="+ AND">
+          </input>
           <span ng-show="!$last">AND</span>
         </div>
 

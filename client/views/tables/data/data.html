@@ -60,12 +60,12 @@
     <div ng-show="ObjectData.showFilter" class="col-md-4">
 
       <div class="object-data-filter-container">
-        <button class="btn btn-success" ng-click="ObjectData.filterData()">Filter</button>
-        <br/><br/>
+
         <bknd-filter-form query="ObjectData.filterQuery"
                           fields="ObjectData.filterOptions.fields"
                           operators="ObjectData.filterOptions.operators"
-                          no-repeat="true">
+                          no-repeat="true"
+                          on-submit="ObjectData.filterData()">
         </bknd-filter-form>
       </div>
     </div>
