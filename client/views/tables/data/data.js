@@ -231,24 +231,6 @@
         + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
     }
 
-    /*self.getSingleSelectLabel = function (row, item) {
-      if (typeof row !== 'object')
-        return row;
-
-      var descriptive = self.relatedViews[item.field].descriptiveColumn;
-      var descriptiveLabel = row.__metadata.id + ': ' +  row[descriptive];
-
-      var fields=[];
-
-      _.forEach(row, function (value, key) {
-        if (key !== '__metadata' && key !== descriptive && !_.isEmpty(value)) {
-          fields.push({key: key, value: value});
-        }
-      });
-
-      return {descriptiveLabel: descriptiveLabel, fields: fields};
-    };*/
-
     self.getSingleAutocomplete = function (item, query) {
       return DataService.search(self.relatedViews[item.field].object, query)
         .then(function(result) {
@@ -479,12 +461,18 @@
           return {
             fieldName: item.field.name,
             operator: item.operator || 'equals',
-            value: item.value || '',
+            value: item.value || ''
           };
         }
       });
 
-      return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, _.compact(query))
+      return DataService.get(
+        self.tableName,
+        self.paginationOptions.pageSize,
+        self.paginationOptions.pageNumber,
+        self.sort,
+        _.compact(query),
+        true)
         .then(successDataHandler, errorHandler);
     };
 

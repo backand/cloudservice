@@ -50,10 +50,12 @@
       self.query.forEach(function (queryItem) {
         if (!queryItem.field) return;
 
-        var operatorsForType = self.operators[queryItem.field.type];
+        if (!queryItem.operator) {
+          var operatorsForType = self.operators[queryItem.field.type];
+          queryItem.operator =
+            operatorsForType.indexOf('equals') !== -1 ? 'equals' : operatorsForType[0];
+        }
 
-        queryItem.operator = queryItem.operator ||
-          operatorsForType.indexOf('equals') !== -1 ? 'equals' : operatorsForType[0];
         queryItem.value = queryItem.value || '';
       });
 
