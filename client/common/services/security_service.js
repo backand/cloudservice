@@ -159,7 +159,17 @@
         },
         headers: { AppName: self.appName }
       })
-    }
+    };
+
+    self.transformNoSQL = function (json) {
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/nosql/transform',
+        data: json,
+        headers: { AppName: self.appName }
+      });
+    };
+
   }
 
   angular.module('common.services')

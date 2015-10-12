@@ -10,6 +10,7 @@
       'NotificationService',
       'SecurityService',
       'ColumnsService',
+      'DataService',
       'DictionaryService',
       'TablesService',
       'ConfirmationPopup',
@@ -25,6 +26,7 @@
     NotificationService,
     SecurityService,
     ColumnsService,
+    DataService,
     DictionaryService,
     TablesService,
     ConfirmationPopup,
@@ -43,7 +45,8 @@
       };
       getUserObjectFields();
 
-      self.placeHolder = "'{{sys::username}}' = ProjectUserEmail";
+      self.placeHolderSql = "'{{sys::username}}' = ProjectUserEmail";
+      self.placeHolderJson = '{"title":{"$gt":"aaa"}}';
       self._lastPermissions = null;
       self.workspaces = null;
       self.view = null;
@@ -64,6 +67,11 @@
       self.toggleOptions = toggleDictionary;
       self.insertAtChar= insertTokenAtChar;
     }());
+
+
+    self.getPermanentFilterModel = function () {
+      return self.sqlFilter ? 'permanentFilter' : 'jsonPermanentFilter';
+    };
 
     function getItemByRegex (object, regex) {
       return _.find(object, function(item) {
@@ -119,13 +127,45 @@
         return ConfirmationPopup.confirm('Would you like to replace the current pre-defined filter?')
           .then(function (approve) {
             if (approve) {
-              self.view.dataEditing.permanentFilter = result;
+              return updateAndSaveFilter(result);
             }
           });
       } else {
-        self.view.dataEditing.permanentFilter = result;
+        return updateAndSaveFilter(result);
       }
     }
+
+    function updateAndSaveFilter (filter) {
+      self.view.dataEditing.permanentFilter = filter;
+      return self.savePermanentFilter();
+    }
+
+    self.transformNoSQL = function () {
+
+      try {
+        var q = JSON.parse(self.view.dataEditing.permanentNoSqlFilter)
+      } catch (error) {
+        NotificationService.add('error', 'JSON is not properly formatted');
+        self.loading = false;
+        return;
+      }
+
+      return SecurityService.transformNoSQL({
+        json: {
+          object: self.currentObjectName,
+          isFilter:true,
+          q: q
+        }
+      }).then(function (response) {
+          self.filter.result = response.data.sql;
+          return openValidationModal(response)
+        })
+        .then(function (result) {
+          if (result) {
+            updateFilter(self.filter.result)
+          }
+        })
+    };
 
     /**
      * switch the state of the dictionary window
@@ -214,7 +254,15 @@
     }
 
     function savePermanentFilter() {
-      ColumnsService.commit(self.view);
+      self.filterError = null;
+      return ColumnsService.commitAndUpdate(self.view)
+
+        .then(function (result) {
+          return DataService.get(self.currentObjectName);
+        })
+        .catch(function (error) {
+          self.filterError = error.data;
+        });
     }
 
     /**

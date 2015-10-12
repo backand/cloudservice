@@ -9,22 +9,22 @@
         <div class="form-group">
           <label class="sr-only" for="userObject">User Object</label>
           <select id="userObject"
-                  class="form-control"
+                  class="ui-select"
                   ng-model="security.filter.userObjectName"
                   ng-options="object.name as object.name for object in security.appObjects"
                   ng-change="security.getUserObjectFields()"
                   required
-                  style="min-width: 130px;"></select>
+                  style="min-width: 130px; vertical-align: text-bottom;"></select>
         </div>
         object by
         <div class="form-group">
           <label class="sr-only" for="emailField">Email</label>
           <select id="emailField"
-                  class="form-control"
+                  class="ui-select"
                   ng-model="security.filter.emailField"
                   ng-options="field.name as field.name for field in security.filter.userObjectFields"
                   required
-                  style="min-width: 130px;"></select>
+                  style="min-width: 130px; vertical-align: text-bottom;"></select>
         </div>
         field.
 
@@ -45,12 +45,29 @@
         </angled-window>
       </div>
 
-      <textarea id="PermanentFilter" ng-model="security.view.dataEditing.permanentFilter"
-                name="PermanentFilter"
-                class="form-control"
-                ng-blur="security.savePermanentFilter()"
-                placeholder="{{security.placeHolder}}"
+      <div ng-show="sqlFilter === 'NoSQL'" class="pull-right"><button class="btn btn-info" ng-click="security.transformNoSQL()">Validate</button></div>
+
+      <label for="radio-no-sql" class="ui-radio"><input id="radio-no-sql" type="radio" ng-model="sqlFilter" value="NoSQL"><span>NoSQL</span></label>
+      <label for="radio-sql" class="ui-radio"><input id="radio-sql" type="radio" ng-model="sqlFilter" value="SQL"><span>SQL</span></label>
+
+      <label><a ng-show="sqlFilter === 'NoSQL'" href="" ng-click="showSQL = !showSQL">{{ showSQL ? 'hide' : 'show' }} SQL</a></label>
+
+      <p ng-show="security.filterError" class="text-danger">Error: {{ security.filterError }}</p>
+
+      <textarea ng-show="sqlFilter === 'NoSQL'" id="PermanentJsonFilter" ng-model="security.view.dataEditing.permanentNoSqlFilter"
+                name="permanentNoSqlFilter"
+                class="form-control no-show-hide-animation"
+                placeholder="{{security.placeHolderJson}}"
                 insert-at-caret></textarea>
+
+      <textarea ng-show="sqlFilter === 'SQL' || showSQL" id="PermanentFilter" ng-model="security.view.dataEditing.permanentFilter"
+                name="PermanentFilter"
+                class="form-control no-show-hide-animation"
+                ng-blur="security.savePermanentFilter()"
+                placeholder="{{security.placeHolderSql}}"
+                ng-disable="sqlFilter === 'NoSQL'"
+                insert-at-caret></textarea>
+
       <div class="field-description">
         The pre-defined filter is used to load data based on rules that can not be overwritten.
         For example, load only the projects associated with the current logged in user

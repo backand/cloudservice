@@ -68,6 +68,11 @@
       //});
     }
 
+    self.commitAndUpdate = function (table) {
+      update(table);
+      return _update(table);
+    };
+
     function _update (table) {
       return $http({
         method: 'PUT',
