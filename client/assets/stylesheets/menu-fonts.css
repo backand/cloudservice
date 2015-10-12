@@ -23,6 +23,24 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.ba-icon-icon-copy:before {
+	content: "\e801";
+}
+.ba-icon-icon-field-type-number:before {
+	content: "\e802";
+}
+.ba-icon-icon-field-type-text:before {
+	content: "\e803";
+}
+.ba-icon-icon-field-type-true:before {
+	content: "\e804";
+}
+.ba-icon-icon-field-type-false:before {
+	content: "\e805";
+}
+.ba-icon-icon-refresh:before {
+	content: "\e806";
+}
 .ba-icon-security-actions:before {
 	content: "\e619";
 }
