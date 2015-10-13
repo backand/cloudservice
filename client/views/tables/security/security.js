@@ -154,6 +154,8 @@
               self.predefinedFilterType = 'NoSQL';
             }
           });
+      } else {
+        return ColumnsService.commitAndUpdate(self.view);
       }
     };
 
