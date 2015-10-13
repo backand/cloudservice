@@ -7,8 +7,8 @@
       <form name="filterCodeForm" class="form-inline" ng-submit="security.getFilterCode()" novalidate>
         Filter <b>{{ security.currentObjectName }}</b> for current user session based on
         <div class="form-group">
-          <label class="sr-only" for="userObject">User Object</label>
-          <select id="userObject"
+          <label class="sr-only" for="user-object">User Object</label>
+          <select id="user-object"
                   class="ui-select"
                   ng-model="security.filter.userObjectName"
                   ng-options="object.name as object.name for object in security.appObjects"
@@ -18,18 +18,30 @@
         </div>
         object by
         <div class="form-group">
-          <label class="sr-only" for="emailField">Email</label>
-          <select id="emailField"
+          <label class="sr-only" for="email-field">Email</label>
+          <select id="email-field"
                   class="ui-select"
                   ng-model="security.filter.emailField"
                   ng-options="field.name as field.name for field in security.filter.userObjectFields"
                   required
                   style="min-width: 130px; vertical-align: text-bottom;"></select>
         </div>
-        field.
+        field and
+        <div class="form-group">
+          <select id="show-to-admin"
+                  class="ui-select"
+                  ng-model="security.filter.showToAdmin"
+                  style="min-width: 130px; vertical-align: text-bottom;">
+            <option value="" selected>always show</option>
+            <option value="dontShow">don't show</option>
+          </select>
+        </div>
+        items to admin.
 
         <button class="btn btn-success pull-right" ng-disabled="filterCodeForm.$invalid">Get Code</button>
       </form>
+
+      <br/>
 
       <div class="pull-right">
         <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="security.toggleOptions()"></span>
@@ -45,27 +57,51 @@
         </angled-window>
       </div>
 
-      <div ng-show="sqlFilter === 'NoSQL'" class="pull-right"><button class="btn btn-info" ng-click="security.transformNoSQL()">Validate</button></div>
+      <div ng-show="security.predefinedFilterType === 'NoSQL'" class="pull-right">
+        <button class="btn btn-info" ng-click="security.transformNoSQL()">Validate</button>
+      </div>
 
-      <label for="radio-no-sql" class="ui-radio"><input id="radio-no-sql" type="radio" ng-model="sqlFilter" value="NoSQL"><span>NoSQL</span></label>
-      <label for="radio-sql" class="ui-radio"><input id="radio-sql" type="radio" ng-model="sqlFilter" value="SQL"><span>SQL</span></label>
+      <label for="radio-no-sql" class="ui-radio">
+        <input id="radio-no-sql"
+               type="radio"
+               ng-model="security.predefinedFilterType"
+               value="NoSQL">
+        <span>NoSQL</span>
+      </label>
 
-      <label><a ng-show="sqlFilter === 'NoSQL'" href="" ng-click="showSQL = !showSQL">{{ showSQL ? 'hide' : 'show' }} SQL</a></label>
+      <label for="radio-sql" class="ui-radio">
+        <input id="radio-sql"
+               type="radio"
+               ng-model="security.predefinedFilterType"
+               value="SQL"
+               ng-change="security.changeToSql()">
+        <span>SQL</span>
+      </label>
+
+      <label>
+        <a ng-show="security.predefinedFilterType === 'NoSQL'" href="" ng-click="showSQL = !showSQL">
+          {{ showSQL ? 'hide' : 'show' }} SQL
+        </a>
+      </label>
 
       <p ng-show="security.filterError" class="text-danger">Error: {{ security.filterError }}</p>
 
-      <textarea ng-show="sqlFilter === 'NoSQL'" id="PermanentJsonFilter" ng-model="security.view.dataEditing.permanentNoSqlFilter"
-                name="permanentNoSqlFilter"
+      <textarea ng-show="security.predefinedFilterType === 'NoSQL'"
+                id="NoSQL"
+                ng-model="security.view.dataEditing.nosqlPermanentFilter"
+                name="nosqlPermanentFilter"
                 class="form-control no-show-hide-animation"
-                placeholder="{{security.placeHolderJson}}"
+                placeholder="{{security.placeHolderNoSql}}"
                 insert-at-caret></textarea>
 
-      <textarea ng-show="sqlFilter === 'SQL' || showSQL" id="PermanentFilter" ng-model="security.view.dataEditing.permanentFilter"
+      <textarea ng-show="security.predefinedFilterType === 'SQL' || showSQL"
+                id="SQL"
+                ng-model="security.view.dataEditing.permanentFilter"
                 name="PermanentFilter"
                 class="form-control no-show-hide-animation"
                 ng-blur="security.savePermanentFilter()"
                 placeholder="{{security.placeHolderSql}}"
-                ng-disabled="sqlFilter === 'NoSQL'"
+                ng-disabled="security.predefinedFilterType === 'NoSQL'"
                 insert-at-caret></textarea>
 
       <div class="field-description">
@@ -77,7 +113,7 @@
 
   <div class="row security-header">
     <div class="col-lg-2">
-    <label class="strong" >Security Template</label>
+      <label class="strong">Security Template</label>
       <select class="form-control"
               ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
               ng-model="security.currentST"
@@ -87,7 +123,8 @@
     <div class="col-lg-2">
       <div class="override-template"><label> override</label>
         <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
-          <input id="override-checkbox" type="checkbox" ng-model="security.view.permissions.overrideinheritable"/><i></i>
+          <input id="override-checkbox" type="checkbox"
+                 ng-model="security.view.permissions.overrideinheritable"/><i></i>
         </label>
       </div>
     </div>

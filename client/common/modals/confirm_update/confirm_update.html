@@ -17,11 +17,16 @@
     </a>
 
     <div class="callout callout-info" ng-show="ConfirmModelUpdate.detailsOpen">
-      <label>The following operations will be performed:</label>
-      <ul>
-        <li ng-repeat="alter in ConfirmModelUpdate.validationResponse.alter">{{alter}}</li>
+      <label>{{ ConfirmModelUpdate.detailsTitle }}</label>
+
+      <ul ng-if="ConfirmModelUpdate.details === 'array'">
+        <li ng-repeat="item in ConfirmModelUpdate.result">{{item}}</li>
       </ul>
+
+      <p ng-show="ConfirmModelUpdate.details === 'string'">{{ ConfirmModelUpdate.result }}</p>
+
     </div>
+
     <div class="modal-footer">
       <button class="btn btn-success" ng-if="ConfirmModelUpdate.text.okButton"
               ng-click="ConfirmModelUpdate.closeValidationModal(true)">

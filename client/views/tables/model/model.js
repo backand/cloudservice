@@ -147,7 +147,13 @@
           validationResponse: function () {
             return response.data;
           },
-          itemName: function () { return 'model'; }
+          titles: function () {
+            return {
+              itemName: 'model',
+              detailsTitle: 'The following operations will be performed:',
+              resultProperty: 'alter'
+            }
+          }
         }
       });
 

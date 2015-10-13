@@ -46,7 +46,7 @@
       getUserObjectFields();
 
       self.placeHolderSql = "'{{sys::username}}' = ProjectUserEmail";
-      self.placeHolderJson = '{"title":{"$gt":"aaa"}}';
+      self.placeHolderNoSql = '{"title":{"$gt":"aaa"}}';
       self._lastPermissions = null;
       self.workspaces = null;
       self.view = null;
@@ -67,11 +67,6 @@
       self.toggleOptions = toggleDictionary;
       self.insertAtChar= insertTokenAtChar;
     }());
-
-
-    self.getPermanentFilterModel = function () {
-      return self.sqlFilter ? 'permanentFilter' : 'jsonPermanentFilter';
-    };
 
     function getItemByRegex (object, regex) {
       return _.find(object, function(item) {
@@ -115,7 +110,13 @@
           validationResponse: function () {
             return response.data;
           },
-          itemName: function () { return 'query'; }
+          titles: function () {
+            return {
+              itemName: 'query',
+              detailsTitle: 'The NoSQL is equivalent to the following SQL query:',
+              resultProperty: 'sql'
+            }
+          }
         }
       });
 
@@ -123,7 +124,7 @@
     }
 
     function updateFilter (result) {
-      if (!_.isEmpty(self.view.dataEditing.permanentFilter)) {
+      if (self.view.dataEditing.permanentFilter) {
         return ConfirmationPopup.confirm('Would you like to replace the current pre-defined filter?')
           .then(function (approve) {
             if (approve) {
@@ -140,10 +141,26 @@
       return self.savePermanentFilter();
     }
 
+    self.changeToSql = function () {
+      if (self.view.dataEditing.nosqlPermanentFilter) {
+        return ConfirmationPopup.confirm('The NoSQL query will be deleted. Are you sure you want to continue?')
+
+          .then(function (approve) {
+            if (approve) {
+              self.view.dataEditing.nosqlPermanentFilter = '';
+              return ColumnsService.commitAndUpdate(self.view);
+
+            } else {
+              self.predefinedFilterType = 'NoSQL';
+            }
+          });
+      }
+    };
+
     self.transformNoSQL = function () {
 
       try {
-        var q = JSON.parse(self.view.dataEditing.permanentNoSqlFilter)
+        var q = JSON.parse(self.view.dataEditing.nosqlPermanentFilter)
       } catch (error) {
         NotificationService.add('error', 'JSON is not properly formatted');
         self.loading = false;
@@ -153,7 +170,7 @@
       return SecurityService.transformNoSQL({
         json: {
           object: self.currentObjectName,
-          isFilter:true,
+          isFilter: true,
           q: q
         }
       }).then(function (response) {
@@ -231,6 +248,10 @@
     function successHandler(data) {
       self.view = data;
       self.currentST = String(self.view.permissions.securityWorkspace);
+
+      // Default view is NoSQL, unless only SQL has value
+      self.predefinedFilterType =
+        self.view.dataEditing.permanentFilter && !self.view.dataEditing.nosqlPermanentFilter ? 'SQL' : 'NoSQL';
       buildTemplate();
     }
 
