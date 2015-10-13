@@ -29,7 +29,7 @@
       {id: 1, label: 'Mail'},
       {id: 2, label: 'Payment Processing'},
       {id: 3, label: 'File Storage'},
-      {id: 4, label: 'Analytics'},
+      {id: 4, label: 'Metrics & Analytics'},
       {id: null, label: 'Other'}
     ];
 
