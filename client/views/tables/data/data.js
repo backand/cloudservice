@@ -46,15 +46,14 @@
     }());
 
     self.toggleShowLog = function () {
-      self.showFilter = false;
       self.showLog = !self.showLog;
       resizeGrid();
     };
 
     self.toggleShowFilter = function () {
-      self.showLog = false;
-      self.showFilter = !self.showFilter;
-      resizeGrid();
+      if (self.filterReady) {
+        self.showFilter = !self.showFilter;
+      }
     };
 
     self.createData = function (data) {
@@ -199,10 +198,10 @@
         return undefined;
 
       if (type == 'dateTime')
-        return '<div class="ui-grid-cell-contents"><span editable-date="MODEL_COL_FIELD" '
+        return '<div class="ui-grid-cell-contents"><span editable-date="MODEL_COL_FIELD" class="editable-grid-cell" '
           + callbackOptions
           + '>{{COL_FIELD | date:"MM/dd/yyyy" CUSTOM_FILTERS }}</span> '
-          + '<span editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" '
+          + '<span editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" class="editable-grid-cell" '
           + callbackOptions
           + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 

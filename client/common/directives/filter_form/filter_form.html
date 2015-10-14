@@ -4,31 +4,32 @@
 
   <div class="form-group">
     <fieldset>
-      <div class="form-group" ng-repeat="predicate in filterForm.query track by $index">
+      <div class="form-group form-inline" ng-repeat="predicate in filterForm.query track by $index">
 
         <!-- Select field to filter by -->
 
-        <select ng-hide="predicate.field"
-                class="form-control"
-                ng-model="predicate.field"
-                ng-options="field.name for field in filterForm.fields"
-                ng-change="filterForm.onFieldSelected(predicate.field)"></select>
+        <span class="ui-select" ng-hide="predicate.field">
+          <select class="form-control"
+                  ng-model="predicate.field"
+                  ng-options="field.name for field in filterForm.fields"
+                  ng-change="filterForm.onFieldSelected(predicate)"></select>
+        </span>
 
         <!-- Field is selected - select operator and value -->
 
-        <div ng-show="predicate.field">
-          <i class="fa fa-close" ng-click="filterForm.removePredicate(predicate)"></i>
-          <label ng-bind="predicate.field.name"></label>
+        <span ng-show="predicate.field">
+          <label class="form-group" ng-bind="predicate.field.name"></label>
 
           <!-- Operator -->
 
-          <select ng-show="filterForm.operators[predicate.field.type].length > 1"
-                  class="form-control"
-                  ng-model="predicate.operator"
-                  ng-options="operator for operator in filterForm.operators[predicate.field.type]"></select>
-          <span ng-show="filterForm.operators[predicate.field.type].length === 1">
-            {{ filterForm.operators[predicate.field.type][0] }}
+          <span class="ui-select">
+            <select class="form-control"
+                    ng-model="predicate.operator"
+                    ng-options="operator for operator in filterForm.operators[predicate.field.type]"></select>
           </span>
+          <!--<span ng-show="filterForm.operators[predicate.field.type].length === 1">-->
+            <!--{{ filterForm.operators[predicate.field.type][0] }}-->
+          <!--</span>-->
 
           <!-- Value -->
 
@@ -39,52 +40,63 @@
                    name="predicate.key"
                    ng-model="predicate.value"/>
 
-            <div ng-switch-when="DateTime" class="filter-form-date">
-              <div class="input-group">
+            <span ng-switch-when="DateTime" class="filter-form-date">
+              <span class="input-group">
                 <span class="input-group-addon ti-calendar"></span>
                 <input type="date"
                        class="editable-has-buttons editable-input form-control"
                        ng-model="predicate.value"/>
-              </div>
-              <div class="input-group">
+              </span>
+              <span class="input-group">
                 <span class="input-group-addon ti-time"></span>
                 <input type="time"
                        class="editable-has-buttons editable-input form-control"
                        ng-model="predicate.value"/>
-              </div>
-            </div>
+              </span>
+            </span>
 
-            <div ng-switch-when="select" class="input-group">
-              <div bknd-single-select-typeahead item="predicate" field="predicate.field"></div>
-            </div>
+            <span ng-switch-when="select" class="input-group">
+              <!--<div bknd-single-select-typeahead item="predicate" field="predicate.field"></div>-->
+              <span class="input-group-addon ti-text"></span>
+              <input type="text"
+                     class="form-control"
+                     ng-model="predicate.value"/>
+            </span>
 
-            <div ng-switch-when="Numeric" class="input-group">
+            <span ng-switch-when="Numeric" class="input-group">
               <span class="input-group-addon" style="min-width: 39px">0</span>
               <input type="text"
                      class="form-control"
                      name="predicate.key"
                      ng-model="predicate.value"/>
-            </div>
+            </span>
 
-            <div ng-switch-default class="input-group">
+            <span ng-switch-default class="input-group">
               <span class="input-group-addon ti-text"></span>
               <input type="text"
                      class="form-control"
                      ng-model="predicate.value"/>
-            </div>
             </span>
+            </span>
+
 
           <!-- AND -->
 
-          <br/>
-          <input type="button" ng-show="$last && filterForm.fields.length > 0"
-                 class="btn btn-primary btn-sm"
-                 ng-click="filterForm.addRow()" value="+ AND">
-          </input>
-          <span ng-show="!$last">AND</span>
-        </div>
+          <!--<span ng-show="!$last">AND</span>-->
+        </span>
 
+        <i ng-show="predicate.field" class="fa fa-close" ng-click="filterForm.removePredicate(predicate)"></i>
+
+        <div ng-show="$last && predicate.operator && filterForm.fields.length > 0">
+          <br/>
+          <input type="button"
+                 class="btn btn-primary btn-sm"
+                 ng-click="filterForm.addRow()" value="+ ADD CONDITION">
+          </input>
+        </div>
       </div>
     </fieldset>
+
+
   </div>
 </form>

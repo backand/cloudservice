@@ -1,4 +1,4 @@
-.tabs .tab-content {
+tabs .tab-content {
   display: none;
 }
 
@@ -33,9 +33,9 @@
   z-index: 10;
 }
 
-.editable-input {
-  padding: 6px 6px !important;
-  border-radius: 3px !important;
+.ui-grid-cell-contents .editable-input {
+  padding: 6px 6px;
+  border-radius: 3px;
 }
 
 .ui-grid-viewport {

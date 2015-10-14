@@ -29,9 +29,13 @@
       self.query.push({});
     };
 
-    self.onFieldSelected = function (field) {
+    self.onFieldSelected = function (predicate) {
       if (self.noRepeat) {
-        _.remove(self.fields, field);
+        _.remove(self.fields, predicate.field);
+      }
+
+      if (self.operators[predicate.field.type].length === 1) {
+        predicate.operator = self.operators[predicate.field.type][0];
       }
     };
 
