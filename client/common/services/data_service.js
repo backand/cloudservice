@@ -3,6 +3,7 @@
     var self = this;
 
     self.log = [];
+    self.logIndex = {};
 
     function logAndExecute (http, log) {
       var logItem = {};
@@ -15,6 +16,7 @@
         };
 
         self.log.push(logItem);
+        self.logIndex.last = self.log.length - 1;
       }
       return $http(http)
         .then(function (response) {

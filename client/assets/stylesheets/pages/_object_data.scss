@@ -94,6 +94,10 @@
   .log-panel {
     margin-top: 19px;
 
+    .panel-heading {
+      text-transform: none;
+    }
+
     .log-navigation-buttons {
       position: absolute;
       right: 24px;

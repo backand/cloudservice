@@ -37,7 +37,7 @@
     self.refreshOnce = false;
     self.httpRequestsLog = DataService.log = [];
     self.showLog = $state.params.showLog === 'false' ? false : $state.params.showLog;
-    self.logIndex = 0;
+    self.logIndex = DataService.logIndex;
 
     this.paginationOptions = {
       pageNumber: 1,
@@ -56,14 +56,14 @@
     };
 
     self.gotoNextLogItem = function () {
-      if (self.httpRequestsLog[self.logIndex + 1]) {
-        self.logIndex++;
+      if (self.httpRequestsLog[self.logIndex.last + 1]) {
+        self.logIndex.last++;
       }
     };
 
     self.gotoPrevLogItem = function () {
-      if (self.httpRequestsLog[self.logIndex - 1]) {
-        self.logIndex--;
+      if (self.httpRequestsLog[self.logIndex.last - 1]) {
+        self.logIndex.last--;
       }
     };
 
