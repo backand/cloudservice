@@ -55,7 +55,7 @@
         controller: 'FieldsController as fields'
       })
       .state('tables.columns.data', {
-        url: '/data',
+        url: '/data?showLog',
         templateUrl: 'views/tables/data/data.html',
         controller: 'ObjectDataController as ObjectData'
       })

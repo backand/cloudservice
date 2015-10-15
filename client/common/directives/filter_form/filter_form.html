@@ -36,7 +36,8 @@
           <span ng-switch on="predicate.field.type">
             <span ng-switch-when="Boolean" class="filter-form-bool">
               <span class="input-group">
-                <span class="input-group-addon ba-icon-icon-field-type-true"></span>
+                <span class="input-group-addon"
+                      ng-class="predicate.value === 'false' ? 'ba-icon-icon-field-type-false' : 'ba-icon-icon-field-type-true'"></span>
                 <span class="ui-select">
                   <select class="form-control"
                         name="predicate.key"
@@ -65,7 +66,7 @@
             </span>
 
             <span ng-switch-when="select" class="input-group">
-              <span class="input-group-addon ti-text"></span>
+              <span class="input-group-addon ba-icon-icon-field-type-text"></span>
               <input type="text"
                      class="form-control"
                      ng-model="predicate.value"
@@ -73,7 +74,7 @@
             </span>
 
             <span ng-switch-when="Numeric" class="input-group">
-              <span class="input-group-addon" style="min-width: 39px">0</span>
+              <span class="input-group-addon ba-icon-icon-field-type-number"></span>
               <input type="text"
                      class="form-control"
                      name="predicate.key"
@@ -82,7 +83,7 @@
             </span>
 
             <span ng-switch-default class="input-group">
-              <span class="input-group-addon ti-text"></span>
+              <span class="input-group-addon ba-icon-icon-field-type-text"></span>
               <input type="text"
                      class="form-control"
                      ng-model="predicate.value"

@@ -20,9 +20,12 @@
       margin-bottom: 0px;
     }
 
-    input[type="text"] {
-      width: 346px;
+    input {
       height: 36px;
+
+      &[type="text"] {
+        width: 346px;
+      }
     }
 
     .close-button {
@@ -36,31 +39,30 @@
       color: white;
 
       &:hover {
-        color: black;
+        color: #666;
       }
     }
 
-    .filter-form-bool {
 
-      .input-group {
-        display: inline-flex;
+    .input-group {
+      display: inline-flex;
 
-        .input-group-addon {
-          vertical-align: middle;
+      .input-group-addon {
+        padding: 10px;
+        min-width: 39px;
+      }
+
+      .ui-select {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+
+        &:after {
+          right: 16px;
         }
 
-        .ui-select {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
+        select {
+          width: 343px;
 
-          &:after {
-            right: 16px;
-          }
-
-          select {
-            width: 343px;
-
-          }
         }
       }
     }

@@ -9,7 +9,9 @@
       if (log) {
         logItem = {
           requestJson: stringifyHttp(http),
-          requestUrl: http.url
+          requestUrl: http.url,
+          requestMethod: http.method,
+          requestTitle: log
         };
 
         self.log.push(logItem);
@@ -35,7 +37,7 @@
           'sort' : sort
         }
       };
-      return logAndExecute(http, log);
+      return logAndExecute(http, log ? 'Get Data' : null);
     };
 
     self.getItem = function(tableName, itemId, log) {
@@ -44,7 +46,7 @@
         url: CONSTS.appUrl + '/1/objects/' + tableName + '/' + itemId,
         headers: { 'AppName': AppsService.currentApp.Name }
       };
-      return logAndExecute(http, log);
+      return logAndExecute(http, log ? 'Get Item' : null);
     };
 
     self.update = function(tableName, record, id, log) {
@@ -54,7 +56,7 @@
         headers: { 'AppName': AppsService.currentApp.Name },
         data: record
       };
-      return logAndExecute(http, log);
+      return logAndExecute(http, log ? 'Update Item' : null);
     };
 
     self.post = function(tableName, record, log) {
@@ -64,7 +66,7 @@
         headers: { 'AppName': AppsService.currentApp.Name },
         data: record
       };
-      return logAndExecute(http, log);
+      return logAndExecute(http, log ? 'New Item' : null);
     };
 
     self.delete = function(tableName, record, id, log) {
@@ -74,7 +76,7 @@
         headers: { 'AppName': AppsService.currentApp.Name },
         data: record
       };
-      return logAndExecute(http, log);
+      return logAndExecute(http, log ? 'Delete Item' : null);
     };
 
     /**

@@ -6,7 +6,7 @@
 
   <button class="btn btn-default ba-icon-icon-refresh refresh-data-button" ng-click="ObjectData.refresh()"></button>
 
-  <a href="" class="btn btn-success btn-xs btn-wide pull-right" ng-click="ObjectData.toggleShowLog()">
+  <a class="btn btn-success btn-xs btn-wide pull-right" ng-click="ObjectData.toggleShowLog()">
     <i class="ti-angle-left" ng-show="ObjectData.showLog"></i>
     {{ ObjectData.showLog ? 'HIDE LOG' : 'SHOW LOG' }}
     <i class="ti-angle-right" ng-hide="ObjectData.showLog"></i>
@@ -73,16 +73,46 @@
     </div>
 
     <div ng-show="ObjectData.showLog" class="col-md-4">
+      <div class="panel panel-default log-panel" ng-if="ObjectData.httpRequestsLog.length !== 0">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ObjectData.httpRequestsLog[ObjectData.logIndex].requestTitle}},
+            {{ObjectData.httpRequestsLog[ObjectData.logIndex].requestMethod}}</h3>
 
-      <div class="object-data-log-container">
-        <div ng-repeat="httpRequest in ObjectData.httpRequestsLog | orderBy:id:reverse track by $index">
-          <bknd-copy-box content="httpRequest.requestUrl"></bknd-copy-box>
-          <bknd-copy-box type="textarea" content="httpRequest.requestJson"></bknd-copy-box>
-          <textarea ng-show="httpRequest.response"
-                    class="request-url object-data-log-response"
-                    rows="7">
-            {{ ::httpRequest.response }}
-          </textarea>
+          <div class="log-navigation-buttons">
+
+            <button class="btn btn-xs btn-default"
+                    ng-disabled="!ObjectData.httpRequestsLog[ObjectData.logIndex - 1]"
+                    ng-click="ObjectData.gotoPrevLogItem()">
+              <i class="ti-angle-left"></i>
+            </button>
+
+            <button class="btn btn-xs btn-default"
+                    ng-disabled="!ObjectData.httpRequestsLog[ObjectData.logIndex + 1]"
+                    ng-click="ObjectData.gotoNextLogItem()">
+              <i class="ti-angle-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <div class="object-data-log-container">
+
+            <!--<div ng-repeat="httpRequest in ObjectData.httpRequestsLog | orderBy:id:reverse track by $index">-->
+            <div>
+              <label for="log-item-url">Endpoint</label>
+              <bknd-copy-box id="log-item-url" content="ObjectData.httpRequestsLog[ObjectData.logIndex].requestUrl"></bknd-copy-box>
+              <label for="log-item-request">Request JSON</label>
+              <bknd-copy-box id="log-item-request" type="textarea" content="ObjectData.httpRequestsLog[ObjectData.logIndex].requestJson"></bknd-copy-box>
+              <label for="log-item-response">Response JSON</label>
+              <textarea id="log-item-response"
+                        ng-show="ObjectData.httpRequestsLog[ObjectData.logIndex].response"
+                        class="request-url object-data-log-response"
+                        disabled>
+                {{ ObjectData.httpRequestsLog[ObjectData.logIndex].response }}
+              </textarea>
+            </div>
+          </div>
         </div>
       </div>
 

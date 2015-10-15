@@ -12,6 +12,7 @@
       'tableName',
       'ConfirmationPopup',
       '$filter',
+      '$state',
       ObjectDataController
     ]);
 
@@ -24,7 +25,8 @@
     usSpinnerService,
     tableName,
     ConfirmationPopup,
-    $filter
+    $filter,
+    $state
   ) {
 
     var self = this;
@@ -34,6 +36,8 @@
     self.sort = '';
     self.refreshOnce = false;
     self.httpRequestsLog = DataService.log = [];
+    self.showLog = $state.params.showLog === 'false' ? false : $state.params.showLog;
+    self.logIndex = 0;
 
     this.paginationOptions = {
       pageNumber: 1,
@@ -47,7 +51,20 @@
 
     self.toggleShowLog = function () {
       self.showLog = !self.showLog;
+      $state.go('.', {showLog: self.showLog}, {notify: false});
       resizeGrid();
+    };
+
+    self.gotoNextLogItem = function () {
+      if (self.httpRequestsLog[self.logIndex + 1]) {
+        self.logIndex++;
+      }
+    };
+
+    self.gotoPrevLogItem = function () {
+      if (self.httpRequestsLog[self.logIndex - 1]) {
+        self.logIndex--;
+      }
     };
 
     self.toggleShowFilter = function () {
@@ -455,6 +472,7 @@
     }
 
     self.filterData = function () {
+      usSpinnerService.spin("loading-data");
       var query = _.map(self.filterQuery, function (item) {
         if (item.field) {
           return {
