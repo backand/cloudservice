@@ -552,50 +552,51 @@ hr.narrow-top-margin {
 /*                                            Quickstart docs                                        */
 /**************************************************************************************************/
 
+.ba-docs {
 
-.panel-heading {
-  padding:20px;
-  h2 {
-    margin:0;
-    font-weight:200;
-    text-transform: none;
+  .panel-heading {
+    padding: 20px;
+    h2 {
+      margin: 0;
+      font-weight: 200;
+      text-transform: none;
+    }
   }
-}
 
-.notice {
-  margin-left:-15px;
-  margin-right:-15px;
-  background:#f9eebd;
-  padding:10px;
-
-}
-.info-panel-row {
-  padding:0;
-}
-.info-panel .tab {
-  padding:10px 20px;
-  display:inline-block;
-  margin-right:5px;
-  border:1px solid #ddd;
-  border-bottom:none;
-  border-radius:5px 5px 0px 0px;
-}
-
-.info-panel {
-  .side {
-    width:50%;
-    float:left;
+  .notice {
+    margin-left: -15px;
+    margin-right: -15px;
+    background: #f9eebd;
+    padding: 10px;
 
   }
-  .current{
-    text-align:right;
-    margin-right:0;
-    width:50%;
+  .info-panel-row {
+    padding: 0;
   }
-}
+  .info-panel .tab {
+    padding: 10px 20px;
+    display: inline-block;
+    margin-right: 5px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 5px 5px 0px 0px;
+  }
 
+  .info-panel {
+    .side {
+      width: 50%;
+      float: left;
 
-.page > .panel > .panel-body {
-  margin-left:20px;
-  padding-bottom:100px;
+    }
+    .current {
+      text-align: right;
+      margin-right: 0;
+      width: 50%;
+    }
+  }
+
+  .page > .panel > .panel-body {
+    margin-left: 20px;
+    padding-bottom: 100px;
+  }
 }
