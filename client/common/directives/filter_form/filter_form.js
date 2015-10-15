@@ -25,8 +25,17 @@
 
     self.query = [{}];
 
+    self.showAddButton = function () {
+      return (self.fields && self.fields.length > 0 && (self.query.length === 0 || _.last(self.query).field));
+    };
+
     self.addRow = function () {
-      self.query.push({});
+      var predicate = {};
+      if (self.fields.length == 1) {
+        predicate.field = self.fields[0];
+        self.onFieldSelected(predicate);
+      }
+      self.query.push(predicate);
     };
 
     self.onFieldSelected = function (predicate) {

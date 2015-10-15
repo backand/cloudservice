@@ -1,17 +1,23 @@
 <div id="grid-container" class="object-data-page">
   <us-spinner spinner-key="loading-data" spinner-start-active="1"
               style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
-  <button class="btn btn-success" ng-click="ObjectData.newRow()">+ Add Row</button>
+
+  <a href="" class="btn btn-success" ng-click="ObjectData.newRow()"><i class="ti-plus"></i> Add Row</a>
+
   <button class="btn btn-default ba-icon-icon-refresh refresh-data-button" ng-click="ObjectData.refresh()"></button>
-  <button class="btn btn-info pull-right" ng-click="ObjectData.toggleShowLog()">
-    {{ ObjectData.showLog ? 'Close' : 'Show' }} Http Log
-  </button>
+
+  <a href="" class="btn btn-success btn-xs btn-wide pull-right" ng-click="ObjectData.toggleShowLog()">
+    <i class="ti-angle-left" ng-show="ObjectData.showLog"></i>
+    {{ ObjectData.showLog ? 'HIDE LOG' : 'SHOW LOG' }}
+    <i class="ti-angle-right" ng-hide="ObjectData.showLog"></i>
+  </a>
 
   <div class="row">
     <div ng-class="ObjectData.showLog ? 'col-md-8' : 'col-md-12'">
 
       <!-- Filter Data-->
-      <fieldset class="object-filter-fieldset" ng-class="{'filter-open': ObjectData.showFilter, 'filter-closed': !ObjectData.showFilter}">
+      <fieldset class="object-filter-fieldset"
+                ng-class="{'filter-open': ObjectData.showFilter, 'filter-closed': !ObjectData.showFilter}">
 
         <legend ng-click="ObjectData.toggleShowFilter()">
           <a href="">

@@ -9,6 +9,22 @@
     top: 1px;
   }
 
+  .btn {
+    &.btn-success {
+      font-weight: 600;
+
+      i {
+        font-weight: 600;
+      }
+
+      &.btn-xs.btn-wide {
+        font-size: 11px;
+        border-radius: 5px;
+        padding: 4px 8px;
+      }
+    }
+  }
+
   .object-filter-fieldset {
 
     padding: 8px;
@@ -30,7 +46,7 @@
       border-top: 1px #ddd solid;
 
       legend {
-        margin-bottom: -10px;
+        margin-bottom: 0;
       }
 
       a:after {
@@ -48,7 +64,7 @@
       font-weight: bold;
       padding: 5px;
       padding-right: 30px;
-      margin-bottom: 20px;
+      margin-bottom: 0px;
       font-size: 14px;
       line-height: inherit;
       color: #333333;

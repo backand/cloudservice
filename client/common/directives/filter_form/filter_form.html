@@ -1,6 +1,8 @@
-<form name="filterForm.form" ng-submit="filterForm.submit()" novalidate class="bknd-filter-form">
-  <button class="btn btn-success" ladda="filterForm.loadingFilterResults" data-style="expand-right">Filter</button>
-  <br/><br/>
+<form name="filterForm.form"
+      ng-submit="filterForm.submit()"
+      novalidate
+      class="bknd-filter-form"
+      ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }">
 
   <div class="form-group">
     <fieldset>
@@ -24,43 +26,50 @@
 
           <span class="ui-select">
             <select class="form-control"
+                    ng-change="filterForm.submit()"
                     ng-model="predicate.operator"
                     ng-options="operator for operator in filterForm.operators[predicate.field.type]"></select>
           </span>
-          <!--<span ng-show="filterForm.operators[predicate.field.type].length === 1">-->
-            <!--{{ filterForm.operators[predicate.field.type][0] }}-->
-          <!--</span>-->
 
           <!-- Value -->
 
-          <span ng-hide="['empty', 'notEmpty'].indexOf(predicate.operator) !== -1" ng-switch on="predicate.field.type">
-
-            <input ng-switch-when="Boolean" type="checkbox"
-                   class="form-control"
-                   name="predicate.key"
-                   ng-model="predicate.value"/>
+          <span ng-switch on="predicate.field.type">
+            <span ng-switch-when="Boolean" class="filter-form-bool">
+              <span class="input-group">
+                <span class="input-group-addon ba-icon-icon-field-type-true"></span>
+                <span class="ui-select">
+                  <select class="form-control"
+                        name="predicate.key"
+                        ng-model="predicate.value"
+                        ng-change="filterForm.submit()"
+                        ng-options="bool for bool in ['true', 'false']"></select>
+                </span>
+              </span>
+            </span>
 
             <span ng-switch-when="DateTime" class="filter-form-date">
               <span class="input-group">
                 <span class="input-group-addon ti-calendar"></span>
                 <input type="date"
                        class="editable-has-buttons editable-input form-control"
-                       ng-model="predicate.value"/>
+                       ng-model="predicate.value"
+                       ng-change="filterForm.submit()"/>
               </span>
               <span class="input-group">
                 <span class="input-group-addon ti-time"></span>
                 <input type="time"
                        class="editable-has-buttons editable-input form-control"
-                       ng-model="predicate.value"/>
+                       ng-model="predicate.value"
+                       ng-change="filterForm.submit()"/>
               </span>
             </span>
 
             <span ng-switch-when="select" class="input-group">
-              <!--<div bknd-single-select-typeahead item="predicate" field="predicate.field"></div>-->
               <span class="input-group-addon ti-text"></span>
               <input type="text"
                      class="form-control"
-                     ng-model="predicate.value"/>
+                     ng-model="predicate.value"
+                     ng-change="filterForm.submit()"/>
             </span>
 
             <span ng-switch-when="Numeric" class="input-group">
@@ -68,33 +77,30 @@
               <input type="text"
                      class="form-control"
                      name="predicate.key"
-                     ng-model="predicate.value"/>
+                     ng-model="predicate.value"
+                     ng-change="filterForm.submit()"/>
             </span>
 
             <span ng-switch-default class="input-group">
               <span class="input-group-addon ti-text"></span>
               <input type="text"
                      class="form-control"
-                     ng-model="predicate.value"/>
+                     ng-model="predicate.value"
+                     ng-change="filterForm.submit()"/>
             </span>
             </span>
 
-
-          <!-- AND -->
-
-          <!--<span ng-show="!$last">AND</span>-->
         </span>
 
-        <i ng-show="predicate.field" class="fa fa-close" ng-click="filterForm.removePredicate(predicate)"></i>
+        <i ng-show="predicate.field" class="fa fa-close close-button" ng-click="filterForm.removePredicate(predicate)"></i>
 
-        <div ng-show="$last && predicate.operator && filterForm.fields.length > 0">
-          <br/>
-          <input type="button"
-                 class="btn btn-primary btn-sm"
-                 ng-click="filterForm.addRow()" value="+ ADD CONDITION">
-          </input>
         </div>
-      </div>
+
+        <div ng-show="filterForm.showAddButton()">
+          <a href="" class="btn btn-success btn-xs btn-wide" ng-click="filterForm.addRow()">
+            <i class="ti-plus"></i> ADD CONDITION</a>
+        </div>
+
     </fieldset>
 
 
