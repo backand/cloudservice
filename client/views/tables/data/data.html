@@ -32,6 +32,7 @@
                               fields="ObjectData.filterOptions.fields"
                               operators="ObjectData.filterOptions.operators"
                               no-repeat="true"
+                              disable-value="ObjectData.disableValue"
                               on-submit="ObjectData.filterData()">
             </bknd-filter-form>
           </div>
@@ -68,11 +69,17 @@
           </select>
         </div>
         <div class="col-md-5" style="margin-top:20px;">
-          <span class="pull-right">Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}} to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize, ObjectData.paginationOptions.pageNumber, ObjectData.gridOptions.totalItems)}} of {{ObjectData.gridOptions.totalItems}} rows</span>
+          <span class="pull-right">
+            Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}}
+            to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize,
+                                    ObjectData.paginationOptions.pageNumber,
+                                    ObjectData.gridOptions.totalItems)}}
+            of {{ObjectData.gridOptions.totalItems}} rows</span>
         </div>
       </div>
     </div>
 
+    <!-- HTTP Log -->
     <div ng-show="ObjectData.showLog" class="col-md-4">
       <div class="panel panel-default log-panel" ng-if="ObjectData.httpRequestsLog.length !== 0">
         <div class="panel-heading">

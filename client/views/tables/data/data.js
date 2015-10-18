@@ -78,7 +78,7 @@
     };
 
     self.refresh = function () {
-      getData(false, true);
+      self.filterData();
     };
 
     self.gridOptions = {
@@ -471,24 +471,47 @@
       return fields;
     }
 
+    self.disableValue = function (operator) {
+      return ['empty', 'notEmpty'].indexOf(operator) > -1;
+    };
+
+    function filterValid (item) {
+      return item.field
+        && item.operator
+        && (item.value || self.disableValue(item.operator));
+    }
+
     self.filterData = function () {
+
+      if (self.filterQuery.length === 1 && _.isEmpty(self.filterQuery[0])) {
+        return getData(true, true);
+      }
+
       usSpinnerService.spin("loading-data");
+
       var query = _.map(self.filterQuery, function (item) {
-        if (item.field) {
+
+        if (filterValid(item)) {
           return {
             fieldName: item.field.name,
             operator: item.operator || 'equals',
-            value: item.value || ''
+            value: self.disableValue(item.operator) ? '' : item.value || ''
           };
         }
       });
+
+      query = _.compact(query);
+      if (_.isEmpty(query)) {
+        usSpinnerService.stop("loading-data");
+        return;
+      }
 
       return DataService.get(
         self.tableName,
         self.paginationOptions.pageSize,
         self.paginationOptions.pageNumber,
         self.sort,
-        _.compact(query),
+        query,
         true)
         .then(successDataHandler, errorHandler);
     };

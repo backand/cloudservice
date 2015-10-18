@@ -33,7 +33,9 @@
 
           <!-- Value -->
 
-          <span ng-switch on="predicate.field.type">
+          <fieldset ng-switch on="predicate.field.type"
+                    ng-disabled="filterForm.disableValue(predicate.operator)">
+
             <span ng-switch-when="Boolean" class="filter-form-bool">
               <span class="input-group">
                 <span class="input-group-addon"
@@ -89,11 +91,11 @@
                      ng-model="predicate.value"
                      ng-change="filterForm.submit()"/>
             </span>
-            </span>
+          </fieldset>
 
         </span>
 
-        <i ng-show="predicate.field" class="fa fa-close close-button" ng-click="filterForm.removePredicate(predicate)"></i>
+        <i class="fa fa-close close-button" ng-click="filterForm.removePredicate(predicate)"></i>
 
         </div>
 

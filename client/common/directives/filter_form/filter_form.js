@@ -11,6 +11,7 @@
         query: '=',
         fields: '=',
         operators: '=',
+        disableValue: '=',
         onSubmit: '&'
       },
       bindToController: true,
@@ -56,26 +57,12 @@
       if (self.noRepeat) {
         self.fields.push(predicate.field);
       }
+
+      self.submit();
     };
 
     self.submit = function () {
-      self.loadingFilterResults = true;
-      self.query.forEach(function (queryItem) {
-        if (!queryItem.field) return;
-
-        if (!queryItem.operator) {
-          var operatorsForType = self.operators[queryItem.field.type];
-          queryItem.operator =
-            operatorsForType.indexOf('equals') !== -1 ? 'equals' : operatorsForType[0];
-        }
-
-        queryItem.value = queryItem.value || '';
-      });
-
-      return self.onSubmit()
-        .finally(function () {
-          self.loadingFilterResults = false;
-      })
+      return self.onSubmit();
     }
 
   }
