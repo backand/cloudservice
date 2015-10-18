@@ -56,6 +56,9 @@
       }
       if (self.noRepeat) {
         self.fields.push(predicate.field);
+        self.fields.sort(function (a, b) {
+          return a.index - b.index;
+        });
       }
 
       self.submit();

@@ -448,8 +448,9 @@
 
     function getFieldsForFilter () {
 
-      var fields = _.map(self.columnDefs, function (field) {
+      var fields = _.map(self.columnDefs, function (field, index) {
         var fieldData = {
+          index: index,
           name: field.name,
           type: getFieldTypeForFilter(field.type),
           originalType: field.type,
