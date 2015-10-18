@@ -28,7 +28,12 @@
       reopen ? self.savingRowAndNew = true : self.savingRow = true;
       var record = {};
       self.editRowData.entities.forEach(function (entity) {
-        record[entity.key] = entity.value;
+        if (!entity.hide && !entity.disable) {
+          record[entity.key] = entity.value;
+          if (entity.type === 'checkbox' && entity.required && _.isEmpty(entity.value)) {
+            record[entity.key] = false;
+          }
+        }
       });
 
       if (self.editRowData.id) {

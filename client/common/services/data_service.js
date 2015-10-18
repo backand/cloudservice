@@ -33,8 +33,8 @@
         url: CONSTS.appUrl + '/1/objects/' + tableName,
         headers: { 'AppName': AppsService.currentApp.Name },
         params: {
-          'pageSize': String(size),
-          'pageNumber': String(page),
+          'pageSize': size,
+          'pageNumber': page,
           'filter' : typeof(filter) === 'undefined' ? '' : filter,
           'sort' : sort
         }
@@ -54,7 +54,7 @@
     self.update = function(tableName, record, id, log) {
       var http = {
         method: 'PUT',
-        url: CONSTS.appUrl + '/1/objects/' + tableName + '/' + id,
+        url: CONSTS.appUrl + '/1/objects/' + tableName + '/' + id + '?returnObject=true',
         headers: { 'AppName': AppsService.currentApp.Name },
         data: record
       };
@@ -64,7 +64,7 @@
     self.post = function(tableName, record, log) {
       var http = {
         method: 'POST',
-        url: CONSTS.appUrl + '/1/objects/' + tableName,
+        url: CONSTS.appUrl + '/1/objects/' + tableName + '?returnObject=true',
         headers: { 'AppName': AppsService.currentApp.Name },
         data: record
       };
@@ -75,8 +75,7 @@
       var http = {
         method: 'DELETE',
         url: CONSTS.appUrl + '/1/objects/' + tableName + '/' + id,
-        headers: { 'AppName': AppsService.currentApp.Name },
-        data: record
+        headers: { 'AppName': AppsService.currentApp.Name }
       };
       return logAndExecute(http, log ? 'Delete Item' : null);
     };

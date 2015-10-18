@@ -57,7 +57,10 @@
       .state('tables.columns.data', {
         url: '/data?showLog',
         templateUrl: 'views/tables/data/data.html',
-        controller: 'ObjectDataController as ObjectData'
+        controller: 'ObjectDataController as ObjectData',
+        params: {
+          showLog: true
+        }
       })
       .state('tables.columns.restapi', {
         url: '/restapi',

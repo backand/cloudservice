@@ -8,7 +8,7 @@
 
   <a class="btn btn-success btn-xs btn-wide pull-right" ng-click="ObjectData.toggleShowLog()">
     <i class="ti-angle-left" ng-show="ObjectData.showLog"></i>
-    {{ ObjectData.showLog ? 'HIDE LOG' : 'SHOW LOG' }}
+    {{ ObjectData.showLog ? 'HIDE CODE' : 'SHOW CODE' }}
     <i class="ti-angle-right" ng-hide="ObjectData.showLog"></i>
   </a>
 
@@ -62,8 +62,9 @@
         </div>
         <div class="col-md-2" style="margin-top:20px;">
           Page size:
-          <select class="ui-select" ng-model="ObjectData.paginationOptions.pageSize">
-            <option ng-repeat="size in ObjectData.paginationOptions.pageSizes">{{size}}</option>
+          <select class="ui-select"
+                  ng-model="ObjectData.paginationOptions.pageSize"
+                  ng-options="size for size in ObjectData.paginationOptions.pageSizes">
           </select>
         </div>
         <div class="col-md-5" style="margin-top:20px;">
@@ -97,20 +98,20 @@
 
         <div class="panel-body">
           <div class="object-data-log-container">
-
-            <!--<div ng-repeat="httpRequest in ObjectData.httpRequestsLog | orderBy:id:reverse track by $index">-->
             <div>
               <label for="log-item-url">Endpoint</label>
-              <bknd-copy-box id="log-item-url" content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestUrl"></bknd-copy-box>
-              <label for="log-item-request">Request JSON</label>
-              <bknd-copy-box id="log-item-request" type="textarea" content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestJson"></bknd-copy-box>
+              <bknd-copy-box id="log-item-url"
+                             content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestUrl"></bknd-copy-box>
+
+              <label for="log-item-request">Request Angular $HTTP code</label>
+              <bknd-copy-box id="log-item-request"
+                             type="textarea"
+                             content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestJson"></bknd-copy-box>
+
               <label for="log-item-response">Response JSON</label>
-              <textarea id="log-item-response"
-                        ng-show="ObjectData.httpRequestsLog[ObjectData.logIndex.last].response"
-                        class="request-url object-data-log-response"
-                        disabled>
-                {{ ObjectData.httpRequestsLog[ObjectData.logIndex.last].response }}
-              </textarea>
+              <bknd-copy-box id="log-item-response"
+                             type="textarea"
+                             content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].response"></bknd-copy-box>
             </div>
           </div>
         </div>

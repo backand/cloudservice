@@ -48,7 +48,7 @@
       }
       return _get(tableName)
         .then(function (result) {
-          self.tables.tableName = result.data;
+          self.tables.tableName = result;
           return result;
         });
     };
