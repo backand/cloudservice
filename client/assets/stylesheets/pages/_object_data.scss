@@ -101,7 +101,16 @@
     .log-navigation-buttons {
       position: absolute;
       right: 24px;
-      top: 27px
+      top: 27px;
+
+      button {
+        outline: none;
+
+        &:focus {
+          background-color: #fff;
+          border-color: #ccc;
+        }
+      }
     }
 
     input, textarea {
