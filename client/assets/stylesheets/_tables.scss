@@ -1,4 +1,4 @@
-.tabs .tab-content {
+tabs .tab-content {
   display: none;
 }
 
@@ -33,9 +33,9 @@
   z-index: 10;
 }
 
-.editable-input {
-  padding: 6px 6px !important;
-  border-radius: 3px !important;
+.ui-grid-cell-contents .editable-input {
+  padding: 6px 6px;
+  border-radius: 3px;
 }
 
 .ui-grid-viewport {
@@ -83,6 +83,10 @@
   }
 }
 
+.typeahead-select-row {
+  cursor: pointer;
+}
+
 .tooltip.select-row-tooltip .tooltip-inner {
   background-color: rgb(243, 243, 243);
   color: black;
@@ -97,5 +101,14 @@
   &:hover {
     background: white;
     cursor: pointer
+  }
+}
+
+.object-data-log-container {
+  height: 600px;
+  overflow: auto;
+
+  .object-data-log-response {
+    resize: vertical;
   }
 }

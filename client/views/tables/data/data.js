@@ -12,6 +12,7 @@
       'tableName',
       'ConfirmationPopup',
       '$filter',
+      '$state',
       ObjectDataController
     ]);
 
@@ -24,7 +25,8 @@
     usSpinnerService,
     tableName,
     ConfirmationPopup,
-    $filter
+    $filter,
+    $state
   ) {
 
     var self = this;
@@ -33,6 +35,9 @@
     self.title = '';
     self.sort = '';
     self.refreshOnce = false;
+    self.httpRequestsLog = DataService.log = [];
+    self.showLog = $state.params.showLog === 'false' ? false : $state.params.showLog;
+    self.logIndex = DataService.logIndex;
 
     this.paginationOptions = {
       pageNumber: 1,
@@ -41,20 +46,39 @@
     };
 
     (function init() {
-      getData(true);
+      getData(true, true);
     }());
 
+    self.toggleShowLog = function () {
+      self.showLog = !self.showLog;
+      $state.go('.', {showLog: self.showLog}, {notify: false});
+      resizeGrid();
+    };
+
+    self.gotoNextLogItem = function () {
+      if (self.httpRequestsLog[self.logIndex.last + 1]) {
+        self.logIndex.last++;
+      }
+    };
+
+    self.gotoPrevLogItem = function () {
+      if (self.httpRequestsLog[self.logIndex.last - 1]) {
+        self.logIndex.last--;
+      }
+    };
+
     self.toggleShowFilter = function () {
-      self.showFilter = !self.showFilter;
-      setTimeout("$('#grid-container').trigger('resize');", 1);
+      if (self.filterReady) {
+        self.showFilter = !self.showFilter;
+      }
     };
 
     self.createData = function (data) {
-      DataService.post(tableName, data);
+      DataService.post(tableName, data, true);
     };
 
     self.refresh = function () {
-      getData();
+      self.filterData();
     };
 
     self.gridOptions = {
@@ -67,11 +91,8 @@
         //declare the events
 
         $scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
-          if (sortColumns[0])
-            self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
-          else
-            self.sort = '';
-          getData();
+          self.sort = sortColumns[0] ? '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]' : '';
+          getData(false, true);
         });
       }
     };
@@ -82,21 +103,24 @@
       , getPageData);
 
     function getPageData(newVal, oldVal) {
-      if (newVal !== oldVal)
-        getData();
+      if (newVal !== oldVal) {
+        getData(false, true);
+      }
     }
 
-    function getData(force) {
+    function getData(force, log) {
       usSpinnerService.spin("loading-data");
 
       ColumnsService.get(force)
         .then(successColumnsHandler, errorHandler)
-        .then(loadData)
+        .then(function () {
+          return loadData(log);
+        })
         .then(successDataHandler, errorHandler);
     }
 
-    function loadData() {
-      return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort);
+    function loadData(log) {
+      return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, null, log);
     }
 
     function successColumnsHandler (data) {
@@ -166,7 +190,7 @@
 
     function refreshGridDisplay() {
       if (!self.refreshOnce) {
-        setTimeout("$('#grid-container').trigger('resize');", 1); //resize the tab to fix the width issue with UI grid
+        resizeGrid();
         self.refreshOnce = true;
       }
     }
@@ -191,10 +215,10 @@
         return undefined;
 
       if (type == 'dateTime')
-        return '<div class="ui-grid-cell-contents"><span editable-date="MODEL_COL_FIELD" '
+        return '<div class="ui-grid-cell-contents"><span editable-date="MODEL_COL_FIELD" class="editable-grid-cell" '
           + callbackOptions
           + '>{{COL_FIELD | date:"MM/dd/yyyy" CUSTOM_FILTERS }}</span> '
-          + '<span editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" '
+          + '<span editable-bstime="MODEL_COL_FIELD" e-show-meridian="false" class="editable-grid-cell" '
           + callbackOptions
           + '>{{COL_FIELD | date:"HH:mm:ss" CUSTOM_FILTERS }}</span></div>';
 
@@ -223,24 +247,6 @@
         + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
     }
 
-    self.getSingleSelectLabel = function (row, item) {
-      if (typeof row !== 'object')
-        return row;
-
-      var descriptive = self.relatedViews[item.field].descriptiveColumn;
-      var descriptiveLabel = row.__metadata.id + ': ' +  row[descriptive];
-
-      var fields=[];
-
-      _.forEach(row, function (value, key) {
-        if (key !== '__metadata' && key !== descriptive && !_.isEmpty(value)) {
-          fields.push({key: key, value: value});
-        }
-      });
-
-      return {descriptiveLabel: descriptiveLabel, fields: fields};
-    };
-
     self.getSingleAutocomplete = function (item, query) {
       return DataService.search(self.relatedViews[item.field].object, query)
         .then(function(result) {
@@ -261,9 +267,11 @@
     self.onUpdateRowCell = function(row, col, newValue) {
       var updatedObject = {};
       updatedObject[col.name] = newValue;
-      var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id);
+      var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id, true);
       updatePromise
-        .then(loadData)
+        .then(function () {
+          return loadData()
+        })
         .then(successDataHandler);
       return updatePromise;
     };
@@ -303,6 +311,7 @@
     function getFieldTypeForFilter(type) {
       switch (type) {
         case 'MultiSelect':
+          return null;
         case 'SingleSelect':
           return 'select'; // Search of Multi-Select keys doesn't work currently
         case 'ShortText':
@@ -321,6 +330,7 @@
     };
 
     self.editRow = function (event, rowItem) {
+      DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true);
       getEditRowEntity(rowItem);
       openModal();
     };
@@ -412,8 +422,10 @@
           if (!result)
             return;
           usSpinnerService.spin("loading-data");
-          DataService.delete(self.tableName, rowItem.entity, rowItem.entity.__metadata.id)
-            .then(loadData)
+          DataService.delete(self.tableName, rowItem.entity, rowItem.entity.__metadata.id, true)
+            .then(function () {
+              return loadData()
+            })
             .then(successDataHandler);
         });
     };
@@ -436,28 +448,78 @@
 
     function getFieldsForFilter () {
 
-      return _.map(self.columnDefs, function (field) {
-        return {
+      var fields = _.map(self.columnDefs, function (field, index) {
+        var fieldData = {
+          index: index,
           name: field.name,
           type: getFieldTypeForFilter(field.type),
-          originalType: field.type
+          originalType: field.type,
         };
+
+        if (field.type === 'SingleSelect' && !_.isEmpty(field.relatedViewName)) {
+          ColumnsService.getColumns(field.relatedViewName)
+            .then(function (response) {
+              fieldData.relatedView = {
+                object: field.relatedViewName,
+                descriptiveColumn: response.data.columnDisplayinTitle
+              };
+            })
+        }
+        return fieldData;
       });
+
+      _.remove(fields, {type: null});
+      return fields;
+    }
+
+    self.disableValue = function (operator) {
+      return ['empty', 'notEmpty'].indexOf(operator) > -1;
+    };
+
+    function filterValid (item) {
+      return item.field
+        && item.operator
+        && (item.value || self.disableValue(item.operator));
     }
 
     self.filterData = function () {
 
+      if (self.filterQuery.length === 1 && _.isEmpty(self.filterQuery[0])) {
+        return getData(true, true);
+      }
+
+      usSpinnerService.spin("loading-data");
+
       var query = _.map(self.filterQuery, function (item) {
-        if (item.field && item.operator && item.value)
-        return {
-          fieldName: item.field.name,
-          operator: item.operator,
-          value: item.value
-        };
+
+        if (filterValid(item)) {
+          return {
+            fieldName: item.field.name,
+            operator: item.operator || 'equals',
+            value: self.disableValue(item.operator) ? '' : item.value || ''
+          };
+        }
       });
 
-      DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, _.compact(query))
+      query = _.compact(query);
+      if (_.isEmpty(query)) {
+        usSpinnerService.stop("loading-data");
+        return;
+      }
+
+      return DataService.get(
+        self.tableName,
+        self.paginationOptions.pageSize,
+        self.paginationOptions.pageNumber,
+        self.sort,
+        query,
+        true)
         .then(successDataHandler, errorHandler);
+    };
+
+    //resize the tab to fix the width issue with UI grid
+    function resizeGrid () {
+      setTimeout("$('#grid-container').trigger('resize');", 50);
     }
   }
 }());

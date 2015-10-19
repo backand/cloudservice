@@ -1,0 +1,17 @@
+<div class="input-group">
+  <span ng-hide="loadingSingleSelect"
+      class="input-group-addon ti-search"></span>
+<span ng-show="loadingSingleSelect"
+      class="input-group-addon"
+      us-spinner="{lines: 9, radius:4, width:3, length: 2, position: 'relative'}"
+      style="padding: 6px 18px 6px 19px;"></span>
+<input type="text"
+       id="singleSelect.inputId"
+       ng-model="singleSelect.item.value"
+       typeahead="row.__metadata.id as singleSelect.getSingleSelectLabel(row, singleSelect.item) for row in singleSelect.getSingleAutocomplete($viewValue)"
+       typeahead-template-url="views/tables/data/select_row_template.html"
+       typeahead-editable="false"
+       typeahead-loading="loadingSingleSelect"
+       class="form-control"
+       ng-disabled="singleSelect.item.disable">
+</div>

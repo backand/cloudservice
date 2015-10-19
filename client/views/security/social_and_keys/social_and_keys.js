@@ -21,13 +21,15 @@
       {
         name: 'general',
         label: 'Master',
-        description: 'Use this token to access without username and password. The master token must sent with the user\'s token'
+        description: 'Use this token to access without username and password. The master token must sent with the user\'s token',
+        helpKey: "socialAndKeysMasterToken"
       },
       {
         name: 'signup',
         label: 'API Sign-up',
         description: 'Use this token when registering a user via the sign-up REST API URL - ' +
-        '/user/signup (put it in headers parameter SignUpToken)'
+        '/user/signup (put it in headers parameter SignUpToken)',
+        helpKey: "socialAndKeysAPISignupToken"
       }
     ];
 

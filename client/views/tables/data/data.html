@@ -1,54 +1,130 @@
-<div id="grid-container">
-  <us-spinner spinner-key="loading-data" spinner-start-active="1" style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
-  <button class="btn btn-success" ng-click="ObjectData.newRow()">+ New Row</button>
-  <button class="btn btn-info" ng-click="ObjectData.toggleShowFilter()" ng-disabled="!ObjectData.filterReady">
-    {{ ObjectData.showFilter ? 'Close Filter' : 'Filter Data' }}</button>
-  <button class="btn btn-default pull-right" ng-click="ObjectData.refresh()">Refresh Data</button>
-  <br/><br/>
-  <div class="row">
-    <div ng-class="ObjectData.showFilter ? 'col-md-8' : 'col-md-12'">
-    <div ui-grid="ObjectData.gridOptions"
-         class="datagrid" ui-grid-resize-columns
-         external-scopes="$scope"
-         ng-show="ObjectData.gridOptions.totalItems > 0">
-    </div>
-    <div ng-show="ObjectData.gridOptions.totalItems == 0">
-      <h3>No items found</h3>
-    </div>
-    <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">
-      <div class="col-md-5">
-        <pagination total-items="ObjectData.gridOptions.totalItems"
-                    ng-model="ObjectData.paginationOptions.pageNumber"
-                    max-size="5"
-                    class="pagination-sm"
-                    boundary-links="true"
-                    rotate="false"
-                    items-per-page="ObjectData.paginationOptions.pageSize"
-                    previous-text="&lsaquo;"
-                    next-text="&rsaquo;"></pagination>
-      </div>
-      <div class="col-md-2" style="margin-top:20px;">
-        Page size:
-        <select class="ui-select" ng-model="ObjectData.paginationOptions.pageSize" >
-          <option ng-repeat="size in ObjectData.paginationOptions.pageSizes">{{size}}</option>
-        </select>
-      </div>
-      <div class="col-md-5" style="margin-top:20px;">
-        <span class="pull-right">Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}} to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize, ObjectData.paginationOptions.pageNumber, ObjectData.gridOptions.totalItems)}} of {{ObjectData.gridOptions.totalItems}} rows</span>
-      </div>
-    </div>
-  </div>
-  <div ng-show="ObjectData.showFilter" class="col-md-4">
+<div id="grid-container" class="object-data-page">
+  <us-spinner spinner-key="loading-data" spinner-start-active="1"
+              style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
 
-    <div class="object-data-filter-container">
-      <button class="btn btn-success" ng-click="ObjectData.filterData()">Filter</button>
-      <br/><br/>
-      <bknd-filter-form query="ObjectData.filterQuery"
-                        fields="ObjectData.filterOptions.fields"
-                        operators="ObjectData.filterOptions.operators"
-                        no-repeat="true">
-      </bknd-filter-form>
+  <a href="" class="btn btn-success" ng-click="ObjectData.newRow()"><i class="ti-plus"></i> Add Row</a>
+
+  <button class="btn btn-default ba-icon-icon-refresh refresh-data-button" ng-click="ObjectData.refresh()"></button>
+
+  <a class="btn btn-success btn-xs btn-wide pull-right" ng-click="ObjectData.toggleShowLog()">
+    <i class="ti-angle-left" ng-show="ObjectData.showLog"></i>
+    {{ ObjectData.showLog ? 'HIDE CODE' : 'SHOW CODE' }}
+    <i class="ti-angle-right" ng-hide="ObjectData.showLog"></i>
+  </a>
+
+  <div class="row">
+    <div ng-class="ObjectData.showLog ? 'col-md-8' : 'col-md-12'">
+
+      <!-- Filter Data-->
+      <fieldset class="object-filter-fieldset"
+                ng-class="{'filter-open': ObjectData.showFilter, 'filter-closed': !ObjectData.showFilter}">
+
+        <legend ng-click="ObjectData.toggleShowFilter()">
+          <a href="">
+            Filter Data</a>
+        </legend>
+
+        <div ng-show="ObjectData.showFilter">
+
+          <div class="object-data-filter-container">
+
+            <bknd-filter-form query="ObjectData.filterQuery"
+                              fields="ObjectData.filterOptions.fields"
+                              operators="ObjectData.filterOptions.operators"
+                              no-repeat="true"
+                              disable-value="ObjectData.disableValue"
+                              on-submit="ObjectData.filterData()">
+            </bknd-filter-form>
+          </div>
+
+        </div>
+      </fieldset>
+
+      <!-- Data Grid -->
+      <div ui-grid="ObjectData.gridOptions"
+           class="datagrid" ui-grid-resize-columns
+           external-scopes="$scope"
+           ng-show="ObjectData.gridOptions.totalItems > 0">
+      </div>
+      <div ng-show="ObjectData.gridOptions.totalItems == 0">
+        <h3>No items found</h3>
+      </div>
+      <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">
+        <div class="col-md-5">
+          <pagination total-items="ObjectData.gridOptions.totalItems"
+                      ng-model="ObjectData.paginationOptions.pageNumber"
+                      max-size="5"
+                      class="pagination-sm"
+                      boundary-links="true"
+                      rotate="false"
+                      items-per-page="ObjectData.paginationOptions.pageSize"
+                      previous-text="&lsaquo;"
+                      next-text="&rsaquo;"></pagination>
+        </div>
+        <div class="col-md-2" style="margin-top:20px;">
+          Page size:
+          <select class="ui-select"
+                  ng-model="ObjectData.paginationOptions.pageSize"
+                  ng-options="size for size in ObjectData.paginationOptions.pageSizes">
+          </select>
+        </div>
+        <div class="col-md-5" style="margin-top:20px;">
+          <span class="pull-right">
+            Showing {{ObjectData.paginationOptions.pageSize * (ObjectData.paginationOptions.pageNumber-1) +1}}
+            to {{ObjectData.pageMax(ObjectData.paginationOptions.pageSize,
+                                    ObjectData.paginationOptions.pageNumber,
+                                    ObjectData.gridOptions.totalItems)}}
+            of {{ObjectData.gridOptions.totalItems}} rows</span>
+        </div>
       </div>
     </div>
+
+    <!-- HTTP Log -->
+    <div ng-show="ObjectData.showLog" class="col-md-4">
+      <div class="panel panel-default log-panel" ng-if="ObjectData.httpRequestsLog.length !== 0">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestTitle}},
+            {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestMethod}}</h3>
+
+          <div class="log-navigation-buttons">
+
+            <button class="btn btn-xs btn-default"
+                    ng-disabled="!ObjectData.httpRequestsLog[ObjectData.logIndex.last - 1]"
+                    ng-click="ObjectData.gotoPrevLogItem()">
+              <i class="ti-angle-left"></i>
+            </button>
+
+            <button class="btn btn-xs btn-default"
+                    ng-disabled="!ObjectData.httpRequestsLog[ObjectData.logIndex.last + 1]"
+                    ng-click="ObjectData.gotoNextLogItem()">
+              <i class="ti-angle-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <div class="object-data-log-container">
+            <div>
+              <label for="log-item-url">Endpoint</label>
+              <bknd-copy-box id="log-item-url"
+                             content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestUrl"></bknd-copy-box>
+
+              <label for="log-item-request">Request Angular $HTTP code</label>
+              <bknd-copy-box id="log-item-request"
+                             type="textarea"
+                             content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestJson"></bknd-copy-box>
+
+              <label for="log-item-response">Response JSON</label>
+              <bknd-copy-box id="log-item-response"
+                             type="textarea"
+                             content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].response"></bknd-copy-box>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 </div>

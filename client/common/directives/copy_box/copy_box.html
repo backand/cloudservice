@@ -1,0 +1,28 @@
+<div>
+  <span ng-switch on="copy.type">
+
+    <textarea ng-switch-when="textarea"
+              rows="7"
+              class="request-url"
+              ng-readonly="true"
+              ng-bind="copy.getContent()"
+              style="resize: vertical">
+    </textarea>
+
+    <input ng-switch-default
+           type="text"
+           class="request-url"
+           ng-readonly="true"
+           ng-value="copy.getContent()">
+  </span>
+
+  <button clip-copy="copy.contentToCopy"
+          clip-click="copy.setContentCopied()"
+          no-propogate
+          class="btn btn-xs bknd-copy-button"
+          ng-class="{ 'btn-success' : copy.isContentCopied(), 'btn-primary' : copy.contentToCopy && !copy.deny()}"
+          ng-disabled="!copy.contentToCopy || copy.deny()"
+          tooltip="copy to clipboard">
+    <span class="ti-clipboard"></span>
+  </button>
+</div>

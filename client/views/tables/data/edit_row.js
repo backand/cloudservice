@@ -6,7 +6,6 @@
       'tableName',
       'editRowData',
       'DataService',
-      'ObjectsService',
       '$filter',
       EditRowController
     ]);
@@ -15,7 +14,6 @@
                              tableName,
                              editRowData,
                              DataService,
-                             ObjectsService,
                              $filter) {
     var self = this;
 
@@ -30,11 +28,16 @@
       reopen ? self.savingRowAndNew = true : self.savingRow = true;
       var record = {};
       self.editRowData.entities.forEach(function (entity) {
-        record[entity.key] = entity.value;
+        if (!entity.hide && !entity.disable) {
+          record[entity.key] = entity.value;
+          if (entity.type === 'checkbox' && entity.required && _.isEmpty(entity.value)) {
+            record[entity.key] = false;
+          }
+        }
       });
 
       if (self.editRowData.id) {
-        DataService.update(self.tableName, record, self.editRowData.id)
+        DataService.update(self.tableName, record, self.editRowData.id, true)
           .then(modalInstance.close)
           .finally(function () {
             self.savingRow = false;
@@ -42,7 +45,7 @@
           });
       }
       else {
-        DataService.post(self.tableName, record)
+        DataService.post(self.tableName, record, true)
           .then(function () {
             modalInstance.close({reopen: reopen})
           })
@@ -59,43 +62,6 @@
 
     self.cancelEditRow = function () {
       modalInstance.dismiss('cancel');
-    };
-
-    self.getSingleSelectLabel = function (row, item) {
-      if (typeof row !== 'object')
-        return row;
-
-      var descriptive = item.relatedView.descriptiveColumn;
-      var descriptiveLabel = row.__metadata.id + ': ' +  row[descriptive];
-
-      var fields=[];
-
-      _.forEach(row, function (value, key) {
-        if (key !== '__metadata' && key !== descriptive && !_.isEmpty(value)) {
-          fields.push({key: key, value: value});
-        }
-      });
-
-      return {descriptiveLabel: descriptiveLabel, fields: fields};
-    };
-
-    self.getSingleAutocomplete = function (item, query) {
-      var results;
-      return DataService.search(item.relatedView.object, query)
-        .then(function(result) {
-          results = $filter('orderBy')(result.data.data, '__matadata.id');
-          return results;
-        })
-        .then(function () {
-          return ObjectsService.getObject(item.relatedView.object, query, true);
-        })
-        .then(function (object) {
-          _.remove(results, {__metadata: {id : object.data.__metadata.id}});
-          results.unshift(object.data);
-          return results;
-        }, function () {
-          return results
-        });
     };
 
     self.getAutocomplete = function (columnName, query) {
