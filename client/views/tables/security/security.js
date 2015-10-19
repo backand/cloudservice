@@ -68,6 +68,14 @@
       self.insertAtChar= insertTokenAtChar;
     }());
 
+    self.ace = {
+      editors: {},
+      onLoad: function (_editor) {
+        self.ace.editors[_editor.container.id] = _editor;
+        _editor.$blockScrolling = Infinity;
+      }
+    };
+
     function getItemByRegex (object, regex) {
       return _.find(object, function(item) {
         return regex.test(item.name);
@@ -87,13 +95,17 @@
     }
 
     self.getFilterCode = function () {
-      return SecurityService.getFilterCode(self.currentObjectName, self.filter.userObjectName, self.filter.emailField)
+      return SecurityService.getFilterCode(self.currentObjectName, self.filter)
         .then(function (response) {
-          self.filter.result = response.data.where;
+          self.filter.result = {
+            sql: response.data.sql,
+            noSql: response.data.nosql
+          };
           return openValidationModal(response)
         })
         .then(function (result) {
           if (result) {
+            self.filter.result.noSql = angular.toJson(angular.fromJson(self.filter.result.noSql).q, true);
             updateFilter(self.filter.result)
           }
         })
@@ -137,7 +149,11 @@
     }
 
     function updateAndSaveFilter (filter) {
-      self.view.dataEditing.permanentFilter = filter;
+      console.log(filter)
+      self.view.dataEditing.permanentFilter = filter.sql;
+      if (filter.noSql) {
+        self.view.dataEditing.nosqlPermanentFilter = filter.noSql;
+      }
       return self.savePermanentFilter();
     }
 
@@ -170,18 +186,15 @@
       }
 
       return SecurityService.transformNoSQL({
-        json: {
-          object: self.currentObjectName,
-          isFilter: true,
-          q: q
-        }
+        object: self.currentObjectName,
+        q: q
       }).then(function (response) {
           self.filter.result = response.data.sql;
           return openValidationModal(response)
         })
         .then(function (result) {
           if (result) {
-            updateFilter(self.filter.result)
+            updateFilter({sql: self.filter.result})
           }
         })
     };

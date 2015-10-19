@@ -148,13 +148,13 @@
       })
     };
 
-    self.getFilterCode = function (objectToUpdate, usersObject, emailField) {
+    self.getFilterCode = function (objectToUpdate, filter) {
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/table/predefined/' + objectToUpdate,
+        url: CONSTS.appUrl + '/1/table/predefined/' + objectToUpdate + (filter.dontShowToAdmin ? '?showAllForAdmin=false' : ''),
         params: {
-          usersObjectName: usersObject,
-          emailFieldName: emailField,
+          usersObjectName: filter.userObjectName,
+          emailFieldName: filter.emailField,
           maxLevel: 3
         },
         headers: { AppName: self.appName }
@@ -164,8 +164,11 @@
     self.transformNoSQL = function (json) {
       return $http({
         method: 'POST',
-        url: CONSTS.appUrl + '/1/nosql/transform',
-        data: json,
+        url: CONSTS.appUrl + '/1/nosql/transform?whereOnly=true',
+        data: {
+          json: json,
+          isFilter: true
+        },
         headers: { AppName: self.appName }
       });
     };

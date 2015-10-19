@@ -1,0 +1,26 @@
+.security-filter {
+
+  .security-filter-ace-row {
+    display: flex;
+
+    .ace-to-edit {
+      width: 60%;
+    }
+
+    .ace-to-view {
+      width: 40%;
+    }
+
+    .panel-left {
+      border-right: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .panel-right {
+      border-left: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}

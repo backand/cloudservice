@@ -1,142 +1,155 @@
-<div>
+<div class="row security-header security-filter">
+  <div class="col-lg-12 form-group">
+    <label class="strong" for="PermanentFilter">Pre-defined Filter</label>
 
-    <div class="row security-header">
-        <div class="col-lg-12 form-group">
-            <label class="strong" for="PermanentFilter">Pre-defined Filter</label>
-
-      <form name="filterCodeForm" class="form-inline" ng-submit="security.getFilterCode()" novalidate>
-        Filter <b>{{ security.currentObjectName }}</b> for current user session based on
-        <div class="form-group">
-          <label class="sr-only" for="user-object">User Object</label>
-          <select id="user-object"
-                  class="ui-select"
-                  ng-model="security.filter.userObjectName"
-                  ng-options="object.name as object.name for object in security.appObjects"
-                  ng-change="security.getUserObjectFields()"
-                  required
-                  style="min-width: 130px; vertical-align: text-bottom;"></select>
-        </div>
-        object by
-        <div class="form-group">
-          <label class="sr-only" for="email-field">Email</label>
-          <select id="email-field"
-                  class="ui-select"
-                  ng-model="security.filter.emailField"
-                  ng-options="field.name as field.name for field in security.filter.userObjectFields"
-                  required
-                  style="min-width: 130px; vertical-align: text-bottom;"></select>
-        </div>
-        field and
-        <div class="form-group">
-          <select id="show-to-admin"
-                  class="ui-select"
-                  ng-model="security.filter.showToAdmin"
-                  style="min-width: 130px; vertical-align: text-bottom;">
-            <option value="" selected>always show</option>
-            <option value="dontShow">don't show</option>
-          </select>
-        </div>
-        items to admin.
-
-        <button class="btn btn-success pull-right" ng-disabled="filterCodeForm.$invalid">Get Code</button>
-      </form>
-
-      <br/>
-
-      <div class="pull-right">
-        <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="security.toggleOptions()"></span>
+    <form name="filterCodeForm" class="form-inline" ng-submit="security.getFilterCode()" novalidate>
+      Filter <b>{{ security.currentObjectName }}</b> for current user session based on
+      <div class="form-group">
+        <label class="sr-only" for="user-object">User Object</label>
+        <select id="user-object"
+                class="ui-select"
+                ng-model="security.filter.userObjectName"
+                ng-options="object.name as object.name for object in security.appObjects"
+                ng-change="security.getUserObjectFields()"
+                required
+                style="min-width: 130px; vertical-align: text-bottom;"></select>
       </div>
-      <div ng-cloak>
-        <angled-window ng-show="security.dictionaryState"
-                       id="{{winId}}"
-                       title="App Tokens"
-                       grouping="w"
-                       close-function="security.toggleOptions()"
-                       style="left: 550px; top: -50px; height:400px;">
-          <div ng-include="'views/tables/security/pre_defined_window.html'"></div>
-        </angled-window>
+      object by
+      <div class="form-group">
+        <label class="sr-only" for="email-field">Email</label>
+        <select id="email-field"
+                class="ui-select"
+                ng-model="security.filter.emailField"
+                ng-options="field.name as field.name for field in security.filter.userObjectFields"
+                required
+                style="min-width: 130px; vertical-align: text-bottom;"></select>
       </div>
-
-      <div ng-show="security.predefinedFilterType === 'NoSQL'" class="pull-right">
-        <button class="btn btn-info" ng-click="security.transformNoSQL()">Validate</button>
+      field and
+      <div class="form-group">
+        <select id="show-to-admin"
+                class="ui-select"
+                ng-model="security.filter.dontShowToAdmin"
+                style="min-width: 130px; vertical-align: text-bottom;">
+          <option value="" selected>always show</option>
+          <option value="dontShow">don't show</option>
+        </select>
       </div>
+      items to admin.
 
-      <label for="radio-no-sql" class="ui-radio">
-        <input id="radio-no-sql"
-               type="radio"
-               ng-model="security.predefinedFilterType"
-               value="NoSQL">
-        <span>NoSQL</span>
-      </label>
+      <button class="btn btn-success pull-right" ng-disabled="filterCodeForm.$invalid">Get Code</button>
+    </form>
 
-      <label for="radio-sql" class="ui-radio">
-        <input id="radio-sql"
-               type="radio"
-               ng-model="security.predefinedFilterType"
-               value="SQL"
-               ng-change="security.changeToSql()">
-        <span>SQL</span>
-      </label>
+    <br/>
 
-      <label>
-        <a ng-show="security.predefinedFilterType === 'NoSQL'" href="" ng-click="showSQL = !showSQL">
-          {{ showSQL ? 'hide' : 'show' }} SQL
-        </a>
-      </label>
-
-      <p ng-show="security.filterError" class="text-danger">Error: {{ security.filterError }}</p>
-
-      <textarea ng-show="security.predefinedFilterType === 'NoSQL'"
-                id="NoSQL"
-                ng-model="security.view.dataEditing.nosqlPermanentFilter"
-                name="nosqlPermanentFilter"
-                class="form-control no-show-hide-animation"
-                placeholder="{{security.placeHolderNoSql}}"
-                insert-at-caret></textarea>
-
-      <textarea ng-show="security.predefinedFilterType === 'SQL' || showSQL"
-                id="SQL"
-                ng-model="security.view.dataEditing.permanentFilter"
-                name="PermanentFilter"
-                class="form-control no-show-hide-animation"
-                ng-blur="security.savePermanentFilter()"
-                placeholder="{{security.placeHolderSql}}"
-                ng-disabled="security.predefinedFilterType === 'NoSQL'"
-                insert-at-caret></textarea>
-            <div class="field-description">
-                The pre-defined filter can be used to add additional restrictions to load data associated with the user
-                session
-                <ba-help-link key="preDefinedFilter"></ba-help-link>
-            </div>
-        </div>
+    <div class="pull-right">
+      <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="security.toggleOptions()"></span>
+    </div>
+    <div ng-cloak>
+      <angled-window ng-show="security.dictionaryState"
+                     id="{{winId}}"
+                     title="App Tokens"
+                     grouping="w"
+                     close-function="security.toggleOptions()"
+                     style="left: 550px; top: -50px; height:400px;">
+        <div ng-include="'views/tables/security/pre_defined_window.html'"></div>
+      </angled-window>
     </div>
 
-    <div class="row security-header">
-        <div class="col-lg-12">
-            <label class="strong" >Security Template</label>
-            <select class="form-control"
-                    ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
-                    ng-model="security.currentST"
-                    ng-disabled="security.view.permissions.overrideinheritable">
-            </select>
-            <div class="field-description">
-                The current security template of the object. By override it you define a specific settings to this object
-                <ba-help-link key="objectSecurityTemplate"></ba-help-link>
-            </div>
+    <label for="radio-no-sql" class="ui-radio">
+      <input id="radio-no-sql"
+             type="radio"
+             ng-model="security.predefinedFilterType"
+             value="NoSQL">
+      <span>NoSQL</span>
+    </label>
+
+    <label for="radio-sql" class="ui-radio">
+      <input id="radio-sql"
+             type="radio"
+             ng-model="security.predefinedFilterType"
+             value="SQL"
+             ng-change="security.changeToSql()">
+      <span>SQL</span>
+    </label>
+
+    <label>
+      <a ng-show="security.predefinedFilterType === 'NoSQL'" href="" ng-click="showSQL = !showSQL">
+        {{ showSQL ? 'hide' : 'show' }} SQL
+      </a>
+    </label>
+
+    <p ng-show="security.filterError" class="text-danger">Error: {{ security.filterError }}</p>
+
+    <div class="security-filter-ace-row">
+
+      <div class="panel panel-success panel-left"
+           ng-class="security.predefinedFilterType  === 'NoSQL' ? 'ace-to-edit' : 'ace-to-view'">
+        <div class="panel-heading">
+          <h3 class="panel-title">NoSQL</h3>
         </div>
-        <div class="col-lg-12" style="padding-top: 20px;">
-            <div class="strong"><label> Override the Security Template</label>
-                <label class="ui-switch ui-switch-success ui-switch-sm pull-right" for="override-checkbox">
-                    <input id="override-checkbox" type="checkbox" ng-model="security.view.permissions.overrideinheritable"/><i></i>
-                </label>
-            </div>
-            <security-matrix security-template="security.sTemplate"
-                             override="security.view.permissions.overrideinheritable"
-                             on-update="security.templateChanged(template)"
-                             on-role-add="security.templateRoleAdd(role)"
-                             on-role-rename="security.templateRoleRename(role, newRole)"
-                             on-role-remove="security.templateRoleRemove(role)">
-            </security-matrix>
+        <div class="">
+          <div
+            ui-ace="{onLoad : security.ace.onLoad, theme:'monokai', mode: 'json', rendererOptions: { fontSize: 15 }}"
+            class=""
+            id="nosql" ng-model="security.view.dataEditing.nosqlPermanentFilter"
+            rows="10"
+            ng-readonly="security.predefinedFilterType !== 'NoSQL'">
+          </div>
         </div>
+      </div>
+
+      <div class="panel panel-success panel-right"
+           ng-class="security.predefinedFilterType  === 'SQL' ? 'ace-to-edit' : 'ace-to-view'">
+        <div class="panel-heading">
+          <h3 class="panel-title">SQL</h3>
+        </div>
+        <div class="">
+          <div
+            ui-ace="{onLoad : security.ace.onLoad, theme:'dawn', mode: 'sql', rendererOptions: { fontSize: 15 }}"
+            class=""
+            id="sql" ng-model="security.view.dataEditing.permanentFilter"
+            rows="10"
+            ng-readonly="security.predefinedFilterType !== 'SQL'">
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="field-description">
+      The pre-defined filter can be used to add additional restrictions to load data associated with the user
+      session
+      <ba-help-link key="preDefinedFilter"></ba-help-link>
+    </div>
+  </div>
+</div>
+
+<div class="row security-header">
+  <div class="col-lg-12">
+    <label class="strong">Security Template</label>
+    <select class="form-control"
+            ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
+            ng-model="security.currentST"
+            ng-disabled="security.view.permissions.overrideinheritable">
+    </select>
+
+    <div class="field-description">
+      The current security template of the object. By override it you define a specific settings to this object
+      <ba-help-link key="objectSecurityTemplate"></ba-help-link>
+    </div>
+  </div>
+  <div class="col-lg-12" style="padding-top: 20px;">
+    <div class="strong"><label> Override the Security Template</label>
+      <label class="ui-switch ui-switch-success ui-switch-sm pull-right" for="override-checkbox">
+        <input id="override-checkbox" type="checkbox"
+               ng-model="security.view.permissions.overrideinheritable"/><i></i>
+      </label>
+    </div>
+    <security-matrix security-template="security.sTemplate"
+                     override="security.view.permissions.overrideinheritable"
+                     on-update="security.templateChanged(template)"
+                     on-role-add="security.templateRoleAdd(role)"
+                     on-role-rename="security.templateRoleRename(role, newRole)"
+                     on-role-remove="security.templateRoleRemove(role)">
+    </security-matrix>
+  </div>
 </div>
