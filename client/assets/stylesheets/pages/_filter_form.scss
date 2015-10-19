@@ -6,6 +6,10 @@
   .form-inline {
     margin-bottom: 5px;
 
+    fieldset {
+      display:inline;
+    }
+
     label {
       font-weight: bold;
       border: 1px solid #ccc;
