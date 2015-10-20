@@ -43,12 +43,12 @@
     };
 
     self.getColumns = function (tableName, force) {
-      if (!force && self.tables.tableName) {
-        return $q.when(self.tables.tableName);
+      if (!force && self.tables[tableName]) {
+        return $q.when(self.tables[tableName]);
       }
       return _get(tableName)
         .then(function (result) {
-          self.tables.tableName = result;
+          self.tables[tableName] = result;
           return result;
         });
     };

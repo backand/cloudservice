@@ -3,6 +3,10 @@
   .security-filter-ace-row {
     display: flex;
 
+    &.security-filter-ace-row-disabled {
+      opacity: 0.7;
+
+    }
     .ace-to-edit {
       width: 60%;
     }
@@ -25,13 +29,24 @@
 
     .panel {
       .panel-heading {
+        text-transform: none;
 
         &:hover {
           cursor: pointer;
         }
 
-        .btn.pull-right {
-          margin-top: -3px;
+        .pull-right {
+
+          .ti-anchor {
+            cursor: pointer;
+            font-size: 20px;
+            color: black;
+            padding: 5px;
+          }
+
+          .btn {
+            margin-top: -3px;
+          }
         }
       }
     }

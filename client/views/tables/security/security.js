@@ -68,6 +68,8 @@
       self.insertAtChar= insertTokenAtChar;
     }());
 
+    // Pre-defined filter
+
     self.ace = {
       editors: {},
       onLoad: function (_editor) {
@@ -75,6 +77,118 @@
         _editor.$blockScrolling = Infinity;
       }
     };
+
+    function replaceFilter (result, type) {
+      if ((type !== 'sql' && self.view.dataEditing.permanentFilter) ||
+          (type !== 'nosql' && self.view.dataEditing.nosqlPermanentFilter)) {
+        return ConfirmationPopup.confirm('Would you like to replace the current pre-defined filter?')
+          .then(function (approve) {
+            if (approve) {
+              return updateFilter(result);
+            }
+          });
+      } else {
+        return updateFilter(result);
+      }
+    }
+
+    function updateFilter (filter) {
+      self.view.dataEditing.permanentFilter = filter.sql;
+      if (filter.noSql) {
+        self.view.dataEditing.nosqlPermanentFilter = filter.noSql;
+      }
+      return self.savePermanentFilter();
+    }
+
+    function savePermanentFilter() {
+      self.filterError = null;
+      return ColumnsService.commitAndUpdate(self.view)
+
+        .then(function (result) {
+          return DataService.get(self.currentObjectName);
+        })
+        .catch(function (error) {
+          self.filterError = error.data;
+        });
+    }
+
+    self.transformNoSQL = function () {
+
+      try {
+        var q = JSON.parse(self.view.dataEditing.nosqlPermanentFilter)
+      } catch (error) {
+        NotificationService.add('error', 'JSON is not properly formatted');
+        self.loading = false;
+        return;
+      }
+
+      return SecurityService.transformNoSQL({
+        object: self.currentObjectName,
+        q: q
+      }).then(function (response) {
+        self.filter.result = response.data.sql;
+        return openValidationModal(response)
+      })
+        .then(function (result) {
+          if (result) {
+            replaceFilter({sql: self.filter.result}, 'nosql')
+          }
+        })
+    };
+
+    function openValidationModal (response) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'common/modals/confirm_update/confirm_update.html',
+        controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          validationResponse: function () {
+            return response.data;
+          },
+          titles: function () {
+            return {
+              itemName: 'query',
+              detailsTitle: 'The NoSQL is equivalent to the following SQL query:',
+              resultProperty: 'sql'
+            }
+          }
+        }
+      });
+
+      return modalInstance.result;
+    }
+
+    function toggleAngledWindow (inputType) {
+      self.showDictionary = !self.showDictionary;
+    }
+
+    function showAngledWindow () {
+      return self.showDictionary;
+    }
+
+    function insertTokenAtChar(elementId, token) {
+      // Handle case of ace editor:
+      var aceEditor = self.ace.editors[self.predefinedFilterType];
+      if (aceEditor) {
+        setTimeout(function () { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
+          aceEditor.insert("{{" + token + "}}");
+        })
+      }
+    }
+
+    self.anchorParams = {
+      toggleAngledWindow: toggleAngledWindow,
+      showAngledWindow: showAngledWindow,
+      dictionaryItems: self.dictionaryItems,
+      insertAtChar: insertTokenAtChar,
+      template: "views/tables/rules/dictionary_window.html",
+      dictionarySections: ['userInput', 'dbRow', 'parameters', 'userProfile'],
+      getDictionaryItems: function () {return self.dictionaryItems;}
+    };
+
+    // Wizard
 
     function getItemByRegex (object, regex) {
       return _.find(object, function(item) {
@@ -106,98 +220,17 @@
         .then(function (result) {
           if (result) {
             self.filter.result.noSql = angular.toJson(angular.fromJson(self.filter.result.noSql).q, true);
-            updateFilter(self.filter.result)
+            replaceFilter(self.filter.result, 'getCode')
+              .then(function (res) {
+                if (res) {
+                  self.showWizard = false;
+                }
+              });
           }
         })
     };
 
-    function openValidationModal (response) {
 
-      var modalInstance = $modal.open({
-        templateUrl: 'common/modals/confirm_update/confirm_update.html',
-        controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
-        backdrop: 'static',
-        keyboard: false,
-        resolve: {
-          validationResponse: function () {
-            return response.data;
-          },
-          titles: function () {
-            return {
-              itemName: 'query',
-              detailsTitle: 'The NoSQL is equivalent to the following SQL query:',
-              resultProperty: 'sql'
-            }
-          }
-        }
-      });
-
-      return modalInstance.result;
-    }
-
-    function updateFilter (result) {
-      if (self.view.dataEditing.permanentFilter) {
-        return ConfirmationPopup.confirm('Would you like to replace the current pre-defined filter?')
-          .then(function (approve) {
-            if (approve) {
-              return updateAndSaveFilter(result);
-            }
-          });
-      } else {
-        return updateAndSaveFilter(result);
-      }
-    }
-
-    function updateAndSaveFilter (filter) {
-      console.log(filter)
-      self.view.dataEditing.permanentFilter = filter.sql;
-      if (filter.noSql) {
-        self.view.dataEditing.nosqlPermanentFilter = filter.noSql;
-      }
-      return self.savePermanentFilter();
-    }
-
-    self.changeToSql = function () {
-      if (self.view.dataEditing.nosqlPermanentFilter) {
-        return ConfirmationPopup.confirm('The NoSQL query will be deleted. Are you sure you want to continue?')
-
-          .then(function (approve) {
-            if (approve) {
-              self.view.dataEditing.nosqlPermanentFilter = '';
-              return ColumnsService.commitAndUpdate(self.view);
-
-            } else {
-              self.predefinedFilterType = 'NoSQL';
-            }
-          });
-      } else {
-        return ColumnsService.commitAndUpdate(self.view);
-      }
-    };
-
-    self.transformNoSQL = function () {
-
-      try {
-        var q = JSON.parse(self.view.dataEditing.nosqlPermanentFilter)
-      } catch (error) {
-        NotificationService.add('error', 'JSON is not properly formatted');
-        self.loading = false;
-        return;
-      }
-
-      return SecurityService.transformNoSQL({
-        object: self.currentObjectName,
-        q: q
-      }).then(function (response) {
-          self.filter.result = response.data.sql;
-          return openValidationModal(response)
-        })
-        .then(function (result) {
-          if (result) {
-            updateFilter({sql: self.filter.result})
-          }
-        })
-    };
 
     /**
      * switch the state of the dictionary window
@@ -221,16 +254,6 @@
           tokens: raw[keys[0]]
         }
       };
-    }
-
-    /**
-     * broadcast insert event from the parent scope
-     * element id used by jquery to locate the element
-     * @param elementId
-     * @param token
-     */
-    function insertTokenAtChar(elementId, token) {
-      $scope.$parent.$broadcast('insert:placeAtCaret', [elementId, "{{" + token + "}}"]);
     }
 
     /**
@@ -266,7 +289,7 @@
 
       // Default view is NoSQL, unless only SQL has value
       self.predefinedFilterType =
-        self.view.dataEditing.permanentFilter && !self.view.dataEditing.nosqlPermanentFilter ? 'SQL' : 'NoSQL';
+        self.view.dataEditing.permanentFilter && !self.view.dataEditing.nosqlPermanentFilter ? 'sql' : 'nosql';
       buildTemplate();
     }
 
@@ -289,17 +312,6 @@
       ColumnsService.commit(self.view);
     }
 
-    function savePermanentFilter() {
-      self.filterError = null;
-      return ColumnsService.commitAndUpdate(self.view)
-
-        .then(function (result) {
-          return DataService.get(self.currentObjectName);
-        })
-        .catch(function (error) {
-          self.filterError = error.data;
-        });
-    }
 
     /**
      * Add new role
