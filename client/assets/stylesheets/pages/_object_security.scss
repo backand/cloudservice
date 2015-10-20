@@ -22,5 +22,11 @@
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
+
+    .panel {
+      .btn.pull-right {
+        margin-top: -3px;
+      }
+    }
   }
 }
