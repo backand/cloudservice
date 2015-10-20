@@ -24,8 +24,15 @@
     }
 
     .panel {
-      .btn.pull-right {
-        margin-top: -3px;
+      .panel-heading {
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        .btn.pull-right {
+          margin-top: -3px;
+        }
       }
     }
   }

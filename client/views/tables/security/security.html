@@ -55,40 +55,18 @@
       </angled-window>
     </div>
 
-    <div ng-show="security.predefinedFilterType === 'NoSQL'" class="pull-right">
-      <button class="btn btn-info" ng-click="security.transformNoSQL()">Validate</button>
-    </div>
-
-    <label for="radio-no-sql" class="ui-radio">
-      <input id="radio-no-sql"
-             type="radio"
-             ng-model="security.predefinedFilterType"
-             value="NoSQL">
-      <span>NoSQL</span>
-    </label>
-
-    <label for="radio-sql" class="ui-radio">
-      <input id="radio-sql"
-             type="radio"
-             ng-model="security.predefinedFilterType"
-             value="SQL"
-             ng-change="security.changeToSql()">
-      <span>SQL</span>
-    </label>
-
-    <label>
-      <a ng-show="security.predefinedFilterType === 'NoSQL'" href="" ng-click="showSQL = !showSQL">
-        {{ showSQL ? 'hide' : 'show' }} SQL
-      </a>
-    </label>
-
     <p ng-show="security.filterError" class="text-danger">Error: {{ security.filterError }}</p>
 
     <div class="security-filter-ace-row">
 
-      <div class="panel panel-success panel-left"
-           ng-class="security.predefinedFilterType  === 'NoSQL' ? 'ace-to-edit' : 'ace-to-view'">
-        <div class="panel-heading">
+      <div class="panel panel-left"
+           ng-class="security.predefinedFilterType  === 'NoSQL' ? 'ace-to-edit panel-success' : 'ace-to-view panel-default'">
+        <div class="panel-heading" ng-click="security.predefinedFilterType = 'NoSQL'">
+          <button class="btn btn-xs btn-w-xs btn-success pull-right"
+                  ng-show="security.predefinedFilterType  === 'NoSQL'"
+                  ng-click="security.transformNoSQL()">
+            Validate
+          </button>
           <h3 class="panel-title">NoSQL</h3>
         </div>
         <div class="">
@@ -103,9 +81,13 @@
       </div>
 
       <div class="panel panel-success panel-right"
-           ng-class="security.predefinedFilterType  === 'SQL' ? 'ace-to-edit' : 'ace-to-view'">
-        <div class="panel-heading">
-          <button class="btn btn-xs btn-w-xs btn-success pull-right" ng-click="security.savePermanentFilter()">Save</button>
+           ng-class="security.predefinedFilterType  === 'SQL' ? 'ace-to-edit panel-success' : 'ace-to-view panel-default'">
+        <div class="panel-heading" ng-click="security.predefinedFilterType = 'SQL'">
+          <button class="btn btn-xs btn-w-xs btn-success pull-right"
+                  ng-show="security.predefinedFilterType  === 'SQL'"
+                  ng-click="security.savePermanentFilter()">
+            Save
+          </button>
           <h3 class="panel-title">SQL</h3>
         </div>
         <div class="">
