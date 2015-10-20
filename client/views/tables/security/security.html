@@ -55,6 +55,10 @@
       </angled-window>
     </div>
 
+    <div ng-show="security.predefinedFilterType === 'NoSQL'" class="pull-right">
+      <button class="btn btn-info" ng-click="security.transformNoSQL()">Validate</button>
+    </div>
+
     <label for="radio-no-sql" class="ui-radio">
       <input id="radio-no-sql"
              type="radio"
