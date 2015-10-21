@@ -1,4 +1,4 @@
-<section class="page-form-ele page ng-scope">
+<section class="page-form-ele page database-query-section">
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong style="text-transform:none"> Query - {{DbQuery.query.name}}</strong>
@@ -12,98 +12,129 @@
       </span>
 
     </div>
-    <div class="panel-body" id="database-query-panel">
+    <div class="panel-body database-query-panel">
       <div class="row">
         <div class="left-col">
 
           <form role="form" ng-submit="DbQuery.saveQuery()" name="DbQuery.queryForm" novalidate>
             <fieldset ng-disabled="!DbQuery.editMode">
-            <div class="form-group">
-              <label for="name">Query Name</label>
-              <input type="text" class="form-control" id="name" name="name" ng-model="DbQuery.query.name" required
-                     ng-pattern="DbQuery.namePattern" placeholder="name your query">
-              <div ng-show="DbQuery.queryForm.name.$error.pattern" class="input-error">no spaces or %$#@^&* allowed</div>
-            </div>
-            <div class="form-group">
-              <label for="params">Input Parameters</label>
-              <input type="text"
-                     class="form-control"
-                     id="params"
-                     name="params"
-                     ng-model="DbQuery.query.parameters"
-                     placeholder="input1, input2,....">
-            </div>
+              <div class="form-group">
+                <label for="name">Query Name</label>
+                <input type="text" class="form-control" id="name" name="name" ng-model="DbQuery.query.name" required
+                       ng-pattern="DbQuery.namePattern" placeholder="name your query">
 
-            <div class="form-group">
-              <label for="query">Query</label>
-
-              <div class="pull-right" ng-show="DbQuery.editMode">
-              <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
-                  ng-click="DbQuery.toggleParametersModal()"></span>
-              </div>
-              <div
-                ui-ace="{onLoad : DbQuery.ace.onLoad, theme:'dawn', mode: DbQuery.ace.dbType}"
-                type="text"
-                class="form-control"
-                id="query" ng-model="DbQuery.query.sQL"
-                required
-                rows="10"
-                ng-readonly="!DbQuery.editMode">
-              </div>
-            </div>
-
-            <div class="form-group" ng-if="DbQuery.editMode">
-              <div class="row security-header">
-                <div class="col-lg-4">
-                  <label class="strong">Security Template</label>
-                  <select class="form-control"
-                          ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in DbQuery.workspaces"
-                          ng-model="DbQuery.currentST"
-                          required
-                          ng-disabled="DbQuery.precedent">
-                  </select>
+                <div ng-show="DbQuery.queryForm.name.$error.pattern" class="input-error">no spaces or %$#@^&* allowed
                 </div>
-                <div class="col-lg-4">
-                  <div class="override-template"><label> override</label>
-                    <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
-                      <input id="override-checkbox" type="checkbox" ng-model="DbQuery.precedent"/><i></i>
-                    </label>
+              </div>
+              <div class="form-group">
+                <label for="params">Input Parameters</label>
+                <input type="text"
+                       class="form-control"
+                       id="params"
+                       name="params"
+                       ng-model="DbQuery.query.parameters"
+                       placeholder="input1, input2,....">
+              </div>
+
+              <div class="ui-tab-container ui-tab-horizontal">
+                <div justified="false" class="ui-tab">
+                  <ul class="nav nav-tabs" ng-class="{'nav-stacked': vertical, 'nav-justified': justified}">
+
+                    <div class="pull-right db-query-anchor" ng-show="DbQuery.editMode">
+                      <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
+                            ng-click="DbQuery.toggleParametersModal()"></span>
+                    </div>
+
+                    <li ng-class="{active: DbQuery.mode === 'nosql'}" class="ng-isolate-scope active">
+                      <a ng-click="DbQuery.mode = 'nosql'" class="ng-binding">NoSQL</a>
+                    </li>
+                    <li ng-class="{active: DbQuery.mode === 'sql'}" class="ng-isolate-scope">
+                      <a ng-click="DbQuery.mode = 'sql'" class="ng-binding">SQL</a>
+                    </li>
+                  </ul>
+
+                  <div class="tab-content">
+
+                    <div ng-show="DbQuery.mode === 'nosql'"
+                         ui-ace="{onLoad : DbQuery.ace.onLoad, theme:'monokai', mode: 'nosql'}"
+                         type="text"
+                         class="form-control no-show-hide-animation"
+                         id="nosql" ng-model="DbQuery.query.nosql"
+                         required
+                         rows="10"
+                         ng-readonly="!DbQuery.editMode">
+                    </div>
+
+                    <div ng-show="DbQuery.mode === 'sql'"
+                         ui-ace="{onLoad : DbQuery.ace.onLoad, theme:'dawn', mode: DbQuery.dbType}"
+                         type="text"
+                         class="form-control no-show-hide-animation"
+                         id="sql" ng-model="DbQuery.query.sQL"
+                         required
+                         rows="10"
+                         ng-readonly="!DbQuery.editMode">
+                    </div>
                   </div>
                 </div>
               </div>
-              <div ng-if="DbQuery.precedent">
-                <label>Read Permissions</label>
-                <ul class="list-style-none">
-                  <li ng-repeat="role in DbQuery.roles">
-                    <input type="checkbox"
-                           ng-model="DbQuery.allowSelectRolesObject[role.Name]"
-                           id="permissions-checkbox-{{role.Name}}"
-                           ng-disabled="!DbQuery.precedent">
-                    </input>
-                    <label for="permissions-checkbox-{{role.Name}}">
-                      {{ role.Name }}
-                    </label>
-                  </li>
-                </ul>
+
+              <div class="form-group">
+
+
               </div>
-            </div>
-            <br/>
+
+              <div class="form-group" ng-if="DbQuery.editMode">
+                <div class="row security-header">
+                  <div class="col-lg-4">
+                    <label class="strong">Security Template</label>
+                    <select class="form-control"
+                            ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in DbQuery.workspaces"
+                            ng-model="DbQuery.currentST"
+                            required
+                            ng-disabled="DbQuery.precedent">
+                    </select>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="override-template"><label> override</label>
+                      <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
+                        <input id="override-checkbox" type="checkbox" ng-model="DbQuery.precedent"/><i></i>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="DbQuery.precedent">
+                  <label>Read Permissions</label>
+                  <ul class="list-style-none">
+                    <li ng-repeat="role in DbQuery.roles">
+                      <input type="checkbox"
+                             ng-model="DbQuery.allowSelectRolesObject[role.Name]"
+                             id="permissions-checkbox-{{role.Name}}"
+                             ng-disabled="!DbQuery.precedent">
+                      </input>
+                      <label for="permissions-checkbox-{{role.Name}}">
+                        {{ role.Name }}
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <br/>
 
 
-            <div class="save-bar" ng-show="DbQuery.editMode">
-              <button type="submit"
-                      ng-disabled="DbQuery.queryForm.$invalid"
-                      class="btn btn-success btn-lg btn-w-lg" ladda="DbQuery.loading"
-                      data-style="expand-right">Save
-              </button>
-              <button type="button"
-                      ng-show="DbQuery.editMode"
-                      class="btn btn-default btn-lg btn-w-lg"
-                      data-style="expand-right"
-                      ng-click="DbQuery.cancel()">Cancel
-              </button>
-            </div>
-              </fieldset>
+              <div class="save-bar" ng-show="DbQuery.editMode">
+                <button type="submit"
+                        ng-disabled="DbQuery.queryForm.$invalid"
+                        class="btn btn-success btn-lg btn-w-lg" ladda="DbQuery.loading"
+                        data-style="expand-right">Save
+                </button>
+                <button type="button"
+                        ng-show="DbQuery.editMode"
+                        class="btn btn-default btn-lg btn-w-lg"
+                        data-style="expand-right"
+                        ng-click="DbQuery.cancel()">Cancel
+                </button>
+              </div>
+            </fieldset>
             <div class="save-bar" ng-show="!DbQuery.editMode">
               <button type="button"
                       class="btn btn-success btn-lg btn-w-lg"

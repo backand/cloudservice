@@ -386,42 +386,7 @@ ul.tables-list {
   }
 }
 
-#database-query-panel {
-  & > .row {
-    max-width:100%;
-    margin:0 auto;
-  }
-  .left-col {
-    width:50%;
-    padding-right:5%;
-    padding-left:2%;
-    border-right:1px solid #ccc;
-    float:left;
-    @media screen and (max-width:900px) {
-      width:100%;
-      padding:0;
-      clear:both;
-      border-right:none;
-      border-bottom:1px solid #ccc;
-      padding-bottom:20px;
-      margin-bottom:20px;
-    }
-  }
-  .right-col {
-    width:50%;
-    padding-left:3%;
-    float:left;
 
-    @media screen and (max-width:900px) {
-      width:100%;
-      clear:both;
-      padding:0;
-      padding-bottom:20px;
-
-    }
-
-  }
-}
 
 .scrollbar {
   background-color: #17232c;
@@ -501,13 +466,6 @@ button.with-margin, input.with-margin{
 .hovering-menu {
   display: block;
 }
-
-.ui-tab ul.nav.nav-tabs {
-  height: 100%;
-  overflow: auto;
-}
-
-
 
 .panel-body .panel-body-description {
   font-size: 16px;

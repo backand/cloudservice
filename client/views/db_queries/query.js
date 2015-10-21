@@ -28,11 +28,13 @@
     var self = this;
     self.namePattern = /^\w+$/;
     self.gridOptions = {virtualizationThreshold: 10};
+    self.mode = 'nosql';
+    self.dbType = 'sql';
 
-    self.ace = {
-      dbType: 'sql',
-      onLoad: function(_editor) {
-        self.ace.editor = _editor;
+      self.ace = {
+      editors: {},
+      onLoad: function (_editor) {
+        self.ace.editors[_editor.container.id] = _editor;
         _editor.$blockScrolling = Infinity;
       }
     };
@@ -79,7 +81,7 @@
 
     function loadDbType() {
       var app = AppsService.currentApp;
-        self.ace.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
+        self.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
     }
 
     function loadQueries() {
@@ -236,7 +238,7 @@
 
     self.insertParamAtChar = function (elementId, param) {
       setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
-        self.ace.editor.insert("{{" + param + "}}");
+        self.ace.editors[self.mode].insert("{{" + param + "}}");
       });
     };
 
