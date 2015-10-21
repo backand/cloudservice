@@ -82,8 +82,8 @@
           <div class="pull-right" ng-show="security.predefinedFilterType  === 'nosql'">
 
             <span class="ti-anchor" ng-click="security.toggleOptions()"></span>
-            <button class="btn btn-xs btn-w-xs btn-success pull-right" ng-click="security.transformNoSQL()">
-              Validate
+            <button class="btn btn-xs btn-w-md btn-success pull-right" ng-click="security.transformNoSQL()">
+              Validate & Update
             </button>
 
           </div>
@@ -104,8 +104,8 @@
           <div class="pull-right" ng-show="security.predefinedFilterType  === 'sql'">
 
             <span class="ti-anchor" ng-click="security.toggleOptions()"></span>
-            <button class="btn btn-xs btn-w-xs btn-success pull-right" ng-click="security.savePermanentFilter()">
-              Save
+            <button class="btn btn-xs btn-w-md btn-success pull-right" ng-click="security.savePermanentFilter()">
+              Validate & Update
             </button>
 
           </div>
@@ -132,7 +132,7 @@
     </select>
 
     <div class="field-description">
-      The current security template of the object. By override it you define a specific settings to this object
+      The current security template of the object. By overriding it you define specific settings to this object
       <ba-help-link key="objectSecurityTemplate"></ba-help-link>
     </div>
   </div>
