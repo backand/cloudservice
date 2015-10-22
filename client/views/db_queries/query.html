@@ -56,11 +56,11 @@
                   <div class="tab-content">
 
                     <div ng-show="DbQuery.mode === 'nosql'"
-                         ui-ace="{onLoad : DbQuery.ace.onLoad, theme:'monokai', mode: 'nosql'}"
+                         ui-ace="{onLoad : DbQuery.ace.onLoad, theme:'monokai', mode: 'json'}"
                          type="text"
                          class="form-control no-show-hide-animation"
-                         id="nosql" ng-model="DbQuery.query.nosql"
-                         required
+                         id="nosql"
+                         ng-model="DbQuery.query.noSQL"
                          rows="10"
                          ng-readonly="!DbQuery.editMode">
                     </div>
@@ -69,8 +69,8 @@
                          ui-ace="{onLoad : DbQuery.ace.onLoad, theme:'dawn', mode: DbQuery.dbType}"
                          type="text"
                          class="form-control no-show-hide-animation"
-                         id="sql" ng-model="DbQuery.query.sQL"
-                         required
+                         id="sql"
+                         ng-model="DbQuery.query.sQL"
                          rows="10"
                          ng-readonly="!DbQuery.editMode">
                     </div>

@@ -12,6 +12,7 @@
       'SecurityService',
       'AppsService',
       'EscapeSpecialChars',
+      '$modal',
       DbQueryController]);
 
   function DbQueryController(CONSTS,
@@ -23,7 +24,8 @@
                              DictionaryService,
                              SecurityService,
                              AppsService,
-                             EscapeSpecialChars) {
+                             EscapeSpecialChars,
+                             $modal) {
 
     var self = this;
     self.namePattern = /^\w+$/;
@@ -134,6 +136,15 @@
 
     self.saveQuery = function () {
       self.loading = true;
+      if (self.mode === 'sql') {
+        return saveQuery();
+
+      } else if (self.mode === 'nosql') {
+        return saveNoSql();
+      }
+    };
+
+    function saveQuery () {
       self.queryUrl = '';
       self.queryHttp = '';
       self.openParamsModal = false;
@@ -143,7 +154,55 @@
       var queryToSend = EscapeSpecialChars(self.query);
       DbQueriesService.saveQuery(queryToSend)
         .then(reload);
-    };
+    }
+
+    function saveNoSql () {
+
+      try {
+        var json = _.isEmpty(self.query.noSQL) ?
+          '' : JSON.parse(self.query.noSQL)
+      } catch (error) {
+        NotificationService.add('error', 'JSON is not properly formatted');
+        self.loading = false;
+        return;
+      }
+
+      return DbQueriesService.transformNoSQL(json)
+        .then(function (response) {
+          self.loading = false;
+          self.transformedSql = response.data.sql;
+        return openValidationModal(response)})
+          .then(function (result) {
+            if (result) {
+              self.query.sQL = self.transformedSql;
+              saveQuery();
+            }
+      })
+    }
+
+    function openValidationModal (response) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'common/modals/confirm_update/confirm_update.html',
+        controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          validationResponse: function () {
+            return response.data;
+          },
+          titles: function () {
+            return {
+              itemName: 'query',
+              detailsTitle: 'The NoSQL is equivalent to the following SQL query:',
+              resultProperty: 'sql'
+            }
+          }
+        }
+      });
+
+      return modalInstance.result;
+    }
 
     function reload(query) {
       self.loading = false;

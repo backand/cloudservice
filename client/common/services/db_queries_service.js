@@ -136,7 +136,19 @@
 
     self.runQuery = function (queryName, parameters) {
       return $http(self.getQueryHttp(queryName, parameters, true));
-    }
+    };
+
+    self.transformNoSQL = function (json) {
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/nosql/transform',
+        data: {
+          json: json,
+          isFilter: true
+        },
+        headers: { AppName: currentApp }
+      });
+    };
 
   }
 
