@@ -27,6 +27,16 @@
         });
     }
 
+    self.getDataSample = function (tableName, log, ignoreError) {
+      var http = {
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/objects/' + tableName,
+        headers: {'AppName': AppsService.currentApp.Name},
+        config: {ignoreError: ignoreError}
+      };
+      return logAndExecute(http, log ? 'Get Data' : null);
+    };
+
     self.get = function(tableName, size, page, sort, filter, log) {
       var http = {
         method: 'GET',

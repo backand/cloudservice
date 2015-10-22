@@ -15,6 +15,7 @@
 
     self.detailsTitle = titles.detailsTitle;
     self.validationResponse = validationResponse;
+    self.actionPhrase = titles.actionPhrase;
 
     self.notifications =
       _.uniq(_.map(_.flatten(_.map(validationResponse.notifications)),

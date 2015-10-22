@@ -101,15 +101,35 @@
     }
 
     function savePermanentFilter() {
-      self.filterError = null;
       return ColumnsService.commitAndUpdate(self.view)
 
         .then(function (result) {
-          return DataService.get(self.currentObjectName);
+          return DataService.getDataSample(self.currentObjectName, false, true);
         })
         .catch(function (error) {
-          self.filterError = error.data;
+          return openErrorModal(error)
         });
+    }
+
+    function openErrorModal (error) {
+
+      $modal.open({
+        templateUrl: 'common/modals/confirm_update/confirm_update.html',
+        controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          validationResponse: function () {
+            return {valid: 'never', warnings: [_.last(error.data.split('Error details: '))]};
+          },
+          titles: function () {
+            return {
+              itemName: 'query',
+              actionPhrase: 'The query was saved with errors.'
+            }
+          }
+        }
+      });
     }
 
     self.transformNoSQL = function () {

@@ -5,7 +5,10 @@
   <div class="panel-body">
     <div class="callout" ng-class="'callout-' + ConfirmModelUpdate.text.cssClass">
       <h4>{{ ConfirmModelUpdate.text.title }}</h4>
-      <label ng-bind-html="ConfirmModelUpdate.text.message"></label>
+      <label>
+        <div>{{ConfirmModelUpdate.actionPhrase}}</div>
+        <div ng-bind-html="ConfirmModelUpdate.text.message"></div>
+      </label>
       <br>
       <ba-nested-container container="ConfirmModelUpdate.notifications"></ba-nested-container>
     </div>
