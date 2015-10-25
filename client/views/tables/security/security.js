@@ -36,6 +36,7 @@
 
     (function init() {
 
+      self.predefinedFilterType = 'nosql';
       self.getUserObjectFields = getUserObjectFields;
       self.currentObjectName = tableName;
       self.appObjects = TablesService.tables;
@@ -78,12 +79,23 @@
       }
     };
 
+    self.saveSqlFilter = function () {
+      return replaceFilter(null, 'sql');
+    };
+
     function replaceFilter (result, type) {
+      var confirmationMessage =
+        type === 'sql' ? 'The NoSQL query will be deleted. Would you like to continue?' :
+          'Would you like to replace the current pre-defined filter?';
+
       if ((type !== 'sql' && self.view.dataEditing.permanentFilter) ||
           (type !== 'nosql' && self.view.dataEditing.nosqlPermanentFilter)) {
-        return ConfirmationPopup.confirm('Would you like to replace the current pre-defined filter?')
+        return ConfirmationPopup.confirm(confirmationMessage)
           .then(function (approve) {
             if (approve) {
+              if (type === 'sql') {
+                self.view.dataEditing.nosqlPermanentFilter = '';
+              }
               return updateFilter(result);
             }
           });
@@ -93,8 +105,11 @@
     }
 
     function updateFilter (filter) {
-      self.view.dataEditing.permanentFilter = filter.sql;
-      if (filter.noSql) {
+      self.showWizard = false;
+      if (filter && filter.sql) {
+        self.view.dataEditing.permanentFilter = filter.sql;
+      }
+      if (filter && filter.noSql) {
         self.view.dataEditing.nosqlPermanentFilter = filter.noSql;
       }
       return self.savePermanentFilter();
@@ -240,12 +255,7 @@
         .then(function (result) {
           if (result) {
             self.filter.result.noSql = angular.toJson(angular.fromJson(self.filter.result.noSql).q, true);
-            replaceFilter(self.filter.result, 'getCode')
-              .then(function (res) {
-                if (res) {
-                  self.showWizard = false;
-                }
-              });
+            replaceFilter(self.filter.result, 'getCode');
           }
         })
     };
@@ -308,8 +318,13 @@
       self.currentST = String(self.view.permissions.securityWorkspace);
 
       // Default view is NoSQL, unless only SQL has value
-      self.predefinedFilterType =
-        self.view.dataEditing.permanentFilter && !self.view.dataEditing.nosqlPermanentFilter ? 'sql' : 'nosql';
+      if (!self.view.dataEditing.nosqlPermanentFilter) {
+        if (self.view.dataEditing.permanentFilter) {
+          self.predefinedFilterType = 'sql';
+        } else {
+          self.showWizard = true;
+        }
+      }
       buildTemplate();
     }
 
