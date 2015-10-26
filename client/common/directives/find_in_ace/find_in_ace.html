@@ -1,0 +1,44 @@
+<div class="find-in-ace">
+  <div class="find-in-ace-form" ng-show="showForm">
+    <form name="findInAce.findForm" novalidate ng-submit="findInAce.findNext()"
+          ng-model-options="{updateOn: 'default blur', debounce: {'default': 100, 'blur': 0}}">
+
+      <input name="searchTerm"
+             class="form-control input-round"
+             ng-model="findInAce.searchTerm"
+             ng-change="findInAce.findOnChange()"
+             placeholder="Press Enter to find"
+             autocomplete="off">
+
+      <div class="find-in-ace-options" ng-model-options="{updateOn: 'default'}">
+        <label class="ui-checkbox find-in-ace-options-left">
+          <input name="checkbox1" type="checkbox" ng-model="findInAce.searchOptions.caseSensitive">
+          <span>Match Case</span>
+        </label>
+
+        <label class="ui-checkbox find-in-ace-options-right">
+          <input name="checkbox1" type="checkbox" ng-model="findInAce.searchOptions.regExp">
+          <span>Regex</span>
+        </label>
+
+        <label class="ui-checkbox find-in-ace-options-left">
+          <input name="checkbox1" type="checkbox" ng-model="findInAce.searchOptions.wholeWord">
+          <span>Words</span>
+        </label>
+
+        <label class="ui-checkbox find-in-ace-options-right">
+          <input name="checkbox1" type="checkbox" ng-model="findInAce.replace">
+          <span>Replace</span>
+        </label>
+      </div>
+    </form>
+
+    <form ng-show="findInAce.replace" name="replaceForm" novalidate ng-submit="findInAce.findAndReplace()">
+      <input class="form-control input-round"
+             ng-model="findInAce.replaceTerm"
+             placeholder="Press Enter to find & replace"
+             autocomplete="off">
+    </form>
+  </div>
+  <i class="ti-search find-in-ace-icon" ng-click="showForm = !showForm"></i>
+</div>
