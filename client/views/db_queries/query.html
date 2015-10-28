@@ -44,6 +44,9 @@
                       <span class="ti-anchor" style="cursor: pointer;font-size:20px;"
                             ng-click="DbQuery.toggleParametersModal()"></span>
                     </div>
+                    <div class="pull-right db-query-anchor" ng-show="DbQuery.mode === 'nosql'">
+                      <ba-help-link key="nosqlQuery" with-text="false"></ba-help-link>
+                    </div>
 
                     <li ng-class="{active: DbQuery.mode === 'nosql'}" class="ng-isolate-scope active">
                       <a ng-click="DbQuery.mode = 'nosql'" class="ng-binding">NoSQL</a>

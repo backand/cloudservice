@@ -297,7 +297,10 @@
 
     self.insertParamAtChar = function (elementId, param) {
       setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
-        self.ace.editors[self.mode].insert("{{" + param + "}}");
+        if(self.mode == 'nosql')
+          self.ace.editors[self.mode].insert("\"\'{{" + param + "}}\'\"");
+        else
+          self.ace.editors[self.mode].insert("\'{{" + param + "}}\'");
       });
     };
 
