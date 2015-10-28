@@ -270,39 +270,13 @@ bknd-copy-url[type="textarea"] .request-url-copy {
   }
 }
 
-.ace-full-screen
-{
+.ace-full-screen.ace-show-test {
   .ace_editor {
-    font-size: 15px;
-    position: fixed;
-    top: 50px;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
-    height: calc(100% - 50px) !important;
-  }
-
-  &.ace-show-test {
-    .ace_editor {
-      width: calc(75% + 55px);
-    }
-
-    .full-screen-button {
-      left: calc(75% - 25px);
-    }
+    width: calc(75% + 55px);
   }
 
   .full-screen-button {
-    z-index: 1000;
-    position: fixed;
-    top: 60px;
-    right: 30px;
-    opacity: 0.5;
-    border-radius: 4px;
-
-    &:hover {
-      opacity: 1;
-    }
+    left: calc(75% - 25px);
   }
 }
 

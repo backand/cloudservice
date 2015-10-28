@@ -35,6 +35,7 @@
                        ng-model="DbQuery.query.parameters"
                        placeholder="input1, input2,....">
               </div>
+            </fieldset>
 
               <div class="ui-tab-container ui-tab-horizontal">
                 <div justified="false" class="ui-tab">
@@ -48,18 +49,19 @@
                       <ba-help-link key="nosqlQuery" with-text="false"></ba-help-link>
                     </div>
 
-                    <li ng-class="{active: DbQuery.mode === 'nosql'}" class="ng-isolate-scope active">
-                      <a ng-click="DbQuery.mode = 'nosql'" class="ng-binding">NoSQL</a>
-                    </li>
-                    <li ng-class="{active: DbQuery.mode === 'sql'}" class="ng-isolate-scope">
-                      <a ng-click="DbQuery.mode = 'sql'" class="ng-binding">SQL</a>
-                    </li>
-                  </ul>
+                  <li ng-class="{active: DbQuery.mode === 'nosql'}" class="ng-isolate-scope active">
+                    <a ng-click="DbQuery.mode = 'nosql'" class="ng-binding">NoSQL</a>
+                  </li>
+                  <li ng-class="{active: DbQuery.mode === 'sql'}" class="ng-isolate-scope">
+                    <a ng-click="DbQuery.mode = 'sql'" class="ng-binding">SQL</a>
+                  </li>
+                </ul>
 
-                  <div class="tab-content">
+                <div class="tab-content">
 
+                  <bknd-ace-features editor="DbQuery.ace.editors[DbQuery.mode]" nesting-form="DbQuery.queryForm">
                     <div ng-show="DbQuery.mode === 'nosql'"
-                         ui-ace="{onLoad : DbQuery.ace.onLoad, theme:'monokai', mode: 'json'}"
+                         ui-ace="{onLoad : DbQuery.ace.onLoad, theme:'monokai', mode: 'json', rendererOptions: { fontSize: 15 } }"
                          type="text"
                          class="form-control no-show-hide-animation"
                          id="nosql"
@@ -77,14 +79,13 @@
                          rows="10"
                          ng-readonly="!DbQuery.editMode">
                     </div>
-                  </div>
+                  </bknd-ace-features>
+
                 </div>
               </div>
+            </div>
 
-              <div class="form-group">
-
-
-              </div>
+            <fieldset ng-disabled="!DbQuery.editMode">
 
               <div class="form-group" ng-if="DbQuery.editMode">
                 <div class="row security-header">
@@ -121,8 +122,6 @@
                   </ul>
                 </div>
               </div>
-              <br/>
-
 
               <div class="save-bar" ng-show="DbQuery.editMode">
                 <button type="submit"
@@ -138,7 +137,9 @@
                 </button>
               </div>
             </fieldset>
+
             <div class="save-bar" ng-show="!DbQuery.editMode">
+              <br/>
               <button type="button"
                       class="btn btn-success btn-lg btn-w-lg"
                       data-style="expand-right" ladda="DbQuery.loading"
