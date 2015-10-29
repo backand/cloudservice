@@ -380,13 +380,7 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     clear: both;
     display: block;
     float: left;
-    width: 99%;
-
-    &:hover .action-template-title {
-      border-radius: 4px;
-      background-color: #428bca;
-      color: #fff;
-    }
+    width: 50%;
 
     img {
       float: left;
@@ -400,14 +394,16 @@ bknd-copy-url[type="textarea"] .request-url-copy {
 
       .action-template-title {
         padding: 0 4px;
-        font-size: 24px;
+        font-size: 18px;
         font-weight: 500;
         line-height: 1.1;
         cursor: pointer;
+
       }
 
       .action-template-docs-link {
         cursor: pointer;
+        margin-top: 20px;
 
         &:hover {
           text-decoration: underline;

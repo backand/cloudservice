@@ -89,12 +89,14 @@
           <h3 class="panel-title">NoSQL</h3>
         </div>
 
-        <div ui-ace="{onLoad : security.ace.onLoad, theme:'monokai', mode: 'json', rendererOptions: { fontSize: 15 }}"
-             id="nosql"
-             ng-model="security.view.dataEditing.nosqlPermanentFilter"
-             rows="10"
-             ng-readonly="security.predefinedFilterType !== 'nosql' || security.showWizard">
-        </div>
+        <bknd-ace-features editor="security.ace.editors['nosql']">
+          <div ui-ace="{onLoad : security.ace.onLoad, theme:'monokai', mode: 'json', rendererOptions: { fontSize: 15 }}"
+               id="nosql"
+               ng-model="security.view.dataEditing.nosqlPermanentFilter"
+               rows="10"
+               ng-readonly="security.predefinedFilterType !== 'nosql' || security.showWizard">
+          </div>
+        </bknd-ace-features>
       </div>
 
       <div class="panel panel-right"
@@ -112,12 +114,14 @@
           <h3 class="panel-title">SQL</h3>
         </div>
 
-        <div ui-ace="{onLoad : security.ace.onLoad, theme:'dawn', mode: 'sql', rendererOptions: { fontSize: 15 }}"
-             id="sql"
-             ng-model="security.view.dataEditing.permanentFilter"
-             rows="10"
-             ng-readonly="security.predefinedFilterType !== 'sql' || security.showWizard">
-        </div>
+        <bknd-ace-features editor="security.ace.editors['sql']">
+          <div ui-ace="{onLoad : security.ace.onLoad, theme:'dawn', mode: 'sql', rendererOptions: { fontSize: 15 }}"
+               id="sql"
+               ng-model="security.view.dataEditing.permanentFilter"
+               rows="10"
+               ng-readonly="security.predefinedFilterType !== 'sql' || security.showWizard">
+          </div>
+        </bknd-ace-features>
       </div>
     </div>
   </div>

@@ -162,16 +162,18 @@
                              window-title="SQL Command"
                              input-id="sqlCommand"></bknd-anchor>
 
-                <div
-                  ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
-                  class="form-control"
-                  name="sqlCommand"
-                  id="sqlCommand"
-                  ng-model="rules.action.command"
-                  required
-                  style="resize: vertical"
-                  ng-readonly="!rules.editMode">
-                </div>
+                <bknd-ace-features editor="rules.ace.editor">
+                  <div
+                    ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
+                    class="form-control"
+                    name="sqlCommand"
+                    id="sqlCommand"
+                    ng-model="rules.action.command"
+                    required
+                    style="resize: vertical"
+                    ng-readonly="!rules.editMode">
+                  </div>
+                </bknd-ace-features>
               </div>
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
@@ -197,23 +199,24 @@
 
                 <div class="form-group" ng-class="{'ace-full-screen': aceFullScreen, 'ace-show-test': rules.requestTestForm}">
                   <label for="code">JavaScript Code</label> <a href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
-
-                  <div
-                    ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"
-                    class="form-control ace-rule"
-                    name="code"
-                    id="code"
-                    ng-model="rules.action.code"
-                    required
-                    ng-pattern="rules.codePattern"
-                    ng-keydown="modal.handleTabKey($event)"
-                    style="resize: vertical; "
-                    ng-readonly="!rules.editMode">
-                  </div>
-                  <input type="button" ng-show="rules.editMode"
-                         class="btn btn-sm btn-primary full-screen-button"
-                         ng-click="aceFullScreen = !aceFullScreen"
-                         value="{{ aceFullScreen ? 'Minimize' : 'Maximize' }}">
+                  <bknd-ace-features editor="rules.ace.editor">
+                    <div
+                      ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"
+                      class="form-control ace-rule"
+                      name="code"
+                      id="code"
+                      ng-model="rules.action.code"
+                      required
+                      ng-pattern="rules.codePattern"
+                      ng-keydown="modal.handleTabKey($event)"
+                      style="resize: vertical; "
+                      ng-readonly="!rules.editMode">
+                    </div>
+                  </bknd-ace-features>
+                  <!--<input type="button" ng-show="rules.editMode"-->
+                         <!--class="btn btn-sm btn-primary full-screen-button"-->
+                         <!--ng-click="aceFullScreen = !aceFullScreen"-->
+                         <!--value="{{ aceFullScreen ? 'Minimize' : 'Maximize' }}">-->
 
                   <!-- workaround: ui-ace doesn't work well in input, ng-pattern doesn't work on div-->
                   <input ng-hide="true" name="codeHidden" ng-model="rules.action.code" ng-pattern="rules.codePattern">
