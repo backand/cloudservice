@@ -6,6 +6,10 @@ $monokai-color: #ccc;
 .bknd-ace-container {
   position: relative;
 
+  &::selection {
+    background: yellow;
+  }
+
   &.ace-full-screen {
 
     .ace_editor {
@@ -68,6 +72,10 @@ $monokai-color: #ccc;
         form {
           position: relative;
 
+          &::selection {
+            background: transparent;
+          }
+
           &.ng-hide {
             opacity: 0;
           }
@@ -84,17 +92,18 @@ $monokai-color: #ccc;
             color: #bbb;
             background: initial;
             top: 7px;
+            width: 20px;
 
             &:hover {
               color: #aaa;
             }
 
             &.first-ace-icon {
-              right: -6px;
+              right: 6px;
             }
 
             &.second-ace-icon {
-              right: 16px;
+              right: 28px;
             }
           }
         }
