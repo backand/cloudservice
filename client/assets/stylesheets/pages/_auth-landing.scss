@@ -1,5 +1,66 @@
 .auth-landing {
 
+	.inner {
+		max-width:1150;
+		margin:0 auto;
+	}
+	.features-section {
+		background:white;
+		.left-col {
+			float:left;
+			&.text-col {
+				width:40%;
+				padding-right:5%;
+			}
+		}
+		.right-col {			
+			float:right;
+			&.image-col {
+				width:60%;
+			}
+		}
+		.feature-title {
+			font-size:26px;
+			font-size:18px;
+
+		}
+
+
+	}
+	.title-wrapper {
+		max-width:80%;
+		text-align:center;
+		h2 {
+			font-size:45px;
+		}
+		p {
+			font-size:19px;
+		}
+
+	}
+	#page-logo {
+		position: absolute;
+		top:20px;
+		left:20px;
+	}
+	.signin-header {
+		margin-top:110px;
+		margin-bottom: 30px;
+		h1 {
+			font-size:45px;
+			margin-bottom:0;
+			font-weight:normal;
+		}
+		h5 {
+			font-size:17px;
+			color:white;
+		}
+	}
+
+	.auth-button {
+		text-shadow:none;
+		font-weight:normal;
+	}
   .auth-body .page-signin {
 
     .first-signup-block .form-container.signup-container {
@@ -9,6 +70,7 @@
     .second-signup-block .form-container.signup-container {
       color: orangered;
       background: black;
+      font-size:20px;
     }
   }
 
