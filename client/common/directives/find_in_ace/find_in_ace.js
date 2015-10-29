@@ -17,14 +17,13 @@
       };
     });
 
-  function findInAceLink (scope, elm, attrs, ctrl) {
-
+  function findInAceLink (scope, element, attrs) {
     var forms = ['findForm', 'replaceForm', 'findOptionsForm'];
-
     forms.forEach(function (form) {
       _.forOwn(scope[form], function (value, key) {
         if (!_.startsWith(key, '$')){
           scope[form][key].$pristine = false;
+          scope[form][key].$setPristine = angular.noop;
         }
       })
     });
