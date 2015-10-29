@@ -100,6 +100,9 @@
             $state.go('dbQueries.newQuery');
             return;
           }
+          if (!self.query.noSQL && self.query.sQL) {
+            self.mode = 'sql';
+          }
         }
         self.currentST = String(self.query.workspaceID);
         SecurityService.appName = self.appName;
@@ -133,6 +136,29 @@
       });
       self.query.allowSelectRoles = allowSelectRolesArray.join(',');
     }
+
+    self.changeModeToSql = function () {
+      self.originalSql = self.query.sQL;
+      self.mode = 'sql';
+    };
+
+    self.onEditSql = function () {
+      if (self.query.noSQL) {
+        ConfirmationPopup.confirm('The NoSQL query will be deleted. Do you want to continue editing the SQL query?')
+          .then(function (confirm) {
+            if (confirm) {
+              self.query.noSQL = '';
+              console.log('deleted nosql')
+            } else {
+              console.log('sql read only')
+              self.query.sQL = self.originalSql;
+              // read only remains for the editing session.
+              // when canceling and editing again - editing enabled and confirmation pop-ups again.
+              self.ace.editors.sql.setReadOnly(true);
+            }
+          });
+      }
+    };
 
     self.saveQuery = function () {
       self.loading = true;
@@ -169,15 +195,21 @@
 
       return DbQueriesService.transformNoSQL(json)
         .then(function (response) {
-          self.loading = false;
-          self.transformedSql = response.data.sql;
-        return openValidationModal(response)})
-          .then(function (result) {
-            if (result) {
-              self.query.sQL = self.transformedSql;
-              saveQuery();
-            }
-      })
+          if (response.data.valid === 'always') {
+            self.query.sQL = self.transformedSql = response.data.sql;
+            saveQuery();
+          } else {
+            self.loading = false;
+            self.transformedSql = response.data.sql;
+            return openValidationModal(response)
+            .then(function (result) {
+              if (result) {
+                self.query.sQL = self.transformedSql;
+                saveQuery();
+              }
+            })
+          }
+        })
     }
 
     function openValidationModal (response) {
@@ -315,6 +347,7 @@
     };
 
     self.testData = function () {
+      self.testError = null;
       if (!self.query.__metadata)
         return;
       self.testLoading = true;
@@ -354,6 +387,7 @@
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
+      self.testError = error.data;
       self.testLoading = false;
     }
 

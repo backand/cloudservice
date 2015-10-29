@@ -53,7 +53,7 @@
                     <a ng-click="DbQuery.mode = 'nosql'" class="ng-binding">NoSQL</a>
                   </li>
                   <li ng-class="{active: DbQuery.mode === 'sql'}" class="ng-isolate-scope">
-                    <a ng-click="DbQuery.mode = 'sql'" class="ng-binding">SQL</a>
+                    <a ng-click="DbQuery.changeModeToSql()" class="ng-binding">SQL</a>
                   </li>
                 </ul>
 
@@ -77,7 +77,7 @@
                          id="sql"
                          ng-model="DbQuery.query.sQL"
                          rows="10"
-                         ng-readonly="!DbQuery.editMode">
+                         ng-readonly="!DbQuery.editMode" ng-change="DbQuery.onEditSql()">
                     </div>
                   </bknd-ace-features>
 

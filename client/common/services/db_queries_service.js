@@ -128,7 +128,10 @@
         }
       };
 
-      runQuery ? http.headers = { AppName: currentApp } : null;
+      if (runQuery) {
+        http.headers = { AppName: currentApp };
+        http.config = {ignoreError: true};
+      }
 
       return http;
 

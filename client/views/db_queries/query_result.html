@@ -1,6 +1,8 @@
-<label ng-hide="DbQuery.gridOptions.totalItems == undefined">Test Results</label>
+<label ng-hide="DbQuery.gridOptions.totalItems == undefined && !DbQuery.testError">Test Results</label>
 
-<div id="grid-container">
+<div ng-show="DbQuery.testError" class="input-error">{{ DbQuery.testError }}</div>
+
+<div id="grid-container" ng-hide="DbQuery.testError">
 
   <div ui-grid="DbQuery.gridOptions"
        class="querygrid" ui-grid-resize-columns
