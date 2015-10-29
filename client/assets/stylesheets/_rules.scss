@@ -270,26 +270,17 @@ bknd-copy-url[type="textarea"] .request-url-copy {
   }
 }
 
-.ace-full-screen.ace-show-test {
+.action-ace-show-test .bknd-ace-container.ace-full-screen {
   .ace_editor {
-    width: calc(75% + 55px);
+    width: calc(74% + 55px);
   }
 
-  .full-screen-button {
-    left: calc(75% - 25px);
-  }
-}
+  .bknd-ace-features {
+    left: 74%;
 
-.full-screen-button {
-  position: absolute;
-  top: 30px;
-  right: 40px;
-  z-index: 10;
-  opacity: 0.5;
-  border-radius: 4px;
-
-  &:hover {
-    opacity: 1;
+    .find-in-ace-form {
+      right: calc(100% + 10px);
+    }
   }
 }
 
