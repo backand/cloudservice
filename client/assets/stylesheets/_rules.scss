@@ -403,7 +403,10 @@ bknd-copy-url[type="textarea"] .request-url-copy {
 
       .action-template-docs-link {
         cursor: pointer;
-        margin-top: 20px;
+        display: inline-block;
+        margin-left: 10px;
+        padding: 5px;
+        margin-top: 2px;
 
         &:hover {
           text-decoration: underline;

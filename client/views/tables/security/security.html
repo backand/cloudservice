@@ -58,7 +58,9 @@
       </div>
     </fieldset>
 
-    <h4>Code Filter</h4>
+    <h4>Code Filter <span ng-show="security.showWizard">(</span><a href="" ng-show="security.showWizard"
+                        ng-click="security.showWizard = !security.showWizard">Customize Code</a><span ng-show="security.showWizard">)</span></h4>
+
     <span ng-show="security.predefinedFilterType  === 'nosql'">Need help with NoSQL syntax <ba-help-link key="nosqlQuery"></ba-help-link></span>
 
     <div ng-cloak>
