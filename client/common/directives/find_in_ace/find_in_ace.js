@@ -22,6 +22,8 @@
     forms.forEach(function (form) {
       _.forOwn(scope[form], function (value, key) {
         if (!_.startsWith(key, '$')){
+          // hack for angular 1.3.2-1.4.5
+          // in angular 1.4.6 use: scope[form].$removeControl(scope[form][key])
           scope[form][key].$pristine = false;
           scope[form][key].$setPristine = angular.noop;
         }
