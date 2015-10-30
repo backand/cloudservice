@@ -153,8 +153,8 @@
               console.log('sql read only')
               self.query.sQL = self.originalSql;
               // read only remains for the editing session.
-              // when canceling and editing again - editing enabled and confirmation pop-ups again.
-              self.ace.editors.sql.setReadOnly(true);
+              // No need - when canceling and editing again - editing enabled and confirmation pop-ups again.
+              //self.ace.editors.sql.setReadOnly(true);
             }
           });
       }
@@ -192,6 +192,13 @@
         self.loading = false;
         return;
       }
+
+      //if noSQL is empty change mode and save as SQL
+      if(json === ''){
+        self.mode = 'sql';
+        return saveQuery();
+      }
+
 
       return DbQueriesService.transformNoSQL(json)
         .then(function (response) {

@@ -125,7 +125,7 @@
 
               <div class="save-bar" ng-show="DbQuery.editMode">
                 <button type="submit"
-                        ng-disabled="DbQuery.queryForm.$invalid"
+                        ng-disabled="DbQuery.queryForm.$invalid || (DbQuery.query.noSQL === '' && DbQuery.query.sQL === '')"
                         class="btn btn-success btn-lg btn-w-lg" ladda="DbQuery.loading"
                         data-style="expand-right">Save
                 </button>
