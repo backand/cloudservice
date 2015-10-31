@@ -26,6 +26,16 @@
 
     self.query = [{}];
 
+    self.operatorsList = self.operators ||
+        {
+          text: ['equals', 'notEquals', 'startsWith', 'contains', 'notContains', 'empty', 'notEmpty'],
+          Numeric: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
+          DateTime: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
+          select: ['in'],
+          Boolean: ['is']
+        }
+
+
     // Don't allow adding a new predicate when there are no more fields to filter
     // or if no field was chosen for one of the predicates
     self.showAddButton = function () {
@@ -46,7 +56,7 @@
         _.remove(self.fields, predicate.field);
       }
 
-      predicate.operator = self.operators[predicate.field.type][0];
+      predicate.operator = self.operatorsList[predicate.field.type][0];
     };
 
     self.removePredicate = function (predicate) {

@@ -54,7 +54,7 @@
     };
 
     self.getUsers = function (size, page, sort, filter) {
-      return self.getData(self.usersTableName, size, page, '[{fieldName:"Username", order:"asc"}]', '', filter)
+      return self.getData(self.usersTableName, size, page, sort, '', filter)
     };
 
     self.getRoles = function () {
