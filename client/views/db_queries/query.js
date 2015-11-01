@@ -13,6 +13,7 @@
       'AppsService',
       'EscapeSpecialChars',
       '$modal',
+      '$window',
       DbQueryController]);
 
   function DbQueryController(CONSTS,
@@ -25,7 +26,8 @@
                              SecurityService,
                              AppsService,
                              EscapeSpecialChars,
-                             $modal) {
+                             $modal,
+                             $window) {
 
     var self = this;
     self.namePattern = /^\w+$/;
@@ -273,6 +275,10 @@
           });
       }
     };
+
+    self.showHelp = function(){
+      $window.open('http://docs.backand.com/en/latest/apidocs/queries/index.html', 'bkhelp');
+    }
 
     self.deleteQuery = function () {
       ConfirmationPopup.confirm('Are you sure you want to delete the query?')
