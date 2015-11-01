@@ -12,6 +12,7 @@
         differ: '=?',
         control: '=?'
       },
+      templateUrl: 'common/directives/ace-diff/ace-diff.html',
       link: function ($scope) {
 
         function initEditor(editor, editorSettings) {
@@ -54,12 +55,7 @@
           $scope.rightEditor = $scope.editors.right;
         });
 
-      },
-      template: '<div id="flex-container" class="ace-diff-container">' +
-        '<div id="acediff-left-editor"></div>' +
-        '<div id="acediff-gutter"></div>' +
-        '<div id="acediff-right-editor"></div>' +
-        '</div>'
+      }
     }
 
   }

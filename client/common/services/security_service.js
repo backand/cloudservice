@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function SecurityService($http, CONSTS, $q) {
+  function SecurityService($http, CONSTS) {
     var self = this;
     self.appName = null;
     self.usersTableName = CONSTS.backandUserObject;
@@ -54,7 +54,7 @@
     };
 
     self.getUsers = function (size, page, sort, filter) {
-      return self.getData(self.usersTableName, size, page, '[{fieldName:"Username", order:"asc"}]', '', filter)
+      return self.getData(self.usersTableName, size, page, sort, '', filter)
     };
 
     self.getRoles = function () {
@@ -76,7 +76,7 @@
         headers: { AppName: self.appName },
         data: user
       })
-    }
+    };
 
     self.userExists = function (username) {
       return $http({
@@ -87,7 +87,7 @@
           username: username
         }
       })
-    }
+    };
 
     self.postUser = function (user) {
       return self.postData(self.usersTableName, user);
@@ -124,7 +124,7 @@
         headers: { AppName: self.appName },
         data: userData
       });
-    }
+    };
 
     self.getUserToken = function (username) {
       return $http({
@@ -135,7 +135,7 @@
           username: username
         }
       })
-    }
+    };
 
     self.resetUserToken = function (username) {
       return $http({
@@ -146,9 +146,35 @@
           username: username
         }
       })
-    }
+    };
+
+    self.getFilterCode = function (objectToUpdate, filter) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/table/predefined/' + objectToUpdate + (filter.dontShowToAdmin ? '?showAllForAdmin=false' : ''),
+        params: {
+          usersObjectName: filter.userObjectName,
+          emailFieldName: filter.emailField,
+          maxLevel: 3
+        },
+        headers: { AppName: self.appName }
+      })
+    };
+
+    self.transformNoSQL = function (json) {
+      return $http({
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/nosql/transform?whereOnly=true',
+        data: {
+          json: json,
+          isFilter: true
+        },
+        headers: { AppName: self.appName }
+      });
+    };
+
   }
 
   angular.module('common.services')
-    .service('SecurityService', ['$http', 'CONSTS','$q', SecurityService]);
+    .service('SecurityService', ['$http', 'CONSTS', SecurityService]);
 })();

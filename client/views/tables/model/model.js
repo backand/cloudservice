@@ -139,13 +139,20 @@
     function openValidationModal (response) {
 
       var modalInstance = $modal.open({
-        templateUrl: 'views/tables/model/confirm_update.html',
+        templateUrl: 'common/modals/confirm_update/confirm_update.html',
         controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
         backdrop: 'static',
         keyboard: false,
         resolve: {
           validationResponse: function () {
             return response.data;
+          },
+          titles: function () {
+            return {
+              itemName: 'model',
+              detailsTitle: 'The following operations will be performed:',
+              resultProperty: 'alter'
+            }
           }
         }
       });

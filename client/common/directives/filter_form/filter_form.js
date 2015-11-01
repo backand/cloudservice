@@ -26,6 +26,18 @@
 
     self.query = [{}];
 
+    self.operatorsList = self.operators ||
+        {
+          text: ['equals', 'notEquals', 'startsWith', 'contains', 'notContains', 'empty', 'notEmpty'],
+          Numeric: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
+          DateTime: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
+          select: ['in'],
+          Boolean: ['is']
+        }
+
+
+    // Don't allow adding a new predicate when there are no more fields to filter
+    // or if no field was chosen for one of the predicates
     self.showAddButton = function () {
       return (self.fields && self.fields.length > 0 && (self.query.length === 0 || _.last(self.query).field));
     };
@@ -44,21 +56,23 @@
         _.remove(self.fields, predicate.field);
       }
 
-      if (self.operators[predicate.field.type].length === 1) {
-        predicate.operator = self.operators[predicate.field.type][0];
-      }
+      predicate.operator = self.operatorsList[predicate.field.type][0];
     };
 
     self.removePredicate = function (predicate) {
-      _.remove(self.query, predicate);
-      if (self.query.length === 0) {
-        self.query.push({});
-      }
-      if (self.noRepeat) {
-        self.fields.push(predicate.field);
-        self.fields.sort(function (a, b) {
-          return a.index - b.index;
-        });
+      if (predicate.field) {
+        _.remove(self.query, predicate);
+        if (self.query.length === 0) {
+          self.query.push({});
+        }
+        if (self.noRepeat) {
+          self.fields.push(predicate.field);
+          self.fields.sort(function (a, b) {
+            return a.index - b.index;
+          });
+        }
+      } else if (predicate === _.last(self.query) && self.query.length > 1) {
+        _.pullAt(self.query, self.query.length - 1);
       }
 
       self.submit();

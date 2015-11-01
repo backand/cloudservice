@@ -8,7 +8,11 @@ $ace-height: 550px;
   }
 
   #acediff-right-editor {
-    opacity: 0.9;
+    background-color: #3D3D38;
+
+    .ace_marker-layer .ace_active-line {
+      background-color: #363636;
+    }
   }
 }
 

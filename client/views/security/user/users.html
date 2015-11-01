@@ -82,9 +82,29 @@
           </div>
         </div>
       </div>
-      <br/>
-
       <div us-spinner spinner-key="loading"></div>
+      <fieldset class="collapsible-fieldset"
+                ng-class="{'fieldset-open': users.showFilter, 'fieldset-closed': !users.showFilter}">
+
+        <legend ng-click="users.toggleShowFilter()">
+          <a href="">
+            Filter Users</a>
+        </legend>
+
+        <div ng-show="users.showFilter">
+
+          <bknd-filter-form query="users.filterQuery"
+                            fields="users.filterOptions.fields"
+                            operators="users.filterOptions.operators"
+                            no-repeat="true"
+                            disable-value="users.disableValue"
+                            on-submit="users.filterData()">
+          </bknd-filter-form>
+
+        </div>
+      </fieldset>
+
+      <!-- Data Grid -->
       <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-selection external-scopes="users.gridExternalScope"
            class="grid"></div>
       <!--pagination-->

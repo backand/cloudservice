@@ -7,8 +7,8 @@
     self.LOG_URL = '/1/table/data/durados_Log';
     self.HISTORY_URL = '/1/table/data/durados_v_ChangeHistory';
 
-    self.getAppLog = function (appName, size, page, isAdmin, sort) {
-      var filterParam = '[{fieldName:"Admin", operator:"equals", value:"' + isAdmin + '"}]';
+    self.getAppLog = function (appName, size, page, filterParam, sort) {
+      //var filterParam =  '[{fieldName:"Admin", operator:"equals", value:"' + isAdmin + '"}]';
       var sortParam = sort || '[{fieldName:"id", order:"desc"}]';
       return $http({
         method: 'GET',
@@ -59,8 +59,8 @@
       return logMsgs;
     };
 
-    self.getAppActivity = function(appName, size, page, isException, sort){
-      var filterParam = '[{fieldName:"LogType", operator:"equals", value:"' + (isException ? '1' : '3') + '"}]';
+    self.getAppActivity = function(appName, size, page, filterParam, sort){
+      //var filterParam = '[{fieldName:"LogType", operator:"equals", value:"' + (isException ? '1' : '3') + '"}]';
 
       return $http({
         method: 'GET',

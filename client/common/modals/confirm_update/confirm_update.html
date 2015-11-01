@@ -5,7 +5,10 @@
   <div class="panel-body">
     <div class="callout" ng-class="'callout-' + ConfirmModelUpdate.text.cssClass">
       <h4>{{ ConfirmModelUpdate.text.title }}</h4>
-      <label ng-bind-html="ConfirmModelUpdate.text.message"></label>
+      <label>
+        <div>{{ConfirmModelUpdate.actionPhrase}}</div>
+        <div ng-bind-html="ConfirmModelUpdate.text.message"></div>
+      </label>
       <br>
       <ba-nested-container container="ConfirmModelUpdate.notifications"></ba-nested-container>
     </div>
@@ -17,11 +20,16 @@
     </a>
 
     <div class="callout callout-info" ng-show="ConfirmModelUpdate.detailsOpen">
-      <label>The following operations will be performed:</label>
-      <ul>
-        <li ng-repeat="alter in ConfirmModelUpdate.validationResponse.alter">{{alter}}</li>
+      <label>{{ ConfirmModelUpdate.detailsTitle }}</label>
+
+      <ul ng-if="ConfirmModelUpdate.details === 'array'">
+        <li ng-repeat="item in ConfirmModelUpdate.result">{{item}}</li>
       </ul>
+
+      <p ng-show="ConfirmModelUpdate.details === 'string'">{{ ConfirmModelUpdate.result }}</p>
+
     </div>
+
     <div class="modal-footer">
       <button class="btn btn-success" ng-if="ConfirmModelUpdate.text.okButton"
               ng-click="ConfirmModelUpdate.closeValidationModal(true)">

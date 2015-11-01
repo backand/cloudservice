@@ -270,52 +270,17 @@ bknd-copy-url[type="textarea"] .request-url-copy {
   }
 }
 
-.ace-full-screen
-{
+.action-ace-show-test .bknd-ace-container.ace-full-screen {
   .ace_editor {
-    font-size: 15px;
-    position: fixed;
-    top: 50px;
-    left: 0;
-    z-index: 1000;
-    width: 100%;
-    height: calc(100% - 50px) !important;
+    width: calc(74% + 55px);
   }
 
-  &.ace-show-test {
-    .ace_editor {
-      width: calc(75% + 55px);
+  .bknd-ace-features {
+    left: 74%;
+
+    .find-in-ace-form {
+      right: calc(100% + 10px);
     }
-
-    .full-screen-button {
-      left: calc(75% - 25px);
-    }
-  }
-
-  .full-screen-button {
-    z-index: 1000;
-    position: fixed;
-    top: 60px;
-    right: 30px;
-    opacity: 0.5;
-    border-radius: 4px;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
-
-.full-screen-button {
-  position: absolute;
-  top: 30px;
-  right: 40px;
-  z-index: 10;
-  opacity: 0.5;
-  border-radius: 4px;
-
-  &:hover {
-    opacity: 1;
   }
 }
 
@@ -406,13 +371,7 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     clear: both;
     display: block;
     float: left;
-    width: 99%;
-
-    &:hover .action-template-title {
-      border-radius: 4px;
-      background-color: #428bca;
-      color: #fff;
-    }
+    width: 50%;
 
     img {
       float: left;
@@ -426,14 +385,19 @@ bknd-copy-url[type="textarea"] .request-url-copy {
 
       .action-template-title {
         padding: 0 4px;
-        font-size: 24px;
+        font-size: 18px;
         font-weight: 500;
         line-height: 1.1;
         cursor: pointer;
+
       }
 
       .action-template-docs-link {
         cursor: pointer;
+        display: inline-block;
+        margin-left: 10px;
+        padding: 5px;
+        margin-top: 2px;
 
         &:hover {
           text-decoration: underline;

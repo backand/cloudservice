@@ -110,6 +110,10 @@
           "appException":{
             "page":"log/exception",
             "url":"http://docs.backand.com/en/latest/getting_started/log/index.html#server-side-exceptions"
+          },
+          "nosqlQuery":{
+            "url":"http://docs.backand.com/en/latest/apidocs/nosql_query_language/index.html",
+            "page":"queries"
           }
         }
 

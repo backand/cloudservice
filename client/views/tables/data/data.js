@@ -435,15 +435,10 @@
     function getFilterOptions () {
       self.filterOptions = {
         fields: getFieldsForFilter(),
-        operators: {
-          text: ['equals', 'notEquals', 'startsWith', 'contains', 'notContains', 'empty', 'notEmpty'],
-          Numeric: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
-          DateTime: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
-          select: ['in'],
-          Boolean: ['is']
-        }
+        operators: null
       };
       self.filterReady = true;
+      self.lastQuery = [];
     }
 
     function getFieldsForFilter () {
@@ -453,7 +448,7 @@
           index: index,
           name: field.name,
           type: getFieldTypeForFilter(field.type),
-          originalType: field.type,
+          originalType: field.type
         };
 
         if (field.type === 'SingleSelect' && !_.isEmpty(field.relatedViewName)) {
@@ -502,10 +497,11 @@
       });
 
       query = _.compact(query);
-      if (_.isEmpty(query)) {
+      if (_.isEqual(query, self.lastQuery)) {
         usSpinnerService.stop("loading-data");
         return;
       }
+      self.lastQuery = query;
 
       return DataService.get(
         self.tableName,

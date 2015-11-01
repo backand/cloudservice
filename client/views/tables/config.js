@@ -35,35 +35,41 @@
           }
         }
       })
-      .state('tables.columns.fields', {
+      .state('object_fields', {
         url: '/fields',
+        parent: 'tables.columns',
         templateUrl: 'views/tables/fields/fields.html',
         controller: 'FieldsController as fields'
       })
-      .state('tables.columns.actions', {
+      .state('object_actions', {
+        parent: 'tables.columns',
         url: '/actions',
         templateUrl: 'views/tables/rules/rules.html'
       })
-      .state('tables.columns.security', {
+      .state('object_security', {
         url: '/security',
+        parent: 'tables.columns',
         templateUrl: 'views/tables/security/security.html',
         controller: 'SecurityController as security'
       })
-      .state('tables.columns.settings', {
+      .state('object_settings', {
         url: '/settings',
+        parent: 'tables.columns',
         templateUrl: 'views/tables/settings/settings.html',
         controller: 'FieldsController as fields'
       })
-      .state('tables.columns.data', {
+      .state('object_data', {
         url: '/data?showLog',
+        parent: 'tables.columns',
         templateUrl: 'views/tables/data/data.html',
         controller: 'ObjectDataController as ObjectData',
         params: {
           showLog: true
         }
       })
-      .state('tables.columns.restapi', {
+      .state('object_restapi', {
         url: '/restapi',
+        parent: 'tables.columns',
         templateUrl: 'views/tables/restapi/restapi.html',
         controller: 'RestAPITab as rest'
       });

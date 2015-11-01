@@ -3,12 +3,14 @@
  */
 (function () {
 
-  function LogActivity($stateParams, $state, $log, NotificationService, AppLogService, $scope) {
+  function LogActivity($stateParams, $state, $log, NotificationService, AppLogService, $scope, usSpinnerService) {
 
     var self = this;
     var isException;
     this.title= '';
     this.sort = '[{fieldName:"ID", order:"desc"}]';
+    self.showFilter = true;
+    self.lastQuery = [];
 
     this.paginationOptions = {
       pageNumber: 1,
@@ -28,6 +30,8 @@
       else {
         self.title ='APP Activity';
       }
+      getFilterOptions();
+
     }());
 
     this.gridOptions = {
@@ -51,10 +55,69 @@
           }
           else
             self.sort = '';
+
           getLog();
         });
       }
     };
+
+    <!-- Filter -->
+
+    self.disableValue = function (operator) {
+      return ['empty', 'notEmpty'].indexOf(operator) > -1;
+    };
+
+    function filterValid (item) {
+      return item.field
+          && item.operator
+          && (item.value || self.disableValue(item.operator));
+    }
+
+    self.filterData = function () {
+
+      usSpinnerService.spin("loading");
+
+      var query = _.map(self.filterQuery, function (item) {
+
+        if (filterValid(item)) {
+          return {
+            fieldName: item.field.name,
+            operator: item.operator || 'equals',
+            value: self.disableValue(item.operator) ? '' : item.value || ''
+          };
+        }
+      });
+
+      query = _.compact(query);
+      if (_.isEqual(query, self.lastQuery)) {
+        usSpinnerService.stop("loading");
+        return;
+      }
+      self.lastQuery = query;
+
+      getLog();
+
+    };
+
+    function getFilterOptions () {
+      self.filterOptions = {
+        fields: getFieldsForFilter(),
+        operators: null
+      };
+      self.filterReady = true;
+      self.lastQuery = [];
+    }
+
+    function getFieldsForFilter () {
+      return [
+        {name: "ID", "type":"Numeric"},
+        {name: "Username",type:"text"},
+        {name: "Time",type:"DateTime"},
+        {name: "ExceptionMessage",type:"text"}
+      ];
+    }
+
+    <!-- End Filter -->
 
     $scope.$watchGroup([
       'log.paginationOptions.pageNumber',
@@ -62,11 +125,16 @@
       , getLog);
 
     function getLog() {
+
+
+      //add isException status to the grid filter
+      self.lastQuery.push({fieldName:"LogType", operator:"equals", value: (isException ? "1" : "3")});
+
       AppLogService.getAppActivity(
         $stateParams.appName,
         self.paginationOptions.pageSize,
         self.paginationOptions.pageNumber,
-        isException,
+        self.lastQuery,
         self.sort)
         .then(logSuccsessHandler, errorHandler);
     }
@@ -74,6 +142,7 @@
     function logSuccsessHandler(data) {
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
+      usSpinnerService.stop("loading");
     }
 
     this.pageMax = function (pageSize, currentPage, max) {
@@ -94,6 +163,7 @@
       'NotificationService',
       'AppLogService',
       '$scope',
+      'usSpinnerService',
       LogActivity
     ]);
 

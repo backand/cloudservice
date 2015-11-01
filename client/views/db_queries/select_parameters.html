@@ -1,7 +1,7 @@
 <strong ng-bind="modal.dictionaryItems.headings.tokens"></strong>
 <ul class="list-unstyled">
   <li ng-repeat="token in DbQuery.dictionaryItems.data.tokens"
-      ng-click="DbQuery.insertParamAtChar('query' ,token.token)"
+      ng-click="DbQuery.insertParamAtChar(DbQuery.mode ,token.token)"
       ng-bind="token.label"
       style="cursor:pointer;">
   </li>
@@ -11,7 +11,7 @@
 <strong>Parameters</strong>
 <ul class="list-unstyled">
   <li ng-repeat="parameter in DbQuery.getParameters()"
-      ng-click="DbQuery.insertParamAtChar('query', parameter)"
+      ng-click="DbQuery.insertParamAtChar(DbQuery.mode, parameter)"
       ng-bind="parameter"
       style="cursor:pointer;">
   </li>

@@ -1,64 +1,161 @@
-<div>
+<div class="row security-header security-filter">
+  <div class="col-lg-12 form-group">
+    <h3>Pre-defined Filter</h3>
 
-    <div class="row security-header">
-        <div class="col-lg-12 form-group">
-            <label class="strong" for="PermanentFilter">Pre-defined Filter</label>
-
-            <div class="pull-right">
-                <span class="ti-anchor" style="cursor: pointer;font-size:20px;" ng-click="security.toggleOptions()"></span>
-            </div>
-            <div ng-cloak>
-                <angled-window ng-show="security.dictionaryState"
-                               id="{{winId}}"
-                               title="App Tokens"
-                               grouping="w"
-                               close-function="security.toggleOptions()"
-                               style="left: 550px; top: -50px; height:400px;">
-                    <div ng-include="'views/tables/security/pre_defined_window.html'"></div>
-                </angled-window>
-            </div>
-
-      <textarea id="PermanentFilter" ng-model="security.view.dataEditing.permanentFilter"
-                name="PermanentFilter"
-                class="form-control"
-                ng-blur="security.savePermanentFilter()"
-                placeholder="{{security.placeHolder}}"
-                insert-at-caret></textarea>
-            <div class="field-description">
-                The pre-defined filter can be used to add additional restrictions to load data associated with the user
-                session
-                <ba-help-link key="preDefinedFilter"></ba-help-link>
-            </div>
-        </div>
+    <div class="field-description">
+      The pre-defined filter can be used to add additional restrictions to load data associated with the user
+      session
+      <ba-help-link key="preDefinedFilter"></ba-help-link>
     </div>
 
-    <div class="row security-header">
-        <div class="col-lg-12">
-            <label class="strong" >Security Template</label>
-            <select class="form-control"
-                    ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
-                    ng-model="security.currentST"
-                    ng-disabled="security.view.permissions.overrideinheritable">
+    <fieldset class="collapsible-fieldset"
+              ng-class="{'fieldset-open': security.showWizard, 'fieldset-closed': !security.showWizard}">
+
+      <legend ng-click="security.showWizard = !security.showWizard">
+        <a href="">
+          Wizard</a>
+      </legend>
+
+      <div ng-show="security.showWizard">
+
+        <form name="filterCodeForm" class="form-inline" ng-submit="security.getFilterCode()" novalidate>
+          Filter <b>{{ security.currentObjectName }}</b> for current user session based on
+          <div class="form-group">
+            <label class="sr-only" for="user-object">User Object</label>
+            <select id="user-object"
+                    class="ui-select"
+                    ng-model="security.filter.userObjectName"
+                    ng-options="object.name as object.name for object in security.appObjects"
+                    ng-change="security.getUserObjectFields()"
+                    required
+                    style="min-width: 130px; vertical-align: text-bottom;"></select>
+          </div>
+          object by
+          <div class="form-group">
+            <label class="sr-only" for="email-field">Email</label>
+            <select id="email-field"
+                    class="ui-select"
+                    ng-model="security.filter.emailField"
+                    ng-options="field.name as field.name for field in security.filter.userObjectFields"
+                    required
+                    style="min-width: 130px; vertical-align: text-bottom;"></select>
+          </div>
+          field and
+          <div class="form-group">
+            <select id="show-to-admin"
+                    class="ui-select"
+                    ng-model="security.filter.dontShowToAdmin"
+                    style="min-width: 130px; vertical-align: text-bottom;">
+              <option value="" selected>always show</option>
+              <option value="dontShow">don't show</option>
             </select>
-            <div class="field-description">
-                The current security template of the object. By override it you define a specific settings to this object
-                <ba-help-link key="objectSecurityTemplate"></ba-help-link>
-            </div>
-        </div>
-        <div class="col-lg-12" style="padding-top: 20px;">
-            <div class="strong"><label> Override the Security Template</label>
-                <label class="ui-switch ui-switch-success ui-switch-sm pull-right" for="override-checkbox">
-                    <input id="override-checkbox" type="checkbox" ng-model="security.view.permissions.overrideinheritable"/><i></i>
-                </label>
-            </div>
-            <security-matrix security-template="security.sTemplate"
-                             override="security.view.permissions.overrideinheritable"
-                             on-update="security.templateChanged(template)"
-                             on-role-add="security.templateRoleAdd(role)"
-                             on-role-rename="security.templateRoleRename(role, newRole)"
-                             on-role-remove="security.templateRoleRemove(role)">
-            </security-matrix>
-        </div>
+          </div>
+          items to admin.
+
+          <button class="btn btn-success pull-right" ng-disabled="filterCodeForm.$invalid">Get Code</button>
+        </form>
+
+      </div>
+    </fieldset>
+
+    <h4>Code Filter <span ng-show="security.showWizard">(</span><a href="" ng-show="security.showWizard"
+                        ng-click="security.showWizard = !security.showWizard">Customize Code</a><span ng-show="security.showWizard">)</span></h4>
+
+    <span ng-show="security.predefinedFilterType  === 'nosql'">Need help with NoSQL syntax <ba-help-link key="nosqlQuery"></ba-help-link></span>
+
+    <div ng-cloak>
+      <angled-window ng-show="security.dictionaryState"
+                     id="{{winId}}"
+                     title="App Tokens"
+                     grouping="w"
+                     close-function="security.toggleOptions()"
+                     style="left: 550px; top: -50px; height:400px;">
+        <div ng-include="'views/tables/security/pre_defined_window.html'"></div>
+      </angled-window>
     </div>
 
+    <div class="security-filter-ace-row" ng-class="{'security-filter-ace-row-disabled': security.showWizard}">
+
+      <div class="panel panel-left"
+           ng-class="security.predefinedFilterType  === 'nosql' ? 'ace-to-edit panel-success' : 'ace-to-view panel-default'">
+        <div class="panel-heading" ng-click="security.predefinedFilterType = 'nosql'">
+
+          <div class="pull-right" ng-show="security.predefinedFilterType  === 'nosql'">
+
+            <span class="ti-anchor" ng-click="security.toggleOptions()"></span>
+            <button class="btn btn-xs btn-w-md btn-success pull-right" ng-click="security.transformNoSQL()">
+              Validate & Update
+            </button>
+
+          </div>
+          <h3 class="panel-title">NoSQL</h3>
+        </div>
+
+        <bknd-ace-features editor="security.ace.editors['nosql']">
+          <div ui-ace="{onLoad : security.ace.onLoad, theme:'monokai', mode: 'json', rendererOptions: { fontSize: 15 }}"
+               id="nosql"
+               ng-model="security.view.dataEditing.nosqlPermanentFilter"
+               rows="10"
+               ng-readonly="security.predefinedFilterType !== 'nosql' || security.showWizard">
+          </div>
+        </bknd-ace-features>
+      </div>
+
+      <div class="panel panel-right"
+           ng-class="security.predefinedFilterType  === 'sql' ? 'ace-to-edit panel-success' : 'ace-to-view panel-default'">
+        <div class="panel-heading" ng-click="security.predefinedFilterType = 'sql'">
+
+          <div class="pull-right" ng-show="security.predefinedFilterType  === 'sql'">
+
+            <span class="ti-anchor" ng-click="security.toggleOptions()"></span>
+            <button class="btn btn-xs btn-w-md btn-success pull-right" ng-click="security.saveSqlFilter()">
+              Validate & Update
+            </button>
+
+          </div>
+          <h3 class="panel-title">SQL</h3>
+        </div>
+
+        <bknd-ace-features editor="security.ace.editors['sql']">
+          <div ui-ace="{onLoad : security.ace.onLoad, theme:'dawn', mode: 'sql', rendererOptions: { fontSize: 15 }}"
+               id="sql"
+               ng-model="security.view.dataEditing.permanentFilter"
+               rows="10"
+               ng-readonly="security.predefinedFilterType !== 'sql' || security.showWizard">
+          </div>
+        </bknd-ace-features>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row security-header">
+  <div class="col-lg-12">
+    <h3>Security Template</h3>
+    <select class="form-control"
+            ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
+            ng-model="security.currentST"
+            ng-disabled="security.view.permissions.overrideinheritable">
+    </select>
+
+    <div class="field-description">
+      The current security template of the object. By overriding it you define specific settings to this object
+      <ba-help-link key="objectSecurityTemplate"></ba-help-link>
+    </div>
+  </div>
+  <div class="col-lg-12" style="padding-top: 20px;">
+    <div class="strong"><label> Override the Security Template</label>
+      <label class="ui-switch ui-switch-success ui-switch-sm pull-right" for="override-checkbox">
+        <input id="override-checkbox" type="checkbox"
+               ng-model="security.view.permissions.overrideinheritable"/><i></i>
+      </label>
+    </div>
+    <security-matrix security-template="security.sTemplate"
+                     override="security.view.permissions.overrideinheritable"
+                     on-update="security.templateChanged(template)"
+                     on-role-add="security.templateRoleAdd(role)"
+                     on-role-rename="security.templateRoleRename(role, newRole)"
+                     on-role-remove="security.templateRoleRemove(role)">
+    </security-matrix>
+  </div>
 </div>

@@ -43,12 +43,12 @@
     };
 
     self.getColumns = function (tableName, force) {
-      if (!force && self.tables.tableName) {
-        return $q.when(self.tables.tableName);
+      if (!force && self.tables[tableName]) {
+        return $q.when(self.tables[tableName]);
       }
       return _get(tableName)
         .then(function (result) {
-          self.tables.tableName = result;
+          self.tables[tableName] = result;
           return result;
         });
     };
@@ -75,6 +75,11 @@
       //  return data;
       //});
     }
+
+    self.commitAndUpdate = function (table) {
+      update(table);
+      return _update(table);
+    };
 
     function _update (table) {
       return $http({

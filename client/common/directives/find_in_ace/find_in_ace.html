@@ -1,0 +1,68 @@
+<div class="find-in-ace">
+  <div class="find-in-ace-form" ng-show="showForm">
+    <form name="findForm" novalidate ng-submit="findInAce.findNext()" ng-disabled="false"
+          ng-model-options="{updateOn: 'default blur', debounce: {'default': 100, 'blur': 0}}">
+
+      <input name="searchTerm"
+             class="form-control input-round"
+             ng-model="findInAce.searchTerm"
+             ng-change="findInAce.findOnChange()"
+             placeholder="Press Enter to find"
+             autocomplete="off">
+      <i class="glyphicon glyphicon-circle-arrow-up ace-icon input-ace-icon first-ace-icon"
+         ng-click="findInAce.findPrev()"></i>
+      <i class="glyphicon glyphicon-circle-arrow-down ace-icon input-ace-icon second-ace-icon"
+         ng-click="findInAce.findNext()"></i>
+    </form>
+
+    <form name="replaceForm" novalidate ng-show="findInAce.replace && !findInAce.editor.getReadOnly()"
+          ng-submit="findInAce.findAndReplace()">
+      <input name="replaceTerm"
+             class="form-control input-round"
+             ng-model="findInAce.replaceTerm"
+             placeholder="Press Enter to find & replace"
+             autocomplete="off">
+      <i ng-show="findInAce.replaceTerm"
+         class="glyphicon glyphicon-ok-sign ace-icon input-ace-icon first-ace-icon"
+         ng-click="findInAce.findAndReplace()"></i>
+    </form>
+
+    <form name="findOptionsForm">
+      <div class="find-in-ace-options" ng-model-options="{updateOn: 'default'}">
+        <label class="ui-checkbox find-in-ace-options-left">
+          <input name="caseSensitive"
+                 type="checkbox"
+                 ng-model="findInAce.searchOptions.caseSensitive"
+                 ng-change="findInAce.findOnChange()">
+          <span>Match Case</span>
+        </label>
+
+        <label class="ui-checkbox find-in-ace-options-right">
+          <input name="regExp"
+                 type="checkbox"
+                 ng-model="findInAce.searchOptions.regExp"
+                 ng-change="findInAce.findOnChange()">
+          <span>Regex</span>
+        </label>
+
+        <label class="ui-checkbox find-in-ace-options-left">
+          <input name="wholeWord"
+                 type="checkbox"
+                 ng-model="findInAce.searchOptions.wholeWord"
+                 ng-change="findInAce.findOnChange()">
+          <span>Words</span>
+        </label>
+
+        <label class="ui-checkbox find-in-ace-options-right">
+          <input name="replace"
+                 type="checkbox"
+                 ng-model="findInAce.replace"
+                 ng-disabled="findInAce.editor.getReadOnly()">
+          <span>Replace</span>
+        </label>
+      </div>
+    </form>
+
+  </div>
+  <i class="glyphicon glyphicon-search ace-icon find-in-ace-icon" ng-click="showForm = !showForm"></i>
+</div>

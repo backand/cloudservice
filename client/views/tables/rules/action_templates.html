@@ -26,13 +26,19 @@
          class="action-template-description-container">
       <div class="action-template-text-container">
         <span class="action-template-title">{{rules.templateToShow.name}}</span>
-        <a ng-href="{{rules.templateToShow.json.docsUrl}}" target="_blank" class="action-template-docs-link" ng-click="$event.stopPropagation();">
-          <!--<i class="ti-help-alt"></i>-->
-          Open Documentation
-        </a><br />
+        <br/>
         <span class="action-template-description">{{rules.templateToShow.shortDescription}}</span>
-
-
+        <br/>
+        <div style="margin-top: 10px;">
+          <button
+                  class="btn btn-success pull-left">
+            <strong>+ Add Action</strong>
+          </button>
+          <a ng-href="{{rules.templateToShow.json.docsUrl}}" target="_blank" class="action-template-docs-link" ng-click="$event.stopPropagation();">
+            <!--<i class="ti-help-alt"></i>-->
+            Read Documentation
+          </a>
+        </div>
       </div>
     </div>
 

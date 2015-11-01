@@ -12,6 +12,7 @@
       'SecurityService',
       'AppsService',
       'EscapeSpecialChars',
+      '$modal',
       DbQueryController]);
 
   function DbQueryController(CONSTS,
@@ -23,16 +24,19 @@
                              DictionaryService,
                              SecurityService,
                              AppsService,
-                             EscapeSpecialChars) {
+                             EscapeSpecialChars,
+                             $modal) {
 
     var self = this;
     self.namePattern = /^\w+$/;
     self.gridOptions = {virtualizationThreshold: 10};
+    self.mode = 'nosql';
+    self.dbType = 'sql';
 
-    self.ace = {
-      dbType: 'sql',
-      onLoad: function(_editor) {
-        self.ace.editor = _editor;
+      self.ace = {
+      editors: {},
+      onLoad: function (_editor) {
+        self.ace.editors[_editor.container.id] = _editor;
         _editor.$blockScrolling = Infinity;
       }
     };
@@ -79,7 +83,7 @@
 
     function loadDbType() {
       var app = AppsService.currentApp;
-        self.ace.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
+        self.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
     }
 
     function loadQueries() {
@@ -95,6 +99,9 @@
           if (typeof self.query == 'undefined') {
             $state.go('dbQueries.newQuery');
             return;
+          }
+          if (!self.query.noSQL && self.query.sQL) {
+            self.mode = 'sql';
           }
         }
         self.currentST = String(self.query.workspaceID);
@@ -130,8 +137,40 @@
       self.query.allowSelectRoles = allowSelectRolesArray.join(',');
     }
 
+    self.changeModeToSql = function () {
+      self.originalSql = self.query.sQL;
+      self.mode = 'sql';
+    };
+
+    self.onEditSql = function () {
+      if (self.query.noSQL) {
+        ConfirmationPopup.confirm('The NoSQL query will be deleted. Do you want to continue editing the SQL query?')
+          .then(function (confirm) {
+            if (confirm) {
+              self.query.noSQL = '';
+              console.log('deleted nosql')
+            } else {
+              console.log('sql read only')
+              self.query.sQL = self.originalSql;
+              // read only remains for the editing session.
+              // No need - when canceling and editing again - editing enabled and confirmation pop-ups again.
+              //self.ace.editors.sql.setReadOnly(true);
+            }
+          });
+      }
+    };
+
     self.saveQuery = function () {
       self.loading = true;
+      if (self.mode === 'sql') {
+        return saveQuery();
+
+      } else if (self.mode === 'nosql') {
+        return saveNoSql();
+      }
+    };
+
+    function saveQuery () {
       self.queryUrl = '';
       self.queryHttp = '';
       self.openParamsModal = false;
@@ -141,7 +180,68 @@
       var queryToSend = EscapeSpecialChars(self.query);
       DbQueriesService.saveQuery(queryToSend)
         .then(reload);
-    };
+    }
+
+    function saveNoSql () {
+
+      try {
+        var json = _.isEmpty(self.query.noSQL) ?
+          '' : JSON.parse(self.query.noSQL)
+      } catch (error) {
+        NotificationService.add('error', 'JSON is not properly formatted');
+        self.loading = false;
+        return;
+      }
+
+      //if noSQL is empty change mode and save as SQL
+      if(json === ''){
+        self.mode = 'sql';
+        return saveQuery();
+      }
+
+
+      return DbQueriesService.transformNoSQL(json)
+        .then(function (response) {
+          if (response.data.valid === 'always') {
+            self.query.sQL = self.transformedSql = response.data.sql;
+            saveQuery();
+          } else {
+            self.loading = false;
+            self.transformedSql = response.data.sql;
+            return openValidationModal(response)
+            .then(function (result) {
+              if (result) {
+                self.query.sQL = self.transformedSql;
+                saveQuery();
+              }
+            })
+          }
+        })
+    }
+
+    function openValidationModal (response) {
+
+      var modalInstance = $modal.open({
+        templateUrl: 'common/modals/confirm_update/confirm_update.html',
+        controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
+        backdrop: 'static',
+        keyboard: false,
+        resolve: {
+          validationResponse: function () {
+            return response.data;
+          },
+          titles: function () {
+            return {
+              itemName: 'query',
+              detailsTitle: 'The NoSQL is equivalent to the following SQL query:',
+              resultProperty: 'sql'
+            }
+          }
+        }
+      });
+
+      return modalInstance.result;
+    }
 
     function reload(query) {
       self.loading = false;
@@ -236,7 +336,10 @@
 
     self.insertParamAtChar = function (elementId, param) {
       setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
-        self.ace.editor.insert("{{" + param + "}}");
+        if(self.mode == 'nosql')
+          self.ace.editors[self.mode].insert("\"\'{{" + param + "}}\'\"");
+        else
+          self.ace.editors[self.mode].insert("\'{{" + param + "}}\'");
       });
     };
 
@@ -251,6 +354,7 @@
     };
 
     self.testData = function () {
+      self.testError = null;
       if (!self.query.__metadata)
         return;
       self.testLoading = true;
@@ -290,6 +394,7 @@
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
+      self.testError = error.data;
       self.testLoading = false;
     }
 

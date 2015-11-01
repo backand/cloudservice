@@ -57,7 +57,7 @@
             &.active {
                 > a {
                     color: $link-color;
-                }                
+                }
             }
 
             &:hover {
@@ -136,7 +136,7 @@
             > a {
                 display: block;
             }
-        }        
+        }
     }
 
     .tab-content {
@@ -146,3 +146,6 @@
 
 }
 
+.ui-tab-container tabs .tab-container .nav-tabs li.active a {
+  border: none;
+}

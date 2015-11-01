@@ -19,6 +19,8 @@
       self.appName = SecurityService.appName = $state.params.appName;
       self.actions = ['Delete'];
       self.action = '';
+      self.showFilter = true;
+      self.lastQuery = [];
 
       self.invitedUsers = '';
       self.invitedAdmins = '';
@@ -84,7 +86,7 @@
           return self.paginationOptions.pageNumber
       }, getRoles);
 
-      getRoles();
+      //getRoles();
 
       //get the default role for invited users
       successApp(AppsService.currentApp);
@@ -122,6 +124,9 @@
     };
 
     function getRoles(){
+
+      getFilterOptions();
+
       usSpinnerService.spin('loading');
       if (self.roles == null) {
         SecurityService.getRoles()
@@ -147,20 +152,25 @@
       //var roleFilter = self.adminMode ? 'Admin' : '%';//_.without(_.map(self.roles, 'Name'),'Admin').join(',');
 
       if(self.adminMode){
-      SecurityService.getUsers(
-        self.paginationOptions.pageSize,
-        self.paginationOptions.pageNumber,
-        self.sort,
-        '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
-        '{fieldName:"Role", operator:"in", value:",Admin"}]')
-        .then(usersSuccessHandler, errorHandler);
-      }
-      else {
+
+        self.lastQuery.push({fieldName:"Email", operator:"notEquals", value:"guest@durados.com"});
+        self.lastQuery.push({fieldName:"Role", operator:"in", value:",Admin"});
+
         SecurityService.getUsers(
           self.paginationOptions.pageSize,
           self.paginationOptions.pageNumber,
           self.sort,
-          '[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"}]')
+          self.lastQuery)
+          .then(usersSuccessHandler, errorHandler);
+      }
+      else {
+        self.lastQuery.push({fieldName:"Email", operator:"notEquals", value:"guest@durados.com"});
+
+        SecurityService.getUsers(
+          self.paginationOptions.pageSize,
+          self.paginationOptions.pageNumber,
+          self.sort,
+          self.lastQuery)
           .then(usersSuccessHandler, errorHandler);
       }
         //The , before the filter is a bug
@@ -270,12 +280,69 @@
       //  data.Role = role;
     }
 
+    <!-- Filter -->
+
+    self.disableValue = function (operator) {
+      return ['empty', 'notEmpty'].indexOf(operator) > -1;
+    };
+
+    function filterValid (item) {
+      return item.field
+          && item.operator
+          && (item.value || self.disableValue(item.operator));
+    }
+
+    self.filterData = function () {
+
+      usSpinnerService.spin("loading");
+
+      var query = _.map(self.filterQuery, function (item) {
+
+        if (filterValid(item)) {
+          return {
+            fieldName: item.field.name,
+            operator: item.operator || 'equals',
+            value: self.disableValue(item.operator) ? '' : item.value || ''
+          };
+        }
+      });
+
+      query = _.compact(query);
+      if (_.isEqual(query, self.lastQuery)) {
+        usSpinnerService.stop("loading");
+        return;
+      }
+      self.lastQuery = query;
+
+      getUsers();
+
+    };
+
+    function getFilterOptions () {
+      self.filterOptions = {
+        fields: getFieldsForFilter(),
+        operators: null
+      };
+      self.filterReady = true;
+      self.lastQuery = [];
+    }
+
+    function getFieldsForFilter () {
+      return [
+        {name: "Username", "type":"text"},
+        {name: "FirstName",type:"text"},
+        {name: "LastName",type:"text"},
+        {name: "IsApproved",type:"Boolean"}
+      ];
+    }
+
+    <!-- End Filter -->
+
     /**
      * extend the default user object and
      * delegate to SecurityService post method
      * @param user
      */
-
 
     self.isEmail = function (email) {
       if (email == '') return false;

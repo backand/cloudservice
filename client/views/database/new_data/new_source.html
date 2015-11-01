@@ -62,17 +62,19 @@
 
   <div class="row">
     <div class="col-md-8 col-lg-9">
-      <div
-        ui-ace="{onLoad : dbedit.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
-        class="form-control ace-db-template"
-        name="tableTemplate"
-        id="tableTemplate"
-        ng-model="dbedit.template.schema"
-        required
-        ng-pattern="codeRegex"
-        style="resize: vertical; height: 500px;">
+      <bknd-ace-features editor="dbedit.ace.editor">
+        <div
+          ui-ace="{onLoad : dbedit.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+          class="form-control ace-db-template"
+          name="tableTemplate"
+          id="tableTemplate"
+          ng-model="dbedit.template.schema"
+          required
+          ng-pattern="codeRegex"
+          style="resize: vertical; height: 500px;">
+        </div>
+      </bknd-ace-features>
 
-      </div>
       <div class="notice">Id is added to all objects automatically, please do not add it yourself</div>
 
     </div>

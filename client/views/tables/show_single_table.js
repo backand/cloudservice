@@ -33,31 +33,31 @@
       self.tabs = [
         {
           heading: 'Fields',
-          route: '^.fields'
+          route: 'object_fields'
         },
         {
           heading: 'Actions',
-          route: '^.actions'
+          route: 'object_actions'
         },
         {
           heading: 'Security',
-          route: '^.security'
+          route: 'object_security'
         },
         {
           heading: 'Settings',
-          route: '^.settings'
+          route: 'object_settings'
         },
         {
           heading: 'Data',
-          route: '^.data'
+          route: 'object_data'
         },
         {
           heading: 'REST API',
-          route: '^.restapi'
+          route: 'object_restapi'
         }/*
         {
           heading: 'Config Log',
-          route: 'tables.columns.log'
+          route: 'object_tables.columns.log'
         }*/
       ];
       RulesService.appName = DictionaryService.appName = SecurityService.appName = self.appName;

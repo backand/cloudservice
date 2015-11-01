@@ -143,7 +143,7 @@
     };
 
     self.showTable = function(table) {
-      var path = 'tables.columns.fields';
+      var path = 'object_fields';
       if (self.isTablesActive()) {
         path = $state.current.name;
       }

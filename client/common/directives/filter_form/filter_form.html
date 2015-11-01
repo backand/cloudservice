@@ -28,7 +28,7 @@
             <select class="form-control"
                     ng-change="filterForm.submit()"
                     ng-model="predicate.operator"
-                    ng-options="operator for operator in filterForm.operators[predicate.field.type]"></select>
+                    ng-options="operator for operator in filterForm.operatorsList[predicate.field.type]"></select>
           </span>
 
           <!-- Value -->
