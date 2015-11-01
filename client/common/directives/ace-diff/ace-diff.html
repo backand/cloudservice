@@ -7,7 +7,7 @@
   <div class="bknd-ace-features" ng-class="aceFeatures.getThemeClass()">
     <bknd-find-in-ace editor="rightEditor"></bknd-find-in-ace>
     <i class="glyphicon ace-icon expand-ace-icon"
-       ng-click="aceFullScreen = !aceFullScreen"
+       ng-click="toggleAceFullScreen()"
        ng-class="aceFullScreen ? 'glyphicon-resize-small': 'glyphicon-resize-full'"></i>
   </div>
 

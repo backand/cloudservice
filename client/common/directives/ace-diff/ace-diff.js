@@ -15,6 +15,14 @@
       templateUrl: 'common/directives/ace-diff/ace-diff.html',
       link: function ($scope) {
 
+        $scope.toggleAceFullScreen = function () {
+          $scope.aceFullScreen = !$scope.aceFullScreen;
+          // fix bug in full screen display
+          if ($scope.aceFullScreen) {
+            setTimeout("window.dispatchEvent(new Event('resize'))", 50);
+          }
+        };
+
         function initEditor(editor, editorSettings) {
 
           editor.on('change', function (data) {
