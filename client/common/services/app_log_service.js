@@ -8,7 +8,7 @@
     self.HISTORY_URL = '/1/table/data/durados_v_ChangeHistory';
 
     self.getAppLog = function (appName, size, page, filterParam, sort) {
-      //var filterParam = '[{fieldName:"Admin", operator:"equals", value:"' + isAdmin + '"}]';
+      //var filterParam =  '[{fieldName:"Admin", operator:"equals", value:"' + isAdmin + '"}]';
       var sortParam = sort || '[{fieldName:"id", order:"desc"}]';
       return $http({
         method: 'GET',
