@@ -1,0 +1,20 @@
+<div class="bknd-ace-container monokai" ng-class="{'ace-full-screen': aceFullScreen}">
+
+  <div class="bknd-ace-features ace-find-left-editor">
+    <bknd-find-in-ace editor="leftEditor"></bknd-find-in-ace>
+  </div>
+
+  <div class="bknd-ace-features" ng-class="aceFeatures.getThemeClass()">
+    <bknd-find-in-ace editor="rightEditor"></bknd-find-in-ace>
+    <i class="glyphicon ace-icon expand-ace-icon"
+       ng-click="aceFullScreen = !aceFullScreen"
+       ng-class="aceFullScreen ? 'glyphicon-resize-small': 'glyphicon-resize-full'"></i>
+  </div>
+
+  <div id="flex-container" class="ace-diff-container">
+    <div id="acediff-left-editor"></div>
+    <div id="acediff-gutter"></div>
+    <div id="acediff-right-editor"></div>
+  </div>
+
+</div>

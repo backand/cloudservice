@@ -6,6 +6,16 @@ $monokai-color: #ccc;
 .bknd-ace-container {
   position: relative;
 
+  &.monokai {
+    color: $monokai-color;
+    background-color: $monokai-bg;
+  }
+
+  &.dawn {
+    color: $dawn-color;
+    background-color: $dawn-bg;
+  }
+
   &::selection {
     background: yellow;
   }
@@ -20,6 +30,16 @@ $monokai-color: #ccc;
       z-index: 1000;
       width: 100%;
       height: calc(100% - 50px) !important;
+    }
+
+    #flex-container.ace-diff-container {
+      font-size: 15px;
+      position: fixed;
+      top: 50px !important;
+      left: 0;
+      z-index: 1000;
+      width: 100%;
+      height: 100%;
     }
 
     .full-screen-button {
@@ -47,15 +67,14 @@ $monokai-color: #ccc;
     top: 10px;
     right: 65px;
     z-index: 10;
+    background-color: inherit;
 
-    &.monokai {
-      color: $monokai-color;
-      background-color: $monokai-bg;
-    }
+    &.ace-find-left-editor {
+      right: calc(50% + 80px);
 
-    &.dawn {
-      color: $dawn-color;
-      background-color: $dawn-bg;
+      .ace-icon.find-in-ace-icon {
+        top: 0;
+      }
     }
 
     .find-in-ace {

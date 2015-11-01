@@ -1,5 +1,5 @@
-<div class="bknd-ace-container" ng-class="{'ace-full-screen': aceFullScreen}">
-  <div class="bknd-ace-features" ng-class="aceFeatures.getThemeClass()">
+<div class="bknd-ace-container" ng-class="[aceFullScreen ? 'ace-full-screen': null, aceFeatures.getThemeClass()]">
+  <div class="bknd-ace-features">
     <bknd-find-in-ace editor="aceFeatures.editor" nesting-form="aceFeatures.nestingForm"></bknd-find-in-ace>
     <i class="glyphicon ace-icon expand-ace-icon"
        ng-click="aceFullScreen = !aceFullScreen"

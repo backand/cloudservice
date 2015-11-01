@@ -49,10 +49,10 @@
                       <ba-help-link key="nosqlQuery" with-text="false"></ba-help-link>
                     </div>
 
-                  <li ng-class="{active: DbQuery.mode === 'nosql'}" class="ng-isolate-scope active">
+                  <li ng-class="{active: DbQuery.mode === 'nosql'}">
                     <a ng-click="DbQuery.mode = 'nosql'" class="ng-binding">NoSQL</a>
                   </li>
-                  <li ng-class="{active: DbQuery.mode === 'sql'}" class="ng-isolate-scope">
+                  <li ng-class="{active: DbQuery.mode === 'sql'}">
                     <a ng-click="DbQuery.changeModeToSql()" class="ng-binding">SQL</a>
                   </li>
                 </ul>

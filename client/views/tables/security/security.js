@@ -148,6 +148,10 @@
     }
 
     self.transformNoSQL = function () {
+      if (_.isEmpty(self.view.dataEditing.nosqlPermanentFilter)) {
+        self.view.dataEditing.permanentFilter = '';
+        return savePermanentFilter();
+      }
 
       try {
         var q = JSON.parse(self.view.dataEditing.nosqlPermanentFilter)
