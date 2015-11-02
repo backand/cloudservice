@@ -18,9 +18,10 @@
         $scope.toggleAceFullScreen = function () {
           $scope.aceFullScreen = !$scope.aceFullScreen;
           // fix bug in full screen display
-          if ($scope.aceFullScreen) {
-            setTimeout("window.dispatchEvent(new Event('resize'))", 50);
-          }
+          setTimeout(function() {
+            $scope.leftEditor.resize()
+            $scope.rightEditor.resize()
+          }, 50);
         };
 
         function initEditor(editor, editorSettings) {
