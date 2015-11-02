@@ -117,6 +117,9 @@
       }
       self.lastQuery = query;
 
+      //add Admin status to the grid filter
+      self.lastQuery.push({fieldName:"Admin", operator:"equals", value:String(isAdmin)});
+
       getLog();
 
     };
@@ -127,7 +130,8 @@
         operators: null
       };
       self.filterReady = true;
-      self.lastQuery = [];
+      self.lastQuery = [{fieldName:"Admin", operator:"equals", value:String(isAdmin)}];
+
     }
 
     function getFieldsForFilter () {
@@ -147,9 +151,6 @@
     }, getLog);
 
     function getLog() {
-
-      //add Admin status to the grid filter
-      self.lastQuery.push({fieldName:"Admin", operator:"equals", value:String(isAdmin)});
 
       AppLogService.getAppLog($stateParams.appName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.lastQuery, self.sort)
         .then(logSuccsessHandler, errorHandler);
