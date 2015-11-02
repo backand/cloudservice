@@ -6,6 +6,8 @@
   function baAceDiff($timeout) {
     return {
       scope: {
+        leftContent: '=',
+        rightContent: '=',
         leftEditor: '=?',
         rightEditor: '=?',
         aceDiffOptions: '=?',
@@ -19,25 +21,26 @@
           $scope.aceFullScreen = !$scope.aceFullScreen;
           // fix bug in full screen display
           setTimeout(function() {
-            $scope.leftEditor.resize()
-            $scope.rightEditor.resize()
+            $scope.leftEditor.resize();
+            $scope.rightEditor.resize();
           }, 50);
         };
 
-        function initEditor(editor, editorSettings) {
+        function initEditor(editor, editorSettings, contentModel) {
 
           editor.on('change', function (data) {
-            editorSettings.content = editor.getValue();
-            _.debounce(function () {
-              $scope.$digest();
-            }, 350);
+            $timeout(function () {
+              $scope[contentModel] = editor.getValue();
+            });
           });
 
-          $scope.$on('ace-update', function () {
+          $scope.$watch(contentModel, function (newVal, oldVal) {
+            if (newVal === editor.getSession().getValue()) return;
             if (editorSettings) {
-              editor.getSession().setValue(editorSettings.content);
+              editor.getSession().setValue($scope[contentModel]);
             }
           });
+
           $scope.aceDiffOptions.onLoad(editor)
         }
 
@@ -57,8 +60,8 @@
           $scope.differ = new AceDiff($scope.aceDiffOptions);
           $scope.editors = $scope.differ.getEditors();
 
-          initEditor($scope.editors.left, $scope.aceDiffOptions.left);
-          initEditor($scope.editors.right, $scope.aceDiffOptions.right);
+          initEditor($scope.editors.left, $scope.aceDiffOptions.left, 'leftContent');
+          initEditor($scope.editors.right, $scope.aceDiffOptions.right, 'rightContent');
 
           $scope.leftEditor = $scope.editors.left;
           $scope.rightEditor = $scope.editors.right;

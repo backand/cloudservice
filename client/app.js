@@ -45,6 +45,7 @@
     'common.directives',
     'theme.directives',
     'common.services',
+    'common.data_models',
     'common.filters.uppercase',
     'common.filters.newTerminology',
     'common.interceptors.http',

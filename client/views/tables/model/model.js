@@ -1,111 +1,67 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ModelController', ['$scope', 'AppsService', 'ModelService', 'usSpinnerService', 'NotificationService', 'DatabaseService', '$modal', '$q', ModelController]);
+    .controller('ModelController', ['$scope', 'AppsService', 'DbDataModel', 'ModelService', 'usSpinnerService', 'NotificationService', 'DatabaseService', '$modal', '$q', ModelController]);
 
-  function ModelController($scope, AppsService, ModelService, usSpinnerService, NotificationService, DatabaseService, $modal, $q) {
+  function ModelController($scope, AppsService, DbDataModel, ModelService, usSpinnerService, NotificationService, DatabaseService, $modal, $q) {
 
     var self = this;
 
     function init() {
       var currentApp = AppsService.currentApp;
       self.appName = currentApp.Name;
-      self.fieldTypes = ['string', 'text', 'datetime', 'float', 'boolean'];
-      self.schemaEditor = null;
-      self.oldSchemaEditor = null;
-      self.editorControl = {};
       self.showHelpDialog = false;
-      self.showDiffs = true;
+      self.oldModel = DbDataModel.currentModel;
+      self.newModel = DbDataModel.newModel;
+
+      self.tabs = [
+        {
+          heading: 'Json Code',
+          route: 'json_model'
+        },
+        {
+          heading: 'ERD',
+          route: 'erd_model'
+        }
+      ];
 
       getSchema();
     }
 
-    self.aceDiffOptions = {
-      onLoad : function(editor) {
-        editor.$blockScrolling = Infinity;
-        editor.getSession().setTabSize(2);
-      },
-      theme:'ace/theme/monokai',
-      mode: 'ace/mode/json',
-      right: {
-        editable: false
-      },
-      left: {
-        copyLinkEnabled: false
+
+    self.showHelp = function (event) {
+      self.showHelpDialog = true;
+      if (event) {
+        event.stopPropagation();
       }
     };
 
-    self.toggleShowDiff = function () {
-      self.showDiffs = !self.showDiffs;
-      self.differ.setOptions({showDiffs: self.showDiffs});
-    };
-
-    self.showHelp = function () {
-      self.showHelpDialog = true;
-    };
+    $scope.$on('open-help', self.showHelp);
 
     self.closeHelp = function () {
       self.showHelpDialog = false;
-      setCursorPosition();
+      $scope.$broadcast('close-help');
     };
 
     self.reset = function(){
       DatabaseService.removeCustomSchema(self.appName);
-
       getSchema();
-
-    }
+    };
 
     function getSchema () {
       usSpinnerService.spin('loading');
-      ModelService.get(self.appName)
-        .then(function (data) {
-          updateSchema(data);
+      DbDataModel.get(self.appName)
+        .finally(function () {
           usSpinnerService.stop('loading');
-        },
-        errorHandler)
-    }
-
-    // save schema in local storage
-    function saveCustomSchema (schema) {
-      DatabaseService.saveCustomSchema(self.appName, schema);
-    }
-
-    $scope.$watch(function () {
-      if (self.schemaEditor)
-        return self.schemaEditor.getValue()
-    }, saveCustomSchema);
-
-    function updateSchema (data) {
-      self.schema = angular.toJson(data.data, true);
-      self.aceDiffOptions.right.content = self.schema;
-      // get schema from local storage if exists
-      self.aceDiffOptions.left.content = DatabaseService.getCustomSchema(self.appName) || self.schema;
-      $scope.$root.$broadcast('ace-update');
-    }
-
-    self.insertTypeAtChar = function (param) {
-      var tokenAtCursor = getTokenAtCursor();
-      if (tokenAtCursor !== '""' && tokenAtCursor !== "''")
-        param = '"' + param + '"';
-
-      setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
-        self.schemaEditor.insert(param);
-      });
-    };
-
-    function getTokenAtCursor () {
-      var position = self.schemaEditor.getCursorPosition();
-      var token = self.schemaEditor.session.getTokenAt(position.row, position.column);
-      if (token !== null) return token.value;
+        })
     }
 
     self.saveSchema = function() {
       self.loading = true;
 
       try {
-        var oldSchema = JSON.parse(self.oldSchemaEditor.getValue());
-        var schema = JSON.parse(self.schemaEditor.getValue());
+        var oldSchema = JSON.parse(self.oldModel.schema);
+        var schema = JSON.parse(self.newModel.schema);
       } catch (err) {
         NotificationService.add('error', 'JSON is not properly formatted');
         self.loading = false;
@@ -120,21 +76,16 @@
         .then(function (result) {
           if (result) {
             self.loading = true;
-            return ModelService.update(self.appName, schema)
+            return DbDataModel.update(self.appName, schema)
           }
           return $q.reject(null);
         })
         .then(function (data) {
-          updateSchema(data);
           $scope.$root.$broadcast('fetchTables');
           self.loading = false;
         })
         .catch(modelErrorHandler);
     };
-
-    function setCursorPosition () {
-      self.editorControl.gotoLine(self.schemaEditor);
-    }
 
     function openValidationModal (response) {
 
@@ -160,15 +111,9 @@
       return modalInstance.result;
     }
 
-    function modelErrorHandler(error, message){
+    function modelErrorHandler (error, message) {
       getSchema();
       $scope.$root.$broadcast('fetchTables');
-      self.loading = false;
-      usSpinnerService.stop('loading');
-    }
-
-    function errorHandler(error, message) {
-      NotificationService.add('error', message);
       self.loading = false;
       usSpinnerService.stop('loading');
     }

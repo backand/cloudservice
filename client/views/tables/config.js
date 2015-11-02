@@ -13,6 +13,7 @@
       })
       .state('tables.model', {
         url: '/model',
+        abstract: true,
         controller: 'ModelController as Model',
         templateUrl: 'views/tables/model/model.html'
       })
