@@ -1,0 +1,42 @@
+<div
+  mouse-capture
+  ng-keydown="flowchartCtrl.keyDown($event)"
+  ng-keyup="flowchartCtrl.keyUp($event)">
+
+  <div style="width: 100%; overflow: hidden; height: 100%">
+    <div style="height: 100%">
+      <button
+        ng-click="flowchartCtrl.addNewNode()"
+        title="Add a new node to the chart">
+        Add Node
+      </button>
+      <button
+        ng-click="flowchartCtrl.addNewInputConnector()"
+        ng-disabled="flowchartCtrl.chartViewModel.getSelectedNodes().length == 0"
+        title="Add a new input connector to the selected node">
+        Add Input Connector
+      </button>
+      <button
+        ng-click="flowchartCtrl.addNewOutputConnector()"
+        ng-disabled="flowchartCtrl.chartViewModel.getSelectedNodes().length == 0"
+        title="Add a new output connector to the selected node">
+        Add Output Connector
+      </button>
+      <button
+        ng-click="flowchartCtrl.deleteSelected()"
+        ng-disabled="flowchartCtrl.chartViewModel.getSelectedNodes().length == 0 && flowchartCtrl.chartViewModel.getSelectedConnections().length == 0"
+        title="Delete selected nodes and connections">
+        Delete Selected
+      </button>
+
+      <!--
+      This custom element defines the flowchart.
+      -->
+      <flow-chart
+        style="width: 100%; "
+        chart="flowchartCtrl.chartViewModel">
+      </flow-chart>
+    </div>
+  </div>
+
+</div>

@@ -63,7 +63,8 @@
     'angled-windows.directives',
     'ngStorage',
     'angulartics',
-    'angulartics.segment.io'
+    'angulartics.segment.io',
+    'flowChart'
   ])
     .config(['ngClipProvider', function (ngClipProvider) {
       ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");

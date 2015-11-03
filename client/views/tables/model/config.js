@@ -15,8 +15,8 @@
       .state('erd_model', {
         parent: 'tables.model',
         url: '/erd',
-        controller: 'JsonModelController as jsonModel',
-        templateUrl: 'views/tables/model/json_model/json_model.html'
+        controller: 'ErdModelController as erdModel',
+        templateUrl: 'views/tables/model/erd_model/erd_model.html'
       })
   }
 })();

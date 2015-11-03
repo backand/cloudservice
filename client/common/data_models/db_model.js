@@ -6,7 +6,8 @@
     var self = this;
 
     self.currentModel = {
-      schema: null
+      schema: null,
+      json: null
     };
 
     self.newModel = {
@@ -16,19 +17,20 @@
     self.get = function (appName) {
       return ModelService.get(appName)
         .then (function (response) {
-          updateModels(appName, response)
+          return updateModels(appName, response)
       })
     };
 
     self.update = function (appName, schema) {
       return ModelService.update(appName, schema)
         .then(function (response) {
-          updateModels(appName, response)
+          return updateModels(appName, response)
         })
     };
 
     function updateModels (appName, model) {
       self.currentModel.schema = angular.toJson(model.data, true);
+      self.currentModel.json = model.data;
       self.newModel.schema =
         DatabaseService.getCustomSchema(appName) || self.currentModel.schema;
       return self.currentModel;
