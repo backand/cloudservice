@@ -7,7 +7,9 @@ angular.module('common.directives')
       templateUrl: "common/directives/flowchart/flowchart.html",
       replace: true,
       scope: {
-        chart: "=chart"
+        chart: "=chart",
+        onUpdate: '&',
+        showModelControls: '='
       },
       controller: FlowchartCtrl,
       controllerAs: 'flowchartCtrl',
@@ -26,7 +28,10 @@ function FlowchartCtrl () {
 	var escKeyCode = 27;
 	var nextNodeID = 10;
 
-	//var chartDataModel = self.chart;
+  self.updateChart = function () {
+    angular.copy(self.chartViewModel.data, self.chart);
+    self.onUpdate();
+  };
 
 	self.keyDown = function (evt) {
 
@@ -131,7 +136,6 @@ function FlowchartCtrl () {
 	};
 
 	self.deleteSelected = function () {
-
 		self.chartViewModel.deleteSelected();
 	};
 

@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ModelController', ['$scope', 'AppsService', 'DbDataModel', 'ModelService', 'usSpinnerService', 'NotificationService', 'DatabaseService', '$modal', '$q', ModelController]);
+    .controller('ModelController', ['$scope', 'AppsService', 'DbDataModel', 'ModelService', 'usSpinnerService', 'NotificationService', '$modal', '$q', ModelController]);
 
-  function ModelController($scope, AppsService, DbDataModel, ModelService, usSpinnerService, NotificationService, DatabaseService, $modal, $q) {
+  function ModelController($scope, AppsService, DbDataModel, ModelService, usSpinnerService, NotificationService, $modal, $q) {
 
     var self = this;
 
@@ -44,7 +44,7 @@
     };
 
     self.reset = function(){
-      DatabaseService.removeCustomSchema(self.appName);
+      DbDataModel.removeCustomSchema(self.appName);
       getSchema();
     };
 

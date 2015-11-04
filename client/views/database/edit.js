@@ -2,10 +2,10 @@
   'use strict';
 angular.module('backand.database')
   .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$state', 'DatabaseNamesService',
-    'NotificationService', 'DatabaseService', 'usSpinnerService', 'ConfirmationPopup', '$modal', 'AnalyticsService', DatabaseEdit]);
+    'NotificationService', 'DatabaseService', 'DbDataModel', 'usSpinnerService', 'ConfirmationPopup', '$modal', 'AnalyticsService', DatabaseEdit]);
 
   function DatabaseEdit($scope, $http, AppsService, $state, DatabaseNamesService,
-                        NotificationService, DatabaseService, usSpinnerService, ConfirmationPopup, $modal, AnalyticsService) {
+                        NotificationService, DatabaseService, DbDataModel, usSpinnerService, ConfirmationPopup, $modal, AnalyticsService) {
 
     var self = this;
     var currentApp = AppsService.currentApp;
@@ -81,7 +81,7 @@ angular.module('backand.database')
           return;
         }
       } else {
-        DatabaseService.removeCustomSchema(self.appName);
+        DbDataModel.removeCustomSchema(self.appName);
       }
 
         DatabaseService.createDB($state.params.appName, product, self.template.appName, schema)
@@ -134,7 +134,7 @@ angular.module('backand.database')
     self.sumbitForm = function() {
       self.loading = true;
       self.data.product = DatabaseNamesService.getNumber(self.dataName);
-      DatabaseService.removeCustomSchema(self.appName);
+      DbDataModel.removeCustomSchema(self.appName);
 
       if(self.dbConnected) //connected
       {
@@ -221,7 +221,7 @@ angular.module('backand.database')
 
     self.customize = function () {
       self.template = self.customTemplate;
-      var schema = DatabaseService.getCustomSchema(self.appName);
+      var schema = DbDataModel.getCustomSchema(self.appName);
       if (schema) {
         self.template.schema = schema;
       }
@@ -236,7 +236,7 @@ angular.module('backand.database')
 
     // save to local storage
     function saveCustomSchema (schema) {
-       DatabaseService.saveCustomSchema(self.appName, schema);
+      DbDataModel.saveCustomSchema(self.appName, schema);
     }
 
     $scope.$watch(function () {

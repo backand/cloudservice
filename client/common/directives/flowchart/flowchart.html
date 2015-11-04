@@ -4,7 +4,7 @@
   ng-keyup="flowchartCtrl.keyUp($event)">
 
   <div style="width: 100%; overflow: hidden; height: 100%">
-    <div style="height: 100%">
+    <div ng-show="flowchartCtrl.showModelControls">
       <button
         ng-click="flowchartCtrl.addNewNode()"
         title="Add a new node to the chart">
@@ -28,15 +28,12 @@
         title="Delete selected nodes and connections">
         Delete Selected
       </button>
-
-      <!--
-      This custom element defines the flowchart.
-      -->
-      <flow-chart
-        style="width: 100%; "
-        chart="flowchartCtrl.chartViewModel">
-      </flow-chart>
     </div>
+
+    <flow-chart ng-mouseup="flowchartCtrl.updateChart()"
+      style="width: 100%; "
+      chart="flowchartCtrl.chartViewModel">
+    </flow-chart>
   </div>
 
 </div>

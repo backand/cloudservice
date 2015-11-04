@@ -1,35 +1,12 @@
 (function() {
   'use strict';
 
-  function DatabaseService($http, CONSTS, $localStorage) {
+  angular.module('common.services')
+    .service('DatabaseService', ['$http', 'CONSTS', DatabaseService]);
+
+  function DatabaseService ($http, CONSTS) {
 
     var self = this;
-
-    self.getCustomSchema = function (appName) {
-      if (!$localStorage.backand[appName])
-        $localStorage.backand[appName] = {};
-      var customSchema =  $localStorage.backand[appName].customSchema;
-      try {
-        if(customSchema != null)
-          customSchema = angular.toJson(JSON.parse(customSchema), true);
-      } finally {
-        return customSchema;
-      }
-    };
-
-    self.saveCustomSchema = function(appName, schema) {
-      if (!$localStorage.backand[appName])
-        $localStorage.backand[appName] = {};
-      if (schema)
-        $localStorage.backand[appName].customSchema = schema;
-    };
-
-    self.removeCustomSchema = function(appName) {
-      if (!$localStorage.backand[appName])
-        $localStorage.backand[appName] = {};
-        $localStorage.backand[appName].customSchema = null;
-    };
-
 
     this.updateTemplate = function(name, templateId) {
       return $http({
@@ -101,8 +78,5 @@
     };
 
   }
-
-  angular.module('common.services')
-    .service('DatabaseService',['$http', 'CONSTS', '$localStorage', DatabaseService]);
 
 })();

@@ -1,9 +1,9 @@
 (function  () {
     'use strict';
   angular.module('backand.backoffice')
-    .controller('BackofficeTemplate', ['$state', 'AppsService', 'DatabaseService', 'NotificationService', BackofficeTemplate]);
+    .controller('BackofficeTemplate', ['$state', 'AppsService', 'DbDataModel', 'NotificationService', BackofficeTemplate]);
 
-  function BackofficeTemplate($state, AppsService, DatabaseService, NotificationService) {
+  function BackofficeTemplate($state, AppsService, DbDataModel, NotificationService) {
 
     var self = this;
 
@@ -18,7 +18,7 @@
 
     this.updateTemplate = function(templateId){
       self.templateId = templateId;
-      DatabaseService.updateTemplate($state.params.appName, templateId)
+      DbDataModel.updateTemplate($state.params.appName, templateId)
         .success(function(data) {
           NotificationService.add('success', 'template changed')
         });

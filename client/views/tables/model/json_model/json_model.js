@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('JsonModelController', ['$scope', 'AppsService', 'DbDataModel', 'usSpinnerService', 'DatabaseService', JsonModelController]);
+    .controller('JsonModelController', ['$scope', 'AppsService', 'DbDataModel', 'usSpinnerService', JsonModelController]);
 
-  function JsonModelController($scope, AppsService, DbDataModel, usSpinnerService, DatabaseService) {
+  function JsonModelController($scope, AppsService, DbDataModel, usSpinnerService) {
 
     var self = this;
 
@@ -43,7 +43,7 @@
     };
 
     self.reset = function(){
-      DatabaseService.removeCustomSchema(self.appName);
+      DbDataModel.removeCustomSchema(self.appName);
       getSchema();
     };
 
@@ -58,7 +58,7 @@
     // save schema in local storage
     function saveCustomSchema (schema) {
       if (schema) {
-        DatabaseService.saveCustomSchema(self.appName, schema);
+        DbDataModel.saveCustomSchema(self.appName, schema);
       }
     }
 
