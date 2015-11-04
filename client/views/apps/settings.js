@@ -39,7 +39,7 @@
           defaultDateFormat: self.dateFormat,
           defaultPageSize: self.defaultPageSize,
           defaultLevelOfDept: self.defaultLevelOfDept,
-          config: config
+          config: self.config
         }
       };
       AppsService.update(self.globalAppName, data).then(submitSuccess, errorHandler);
