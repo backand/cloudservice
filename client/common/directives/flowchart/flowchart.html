@@ -3,7 +3,7 @@
   ng-keydown="flowchartCtrl.keyDown($event)"
   ng-keyup="flowchartCtrl.keyUp($event)">
 
-  <div style="width: 100%; overflow: hidden; height: 100%">
+  <div>
     <div ng-show="flowchartCtrl.showModelControls">
       <button
         ng-click="flowchartCtrl.addNewNode()"
@@ -31,8 +31,7 @@
     </div>
 
     <flow-chart ng-mouseup="flowchartCtrl.updateChart()"
-      style="width: 100%; "
-      chart="flowchartCtrl.chartViewModel">
+      chart="flowchartCtrl.chartViewModel" on-icon-click="flowchartCtrl.onIconClick({node: node})">
     </flow-chart>
   </div>
 

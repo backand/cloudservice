@@ -107,7 +107,7 @@
     }
 
     self.isTablesActive = function() {
-      return $state.current.name.indexOf('tables.columns') != -1;
+      return $state.includes('tables.columns');
     };
 
     self.getDBStatus = function() {

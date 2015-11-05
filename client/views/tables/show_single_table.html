@@ -23,6 +23,10 @@
       <div>
 
         <div class="ui-tab-container ui-tab-horizontal">
+          <i class="fa fa-sitemap goto-diagram-icon"
+             ui-sref="erd_model({tableName: singleTable.tableName})"
+             tooltip="Go to model diagram"
+             tooltip-placement="left"></i>
           <tabs data="singleTable.tabs" type="tabs" />
           <div class="tab-content" ui-view></div>
 

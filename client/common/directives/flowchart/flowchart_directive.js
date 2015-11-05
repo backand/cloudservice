@@ -12,7 +12,8 @@ angular.module('flowChart', ['dragging'] )
   	templateUrl: "common/directives/flowchart/flowchart_template.html",
   	replace: true,
   	scope: {
-  		chart: "=chart"
+  		chart: "=chart",
+      onIconClick: '&'
   	},
 
   	//
@@ -123,6 +124,9 @@ angular.module('flowChart', ['dragging'] )
 	this.connectorClass = 'connector';
 	this.nodeClass = 'node';
 
+  $scope.onNodeClick = function (node) {
+    this.onIconClick({node: node})
+  };
 	//
 	// Search up the HTML element tree for an element the requested class.
 	//

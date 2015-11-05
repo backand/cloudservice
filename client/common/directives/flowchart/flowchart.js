@@ -9,11 +9,21 @@ angular.module('common.directives')
       scope: {
         chart: "=chart",
         onUpdate: '&',
-        showModelControls: '='
+        showModelControls: '=',
+        onIconClick: '&',
+        selectedNode: '='
       },
       controller: FlowchartCtrl,
       controllerAs: 'flowchartCtrl',
-      bindToController: true
+      bindToController: true,
+      link: function (scope) {
+        if (scope.flowchartCtrl.selectedNode) {
+          var node = scope.flowchartCtrl.chartViewModel.findNode(scope.flowchartCtrl.selectedNode);
+          if (node) {
+            scope.flowchartCtrl.chartViewModel.handleNodeClicked(node);
+          }
+        }
+      }
     };
   });
 
@@ -29,8 +39,10 @@ function FlowchartCtrl () {
 	var nextNodeID = 10;
 
   self.updateChart = function () {
-    angular.copy(self.chartViewModel.data, self.chart);
-    self.onUpdate();
+    if (self.chartViewModel.data !== self.chart) {
+      angular.copy(self.chartViewModel.data, self.chart);
+      self.onUpdate();
+    }
   };
 
 	self.keyDown = function (evt) {

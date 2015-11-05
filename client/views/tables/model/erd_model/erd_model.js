@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', 'AppsService', 'DbDataModel', 'usSpinnerService', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', ErdModelController]);
 
-  function ErdModelController($scope, AppsService, DbDataModel, usSpinnerService) {
+  function ErdModelController($scope, $state, AppsService, DbDataModel, TablesService, usSpinnerService) {
 
     var self = this;
 
@@ -14,6 +14,7 @@
       self.showHelpDialog = false;
       self.currentModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
+      self.currentObject = $state.params.tableName;
 
       getSchema();
     }
@@ -22,6 +23,15 @@
       DbDataModel.saveErdModel(self.appName);
     };
 
+    self.gotoObject = function (obj) {
+      var table = TablesService.getTableByName(obj.data.name);
+      if (table) {
+        $state.go('object_fields', {
+          tableName: obj.name,
+          tableId: table.__metadata.id
+        })
+      }
+    };
 
     self.reset = function () {
       DbDataModel.removeCustomSchema(self.appName);

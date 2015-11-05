@@ -27,10 +27,11 @@
           connections: []
         };
       }
+      return $localStorage.backand[appName];
     }
 
     self.getCustomSchema = function (appName) {
-      var customSchema =  $localStorage.backand[appName].customSchema;
+      var customSchema =  getAppLocalStorage(appName).customSchema;
       try {
         if(customSchema != null)
           customSchema = angular.toJson(JSON.parse(customSchema), true);

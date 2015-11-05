@@ -46,6 +46,14 @@
       {{node.name()}}
     </text>
 
+    <text ng-click="onNodeClick(node)"
+      class="fa-icon magic-icon"
+      ng-attr-x="{{node.width() - 30}}"
+      y="25"
+      text-anchor="middle"
+      alignment-baseline="middle">&#xf0d0
+    </text>
+
     <g
       ng-repeat="connector in node.inputConnectors"
       ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
