@@ -2,7 +2,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <strong test-hook="docs.quickstart.title">Quickstart Guide</strong>
-      <h2>5 easy steps to include Backand in your Angular project:</h2>
+      <h2>4 easy steps to include Backand in your Angular or ionic project:</h2>
 
     </div>
     <div class="panel-body docs">
@@ -26,17 +26,18 @@
         <ol>
 
           <li>
-            <h3>Add the Backand scripts</h3><br/>
+            <h3>Add the Backand scripts</h3>
+            <p>Include the above code in your index.html file. Make it above the project's code</p>
             <pre><code class="html hljs">
   &lt;!-- Backand SDK for Angular --&gt;
   &lt;script src=&quot;//cdn.backand.net/backand/dist/1.8.0/backand.min.js&quot;&gt;&lt;/script&gt;
             </code></pre>
-            <p>Include the above code in your index.html file. Make it above the project's code</p>
             <br />
           </li>
 
           <li>
-            <p>Add the backand and module dependencies to your angular app definition</p>
+            <h3>Script Dependencies</h3>
+            <p>Add 'backand' to the module dependencies of your angular app</p>
             <pre><code class="javascript">
   //app.js
   angular.module('YOUR-APP-NAME', ['backand'])
@@ -53,44 +54,43 @@
   //Update Angular configuration section
   myApp.config(function (BackandProvider) {
       BackandProvider.setAppName('{{docs.currentApp.Name || 'Your-App-Name'}}');
-      //BackandProvider.setSignUpToken('{{docs.keys.signup || 'Your-SignUp-Token'}}');
-      //BackandProvider.setAnonymousToken('{{docs.keys.anonymous || 'Your-Anonymous-Token'}}');
-
+      BackandProvider.setSignUpToken('{{docs.keys.signup || 'Your-SignUp-Token'}}');
+      BackandProvider.setAnonymousToken('{{docs.keys.anonymous || 'Your-Anonymous-Token'}}');
   })
             </code></pre>
-            setAppName - set the app name to be used by the SDK<br/>
-            setAnonymousToken - allow anonymous access if needed<br/>
-            setSignUpToken - allow any user to register to the app
+            <!--setAppName - set the app name to be used by the SDK<br/>-->
+            <!--setAnonymousToken - allow anonymous access if needed<br/>-->
+            <!--setSignUpToken - allow any user to register to the app-->
             <br />
           </li>
           <br/>
 
-          <li>
-            <h3>Connect your Backand app</h3>
-            <p>
-              We can inject the Backand service into any controller - simply call Backand.signin(...)
-              in your controller to gain access.<br />
-              In this example, we sign into Backand in the SignInCtrl controller's signIn method.
-              When we are successfully signed in, we save the authentication token into a cookie.
-            </p>
-            <pre><code>
-  // SignInCtrl.js
-  function SignInCtrl(Backand, $cookieStore) {
-    $scope.signIn = function() {
-      Backand.signin($scope.username, $scope.password)
-      .then(
-        function (response) {
-          //Do good for the world
+          <!--<li>-->
+            <!--<h3>Connect your Backand app</h3>-->
+            <!--<p>-->
+              <!--We can inject the Backand service into any controller - simply call Backand.signin(...)-->
+              <!--in your controller to gain access.<br />-->
+              <!--In this example, we sign into Backand in the SignInCtrl controller's signIn method.-->
+              <!--When we are successfully signed in, we save the authentication token into a cookie.-->
+            <!--</p>-->
+            <!--<pre><code>-->
+  <!--// SignInCtrl.js-->
+  <!--function SignInCtrl(Backand, $cookieStore) {-->
+    <!--$scope.signIn = function() {-->
+      <!--Backand.signin($scope.username, $scope.password)-->
+      <!--.then(-->
+        <!--function (response) {-->
+          <!--//Do good for the world-->
 
-        },
-        function (data, status, headers, config) {
-          //handle error
-        }
-      );
-    }
-  }
-            </code></pre>
-          </li>
+        <!--},-->
+        <!--function (data, status, headers, config) {-->
+          <!--//handle error-->
+        <!--}-->
+      <!--);-->
+    <!--}-->
+  <!--}-->
+            <!--</code></pre>-->
+          <!--</li>-->
 
           <li>
             <h3>Read data from your database</h3>
@@ -101,13 +101,15 @@
               <pre><code>
   //dataService.js
   function dataService($http, Backand) {
-    var self = this;
+    var vm = this;
     //get the object name and optional parameters
-    self.getList = function(name, sort, filter) {
+    vm.getList = function(name, sort, filter) {
       return $http({
         method: 'GET',
         url: Backand.getApiUrl() + '/1/objects/' + name,
         params: {
+          pageSize: 20,
+          pageNumber: 1,
           filter: filter || '',
           sort: sort || ''
         }
@@ -119,12 +121,11 @@
                   All API calls and expected parameters can be reviewed and tested in Backand's API Playground.</p>
           </li>
         </ol>
-        <br />
         <h3>Done. It's that simple</h3>
         <p>In the above example, we easily logged-in to the Backand service, and wrote functionality that can
           retrieve data from your database.<br/>
           Using the above code, you can simply modify the URL endpoints to hit all of the relevant API functionality
-          available from your application's playground - simply copy the URL, adjust the parameters per step 5, and you are set!</p>
+          available from your application's playground - simply copy the URL, adjust the parameters per step 4, and you are set!</p>
 
         <p><b>In your Angular application, you are the rock star - Backand is just here to help you rise and shine.
           Have fun!</b></p>
