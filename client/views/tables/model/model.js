@@ -16,11 +16,11 @@
 
       self.tabs = [
         {
-          heading: 'Json Code',
+          heading: 'Model Json',
           route: 'json_model'
         },
         {
-          heading: 'ERD',
+          heading: 'Model Diagram',
           route: 'erd_model'
         }
       ];

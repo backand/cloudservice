@@ -24,11 +24,16 @@ var flowchart = {
 	//
 	flowchart.connectorHeight = 35;
 
+  //
+  // Vertical offset of a connector in a node.
+  //
+  flowchart.connectorYOffset = 10;
+
 	//
 	// Compute the Y coordinate of a connector, given its index.
 	//
 	flowchart.computeConnectorY = function (connectorIndex) {
-		return flowchart.nodeNameHeight + (connectorIndex * flowchart.connectorHeight);
+		return flowchart.nodeNameHeight + (connectorIndex * flowchart.connectorHeight) + flowchart.connectorYOffset;
 	};
 
 	//
@@ -150,7 +155,7 @@ var flowchart = {
 				Math.max(
 					this.inputConnectors.length,
 					this.outputConnectors.length);
-			return flowchart.computeConnectorY(numConnectors);
+			return flowchart.computeConnectorY(numConnectors) - flowchart.connectorYOffset;
 		};
 
 		//

@@ -38,6 +38,7 @@
     </rect>
 
     <text
+      class="node-title"
       ng-attr-x="{{node.width()/2}}"
       y="25"
       text-anchor="middle"
@@ -103,6 +104,22 @@
         ng-attr-y="{{connection.middleY()}}"
         text-anchor="middle"
         alignment-baseline="middle">{{connection.name()}}
+      </text>
+
+      <text
+        ng-attr-class="{{connection.selected() && 'selected-connection-name' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
+        ng-attr-x="{{connection.sourceCoordX() + 10}}"
+        ng-attr-y="{{connection.sourceCoordY() - 15}}"
+        text-anchor="middle"
+        alignment-baseline="middle">1
+      </text>
+
+      <text
+        ng-attr-class="{{connection.selected() && 'selected-connection-name' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
+        ng-attr-x="{{connection.destCoordX() - 10}}"
+        ng-attr-y="{{connection.destCoordY() - 15}}"
+        text-anchor="middle"
+        alignment-baseline="middle">n
       </text>
 
       <circle
