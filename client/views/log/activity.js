@@ -95,6 +95,10 @@
       }
       self.lastQuery = query;
 
+      //add isException status to the grid filter
+      self.lastQuery.push({fieldName:"LogType", operator:"equals", value: (isException ? "1" : "3")});
+
+
       getLog();
 
     };
@@ -105,7 +109,7 @@
         operators: null
       };
       self.filterReady = true;
-      self.lastQuery = [];
+      self.lastQuery = [{fieldName:"LogType", operator:"equals", value: (isException ? "1" : "3")}];
     }
 
     function getFieldsForFilter () {
@@ -126,9 +130,6 @@
 
     function getLog() {
 
-
-      //add isException status to the grid filter
-      self.lastQuery.push({fieldName:"LogType", operator:"equals", value: (isException ? "1" : "3")});
 
       AppLogService.getAppActivity(
         $stateParams.appName,

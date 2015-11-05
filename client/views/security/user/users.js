@@ -81,6 +81,8 @@
         });
       }
 
+      getFilterOptions();
+
       $scope.$watch(function () {
         if (self.paginationOptions)
           return self.paginationOptions.pageNumber
@@ -125,8 +127,6 @@
 
     function getRoles(){
 
-      getFilterOptions();
-
       usSpinnerService.spin('loading');
       if (self.roles == null) {
         SecurityService.getRoles()
@@ -153,9 +153,6 @@
 
       if(self.adminMode){
 
-        self.lastQuery.push({fieldName:"Email", operator:"notEquals", value:"guest@durados.com"});
-        self.lastQuery.push({fieldName:"Role", operator:"in", value:",Admin"});
-
         SecurityService.getUsers(
           self.paginationOptions.pageSize,
           self.paginationOptions.pageNumber,
@@ -164,7 +161,6 @@
           .then(usersSuccessHandler, errorHandler);
       }
       else {
-        self.lastQuery.push({fieldName:"Email", operator:"notEquals", value:"guest@durados.com"});
 
         SecurityService.getUsers(
           self.paginationOptions.pageSize,
@@ -314,6 +310,14 @@
       }
       self.lastQuery = query;
 
+      if(self.adminMode) {
+        self.lastQuery.push({fieldName: "Email", operator: "notEquals", value: "guest@durados.com"});
+        self.lastQuery.push({fieldName: "Role", operator: "in", value: ",Admin"});
+      }
+      else{
+        self.lastQuery.push({fieldName:"Email", operator:"notEquals", value:"guest@durados.com"});
+      }
+
       getUsers();
 
     };
@@ -325,6 +329,13 @@
       };
       self.filterReady = true;
       self.lastQuery = [];
+      if(self.adminMode) {
+        self.lastQuery.push({fieldName: "Email", operator: "notEquals", value: "guest@durados.com"});
+        self.lastQuery.push({fieldName: "Role", operator: "in", value: ",Admin"});
+      }
+      else{
+        self.lastQuery.push({fieldName:"Email", operator:"notEquals", value:"guest@durados.com"});
+      }
     }
 
     function getFieldsForFilter () {
