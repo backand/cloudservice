@@ -16,7 +16,7 @@
 
       self.tabs = [
         {
-          heading: 'Model Json',
+          heading: 'Model JSON',
           route: 'json_model'
         },
         {
