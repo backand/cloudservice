@@ -41,8 +41,8 @@
           return self.signIn({username: email, password: password})
         })
         .then(function (response) {
-          AnalyticsService.identify(fullName, email);
-          AnalyticsService.trackSignupEvent(fullName, email);
+          //AnalyticsService.identify(fullName, email);
+          //AnalyticsService.trackSignupEvent(fullName, email);
           return response;
         })
     };
@@ -178,12 +178,12 @@
         appName: userData.appName
       };
 
-      if (st != '0') { //this is sign up
-        AnalyticsService.trackSignupEvent(
-          tokenData.username,
-          tokenData.username,
-          _.find(self.socials, {id: Number(st)}));
-      }
+      //if (st != '0') { //this is sign up
+      //  AnalyticsService.trackSignupEvent(
+      //    tokenData.username,
+      //    tokenData.username,
+      //    _.find(self.socials, {id: Number(st)}));
+      //}
 
       return self.signIn(tokenData);
     }
