@@ -15,7 +15,7 @@
         control: '=?'
       },
       templateUrl: 'common/directives/ace-diff/ace-diff.html',
-      link: function ($scope) {
+      link: function ($scope, element) {
 
         $scope.toggleAceFullScreen = function () {
           $scope.aceFullScreen = !$scope.aceFullScreen;
@@ -56,15 +56,17 @@
           };
         }
 
-        angular.element(document).ready(function () {
-          $scope.differ = new AceDiff($scope.aceDiffOptions);
-          $scope.editors = $scope.differ.getEditors();
+        $scope.differ = new AceDiff($scope.aceDiffOptions);
+        $scope.editors = $scope.differ.getEditors();
 
-          initEditor($scope.editors.left, $scope.aceDiffOptions.left, 'leftContent');
-          initEditor($scope.editors.right, $scope.aceDiffOptions.right, 'rightContent');
+        initEditor($scope.editors.left, $scope.aceDiffOptions.left, 'leftContent');
+        initEditor($scope.editors.right, $scope.aceDiffOptions.right, 'rightContent');
 
-          $scope.leftEditor = $scope.editors.left;
-          $scope.rightEditor = $scope.editors.right;
+        $scope.leftEditor = $scope.editors.left;
+        $scope.rightEditor = $scope.editors.right;
+
+        element.on('$destroy', function () {
+          $scope.differ.destroy();
         });
 
       }
