@@ -433,7 +433,7 @@
       })[0])
     }
 
-    var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup'];
+    var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup','backandAuthOverride'];
 
     self.isConstName = function (ruleName) {
       return (self.getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);
@@ -827,6 +827,7 @@
     var backandCallbackConstCode = {
       start: '/* globals\n\  $http - Service for AJAX calls \n' +
       '  CONSTS - CONSTS.apiUrl for Backands API URL\n' +
+      '  Config - Global Configuration\n' +
       '\*/\n' +
       '\'use strict\';\n' +
       'function backandCallback(userInput, dbRow, parameters, userProfile) {',
