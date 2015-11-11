@@ -11,7 +11,7 @@
           baLanding: '@'
         },
         link: function(scope) {
-          AuthLayoutService.flags.landing = !!scope.baLanding;
+          AuthLayoutService.flags.landing = scope.baLanding !== 'false';
 
         }
       };
