@@ -574,3 +574,9 @@ hr.narrow-top-margin {
     opacity:0;
   }
 }
+
+.ladda-button,
+.ladda-button:hover,
+.ladda-button:active {
+  outline: none !important;
+}
