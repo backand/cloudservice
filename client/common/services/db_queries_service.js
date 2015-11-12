@@ -29,6 +29,11 @@
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + baseUrl + configUrl,
+        params: {
+          'pageSize': 200,
+          'pageNumber': 1,
+          'sort' : '[{fieldName:"name", order:"asc"}]'
+        },
         headers: { AppName: appName }
       });
     }

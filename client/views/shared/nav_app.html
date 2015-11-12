@@ -22,6 +22,12 @@
           <span>AngularJS Quickstart</span>
         </a>
       </li>
+      <li ng-class="{active: nav.state == 'docs.mobile'}">
+        <a ng-click="nav.goToAlways('docs.mobile')" href="">
+          <i class="ba-icon-angularjs-quickstart"></i>
+          <span>Ionic Mobile Starter</span>
+        </a>
+      </li>
       <li ng-class="{active: nav.state == 'docs.kickstart'}">
         <a ng-click="nav.goToAlways('docs.kickstart')" href="">
           <i class="ba-icon-kickstart-tutorial"></i>

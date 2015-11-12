@@ -48,6 +48,18 @@
         templateUrl: 'views/docs/api_desc.html',
         controller: 'Desc as desc'
       })
+      .state('docs.mobile-open', {
+        parent: 'apps',
+        url: 'mobile',
+        templateUrl: 'views/docs/ionic_starter.html',
+        controller: 'Docs as docs'
+      })
+      .state('docs.mobile', {
+        parent: 'app',
+        url: '/docs/mobile',
+        templateUrl: 'views/docs/ionic_starter.html',
+        controller: 'Docs as docs'
+      })
   }
 
 })();
