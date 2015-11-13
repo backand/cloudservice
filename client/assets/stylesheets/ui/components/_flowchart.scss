@@ -20,30 +20,40 @@ Styles for nodes and connectors.
 */
 
 .node-rect {
-  stroke: black;
-  stroke-width: 2;
+  stroke: #d1d1d1;
+  fill:#f0f0f0;
+  stroke-width: 1px;
+  rx:5px;
+  ry:5px;
 }
 
 .mouseover-node-rect {
-  stroke: black;
-  stroke-width: 4;
+  stroke: #d1d1d1;
+    fill:#f0f0f0;
+rx:5px;
+  ry:5px;
+  stroke-width: 2;
 }
 
 .selected-node-rect {
-  stroke: red;
-  stroke-width: 3;
+  stroke: #428bca;
+  stroke-width: 2;
+    fill:#f0f0f0;
+    rx:5px;
+  ry:5px;
+
 }
 
 .connector-circle {
   fill: white;
-  stroke: black;
-  stroke-width: 2;
+  stroke: #d1d1d1;
+  stroke-width: 1;
 }
 
 .mouseover-connector-circle {
   fill: white;
   stroke: black;
-  stroke-width: 3;
+  stroke-width: 2;
 }
 
 /*
@@ -54,33 +64,33 @@ Style for connections.
 }
 
 .connection-line {
-  stroke: gray;
-  stroke-width: 4;
+  stroke: black;
+  stroke-width: 3;
   fill: transparent;
 }
 
 .mouseover-connection-line {
   stroke: gray;
-  stroke-width: 6;
-  fill: transparent;
-}
-
-.selected-connection-line {
-  stroke: red;
   stroke-width: 4;
   fill: transparent;
 }
 
+.selected-connection-line {
+  stroke: #428bca;
+  stroke-width: 3;
+  fill: transparent;
+}
+
 .connection-endpoint {
-  fill: gray;
+  fill: black;
 }
 
 .selected-connection-endpoint {
-  fill: red;
+  fill: #428bca;
 }
 
 .mouseover-connection-endpoint {
-  fill: gray;
+  fill: black;
 }
 
 .connection-name{
@@ -88,7 +98,7 @@ Style for connections.
 }
 
 .selected-connection-name{
-  fill: red;
+  fill: #428bca;
 }
 
 .mouseover-connection-name{
