@@ -105,6 +105,7 @@
   border-right-style: solid;
   border-right-width: 1px;
   padding-left: 2px;
+  padding-right:0px;
 }
 
 .test-column{
@@ -115,11 +116,14 @@
 
 .rule-tree {
   font-weight: bold;
-  padding-right: 30px;
   list-style: none;
   :hover {
     text-decoration: none;
     color: #333;
+  }
+  & > li {
+    border-bottom:1px solid #ddd;
+    padding-bottom:10px;
   }
 
   li:first-child .rule-group-title {
@@ -128,7 +132,7 @@
 
   .rule-group-title {
     padding-top: 10px;
-    text-transform: uppercase;
+    
 
     a{
       font-size: 150%;
@@ -139,10 +143,9 @@
   .rule-sub-title {
     padding-top: 10px;
     padding-left: 17px;
-    text-transform: uppercase;
 
     a {
-      font-size: 120%;
+      font-size:14px;
       color: #333;
     }
   }
@@ -166,7 +169,10 @@
     line-height: 18px;
     width: 24px;
     height: 24px;
-    padding-bottom: 4px;
+    padding-bottom: 0px;
+    right:10px;
+    position: absolute;
+    top:7px;
 
     &:hover {
       color: #FFFFFF;
@@ -176,50 +182,32 @@
   .rules-sub-items-list {
     list-style: none;
     padding-left: 15px;
+    & > li {
+      position: relative;
+    }
     .rules-names-list {
       list-style: none;
-      padding-left: 25px;
+      margin-bottom:10px;
+      margin-top:10px;
+      padding-left: 35px;
 
       .rule-name {
         width: 100%;
         overflow: hidden;
-        margin: 5px;
-        font-weight: 600;
+       font-weight: normal;
         display: inline-block;
         margin-bottom: 0;
         vertical-align: middle;
         white-space: nowrap;
-        padding: 6px 12px;
-        font-size: 14px;
+        
+        font-size: 15px;
         border-radius: 4px;
         position: relative;
         line-height: 18px;
-        border: 1px solid #e0e0e0;
+       
         list-style: decimal;
 
-        &:before {
-          box-sizing: border-box;
-          content: " ";
-          line-height: 0;
-          position: absolute;
-          top: 0;
-          right: -26px;
-          border: 16px solid transparent;
-          border-left: 10px solid #428bca;
-        }
-        &:hover {
-          overflow: visible;
-          line-height: 20px;
-          touch-action: manipulation;
-          cursor: pointer;
-          -webkit-user-select: none;
-          color: #fff;
-          background-color: #428bca;
-          border-color: #357ebd;
-          border: 0;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
+        
       }
     }
   }
@@ -286,6 +274,8 @@ bknd-copy-url[type="textarea"] .request-url-copy {
 }
 
 .action-template-container {
+  margin-left:-1px;
+  border-left:1px solid #ddd;
   padding-top: 3px;
 
   .action-template-category {
