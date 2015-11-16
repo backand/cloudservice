@@ -139,18 +139,21 @@
             var destConnectorIndex = _.findIndex(dest.inputConnectors, {name: fieldname});
 
             var source = _.find(chartData.nodes, {name: field.collection});
-            var sourceConnectorIndex = _.findIndex(source.outputConnectors, {name: field.via});
+            if(source)
+            {
+              var sourceConnectorIndex = _.findIndex(source.outputConnectors, {name: field.via});
 
-            chartData.connections.push({
-              source: {
-                nodeID: source.name,
-                connectorIndex: sourceConnectorIndex
-              },
-              dest: {
-                nodeID: dest.name,
-                connectorIndex: destConnectorIndex
-              }
-            });
+              chartData.connections.push({
+                source: {
+                  nodeID: source.name,
+                  connectorIndex: sourceConnectorIndex
+                },
+                dest: {
+                  nodeID: dest.name,
+                  connectorIndex: destConnectorIndex
+                }
+              });
+            }
           }
         });
       });
