@@ -105,8 +105,9 @@ angular.module('backand.database')
     };
 
     function openValidationModal (error) {
+
       var modalInstance = $modal.open({
-        templateUrl: 'views/tables/model/confirm_update.html',
+        templateUrl: 'common/modals/confirm_update/confirm_update.html',
         controller: 'ConfirmModelUpdateController as ConfirmModelUpdate',
         backdrop: 'static',
         keyboard: false,
@@ -118,8 +119,16 @@ angular.module('backand.database')
             };
             validationResponse.warnings.shift();
             return validationResponse;
+          },
+          titles: function () {
+            return {
+              itemName: 'model',
+              detailsTitle: 'The following operations will be performed:',
+              resultProperty: 'alter'
+            }
           }
         }
+
       });
 
       return modalInstance.result;

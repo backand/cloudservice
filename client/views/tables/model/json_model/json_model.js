@@ -63,6 +63,7 @@
     }
 
     $scope.$watch(function () {
+      if(self.oldModel.schema !== self.newModel.schema)
       return self.newModel.schema;
     }, saveCustomSchema);
 
