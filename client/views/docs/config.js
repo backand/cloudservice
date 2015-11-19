@@ -60,6 +60,12 @@
         templateUrl: 'views/docs/ionic_starter.html',
         controller: 'Docs as docs'
       })
+      .state('docs.realtime', {
+        parent: 'app',
+        url: '/docs/realtime',
+        templateUrl: 'views/docs/realtime_database.html',
+        controller: 'Docs as docs'
+      })
   }
 
 })();

@@ -1,0 +1,95 @@
+<section class="page-form-ele page ng-scope ba-docs">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong test-hook="docs.quickstart.title">Setup Realtime Database</strong>
+      <h2>4 easy steps to set Backand Realtime Communication (Beta):</h2>
+
+    </div>
+    <div class="panel-body docs">
+
+      <div class="quickstart-body">
+        <br/>
+        <ol>
+          <li>
+            <h3>Install Backand</h3>
+            <p>First make sure Backand is included in your project, start with <a ui-sref="docs.getting-started-open">Backand Quick start</a></p>
+            <p>Update to Backand SDK 1.8.2 with Realtime Communication</p>
+            <pre><code class="html hljs">
+  &lt;!-- Backand SDK for Angular --&gt;
+  &lt;script src=&quot;//cdn.backand.net/backand/dist/1.8.2/backand.debug.js&quot;&gt;&lt;/script&gt;
+  &lt;!-- Backand Realtime --&gt;
+  &lt;script src=&quot;//api.backand.com:4000/socket.io/socket.io.js&quot;&gt;&lt;/script&gt;
+            </code></pre>
+            <br />
+          </li>
+
+          <li>
+            <h3>Update Angular configuration section</h3>
+            <p>Set the realtime flag to True</p>
+            <pre><code>
+  //Update Angular configuration section
+  myApp.config(function (BackandProvider) {
+    BackandProvider.runSocket(true); //enable the web sockets that makes the database realtime
+  })
+            </code></pre>
+            <br />
+          </li>
+
+          <li>
+            <h3>Angular client code</h3>
+              <p>To get realtime event with data from the Backand service.<br /></p>
+              <pre><code>
+  //Wait for server updates on 'items' object
+  Backand.on('items_updated', function (data) {
+    //Get the 'items' object that have changed
+    console.log(data);
+  });
+    </code></pre>
+          <br/>
+    <li>
+            <h3>Backand server side code</h3>
+              <p>In backand's Action add the emit command to notify the client on the event and send data<br />
+              </p>
+              <pre><code>
+  //Action: Update - After data saved and committed
+  function backandCallback(userInput, dbRow, parameters, userProfile) {
+
+      //Send to a specific role
+      socket.emitRole("items_updated",userInput, "User");
+
+      //Send to all user
+      //socket.emitAll("items_updated",userInput);
+
+      //Send to array of users
+      //socket.emitUsers("items_updated",userInput, ["user2@gmail.com","user1@gmail.com"]);
+
+      return {};
+  }
+    </code></pre>
+          </li>
+          <div style="margin-left: 15px;">
+            <h3>Done. It's that simple</h3>
+            <p>Using the above code, we have implemented realtime communication between Backand service and
+              Angular client code.<br/>
+            Have fun!</b></p>
+          </div>
+        </ol>
+      </div>
+      <br/>
+        <div class="quickstart-sidebar">
+
+        <div class="quickstart-sidebox" id="kickstart-sidebox">
+          <div class="quickstart-kickstart">
+            <img src="../assets/images/docs_pages/kickstart-icon.png" />
+            <div class="quickstart-sidebox-title">Already have an Ionic project?</div>
+            <br/>
+            <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your project:</div>
+            <br/>
+            <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToQuickstart()">Get Started</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -34,6 +34,12 @@
           <span>Kickstart Tutorial</span>
         </a>
       </li>
+      <li ng-class="{active: nav.state == 'docs.realtime'}">
+        <a ng-click="nav.goToAlways('docs.realtime')" href="">
+          <i class="ba-icon-documentation"></i>
+          <span>Realtime Database</span>
+        </a>
+      </li>
       <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}">
         <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToLocation('http://docs.backand.com')" href="">
           <i class="ba-icon-documentation"></i>
