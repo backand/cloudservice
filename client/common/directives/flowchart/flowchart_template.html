@@ -54,6 +54,13 @@
       alignment-baseline="middle">&#xf0d0
     </text>
 
+    <text ng-click="onNodePlusClick(node)"
+      class="fa-icon magic-icon"
+      y="25"
+      text-anchor="middle"
+      alignment-baseline="middle"
+      x="200">+</text>
+
     <g
       ng-repeat="connector in node.inputConnectors"
       ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
