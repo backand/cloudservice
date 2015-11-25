@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', '$state', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', ErdModelController]);
 
-  function ErdModelController($scope, $state, AppsService, DbDataModel, TablesService, usSpinnerService) {
+  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService) {
 
     var self = this;
 
@@ -48,6 +48,32 @@
 
     self.showHelp = function () {
       $scope.$emit('open-help');
+    };
+
+    self.editField = function (tableName, fieldName) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/model/erd_model/edit_field.html',
+        controller: 'EditFieldController as EditField',
+        resolve: {
+          tableName: function () {
+            return tableName;
+          },
+          fieldName: function () {
+            return fieldName;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        if (result && result.reopen) {
+          self.newRow();
+        }
+        else {
+          usSpinnerService.spin("loading-data");
+        }
+        loadData()
+          .then(successDataHandler);
+      });
     };
 
     init();
