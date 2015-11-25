@@ -25,12 +25,13 @@
       {crud: 'delete', value: 'AfterDelete', label: 'Delete - After record deleted and committed', level1: 3, level2: 2}
     ];
 
+
     self.actionTemplateCategories = [
+      {id: 5, label: 'Realtime Communication'},
       {id: 1, label: 'Mail'},
       {id: 2, label: 'Payment Processing'},
       {id: 3, label: 'File Storage'},
-      {id: 4, label: 'Metrics & Analytics'},
-      {id: null, label: 'Other'}
+      {id: 4, label: 'Metrics & Analytics'}
     ];
 
     self.get = function () {

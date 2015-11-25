@@ -7,7 +7,7 @@
   </button>
   or use a 3rd party integration snippet:
   <div ng-repeat="(categoryId, templates) in rules.actionTemplates">
-    <div class="action-template-category">{{ ::rules.getCategoryLabel(categoryId) }}</div>
+    <div class="action-template-category">{{templates.label}}</div>
     <!-- a and img elements must be in the same line, otherwise space is inserted between them-->
     <div class="action-template-icons-container">
       <a href=""
@@ -20,8 +20,10 @@
              ng-src="{{template.json.imageUrl}}"></a>
 
     </div>
+<div>
+</div>
 
-    <div ng-show="rules.templateToShow && rules.templateToShow.category == categoryId"
+    <div ng-show="rules.templateToShow && rules.templateToShow.category === templates[0].category"
          ng-click="rules.selectTemplate(rules.templateToShow)"
          class="action-template-description-container">
       <div class="action-template-text-container">

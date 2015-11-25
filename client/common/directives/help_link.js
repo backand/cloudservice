@@ -114,6 +114,10 @@
           "nosqlQuery":{
             "url":"http://docs.backand.com/en/latest/apidocs/nosql_query_language/index.html",
             "page":"queries"
+          },
+          "realtime":{
+            "url":"http://docs.backand.com/en/latest/apidocs/realtime/index.html",
+            "page":"actoinhelp"
           }
         }
 

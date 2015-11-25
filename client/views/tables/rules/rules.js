@@ -57,10 +57,6 @@
       self.getActionTemplates();
     }
 
-    self.getCategoryLabel = function (id) {
-      return _.find(RulesService.actionTemplateCategories, {id: parseInt(id)}).label;
-    };
-
     self.getActionTemplates = function () {
       return RulesService.getActionTemplates()
         .then(function (result) {
@@ -70,7 +66,19 @@
             } catch (error) {
               console.log(error);
             }
-            self.actionTemplates = _.groupBy(_.sortBy(result.data.data, 'ordinal'), 'category');
+
+            var groupedNotOrdered = _.groupBy(_.sortBy(result.data.data, 'ordinal'), 'category');
+            var res = [];
+            _.each(RulesService.actionTemplateCategories, function(rule){
+              var fromService = _.find(groupedNotOrdered, function(g){
+                return rule.id ==  g[0].category;
+              });
+
+              fromService.label = rule.label;
+              res.push(fromService);
+            });
+
+            self.actionTemplates = res;
           });
         });
     };
@@ -828,6 +836,7 @@
       start: '/* globals\n\  $http - Service for AJAX calls \n' +
       '  CONSTS - CONSTS.apiUrl for Backands API URL\n' +
       '  Config - Global Configuration\n' +
+      '  socket - Send realtime database communication\n' +
       '\*/\n' +
       '\'use strict\';\n' +
       'function backandCallback(userInput, dbRow, parameters, userProfile) {',

@@ -99,6 +99,12 @@
           <span>Model</span>
         </a>
       </li>
+      <li ng-if="nav.app.connectionSource !== 'local'">
+        <a ui-sref="tables.notables">
+          <i class="ba-icon-model"></i>
+          <span>Sync with Database</span>
+        </a>
+      </li>
 
       <li ng-class="{active: false }" ng-repeat="table in nav.tables">
         <a ng-class="{disabled: false}"  ng-click="nav.showTable(table)" href="">

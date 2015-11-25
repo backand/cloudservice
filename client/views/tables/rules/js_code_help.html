@@ -1,7 +1,7 @@
 <section class="" style="width: 650px;">
   <div class="panel panel-default">
     <div class="panel-heading"><strong>Server side JavaScript actions</strong></div>
-    <div class="panel-body">
+    <div class="panel-body docs">
   <p>You can run standard JavaScript on the server.
     It runs on the <a href="http://en.wikipedia.org/wiki/V8_(JavaScript_engine)">V8 engine</a>.
     To execute the JavaScript action, put your code into the following function:</p>
@@ -11,6 +11,7 @@
         return {};
     }
       </code></pre>
+  <div class="col-sm-12 col-lg-12">
   <p>The function parameters are:</p>
   <ul>
     <li><strong>userInput</strong>:
@@ -88,13 +89,38 @@
         </li>
       </ul>
     </li>
-    <li>CONSTS - CONSTS.apiUrl for Backand's API URL</li>
-    <li>Return values:<br/>
+    <li><b>CONSTS</b>: CONSTS.apiUrl for Backand's API URL</li><br/>
+    <li><b>Return values:</b><br/>
       On Demand actions, will return whatever is returned by the custom server code,
       which can be any properly-formatted JSON.
       Trigger actions will have a response that matches the format
       expected by the triggering call (such as the return value of a CREATE call).
     </li>
+    </ul>
+  </div>
+  <div class="col-sm-12 col-lg-12">
+
+  <h3>Realtime Database:</h3><br/>
+  The real-time database communication works with <b>socket.emit</b> command that
+  sends event and data on the client from the action. The are 3 emit commands: <ba-help-link key="realtime"></ba-help-link><br/>
+  <ul>
+    <li>socket.emitUsers<br/>
+  <pre><code>
+    socket.emitUsers("items_updated",userInput, ["user2@gmail.com"]);
+  </code></pre><br/>
+        </li>
+        <li>socket.emitRole<br/>
+  <pre><code>
+    socket.emitRole("items_updated",userInput, "User");
+  </code></pre><br/>
+        </li>
+        <li>socket.emitAll<br/>
+  <pre><code>
+    socket.emitAll("items_updated", userInput);
+  </code></pre><br/>
+        </li>
+      </ul>
+
   </ul>
   <h3>Debugging</h3>
     <p><code>console.log(object)</code> and <code>console.error(object)</code>
@@ -106,6 +132,7 @@
     the request will return HTTP status 417,
     and the response body will contain the associated error message.
   </p>
+    </div>
   </div>
   </div>
 </section>
