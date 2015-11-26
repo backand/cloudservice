@@ -10,8 +10,13 @@
       <input id="field-name"
              type="text"
              class="form-control"
-             ng-disabled="EditField.fieldName"
-             value="EditField.fieldName ? EditField.fieldName : ''">
+              ng-model="EditField.fieldName">
+
+      <label for="field-type">Field Type:</label>
+      <input id="field-type"
+             type="text"
+             class="form-control"
+             ng-model="EditField.fieldType">
     </fieldset>
   </form>
 </div>

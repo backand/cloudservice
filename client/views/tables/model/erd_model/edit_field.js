@@ -3,29 +3,34 @@
   angular.module('backand')
     .controller('EditFieldController', [
       '$modalInstance',
-      'tableData',
+      'tableName',
       'fieldName',
-      'DataService',
+      'DbDataModel',
+      'AppsService',
       '$filter',
       EditFieldController
     ]);
 
   function EditFieldController(modalInstance,
-                             tableData,
-                             fieldName,
-                             $filter) {
+                               tableName,
+                               fieldName,
+                               DbDataModel,
+                               AppsService,
+                               $filter) {
     var self = this;
 
-    self.tableData = tableData;
+    self.tableName = tableName;
     self.fieldName = fieldName;
     self.editFieldForm = 'edit-field';
 
     self.saveField = function () {
-
+      var fieldObj = {};
+      fieldObj[self.fieldName] = {type: self.fieldType};
+      DbDataModel.addField(AppsService.currentApp, self.tableName, fieldObj);
     };
 
-    self.cancelEditField = function(){
-
+    self.cancelEditField = function () {
+      modalInstance.dismiss('cancel');
     };
 
   }
