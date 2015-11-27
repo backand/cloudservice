@@ -1,16 +1,16 @@
 <div class="modal-header">
   <h3 class="modal-title">
-    {{(EditField.fieldName ? 'Edit Field' : 'New Field') + ' - Table: ' + EditField.tableName}}
+    {{::(EditField.fieldName ? 'Edit Field' : 'New Field') + ' - Table: ' + EditField.tableName}}
   </h3>
 </div>
 <div class="modal-body edit-row-modal">
-  <form role="form" ng-submit="EditField.saveField()" name="EditField.editFieldForm" novalidate>
+  <form role="form" name="EditField.editFieldForm" novalidate>
     <fieldset>
       <label for="field-name">Field Name:</label>
       <input id="field-name"
              type="text"
              class="form-control"
-              ng-model="EditField.fieldName">
+             ng-model="EditField.fieldName">
 
       <label for="field-type">Field Type:</label>
       <input id="field-type"
@@ -23,8 +23,8 @@
 <div class="modal-footer">
   <button class="btn btn-success"
           ladda="EditRow.savingRow"
-          ng-click="EditField.saveField()">
-    Save
+          ng-click="EditField.addField()">
+    Add
   </button>
   <button class="btn btn-default"
           ng-click="EditField.cancelEditField()">

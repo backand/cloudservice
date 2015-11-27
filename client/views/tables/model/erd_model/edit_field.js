@@ -1,10 +1,12 @@
 (function () {
-
+  'use strict';
   angular.module('backand')
     .controller('EditFieldController', [
       '$modalInstance',
       'tableName',
       'fieldName',
+      'appName',
+      'newModel',
       'DbDataModel',
       'AppsService',
       '$filter',
@@ -14,19 +16,28 @@
   function EditFieldController(modalInstance,
                                tableName,
                                fieldName,
+                               appName,
+                               newModel,
                                DbDataModel,
                                AppsService,
                                $filter) {
     var self = this;
 
+    self.appName = appName;
     self.tableName = tableName;
     self.fieldName = fieldName;
+    self.newModel = newModel;
     self.editFieldForm = 'edit-field';
 
-    self.saveField = function () {
-      var fieldObj = {};
-      fieldObj[self.fieldName] = {type: self.fieldType};
-      DbDataModel.addField(AppsService.currentApp, self.tableName, fieldObj);
+
+    self.addField = function () {
+      var newModelObject = JSON.parse(self.newModel.schema);
+      var fieldToAdd = {};
+      fieldToAdd[self.fieldName] = {type: self.fieldType};
+      var object = _.find(newModelObject, {name: self.tableName});
+      _.extend(object.fields, fieldToAdd);
+      DbDataModel.saveCustomSchema(self.appName, JSON.stringify(newModelObject));
+      modalInstance.dismiss('added');
     };
 
     self.cancelEditField = function () {

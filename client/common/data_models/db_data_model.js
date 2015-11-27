@@ -76,13 +76,6 @@
         })
     };
 
-    self.addField = function (appName, objectName, fieldToAdd) {
-      var newModelObject = JSON.parse(this.newModel.schema);
-      var object = _.find(newModelObject, {name: objectName});
-      _.extend(object.fields, fieldToAdd);
-      this.update(appName, newModelObject);
-    };
-
     function updateModels (appName, model) {
       self.currentModel.schema = angular.toJson(model.data, true);
       self.currentModel.json = model.data;

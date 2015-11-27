@@ -11,7 +11,7 @@ angular.module('common.directives')
         onUpdate: '&',
         showModelControls: '=',
         onIconClick: '&',
-        editField: '&',
+        editFieldDialog: '&',
         selectedNode: '='
       },
       controller: FlowchartCtrl,

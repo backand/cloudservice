@@ -50,7 +50,7 @@
       $scope.$emit('open-help');
     };
 
-    self.editField = function (tableName, fieldName) {
+    self.editFieldDialog = function (tableName, fieldName) {
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/model/erd_model/edit_field.html',
         controller: 'EditFieldController as EditField',
@@ -60,19 +60,14 @@
           },
           fieldName: function () {
             return fieldName;
+          },
+          appName: function(){
+            return self.appName;
+          },
+          newModel: function(){
+            return self.newModel;
           }
         }
-      });
-
-      modalInstance.result.then(function (result) {
-        if (result && result.reopen) {
-          self.newRow();
-        }
-        else {
-          usSpinnerService.spin("loading-data");
-        }
-        loadData()
-          .then(successDataHandler);
       });
     };
 
