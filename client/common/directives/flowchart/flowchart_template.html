@@ -81,6 +81,17 @@
     </g>
 
     <g
+      ng-repeat="textField in node.textFields">
+      <text
+        alignment-baseline="central"
+        ng-attr-x="{{textField.x()-20}}"
+        ng-attr-y="{{textField.y()}}">
+        {{textField.name()}}
+      </text>
+      </g>
+
+
+    <g
       ng-repeat="connector in node.outputConnectors"
       ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
       class="connector output-connector">

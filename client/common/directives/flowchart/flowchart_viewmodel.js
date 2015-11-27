@@ -46,6 +46,17 @@ var flowchart = {
 		};
 	};
 
+  // View model for a text field
+  flowchart.TextFieldViewModel = function (textFieldDataModel, parentNode){
+    this.data = textFieldDataModel;
+    this._parentNode = parentNode;
+
+    // The name of the text field.
+    this.name = function () {
+      return this.data.name;
+    };
+  };
+
 	//
 	// View model for a connector.
 	//
@@ -115,6 +126,7 @@ var flowchart = {
 		}
 		this.inputConnectors = createConnectorsViewModel(this.data.inputConnectors, 0, this);
 		this.outputConnectors = createConnectorsViewModel(this.data.outputConnectors, this.data.width, this);
+    this.textFields = createConnectorsViewModel(this.data.textFields,this.data.width/2, this);
 
 		// Set to true when the node is selected.
 		this._selected = false;

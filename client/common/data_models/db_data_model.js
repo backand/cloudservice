@@ -100,7 +100,8 @@
           name: obj.name,
           id: obj.name,
           inputConnectors: [],
-          outputConnectors: []
+          outputConnectors: [],
+          textFields: []
         };
 
         var savedModelObject = self.getErdModelObject(appName, obj.name);
@@ -117,6 +118,9 @@
             node.outputConnectors.push({name: fieldname});
           } else if (field.collection) {
             node.inputConnectors.push({name: fieldname});
+          }
+          else {
+            node.textFields.push({name: fieldname});
           }
         });
 

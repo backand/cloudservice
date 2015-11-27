@@ -102,6 +102,17 @@ function FlowchartCtrl () {
 					name: "Z"
 				}
 			],
+      textField: [
+        {
+          name: "text1"
+        },
+        {
+          name: "text2"
+        },
+        {
+          name: "text3"
+        }
+      ],
 			outputConnectors: [
 				{
 					name: "1"
