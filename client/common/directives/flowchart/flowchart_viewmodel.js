@@ -454,7 +454,7 @@ var flowchart = {
 
       var inputConnectors = _.where(node.fields, {type: "InputConnector"});
 
-			if (!inputConnectors || inputConnectors.length <= connectorIndex) {
+			if (!inputConnectors || node.fields.length <= connectorIndex) {
 				throw new Error("Node " + nodeID + " has invalid input connectors.");
 			}
 
@@ -470,20 +470,33 @@ var flowchart = {
 
       var outputConnectors = _.where(node.fields, {type: "OutputConnector"});
 
-			if (!outputConnectors || outputConnectors.length <= connectorIndex) {
+			if (!outputConnectors || node.fields.length <= connectorIndex) {
 				throw new Error("Node " + nodeID + " has invalid output connectors.");
 			}
 
 			return outputConnectors[connectorIndex];
 		};
 
+    // Find a field within the chart
+    this.findField = function (nodeID, connectorIndex) {
+      var node = this.findNode(nodeID);
+
+
+
+      if (node.fields.length <= connectorIndex) {
+        throw new Error("Node " + nodeID + " has invalid output connectors.");
+      }
+
+      return node.fields[connectorIndex];
+    };
+
 		//
 		// Create a view model for connection from the data model.
 		//
 		this._createConnectionViewModel = function(connectionDataModel) {
 
-			var sourceConnector = this.findOutputConnector(connectionDataModel.source.nodeID, connectionDataModel.source.connectorIndex);
-			var destConnector = this.findInputConnector(connectionDataModel.dest.nodeID, connectionDataModel.dest.connectorIndex);
+			var sourceConnector = this.findField(connectionDataModel.source.nodeID, connectionDataModel.source.connectorIndex);
+			var destConnector = this.findField(connectionDataModel.dest.nodeID, connectionDataModel.dest.connectorIndex);
 			return new flowchart.ConnectionViewModel(connectionDataModel, sourceConnector, destConnector);
 		};
 

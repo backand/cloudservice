@@ -139,12 +139,12 @@
         _.forIn(obj.fields, function (field, fieldname) {
           if (field.collection) {
 
-            var destConnectorIndex = _.findIndex(dest.inputConnectors, {name: fieldname});
+            var destConnectorIndex = _.findIndex(dest.fields, {name: fieldname});
 
             var source = _.find(chartData.nodes, {name: field.collection});
             if(source)
             {
-              var sourceConnectorIndex = _.findIndex(source.outputConnectors, {name: field.via});
+              var sourceConnectorIndex = _.findIndex(source.fields, {name: field.via});
 
               chartData.connections.push({
                 source: {
