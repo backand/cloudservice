@@ -61,54 +61,53 @@
       alignment-baseline="middle"
       x="200">+</text>
 
-    <g
-      ng-repeat="connector in node.inputConnectors"
-      ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
-      class="connector input-connector">
-      <text
-        ng-attr-x="{{connector.x() + 20}}"
-        ng-attr-y="{{connector.y()}}"
-        text-anchor="left"
-        alignment-baseline="middle">
-        {{connector.name()}}
-      </text>
+    <g ng-repeat="field in node.fields">
+      <g ng-switch on="field.type">
+        <g
+          ng-switch-when="InputConnector"
+          ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
+          class="connector input-connector">
+          <text
+            ng-attr-x="{{field.x() + 20}}"
+            ng-attr-y="{{field.y()}}"
+            text-anchor="left"
+            alignment-baseline="middle">
+            {{field.name()}}
+          </text>
 
-      <circle
-        ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
-        ng-attr-r="{{connectorSize}}"
-        ng-attr-cx="{{connector.x()}}"
-        ng-attr-cy="{{connector.y()}}"/>
-    </g>
+          <circle
+            ng-attr-class="{{field == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
+            ng-attr-r="{{connectorSize}}"
+            ng-attr-cx="{{field.x()}}"
+            ng-attr-cy="{{field.y()}}"/>
+        </g>
+          <text ng-switch-when="TextField"
+            alignment-baseline="central"
+            ng-attr-x="{{field.x()-20}}"
+            ng-attr-y="{{field.y()}}">
+            {{field.name()}}
+          </text>
+        <g
+          ng-switch-when="OutputConnector"
+          ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
+          class="connector output-connector">
+          <text
+            ng-attr-x="{{field.x() - 20}}"
+            ng-attr-y="{{field.y()}}"
+            text-anchor="end"
+            alignment-baseline="middle">
+            {{field.name()}}
+          </text>
 
-    <g
-      ng-repeat="textField in node.textFields">
-      <text
-        alignment-baseline="central"
-        ng-attr-x="{{textField.x()-20}}"
-        ng-attr-y="{{textField.y()}}">
-        {{textField.name()}}
-      </text>
+          <circle
+            ng-attr-class="{{field == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
+            ng-attr-r="{{connectorSize}}"
+            ng-attr-cx="{{field.x()}}"
+            ng-attr-cy="{{field.y()}}"/>
+        </g>
       </g>
-
-
-    <g
-      ng-repeat="connector in node.outputConnectors"
-      ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
-      class="connector output-connector">
-      <text
-        ng-attr-x="{{connector.x() - 20}}"
-        ng-attr-y="{{connector.y()}}"
-        text-anchor="end"
-        alignment-baseline="middle">
-        {{connector.name()}}
-      </text>
-
-      <circle
-        ng-attr-class="{{connector == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
-        ng-attr-r="{{connectorSize}}"
-        ng-attr-cx="{{connector.x()}}"
-        ng-attr-cy="{{connector.y()}}"/>
     </g>
+
   </g>
 
   <g>

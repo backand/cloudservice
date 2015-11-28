@@ -99,9 +99,7 @@
         var node = {
           name: obj.name,
           id: obj.name,
-          inputConnectors: [],
-          outputConnectors: [],
-          textFields: []
+          fields: [],
         };
 
         var savedModelObject = self.getErdModelObject(appName, obj.name);
@@ -114,14 +112,15 @@
         }
 
         _.forIn(obj.fields, function (field, fieldname) {
+          var fieldToBeAdded = {name: fieldname, type: ''};
           if (field.object) {
-            node.outputConnectors.push({name: fieldname});
+            fieldToBeAdded.type = 'OutputConnector';
           } else if (field.collection) {
-            node.inputConnectors.push({name: fieldname});
+            fieldToBeAdded.type = 'InputConnector';
+          } else {
+            fieldToBeAdded.type = 'TextField';
           }
-          else {
-            node.textFields.push({name: fieldname});
-          }
+          node.fields.push(fieldToBeAdded);
         });
 
         chartData.nodes.push(node);

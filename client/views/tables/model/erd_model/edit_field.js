@@ -37,6 +37,7 @@
       var object = _.find(newModelObject, {name: self.tableName});
       _.extend(object.fields, fieldToAdd);
       DbDataModel.saveCustomSchema(self.appName, JSON.stringify(newModelObject));
+
       modalInstance.dismiss('added');
     };
 
