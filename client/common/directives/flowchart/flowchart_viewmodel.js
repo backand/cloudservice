@@ -30,7 +30,7 @@ var flowchart = {
   flowchart.connectorYOffset = 10;
 
   // Maps between connector types to their x position
-  flowchart.typeToXPositionMapper = {InputConnector: 0, OutputConnector: 0.5 * flowchart.defaultNodeWidth, TextField: flowchart.defaultNodeWidth};
+  flowchart.typeToXPositionMapper = {InputConnector: 0, OutputConnector: flowchart.defaultNodeWidth, TextField: 0.5 * flowchart.defaultNodeWidth};
 
 	//
 	// Compute the Y coordinate of a connector, given its index.

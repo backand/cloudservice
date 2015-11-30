@@ -69,6 +69,13 @@
           }
         }
       });
+
+      modalInstance.result.then(function (result) {
+        DbDataModel.updateNewModel(self.appName, result.model);
+        // Refresh ERD
+        $state.go($state.current, {}, {reload: true});
+      });
+
     };
 
     init();

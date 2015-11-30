@@ -58,7 +58,7 @@
     };
 
     self.saveErdModel = function (appName) {
-      $localStorage.backand[appName].erdModel = self.currentModel.erdModel;
+      $localStorage.backand[appName].erdModel = self.newModel.erdModel;
     };
 
     self.get = function (appName) {
@@ -76,17 +76,26 @@
         })
     };
 
+    // Updates new model schema & erd (localstorage)
+    self.updateNewModel = function (appName, model) {
+      self.saveCustomSchema(appName, JSON.stringify(model));
+      self.newModel.schema = JSON.stringify(model);
+      self.newModel.erdModel = self.modelToChartData(appName, model);
+      self.saveErdModel(appName);
+    };
+
     function updateModels (appName, model) {
       self.currentModel.schema = angular.toJson(model.data, true);
       self.currentModel.json = model.data;
-      self.currentModel.erdModel = modelToChartData(appName, model.data);
-      self.saveErdModel(appName);
+      self.currentModel.erdModel = self.modelToChartData(appName, model.data);
       self.newModel.schema =
         self.getCustomSchema(appName) || self.currentModel.schema;
+      self.newModel.erdModel = self.modelToChartData(appName, JSON.parse(self.newModel.schema));
+      self.saveErdModel(appName);
       return self.currentModel;
     }
 
-    function modelToChartData (appName, model) {
+    self.modelToChartData = function (appName, model) {
       var chartData = {
         nodes: [],
         connections: []

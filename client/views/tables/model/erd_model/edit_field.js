@@ -30,15 +30,16 @@
     self.editFieldForm = 'edit-field';
 
 
+
     self.addField = function () {
       var newModelObject = JSON.parse(self.newModel.schema);
       var fieldToAdd = {};
       fieldToAdd[self.fieldName] = {type: self.fieldType};
       var object = _.find(newModelObject, {name: self.tableName});
       _.extend(object.fields, fieldToAdd);
-      DbDataModel.saveCustomSchema(self.appName, JSON.stringify(newModelObject));
-
-      modalInstance.dismiss('added');
+      //DbDataModel.saveCustomSchema(self.appName, JSON.stringify(newModelObject));
+      //modalInstance.dismiss('added');
+      modalInstance.close({model: newModelObject});
     };
 
     self.cancelEditField = function () {
