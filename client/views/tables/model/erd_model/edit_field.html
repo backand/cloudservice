@@ -13,10 +13,23 @@
              ng-model="EditField.fieldName">
 
       <label for="field-type">Field Type:</label>
-      <input id="field-type"
-             type="text"
-             class="form-control"
-             ng-model="EditField.fieldType">
+      <select id="field-type"
+              class="form-control"
+              ng-model="EditField.fieldType"
+              ng-options="option for option in EditField.typeOptions"></select>
+
+      <div id="collection-properties"
+           ng-show="EditField.fieldType == 'collection'">
+
+        <label for="related-object">Related Object:</label>
+        <select id="related-object" class="form-control" ng-model="EditField.relatedObject" ng-options="option.name for option in EditField.objectOptions"></select>
+
+        <label for="via-field">Via:</label>
+        <input id="via-field"
+               type="text"
+               class="form-control"
+              ng-model="EditField.viaField">
+      </div>
     </fieldset>
   </form>
 </div>
