@@ -7,10 +7,7 @@
       'fieldName',
       'appName',
       'newModel',
-      'DbDataModel',
-      'AppsService',
       'TablesService',
-      '$filter',
       EditFieldController
     ]);
 
@@ -19,10 +16,7 @@
                                fieldName,
                                appName,
                                newModel,
-                               DbDataModel,
-                               AppsService,
-                               TablesService,
-                               $filter) {
+                               TablesService) {
     var self = this;
 
     self.appName = appName;
@@ -49,8 +43,6 @@
       else {
         createSimpleField(newModelObject, self.fieldName, self.fieldType, self.tableName);
       }
-      //DbDataModel.saveCustomSchema(self.appName, JSON.stringify(newModelObject));
-      //modalInstance.dismiss('added');
       modalInstance.close({model: newModelObject});
     };
 

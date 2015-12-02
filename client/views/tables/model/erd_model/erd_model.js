@@ -1,4 +1,4 @@
-  (function  () {
+(function () {
   'use strict';
   angular.module('backand')
     .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', ErdModelController]);
@@ -38,7 +38,7 @@
       getSchema();
     };
 
-    function getSchema () {
+    function getSchema() {
       usSpinnerService.spin('loading');
       DbDataModel.get(self.appName)
         .finally(function () {
@@ -61,22 +61,43 @@
           fieldName: function () {
             return fieldName;
           },
-          appName: function(){
+          appName: function () {
             return self.appName;
           },
-          newModel: function(){
+          newModel: function () {
             return self.newModel;
           }
         }
       });
 
+      updateErdAfterModal(modalInstance);
+
+    };
+
+    self.addObjectDialog = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/model/erd_model/add_object.html',
+        controller: 'AddObjectController as AddObject',
+        resolve: {
+          appName: function () {
+            return self.appName;
+          },
+          newModel: function () {
+            return self.newModel;
+          }
+        }
+      });
+
+      updateErdAfterModal(modalInstance);
+    };
+
+    function updateErdAfterModal(modalInstance) {
       modalInstance.result.then(function (result) {
         DbDataModel.updateNewModel(self.appName, result.model);
         // Refresh ERD
         $state.go($state.current, {}, {reload: true});
       });
-
-    };
+    }
 
     init();
   }

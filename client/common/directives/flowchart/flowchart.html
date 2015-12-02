@@ -4,12 +4,12 @@
   ng-keyup="flowchartCtrl.keyUp($event)">
 
   <div>
+    <button
+      ng-click="flowchartCtrl.addObjectDialog()"
+      title="Add a new object to the ERD model">
+      Add Object
+    </button>
     <div ng-show="flowchartCtrl.showModelControls">
-      <button
-        ng-click="flowchartCtrl.addNewNode()"
-        title="Add a new node to the chart">
-        Add Node
-      </button>
       <button
         ng-click="flowchartCtrl.addNewInputConnector()"
         ng-disabled="flowchartCtrl.chartViewModel.getSelectedNodes().length == 0"
