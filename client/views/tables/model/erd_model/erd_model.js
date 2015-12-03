@@ -74,16 +74,19 @@
 
     };
 
-    self.addObjectDialog = function () {
+    self.editObjectDialog = function (objectName) {
       var modalInstance = $modal.open({
-        templateUrl: 'views/tables/model/erd_model/add_object.html',
-        controller: 'AddObjectController as AddObject',
+        templateUrl: 'views/tables/model/erd_model/edit_object.html',
+        controller: 'EditObjectController as EditObject',
         resolve: {
           appName: function () {
             return self.appName;
           },
           newModel: function () {
             return self.newModel;
+          },
+          objectName: function () {
+            return objectName;
           }
         }
       });

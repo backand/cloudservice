@@ -14,7 +14,8 @@ angular.module('flowChart', ['dragging'])
       scope: {
         chart: "=chart",
         onIconClick: '&',
-        editFieldDialog: '&'
+        editFieldDialog: '&',
+        editObjectDialog: '&'
       },
 
       //
@@ -130,8 +131,12 @@ angular.module('flowChart', ['dragging'])
     };
 
 
-    $scope.onAddFieldClick = function (tableName) {
+    $scope.onEditFieldClick = function (tableName) {
       this.editFieldDialog({tableName: tableName});
+    };
+
+    $scope.onEditObjectClick = function (objectName) {
+      this.editObjectDialog({objectName: objectName});
     };
     //
     // Search up the HTML element tree for an element the requested class.

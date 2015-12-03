@@ -37,29 +37,31 @@
 
     </rect>
 
-    <text
-      class="node-title"
-      ng-attr-x="{{node.width()/2}}"
-      y="25"
-      text-anchor="middle"
-      alignment-baseline="middle">
-      {{node.name()}}
-    </text>
+      <text
+        ng-click="onEditObjectClick(node.name())"
+        class="node-title"
+        ng-attr-x="{{node.width()/2}}"
+        y="25"
+        text-anchor="middle"
+        alignment-baseline="middle">
+        {{node.name()}}
+      </text>
 
     <text ng-click="onNodeClick(node)"
-      class="fa-icon magic-icon"
-      ng-attr-x="{{node.width() - 30}}"
-      y="25"
-      text-anchor="middle"
-      alignment-baseline="middle">&#xf0d0
+          class="fa-icon magic-icon"
+          ng-attr-x="{{node.width() - 30}}"
+          y="25"
+          text-anchor="middle"
+          alignment-baseline="middle">&#xf0d0
     </text>
 
-    <text ng-click="onAddFieldClick(node.name())"
-      class="fa-icon magic-icon"
-      y="25"
-      text-anchor="middle"
-      alignment-baseline="middle"
-      x="200">+</text>
+    <text ng-click="onEditFieldClick(node.name())"
+          class="fa-icon magic-icon"
+          y="25"
+          text-anchor="middle"
+          alignment-baseline="middle"
+          x="200">+
+    </text>
 
     <g ng-repeat="field in node.fields">
       <g ng-switch on="field.type">
@@ -67,13 +69,15 @@
           ng-switch-when="InputConnector"
           ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
           class="connector input-connector">
-          <text
-            ng-attr-x="{{field.x() + 20}}"
-            ng-attr-y="{{field.y()}}"
-            text-anchor="left"
-            alignment-baseline="middle">
-            {{field.name()}}
-          </text>
+          <a ng-click="onEditFieldClick(node.name(), field.name())">
+            <text
+              ng-attr-x="{{field.x() + 20}}"
+              ng-attr-y="{{field.y()}}"
+              text-anchor="left"
+              alignment-baseline="middle">
+              {{field.name()}}
+            </text>
+          </a>
 
           <circle
             ng-attr-class="{{field == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"
@@ -81,23 +85,28 @@
             ng-attr-cx="{{field.x()}}"
             ng-attr-cy="{{field.y()}}"/>
         </g>
+        <a ng-click="onEditFieldClick(node.name(), field.name())">
           <text ng-switch-when="TextField"
-            alignment-baseline="central"
-            ng-attr-x="{{field.x()-20}}"
-            ng-attr-y="{{field.y()}}">
+                alignment-baseline="central"
+                ng-attr-x="{{field.x()-20}}"
+                ng-attr-y="{{field.y()}}">
             {{field.name()}}
           </text>
+        </a>
+
         <g
           ng-switch-when="OutputConnector"
           ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
           class="connector output-connector">
-          <text
-            ng-attr-x="{{field.x() - 20}}"
-            ng-attr-y="{{field.y()}}"
-            text-anchor="end"
-            alignment-baseline="middle">
-            {{field.name()}}
-          </text>
+          <a ng-click="onEditFieldClick(node.name(), field.name())">
+            <text
+              ng-attr-x="{{field.x() - 20}}"
+              ng-attr-y="{{field.y()}}"
+              text-anchor="end"
+              alignment-baseline="middle">
+              {{field.name()}}
+            </text>
+          </a>
 
           <circle
             ng-attr-class="{{field == mouseOverConnector && 'mouseover-connector-circle' || 'connector-circle'}}"

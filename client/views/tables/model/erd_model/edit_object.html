@@ -1,17 +1,17 @@
 <div class="modal-header">
   <h3 class="modal-title">
-    New Object
+    {{::(EditObject.objectName ? 'Edit Object' : 'New Object')}}
   </h3>
 </div>
 
 <div class="modal-body edit-row-modal">
-  <form role="form" name="AddObject.addObjectForm" novalidate>
+  <form role="form" name="EditObject.editObjectForm" novalidate>
     <fieldset>
       <label for="object-name">Object Name:</label>
       <input id="object-name"
              type="text"
              class="form-control"
-             ng-model="AddObject.objectName">
+             ng-model="EditObject.selectedObjectName">
     </fieldset>
   </form>
 </div>
@@ -19,7 +19,7 @@
 <div class="modal-footer">
   <button class="btn btn-success"
           ladda="EditRow.savingRow"
-          ng-click="AddObject.addObject()">
+          ng-click="EditObject.objectName ? EditObject.editObject() : EditObject.addObject()">
     Update
   </button>
 </div>
