@@ -14,6 +14,9 @@
     self.newModel = newModel;
     self.objectName = objectName;
     self.editObjectForm = 'edit-object';
+    if (self.objectName) {
+      self.selectedObjectName = self.objectName
+    }
 
     self.addObject = function () {
       var newModelObject = JSON.parse(self.newModel.schema);

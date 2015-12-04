@@ -131,8 +131,8 @@ angular.module('flowChart', ['dragging'])
     };
 
 
-    $scope.onEditFieldClick = function (tableName) {
-      this.editFieldDialog({tableName: tableName});
+    $scope.onEditFieldClick = function (tableName, fieldName) {
+      this.editFieldDialog({tableName: tableName, fieldName: fieldName});
     };
 
     $scope.onEditObjectClick = function (objectName) {

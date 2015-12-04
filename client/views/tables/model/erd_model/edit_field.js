@@ -24,6 +24,30 @@
     self.fieldName = fieldName;
     self.newModel = newModel;
     self.editFieldForm = 'edit-field';
+    self.showUniqueSection = false;
+
+    // If editing a field, get the field from the model by the field name
+    // If editing a field, set field type
+    if (self.fieldName) {
+      var newModelObject = JSON.parse(self.newModel.schema);
+      self.field = getField(newModelObject, self.tableName, self.fieldName);
+
+      if (self.field.type) {
+        self.fieldType = self.field.type;
+      }
+      else if (self.field.collection) {
+        self.fieldType = 'collection';
+        self.relatedObject = self.field.collection;
+        self.viaField = self.field.via;
+      }
+      else {
+        self.fieldType = 'object';
+      }
+    }
+
+    // Indicate whether to display edit or add form
+    self.isEdit = self.fieldName;
+
     self.typeOptions = [
       'string',
       'text',
@@ -32,8 +56,29 @@
       'boolean',
       'collection'
     ];
-    self.objectOptions = TablesService.tables;
+    // If editing a field, be able to show the 'object' type
+    if (self.isEdit) {
+      self.typeOptions.push('object');
+    }
 
+    self.objectOptions = getObjectNames();
+
+
+    self.editField = function () {
+      var newModelObject = JSON.parse(self.newModel.schema);
+      var field = getField(newModelObject, self.tableName, self.field.name);
+      _.extend(field, self.field);
+
+      modalInstance.close({model: newModelObject});
+    };
+
+    self.deleteField = function () {
+      var newModelObject = JSON.parse(self.newModel.schema);
+      var object = _.find(newModelObject, {name: tableName});
+      delete object.fields[self.fieldName];
+
+      modalInstance.close({model: newModelObject});
+    };
 
     self.addField = function () {
       var newModelObject = JSON.parse(self.newModel.schema);
@@ -74,6 +119,16 @@
     function addGenericField(model, tableName, fieldToAdd) {
       var object = _.find(model, {name: tableName});
       _.extend(object.fields, fieldToAdd);
+    }
+
+    function getObjectNames() {
+      var newModelObject = JSON.parse(self.newModel.schema);
+      return _.pluck(newModelObject, 'name');
+    }
+
+    function getField(model, tableName, fieldName) {
+      var object = _.find(model, {name: tableName});
+      return object.fields[self.fieldName];
     }
 
   }

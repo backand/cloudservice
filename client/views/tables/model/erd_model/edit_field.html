@@ -1,6 +1,6 @@
 <div class="modal-header">
   <h3 class="modal-title">
-    {{::(EditField.fieldName ? 'Edit Field' : 'New Field') + ' - Table: ' + EditField.tableName}}
+    {{::(EditField.isEdit ? 'Edit Field' : 'New Field') + ' - Table: ' + EditField.tableName}}
   </h3>
 </div>
 <div class="modal-body edit-row-modal">
@@ -10,34 +10,66 @@
       <input id="field-name"
              type="text"
              class="form-control"
-             ng-model="EditField.fieldName">
+             ng-model="EditField.fieldName"
+             ng-disabled="::EditField.isEdit">
 
       <label for="field-type">Field Type:</label>
       <select id="field-type"
               class="form-control"
               ng-model="EditField.fieldType"
-              ng-options="option for option in EditField.typeOptions"></select>
+              ng-options="option for option in EditField.typeOptions"
+              ng-disabled="::EditField.isEdit"></select>
 
       <div id="collection-properties"
            ng-show="EditField.fieldType == 'collection'">
 
         <label for="related-object">Related Object:</label>
-        <select id="related-object" class="form-control" ng-model="EditField.relatedObject" ng-options="option.name for option in EditField.objectOptions"></select>
+        <select id="related-object" class="form-control"
+                ng-model="EditField.relatedObject"
+                ng-options="option for option in EditField.objectOptions"
+                ng-disabled="::EditField.isEdit"></select>
 
         <label for="via-field">Via:</label>
         <input id="via-field"
                type="text"
                class="form-control"
-              ng-model="EditField.viaField">
+               ng-model="EditField.viaField"
+               ng-disabled="::EditField.isEdit">
+      </div>
+
+      <div id="editable-properties"
+           ng-show="::EditField.isEdit">
+        <label for="default-value">Default Value:</label>
+        <input id="default-value"
+               type="text"
+               class="form-control"
+               ng-model="EditField.field.defaultValue">
+
+        <label for="is-required">Required</label>
+        <label id="is-required" class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
+          type="checkbox"
+          ng-model="EditField.field.required"><i></i></label>
+
+        <div id="unique-section" ng-show="::EditField.showUniqueSection">
+        <label for="is-unique">Unique</label>
+        <label id="is-unique" class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
+          type="checkbox"
+          ng-model="EditField.field.unique"><i></i></label>
+        </div>
+
       </div>
     </fieldset>
   </form>
 </div>
 <div class="modal-footer">
+  <button class="btn btn-danger"
+    ng-show="::EditField.isEdit"
+    ng-click="EditField.deleteField()">
+    Delete
+  </button>
   <button class="btn btn-success"
-          ladda="EditRow.savingRow"
-          ng-click="EditField.addField()">
-    Add
+          ng-click="::EditField.isEdit ? EditField.editField() : EditField.addField()">
+    {{::EditField.isEdit ? 'Update' : 'Add'}}
   </button>
   <button class="btn btn-default"
           ng-click="EditField.cancelEditField()">
