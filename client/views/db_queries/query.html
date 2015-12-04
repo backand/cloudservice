@@ -67,7 +67,8 @@
                          id="nosql"
                          ng-model="DbQuery.query.noSQL"
                          rows="10"
-                         ng-readonly="!DbQuery.editMode">
+                         ng-readonly="!DbQuery.editMode"
+                         ng-class="{'not-allowed':!DbQuery.editMode}">
                     </div>
 
                     <div ng-show="DbQuery.mode === 'sql'"
@@ -77,7 +78,8 @@
                          id="sql"
                          ng-model="DbQuery.query.sQL"
                          rows="10"
-                         ng-readonly="!DbQuery.editMode" ng-change="DbQuery.onEditSql()">
+                         ng-readonly="!DbQuery.editMode" ng-change="DbQuery.onEditSql()"
+                         ng-class="{'not-allowed':!DbQuery.editMode}">
                     </div>
                   </bknd-ace-features>
 

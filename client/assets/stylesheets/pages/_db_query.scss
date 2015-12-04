@@ -33,6 +33,11 @@
         padding-bottom:20px;
       }
     }
+
+    .not-allowed .ace_scroller{
+      cursor: not-allowed !important;
+    }
+
   }
 
   .db-query-anchor {
