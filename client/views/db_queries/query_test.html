@@ -23,6 +23,13 @@
             ng-disabled="!(DbQuery.allowTest() && !DbQuery.inputParametersForm.$invalid)"
             ng-click="DbQuery.testData()">Test Query
     </button>
+    <button type="button"
+            style=""
+            class="btn btn-success btn-lg btn-w-lg"
+            data-style="expand-right" ladda="DbQuery.loading"
+            ng-hide="DbQuery.allowTest()"
+            ng-click="DbQuery.saveQuery(true)">Save & Test
+    </button>
     <div ng-if="!DbQuery.allowTest()">** Must save first to enable Test Query</div>
   </form>
   <br/><br/>
