@@ -8,6 +8,7 @@
       'appName',
       'newModel',
       'TablesService',
+      'FieldsService',
       EditFieldController
     ]);
 
@@ -16,7 +17,8 @@
                                fieldName,
                                appName,
                                newModel,
-                               TablesService) {
+                               TablesService,
+                               FieldsService) {
     var self = this;
 
     self.appName = appName;
@@ -65,61 +67,25 @@
 
 
     self.editField = function () {
-      var newModelObject = JSON.parse(self.newModel.schema);
-      var field = getField(newModelObject, self.tableName, self.field.name);
-      _.extend(field, self.field);
+      FieldsService.editField(self.tableName, self.field);
 
       modalInstance.close({model: newModelObject});
     };
 
     self.deleteField = function () {
-      var newModelObject = JSON.parse(self.newModel.schema);
-      var object = _.find(newModelObject, {name: tableName});
-      delete object.fields[self.fieldName];
-
-      modalInstance.close({model: newModelObject});
+      FieldsService.deleteField(self.tableName, self.fieldName);
+      modalInstance.close({model: FieldsService.newModelObject});
     };
 
     self.addField = function () {
-      var newModelObject = JSON.parse(self.newModel.schema);
-      if (self.fieldType == 'collection') {
-        createCollectionField(newModelObject, self.fieldName, self.relatedObject.name, self.viaField);
-      }
-      else {
-        createSimpleField(newModelObject, self.fieldName, self.fieldType, self.tableName);
-      }
-      modalInstance.close({model: newModelObject});
+      FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
+      modalInstance.close({model: FieldsService.newModelObject});
     };
 
     self.cancelEditField = function () {
       modalInstance.dismiss('cancel');
     };
 
-
-    function createCollectionField(model, fieldName, relatedObject, viaField) {
-      // Create field on the selected object
-      var fieldToAdd = {};
-      fieldToAdd[fieldName] = {collection: relatedObject, via: viaField};
-      addGenericField(model, self.tableName, fieldToAdd);
-
-      // Create field on the related object
-      fieldToAdd = {};
-      fieldToAdd[viaField] = {object: self.tableName};
-      addGenericField(model, relatedObject, fieldToAdd);
-    }
-
-    // Create field of a simple type, e.g {type: string}
-    function createSimpleField(model, fieldName, fieldType, tableName) {
-      var fieldToAdd = {};
-      fieldToAdd[fieldName] = {type: fieldType};
-      addGenericField(model, tableName, fieldToAdd);
-    }
-
-    // Add a field from an existing field object given to the function
-    function addGenericField(model, tableName, fieldToAdd) {
-      var object = _.find(model, {name: tableName});
-      _.extend(object.fields, fieldToAdd);
-    }
 
     function getObjectNames() {
       var newModelObject = JSON.parse(self.newModel.schema);
