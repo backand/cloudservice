@@ -94,14 +94,21 @@
       updateErdAfterModal(modalInstance);
     };
 
-    self.deleteRelationship = function (sourceObjectName, sourceFieldName, destinationObjectName, destinationFieldName) {
-      var newModelObject = JSON.parse(self.newModel.schema);
-      // Delete source
-      var sourceObject = _.find(newModelObject, {name: sourceObjectName});
-      delete sourceObject.fields[sourceFieldName];
-      // Delete destination
-      var destinationObject = _.find(newModelObject, {name: destinationObjectName});
-      delete destinationObject.fields[destinationFieldName];
+
+    self.deleteObject = function (objectName) {
+      var newModel = JSON.parse(DbDataModel.newModel.schema);
+      newModel = _.reject(newModel, function (object) {
+        return object.name == objectName;
+      });
+
+      // Remove fields related to the object
+      newModel.forEach(function (object) {
+        object.fields = _.pick(object.fields, function (value, key, object) {
+          return value.collection != objectName && value.object != objectName;
+        });
+      });
+
+      self.updateErd(newModel);
     };
 
     function updateErdAfterModal(modalInstance) {

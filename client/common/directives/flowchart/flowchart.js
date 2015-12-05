@@ -14,6 +14,7 @@ angular.module('common.directives')
         editFieldDialog: '&',
         editObjectDialog: '&',
         updateErd: '&',
+        deleteObject: '&',
         selectedNode: '='
       },
       controller: FlowchartCtrl,

@@ -5,13 +5,13 @@
 </div>
 
 <div class="modal-body edit-row-modal">
-  <form role="form" name="EditObject.editObjectForm" novalidate>
+  <form role="form" name="EditObject.editObjectForm">
     <fieldset>
       <label for="object-name">Object Name:</label>
       <input id="object-name"
              type="text"
              class="form-control"
-             ng-model="EditObject.selectedObjectName">
+             ng-model="EditObject.selectedObjectName" required>
     </fieldset>
   </form>
 </div>
@@ -19,6 +19,7 @@
 <div class="modal-footer">
   <button class="btn btn-success"
           ladda="EditRow.savingRow"
+          ng-disabled="EditObject.editObjectForm.$invalid"
           ng-click="EditObject.objectName ? EditObject.editObject() : EditObject.addObject()">
     Update
   </button>

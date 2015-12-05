@@ -16,7 +16,8 @@ angular.module('flowChart', ['dragging'])
         onIconClick: '&',
         editFieldDialog: '&',
         editObjectDialog: '&',
-        deleteRelationship: '&'
+        deleteRelationship: '&',
+        deleteObject: '&'
       },
 
       //
@@ -142,6 +143,10 @@ angular.module('flowChart', ['dragging'])
 
     $scope.onDeleteRelationshipClick = function () {
       this.deleteRelationship();
+    };
+
+    $scope.onDeleteObjectClick = function (objectName) {
+      this.deleteObject({objectName: objectName});
     };
 
     //

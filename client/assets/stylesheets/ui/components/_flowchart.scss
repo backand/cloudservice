@@ -143,3 +143,16 @@ Drag selection rectangle.
 text.node-title {
   font-weight: 700;
 }
+
+.erd-model-button {
+  background-color: #ededed;
+}
+
+svg.draggable-container {
+  margin-bottom: 5px;
+}
+
+.delete-connection-indicator {
+  fill: #ff0000;
+  font-size: 30px;
+}

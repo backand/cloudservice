@@ -4,20 +4,19 @@
   angular.module('common.services')
     .service('FieldsService', ['DbDataModel', FieldsService]);
 
-  function FieldsService(DbDataModel){
+  function FieldsService(DbDataModel) {
     var self = this;
 
-    self.newModel = DbDataModel.newModel;
-    self.newModelObject = JSON.parse(self.newModel.schema);
-
-
+    init();
 
     self.getField = function (objectName, fieldName) {
+      init();
       var object = _.find(self.newModelObject, {name: objectName});
       return object.fields[fieldName];
     };
 
     self.addField = function (objectName, fieldName, fieldType, relatedObject, viaField) {
+      init();
       if (fieldType == 'collection') {
         createCollectionField(self.newModelObject, fieldName, relatedObject, viaField, objectName);
       }
@@ -27,12 +26,14 @@
     };
 
     self.deleteField = function (objectName, fieldName) {
+      init();
       var object = _.find(self.newModelObject, {name: objectName});
       delete object.fields[fieldName];
     };
 
-    self.editField = function (objectName, field) {
-      var uneditedField = self.getField(objectName, field.name);
+    self.editField = function (objectName, fieldName, field) {
+      init();
+      var uneditedField = self.getField(objectName, fieldName);
       _.extend(uneditedField, field)
     };
 
@@ -59,6 +60,13 @@
     function addGenericField(model, tableName, fieldToAdd) {
       var object = _.find(model, {name: tableName});
       _.extend(object.fields, fieldToAdd);
+    }
+
+    function init() {
+      if(!self.newModelObject) {
+        self.newModel = DbDataModel.newModel;
+        self.newModelObject = JSON.parse(self.newModel.schema);
+      }
     }
   }
 })();

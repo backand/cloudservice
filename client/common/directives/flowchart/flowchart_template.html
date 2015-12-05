@@ -37,6 +37,13 @@
 
     </rect>
 
+    <text
+      ng-click="onDeleteObjectClick(node.name())"
+      y="25"
+      x="20">
+      X
+      </text>
+
       <text
         ng-click="onEditObjectClick(node.name())"
         class="node-title"
@@ -135,7 +142,7 @@
       <text
         ng-click="onDeleteRelationshipClick()"
         ng-show="connection.selected()"
-        ng-attr-class="{{connection.selected() && 'selected-connection-name' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
+        ng-attr-class="{{connection.selected() && 'selected-connection-name delete-connection-indicator' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
         ng-attr-x="{{connection.middleX()}}"
         ng-attr-y="{{connection.middleY()}}"
         text-anchor="middle"

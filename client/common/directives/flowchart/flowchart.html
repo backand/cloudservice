@@ -6,6 +6,7 @@
   <div>
     <button
       ng-click="flowchartCtrl.editObjectDialog()"
+      class="btn btn-default erd-model-button"
       title="Add a new object to the ERD model">
       Add Object
     </button>
@@ -36,7 +37,8 @@
       edit-field-dialog="flowchartCtrl.editFieldDialog({tableName: tableName, fieldName: fieldName})"
       edit-object-dialog="flowchartCtrl.editObjectDialog({objectName: objectName})"
       delete-relationship="flowchartCtrl.deleteRelationship()"
-      update-erd="flowchartCtrl.updateErd()">
+      update-erd="flowchartCtrl.updateErd()"
+      delete-object="flowchartCtrl.deleteObject({objectName: objectName})">
     </flow-chart>
   </div>
 
