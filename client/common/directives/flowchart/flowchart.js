@@ -13,6 +13,7 @@ angular.module('common.directives')
         onIconClick: '&',
         editFieldDialog: '&',
         editObjectDialog: '&',
+        updateErd: '&',
         selectedNode: '='
       },
       controller: FlowchartCtrl,
@@ -29,7 +30,8 @@ angular.module('common.directives')
     };
   });
 
-function FlowchartCtrl () {
+FlowchartCtrl.$inject = ['FieldsService'];
+function FlowchartCtrl (FieldsService) {
 
   var self = this;
 
@@ -129,6 +131,22 @@ function FlowchartCtrl () {
 
 		self.chartViewModel.addNode(newNodeDataModel);
 	};
+
+  self.deleteRelationship = function () {
+    var connection = self.chartViewModel.getSelectedConnections()[0];
+    var sourceObjectName = connection.data.source.nodeID;
+    var destinationObjectName = connection.data.dest.nodeID;
+    var sourceObject = _.where(self.chartViewModel.data.nodes, {name: connection.data.source.nodeID})[0];
+    var destinationObject = _.where(self.chartViewModel.data.nodes, {name: connection.data.dest.nodeID})[0];
+
+    var sourceField = sourceObject.fields[connection.data.source.connectorIndex];
+    var destinationField = destinationObject.fields[connection.data.dest.connectorIndex];
+
+    FieldsService.deleteField(sourceObjectName, sourceField.name);
+    FieldsService.deleteField(destinationObjectName, destinationField.name);
+
+    self.updateErd();
+  };
 
 	self.addNewInputConnector = function () {
 		var connectorName = prompt("Enter a connector name:", "New connector");

@@ -15,7 +15,8 @@ angular.module('flowChart', ['dragging'])
         chart: "=chart",
         onIconClick: '&',
         editFieldDialog: '&',
-        editObjectDialog: '&'
+        editObjectDialog: '&',
+        deleteRelationship: '&'
       },
 
       //
@@ -138,6 +139,11 @@ angular.module('flowChart', ['dragging'])
     $scope.onEditObjectClick = function (objectName) {
       this.editObjectDialog({objectName: objectName});
     };
+
+    $scope.onDeleteRelationshipClick = function () {
+      this.deleteRelationship();
+    };
+
     //
     // Search up the HTML element tree for an element the requested class.
     //

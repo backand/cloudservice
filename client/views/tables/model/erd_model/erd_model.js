@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', ErdModelController]);
 
-  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService) {
+  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService) {
 
     var self = this;
 
@@ -106,15 +106,18 @@
 
     function updateErdAfterModal(modalInstance) {
       modalInstance.result.then(function (result) {
-        updateErd(result.model);
+        self.updateErd(result.model);
       });
     }
 
-    function updateErd(newModel){
+    self.updateErd = function (newModel) {
+      if (!newModel) {
+        newModel = FieldsService.newModelObject;
+      }
       DbDataModel.updateNewModel(self.appName, newModel);
       // Refresh ERD
       $state.go($state.current, {}, {reload: true});
-    }
+    };
 
     init();
   }

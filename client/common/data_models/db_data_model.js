@@ -108,7 +108,7 @@
         var node = {
           name: obj.name,
           id: obj.name,
-          fields: [],
+          fields: []
         };
 
         var savedModelObject = self.getErdModelObject(appName, obj.name);
