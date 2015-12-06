@@ -66,6 +66,13 @@
     };
 
     self.deleteField = function () {
+      var fieldToDelete = FieldsService.getField(self.tableName, self.fieldName);
+      if (fieldToDelete.collection) {
+        FieldsService.deleteField(fieldToDelete.collection, fieldToDelete.via);
+      }
+      else if (fieldToDelete.object){
+        FieldsService.removeFieldsRelatingToField(fieldToDelete.object, self.tableName,self.fieldName)
+      }
       FieldsService.deleteField(self.tableName, self.fieldName);
       modalInstance.close({model: FieldsService.newModelObject});
     };

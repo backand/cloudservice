@@ -102,11 +102,7 @@
       });
 
       // Remove fields related to the object
-      newModel.forEach(function (object) {
-        object.fields = _.pick(object.fields, function (value, key, object) {
-          return value.collection != objectName && value.object != objectName;
-        });
-      });
+      FieldsService.removeFieldsRelatingToObject(objectName);
 
       self.updateErd(newModel);
     };

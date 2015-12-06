@@ -37,6 +37,24 @@
       _.extend(uneditedField, field)
     };
 
+    self.removeFieldsRelatingToObject = function (relatedObjectName) {
+      init();
+      self.newModelObject.forEach(function (object) {
+        object.fields = _.pick(object.fields, function (value, key, object) {
+          return value.collection != relatedObjectName && value.object != relatedObjectName;
+        });
+      });
+    };
+
+    self.removeFieldsRelatingToField = function (objectName, relatedObjectName, relatedFieldName) {
+      init();
+      var object = _.find(self.newModelObject, {name: objectName});
+      object.fields = _.pick(object.fields, function (value, key, object) {
+        return !(value.collection == relatedObjectName && value.via == relatedFieldName);
+      });
+    };
+
+
     function createCollectionField(model, fieldName, relatedObject, viaField, objectName) {
       // Create field on the selected object
       var fieldToAdd = {};
@@ -63,7 +81,7 @@
     }
 
     function init() {
-      if(!self.newModelObject) {
+      if (!self.newModelObject) {
         self.newModel = DbDataModel.newModel;
         self.newModelObject = JSON.parse(self.newModel.schema);
       }
