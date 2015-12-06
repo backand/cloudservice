@@ -102,7 +102,7 @@
       });
 
       // Remove fields related to the object
-      FieldsService.removeFieldsRelatingToObject(objectName);
+      FieldsService.removeFieldsRelatingToObject(newModel, objectName);
 
       self.updateErd(newModel);
     };

@@ -37,9 +37,9 @@
       _.extend(uneditedField, field)
     };
 
-    self.removeFieldsRelatingToObject = function (relatedObjectName) {
+    self.removeFieldsRelatingToObject = function (model, relatedObjectName) {
       init();
-      self.newModelObject.forEach(function (object) {
+      model.forEach(function (object) {
         object.fields = _.pick(object.fields, function (value, key, object) {
           return value.collection != relatedObjectName && value.object != relatedObjectName;
         });
