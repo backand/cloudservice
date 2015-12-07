@@ -81,11 +81,12 @@
   </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-danger"
+  <i
+    id="delete-field-button"
+    class="fa fa-trash fa-2x"
           ng-show="::EditField.isEdit"
           ng-click="EditField.deleteField()">
-    Delete
-  </button>
+  </i>
   <button class="btn btn-success"
           ng-click="::EditField.isEdit ? EditField.editField() : EditField.addField()"
           ng-disabled="EditField.editFieldForm.$invalid">
