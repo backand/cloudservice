@@ -147,11 +147,12 @@
       <text
         ng-click="onDeleteRelationshipClick()"
         ng-show="connection.selected()"
-        ng-attr-class="{{connection.selected() && 'selected-connection-name delete-connection-indicator' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
+        ng-attr-class="{{connection.selected() && 'selected-connection-name delete-connection-indicator fa-icon' || (connection == mouseOverConnection && 'mouseover-connection-name' || 'connection-name')}}"
         ng-attr-x="{{connection.middleX()}}"
         ng-attr-y="{{connection.middleY()}}"
         text-anchor="middle"
-        alignment-baseline="middle">X
+        alignment-baseline="middle">
+        &#xf00d
       </text>
 
       <text

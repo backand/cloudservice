@@ -1,7 +1,7 @@
 //
 // Flowchart module.
 //
-angular.module('flowChart', ['dragging'])
+angular.module('flowChart', ['dragging', 'common.services'])
 
 //
 // Directive that generates the rendered chart from the data model.
@@ -83,7 +83,7 @@ angular.module('flowChart', ['dragging'])
 // it is painful to unit test a directive without instantiating the DOM
 // (which is possible, just not ideal).
 //
-  .controller('FlowChartController', ['$scope', 'dragging', '$element', 'DbDataModel', function FlowChartController($scope, dragging, $element, DbDataModel) {
+  .controller('FlowChartController', ['$scope', 'dragging', '$element', 'DbDataModel', 'ConfirmationPopup', function FlowChartController($scope, dragging, $element, DbDataModel, ConfirmationPopup) {
 
     var controller = this;
 
@@ -142,10 +142,18 @@ angular.module('flowChart', ['dragging'])
     };
 
     $scope.onDeleteRelationshipClick = function () {
-      this.deleteRelationship();
+      var result = ConfirmationPopup.confirm("Are you sure?", "Yes", "No", true, true, "Delete Relationship", 'm');
+      // Referencing the current scope so we can call the function if the user confirms
+      var self = this;
+      result.then(function (result) {
+        if (result) {
+          self.deleteRelationship();
+        }
+      });
     };
 
     $scope.onDeleteObjectClick = function (objectName) {
+
       this.deleteObject({objectName: objectName});
     };
 
