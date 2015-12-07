@@ -662,6 +662,11 @@ var flowchart = {
 			}
 		};
 
+    this.updateDraggedFieldLocation = function (field, deltaX, deltaY) {
+      field._x += deltaX;
+      field._y += deltaY;
+    };
+
 		//
 		// Handle mouse click on a particular node.
 		//

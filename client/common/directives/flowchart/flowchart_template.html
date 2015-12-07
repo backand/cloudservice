@@ -77,7 +77,7 @@
       <g ng-switch on="field.type">
         <g
           ng-switch-when="InputConnector"
-          ng-mousedown="connectorMouseDown($event, node, connector, $index, true)"
+          ng-mousedown="fieldMouseDown($event, field)"
           class="connector input-connector">
             <text
               class="btn"
@@ -99,6 +99,7 @@
           <text
             ng-switch-when="TextField"
                 class="btn"
+                ng-mousedown="fieldMouseDown($event, field)"
                 ng-click="onEditFieldClick(node.name(), field.name())"
                 alignment-baseline="central"
                 ng-attr-x="{{field.x()-20}}"
@@ -108,7 +109,7 @@
 
         <g
           ng-switch-when="OutputConnector"
-          ng-mousedown="connectorMouseDown($event, node, connector, $index, false)"
+          ng-mousedown="fieldMouseDown($event, field)"
           class="connector output-connector">
             <text
               ng-click="onEditFieldClick(node.name(), field.name())"

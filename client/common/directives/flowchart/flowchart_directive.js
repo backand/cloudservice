@@ -368,6 +368,35 @@ angular.module('flowChart', ['dragging', 'common.services'])
       });
     };
 
+    // Handle mousedown on a field
+    $scope.fieldMouseDown = function (evt, field) {
+      var chart = $scope.chart;
+      var lastMouseCoords;
+
+      dragging.startDrag(evt, {
+        dragStarted: function (x, y) {
+          console.log('started drag');
+          lastMouseCoords = controller.translateCoordinates(x, y, evt);
+          console.log('x: ' + x + ' y: ' + y);
+        },
+        dragging: function (x, y, evt) {
+          console.log('dragging');
+          var curCoords = controller.translateCoordinates(x, y, evt);
+          var deltaX = curCoords.x - lastMouseCoords.x;
+          var deltaY = curCoords.y - lastMouseCoords.y;
+
+          lastMouseCoords = curCoords;
+
+          chart.updateDraggedFieldLocation(field, deltaX, deltaY);
+        },
+        dragEnded: function () {
+          console.log('ended dragging');
+          var node = field._parentNode;
+          node.fields = _.sortBy(node.fields, '_y');
+        }
+      });
+    };
+
     //
     // Handle mousedown on a connection.
     //
