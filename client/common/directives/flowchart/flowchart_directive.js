@@ -372,10 +372,12 @@ angular.module('flowChart', ['dragging', 'common.services'])
     $scope.fieldMouseDown = function (evt, field) {
       var chart = $scope.chart;
       var lastMouseCoords;
+      $scope.isDraggingField = false;
 
       dragging.startDrag(evt, {
         dragStarted: function (x, y) {
           console.log('started drag');
+          $scope.isDraggingField = true;
           lastMouseCoords = controller.translateCoordinates(x, y, evt);
           console.log('x: ' + x + ' y: ' + y);
         },
@@ -392,9 +394,19 @@ angular.module('flowChart', ['dragging', 'common.services'])
         dragEnded: function () {
           console.log('ended dragging');
           var node = field._parentNode;
-          node.fields = _.sortBy(node.fields, '_y');
+          var fieldsOrder = _.sortBy(node.fields, '_y');
+          for (var i = 0; i < fieldsOrder.length; ++i) {
+            fieldsOrder[i]._y = flowchart.computeConnectorY(i);
+          }
         }
       });
+
+    };
+
+    $scope.fieldMouseUp = function (evt, field) {
+      if (!$scope.isDragging) {
+        this.onEditFieldClick(field._parentNode.name(), field.name());
+      }
     };
 
     //

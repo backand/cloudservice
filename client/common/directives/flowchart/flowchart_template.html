@@ -78,10 +78,10 @@
         <g
           ng-switch-when="InputConnector"
           ng-mousedown="fieldMouseDown($event, field)"
+          ng-mouseup="fieldMouseUp($event, field)"
           class="connector input-connector">
             <text
               class="btn"
-              ng-click="onEditFieldClick(node.name(), field.name())"
               ng-attr-x="{{field.x() + 20}}"
               ng-attr-y="{{field.y()}}"
               ng-attr-y="{{field.y()}}"
@@ -100,7 +100,7 @@
             ng-switch-when="TextField"
                 class="btn"
                 ng-mousedown="fieldMouseDown($event, field)"
-                ng-click="onEditFieldClick(node.name(), field.name())"
+                ng-mouseup="fieldMouseUp($event, field)"
                 alignment-baseline="central"
                 ng-attr-x="{{field.x()-20}}"
                 ng-attr-y="{{field.y()}}">
@@ -110,9 +110,9 @@
         <g
           ng-switch-when="OutputConnector"
           ng-mousedown="fieldMouseDown($event, field)"
+          ng-mouseup="fieldMouseUp($event, field)"
           class="connector output-connector">
             <text
-              ng-click="onEditFieldClick(node.name(), field.name())"
               class="btn"
               ng-attr-x="{{field.x() - 20}}"
               ng-attr-y="{{field.y()}}"
