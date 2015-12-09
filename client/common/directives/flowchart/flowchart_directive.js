@@ -379,13 +379,10 @@ angular.module('flowChart', ['dragging', 'common.services'])
 
       dragging.startDrag(evt, {
         dragStarted: function (x, y) {
-          //console.log('started drag');
           $scope.isDraggingField = true;
           lastMouseCoords = controller.translateCoordinates(x, y, evt);
-          //console.log('x: ' + x + ' y: ' + y);
         },
         dragging: function (x, y, evt) {
-          //console.log('dragging');
           var curCoords = controller.translateCoordinates(x, y, evt);
           var deltaX = curCoords.x - lastMouseCoords.x;
           var deltaY = curCoords.y - lastMouseCoords.y;
@@ -395,17 +392,18 @@ angular.module('flowChart', ['dragging', 'common.services'])
           chart.updateDraggedFieldLocation(field, deltaX, deltaY);
         },
         dragEnded: function () {
-          //console.log('ended dragging');
+          // Prepare the fields view
           var node = field._parentNode;
-          var fieldsOrder = _.sortBy(node.fields, '_y');
-          for (var i = 0; i < fieldsOrder.length; ++i) {
-            fieldsOrder[i]._y = flowchart.computeConnectorY(i);
-            fieldsOrder[i]._x = flowchart.typeToXPositionMapper[fieldsOrder[i].data.type];
+          var orderedFields = _.sortBy(node.fields, '_y');
+          for (var i = 0; i < orderedFields.length; ++i) {
+            orderedFields[i]._y = flowchart.computeConnectorY(i);
+            orderedFields[i]._x = flowchart.typeToXPositionMapper[orderedFields[i].data.type];
           }
 
+          // Handle the change of the model
           var newFields = {};
           var currentFields = FieldsService.getObjectFields(node.name());
-          fieldsOrder.forEach(function (field) {
+          orderedFields.forEach(function (field) {
             newFields[field.name()] = currentFields[field.name()];
           });
           var currentObject = _.find(FieldsService.newModelObject, function (object) {
