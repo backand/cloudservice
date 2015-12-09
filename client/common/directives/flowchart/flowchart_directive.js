@@ -374,16 +374,18 @@ angular.module('flowChart', ['dragging', 'common.services'])
       var chart = $scope.chart;
       var lastMouseCoords;
       $scope.isDraggingField = false;
+      evt.preventDefault();
+      var self = this;
 
       dragging.startDrag(evt, {
         dragStarted: function (x, y) {
-          console.log('started drag');
+          //console.log('started drag');
           $scope.isDraggingField = true;
           lastMouseCoords = controller.translateCoordinates(x, y, evt);
-          console.log('x: ' + x + ' y: ' + y);
+          //console.log('x: ' + x + ' y: ' + y);
         },
         dragging: function (x, y, evt) {
-          console.log('dragging');
+          //console.log('dragging');
           var curCoords = controller.translateCoordinates(x, y, evt);
           var deltaX = curCoords.x - lastMouseCoords.x;
           var deltaY = curCoords.y - lastMouseCoords.y;
@@ -393,11 +395,12 @@ angular.module('flowChart', ['dragging', 'common.services'])
           chart.updateDraggedFieldLocation(field, deltaX, deltaY);
         },
         dragEnded: function () {
-          console.log('ended dragging');
+          //console.log('ended dragging');
           var node = field._parentNode;
           var fieldsOrder = _.sortBy(node.fields, '_y');
           for (var i = 0; i < fieldsOrder.length; ++i) {
             fieldsOrder[i]._y = flowchart.computeConnectorY(i);
+            fieldsOrder[i]._x = flowchart.typeToXPositionMapper[fieldsOrder[i].data.type];
           }
 
           var newFields = {};
@@ -405,11 +408,11 @@ angular.module('flowChart', ['dragging', 'common.services'])
           fieldsOrder.forEach(function (field) {
             newFields[field.name()] = currentFields[field.name()];
           });
-          var currentObject = _.where(FieldsService.newModelObject, function (object) {
+          var currentObject = _.find(FieldsService.newModelObject, function (object) {
             return object.name == node.name();
-          })[0];
+          });
           currentObject.fields = newFields;
-          DbDataModel.updateNewModel(AppsService.currentApp.Name, FieldsService.newModelObject);
+          self.updateErd();
         }
       });
 
