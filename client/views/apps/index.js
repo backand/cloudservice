@@ -29,6 +29,7 @@ angular.module('backand.apps')
 
     self.addApp = function() {
       self.loading = true;
+      self.appName = angular.lowercase(self.appName);
       if(self.appTitle === '')
           self.appTitle = self.appName;
 
