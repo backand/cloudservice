@@ -17,7 +17,8 @@ angular.module('flowChart', ['dragging', 'common.services'])
         editFieldDialog: '&',
         editObjectDialog: '&',
         deleteRelationship: '&',
-        deleteObject: '&'
+        deleteObject: '&',
+        updateErd: '&'
       },
 
       //
@@ -83,7 +84,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
 // it is painful to unit test a directive without instantiating the DOM
 // (which is possible, just not ideal).
 //
-  .controller('FlowChartController', ['$scope', 'dragging', '$element', 'DbDataModel', 'ConfirmationPopup', function FlowChartController($scope, dragging, $element, DbDataModel, ConfirmationPopup) {
+  .controller('FlowChartController', ['$scope', 'dragging', '$element', 'DbDataModel', 'ConfirmationPopup', 'FieldsService', 'AppsService', function FlowChartController($scope, dragging, $element, DbDataModel, ConfirmationPopup, FieldsService, AppsService) {
 
     var controller = this;
 
@@ -398,15 +399,24 @@ angular.module('flowChart', ['dragging', 'common.services'])
           for (var i = 0; i < fieldsOrder.length; ++i) {
             fieldsOrder[i]._y = flowchart.computeConnectorY(i);
           }
+
+          var newFields = {};
+          var currentFields = FieldsService.getObjectFields(node.name());
+          fieldsOrder.forEach(function (field) {
+            newFields[field.name()] = currentFields[field.name()];
+          });
+          var currentObject = _.where(FieldsService.newModelObject, function (object) {
+            return object.name == node.name();
+          })[0];
+          currentObject.fields = newFields;
+          DbDataModel.updateNewModel(AppsService.currentApp.Name, FieldsService.newModelObject);
         }
       });
 
     };
 
     $scope.fieldMouseUp = function (evt, field) {
-      if (!$scope.isDragging) {
-        this.onEditFieldClick(field._parentNode.name(), field.name());
-      }
+      this.onEditFieldClick(field._parentNode.name(), field.name());
     };
 
     //

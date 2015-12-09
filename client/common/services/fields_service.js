@@ -10,9 +10,12 @@
     init();
 
     self.getField = function (objectName, fieldName) {
+      return self.getObjectFields(objectName)[fieldName];
+    };
+
+    self.getObjectFields = function (objectName) {
       init();
-      var object = _.find(self.newModelObject, {name: objectName});
-      return object.fields[fieldName];
+      return _.find(self.newModelObject, {name: objectName}).fields;
     };
 
     self.addField = function (objectName, fieldName, fieldType, relatedObject, viaField) {
