@@ -14,10 +14,15 @@
              ng-model="EditObject.selectedObjectName" required>
     </fieldset>
   </form>
+
+  <div ng-show="EditObject.invalidObjectName">
+    Object with that name already exists
+  </div>
 </div>
 
 <div class="modal-footer">
   <button class="btn btn-success"
+          type="submit"
           ladda="EditRow.savingRow"
           ng-disabled="EditObject.editObjectForm.$invalid"
           ng-click="EditObject.objectName ? EditObject.editObject() : EditObject.addObject()">

@@ -88,6 +88,7 @@
           ng-click="EditField.deleteField()">
   </i>
   <button class="btn btn-success"
+          type="submit"
           ng-click="::EditField.isEdit ? EditField.editField() : EditField.addField()"
           ng-disabled="EditField.editFieldForm.$invalid">
     {{::EditField.isEdit ? 'Update' : 'Add'}}

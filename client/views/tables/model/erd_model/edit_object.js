@@ -20,13 +20,20 @@
 
     self.addObject = function () {
       var newModelObject = JSON.parse(self.newModel.schema);
-      var objectToAdd = {name: self.selectedObjectName};
-      if (!objectToAdd.fields) {
-        objectToAdd['fields'] = {};
-      }
-      newModelObject.push(objectToAdd);
 
-      modalInstance.close({model: newModelObject});
+      if (_.some(newModelObject, function (object) {
+          return object.name == self.selectedObjectName;
+        })) {
+        self.invalidObjectName = true;
+      } else {
+        var objectToAdd = {name: self.selectedObjectName};
+        if (!objectToAdd.fields) {
+          objectToAdd['fields'] = {};
+        }
+        newModelObject.push(objectToAdd);
+
+        modalInstance.close({model: newModelObject});
+      }
     };
 
     self.editObject = function () {
