@@ -1,0 +1,44 @@
+<section class="page-form-ele page ng-scope ba-docs">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong test-hook="docs.quickstart.title">Backand Hosting & Deployment</strong>
+      <h2>High-performance, reliable and secure hosting for AngularJS applications</h2>
+    </div>
+    <div class="panel-body docs">
+
+      <div>
+        <p>
+          <h4>Backand hosting built on AWS and it’s super-easy, effortlessly deploy your local Angular project files
+        with the hosted server.<br/> Your project files will be available here:
+        https://hosting.backand.io/{{docs.currentApp.Name}}</h4>
+        </p>
+        <br/>
+            <h3>First Time Installation</h3>
+            <p>The Backand CLI (command-line interface) require Node.js and npm, which can both be installed by
+              following the instructions on <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.
+              Installing Node.js also installs npm.
+            </p>
+            <pre><code class="bash">
+  $ npm install -g backand
+
+  # or use sudo (with caution) if required by your system permissions
+  # sudo npm install -g backand
+            </code></pre>
+            <p>
+              To <b>update</b> previous Backand CLI version run this:
+            </p>
+            <pre><code class="bash">
+  $ npm update -g backand
+
+  # or use sudo (with caution) if required by your system permissions
+  # sudo npm update -g backand
+            </code></pre>
+            <h3>Deploy your Angular Project</h3>
+            <p>To deploy your local Angular project run this command:</p>
+            <pre><code>
+  backand sync --master &lt;masterapptoken&gt; --user &lt;userapptoken&gt; --folder /path/to/project/folder
+            </code></pre>
+            <br />
+        </div>
+  </div>
+</section>
