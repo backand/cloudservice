@@ -1,100 +1,102 @@
-<div class="modal-header">
-  <h3 class="modal-title">
-    {{::(EditField.isEdit ? 'Edit Field' : 'New Field') + ' - Object: ' + EditField.tableName}}
-  </h3>
-</div>
-<div class="modal-body edit-row-modal">
-  <form role="form" name="EditField.editFieldForm" novalidate>
-    <fieldset>
-      <div class="form-group">
-        <label for="field-name">Field Name:</label>
-        <input id="field-name"
-               type="text"
-               class="form-control"
-               ng-model="EditField.fieldName"
-               ng-disabled="::EditField.isEdit"
-               required>
-      </div>
-
-      <div class="form-group">
-        <label for="field-type">Field Type:</label>
-        <select id="field-type"
-                class="form-control"
-                ng-model="EditField.fieldType"
-                ng-options="option for option in EditField.typeOptions"
-                ng-disabled="::EditField.isEdit"
-                required></select>
-      </div>
-
-      <div id="collection-properties"
-           ng-show="EditField.fieldType == 'collection'">
-
+<div draggable-modal>
+  <div class="modal-header">
+    <h3 class="modal-title">
+      {{::(EditField.isEdit ? 'Edit Field' : 'New Field') + ' - Object: ' + EditField.tableName}}
+    </h3>
+  </div>
+  <div class="modal-body edit-row-modal">
+    <form role="form" name="EditField.editFieldForm" novalidate>
+      <fieldset>
         <div class="form-group">
-          <label for="related-object">Related Object:</label>
-          <select id="related-object" class="form-control"
-                  ng-model="EditField.relatedObject"
-                  ng-options="option for option in EditField.objectOptions"
-                  ng-disabled="::EditField.isEdit"
-                  ng-required="EditField.fieldType == 'collection'"></select>
-        </div>
-
-        <div class="form-group">
-          <label for="via-field">Via:</label>
-          <input id="via-field"
+          <label for="field-name">Field Name:</label>
+          <input id="field-name"
                  type="text"
                  class="form-control"
-                 ng-model="EditField.viaField"
+                 ng-model="EditField.fieldName"
                  ng-disabled="::EditField.isEdit"
-                 ng-required="EditField.fieldType == 'collection'">
-        </div>
-      </div>
-
-      <div id="editable-properties"
-           ng-show="::EditField.isEdit">
-
-        <div class="form-group">
-          <label for="default-value">Default Value:</label>
-          <input id="default-value"
-                 type="text"
-                 class="form-control"
-                 ng-model="EditField.field.defaultValue">
+                 required>
         </div>
 
         <div class="form-group">
-          <label for="is-required">Required</label>
-          <label id="is-required" class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
-            type="checkbox"
-            ng-model="EditField.field.required"><i></i></label>
+          <label for="field-type">Field Type:</label>
+          <select id="field-type"
+                  class="form-control"
+                  ng-model="EditField.fieldType"
+                  ng-options="option for option in EditField.typeOptions"
+                  ng-disabled="::EditField.isEdit"
+                  required></select>
         </div>
 
-        <div class="form-group">
-          <div id="unique-section" ng-show="::EditField.showUniqueSection">
-            <label for="is-unique">Unique</label>
-            <label id="is-unique" class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
-              type="checkbox"
-              ng-model="EditField.field.unique"><i></i></label>
+        <div id="collection-properties"
+             ng-show="EditField.fieldType == 'collection'">
+
+          <div class="form-group">
+            <label for="related-object">Related Object:</label>
+            <select id="related-object" class="form-control"
+                    ng-model="EditField.relatedObject"
+                    ng-options="option for option in EditField.objectOptions"
+                    ng-disabled="::EditField.isEdit"
+                    ng-required="EditField.fieldType == 'collection'"></select>
+          </div>
+
+          <div class="form-group">
+            <label for="via-field">Via:</label>
+            <input id="via-field"
+                   type="text"
+                   class="form-control"
+                   ng-model="EditField.viaField"
+                   ng-disabled="::EditField.isEdit"
+                   ng-required="EditField.fieldType == 'collection'">
           </div>
         </div>
 
-      </div>
-    </fieldset>
-  </form>
-</div>
-<div class="modal-footer">
-  <i
-    id="delete-field-button"
-    class="fa fa-trash fa-2x"
-          ng-show="::EditField.isEdit"
-          ng-click="EditField.deleteField()">
-  </i>
-  <button class="btn btn-success"
-          type="submit"
-          ng-click="::EditField.isEdit ? EditField.editField() : EditField.addField()"
-          ng-disabled="EditField.editFieldForm.$invalid">
-    {{::EditField.isEdit ? 'Update' : 'Add'}}
-  </button>
-  <button class="btn btn-default"
-          ng-click="EditField.cancelEditField()">
-    Cancel
-  </button>
+        <div id="editable-properties"
+             ng-show="::EditField.isEdit">
+
+          <div class="form-group">
+            <label for="default-value">Default Value:</label>
+            <input id="default-value"
+                   type="text"
+                   class="form-control"
+                   ng-model="EditField.field.defaultValue">
+          </div>
+
+          <div class="form-group">
+            <label for="is-required">Required</label>
+            <label id="is-required" class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
+              type="checkbox"
+              ng-model="EditField.field.required"><i></i></label>
+          </div>
+
+          <div class="form-group">
+            <div id="unique-section" ng-show="::EditField.showUniqueSection">
+              <label for="is-unique">Unique</label>
+              <label id="is-unique" class="pull-right ui-switch ui-switch-success ui-switch-sm"><input
+                type="checkbox"
+                ng-model="EditField.field.unique"><i></i></label>
+            </div>
+          </div>
+
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <i
+      id="delete-field-button"
+      class="fa fa-trash fa-2x"
+      ng-show="::EditField.isEdit"
+      ng-click="EditField.deleteField()">
+    </i>
+    <button class="btn btn-success"
+            type="submit"
+            ng-click="::EditField.isEdit ? EditField.editField() : EditField.addField()"
+            ng-disabled="EditField.editFieldForm.$invalid">
+      {{::EditField.isEdit ? 'Update' : 'Add'}}
+    </button>
+    <button class="btn btn-default"
+            ng-click="EditField.cancelEditField()">
+      Cancel
+    </button>
+  </div>
 </div>

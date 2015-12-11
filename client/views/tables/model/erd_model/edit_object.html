@@ -1,31 +1,33 @@
-<div class="modal-header">
-  <h3 class="modal-title">
-    {{::(EditObject.objectName ? 'Edit Object' : 'New Object')}}
-  </h3>
-</div>
-
-<div class="modal-body edit-row-modal">
-  <form role="form" name="EditObject.editObjectForm">
-    <fieldset>
-      <label for="object-name">Object Name:</label>
-      <input id="object-name"
-             type="text"
-             class="form-control"
-             ng-model="EditObject.selectedObjectName" required>
-    </fieldset>
-  </form>
-
-  <div ng-show="EditObject.invalidObjectName">
-    Object with that name already exists
+<div draggable-modal>
+  <div class="modal-header">
+    <h3 class="modal-title">
+      {{::(EditObject.objectName ? 'Edit Object' : 'New Object')}}
+    </h3>
   </div>
-</div>
 
-<div class="modal-footer">
-  <button class="btn btn-success"
-          type="submit"
-          ladda="EditRow.savingRow"
-          ng-disabled="EditObject.editObjectForm.$invalid"
-          ng-click="EditObject.objectName ? EditObject.editObject() : EditObject.addObject()">
-    Update
-  </button>
+  <div class="modal-body edit-row-modal">
+    <form role="form" name="EditObject.editObjectForm">
+      <fieldset>
+        <label for="object-name">Object Name:</label>
+        <input id="object-name"
+               type="text"
+               class="form-control"
+               ng-model="EditObject.selectedObjectName" required>
+      </fieldset>
+    </form>
+
+    <div ng-show="EditObject.invalidObjectName">
+      Object with that name already exists
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-success"
+            type="submit"
+            ladda="EditRow.savingRow"
+            ng-disabled="EditObject.editObjectForm.$invalid"
+            ng-click="EditObject.objectName ? EditObject.editObject() : EditObject.addObject()">
+      Update
+    </button>
+  </div>
 </div>
