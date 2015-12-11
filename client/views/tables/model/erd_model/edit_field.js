@@ -49,6 +49,7 @@
       else {
         self.fieldType = 'object';
       }
+      self.isCollectionOrObject = self.fieldType == 'collection' || self.fieldType == 'object';
     }
 
     self.typeOptions = [
