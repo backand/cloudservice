@@ -6,7 +6,6 @@
       return {
         restrict: 'A',
         link: function (scope, elem, attr) {
-          console.log('from directive');
           $('.modal-dialog').draggable();
         }
       }
