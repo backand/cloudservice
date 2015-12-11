@@ -66,6 +66,9 @@
           },
           newModel: function () {
             return self.newModel;
+          },
+          updateErd: function () {
+            return self.updateErd;
           }
         }
       });
@@ -119,7 +122,7 @@
       }
       DbDataModel.updateNewModel(self.appName, newModel);
       // Refresh ERD
-      $state.go($state.current, {}, {reload: true});
+      return $state.go($state.current, {}, {reload: true});
     };
 
     init();

@@ -7,7 +7,9 @@
       'fieldName',
       'appName',
       'newModel',
+      'updateErd',
       'FieldsService',
+      'NotificationService',
       EditFieldController
     ]);
 
@@ -16,13 +18,16 @@
                                fieldName,
                                appName,
                                newModel,
-                               FieldsService) {
+                               updateErd,
+                               FieldsService,
+                               NotificationService) {
     var self = this;
 
     self.appName = appName;
     self.tableName = tableName;
     self.fieldName = fieldName;
     self.newModel = newModel;
+    self.updateErd = updateErd;
     self.editFieldForm = 'edit-field';
     self.showUniqueSection = false;
 
@@ -70,8 +75,8 @@
       if (fieldToDelete.collection) {
         FieldsService.deleteField(fieldToDelete.collection, fieldToDelete.via);
       }
-      else if (fieldToDelete.object){
-        FieldsService.removeFieldsRelatingToField(fieldToDelete.object, self.tableName,self.fieldName)
+      else if (fieldToDelete.object) {
+        FieldsService.removeFieldsRelatingToField(fieldToDelete.object, self.tableName, self.fieldName)
       }
       FieldsService.deleteField(self.tableName, self.fieldName);
       modalInstance.close({model: FieldsService.newModelObject});
@@ -79,7 +84,11 @@
 
     self.addField = function () {
       FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
-      modalInstance.close({model: FieldsService.newModelObject});
+      self.updateErd().then(function (data) {
+        self.editFieldForm.$setPristine();
+        resetAddFieldValues();
+        NotificationService.add('success', 'Field added successfully');
+      });
     };
 
     self.cancelEditField = function () {
@@ -89,6 +98,13 @@
     function getObjectNames() {
       var newModelObject = JSON.parse(self.newModel.schema);
       return _.pluck(newModelObject, 'name');
+    }
+
+    function resetAddFieldValues() {
+      self.fieldName = '';
+      self.fieldType = '';
+      self.relatedObject = '';
+      self.viaField = '';
     }
   }
 }());
