@@ -100,7 +100,8 @@
       } else {
         modalInstance.result.then(function (result) {
           self.updateErd(result.model).then(function () {
-            self.editFieldDialog(objectName);
+            var newObjectName = result.objectName;
+            self.editFieldDialog(newObjectName);
           });
         });
       }

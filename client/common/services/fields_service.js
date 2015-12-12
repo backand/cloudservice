@@ -98,10 +98,8 @@
     }
 
     function init() {
-      if (!self.newModelObject) {
         self.newModel = DbDataModel.newModel;
         self.newModelObject = JSON.parse(self.newModel.schema);
-      }
     }
   }
 })();

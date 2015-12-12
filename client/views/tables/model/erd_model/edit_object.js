@@ -32,7 +32,7 @@
         }
         newModelObject.push(objectToAdd);
 
-        modalInstance.close({model: newModelObject});
+        modalInstance.close({model: newModelObject, objectName: self.selectedObjectName});
       }
     };
 
