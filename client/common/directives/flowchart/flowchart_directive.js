@@ -153,6 +153,10 @@ angular.module('flowChart', ['dragging', 'common.services'])
       });
     };
 
+    $scope.getFieldType = function (objectName, fieldName) {
+      return FieldsService.getFieldType(objectName, fieldName)
+    };
+
     $scope.onDeleteObjectClick = function (objectName) {
 
       this.deleteObject({objectName: objectName});

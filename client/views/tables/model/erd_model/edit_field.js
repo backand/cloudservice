@@ -37,17 +37,11 @@
     // If editing a field, Populate the inputs by the field data
     if (self.isEdit) {
       self.field = FieldsService.getField(self.tableName, self.fieldName);
+      self.fieldType = FieldsService.getFieldType(self.tableName, self.fieldName);
 
-      if (self.field.type) {
-        self.fieldType = self.field.type;
-      }
-      else if (self.field.collection) {
-        self.fieldType = 'collection';
+      if (self.fieldType == 'collection') {
         self.relatedObject = self.field.collection;
         self.viaField = self.field.via;
-      }
-      else {
-        self.fieldType = 'object';
       }
       self.isCollectionOrObject = self.fieldType == 'collection' || self.fieldType == 'object';
     }

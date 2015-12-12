@@ -13,6 +13,20 @@
       return self.getObjectFields(objectName)[fieldName];
     };
 
+    self.getFieldType = function (objectName, fieldName) {
+      var field = self.getField(objectName, fieldName);
+
+      if (field.type) {
+        return field.type;
+      }
+      else if (field.collection) {
+        return 'collection';
+      }
+      else {
+        return 'object';
+      }
+    };
+
     self.getObjectFields = function (objectName) {
       init();
       return _.find(self.newModelObject, {name: objectName}).fields;
