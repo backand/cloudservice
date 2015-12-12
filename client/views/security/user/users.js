@@ -55,7 +55,8 @@
             editDropdownValueLabel: 'Name',
             cellEditableCondition: function($scope){
               return !($scope.row.entity.Role === "Admin");
-            }
+            },
+            enableSorting: false
           },
           {
             name: 'IsApproved',
