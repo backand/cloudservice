@@ -91,8 +91,8 @@
     function loadQueries() {
       DbQueriesService.getQueries(self.appName).then(function () {
         self.openParamsModal = false;
-        self.new = (!$stateParams.queryId);
-        self.editMode = self.new;
+        self.new = $state.current.name === "dbQueries.newQuery";
+        self.editMode = self.new || $state.current.name === "dbQueries.newSavedQuery";
 
         if (self.new) {
           self.query = DbQueriesService.getNewQuery();
@@ -265,7 +265,11 @@
           self.inputValues = {};
 
         self.queryForm.$setPristine();
-        $state.go('dbQueries.query', params);
+        if(self.new || $state.current.name === "dbQueries.newSavedQuery"){
+          $state.go('dbQueries.newSavedQuery', params);
+        } else {
+          $state.go('dbQueries.query', params);
+        }
       }
     }
 
