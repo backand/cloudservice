@@ -78,6 +78,7 @@
     };
 
     self.editObjectDialog = function (objectName) {
+      var isEdit = objectName;
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/model/erd_model/edit_object.html',
         controller: 'EditObjectController as EditObject',
@@ -94,9 +95,16 @@
         }
       });
 
-      updateErdAfterModal(modalInstance);
+      if (isEdit) {
+        updateErdAfterModal(modalInstance);
+      } else {
+        modalInstance.result.then(function (result) {
+          self.updateErd(result.model).then(function () {
+            self.editFieldDialog(objectName);
+          });
+        });
+      }
     };
-
 
     self.deleteObject = function (objectName) {
       var newModel = JSON.parse(DbDataModel.newModel.schema);
@@ -110,9 +118,9 @@
       self.updateErd(newModel);
     };
 
-    function updateErdAfterModal(modalInstance) {
+    function updateErdAfterModal(modalInstance, additionalAction) {
       modalInstance.result.then(function (result) {
-        self.updateErd(result.model);
+        return self.updateErd(result.model);
       });
     }
 

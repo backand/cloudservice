@@ -1,7 +1,7 @@
 <div draggable-modal>
   <div class="modal-header">
     <h3 class="modal-title">
-      {{::(EditField.isEdit ? 'Edit Field' : 'New Field') + ' - Object: ' + EditField.tableName}}
+      {{::(EditField.isEdit ? 'Edit Field' : 'New Field') + (EditField.tableName ? ' - Object: ' + EditField.tableName : '')}}
     </h3>
   </div>
   <div class="modal-body edit-row-modal">
