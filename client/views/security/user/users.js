@@ -57,7 +57,14 @@
               return !($scope.row.entity.Role === "Admin");
             }
           },
-          {name: 'IsApproved', displayName: 'Is Approved', type: 'boolean'},
+          {
+            name: 'IsApproved',
+            displayName: 'Is Approved',
+            type: 'boolean',
+            cellEditableCondition: function($scope){
+              return !($scope.row.entity.Username === SessionService.currentUser.username);
+            }
+          },
           {field: 'readyToSignin', displayName: 'Ready to sign-in', enableCellEdit: false}
         ]
       };
