@@ -19,6 +19,8 @@ var minifyCSS = require('gulp-minify-css');
 var rsync  = require('gulp-rsync');
 var confirm = require('gulp-confirm');
 var _ = require('lodash');
+var backandSync = require('backand-hosting-s3');
+
 
 /* jshint camelcase:false*/
 var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
@@ -136,13 +138,14 @@ gulp.task('copy:assets', function() {
   return gulp.src(config.assets, {
       dot: true
     }).pipe(gulp.dest(config.dist + '/assets'))
+      .pipe(gulp.dest(config.dist + '/assets/assets')) //bug in the views that need /assets/assets
     .pipe($.size({
       title: 'copy:assets'
     }));
 });
 
 //copy assets in dist folder
-gulp.task('copy', function() {
+gulp.task('copy',['copy:extra'], function() {
   return gulp.src([
       config.base + '/*',
       '!' + config.base + '/*.html',
@@ -152,6 +155,15 @@ gulp.task('copy', function() {
     .pipe($.size({
       title: 'copy'
     }));
+});
+
+gulp.task('copy:extra', function() {
+  gulp.src([
+      config.base + '/views/database/db_templates/*',
+      config.base + '/vendor/zeroclipboard/dist/*',
+      config.base + '/examples/todo/*'
+    ],{ base: config.base })
+      .pipe(gulp.dest(config.dist));
 });
 
 //clean temporary directories
@@ -231,13 +243,19 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
 });
 
 //deploy the code into production
-gulp.task('rsync',['env:prod', 'build:dist'], function() {
-  return gulp.src(config.rsync.src)
-    .pipe(confirm({
-      question: 'Do you want to build to production?',
-      input: '_key:y' // Continue the flow if `y` key is pressed.
-    }))
-    .pipe(rsync(config.rsync.options));
+gulp.task('qa:dist',['env:dev', 'build:dist'], function() {
+  //return backandSync.dist(config.dist);
+});
+
+gulp.task('sts', function(){
+  var username = "9b37748c-0646-40da-9100-59a86d4c7da4";
+  var password = "d94c5b9e-9f2a-11e5-be83-0ed7053426cb";
+  return backandSync.sts(username, password);
+});
+
+gulp.task('qa:dist11',['sts'], function() {
+  console.log(config.dist);
+  return backandSync.dist('./build/dist');
 });
 
 function setEnv(env) {
