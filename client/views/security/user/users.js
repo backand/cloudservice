@@ -52,7 +52,10 @@
             editableCellTemplate: 'ui-grid/dropdownEditor',
             editDropdownOptionsArray: [],
             editDropdownIdLabel: 'Name',
-            editDropdownValueLabel: 'Name'
+            editDropdownValueLabel: 'Name',
+            cellEditableCondition: function($scope){
+              return !($scope.row.entity.Role === "Admin");
+            }
           },
           {name: 'IsApproved', displayName: 'Is Approved', type: 'boolean'},
           {field: 'readyToSignin', displayName: 'Ready to sign-in', enableCellEdit: false}
@@ -144,6 +147,12 @@
       $scope.modal.roles = self.roles.map(function (role) {
           return role.Name;
       });
+
+      //remove admin role
+      var index = $scope.modal.roles.indexOf("Admin");
+      if (index > -1) {
+        $scope.modal.roles.splice(index, 1);
+      }
       getUsers();
 
     }
