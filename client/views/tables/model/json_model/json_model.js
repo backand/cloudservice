@@ -63,8 +63,12 @@
     }
 
     $scope.$watch(function () {
-      if(self.oldModel.schema !== self.newModel.schema)
-      return self.newModel.schema;
+      if (self.oldModel.schema !== self.newModel.schema) {
+        $scope.isUnsaved = true;
+        return self.newModel.schema;
+      } else {
+        $scope.isUnsaved = false;
+      }
     }, saveCustomSchema);
 
 

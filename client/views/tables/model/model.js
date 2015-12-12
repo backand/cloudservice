@@ -52,6 +52,7 @@
       usSpinnerService.spin('loading');
       DbDataModel.get(self.appName)
         .finally(function () {
+          $scope.isUnsaved = self.oldModel.schema !== self.newModel.schema;
           usSpinnerService.stop('loading');
         })
     }
