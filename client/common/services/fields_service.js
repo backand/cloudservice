@@ -15,16 +15,18 @@
 
     self.getFieldType = function (objectName, fieldName) {
       var field = self.getField(objectName, fieldName);
-
-      if (field.type) {
-        return field.type;
+      if (field) {
+        if (field.type) {
+          return field.type;
+        }
+        else if (field.collection) {
+          return 'collection';
+        }
+        else {
+          return 'object';
+        }
       }
-      else if (field.collection) {
-        return 'collection';
-      }
-      else {
-        return 'object';
-      }
+      return '';
     };
 
     self.getObjectFields = function (objectName) {
