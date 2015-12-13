@@ -78,12 +78,16 @@
     };
 
     self.addField = function () {
-      FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
-      self.updateErd().then(function (data) {
-        self.editFieldForm.$setPristine();
-        resetAddFieldValues();
-        NotificationService.add('success', 'Field added successfully');
-      });
+      if (FieldsService.getField(self.tableName, self.fieldName)) {
+        NotificationService.add('warning', 'Field already exists');
+      } else {
+        FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
+        self.updateErd().then(function (data) {
+          self.editFieldForm.$setPristine();
+          resetAddFieldValues();
+          NotificationService.add('success', 'Field added successfully');
+        });
+      }
     };
 
     self.cancelEditField = function () {

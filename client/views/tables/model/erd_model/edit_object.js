@@ -6,9 +6,10 @@
       'appName',
       'newModel',
       'objectName',
+      'NotificationService',
       EditObjectController
     ]);
-  function EditObjectController(modalInstance, appName, newModel, objectName) {
+  function EditObjectController(modalInstance, appName, newModel, objectName, NotificationService) {
     var self = this;
     self.appName = appName;
     self.newModel = newModel;
@@ -24,7 +25,7 @@
       if (_.some(newModelObject, function (object) {
           return object.name == self.selectedObjectName;
         })) {
-        self.invalidObjectName = true;
+        NotificationService.add('warning', 'Object already exists');
       } else {
         var objectToAdd = {name: self.selectedObjectName};
         if (!objectToAdd.fields) {
