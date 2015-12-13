@@ -52,12 +52,10 @@
       'datetime',
       'float',
       'boolean',
-      'collection'
+      'collection',
+      'object'
     ];
-    // If editing a field, be able to show the 'object' type
-    if (self.isEdit) {
-      self.typeOptions.push('object');
-    }
+
     self.objectOptions = getObjectNames();
 
     self.editField = function () {

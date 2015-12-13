@@ -37,6 +37,9 @@
       if (fieldType == 'collection') {
         createCollectionField(self.newModelObject, fieldName, relatedObject, viaField, objectName);
       }
+      else if (fieldType == 'object') {
+        createCollectionField(self.newModelObject, fieldName, objectName, viaField, relatedObject);
+      }
       else {
         createSimpleField(self.newModelObject, fieldName, fieldType, objectName);
       }
@@ -98,8 +101,8 @@
     }
 
     function init() {
-        self.newModel = DbDataModel.newModel;
-        self.newModelObject = JSON.parse(self.newModel.schema);
+      self.newModel = DbDataModel.newModel;
+      self.newModelObject = JSON.parse(self.newModel.schema);
     }
   }
 })();
