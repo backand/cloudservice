@@ -119,7 +119,7 @@
       self.updateErd(newModel);
     };
 
-    function updateErdAfterModal(modalInstance, additionalAction) {
+    function updateErdAfterModal(modalInstance) {
       modalInstance.result.then(function (result) {
         return self.updateErd(result.model);
       });
