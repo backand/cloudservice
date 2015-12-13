@@ -158,7 +158,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
     };
 
     $scope.onDeleteObjectClick = function (objectName) {
-      var result = ConfirmationPopup.confirm("Are you sure?", "Yes", "No", true, true, "Delete Relationship", 'm');
+      var result = ConfirmationPopup.confirm("Are you sure?", "Yes", "No", true, true, "Delete Object", 'm');
       // Referencing the current scope so we can call the function if the user confirms
       var self = this;
       result.then(function (result) {
