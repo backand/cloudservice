@@ -10,6 +10,7 @@
       'updateErd',
       'FieldsService',
       'NotificationService',
+      'usSpinnerService',
       EditFieldController
     ]);
 
@@ -20,7 +21,8 @@
                                newModel,
                                updateErd,
                                FieldsService,
-                               NotificationService) {
+                               NotificationService,
+                               usSpinnerService) {
     var self = this;
 
     self.appName = appName;

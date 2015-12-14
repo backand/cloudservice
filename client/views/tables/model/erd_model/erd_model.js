@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', ErdModelController]);
 
-  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService) {
+  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q) {
 
     var self = this;
 
@@ -120,18 +120,28 @@
     };
 
     function updateErdAfterModal(modalInstance) {
+      var deferred = $q.defer();
       modalInstance.result.then(function (result) {
-        return self.updateErd(result.model);
+        self.updateErd(result.model).then(function () {
+          deferred.resolve();
+        });
       });
+      return deferred.promise;
     }
 
     self.updateErd = function (newModel) {
+      var deferred = $q.defer();
       if (!newModel) {
         newModel = FieldsService.newModelObject;
       }
       DbDataModel.updateNewModel(self.appName, newModel);
+      usSpinnerService.spin('loading');
       // Refresh ERD
-      return $state.go($state.current, {}, {reload: true});
+      $state.go($state.current, {}, {reload: true}).then(function () {
+        //usSpinnerService.stop('loading');
+        deferred.resolve();
+      });
+      return deferred.promise;
     };
 
     init();
