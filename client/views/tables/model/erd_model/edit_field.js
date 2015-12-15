@@ -78,8 +78,10 @@
     };
 
     self.addField = function () {
-      if (FieldsService.getField(self.tableName, self.fieldName)) {
+      if (isFieldNameExists(self.fieldName)) {
         NotificationService.add('warning', 'Field already exists');
+      } else if (self.relatedObject && FieldsService.getField(self.relatedObject, self.viaField)) {
+        NotificationService.add('warning', 'Related field already exists');
       } else {
         FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
         self.updateErd().then(function (data) {
@@ -96,7 +98,10 @@
 
     function getObjectNames() {
       var newModelObject = JSON.parse(self.newModel.schema);
-      return _.pluck(newModelObject, 'name');
+      var allObjects = _.pluck(newModelObject, 'name');
+      return _.reject(allObjects, function (object) {
+        return object === self.tableName;
+      });
     }
 
     function resetAddFieldValues() {
@@ -105,5 +110,16 @@
       self.relatedObject = '';
       self.viaField = '';
     }
+
+    function isFieldNameExists(name) {
+      var fields = FieldsService.getObjectFields(self.tableName);
+      return _.some(_.keys(fields), function (field) {
+        return field.toLowerCase() === name.toLowerCase();
+      });
+    }
   }
-}());
+}
+
+()
+)
+;
