@@ -195,6 +195,25 @@
       </li>
     </ul>
   </li>
+
+  <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}">
+    <a ng-class="{disabled: nav.DatabaseStatus != 1}"  href="">
+      <i class="ba-icon-angularjs-quickstart"></i>
+      <span>Hosting</span>
+      <ba-tooltip tooltip-text="High-performance, reliable and secure hosting for AngularJS applications"
+                  tooltip-placement="right" class=""></ba-tooltip>
+      <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
+    </a>
+    <ul>
+      <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('docs.hosting')" href="">
+          <i class="ba-icon-configuration"></i>
+          <span>Configuration</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
   <li ng-class="{active: nav.state == 'log.activity', disabled: nav.DatabaseStatus != 1}">
     <a ng-class="{disabled: nav.DatabaseStatus != 1}"  href="">
       <i class="ba-icon-log"></i>

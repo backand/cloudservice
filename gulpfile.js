@@ -243,19 +243,14 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
 });
 
 //deploy the code into production
-gulp.task('qa:dist',['env:dev', 'build:dist'], function() {
-  //return backandSync.dist(config.dist);
+gulp.task('qa:dist',['sts','env:dev', 'build:dist'], function() {
+  return backandSync.dist(config.dist, 'qa1');
 });
 
 gulp.task('sts', function(){
   var username = "9b37748c-0646-40da-9100-59a86d4c7da4";
   var password = "d94c5b9e-9f2a-11e5-be83-0ed7053426cb";
   return backandSync.sts(username, password);
-});
-
-gulp.task('qa:dist11',['sts'], function() {
-  console.log(config.dist);
-  return backandSync.dist('./build/dist');
 });
 
 function setEnv(env) {
