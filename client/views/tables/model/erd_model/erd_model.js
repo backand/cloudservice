@@ -138,7 +138,7 @@
       usSpinnerService.spin('loading');
       // Refresh ERD
       $state.go($state.current, {}, {reload: true}).then(function () {
-        //usSpinnerService.stop('loading');
+        usSpinnerService.stop('loading');
         deferred.resolve();
       });
       return deferred.promise;
