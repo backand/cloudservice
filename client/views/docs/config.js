@@ -68,7 +68,7 @@
       })
       .state('docs.hosting', {
         parent: 'app',
-        url: '/docs/hosting',
+        url: '/hosting/config',
         templateUrl: 'views/docs/hosting.html',
         controller: 'Docs as docs'
       })
