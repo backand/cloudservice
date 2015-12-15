@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('common.services')
-    .service('FieldsService', ['DbDataModel', FieldsService]);
+    .service('FieldsService', ['DbDataModel', 'AppsService', FieldsService]);
 
-  function FieldsService(DbDataModel) {
+  function FieldsService(DbDataModel, AppsService) {
     var self = this;
 
     init();
@@ -51,6 +51,7 @@
       init();
       var object = _.find(self.newModelObject, {name: objectName});
       delete object.fields[fieldName];
+      updateNewModel();
     };
 
     self.editField = function (objectName, fieldName, field) {
@@ -66,6 +67,7 @@
           return value.collection != relatedObjectName && value.object != relatedObjectName;
         });
       });
+      updateNewModel();
     };
 
     self.removeFieldsRelatingToField = function (objectName, relatedObjectName, relatedFieldName) {
@@ -74,6 +76,7 @@
       object.fields = _.pick(object.fields, function (value, key, object) {
         return !(value.collection == relatedObjectName && value.via == relatedFieldName);
       });
+      updateNewModel();
     };
 
 
@@ -105,6 +108,10 @@
     function init() {
       self.newModel = DbDataModel.newModel;
       self.newModelObject = JSON.parse(self.newModel.schema);
+    }
+
+    function updateNewModel() {
+      DbDataModel.updateNewModel(AppsService.currentApp.Name, self.newModelObject);
     }
   }
 })();
