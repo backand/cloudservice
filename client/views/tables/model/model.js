@@ -84,6 +84,7 @@
         .then(function (data) {
           $scope.$root.$broadcast('fetchTables');
           self.loading = false;
+          $scope.isUnsaved = false;
         })
         .catch(modelErrorHandler);
     };
