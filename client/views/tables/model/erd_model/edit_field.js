@@ -10,7 +10,6 @@
       'updateErd',
       'FieldsService',
       'NotificationService',
-      'usSpinnerService',
       EditFieldController
     ]);
 
@@ -21,8 +20,7 @@
                                newModel,
                                updateErd,
                                FieldsService,
-                               NotificationService,
-                               usSpinnerService) {
+                               NotificationService) {
     var self = this;
 
     self.appName = appName;
@@ -44,7 +42,12 @@
       if (self.fieldType == 'collection') {
         self.relatedObject = self.field.collection;
         self.viaField = self.field.via;
+      } else if (self.fieldType == 'object') {
+        self.relatedObject = self.field.object;
+        self.viaField = FieldsService.getFieldRelatingToField(self.field.object, self.tableName, self.fieldName);
       }
+
+
       self.isCollectionOrObject = self.fieldType == 'collection' || self.fieldType == 'object';
     }
 

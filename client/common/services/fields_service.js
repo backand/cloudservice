@@ -79,6 +79,15 @@
       updateNewModel();
     };
 
+    self.getFieldRelatingToField = function (objectName, relatedObjectName, relatedFieldName) {
+      init();
+      var object = _.find(self.newModelObject, {name: objectName});
+      var field = _.findKey(object.fields, function (object) {
+        return object.collection == relatedObjectName && object.via == relatedFieldName;
+      });
+      return field;
+    };
+
 
     function createCollectionField(model, fieldName, relatedObject, viaField, objectName) {
       // Create field on the selected object
