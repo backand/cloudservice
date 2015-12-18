@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', '$stateParams', ErdModelController]);
 
-  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q) {
+  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q, $stateParams) {
 
     var self = this;
 
@@ -15,6 +15,11 @@
       self.currentModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
       self.currentObject = $state.params.tableName;
+
+      if ($stateParams.isNewObject) {
+        self.editObjectDialog();
+        $stateParams.isNewObject = false;
+      }
 
       getSchema();
     }
@@ -142,7 +147,7 @@
       DbDataModel.updateNewModel(self.appName, newModel);
       usSpinnerService.spin('loading');
       // Refresh ERD
-      $state.go($state.current, {}, {reload: true}).then(function () {
+      $state.go($state.current, {isNewObject: false}, {reload: true}).then(function () {
         usSpinnerService.stop('loading');
         deferred.resolve();
       });

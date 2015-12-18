@@ -164,5 +164,9 @@
       $state.go('dbQueries.newQuery');
     };
 
+    self.newObject = function () {
+      $state.go('erd_model',{isNewObject: true});
+    }
+
   }
 }());
