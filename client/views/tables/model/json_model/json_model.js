@@ -44,8 +44,8 @@
 
     self.reset = function(){
       DbDataModel.removeCustomSchema(self.appName);
-      $scope.isUnsaved = false;
       getSchema();
+      $scope.isUnsaved = false;
     };
 
     function getSchema () {

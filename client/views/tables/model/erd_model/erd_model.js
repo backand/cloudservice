@@ -47,6 +47,10 @@
         })
     }
 
+    $scope.$root.$on("fetchTables", function () {
+      $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
+    });
+
     self.showHelp = function () {
       $scope.$emit('open-help');
     };
