@@ -36,19 +36,7 @@
 
     // If editing a field, Populate the inputs by the field data
     if (self.isEdit) {
-      self.field = FieldsService.getField(self.tableName, self.fieldName);
-      self.fieldType = FieldsService.getFieldType(self.tableName, self.fieldName);
-
-      if (self.fieldType == 'collection') {
-        self.relatedObject = self.field.collection;
-        self.viaField = self.field.via;
-      } else if (self.fieldType == 'object') {
-        self.relatedObject = self.field.object;
-        self.viaField = FieldsService.getFieldRelatingToField(self.field.object, self.tableName, self.fieldName);
-      }
-
-
-      self.isCollectionOrObject = self.fieldType == 'collection' || self.fieldType == 'object';
+      populateInputs();
     }
 
     self.typeOptions = [
@@ -119,6 +107,21 @@
       return _.some(_.keys(fields), function (field) {
         return field.toLowerCase() === name.toLowerCase();
       });
+    }
+
+    function populateInputs() {
+      self.field = FieldsService.getField(self.tableName, self.fieldName);
+      self.fieldType = FieldsService.getFieldType(self.tableName, self.fieldName);
+
+      if (self.fieldType == 'collection') {
+        self.relatedObject = self.field.collection;
+        self.viaField = self.field.via;
+      } else if (self.fieldType == 'object') {
+        self.relatedObject = self.field.object;
+        self.viaField = FieldsService.getFieldRelatingToField(self.field.object, self.tableName, self.fieldName);
+      }
+
+      self.isCollectionOrObject = self.fieldType == 'collection' || self.fieldType == 'object';
     }
   }
 })();
