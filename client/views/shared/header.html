@@ -30,11 +30,15 @@
                     ng-options="app.Name as app.Name for app in header.apps.list | orderBy:'Name'">
             </select>
           </div>
-          <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}" style="position: relative;left: 150px;top: -18px;"></div>
+          <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
+               style="position: relative;left: 150px;top: -18px;"></div>
+          <span ng-if="header.usingDefaultModel" class="label label-danger" style="position: relative;left: 250px;top: -28px;">
+            You are using the default data model, click <a ui-sref="json_model">here</a> to set it or <a
+                  ui-sref="database.show">connect</a> your own database
+          </span>
         </div>
       </li>
     </ul>
-
     <ul class="nav-right pull-right list-unstyled">
       <li class="dropdown text-normal nav-profile">
           <a ng-click="header.showUserDropdown = !header.showUserDropdown; $event.stopPropagation();"
@@ -68,4 +72,5 @@
       </li>
     </ul>
   </div>
+
 </header>

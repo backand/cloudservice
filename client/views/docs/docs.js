@@ -18,6 +18,7 @@
 
     function setKeysInfo(data){
       self.keys = data.data;
+      self.masterToken = data.data.general;
     }
 
     self.goToKickstart = function () {
@@ -50,11 +51,6 @@
     };
 
     self.getTokens = function(){
-      //get master token
-      AppsService.appKeys(self.currentApp.Name)
-        .then(function(data){
-          self.masterToken = data.data.general;
-        });
 
       //get first admin user token
       SecurityService.appName = self.currentApp.Name;

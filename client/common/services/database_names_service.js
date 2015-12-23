@@ -33,6 +33,14 @@
         5: 'oracle'
     }
 
+    var database_source_name = {
+      'sqlserver' : 1,
+      'sqlazure' : 2,
+      'mysql' : 3,
+      'postgresql' : 4,
+      'oracle' : 5
+    }
+
     this.getName = function(dataNumber){
        return numbers[dataNumber];
     };
@@ -41,8 +49,12 @@
       return names[dataName];
     };
 
-    this.getDBSource = function (dataName){
-      return database_source[dataName];
+    this.getDBSource = function (dataId){
+      return database_source[dataId];
+    };
+
+    this.getDBSourceId = function (dataName){
+      return database_source_name[dataName];
     };
 
   }

@@ -55,7 +55,7 @@
       angular.copy({}, self.currentApp);
     };
 
-      self.isExampleApp = function (app) {
+    self.isExampleApp = function (app) {
       if (!app || !app.Name) return false;
       return app.Name === 'todo' + SessionService.getUserId();
       //return (app.Name.substring(0, 4) === 'todo')

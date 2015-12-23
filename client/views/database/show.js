@@ -1,15 +1,18 @@
 (function  () {
   'use strict';
   angular.module('backand.database')
-    .controller('DatabaseShow', ['$state', 'AppsService', 'usSpinnerService', 'DatabaseService', 'DatabaseNamesService', DatabaseShow]);
+    .controller('DatabaseShow', ['$state', 'AppsService', 'usSpinnerService', 'DatabaseService', 'DatabaseNamesService','ModelService', DatabaseShow]);
 
-  function DatabaseShow($state, AppsService, usSpinnerService, DatabaseService, DatabaseNamesService) {
+  function DatabaseShow($state, AppsService, usSpinnerService, DatabaseService, DatabaseNamesService, ModelService) {
     var self = this;
 
     self.appName = $state.params.appName;
     var currentApp = AppsService.currentApp;
     self.isLocal = currentApp.connectionSource === 'local';
+    self.usingDefaultModel = false;
+    self.displayButton = !AppsService.isExampleApp(self.appName); //example app don't show the button
     checkDatabaseStatuse();
+    checkForDefaultSchema();
 
     function checkDatabaseStatuse() {
       usSpinnerService.spin("loading");
@@ -40,9 +43,14 @@
         });
     };
 
-    self.displayButton = function() {
-      return !AppsService.isExampleApp(self.appName);
-    };
+    function checkForDefaultSchema(){
+      ModelService.usingDefaultSchema(self.appName, false)
+        .then(function(result){
+          self.usingDefaultModel = result;
+          self.displayButton = self.usingDefaultModel || !self.isLocal;
+        });
+    }
+
 
     self.edit = function() {
       $state.go('database.edit');
