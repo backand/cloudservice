@@ -29,8 +29,9 @@
 <div class="page ng-scope">
   <div class="panel-body" id="apps-page">
     <div class="row">
-      <div us-spinner spinner-key="loading" spinner-start-active></div>
-      <div  class="col-lg-3 col-md-4 col-sm-6 app-panel" >
+      <div us-spinner spinner-key="loading" spinner-start-active
+           us-spinner="{color: 'black', top: '50%', left: '50%%'}"></div>
+      <div  class="col-lg-4 col-md-4 col-sm-6 app-panel" >
         <div class="panel panel-default ui-ribbon-container ui-ribbon-primary">
           <div class="ui-ribbon-wrapper">
             <div class="ui-ribbon">New</div>
@@ -43,10 +44,11 @@
                   <fieldset>
                     <div class="form-group">
                         <div class="input-group">
+                          <div class="input-group-addon">hosting.backand.io/</div>
                           <input type="text" class="form-control" placeholder="App Name" style="text-transform: lowercase;"
                                  ng-model = "index.appName" ng-model-options="{debounce: 500}"
                                  ng-pattern="index.namePattern" test-hook="apps.new-app.name" name="appName" required >
-                            <div class="input-group-addon">.backand.net</div>
+
                         </div>
                       <div ng-show="form.appName.$error.pattern" test-hook="apps.new-app.error" class="input-error">no spaces or %$#@^&* allowed</div>
                     </div>
@@ -65,7 +67,7 @@
         </div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 app-panel"
+      <div class="col-lg-4 col-md-4 col-sm-6 app-panel"
            ng-repeat="app in index.apps track by app.__metadata.id"
            test-hook="apps.app-panel">
 
@@ -84,21 +86,17 @@
           <div class="panel-body app-panel-body">
             <div class="body-height">{{ ::app.Title }}</div>
             <div class="app-panel-body-link">
-              <a href="" ng-click="index.goToLink(app)"
-                 ng-if="app.DatabaseStatus == 1"
-                 test-hook="apps.app-panel.link">
-                <i class="ti-star"></i>
-                {{index.getGoToLink(app).linkTitle}}
-              </a>
-              <div ng-if="app.DatabaseStatus !== 1">&nbsp;</div>
+              <div>&nbsp;</div>
             </div>
-            <button ng-click="index.appManage(app)"
-                    class="btn btn-default btn-w-md btn-block"
-                    data-style="expand-right"
-                    test-hook="apps.app-panel.manage-button">
-              {{index.getAppManageTitle(app)}}
+            <button
+                ng-click="index.appManage(app)"
+                class="btn btn-default btn-w-md btn-block"
+                data-spinner-color="#000000"
+                test-hook="apps.app-panel.manage-button">
+                {{index.getAppManageTitle(app)}}
             </button>
-
+            <div ng-if="index.appSpinner[app.Name]" us-spinner spinner-start-active
+                 us-spinner="{color: 'black', left: '50%%'}"></div>
           </div>
         </div>
       </div>

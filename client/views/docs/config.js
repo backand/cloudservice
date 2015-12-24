@@ -66,6 +66,18 @@
         templateUrl: 'views/docs/realtime_database.html',
         controller: 'Docs as docs'
       })
+      .state('docs.realtime-open', {
+        parent: 'apps',
+        url: 'realtime',
+        templateUrl: 'views/docs/realtime_database.html',
+        controller: 'Docs as docs'
+      })
+      .state('docs.hosting', {
+        parent: 'app',
+        url: '/hosting/config',
+        templateUrl: 'views/docs/hosting.html',
+        controller: 'Docs as docs'
+      })
   }
 
 })();

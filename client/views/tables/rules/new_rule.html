@@ -1,7 +1,7 @@
 <div ng-if="rules.action">
   <div ng-cloak>
     <angled-window ng-show="rules.showJsCodeHelpDialog"
-                   title="Help - JavaScript Code"
+                   title="Readme - JavaScript Code"
                    id="help"
                    grouping="w"
                    close-function="rules.showJsCodeHelpDialog = false"
@@ -97,12 +97,13 @@
           <select class="form-control"
                   ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
                   ng-model="rules.action.dataAction"
+                  required
                   ng-disabled="!rules.editMode">
             <option value="">Select trigger...</option>
           </select>
         </div>
 
-        <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.dataAction"
+        <div class="form-group col-lg-12 col-md-12 col-sm-12"
              ng-class="{'has-error': rules.newRuleForm.action.$invalid}">
 
           <label for="workflowAction">Type</label>
@@ -115,6 +116,7 @@
                   required
                   ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
                   ng-model="rules.action.workflowAction"
+                  ng-init="rules.action.workflowAction = rules.action.workflowAction || 'JavaScript'"
                   ng-model-options="{debounce: 0}"
                   ng-disabled="!rules.editMode">
             <option value="">Select what to do...</option>
@@ -201,8 +203,8 @@
               <div ng-class="{'has-error': rules.newRuleForm.code.$invalid}">
 
                 <div class="form-group" ng-class="{'action-ace-show-test': rules.requestTestForm}">
-                  <label for="code">JavaScript Code</label> <a href="" ng-click="rules.showJsCodeHelpDialog = true">Need help?</a>
-
+                  <label for="code">JavaScript Code - </label> <a style="font-size:18px;" href=""
+                                                               ng-click="rules.showJsCodeHelpDialog = true">Read.me!</a>
                   <bknd-ace-features editor="ace.editors.code" nesting-form="rules.newRuleForm">
                     <div
                       ui-ace="{onLoad : ace.onLoad, theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 }}"

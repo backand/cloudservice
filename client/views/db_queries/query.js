@@ -91,8 +91,8 @@
     function loadQueries() {
       DbQueriesService.getQueries(self.appName).then(function () {
         self.openParamsModal = false;
-        self.new = (!$stateParams.queryId);
-        self.editMode = self.new;
+        self.new = $state.current.name === "dbQueries.newQuery";
+        self.editMode = self.new || $state.current.name === "dbQueries.newSavedQuery";
 
         if (self.new) {
           self.query = DbQueriesService.getNewQuery();
@@ -162,13 +162,22 @@
       }
     };
 
-    self.saveQuery = function () {
+    self.saveQuery = function (withTest) {
       self.loading = true;
+      self.savingAndTesting = true;
       if (self.mode === 'sql') {
-        return saveQuery();
+        return saveQuery().then(function(){
+          if(withTest){
+            self.testData();
+          }
+        });
 
       } else if (self.mode === 'nosql') {
-        return saveNoSql();
+        return saveNoSql().then(function(){
+          if(withTest){
+            self.testData();
+          }
+        });
       }
     };
 
@@ -180,7 +189,7 @@
 
       rolesToString();
       var queryToSend = EscapeSpecialChars(self.query);
-      DbQueriesService.saveQuery(queryToSend)
+      return DbQueriesService.saveQuery(queryToSend)
         .then(reload);
     }
 
@@ -206,7 +215,7 @@
         .then(function (response) {
           if (response.data.valid === 'always') {
             self.query.sQL = self.transformedSql = response.data.sql;
-            saveQuery();
+            return saveQuery();
           } else {
             self.loading = false;
             self.transformedSql = response.data.sql;
@@ -214,7 +223,7 @@
             .then(function (result) {
               if (result) {
                 self.query.sQL = self.transformedSql;
-                saveQuery();
+                return saveQuery();
               }
             })
           }
@@ -256,7 +265,11 @@
           self.inputValues = {};
 
         self.queryForm.$setPristine();
-        $state.go('dbQueries.query', params);
+        if(self.new || $state.current.name === "dbQueries.newSavedQuery"){
+          $state.go('dbQueries.newSavedQuery', params);
+        } else {
+          $state.go('dbQueries.query', params);
+        }
       }
     }
 
@@ -387,6 +400,8 @@
       self.queryUrlCopied = false;
 
       self.testLoading = false;
+      self.savingAndTesting = false;
+
     }
 
     function stringifyHttp (http) {
@@ -402,6 +417,7 @@
       NotificationService.add('error', message);
       self.testError = error.data;
       self.testLoading = false;
+      self.savingAndTesting = false;
     }
 
   }

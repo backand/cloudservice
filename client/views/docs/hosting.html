@@ -1,0 +1,49 @@
+<section class="page-form-ele page ng-scope ba-docs" ng-init="docs.getTokens()">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong test-hook="docs.quickstart.title">Backand Hosting & Deployment</strong>
+      <h2>High-performance, reliable and secure hosting for AngularJS applications</h2>
+    </div>
+    <div class="panel-body docs">
+      <div>
+        <p>
+        <h4>Backand offers high-performance, reliable, and secure hosting for AngularJS applications through the hosting and deployment tool. Built off of AWS, Backand's hosting gives you an effortless way to deploy your Angular project to a hosted server.<br/>
+        Your project files will be available for review at <a href="https://hosting.backand.io/{{docs.currentApp.Name}}" target="_blank">https://hosting.backand.io/{{docs.currentApp.Name}}</a></h4>
+        </p>
+        <br/>
+            <h3>First Time Installation</h3>
+        <p>The Backand CLI  (command-line interface), which is used to control deployment, requires Node.js and npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.<br/>
+          Run the following command to install Backand CLI tool:
+        </p>
+            <pre><code class="bash">
+  $ npm install -g backand
+
+  # or use sudo (with caution) if required by your system permissions
+  # sudo npm install -g backand
+            </code></pre>
+            <p>
+              To <b>update</b> a previously-installed version of Backand CLI, run the following command to update the node package:
+            </p>
+            <pre><code class="bash">
+  $ npm update -g backand
+
+  # or use sudo (with caution) if required by your system permissions
+  # sudo npm update -g backand
+            </code></pre>
+            <br/>
+            <h3>Deploy your Angular Project</h3>
+        <p>To deploy and sync your local Angular project folder with the server, use the following command on the command line:</p>
+            <pre><code>
+  backand sync --app {{docs.currentApp.Name}} --master {{docs.masterToken}} --user {{docs.userToken}} --folder /path/to/project/folder
+            </code></pre>
+            <p>
+              <b>--app</b>: The current app name<br/>
+              <b>--master</b>: The master token of the app (get it from Social & Keys)<br/>
+              <b>--user</b>: The token of the current user (get it from Team and click on key icon)<br/>
+              <b>--folder</b>: The path of the local Angular folder to sync and deploy<br/>
+            </p>
+            <br/>
+        </div>
+      </div>
+  </div>
+</section>

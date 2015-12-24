@@ -78,7 +78,7 @@
           _.startsWith(httpPackage.config.url, CONSTS.appUrl + '/admin/myAppConnection/') &&
           _.startsWith(httpPackage.data, 'Invalid schema:')) return true;
 
-        if(_.startsWith(httpPackage.data, 'Blob is not ready yet')) return true;
+        if(_.startsWith(httpPackage.data, 'App is not ready yet')) return true;
       }
     }
   }

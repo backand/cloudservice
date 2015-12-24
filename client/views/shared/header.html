@@ -1,75 +1,81 @@
-<div class="alert db-alert alert-info">You’re Currently using the <strong> Default Database Model </strong>
-<a href="#" class="btn btn-ghost">Setup your own</a>
-<span class="or">or</span>
-<a href="#" class="btn btn-ghost">connect your own</a></div>
-<header class="top-header clearfix"
-        ng-controller="HeaderController as header"
-        ng-click="header.showUserDropdown = false">
+<section class="header-container ng-scope header-fixed bg-white" id="header">
+  <header class="top-header clearfix"
+          ng-controller="HeaderController as header"
+          ng-click="header.showUserDropdown = false">
 
-  <!-- Logo -->
-  <div class="logo bg-dark">
-    <a ui-sref="apps.index">
-      <span>Backand</span>
-    </a>
-  </div>
+    <div ng-if="header.usingDefaultModel"
+         class="alert db-alert alert-info">You’re Currently using the <strong> Default Data Model </strong>
+      <a ui-sref="json_model" class="btn btn-ghost">Setup Data Model</a>
+      <span class="or">or</span>
+      <a ui-sref="database.show" class="btn btn-ghost">Connect Your Database</a>
+    </div>
 
-  <!-- needs to be put after logo to make it work -->
-  <div class="menu-button" toggle-off-canvas>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </div>
+    <!-- Logo -->
+    <div class="logo bg-dark">
+      <a ui-sref="apps.index">
+        <span>Backand</span>
+      </a>
+    </div>
 
-  <div class="top-nav">
-    <ul class="nav-left list-unstyled" ng-hide="header.hideAppList()">
-      <li>
-        <a ui-sref="apps.index"><i class="ti-layers-alt" style="font-size: 25px;"></i></a>
-      </li>
-      <li class="search-box">
-        <div class="input-group">
-          <span class="input-group-addon">App: &nbsp;</span>
-          <div class="ui-select" style="font-weight: bold;">
-            <select ng-model="header.currentAppName"
-                    ng-change="header.goToApp()"
-                    ng-options="app.Name as app.Name for app in header.apps.list | orderBy:'Name'">
-            </select>
+    <!-- needs to be put after logo to make it work -->
+    <div class="menu-button" toggle-off-canvas>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+
+    <div class="top-nav">
+      <ul class="nav-left list-unstyled" ng-hide="header.hideAppList()">
+        <li>
+          <a ui-sref="apps.index"><i class="ti-layers-alt" style="font-size: 25px;"></i></a>
+        </li>
+        <li class="search-box">
+          <div class="input-group">
+            <span class="input-group-addon">App: &nbsp;</span>
+            <div class="ui-select" style="font-weight: bold;">
+              <select ng-model="header.currentAppName"
+                      ng-change="header.goToApp()"
+                      ng-options="app.Name as app.Name for app in header.apps.list | orderBy:'Name'">
+              </select>
+            </div>
+            <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
+                 style="position: relative;left: 150px;top: -18px;"></div>
           </div>
-          <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}" style="position: relative;left: 150px;top: -18px;"></div>
-        </div>
-      </li>
-    </ul>
-
-    <ul class="nav-right pull-right list-unstyled">
-      <li class="dropdown text-normal nav-profile">
-          <a ng-click="header.showUserDropdown = !header.showUserDropdown; $event.stopPropagation();"
-             href="" class="dropdown-toggle header-item" data-toggle="dropdown">
-              <span>
-                  <i class="ti-user"></i>
-                  <span class="bknd-username">{{::header.getCurrentUser().username}}</span>
-              </span>
-          </a>
-          <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
-              <li class="bknd-username"><a>{{::header.getCurrentUser().username}}</a></li>
-              <li>
-                  <a href="" ng-click="header.changePassword()">
-                      <i class="ti-lock"></i>
-                      <span>Change Password</span>
+        </li>
+      </ul>
+      <ul class="nav-right pull-right list-unstyled">
+        <li class="dropdown text-normal nav-profile">
+            <a ng-click="header.showUserDropdown = !header.showUserDropdown; $event.stopPropagation();"
+               href="" class="dropdown-toggle header-item" data-toggle="dropdown">
+                <span>
+                    <i class="ti-user"></i>
+                    <span class="bknd-username">{{::header.getCurrentUser().username}}</span>
+                </span>
+            </a>
+            <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
+                <li class="bknd-username"><a>{{::header.getCurrentUser().username}}</a></li>
+                <li>
+                    <a href="" ng-click="header.changePassword()">
+                        <i class="ti-lock"></i>
+                        <span>Change Password</span>
+                    </a>
+                </li>
+                <li>
+                  <a href="" ng-click="header.logout()">
+                    <i class="ti-export"></i>
+                    <span>Log Out</span>
                   </a>
-              </li>
-              <li>
-                <a href="" ng-click="header.logout()">
-                  <i class="ti-export"></i>
-                  <span>Log Out</span>
-                </a>
-              </li>
-          </ul>
-      </li>
-      <li>
-        <a href="" ng-click="header.openVideoModal()" class="header-item header-video-btn">
-          <img class="header-video-img" src="assets/images/docs_pages/video-tutorials-button.png" />
-          <span class="header-video-title">Video Tutorials</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-</header>
+                </li>
+            </ul>
+        </li>
+        <li>
+          <a href="" ng-click="header.openVideoModal()" class="header-item header-video-btn">
+            <img class="header-video-img" src="assets/images/docs_pages/video-tutorials-button.png" />
+            <span class="header-video-title">Video Tutorials</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </header>
+</section>

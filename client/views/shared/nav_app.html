@@ -93,16 +93,22 @@
          style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
     </a>
     <ul class="scrollbar ex4" id="ex4">
+      <li ng-if="nav.app.connectionSource === 'local'">
+        <a ui-sref="erd_model">
+          <i class="ba-icon-model"></i>
+          <span>Model</span>
+        </a>
+      </li>
       <li>
         <a ng-click="nav.newObject()" href="">
           <i class="ba-icon-new-query"></i>
           <span>New Object</span>
         </a>
       </li>
-      <li ng-if="nav.app.connectionSource === 'local'">
-        <a ui-sref="json_model">
+      <li ng-if="nav.app.connectionSource !== 'local'">
+        <a ui-sref="tables.notables">
           <i class="ba-icon-model"></i>
-          <span>Model</span>
+          <span>Sync with Database</span>
         </a>
       </li>
 
@@ -195,6 +201,25 @@
       </li>
     </ul>
   </li>
+
+  <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}">
+    <a ng-class="{disabled: nav.DatabaseStatus != 1}"  href="">
+      <i class="ba-icon-angularjs-quickstart"></i>
+      <span>Hosting</span>
+      <ba-tooltip tooltip-text="High-performance, reliable and secure hosting for AngularJS applications"
+                  tooltip-placement="right" class=""></ba-tooltip>
+      <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
+    </a>
+    <ul>
+      <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('docs.hosting')" href="">
+          <i class="ba-icon-configuration"></i>
+          <span>Configuration</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
   <li ng-class="{active: nav.state == 'log.activity', disabled: nav.DatabaseStatus != 1}">
     <a ng-class="{disabled: nav.DatabaseStatus != 1}"  href="">
       <i class="ba-icon-log"></i>

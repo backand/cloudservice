@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.docs')
-    .controller('Docs', ['AppsService', 'usSpinnerService', '$state', Docs]);
+    .controller('Docs', ['AppsService', 'usSpinnerService', '$state','SessionService','SecurityService', Docs]);
 
-  function Docs(AppsService, usSpinnerService, $state) {
+  function Docs(AppsService, usSpinnerService, $state, SessionService, SecurityService) {
 
     var self = this;
 
@@ -18,6 +18,7 @@
 
     function setKeysInfo(data){
       self.keys = data.data;
+      self.masterToken = data.data.general;
     }
 
     self.goToKickstart = function () {
@@ -48,6 +49,16 @@
       }
       return isNew;
     };
+
+    self.getTokens = function(){
+
+      //get first admin user token
+      SecurityService.appName = self.currentApp.Name;
+      SecurityService.getUserToken(SessionService.currentUser.username)
+        .then(function (response) {
+          self.userToken = response.data;
+        });
+    }
   }
 
 }());

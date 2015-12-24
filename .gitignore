@@ -1,6 +1,8 @@
 # general
 .idea
 .DS_Store
+.awspublish-hosting.backand.net
+.backand-credentials.json
 *~
 .sass-cache
 
@@ -23,3 +25,5 @@ client/test/screenshots/*
 !client/test/screenshots/README.md
 client/test/unit-results/*
 !client/test/unit-results/README.md
+
+

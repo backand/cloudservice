@@ -3,10 +3,12 @@
 
 angular.module('backand.apps')
   .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
-    'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',  AppsIndexController]);
+    'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',
+    'DatabaseService','ModelService', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
-                                usSpinnerService, LayoutService, AnalyticsService, SessionService) {
+                               usSpinnerService, LayoutService, AnalyticsService, SessionService,
+                               DatabaseService, ModelService) {
 
     var self = this;
     self.loading = false;
@@ -29,14 +31,15 @@ angular.module('backand.apps')
 
     self.addApp = function() {
       self.loading = true;
+      self.appName = angular.lowercase(self.appName);
       if(self.appTitle === '')
           self.appTitle = self.appName;
 
+      NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
+
       AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
-          AnalyticsService.track('CreatedApp', {appName: self.appName});
-          NotificationService.add('success', 'App was successfully created');
-          $state.go('database.edit', { appName: self.appName });
+          createDB(self.appName);
         },
         function(err) {
           self.loading = false;
@@ -45,13 +48,40 @@ angular.module('backand.apps')
         })
     };
 
+    function createDB(appName){
+
+      AnalyticsService.track('CreatedApp', {appName: appName});
+
+      //create app with default schema
+      var product = 10; //New MySQL
+
+      DatabaseService.createDB(appName, product, '', ModelService.defaultSchema())
+        .success(function (data) {
+
+          AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
+          AnalyticsService.track('create app', {app: appName});
+          $state.go('docs.kickstart',{appName: appName});
+        })
+        .error(function () {
+          self.loading = false;
+        });
+    }
+
     /**
      *
      * @param appName
      */
     self.appManage = function (app) {
-      usSpinnerService.spin("loading");
-      $state.go('app', {appName: app.Name});
+
+      self.appSpinner = [];
+      self.appSpinner[app.Name] = true;
+
+      if(app.DatabaseStatus !== 0){
+        $state.go('app', {appName: app.Name});
+      } else {
+        createDB(app.Name);
+      }
+
     };
 
     /**
@@ -86,12 +116,12 @@ angular.module('backand.apps')
 
     self.getAppManageTitle = function (app) {
       if (app.DatabaseStatus == 2)
-        return 'Connecting to Database';
+        return 'Creating App ...';
       if (app.DatabaseStatus == 1)
         return 'Manage App';
       if (AppsService.isExampleApp(app))
-        return 'Build Example App';
-      return 'Complete DB Connection';
+        return 'Create Example App';
+      return 'Create App';
     };
 
     self.namePattern = /^\w+$/;

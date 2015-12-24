@@ -45,35 +45,45 @@
             <div class="app-log">
               <h4 class="">TOOLS AND KNOWLEDGE BASE</h4>
 
-              <section ui-sref="playground.show({name: show.appName})" class="data-panel">
+              <section ui-sref="json_model({name: show.appName})" class="data-panel" ng-if="show.currentApp.connectionSource === 'local'">
                 <div class="panel-icon">
                   <i class="icon-rest-api-icon text-huge"></i>
                 </div>
                 <div class="panel-data">
-                  <h4>REST API Playground</h4>
-                  <p>Test your app with Backand's REST APIs</p>
+                  <h4>Data Model</h4>
+                  <p>Manage your data model by adding new objects</p>
                 </div>
               </section>
 
-                <section ui-sref="docs.api-desc({name: show.appName})" class="data-panel data-panel-success">
-                    <div class="panel-icon">
-                        <i class="icon-orm-icon text-huge"></i>
-                    </div>
-                    <div class="panel-data">
-                        <h4>Documentation</h4>
-                        <p>Review Backand's documentation</p>
-                    </div>
-                </section>
+              <section ui-sref="tables.notables({name: show.appName})" class="data-panel" ng-if="show.currentApp.connectionSource !== 'local'">
+                <div class="panel-icon">
+                  <i class="icon-rest-api-icon text-huge"></i>
+                </div>
+                <div class="panel-data">
+                  <h4>Sync Database</h4>
+                  <p>Synchronize database's schema changes with Backand's ORM</p>
+                </div>
+              </section>
 
-                <section  class="data-panel" ui-sref="database.show({name: show.appName})">
-                    <div class="panel-icon">
-                        <i class="icon-databsase-icon text-huge"></i>
-                    </div>
-                    <div class="panel-data">
-                        <h4>Database</h4>
-                        <p>Manage your database connection</p>
-                    </div>
-                </section>
+              <section ui-sref="docs.api-desc({name: show.appName})" class="data-panel data-panel-success">
+                  <div class="panel-icon">
+                      <i class="icon-orm-icon text-huge"></i>
+                  </div>
+                  <div class="panel-data">
+                      <h4>Documentation</h4>
+                      <p>Review Backand's documentation</p>
+                  </div>
+              </section>
+
+              <section  class="data-panel" ui-sref="database.show({name: show.appName})">
+                  <div class="panel-icon">
+                      <i class="icon-databsase-icon text-huge"></i>
+                  </div>
+                  <div class="panel-data">
+                      <h4>Database</h4>
+                      <p>Manage your database connection</p>
+                  </div>
+              </section>
             </div>
           </div>
         </div>

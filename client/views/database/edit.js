@@ -2,10 +2,12 @@
   'use strict';
 angular.module('backand.database')
   .controller('DatabaseEdit', ['$scope', '$http', 'AppsService', '$state', 'DatabaseNamesService',
-    'NotificationService', 'DatabaseService', 'DbDataModel', 'usSpinnerService', 'ConfirmationPopup', '$modal', 'AnalyticsService', DatabaseEdit]);
+    'NotificationService', 'DatabaseService', 'DbDataModel', 'usSpinnerService',
+    'ConfirmationPopup', '$modal', 'AnalyticsService','ModelService', DatabaseEdit]);
 
   function DatabaseEdit($scope, $http, AppsService, $state, DatabaseNamesService,
-                        NotificationService, DatabaseService, DbDataModel, usSpinnerService, ConfirmationPopup, $modal, AnalyticsService) {
+                        NotificationService, DatabaseService, DbDataModel, usSpinnerService,
+                        ConfirmationPopup, $modal, AnalyticsService, ModelService) {
 
     var self = this;
     var currentApp = AppsService.currentApp;
@@ -20,13 +22,14 @@ angular.module('backand.database')
       self.loading = false;
       self.showHelp = false;
       self.showHelpDialog = false;
+      self.usingDefaultModel = false;
       getCurrentApp();
     }());
 
     function getCurrentApp() {
       self.databaseStatus = currentApp.DatabaseStatus;
       self.dbConnected = currentApp.DatabaseStatus === 1;
-      self.dataName = currentApp.databaseName || 'newMysql';
+      self.dataName = currentApp.databaseName || 'mysql';
       self.data = {
         usingSsl: 'true',
         usingSsh: 'false'
@@ -34,6 +37,7 @@ angular.module('backand.database')
 
       if (self.databaseStatus !== 0) {
         checkDatabaseStatus();
+        checkForDefaultSchema();
       }
     }
 
@@ -56,6 +60,13 @@ angular.module('backand.database')
             self.data.sshPrivateKey   = dataIn.SshPrivateKey;
           });
         usSpinnerService.stop("loading");
+    }
+
+    function checkForDefaultSchema(){
+      ModelService.usingDefaultSchema(self.appName, false)
+          .then(function(result){
+            self.usingDefaultModel = result;
+          });
     }
 
     self.create = function () {
@@ -147,29 +158,35 @@ angular.module('backand.database')
 
       if(self.dbConnected) //connected
       {
-          DatabaseService.reConnect2DB($state.params.appName, self.data)
-              .success(function (data) {
-                  NotificationService.add('info', 'Update App connection to database');
-                  $state.go('docs.get-started');
-              })
-              .error(function (err) {
-                  self.loading = false;
-              })
+          //get the current Database_Source
+        self.data.Database_Source = DatabaseNamesService.getDBSourceId(self.dataName);
+        self.data.databaseName = self.dataName;
+
+        DatabaseService.reConnect2DB($state.params.appName, self.data)
+          .success(function (data) {
+              NotificationService.add('info', 'Update App connection to database');
+
+              AnalyticsService.track('ReConnectedExistingDB', {product: self.data.product});
+              $state.go('docs.get-started');
+          })
+          .error(function (err) {
+              self.loading = false;
+          })
       }
       else {
           DatabaseService.connect2DB($state.params.appName, self.data)
-              .success(function (data) {
+            .success(function (data) {
 
-              AnalyticsService.track('ConnectedExistingDB', {product: self.data.product});
+            AnalyticsService.track('ConnectedExistingDB', {product: self.data.product});
 
 
-              NotificationService.add('info', 'Connecting to the database...');
-                  $state.go('docs.get-started')
-              })
-              .error(function () {
-                  self.loading = false;
-                  self.showHelp = true;
-              })
+            NotificationService.add('info', 'Connecting to the database...');
+                $state.go('docs.get-started')
+            })
+            .error(function () {
+                self.loading = false;
+                self.showHelp = true;
+            })
       }
     };
 
@@ -274,7 +291,7 @@ angular.module('backand.database')
     }
 
     self.chooseDb = function (dbName) {
-      if (self.dbConnected)
+      if (self.dbConnected && !self.usingDefaultModel)
       {
         self.Confirmation('Changing database is not allowed for connected app.');
         return;

@@ -9,6 +9,7 @@
     var self = this;
 
     var app = AppsService.currentApp;
+    self.currentApp = app;
     self.appName = app.Name;
     $scope.appName = self.appName;
 
