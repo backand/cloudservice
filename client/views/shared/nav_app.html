@@ -100,7 +100,8 @@
         </a>
       </li>
       <li>
-        <a ng-click="nav.newObject()" href="">
+        <a  ng-if="nav.app.connectionSource === 'local'"
+            ng-click="nav.newObject()" href="">
           <i class="ba-icon-new-query"></i>
           <span>New Object</span>
         </a>

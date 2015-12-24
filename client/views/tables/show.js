@@ -47,5 +47,9 @@
           NotificationService.add('error', 'Cannot sync tables');
         });
     }
+
+    if($stateParams.sync){
+      self.sync();
+    }
   }
 }());

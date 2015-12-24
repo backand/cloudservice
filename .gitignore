@@ -2,6 +2,7 @@
 .idea
 .DS_Store
 .awspublish-hosting.backand.net
+.awspublish-hosting.backand.io
 .backand-credentials.json
 *~
 .sass-cache

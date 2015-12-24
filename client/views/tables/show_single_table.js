@@ -68,10 +68,11 @@
 
       loadColumns();
 
+
     }());
 
     /**
-     * Need to het first the tables before loading the page
+     * Need to get first the tables before loading the page
      * @param tables
      */
     function loadColumns()
@@ -102,12 +103,12 @@
           if (data.data.errors !== '') {
 
             //data.data.errors = data.data.errors.replace(/\r?\n/g, "%0D%0A");
-            NotificationService.add('error', 'Synchronizing tables completed with errors: ' + data.data.errors);
+            NotificationService.add('error', 'Synchronizing with the database completed with errors: ' + data.data.errors);
             self.alertClass = 'tables-alert-with-errors';
             self.messages.push('Errors: ' + data.data.errors);
           }
           else {
-            NotificationService.add('success', 'Synchronizing tables was completed successfully');
+            NotificationService.add('success', 'Synchronizing with the database was completed successfully');
             self.alertClass = '';
           }
           //refresh tables list
@@ -118,7 +119,8 @@
 
         }, function (err) {
           self.syncing = false;
-          NotificationService.add('error', 'Can not sync tables');
+          NotificationService.add('error', 'Synchronizing with the database was failed, please review the log for' +
+              ' details');
         });
     };
 

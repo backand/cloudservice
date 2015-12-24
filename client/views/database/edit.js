@@ -158,36 +158,38 @@ angular.module('backand.database')
 
       if(self.dbConnected) //connected
       {
-          //get the current Database_Source
+
+        //get the current Database_Source
         self.data.Database_Source = DatabaseNamesService.getDBSourceId(self.dataName);
         self.data.databaseName = self.dataName;
 
         DatabaseService.reConnect2DB($state.params.appName, self.data)
           .success(function (data) {
-              NotificationService.add('info', 'Update App connection to database');
+            //NotificationService.add('info', 'Update App connection to database');
 
-              AnalyticsService.track('ReConnectedExistingDB', {product: self.data.product});
-              $state.go('docs.get-started');
+            AnalyticsService.track('ReConnectedExistingDB', {product: self.data.product});
+
+            $state.go('tables.notables', {sync: self.usingDefaultModel});
           })
           .error(function (err) {
-              self.loading = false;
+            self.loading = false;
           })
-      }
-      else {
-          DatabaseService.connect2DB($state.params.appName, self.data)
-            .success(function (data) {
-
-            AnalyticsService.track('ConnectedExistingDB', {product: self.data.product});
-
-
-            NotificationService.add('info', 'Connecting to the database...');
-                $state.go('docs.get-started')
-            })
-            .error(function () {
-                self.loading = false;
-                self.showHelp = true;
-            })
-      }
+      } //not used any more
+      //else {
+      //    DatabaseService.connect2DB($state.params.appName, self.data)
+      //      .success(function (data) {
+      //
+      //      AnalyticsService.track('ConnectedExistingDB', {product: self.data.product});
+      //
+      //
+      //      NotificationService.add('info', 'Connecting to the database...');
+      //          $state.go('docs.get-started')
+      //      })
+      //      .error(function () {
+      //          self.loading = false;
+      //          self.showHelp = true;
+      //      })
+      //}
     };
 
     self.back = function(){

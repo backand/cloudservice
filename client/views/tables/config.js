@@ -9,7 +9,10 @@
       .state('tables.notables', {
         url: '/sync',
         controller: 'TablesShow as tables',
-        templateUrl: 'views/tables/no_tables.html'
+        templateUrl: 'views/tables/no_tables.html',
+        params: {
+          sync: false
+        }
       })
       .state('tables.model', {
         url: '/model',
