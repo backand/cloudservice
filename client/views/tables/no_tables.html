@@ -4,11 +4,9 @@
         <strong> Objects </strong>
         <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="tables.sync()" ladda="tables.syncing" data-style="expand-right" style="margin-left: 50px;">Sync with Database</button>
 
-        <li class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="tables.alertClass" style="margin-left: 10px;">
-            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="ti-bell" ></i>
-            </a>
-            <div class="dropdown-menu with-arrow panel panel-default">
+        <span ng-click="tables.showMessages = !tables.showMessages" class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="tables.alertClass" style="margin-left: 10px;">
+          <i class="ti-bell" ></i>
+          <div  ng-show="tables.showMessages"  class="dropdown-menu with-arrow hovering-menu panel panel-default">
                 <div class="panel-heading">
                     Sync Status
                 </div>
@@ -18,7 +16,7 @@
                     </li>
                 </ul>
             </div>
-        </li>
+        </span>
       <div us-spinner spinner-key="loading" spinner-start-active></div>
     </div>
 
