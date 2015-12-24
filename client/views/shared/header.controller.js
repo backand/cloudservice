@@ -19,7 +19,9 @@
 
     $scope.$on('$stateChangeSuccess', function () {
 
-      if(self.currentAppName === AppsService.currentApp.Name)
+      if( AppsService.currentApp === null ||
+          AppsService.currentApp === undefined ||
+          self.currentAppName === AppsService.currentApp.Name)
         return;
 
       self.currentAppName = AppsService.currentApp.Name;
@@ -29,6 +31,10 @@
 
 
     $scope.$on('fetchTables', function () {
+      updateDefaultModelUse(self.currentAppName, true);
+    });
+
+    $scope.$on('appname:saved', function () {
       updateDefaultModelUse(self.currentAppName, true);
     });
 

@@ -16,12 +16,12 @@
 
       self.tabs = [
         {
-          heading: 'Model JSON',
-          route: 'json_model'
-        },
-        {
           heading: 'Model Diagram',
           route: 'erd_model'
+        },
+        {
+          heading: 'Model JSON',
+          route: 'json_model'
         }
       ];
 
@@ -52,6 +52,7 @@
       usSpinnerService.spin('loading');
       DbDataModel.get(self.appName)
         .finally(function () {
+          $scope.isUnsaved = self.oldModel.schema !== self.newModel.schema;
           usSpinnerService.stop('loading');
         })
     }
@@ -83,6 +84,7 @@
         .then(function (data) {
           $scope.$root.$broadcast('fetchTables');
           self.loading = false;
+          $scope.isUnsaved = false;
         })
         .catch(modelErrorHandler);
     };

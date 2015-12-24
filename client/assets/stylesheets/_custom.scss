@@ -580,3 +580,45 @@ hr.narrow-top-margin {
 .ladda-button:active {
   outline: none !important;
 }
+
+.db-alert {
+  padding:5px;
+  margin-bottom:0;
+  text-align:center;
+  background:#7fabd2;
+  font-weight:normal;
+  color:white;
+  strong  {
+    font-weight: bold;
+  }
+  .or {
+    font-weight:normal;
+  }
+  
+.btn {
+  margin-left:10px;
+  margin-right:10px;
+  border-radius:4px;
+  text-transform: uppercase;
+  padding:8px 20px;
+  transition:300ms;
+  &.btn-ghost {
+    border:1px solid white;
+    color:white !important;
+    &:hover {
+      background:white;
+      color:#7fabd2 !important;
+    }
+  }
+  &.btn-white {
+    background:white;
+    color:#7fabd2 !important;
+    border:1px solid white;
+
+  }
+}
+}
+
+.app > .header-container.header-fixed.header-alert + .main-container {
+  padding-top:100px;
+}

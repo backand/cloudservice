@@ -18,7 +18,8 @@
         controller: 'ErdModelController as erdModel',
         templateUrl: 'views/tables/model/erd_model/erd_model.html',
         params: {
-          tableName: ''
+          tableName: '',
+          isNewObject: ''
         }
       })
   }

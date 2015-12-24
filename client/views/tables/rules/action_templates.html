@@ -1,48 +1,33 @@
 <div class="col-xs-8 col-md-9 action-template-container">
-  <h3>Add a New Action</h3>
   <button ng-click="rules.newAction()"
           id="new-rule-btn with-margin"
-          class="btn btn-lg new-action-button">
+          class="btn btn-success  new-action-button">
     + New Blank Action
   </button>
-  or use a 3rd party integration snippet:
+  <div class="or">or</div>
+  <h4>Use a 3rd party integration snippet:</h4>
   <div ng-repeat="(categoryId, templates) in rules.actionTemplates">
     <div class="action-template-category">{{templates.label}}</div>
     <!-- a and img elements must be in the same line, otherwise space is inserted between them-->
     <div class="action-template-icons-container">
-      <a href=""
-         ng-repeat="template in templates track by template.id"
-         ng-click="rules.templateToShow = template"
-         ng-show="!rules.action || rules.action.workflowAction === template.ruleType"
-         ng-class="{'action-template-active': rules.templateToShow === template}"
-         ><img class="action-template-icon"
+      <div ng-repeat="template in templates track by template.id" class="integration-item">
+        <div class="left-col">
+           <a href="" ng-click="rules.selectTemplate(template)"  >
+             <img class="action-template-icon"
              ng-show="template.json.imageUrl"
-             ng-src="{{template.json.imageUrl}}"></a>
-
-    </div>
-<div>
-</div>
-
-    <div ng-show="rules.templateToShow && rules.templateToShow.category === templates[0].category"
-         ng-click="rules.selectTemplate(rules.templateToShow)"
-         class="action-template-description-container">
-      <div class="action-template-text-container">
-        <span class="action-template-title">{{rules.templateToShow.name}}</span>
-        <br/>
-        <span class="action-template-description">{{rules.templateToShow.shortDescription}}</span>
-        <br/>
-        <div style="margin-top: 10px;">
-          <button
-                  class="btn btn-success pull-left">
-            <strong>+ Add Action</strong>
-          </button>
-          <a ng-href="{{rules.templateToShow.json.docsUrl}}" target="_blank" class="action-template-docs-link" ng-click="$event.stopPropagation();">
-            <!--<i class="ti-help-alt"></i>-->
-            Read Documentation
-          </a>
+             ng-src="{{template.json.imageUrl}}">
+           </a>
         </div>
+        <div class="right-col">
+            <a href="" ng-click="rules.selectTemplate(template)"  >
+              <h2 class="action-template-title">{{template.name}}</h2>
+            </a>
+            <p class="action-template-description">{{template.shortDescription}}</p>
+                     <a ng-href="{{'#'}}" target="_blank" class="action-template-docs-link" ng-click="">
+                 Documentation
+               </a>
+          </div>
       </div>
     </div>
-
   </div>
 </div>

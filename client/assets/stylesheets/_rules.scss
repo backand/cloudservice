@@ -274,47 +274,104 @@ bknd-copy-url[type="textarea"] .request-url-copy {
 }
 
 .action-template-container {
+  text-align:center;
   margin-left:-1px;
   border-left:1px solid #ddd;
   padding-top: 3px;
+  .or {
+    clear:both;
+    
+    margin:10px;
+    color:#c2c2c2;
+    font-style:italic;
+  }
+
+  h4 {
+    font-weight:bold;
+    color:black;
+  }
 
   .action-template-category {
     clear:both;
     padding-top: 10px;
     margin-left: 3px;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 13px;
+    text-transform: uppercase;
+    color:#9d9d9d;
+
   }
 
   .action-template-icons-container {
-    max-height: 140px;
+    margin:0 auto;
+    overflow:hidden;
     clear:both;
 
-    a {
-      display:block;
+    .integration-item {
+      width:46%;
+      margin:2%;
       float:left;
+      min-height:120px;
+      border:1px solid #ddd;
+      border-radius:5px;
+      padding-right:10px;
+      @media screen and (max-width:1200px) {
+        width:100%;
+        margin-bottom:10px;
+        clear:both;
+      }
+      &:nth-child(odd) {
+        clear:both;
+      }
+      .left-col{
+        float:left;
+        width:25%;
+        padding:5px;
+        img {
+          max-width:100%;
+          height:auto;
+        }
+
+
+      }
+      .right-col {
+        float:left;
+        text-align:left;
+        width:75%;
+        position: relative;
+        h2 {
+          font-weight: bold;
+          color:black;
+          font-size: 17px;
+        }
+        .action-template-docs-link {
+          position: absolute;
+          top:5px;
+          right:5px;
+        }
+      }
+
     }
   }
 
   .action-template-icon, .new-action-button {
-    border: solid lightgray 1px;
-    border-radius: 10px;
     padding: 5px;
     display:block;
-    margin: 3px;
+  
 
-    &:hover {
-      border: 1px solid #4FA4E8;
-    }
+  
   }
 
   .new-action-button {
-    background: white;
+  max-width:400px;
+  width:50%;
+  display:inline-block;
     padding: 14px;
     margin: 15px 0;
     font-size: 14px;
     font-weight: 500;
     text-transform: uppercase;
+    margin-bottom:0;
   }
 
   .action-template-active {

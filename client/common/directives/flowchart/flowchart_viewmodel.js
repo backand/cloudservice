@@ -29,6 +29,9 @@ var flowchart = {
   //
   flowchart.connectorYOffset = 10;
 
+  // Maps between connector types to their x position
+  flowchart.typeToXPositionMapper = {InputConnector: 0, OutputConnector: flowchart.defaultNodeWidth, TextField: 0.5 * flowchart.defaultNodeWidth};
+
 	//
 	// Compute the Y coordinate of a connector, given its index.
 	//
@@ -46,15 +49,27 @@ var flowchart = {
 		};
 	};
 
+  // View model for a text field
+  flowchart.TextFieldViewModel = function (textFieldDataModel, parentNode){
+    this.data = textFieldDataModel;
+    this._parentNode = parentNode;
+
+    // The name of the text field.
+    this.name = function () {
+      return this.data.name;
+    };
+  };
+
 	//
 	// View model for a connector.
 	//
-	flowchart.ConnectorViewModel = function (connectorDataModel, x, y, parentNode) {
+	flowchart.ConnectorViewModel = function (connectorDataModel, x, y, parentNode, type) {
 
 		this.data = connectorDataModel;
 		this._parentNode = parentNode;
 		this._x = x;
 		this._y = y;
+    this.type = type;
 
 		//
 		// The name of the connector.
@@ -85,16 +100,27 @@ var flowchart = {
 		};
 	};
 
+  // Helper function to get output connectors of a node
+  var getOutputConnectors = function (node) {
+    return _.where(node.fields, {type: "OutputConnector"});
+  };
+
+  // Helper function to get output connectors of a node
+  var getInputConnectors = function (node) {
+    return _.where(node.fields, {type: "InputConnector"});
+  };
+
 	//
 	// Create view model for a list of data models.
 	//
-	var createConnectorsViewModel = function (connectorDataModels, x, parentNode) {
+	var createConnectorsViewModel = function (connectorDataModels, parentNode) {
 		var viewModels = [];
 
 		if (connectorDataModels) {
 			for (var i = 0; i < connectorDataModels.length; ++i) {
 				var connectorViewModel =
-					new flowchart.ConnectorViewModel(connectorDataModels[i], x, flowchart.computeConnectorY(i), parentNode);
+					new flowchart.ConnectorViewModel(connectorDataModels[i], flowchart.typeToXPositionMapper[connectorDataModels[i].type],
+            flowchart.computeConnectorY(i), parentNode, connectorDataModels[i].type);
 				viewModels.push(connectorViewModel);
 			}
 		}
@@ -113,8 +139,7 @@ var flowchart = {
 		if (!this.data.width || this.data.width < 0) {
 			this.data.width = flowchart.defaultNodeWidth;
 		}
-		this.inputConnectors = createConnectorsViewModel(this.data.inputConnectors, 0, this);
-		this.outputConnectors = createConnectorsViewModel(this.data.outputConnectors, this.data.width, this);
+    this.fields = createConnectorsViewModel(this.data.fields, this);
 
 		// Set to true when the node is selected.
 		this._selected = false;
@@ -153,8 +178,7 @@ var flowchart = {
 		this.height = function () {
 			var numConnectors =
 				Math.max(
-					this.inputConnectors.length,
-					this.outputConnectors.length);
+					this.fields.length);
 			return flowchart.computeConnectorY(numConnectors) - flowchart.connectorYOffset;
 		};
 
@@ -428,11 +452,13 @@ var flowchart = {
 
 			var node = this.findNode(nodeID);
 
-			if (!node.inputConnectors || node.inputConnectors.length <= connectorIndex) {
+      var inputConnectors = _.where(node.fields, {type: "InputConnector"});
+
+			if (!inputConnectors || node.fields.length <= connectorIndex) {
 				throw new Error("Node " + nodeID + " has invalid input connectors.");
 			}
 
-			return node.inputConnectors[connectorIndex];
+			return inputConnectors[connectorIndex];
 		};
 
 		//
@@ -442,20 +468,35 @@ var flowchart = {
 
 			var node = this.findNode(nodeID);
 
-			if (!node.outputConnectors || node.outputConnectors.length <= connectorIndex) {
+      var outputConnectors = _.where(node.fields, {type: "OutputConnector"});
+
+			if (!outputConnectors || node.fields.length <= connectorIndex) {
 				throw new Error("Node " + nodeID + " has invalid output connectors.");
 			}
 
-			return node.outputConnectors[connectorIndex];
+			return outputConnectors[connectorIndex];
 		};
+
+    // Find a field within the chart
+    this.findField = function (nodeID, connectorIndex) {
+      var node = this.findNode(nodeID);
+
+
+
+      if (node.fields.length <= connectorIndex) {
+        throw new Error("Node " + nodeID + " has invalid output connectors.");
+      }
+
+      return node.fields[connectorIndex];
+    };
 
 		//
 		// Create a view model for connection from the data model.
 		//
 		this._createConnectionViewModel = function(connectionDataModel) {
 
-			var sourceConnector = this.findOutputConnector(connectionDataModel.source.nodeID, connectionDataModel.source.connectorIndex);
-			var destConnector = this.findInputConnector(connectionDataModel.dest.nodeID, connectionDataModel.dest.connectorIndex);
+			var sourceConnector = this.findField(connectionDataModel.source.nodeID, connectionDataModel.source.connectorIndex);
+			var destConnector = this.findField(connectionDataModel.dest.nodeID, connectionDataModel.dest.connectorIndex);
 			return new flowchart.ConnectionViewModel(connectionDataModel, sourceConnector, destConnector);
 		};
 
@@ -500,10 +541,10 @@ var flowchart = {
 			}
 
 			var startNode = startConnector.parentNode();
-			var startConnectorIndex = startNode.outputConnectors.indexOf(startConnector);
+			var startConnectorIndex = getOutputConnectors(startNode).indexOf(startConnector);
 			var startConnectorType = 'output';
 			if (startConnectorIndex == -1) {
-				startConnectorIndex = startNode.inputConnectors.indexOf(startConnector);
+				startConnectorIndex = getInputConnectors(startNode).indexOf(startConnector);
 				startConnectorType = 'input';
 				if (startConnectorIndex == -1) {
 					throw new Error("Failed to find source connector within either inputConnectors or outputConnectors of source node.");
@@ -511,10 +552,10 @@ var flowchart = {
 			}
 
 			var endNode = endConnector.parentNode();
-			var endConnectorIndex = endNode.inputConnectors.indexOf(endConnector);
+			var endConnectorIndex = getInputConnectors(endNode).indexOf(endConnector);
 			var endConnectorType = 'input';
 			if (endConnectorIndex == -1) {
-				endConnectorIndex = endNode.outputConnectors.indexOf(endConnector);
+				endConnectorIndex = getOutputConnectors(endNode).indexOf(endConnector);
 				endConnectorType = 'output';
 				if (endConnectorIndex == -1) {
 					throw new Error("Failed to find dest connector within inputConnectors or outputConnectors of dest node.");
@@ -620,6 +661,11 @@ var flowchart = {
 				node.data.y += deltaY;
 			}
 		};
+
+    this.updateDraggedFieldLocation = function (field, deltaX, deltaY) {
+      field._x += deltaX;
+      field._y += deltaY;
+    };
 
 		//
 		// Handle mouse click on a particular node.

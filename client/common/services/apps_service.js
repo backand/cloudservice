@@ -77,9 +77,13 @@
 
     function setCurrentApp (data) {
       angular.copy(data, self.currentApp);
-      self.currentApp.databaseName =
-        data.Database_Source ? DatabaseNamesService.getDBSource(data.Database_Connection.Database_Source) : undefined;
-      stopRefreshDBStatus();
+      if(self.currentApp !== null){
+        self.currentApp.databaseName =
+          data.Database_Source ? DatabaseNamesService.getDBSource(data.Database_Connection.Database_Source) : undefined;
+        stopRefreshDBStatus();
+      } else {
+        return;
+      }
 
       if (self.currentApp.DatabaseStatus == 2) {
         self.currentAppStatus = 2;

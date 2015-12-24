@@ -94,9 +94,15 @@
     </a>
     <ul class="scrollbar ex4" id="ex4">
       <li ng-if="nav.app.connectionSource === 'local'">
-        <a ui-sref="json_model">
+        <a ui-sref="erd_model">
           <i class="ba-icon-model"></i>
           <span>Model</span>
+        </a>
+      </li>
+      <li>
+        <a ng-click="nav.newObject()" href="">
+          <i class="ba-icon-new-query"></i>
+          <span>New Object</span>
         </a>
       </li>
       <li ng-if="nav.app.connectionSource !== 'local'">

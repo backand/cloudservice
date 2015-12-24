@@ -2,12 +2,20 @@
   <h4>View the current model and review the objects' relationship. Adjust the model view by dragging the boxes. To
     manage your model click on the 'Model JSON' tab</h4>
 
-  <bknd-flow-chart ng-if="erdModel.currentModel.erdModel"
+  <div id="unsaved-changes" ng-show="isUnsaved">
+    Unsaved changes
+  </div>
+
+  <bknd-flow-chart ng-if="erdModel.newModel.erdModel"
                    style="width: 100%;"
-                   chart="erdModel.currentModel.erdModel"
+                   chart="erdModel.newModel.erdModel"
                    on-update="erdModel.saveModel()"
                    on-icon-click="erdModel.gotoObject(node)"
-                   selected-node="erdModel.currentObject">
+                   edit-field-dialog="erdModel.editFieldDialog(tableName, fieldName)"
+                   edit-object-dialog="erdModel.editObjectDialog(objectName)"
+                   selected-node="erdModel.currentObject"
+                   update-erd="erdModel.updateErd()"
+                   delete-object="erdModel.deleteObject(objectName)">
   </bknd-flow-chart>
 
 </div>

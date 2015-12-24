@@ -1,9 +1,9 @@
-  (function  () {
+(function () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', '$state', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', '$stateParams', ErdModelController]);
 
-  function ErdModelController($scope, $state, AppsService, DbDataModel, TablesService, usSpinnerService) {
+  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q, $stateParams) {
 
     var self = this;
 
@@ -15,6 +15,11 @@
       self.currentModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
       self.currentObject = $state.params.tableName;
+
+      if ($stateParams.isNewObject) {
+        self.editObjectDialog();
+        $stateParams.isNewObject = false;
+      }
 
       getSchema();
     }
@@ -38,16 +43,115 @@
       getSchema();
     };
 
-    function getSchema () {
+    function getSchema() {
       usSpinnerService.spin('loading');
       DbDataModel.get(self.appName)
         .finally(function () {
+          $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
           usSpinnerService.stop('loading');
         })
     }
 
+    $scope.$root.$on("fetchTables", function () {
+      $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
+    });
+
     self.showHelp = function () {
       $scope.$emit('open-help');
+    };
+
+    self.editFieldDialog = function (tableName, fieldName) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/model/erd_model/edit_field.html',
+        controller: 'EditFieldController as EditField',
+        resolve: {
+          tableName: function () {
+            return tableName;
+          },
+          fieldName: function () {
+            return fieldName;
+          },
+          appName: function () {
+            return self.appName;
+          },
+          newModel: function () {
+            return self.newModel;
+          },
+          updateErd: function () {
+            return self.updateErd;
+          }
+        }
+      });
+
+      updateErdAfterModal(modalInstance);
+
+    };
+
+    self.editObjectDialog = function (objectName) {
+      var isEdit = objectName;
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/model/erd_model/edit_object.html',
+        controller: 'EditObjectController as EditObject',
+        resolve: {
+          appName: function () {
+            return self.appName;
+          },
+          newModel: function () {
+            return self.newModel;
+          },
+          objectName: function () {
+            return objectName;
+          }
+        }
+      });
+
+      if (isEdit) {
+        updateErdAfterModal(modalInstance);
+      } else {
+        modalInstance.result.then(function (result) {
+          self.updateErd(result.model).then(function () {
+            var newObjectName = result.objectName;
+            self.editFieldDialog(newObjectName);
+          });
+        });
+      }
+    };
+
+    self.deleteObject = function (objectName) {
+      var newModel = JSON.parse(DbDataModel.newModel.schema);
+      newModel = _.reject(newModel, function (object) {
+        return object.name == objectName;
+      });
+
+      // Remove fields related to the object
+      FieldsService.removeFieldsRelatingToObject(newModel, objectName);
+
+      self.updateErd(newModel);
+    };
+
+    function updateErdAfterModal(modalInstance) {
+      var deferred = $q.defer();
+      modalInstance.result.then(function (result) {
+        self.updateErd(result.model).then(function () {
+          deferred.resolve();
+        });
+      });
+      return deferred.promise;
+    }
+
+    self.updateErd = function (newModel) {
+      var deferred = $q.defer();
+      if (!newModel) {
+        newModel = FieldsService.newModelObject;
+      }
+      DbDataModel.updateNewModel(self.appName, newModel);
+      usSpinnerService.spin('loading');
+      // Refresh ERD
+      $state.go($state.current, {isNewObject: false}, {reload: true}).then(function () {
+        usSpinnerService.stop('loading');
+        deferred.resolve();
+      });
+      return deferred.promise;
     };
 
     init();
