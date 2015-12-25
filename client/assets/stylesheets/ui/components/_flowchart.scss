@@ -167,8 +167,6 @@ svg.draggable-container {
 }
 
 .flowchart-node-title {
-  width: 250px;
-  height: 35px;
   fill: #f6f6f6;
   stroke: #e1dddd;
 }
@@ -183,4 +181,35 @@ svg.draggable-container {
   width: 17px;
   height: 17px;
   cursor: pointer;
+}
+
+.node-field:hover {
+  fill: #f6f6f6;
+}
+
+.node-field {
+  fill: #ffffff;
+}
+
+.node-field text {
+  fill: #000000;
+}
+
+.node-field:hover .field-icon {
+  cursor: pointer;
+  visibility: visible;
+}
+
+.field-icon {
+  visibility: hidden;
+}
+
+.edit-field-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.down-icon {
+  width: 7px;
+  height: 4px;
 }

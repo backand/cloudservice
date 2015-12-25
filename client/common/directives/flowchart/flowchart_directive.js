@@ -126,7 +126,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
     // The class for connections and connectors.
     //
     this.connectionClass = 'connection';
-    this.connectorClass = 'connector';
+    this.connectorClass = 'field';
     this.nodeClass = 'node';
 
     $scope.onNodeClick = function (node) {
@@ -166,6 +166,33 @@ angular.module('flowChart', ['dragging', 'common.services'])
           self.deleteObject({objectName: objectName});
         }
       });
+    };
+
+    $scope.onFieldDownClick = function (node, fieldName) {
+      var object = node.fields;
+      var indexOfSelectedField = _.findIndex(object, function (field) {
+        return field.name() == fieldName;
+      });
+      var temp = object[indexOfSelectedField + 1];
+      object[indexOfSelectedField+1] = object[indexOfSelectedField];
+      object[indexOfSelectedField] = temp;
+      $scope.reorderFields(object, node);
+    };
+
+    $scope.reorderFields = function (orderedFields, node) {
+      var self = this;
+      // Handle the change of the model
+      var newFields = {};
+      var currentFields = FieldsService.getObjectFields(node.name());
+      orderedFields.forEach(function (field) {
+        newFields[field.name()] = currentFields[field.name()];
+      });
+      var currentObject = _.find(FieldsService.newModelObject, function (object) {
+        return object.name == node.name();
+      });
+      currentObject.fields = newFields;
+      //currentObject.fields = {};
+      self.updateErd();
     };
 
     //

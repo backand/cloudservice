@@ -48,6 +48,12 @@
       &#xf00d
     </text>
 
+    <rect
+      class="flowchart-node-title"
+      height="34"
+      ng-attr-width="{{node.width()-2}}"
+      y="1"
+      x="1"></rect>
     <text
       ng-click="onEditObjectClick(node.name())"
       class="node-title btn"
@@ -57,26 +63,41 @@
     </text>
 
     <image ng-click="onNodeClick(node)"
-          class="edit-object-icon"
-          xlink:href="../../assets/images/flowchart/edit_icon.png"
-          ng-attr-x="{{node.width() - 61}}"
-          y="11" />
+           class="edit-object-icon"
+           xlink:href="../../assets/images/flowchart/edit_icon.png"
+           ng-attr-x="{{node.width() - 61}}"
+           y="11"/>
 
     <image ng-click="onEditFieldClick(node.name())"
            class="add-field-icon"
            xlink:href="../../assets/images/flowchart/add_icon.png"
            ng-attr-x="{{node.width() - 33}}"
-          y="7" />
+           y="7"/>
     <g ng-repeat="field in node.fields">
-      <g ng-switch on="field.type">
+      <g ng-switch on="field.type" class="node-field">
+        <rect
+          height="35"
+          ng-attr-width="{{node.width()-2}}"
+          ng-attr-y="{{field.y() - 15}}"
+          x="1"></rect>
+        <image
+          ng-click="onEditFieldClick(node.name(), field.name())"
+          class="field-icon edit-field-icon"
+          xlink:href="../../assets/images/flowchart/edit_icon.png"
+          ng-attr-x="{{node.width() - 30}}"
+          ng-attr-y="{{field.y() - 5}}"/>
+        <image
+          ng-click="onFieldDownClick(node, field.name())"
+          class="field-icon down-icon"
+          xlink:href="../../assets/images/flowchart/arrow_down.png"
+          ng-attr-y="{{field.y() - 5}}"
+          x="5"/>
         <g
           ng-switch-when="InputConnector"
-          ng-click="onEditFieldClick(node.name(), field.name())"
           class="connector input-connector">
           <text
             class="btn"
             ng-attr-x="{{field.x() + 25}}"
-            ng-attr-y="{{field.y()}}"
             ng-attr-y="{{field.y()}}"
             text-anchor="left"
             alignment-baseline="middle">
@@ -94,7 +115,7 @@
           class="btn"
           ng-click="onEditFieldClick(node.name(), field.name())"
           alignment-baseline="central"
-          ng-attr-x="{{field.x()+25}}"
+          ng-attr-x="{{field.x() + 25}}"
           ng-attr-y="{{field.y()}}">
           {{field.name() + ' (' + getFieldType(node.name(), field.name()) + ')'}}
         </text>
@@ -118,6 +139,7 @@
             ng-attr-cx="{{field.x()}}"
             ng-attr-cy="{{field.y()}}"/>
         </g>
+
       </g>
     </g>
 
