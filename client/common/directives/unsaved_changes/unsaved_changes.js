@@ -2,13 +2,13 @@
   'use strict';
 
   angular.module('common.directives')
-    .directive('draggableModal', function () {
+    .directive('unsavedChanges', function () {
       return {
         restrict: 'EA',
         scope: {
           isUnsaved: '='
         },
-        templateUrl: 'unsaved_changes.html'
+        templateUrl: 'common/directives/unsaved_changes/unsaved_changes.html'
       }
     });
 })();
