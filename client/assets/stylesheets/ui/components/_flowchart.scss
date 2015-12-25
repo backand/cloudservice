@@ -20,27 +20,27 @@ Styles for nodes and connectors.
 */
 
 .node-rect {
-  stroke: #d1d1d1;
-  fill:#f0f0f0;
+  stroke: #e1dddd;
+  fill: #ffffff;
   stroke-width: 1px;
-  rx:5px;
-  ry:5px;
+  rx: 5px;
+  ry: 5px;
 }
 
 .mouseover-node-rect {
-  stroke: #d1d1d1;
-    fill:#f0f0f0;
-rx:5px;
-  ry:5px;
+  stroke: #e1dddd;
+  fill: #ffffff;
+  rx: 5px;
+  ry: 5px;
   stroke-width: 2;
 }
 
 .selected-node-rect {
   stroke: #428bca;
   stroke-width: 2;
-    fill:#f0f0f0;
-    rx:5px;
-  ry:5px;
+  fill: #ffffff;
+  rx: 5px;
+  ry: 5px;
 
 }
 
@@ -93,17 +93,18 @@ Style for connections.
   fill: black;
 }
 
-.connection-name{
+.connection-name {
   fill: black;
 }
 
-.selected-connection-name{
+.selected-connection-name {
   fill: #428bca;
 }
 
-.mouseover-connection-name{
+.mouseover-connection-name {
   fill: gray;
 }
+
 /*
 Style for the connection being dragged out.
 */
@@ -127,7 +128,7 @@ The element (in this case the SVG element) that contains the draggable elements.
 */
 
 .draggable-container {
-  border: solid 1px blue;
+  border: solid 1px #e1dddd;
 }
 
 /*
@@ -163,4 +164,23 @@ svg.draggable-container {
   float: left;
   cursor: pointer;
   margin-left: 10px;
+}
+
+.flowchart-node-title {
+  width: 250px;
+  height: 35px;
+  fill: #f6f6f6;
+  stroke: #e1dddd;
+}
+
+.add-field-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.edit-object-icon {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
 }

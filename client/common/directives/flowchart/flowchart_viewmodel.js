@@ -12,7 +12,7 @@ var flowchart = {
 	//
 	// Width of a node.
 	//
-	flowchart.defaultNodeWidth = 250;
+	flowchart.defaultNodeWidth = 281;
 
 	//
 	// Amount of space reserved for displaying the node's name.
@@ -30,7 +30,7 @@ var flowchart = {
   flowchart.connectorYOffset = 10;
 
   // Maps between connector types to their x position
-  flowchart.typeToXPositionMapper = {InputConnector: 0, OutputConnector: flowchart.defaultNodeWidth, TextField: 0.5 * flowchart.defaultNodeWidth};
+  flowchart.typeToXPositionMapper = {InputConnector: 0, OutputConnector: flowchart.defaultNodeWidth, TextField: 0};
 
 	//
 	// Compute the Y coordinate of a connector, given its index.
