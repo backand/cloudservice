@@ -80,6 +80,13 @@
           ng-attr-width="{{node.width()-2}}"
           ng-attr-y="{{field.y() - 15}}"
           x="1"></rect>
+        <rect
+          class="field-seperator"
+          height="1"
+          width="242"
+          ng-attr-y="{{field.y() + 19}}"
+          x="20"
+          ng-hide="$last"></rect>
         <image
           ng-click="onEditFieldClick(node.name(), field.name())"
           class="field-icon edit-field-icon"

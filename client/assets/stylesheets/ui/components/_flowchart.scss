@@ -213,3 +213,11 @@ svg.draggable-container {
   width: 7px;
   height: 4px;
 }
+
+.field-seperator {
+  fill: #e1e1e1;
+}
+
+.node-field:hover .field-seperator {
+  visibility: hidden;
+}
