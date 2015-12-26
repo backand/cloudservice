@@ -135,59 +135,59 @@ angular.module('flowChart', ['dragging', 'common.services'])
 
 
     $scope.onEditFieldClick = function (tableName, fieldName) {
-      this.editFieldDialog({tableName: tableName, fieldName: fieldName});
+      if(!$scope.isDragging) {
+        this.editFieldDialog({tableName: tableName, fieldName: fieldName});
+      }
     };
 
     $scope.onEditObjectClick = function (objectName) {
-      this.editObjectDialog({objectName: objectName});
+      if(!$scope.isDragging) {
+        this.editObjectDialog({objectName: objectName});
+      }
     };
 
     $scope.onDeleteRelationshipClick = function () {
-      var result = ConfirmationPopup.confirm("Are you sure?", "Yes", "No", true, true, "Delete Relationship", 'm');
-      // Referencing the current scope so we can call the function if the user confirms
-      var self = this;
-      result.then(function (result) {
-        if (result) {
-          self.deleteRelationship();
-        }
-      });
+      if(!$scope.isDragging) {
+        var result = ConfirmationPopup.confirm("Are you sure?", "Yes", "No", true, true, "Delete Relationship", 'm');
+        // Referencing the current scope so we can call the function if the user confirms
+        var self = this;
+        result.then(function (result) {
+          if (result) {
+            self.deleteRelationship();
+          }
+        });
+      }
     };
 
     $scope.getFieldType = function (objectName, fieldName) {
       return FieldsService.getFieldType(objectName, fieldName)
     };
 
-    $scope.onDeleteObjectClick = function (objectName) {
-      var result = ConfirmationPopup.confirm("Are you sure?", "Yes", "No", true, true, "Delete Object", 'm');
-      // Referencing the current scope so we can call the function if the user confirms
-      var self = this;
-      result.then(function (result) {
-        if (result) {
-          self.deleteObject({objectName: objectName});
-        }
-      });
-    };
 
     $scope.onFieldDownClick = function (node, fieldName) {
-      var objectFields = node.fields;
-      var indexOfSelectedField = _.findIndex(objectFields, function (field) {
-        return field.name() == fieldName;
-      });
-      var temp = objectFields[indexOfSelectedField + 1];
-      objectFields[indexOfSelectedField + 1] = objectFields[indexOfSelectedField];
-      objectFields[indexOfSelectedField] = temp;
-      $scope.reorderFields(objectFields, node);
+      if(!$scope.isDragging) {
+        var objectFields = node.fields;
+        var indexOfSelectedField = _.findIndex(objectFields, function (field) {
+          return field.name() == fieldName;
+        });
+        var temp = objectFields[indexOfSelectedField + 1];
+        objectFields[indexOfSelectedField + 1] = objectFields[indexOfSelectedField];
+        objectFields[indexOfSelectedField] = temp;
+        $scope.reorderFields(objectFields, node);
+      }
     };
 
     $scope.onFieldUpClick = function (node, fieldName) {
-      var objectFields = node.fields;
-      var indexOfSelectedField = _.findIndex(objectFields, function (field) {
-        return field.name() == fieldName;
-      });
-      var temp = objectFields[indexOfSelectedField - 1];
-      objectFields[indexOfSelectedField - 1] = objectFields[indexOfSelectedField];
-      objectFields[indexOfSelectedField] = temp;
-      $scope.reorderFields(objectFields, node);
+      if(!$scope.isDragging) {
+        var objectFields = node.fields;
+        var indexOfSelectedField = _.findIndex(objectFields, function (field) {
+          return field.name() == fieldName;
+        });
+        var temp = objectFields[indexOfSelectedField - 1];
+        objectFields[indexOfSelectedField - 1] = objectFields[indexOfSelectedField];
+        objectFields[indexOfSelectedField] = temp;
+        $scope.reorderFields(objectFields, node);
+      }
     };
 
     $scope.reorderFields = function (orderedFields, node) {
@@ -380,7 +380,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
         // Node dragging has commenced.
         //
         dragStarted: function (x, y) {
-
+          $scope.isDragging = true;
           lastMouseCoords = controller.translateCoordinates(x, y, evt);
 
           //
@@ -411,6 +411,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
         // The node wasn't dragged... it was clicked.
         //
         clicked: function () {
+          $scope.isDragging = false;
           chart.handleNodeClicked(node, evt.ctrlKey);
         }
 
@@ -418,7 +419,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
     };
 
     // Handle mousedown on a field
-    $scope.fieldMouseDown = function (evt, field) {
+    $scope.fieldMouseDrag = function (evt, field) {
       var chart = $scope.chart;
       var lastMouseCoords;
       $scope.isDraggingField = false;
