@@ -33,7 +33,11 @@
             ladda="EditRow.savingRow"
             ng-disabled="EditObject.editObjectForm.$invalid"
             ng-click="EditObject.objectName ? EditObject.editObject() : EditObject.addObject()">
-      Update
+      {{::EditObject.isEdit ? 'Update' : 'Add Object'}}
+    </button>
+    <button class="btn btn-default"
+            ng-click="EditObject.cancelEditObject()">
+      Cancel
     </button>
   </div>
 </div>

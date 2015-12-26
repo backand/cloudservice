@@ -67,5 +67,9 @@
 
       modalInstance.close({model: newModel});
     };
+
+    self.cancelEditObject = function () {
+      modalInstance.dismiss('cancel');
+    }
   }
 })();
