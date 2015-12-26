@@ -11,6 +11,7 @@
     self.isLocal = currentApp.connectionSource === 'local';
     self.usingDefaultModel = false;
     self.displayButton = !AppsService.isExampleApp(self.appName); //example app don't show the button
+    self.displayButtonTitle = 'Edit Database Connection';
     checkDatabaseStatuse();
     checkForDefaultSchema();
 
@@ -48,6 +49,8 @@
         .then(function(result){
           self.usingDefaultModel = result;
           self.displayButton = self.usingDefaultModel || !self.isLocal;
+          if(self.displayButton && self.usingDefaultModel)
+            self.displayButtonTitle = 'Connect Your Database';
         });
     }
 

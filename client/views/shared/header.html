@@ -1,6 +1,6 @@
-<section class="header-container ng-scope header-fixed bg-white" id="header">
+<section class="header-container ng-scope header-fixed bg-white"
+         id="header" ng-class="header.usingDefaultModel ? 'header-alert' : ''">
   <header class="top-header clearfix"
-          ng-controller="HeaderController as header"
           ng-click="header.showUserDropdown = false">
 
     <div ng-if="header.usingDefaultModel"
