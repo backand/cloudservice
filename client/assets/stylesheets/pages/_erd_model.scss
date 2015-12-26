@@ -19,13 +19,22 @@
   }
 }
 
-#unsaved-changes {
-  color: #ff0000;
-  font-size: 12px;
+.unsaved-changes {
+  color: #904e54;
+  font-size: 15px;
+  font-style: italic;
+  display: inline;
+}
+
+.unsaved-changes-top {
+  float: right;
+  text-transform: none;
+  margin-right: 21px;
 }
 
 .erd-description {
   font-size: 15px;
+  padding-bottom: 21px;
 }
 
 .add-object-button {
@@ -37,3 +46,4 @@
 .new-object-icon {
   padding-right: 4px;
 }
+

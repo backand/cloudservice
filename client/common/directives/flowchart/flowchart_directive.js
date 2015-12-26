@@ -169,14 +169,25 @@ angular.module('flowChart', ['dragging', 'common.services'])
     };
 
     $scope.onFieldDownClick = function (node, fieldName) {
-      var object = node.fields;
-      var indexOfSelectedField = _.findIndex(object, function (field) {
+      var objectFields = node.fields;
+      var indexOfSelectedField = _.findIndex(objectFields, function (field) {
         return field.name() == fieldName;
       });
-      var temp = object[indexOfSelectedField + 1];
-      object[indexOfSelectedField+1] = object[indexOfSelectedField];
-      object[indexOfSelectedField] = temp;
-      $scope.reorderFields(object, node);
+      var temp = objectFields[indexOfSelectedField + 1];
+      objectFields[indexOfSelectedField + 1] = objectFields[indexOfSelectedField];
+      objectFields[indexOfSelectedField] = temp;
+      $scope.reorderFields(objectFields, node);
+    };
+
+    $scope.onFieldUpClick = function (node, fieldName) {
+      var objectFields = node.fields;
+      var indexOfSelectedField = _.findIndex(objectFields, function (field) {
+        return field.name() == fieldName;
+      });
+      var temp = objectFields[indexOfSelectedField - 1];
+      objectFields[indexOfSelectedField - 1] = objectFields[indexOfSelectedField];
+      objectFields[indexOfSelectedField] = temp;
+      $scope.reorderFields(objectFields, node);
     };
 
     $scope.reorderFields = function (orderedFields, node) {

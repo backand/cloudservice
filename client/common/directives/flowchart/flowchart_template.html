@@ -33,7 +33,7 @@
       x="0"
       y="0"
       ng-attr-width="{{node.width()}}"
-      ng-attr-height="{{node.height()}}"
+      ng-attr-height="{{node.height()-3}}"
       fill="url(#nodeBackgroundGradient)">
 
     </rect>
@@ -50,7 +50,7 @@
 
     <rect
       class="flowchart-node-title"
-      height="34"
+      height="33"
       ng-attr-width="{{node.width()-2}}"
       y="1"
       x="1"></rect>
@@ -87,11 +87,19 @@
           ng-attr-x="{{node.width() - 30}}"
           ng-attr-y="{{field.y() - 5}}"/>
         <image
-          ng-click="onFieldDownClick(node, field.name())"
-          class="field-icon down-icon"
-          xlink:href="../../assets/images/flowchart/arrow_down.png"
+          ng-click="onFieldUpClick(node, field.name())"
+          class="field-icon up-down-icon"
+          xlink:href="../../assets/images/flowchart/arrow_up.png"
+          ng-hide="$first"
           ng-attr-y="{{field.y() - 5}}"
-          x="5"/>
+          x="10"/>
+        <image
+          ng-click="onFieldDownClick(node, field.name())"
+          class="field-icon up-down-icon"
+          xlink:href="../../assets/images/flowchart/arrow_down.png"
+          ng-hide="$last"
+          ng-attr-y="{{field.y() + 2}}"
+          x="10"/>
         <g
           ng-switch-when="InputConnector"
           class="connector input-connector">
