@@ -55,14 +55,13 @@
       y="1"
       x="1"></rect>
     <text
-      ng-click="onEditObjectClick(node.name())"
-      class="node-title btn"
+      class="node-title"
       x="12"
       y="23">
       {{node.name()}}
     </text>
 
-    <image ng-click="onNodeClick(node)"
+    <image ng-click="onEditObjectClick(node.name())"
            class="edit-object-icon"
            xlink:href="../../assets/images/flowchart/edit_icon.png"
            ng-attr-x="{{node.width() - 61}}"
@@ -111,12 +110,12 @@
           ng-switch-when="InputConnector"
           class="connector input-connector">
           <text
-            class="btn"
             ng-attr-x="{{field.x() + 25}}"
-            ng-attr-y="{{field.y()}}"
+            ng-attr-y="{{field.y() + 5}}"
             text-anchor="left"
             alignment-baseline="middle">
-            {{field.name() + ' (' + getFieldType(node.name(), field.name()) + ')'}}
+            <tspan class="field-name-label">{{field.name()}}</tspan>
+            <tspan>{{' (' + getFieldType(node.name(), field.name()) + ')'}}</tspan>
           </text>
 
           <circle
@@ -127,8 +126,6 @@
         </g>
         <text
           ng-switch-when="TextField"
-          class="btn"
-          ng-click="onEditFieldClick(node.name(), field.name())"
           alignment-baseline="central"
           ng-attr-x="{{field.x() + 25}}"
           ng-attr-y="{{field.y() + 5}}">
@@ -138,15 +135,14 @@
 
         <g
           ng-switch-when="OutputConnector"
-          ng-click="onEditFieldClick(node.name(), field.name())"
           class="connector output-connector">
           <text
-            class="btn"
             ng-attr-x="{{field.x() - 20}}"
-            ng-attr-y="{{field.y()}}"
+            ng-attr-y="{{field.y() + 5}}"
             text-anchor="end"
             alignment-baseline="middle">
-            {{field.name() + ' (' + getFieldType(node.name(), field.name()) + ')'}}
+            <tspan class="field-name-label">{{field.name()}}</tspan>
+            <tspan>{{' (' + getFieldType(node.name(), field.name()) + ')'}}</tspan>
           </text>
 
           <circle

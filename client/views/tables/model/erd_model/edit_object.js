@@ -7,14 +7,16 @@
       'newModel',
       'objectName',
       'NotificationService',
+      'FieldsService',
       EditObjectController
     ]);
-  function EditObjectController(modalInstance, appName, newModel, objectName, NotificationService) {
+  function EditObjectController(modalInstance, appName, newModel, objectName, NotificationService, FieldsService) {
     var self = this;
     self.appName = appName;
     self.newModel = newModel;
     self.objectName = objectName;
     self.editObjectForm = 'edit-object';
+    self.isEdit = self.objectName;
     if (self.objectName) {
       self.selectedObjectName = self.objectName
     }
@@ -52,6 +54,18 @@
       });
 
       modalInstance.close({model: newModelObject});
-    }
+    };
+
+    self.deleteObject = function (objectName) {
+      var newModel = JSON.parse(self.newModel.schema);
+      newModel = _.reject(newModel, function (object) {
+        return object.name == objectName;
+      });
+
+      // Remove fields related to the object
+      FieldsService.removeFieldsRelatingToObject(newModel, objectName);
+
+      modalInstance.close({model: newModel});
+    };
   }
 })();

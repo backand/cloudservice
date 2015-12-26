@@ -117,18 +117,6 @@
       }
     };
 
-    self.deleteObject = function (objectName) {
-      var newModel = JSON.parse(DbDataModel.newModel.schema);
-      newModel = _.reject(newModel, function (object) {
-        return object.name == objectName;
-      });
-
-      // Remove fields related to the object
-      FieldsService.removeFieldsRelatingToObject(newModel, objectName);
-
-      self.updateErd(newModel);
-    };
-
     function updateErdAfterModal(modalInstance) {
       var deferred = $q.defer();
       modalInstance.result.then(function (result) {

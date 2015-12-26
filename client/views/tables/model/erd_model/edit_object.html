@@ -1,7 +1,7 @@
 <div draggable-modal>
   <div class="modal-header">
     <h3 class="modal-title">
-      {{::(EditObject.objectName ? 'Edit Object' : 'New Object')}}
+      {{::(EditObject.isEdit ? 'Edit Object' : 'New Object')}}
     </h3>
   </div>
 
@@ -22,6 +22,12 @@
   </div>
 
   <div class="modal-footer">
+    <i
+      id="delete-object-button"
+      class="fa fa-trash fa-2x"
+      ng-show="::EditObject.isEdit"
+      ng-click="EditObject.deleteObject(EditObject.objectName)">
+    </i>
     <button class="btn btn-success"
             type="submit"
             ladda="EditRow.savingRow"
