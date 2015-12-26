@@ -42,6 +42,9 @@
           //need to save once after sync to see the changes
           $rootScope.$broadcast('after:sync');
 
+          if($stateParams.sync)
+            $rootScope.$broadcast('AppDbReady', self.appName);
+
         }, function (err) {
           self.syncing = false;
           NotificationService.add('error', 'Cannot sync tables');

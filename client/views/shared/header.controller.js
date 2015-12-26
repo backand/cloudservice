@@ -38,6 +38,10 @@
       updateDefaultModelUse(self.currentAppName, true);
     });
 
+    $scope.$on('AppDbReady', function () {
+      updateDefaultModelUse(self.currentAppName, true);
+    });
+
     function updateDefaultModelUse(appName, force){
 
       if(appName != undefined){
