@@ -94,11 +94,11 @@
             type="submit"
             ng-click="::EditField.isEdit ? EditField.editField() : EditField.addField()"
             ng-disabled="EditField.editFieldForm.$invalid">
-      {{::EditField.isEdit ? 'Update' : 'Add'}}
+      {{::EditField.isEdit ? 'Update' : 'Add Field'}}
     </button>
     <button class="btn btn-default"
             ng-click="EditField.cancelEditField()">
-      Cancel
+      Close
     </button>
   </div>
 </div>
