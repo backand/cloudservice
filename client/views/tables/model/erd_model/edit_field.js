@@ -10,6 +10,7 @@
       'updateErd',
       'FieldsService',
       'NotificationService',
+      'ConfirmationPopup',
       EditFieldController
     ]);
 
@@ -20,7 +21,8 @@
                                newModel,
                                updateErd,
                                FieldsService,
-                               NotificationService) {
+                               NotificationService,
+                               ConfirmationPopup) {
     var self = this;
 
     self.appName = appName;
@@ -57,15 +59,20 @@
     };
 
     self.deleteField = function () {
-      var fieldToDelete = FieldsService.getField(self.tableName, self.fieldName);
-      if (fieldToDelete.collection) {
-        FieldsService.deleteField(fieldToDelete.collection, fieldToDelete.via);
-      }
-      else if (fieldToDelete.object) {
-        FieldsService.removeFieldsRelatingToField(fieldToDelete.object, self.tableName, self.fieldName)
-      }
-      FieldsService.deleteField(self.tableName, self.fieldName);
-      modalInstance.close({model: FieldsService.newModelObject});
+      var result = ConfirmationPopup.confirm("Are you sure?", "Yes", "No", true, true, "Delete Field", 'm');
+      result.then(function (result) {
+        if (result) {
+          var fieldToDelete = FieldsService.getField(self.tableName, self.fieldName);
+          if (fieldToDelete.collection) {
+            FieldsService.deleteField(fieldToDelete.collection, fieldToDelete.via);
+          }
+          else if (fieldToDelete.object) {
+            FieldsService.removeFieldsRelatingToField(fieldToDelete.object, self.tableName, self.fieldName)
+          }
+          FieldsService.deleteField(self.tableName, self.fieldName);
+          modalInstance.close({model: FieldsService.newModelObject});
+        }
+      });
     };
 
     self.addField = function () {

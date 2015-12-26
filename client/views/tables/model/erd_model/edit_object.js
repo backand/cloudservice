@@ -8,9 +8,10 @@
       'objectName',
       'NotificationService',
       'FieldsService',
+      'ConfirmationPopup',
       EditObjectController
     ]);
-  function EditObjectController(modalInstance, appName, newModel, objectName, NotificationService, FieldsService) {
+  function EditObjectController(modalInstance, appName, newModel, objectName, NotificationService, FieldsService, ConfirmationPopup) {
     var self = this;
     self.appName = appName;
     self.newModel = newModel;
@@ -57,15 +58,18 @@
     };
 
     self.deleteObject = function (objectName) {
-      var newModel = JSON.parse(self.newModel.schema);
-      newModel = _.reject(newModel, function (object) {
-        return object.name == objectName;
+      var result = ConfirmationPopup.confirm("Are you sure?", "Yes", "No", true, true, "Delete Object", 'm');
+      result.then(function (result) {
+        if (result) {
+          var newModel = JSON.parse(self.newModel.schema);
+          newModel = _.reject(newModel, function (object) {
+            return object.name == objectName;
+          });
+          // Remove fields related to the object
+          FieldsService.removeFieldsRelatingToObject(newModel, objectName);
+          modalInstance.close({model: newModel});
+        }
       });
-
-      // Remove fields related to the object
-      FieldsService.removeFieldsRelatingToObject(newModel, objectName);
-
-      modalInstance.close({model: newModel});
     };
 
     self.cancelEditObject = function () {

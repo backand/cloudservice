@@ -14,16 +14,20 @@
     };
 
     self.getFieldType = function (objectName, fieldName) {
-      var field = self.getField(objectName, fieldName);
-      if (field) {
-        if (field.type) {
-          return field.type;
-        }
-        else if (field.collection) {
-          return 'collection';
-        }
-        else {
-          return 'object';
+      // Check if object exists
+      if (isObjectExist(objectName)) {
+        var field = self.getField(objectName, fieldName);
+        // Check if field exists
+        if (field) {
+          if (field.type) {
+            return field.type;
+          }
+          else if (field.collection) {
+            return 'collection';
+          }
+          else {
+            return 'object';
+          }
         }
       }
       return '';
@@ -121,6 +125,13 @@
 
     function updateNewModel() {
       DbDataModel.updateNewModel(AppsService.currentApp.Name, self.newModelObject);
+    }
+
+    function isObjectExist(objectName) {
+      init();
+      return _.some(self.newModelObject, function (object) {
+        return object.name == objectName;
+      });
     }
   }
 })();
