@@ -47,6 +47,7 @@
 
     (function init() {
       getData(true, true);
+      initJSONUpload();
     }());
 
     self.toggleShowLog = function () {
@@ -516,6 +517,59 @@
     //resize the tab to fix the width issue with UI grid
     function resizeGrid () {
       setTimeout("$('#grid-container').trigger('resize');", 50);
+    }
+
+    function initJSONUpload(){
+      var fileInput = document.getElementById('fileInput');
+
+      fileInput.addEventListener('change', function(e) {
+        var file = fileInput.files[0];
+        var textType = /text.*/;
+        if(!file){
+          return;
+        }
+        if (file.type.match(textType)) {
+          var reader = new FileReader();
+
+          reader.onload = function(e) {
+            var fileContent = reader.result;
+            var result = getJson(fileContent);
+            if(result.err){
+              console.log(result.err);
+              return;
+            }
+            var json = result.json;
+            DataService.bulkPost(tableName, json, true);
+
+          };
+          reader.readAsText(file);
+        } else {
+          console.log("Invalid file type");
+        }
+      });
+    }
+
+    var maxDocuments = 800;
+    function getJson(fileContent){
+      try{
+        var json = JSON.parse(fileContent);
+        if(Array.isArray(json) && json.length > maxDocuments){
+          return {
+            err: "Too much documents in file",
+            json: null
+          };
+        }
+        return {
+          err: null,
+          json: json
+        };
+      }
+      catch(ex){
+        return {
+          err: "invalid json file",
+          json: null
+        };
+      }
     }
   }
 }());

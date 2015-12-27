@@ -119,6 +119,10 @@
         headers: { AppName: AppsService.currentApp.Name }
       });
     }
+
+    self.bulkPost = function(tableName, records, log){
+      console.log(records);
+    }
   }
 
   angular.module('common.services')
