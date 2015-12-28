@@ -23,7 +23,7 @@ html {
     position: static; //
     min-height: 100%; // important!
 
-    > .header-container {
+    .app-inner >  .header-container {
         &.header-fixed {
             position: fixed;
             right: 0;

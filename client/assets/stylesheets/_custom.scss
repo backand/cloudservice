@@ -619,6 +619,12 @@ hr.narrow-top-margin {
 }
 }
 
-.app > .header-container.header-fixed.header-alert + .main-container {
+.app.header-alert > .app-inner + .main-container {
   padding-top:100px;
+}
+
+
+
+.app > .app-inner + .main-container {
+  padding-top:50px;
 }
