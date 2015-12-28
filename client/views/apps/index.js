@@ -76,10 +76,11 @@ angular.module('backand.apps')
       self.appSpinner = [];
       self.appSpinner[app.Name] = true;
 
-      if (AppsService.isExampleApp(app))
-        $state.go('database.example', {appName: app.Name});
-      else if(app.DatabaseStatus !== 0){
+      if(app.DatabaseStatus !== 0) {
         $state.go('app', {appName: app.Name});
+      }
+      else if (AppsService.isExampleApp(app)){
+          $state.go('database.example', {appName: app.Name});
       } else {
         createDB(app.Name);
       }
