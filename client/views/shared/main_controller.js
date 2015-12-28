@@ -18,8 +18,8 @@
     };
 
     $scope.$on('AppDbReady', function (event, appName) {
-      ConfirmationPopup.confirm('You can start by reviewing the REST API of your model in the Playground page. ' +
-      'You can find the page under "Docs & API" in the navigation bar.', 'Ok', '', true, false, 'Your app ' + appName + ' is ready');
+      ConfirmationPopup.confirm('You can start by changing the Data Model of your app in the object page.' +
+      ' Otherwise you can find how to connect Backand to your app under "Docs & API" in the navigation bar.', 'Ok', '', true, false, 'Your app ' + appName + ' is ready!');
     });
   }
 

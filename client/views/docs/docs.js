@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.docs')
-    .controller('Docs', ['AppsService', 'usSpinnerService', '$state','SessionService','SecurityService', Docs]);
+    .controller('Docs', ['AppsService', 'usSpinnerService', '$state','SessionService','SecurityService','$rootScope', Docs]);
 
-  function Docs(AppsService, usSpinnerService, $state, SessionService, SecurityService) {
+  function Docs(AppsService, usSpinnerService, $state, SessionService, SecurityService, $rootScope) {
 
     var self = this;
 
@@ -14,6 +14,11 @@
       if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
 
+      //when creating new app and it is the pool, there is no status 2 so the timer doesn't work and need to trigger
+      // this manually
+      if($state.params.newApp && self.currentApp.DatabaseStatus == 1){
+        $rootScope.$broadcast('AppDbReady', self.currentApp.Name);
+      }
     }());
 
     function setKeysInfo(data){

@@ -28,7 +28,10 @@
         parent: 'app',
         url: '/docs/kickstart',
         templateUrl: 'views/docs/kickstart.html',
-        controller: 'Docs as docs'
+        controller: 'Docs as docs',
+        params: {
+          newApp: false
+        }
       })
       .state('docs.kickstart-open', {
         parent: 'apps',

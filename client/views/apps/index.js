@@ -35,7 +35,7 @@ angular.module('backand.apps')
       if(self.appTitle === '')
           self.appTitle = self.appName;
 
-      NotificationService.add('info', 'Creating new database... It may take 1-2 minutes');
+      NotificationService.add('info', 'Creating new app...');
 
       AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
@@ -60,7 +60,7 @@ angular.module('backand.apps')
 
           AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
           AnalyticsService.track('create app', {app: appName});
-          $state.go('docs.kickstart',{appName: appName});
+          $state.go('docs.kickstart',{appName: appName, newApp:true});
         })
         .error(function () {
           self.loading = false;
@@ -76,8 +76,11 @@ angular.module('backand.apps')
       self.appSpinner = [];
       self.appSpinner[app.Name] = true;
 
-      if(app.DatabaseStatus !== 0){
+      if(app.DatabaseStatus !== 0) {
         $state.go('app', {appName: app.Name});
+      }
+      else if (AppsService.isExampleApp(app)){
+          $state.go('database.example', {appName: app.Name});
       } else {
         createDB(app.Name);
       }

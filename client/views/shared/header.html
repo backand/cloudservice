@@ -1,13 +1,13 @@
 <section class="header-container ng-scope header-fixed bg-white"
-         id="header" ng-class="header.usingDefaultModel ? 'header-alert' : ''">
+         id="header">
   <header class="top-header clearfix"
           ng-click="header.showUserDropdown = false">
 
     <div ng-if="header.usingDefaultModel"
          class="alert db-alert alert-info">You’re Currently using the <strong> Default Data Model </strong>
-      <a ui-sref="erd_model" class="btn btn-ghost">Setup Data Model</a>
+      <span class="button-wrapper"><a ui-sref="erd_model" class="btn btn-ghost">Setup Data Model</a>
       <span class="or">or</span>
-      <a ui-sref="database.show" class="btn btn-ghost">Connect Your Database</a>
+      <a ui-sref="database.show" class="btn btn-ghost">Connect Your Database</a></span>
     </div>
 
     <!-- Logo -->

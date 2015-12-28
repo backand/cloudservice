@@ -16,6 +16,14 @@
       <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
     </a>
     <ul>
+      <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"
+           ng-click="nav.goToLocation('https://www.backand.com/app-examples')"
+           href="">
+          <i class="ba-icon-documentation"></i>
+          <span>Examples</span>
+        </a>
+      </li>
       <li ng-class="{active: nav.state == 'docs.get-started'}">
         <a ng-click="nav.goToAlways('docs.get-started')" href="">
           <i class="ba-icon-angularjs-quickstart"></i>

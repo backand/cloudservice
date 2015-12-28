@@ -1,6 +1,6 @@
 <div class="app" id="app" ng-class="{'nav-collapsed-min' : main.hideNav()}">
-  <div ng-include=" 'views/shared/header.html' "
-       ng-controller="HeaderController as header"></div>
+  <div class="app-inner" ng-include=" 'views/shared/header.html' "
+       ng-controller="HeaderController as header" ng-class="header.usingDefaultModel ? 'header-alert' : ''"></div>
 
   <div class="main-container">
 

@@ -103,6 +103,13 @@ a.app-panel:hover {
 }
 
 .app-log {
+  @media screen and (max-width:768px) {
+    .row {
+      margin-left:0;
+      margin-right:0;
+    }
+    
+  }
   li {
     label {
       text-transform: uppercase;
@@ -582,12 +589,23 @@ hr.narrow-top-margin {
 }
 
 .db-alert {
+  border:0;
   padding:5px;
   margin-bottom:0;
   text-align:center;
   background:#7fabd2;
   font-weight:normal;
   color:white;
+  @media screen and (max-width:768px) {
+    height:70px;
+    
+  }
+  .button-wrapper {
+    @media screen and (max-width:768px) {
+      display:block;
+      
+    }
+  }
   strong  {
     font-weight: bold;
   }
@@ -619,6 +637,32 @@ hr.narrow-top-margin {
 }
 }
 
-.app > .header-container.header-fixed.header-alert + .main-container {
+
+
+
+.app > .app-inner + .main-container {
+  padding-top:50px;
+}
+
+.app > .app-inner.header-alert + .main-container {
   padding-top:100px;
+  @media screen and (max-width:768px) {
+    padding-top:170px;
+  }
+}
+.app > .header-alert + .main-container > .nav-container.nav-fixed {
+  top:97px;
+  
+}
+
+@media screen and (max-width:768px) {
+.on-canvas  .header-alert + .main-container #nav-container {
+  top:171px;
+ } 
+}
+
+
+
+.header-alert .header-container  > .top-header  .menu-button {
+  top:78px;
 }
