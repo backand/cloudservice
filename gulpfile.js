@@ -243,6 +243,11 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
 });
 
 //deploy the code into production
+gulp.task('qa:deploy',['sts'], function() {
+  return backandSync.dist(config.dist, 'qa1');
+});
+
+//deploy the code into production
 gulp.task('qa:dist',['sts','env:dev', 'build:dist'], function() {
   return backandSync.dist(config.dist, 'qa1');
 });
