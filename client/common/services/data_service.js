@@ -121,7 +121,24 @@
     }
 
     self.bulkPost = function(tableName, records, log){
-      console.log(records);
+      if(!records){
+        return;
+      }
+      var requests = [];
+      records.forEach(function(record){
+        requests.push({
+          method: 'POST',
+          url: CONSTS.appUrl + '/1/objects/' + tableName,
+          data: record
+        });
+      });
+      var http = {
+        method: 'POST',
+        url: CONSTS.appUrl + '/1/bulk',
+        headers: { 'AppName': AppsService.currentApp.Name },
+        data: requests
+      };
+      return logAndExecute(http, log ? 'New Items' : null);
     }
   }
 

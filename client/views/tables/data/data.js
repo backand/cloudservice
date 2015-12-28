@@ -523,50 +523,65 @@
       var fileInput = document.getElementById('fileInput');
 
       fileInput.addEventListener('change', function(e) {
-        var file = fileInput.files[0];
-        var textType = /text.*/;
-        if(!file){
-          return;
-        }
-        if (file.type.match(textType)) {
-          var reader = new FileReader();
-
-          reader.onload = function(e) {
-            var fileContent = reader.result;
-            var result = getJson(fileContent);
-            if(result.err){
-              console.log(result.err);
-              return;
-            }
-            var json = result.json;
-            DataService.bulkPost(tableName, json, true);
-
-          };
-          reader.readAsText(file);
-        } else {
-          console.log("Invalid file type");
-        }
+        readFileFromInput(fileInput);
       });
     }
 
-    var maxDocuments = 800;
+    function readFileFromInput(fileInput){
+      var file = fileInput.files[0];
+      if(!file){
+        return;
+      }
+      var textType = /text.*/;
+      if (file.type.match(textType)) {
+        readTextFile(file);
+      } else {
+        NotificationService.add('error', "Invalid file type.");
+      }
+    }
+
+    function readTextFile(file){
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var fileContent = reader.result;
+        var result = getJson(fileContent);
+        if(result.err){
+          NotificationService.add('error', result.err);
+          return;
+        }
+        DataService.bulkPost(tableName, result.json, true).then(function(result){
+          usSpinnerService.spin("loading-data");
+          loadData().then(successDataHandler);
+        });
+
+      };
+      reader.readAsText(file);
+    }
+
     function getJson(fileContent){
+      var maxDocuments = 1000;
       try{
         var json = JSON.parse(fileContent);
-        if(Array.isArray(json) && json.length > maxDocuments){
+        if(Array.isArray(json)){
+          if(json.length > maxDocuments){
+            return {
+              err: "Too much documents in file.",
+              json: null
+            };
+          }
           return {
-            err: "Too much documents in file",
-            json: null
+            err: null,
+            json: json
           };
         }
         return {
           err: null,
-          json: json
+          json: [json]
         };
       }
       catch(ex){
         return {
-          err: "invalid json file",
+          err: "Invalid json file.",
           json: null
         };
       }
