@@ -532,12 +532,7 @@
       if(!file){
         return;
       }
-      var textType = /text.*/;
-      if (file.type.match(textType)) {
-        readTextFile(file);
-      } else {
-        NotificationService.add('error', "Invalid file type.");
-      }
+      readTextFile(file);
     }
 
     function readTextFile(file){
