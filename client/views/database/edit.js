@@ -321,8 +321,8 @@ angular.module('backand.database')
 
     //Control the Create button text to replace the text
     self.loadOpt = function () {
-      window['optimizely'] = window['optimizely'] || [];
-      window['optimizely'].push(["activate", 2928170239]);
+      //window['optimizely'] = window['optimizely'] || [];
+      //window['optimizely'].push(["activate", 2928170239]);
     };
 
 

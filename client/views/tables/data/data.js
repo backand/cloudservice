@@ -47,7 +47,7 @@
 
     (function init() {
       getData(true, true);
-      //initJSONUpload();
+      initJSONUpload();
     }());
 
     self.toggleShowLog = function () {
@@ -533,6 +533,7 @@
         return;
       }
       readTextFile(file);
+      fileInput.value = ""; //clear for next time
     }
 
     function readTextFile(file){
