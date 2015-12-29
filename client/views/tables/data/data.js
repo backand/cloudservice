@@ -47,7 +47,7 @@
 
     (function init() {
       getData(true, true);
-      //initJSONUpload();
+      initJSONUpload();
     }());
 
     self.toggleShowLog = function () {
