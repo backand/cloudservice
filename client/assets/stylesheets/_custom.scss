@@ -108,7 +108,7 @@ a.app-panel:hover {
       margin-left:0;
       margin-right:0;
     }
-    
+
   }
   li {
     label {
@@ -593,17 +593,17 @@ hr.narrow-top-margin {
   padding:5px;
   margin-bottom:0;
   text-align:center;
-  background:#7fabd2;
+  background:#039be5;
   font-weight:normal;
   color:white;
   @media screen and (max-width:768px) {
     height:70px;
-    
+
   }
   .button-wrapper {
     @media screen and (max-width:768px) {
       display:block;
-      
+
     }
   }
   strong  {
@@ -612,7 +612,7 @@ hr.narrow-top-margin {
   .or {
     font-weight:normal;
   }
-  
+
 .btn {
   margin-left:10px;
   margin-right:10px;
@@ -652,13 +652,13 @@ hr.narrow-top-margin {
 }
 .app > .header-alert + .main-container > .nav-container.nav-fixed {
   top:97px;
-  
+
 }
 
 @media screen and (max-width:768px) {
 .on-canvas  .header-alert + .main-container #nav-container {
   top:171px;
- } 
+ }
 }
 
 
