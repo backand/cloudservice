@@ -15,7 +15,7 @@
   </div>
 
 
-  <bknd-flow-chart ng-if="erdModel.newModel.erdModel"
+  <bknd-flow-chart ng-if="erdModel.newModel.erdModel && isChartReady"
                    style="width: 100%;"
                    chart="erdModel.newModel.erdModel"
                    on-update="erdModel.saveModel()"

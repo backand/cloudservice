@@ -20,7 +20,6 @@
         self.editObjectDialog();
         $stateParams.isNewObject = false;
       }
-
       getSchema();
     }
 
@@ -48,6 +47,9 @@
       DbDataModel.get(self.appName)
         .finally(function () {
           $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
+          if (!$scope.isChartReady) {
+            $scope.isChartReady = true;
+          }
           usSpinnerService.stop('loading');
         })
     }
