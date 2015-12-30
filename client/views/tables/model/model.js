@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('ModelController', ['$scope', 'AppsService', 'DbDataModel', 'ModelService', 'usSpinnerService', 'NotificationService', '$modal', '$q', ModelController]);
+    .controller('ModelController', ['$scope', 'AppsService', 'DbDataModel', 'ModelService', 'usSpinnerService', 'NotificationService', '$modal', '$q', '$state', 'AnalyticsService', ModelController]);
 
-  function ModelController($scope, AppsService, DbDataModel, ModelService, usSpinnerService, NotificationService, $modal, $q) {
+  function ModelController($scope, AppsService, DbDataModel, ModelService, usSpinnerService, NotificationService, $modal, $q, $state, AnalyticsService) {
 
     var self = this;
 
@@ -59,6 +59,9 @@
 
     self.saveSchema = function() {
       self.loading = true;
+      if ($state.$current.self.name == 'erd_model'){
+        AnalyticsService.track('UsedERD', {provider: 'ERD'});
+      }
 
       try {
         var oldSchema = JSON.parse(self.oldModel.schema);
