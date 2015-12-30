@@ -40,6 +40,8 @@
     self.reset = function () {
       DbDataModel.removeCustomSchema(self.appName);
       getSchema();
+      self.updateErd(JSON.parse(self.currentModel.schema));
+      $scope.isUnsaved = false;
     };
 
     function getSchema() {
