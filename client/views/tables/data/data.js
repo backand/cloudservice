@@ -132,15 +132,13 @@
 
     function successDataHandler(response) {
       self.gridOptions.totalItems = response.data.totalRows;
-      if (self.gridOptions.totalItems === 0) {
-        usSpinnerService.stop("loading-data");
-        return;
-      }
 
       self.gridOptions.data = response.data.data;
       var columns = [];
       if (response.data.data.length > 0) {
         columns = _.without(Object.keys(response.data.data[0]), '__metadata');
+      } else {
+        columns = _.pluck(self.columnDefs, 'name');
       }
 
       fixDatesInData();

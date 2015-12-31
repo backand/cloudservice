@@ -43,11 +43,7 @@
       <!-- Data Grid -->
       <div ui-grid="ObjectData.gridOptions"
            class="datagrid" ui-grid-resize-columns
-           external-scopes="$scope"
-           ng-show="ObjectData.gridOptions.totalItems > 0">
-      </div>
-      <div ng-show="ObjectData.gridOptions.totalItems == 0">
-        <h3>No items found</h3>
+           external-scopes="$scope">
       </div>
       <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">
         <div class="col-md-5">
