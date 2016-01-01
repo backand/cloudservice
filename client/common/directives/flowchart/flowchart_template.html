@@ -115,7 +115,7 @@
             text-anchor="left"
             alignment-baseline="middle">
             <tspan class="field-name-label">{{field.name()}}</tspan>
-            <tspan>{{' (' + getFieldType(node.name(), field.name()) + ')'}}</tspan>
+            <tspan>{{' (' + field.dbType + ')'}}</tspan>
           </text>
 
           <circle
@@ -130,7 +130,7 @@
           ng-attr-x="{{field.x() + 25}}"
           ng-attr-y="{{field.y() + 5}}">
             <tspan class="field-name-label">{{field.name()}}</tspan>
-          <tspan>{{' (' + getFieldType(node.name(), field.name()) + ')'}}</tspan>
+          <tspan>{{' (' + field.dbType + ')'}}</tspan>
         </text>
 
         <g
@@ -142,7 +142,7 @@
             text-anchor="end"
             alignment-baseline="middle">
             <tspan class="field-name-label">{{field.name()}}</tspan>
-            <tspan>{{' (' + getFieldType(node.name(), field.name()) + ')'}}</tspan>
+            <tspan>{{' (' + field.dbType + ')'}}</tspan>
           </text>
 
           <circle

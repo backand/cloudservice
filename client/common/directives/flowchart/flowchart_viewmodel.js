@@ -63,13 +63,14 @@ var flowchart = {
 	//
 	// View model for a connector.
 	//
-	flowchart.ConnectorViewModel = function (connectorDataModel, x, y, parentNode, type) {
+	flowchart.ConnectorViewModel = function (connectorDataModel, x, y, parentNode, type, dbType) {
 
 		this.data = connectorDataModel;
 		this._parentNode = parentNode;
 		this._x = x;
 		this._y = y;
     this.type = type;
+    this.dbType = dbType;
 
 		//
 		// The name of the connector.
@@ -120,7 +121,7 @@ var flowchart = {
 			for (var i = 0; i < connectorDataModels.length; ++i) {
 				var connectorViewModel =
 					new flowchart.ConnectorViewModel(connectorDataModels[i], flowchart.typeToXPositionMapper[connectorDataModels[i].type],
-            flowchart.computeConnectorY(i), parentNode, connectorDataModels[i].type);
+            flowchart.computeConnectorY(i), parentNode, connectorDataModels[i].type, connectorDataModels[i].dbType);
 				viewModels.push(connectorViewModel);
 			}
 		}

@@ -121,7 +121,18 @@
         }
 
         _.forIn(obj.fields, function (field, fieldname) {
-          var fieldToBeAdded = {name: fieldname, type: ''};
+          var fieldToBeAdded = {name: fieldname, type: '', dbType: ''};
+          // set db type
+          if (field.type) {
+            fieldToBeAdded.dbType = field.type;
+          }
+          else if (field.collection) {
+            fieldToBeAdded.dbType = 'collection';
+          }
+          else {
+            fieldToBeAdded.dbType = 'object';
+          }
+          // set connector type
           if (field.object) {
             fieldToBeAdded.type = 'OutputConnector';
           } else if (field.collection) {
