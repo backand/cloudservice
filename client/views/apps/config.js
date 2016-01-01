@@ -15,6 +15,9 @@
           appsList: ['AppsService', function (AppsService) {
             return AppsService.all();
           }]
+        },
+        params: {
+          'deletedApp': ''
         }
       })
       .state('app.show', {

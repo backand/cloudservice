@@ -4,11 +4,11 @@
 angular.module('backand.apps')
   .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
     'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',
-    'DatabaseService','ModelService', AppsIndexController]);
+    'DatabaseService','ModelService', '$stateParams', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
                                usSpinnerService, LayoutService, AnalyticsService, SessionService,
-                               DatabaseService, ModelService) {
+                               DatabaseService, ModelService, $stateParams) {
 
     var self = this;
     self.loading = false;
@@ -17,6 +17,10 @@ angular.module('backand.apps')
     (function () {
       self.apps = appsList.data;
       self.showJumbo = LayoutService.showJumbo();
+
+      if ($stateParams.deletedApp){
+        self.apps = _.reject(self.apps, {Name: $stateParams.deletedApp});
+      }
 
       //create todos sample app
       var userId = SessionService.getUserId();

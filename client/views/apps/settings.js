@@ -62,7 +62,7 @@
             return;
           self.loading = true;
           AppsService.delete(self.globalAppName).then(deleteSuccess, errorHandler);
-          $state.go('apps.index');
+          $state.go('apps.index', {deletedApp: self.globalAppName});
         })
     };
 
