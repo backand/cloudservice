@@ -65,13 +65,18 @@
            class="edit-object-icon"
            xlink:href="../../assets/images/flowchart/edit_icon.png"
            ng-attr-x="{{node.width() - 61}}"
-           y="11"/>
+           y="11"
+           height="17"
+           width="17"
+      />
 
     <image ng-click="onEditFieldClick(node.name())"
            class="add-field-icon"
            xlink:href="../../assets/images/flowchart/add_icon.png"
            ng-attr-x="{{node.width() - 33}}"
-           y="7"/>
+           y="7"
+           height="24"
+           width="24"/>
     <g ng-repeat="field in node.fields">
       <g ng-switch on="field.type" class="node-field">
         <rect
@@ -88,24 +93,30 @@
           ng-hide="$last"></rect>
         <image
           ng-click="onEditFieldClick(node.name(), field.name())"
-          class="field-icon edit-field-icon"
+          class="field-icon"
           xlink:href="../../assets/images/flowchart/edit_icon.png"
           ng-attr-x="{{node.width() - 30}}"
-          ng-attr-y="{{field.y() - 5}}"/>
+          ng-attr-y="{{field.y() - 5}}"
+          width="15"
+          height="15"/>
         <image
           ng-click="onFieldUpClick(node, field.name())"
-          class="field-icon up-down-icon"
+          class="field-icon"
           xlink:href="../../assets/images/flowchart/arrow_up.png"
           ng-hide="$first"
           ng-attr-y="{{field.y() - 5}}"
-          x="10"/>
+          x="10"
+          width="7"
+          height="4"/>
         <image
           ng-click="onFieldDownClick(node, field.name())"
-          class="field-icon up-down-icon"
+          class="field-icon"
           xlink:href="../../assets/images/flowchart/arrow_down.png"
           ng-hide="$last"
           ng-attr-y="{{field.y() + 2}}"
-          x="10"/>
+          x="10"
+          width="7"
+          height="4"/>
         <g
           ng-switch-when="InputConnector"
           class="connector input-connector">
