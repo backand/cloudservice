@@ -151,7 +151,7 @@
     }, getLog);
 
     function getLog() {
-
+      usSpinnerService.spin('loading');
       AppLogService.getAppLog($stateParams.appName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.lastQuery, self.sort)
         .then(logSuccsessHandler, errorHandler);
     }
