@@ -54,8 +54,13 @@
     self.objectOptions = getObjectNames();
 
     self.editField = function () {
-      FieldsService.editField(self.tableName, self.fieldName, self.field);
-      modalInstance.close({model: FieldsService.newModelObject});
+      // Validate default value
+      if (self.fieldType === 'float' && isNaN(self.field.defaultValue)) {
+        NotificationService.add('warning', 'Default value is not a numeric value');
+      } else {
+        FieldsService.editField(self.tableName, self.fieldName, self.field);
+        modalInstance.close({model: FieldsService.newModelObject});
+      }
     };
 
     self.deleteField = function () {
