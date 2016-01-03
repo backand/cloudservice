@@ -2,9 +2,9 @@
 (function  () {
     'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService){
+  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams){
     var self = this;
 
     (function init() {
@@ -107,7 +107,11 @@
     }
 
     self.isTablesActive = function() {
-      return $state.includes('tables.columns');
+      return $state.includes('tables.columns') || $stateParams.newApp;
+    };
+
+    self.isObjectsOpened = function () {
+      return $stateParams.newApp;
     };
 
     self.getDBStatus = function() {
