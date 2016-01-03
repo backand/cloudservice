@@ -67,6 +67,8 @@
       self.dictionaryState = false;
       self.toggleOptions = toggleDictionary;
       self.insertAtChar= insertTokenAtChar;
+
+      $scope.$watch(checkOverrideChange, onOverrideChange);
     }());
 
     // Pre-defined filter
@@ -419,6 +421,18 @@
 
     function errorHandler(error, message) {
       NotificationService.add('error', message);
+    }
+
+    function checkOverrideChange(scope) {
+      if (self.view != null) {
+        return self.view.permissions.overrideinheritable;
+      }
+    }
+
+    function onOverrideChange(newVal, oldVal) {
+      if (oldVal !== undefined) {
+        ColumnsService.commit(self.view);
+      }
     }
 
   }
