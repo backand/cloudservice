@@ -61,6 +61,8 @@
       self.loading = true;
       if ($state.$current.self.name == 'erd_model'){
         AnalyticsService.track('UsedERD', {provider: 'ERD'});
+      } else if ($state.$current.self.name == 'json_model') {
+        AnalyticsService.track('UsedJson', {provider: 'Json'});
       }
 
       try {
