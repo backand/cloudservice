@@ -20,7 +20,7 @@
     }
 
     function rolesSuccessHandler(data) {
-      self.roles = data.data.data;
+      self.roles = _.reject(data.data.data, {Name: 'Admin'});
       setDbInfo(AppsService.currentApp);
     }
 
