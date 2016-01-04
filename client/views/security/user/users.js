@@ -149,20 +149,15 @@
     }
 
     function rolesSuccessHandler(data) {
-      self.roles = data.data.data;
+      // Remove admin role
+      self.roles = _.reject(data.data.data, {Name: 'Admin'});
       self.gridOptions.columnDefs[self.adminMode ? 4 : 5].editDropdownOptionsArray = self.roles;
 
       $scope.modal.roles = self.roles.map(function (role) {
           return role.Name;
       });
 
-      //remove admin role
-      var index = $scope.modal.roles.indexOf("Admin");
-      if (index > -1) {
-        $scope.modal.roles.splice(index, 1);
-      }
       getUsers();
-
     }
 
     function getUsers() {
