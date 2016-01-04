@@ -30,6 +30,12 @@
           </ul>
         </div>
 
+        <div ng-repeat="object in show.objects" class="row">
+          <div class="col-md-3">
+            Authorization Security: {{object.isAuthSecurityOverridden ? 'OVERRIDDEN' : 'INHERITED'}}
+          </div>
+        </div>
+
         <div class="divider divider-solid"></div>
 
         <div class="row">

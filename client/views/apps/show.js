@@ -3,14 +3,15 @@
 
   'use strict';
   angular.module('backand.apps')
-    .controller('AppShowController',['$scope', 'AppsService', '$sce', '$state', AppShowController]);
+    .controller('AppShowController',['$scope', 'AppsService', '$sce', '$state', 'ColumnsService', 'TablesService', AppShowController]);
 
-  function AppShowController($scope, AppsService, $sce, $state){
+  function AppShowController($scope, AppsService, $sce, $state, ColumnsService, TablesService){
     var self = this;
 
     var app = AppsService.currentApp;
     self.currentApp = app;
     self.appName = app.Name;
+    self.objects = {};
     $scope.appName = self.appName;
 
     $scope.$root.$broadcast('fetchTables');
@@ -26,6 +27,8 @@
     self.appTitle = app.Title;
     self.connectionStatus = '';
     self.alertMsg = '';
+
+    init();
 
     self.goToLocation = function(href) {
         window.open(href, '_blank');
@@ -55,6 +58,17 @@
 
     self.updateAppName = function() {
       AppsService.update(self.appName, self.appTitle)
+    };
+
+    function init() {
+      TablesService.get(self.appName).then(function (data) {
+        data.forEach(function (object) {
+          self.objects[object.name] = {};
+          ColumnsService.getColumns(object.name).then(function (data) {
+            self.objects[object.name].isAuthSecurityOverridden = data.data.permissions.overrideinheritable;
+          });
+        });
+      });
     }
   }
 }());
