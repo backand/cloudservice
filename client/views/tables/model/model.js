@@ -60,9 +60,9 @@
     self.saveSchema = function() {
       self.loading = true;
       if ($state.$current.self.name == 'erd_model'){
-        AnalyticsService.track('UsedERD', {provider: 'ERD'});
+        AnalyticsService.track('UsedERD');
       } else if ($state.$current.self.name == 'json_model') {
-        AnalyticsService.track('UsedJson', {provider: 'Json'});
+        AnalyticsService.track('UsedJson');
       }
 
       try {
