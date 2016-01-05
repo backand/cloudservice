@@ -107,7 +107,7 @@
     }
 
     self.isTablesActive = function() {
-      return $state.includes('tables.columns') || $stateParams.newApp;
+      return $state.includes('tables.columns');
     };
 
     self.isObjectsOpened = function () {
