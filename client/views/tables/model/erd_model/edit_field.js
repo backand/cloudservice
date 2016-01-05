@@ -57,7 +57,14 @@
       // Validate default value
       if (self.fieldType === 'float' && isNaN(self.field.defaultValue)) {
         NotificationService.add('warning', 'Default value is not a numeric value');
-      } else {
+      }
+      else {
+        // Cast value according to field type
+        if (self.fieldType === 'float') {
+          self.field.defaultValue = parseFloat(self.field.defaultValue);
+        } else if (self.fieldType === 'boolean') {
+          self.field.defaultValue = self.field.defaultValue === 'true';
+        }
         FieldsService.editField(self.tableName, self.fieldName, self.field);
         modalInstance.close({model: FieldsService.newModelObject});
       }
