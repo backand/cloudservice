@@ -46,6 +46,17 @@
         self.notifications = _.uniq(self.validationResponse.warnings);
         break;
 
+      case 'data':
+        self.text = {
+          title: 'Errors in ' + _.capitalize(titles.itemName),
+          message: 'The type can\'t be changed from the Model, you must delete the field first and re-add it back.' +
+          ' Details:',
+          cssClass: 'danger',
+          cancelButton: 'Return'
+        };
+        self.notifications = _.uniq(self.validationResponse.warnings);
+        break;
+
       case 'always':
         self.text = {
           title: _.capitalize(titles.itemName) + ' is Valid',
@@ -64,27 +75,27 @@
         }
         break;
 
-      case 'data':
-            self.text = {
-              title: 'Warning',
-              cssClass: 'danger',
-              okButton: 'OK',
-              cancelButton: 'Cancel'
-            };
-        if (self.notifications) {
-          self.text.message = 'The ' + _.capitalize(titles.itemName) + ' is valid.<br>' +
-            'The following parts of the ' + titles.itemName + ', including the data they contain, will be permanently deleted.<br>' +
-            'Changes made to the ' + titles.itemName + ' include changes to fields types.<br>' +
-            'Those changes may result in a loss or corruption of data.<br>' +
-            'Click Ok to proceed';
-        } else {
-          self.notifications = _.uniq(self.validationResponse.warnings);
-          self.text.message = 'The ' +  _.capitalize(titles.itemName) + ' is valid.<br>' +
-            'Changes made to the ' + titles.itemName + ' include changes to fields types.<br>' +
-            'Those changes may result in a loss or corruption of data.<br>' +
-            'Click Ok to proceed';
-        }
-        break;
+      //case 'data':
+      //      self.text = {
+      //        title: 'Warning',
+      //        cssClass: 'danger',
+      //        okButton: 'OK',
+      //        cancelButton: 'Cancel'
+      //      };
+      //  if (self.notifications) {
+      //    self.text.message = 'The ' + _.capitalize(titles.itemName) + ' is valid.<br>' +
+      //      'The following parts of the ' + titles.itemName + ', including the data they contain, will be permanently deleted.<br>' +
+      //      'Changes made to the ' + titles.itemName + ' include changes to fields types.<br>' +
+      //      'Those changes may result in a loss or corruption of data.<br>' +
+      //      'Click Ok to proceed';
+      //  } else {
+      //    self.notifications = _.uniq(self.validationResponse.warnings);
+      //    self.text.message = 'The ' +  _.capitalize(titles.itemName) + ' is valid.<br>' +
+      //      'Changes made to the ' + titles.itemName + ' include changes to fields types.<br>' +
+      //      'Those changes may result in a loss or corruption of data.<br>' +
+      //      'Click Ok to proceed';
+      //  }
+      //  break;
     }
 
     self.closeValidationModal = function (result) {
