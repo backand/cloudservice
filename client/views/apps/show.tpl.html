@@ -5,7 +5,7 @@
     <div class="panel-body">
       <div class="row col-md-10 col-sm-offset-1">
 
-        <div class="list-unstyled row col-sm-offset-1">
+        <div class="list-unstyled row">
           <ul class="list-inline text-center stats" >
               <li class="col-md-3">
                 <h1>{{show.statisticsArray['last24hours'] | number:0}}</h1>
@@ -30,9 +30,29 @@
           </ul>
         </div>
 
-        <div ng-repeat="object in show.objects" class="row">
-          <div class="col-md-3">
-            Authorization Security: {{object.isAuthSecurityOverridden ? 'OVERRIDDEN' : 'INHERITED'}}
+        <div ng-repeat="(objectName, object) in show.objects" class="row dashboard-row">
+          <div class="object-title"><span class="object-title">{{objectName}}</span></div>
+          <div class="col-md-2 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_fields')">
+            <span class="object-stat-title">Records:</span>
+            {{object.records}}
+          </div>
+          <div class="col-md-2 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_actions')">
+            <span class="object-stat-title">Actions:</span>
+            {{object.actions}}
+          </div>
+          <div class="col-md-3 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_security')">
+            <span class="object-stat-title">Authorization Security:</span>
+            {{object.isAuthSecurityOverridden ? 'OVERRIDDEN' : 'INHERITED'}}
+          </div>
+          <div class="col-md-2 object-stat-field">
+            <span class="object-stat-title">Data Security:</span>
+            {{object.isDataSecurityEnabled ? 'ENABLED' : 'DISABLED'}}
+          </div>
+          <div class="col-md-3 object-stat-field">
+            <span class="object-stat-title">Related Objects:</span>
+            <span ng-repeat="relatedObject in object.relatedObjects">
+              <a>{{relatedObject + ($last ? '' : ',')}}</a>
+            </span>
           </div>
         </div>
 

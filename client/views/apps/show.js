@@ -60,15 +60,29 @@
       AppsService.update(self.appName, self.appTitle)
     };
 
+    self.goToObjectPage = function (objectName, objectId, state) {
+      $state.go(state, {
+        tableName: objectName,
+        tableId: objectId
+      });
+    };
+
     function init() {
       TablesService.get(self.appName).then(function (data) {
         data.forEach(function (object) {
+          // Currently using placeholders until we have Dbstat service
           self.objects[object.name] = {};
-          ColumnsService.getColumns(object.name).then(function (data) {
-            self.objects[object.name].isAuthSecurityOverridden = data.data.permissions.overrideinheritable;
-          });
+          self.objects[object.name].isAuthSecurityOverridden = true;
+          self.objects[object.name].records = 5324;
+          self.objects[object.name].actions = 12;
+          self.objects[object.name].isDataSecurityEnabled = false;
+          self.objects[object.name].relatedObjects = ['Users', 'Files'];
+          self.objects[object.name].id = object.__metadata.id;
         });
+        self.objects.items.records=33333333333;
       });
+
+
     }
   }
 }());
