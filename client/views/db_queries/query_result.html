@@ -1,3 +1,7 @@
+
+<div ng-hide="DbQuery.gridOptions.totalItems == undefined && !DbQuery.testError">
+  <a class="btn" ng-click="DbQuery.showJson = true">Show result as JSON</a>
+</div>
 <label ng-hide="DbQuery.gridOptions.totalItems == undefined && !DbQuery.testError">Test Results</label>
 
 <div ng-show="DbQuery.testError" class="input-error">{{ DbQuery.testError }}</div>
