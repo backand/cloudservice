@@ -68,6 +68,9 @@
     };
 
     function init() {
+      AppsService.appDbStat(self.appName).then(function (data) {
+        var a = data;
+      });
       TablesService.get(self.appName).then(function (data) {
         data.forEach(function (object) {
           // Currently using placeholders until we have Dbstat service
@@ -80,6 +83,7 @@
           self.objects[object.name].id = object.__metadata.id;
         });
         self.objects.items.records=33333333333;
+        self.objects.items.isDataSecurityEnabled = true;
       });
 
 

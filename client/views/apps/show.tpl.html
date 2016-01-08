@@ -32,7 +32,7 @@
 
         <div ng-repeat="(objectName, object) in show.objects" class="row dashboard-row">
           <div class="object-title"><span class="object-title">{{objectName}}</span></div>
-          <div class="col-md-2 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_fields')">
+          <div class="col-md-2 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_data')">
             <span class="object-stat-title">Records:</span>
             {{object.records}}
           </div>
@@ -46,7 +46,7 @@
           </div>
           <div class="col-md-2 object-stat-field">
             <span class="object-stat-title">Data Security:</span>
-            {{object.isDataSecurityEnabled ? 'ENABLED' : 'DISABLED'}}
+            <span ng-class="{'data-security-enabled': object.isDataSecurityEnabled}">{{object.isDataSecurityEnabled ? 'ENABLED' : 'DISABLED'}}</span>
           </div>
           <div class="col-md-3 object-stat-field">
             <span class="object-stat-title">Related Objects:</span>
