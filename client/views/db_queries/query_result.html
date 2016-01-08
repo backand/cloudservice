@@ -1,7 +1,17 @@
-
 <div ng-hide="DbQuery.gridOptions.totalItems == undefined && !DbQuery.testError">
-  <a class="btn" ng-click="DbQuery.showJson = true">Show result as JSON</a>
+  <a class="btn" ng-click="DbQuery.showJson = !DbQuery.showJson">{{(DbQuery.showJson ? 'Hide' : 'Show') + ' result as JSON'}}</a>
 </div>
+
+  <div ng-if="DbQuery.showJson"
+       ui-ace="{theme: 'monokai', mode: 'json', rendererOptions: { fontSize: 15 } }"
+       type="text"
+       class="form-form-controlcontrol"
+       id="json-result"
+       ng-model="DbQuery.jsonQueryTestResult"
+       readonly
+       rows="10">
+  </div>
+
 <label ng-hide="DbQuery.gridOptions.totalItems == undefined && !DbQuery.testError">Test Results</label>
 
 <div ng-show="DbQuery.testError" class="input-error">{{ DbQuery.testError }}</div>
