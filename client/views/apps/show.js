@@ -67,6 +67,10 @@
       });
     };
 
+    self.goToPage = function (state) {
+      $state.go(state);
+    };
+
     function init() {
       AppsService.appDbStat(self.appName).then(function (data) {
         var a = data;
