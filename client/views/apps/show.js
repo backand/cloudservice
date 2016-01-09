@@ -80,14 +80,13 @@
           // Currently using placeholders until we have Dbstat service
           self.objects[object.name] = {};
           self.objects[object.name].isAuthSecurityOverridden = true;
-          self.objects[object.name].records = 5324;
+          self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
           self.objects[object.name].actions = 12;
           self.objects[object.name].isDataSecurityEnabled = false;
           self.objects[object.name].relatedObjects = ['Users', 'Files'];
           self.objects[object.name].id = object.__metadata.id;
         });
         var objectKey = _.keys(self.objects)[0];
-        self.objects[objectKey].records = 33333333333;
         self.objects[objectKey].isDataSecurityEnabled = true;
       });
 
