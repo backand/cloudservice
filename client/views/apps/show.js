@@ -86,8 +86,9 @@
           self.objects[object.name].relatedObjects = ['Users', 'Files'];
           self.objects[object.name].id = object.__metadata.id;
         });
-        self.objects.items.records=33333333333;
-        self.objects.items.isDataSecurityEnabled = true;
+        var objectKey = _.keys(self.objects)[0];
+        self.objects[objectKey].records = 33333333333;
+        self.objects[objectKey].isDataSecurityEnabled = true;
       });
 
 
