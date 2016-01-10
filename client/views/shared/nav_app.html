@@ -100,7 +100,7 @@
       <i class="ti-angle-double-right pull-right"
          style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
     </a>
-    <ul class="scrollbar ex4" id="ex4">
+    <ul class="scrollbar ex4" id="ex4" ng-style="{'display': nav.getObjectMenuStyle()}">
       <li ng-if="nav.app.connectionSource === 'local'">
         <a ui-sref="erd_model">
           <i class="ba-icon-model"></i>

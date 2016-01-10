@@ -1,9 +1,9 @@
   (function  () {
   'use strict';
   angular.module('backand')
-    .controller('JsonModelController', ['$scope', 'AppsService', 'DbDataModel', 'usSpinnerService', JsonModelController]);
+    .controller('JsonModelController', ['$scope', 'AppsService', 'DbDataModel', 'usSpinnerService', '$state', JsonModelController]);
 
-  function JsonModelController($scope, AppsService, DbDataModel, usSpinnerService) {
+  function JsonModelController($scope, AppsService, DbDataModel, usSpinnerService, $state) {
 
     var self = this;
 
@@ -45,6 +45,11 @@
     self.reset = function(){
       DbDataModel.removeCustomSchema(self.appName);
       getSchema();
+      usSpinnerService.spin('loading');
+      // Refresh
+      $state.go($state.current, {}, {reload: true}).then(function () {
+        usSpinnerService.stop('loading');
+      });
       $scope.isUnsaved = false;
     };
 
@@ -52,6 +57,7 @@
       usSpinnerService.spin('loading');
       DbDataModel.get(self.appName)
         .finally(function () {
+          $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
           usSpinnerService.stop('loading');
         })
     }
@@ -65,13 +71,9 @@
 
     $scope.$watch(function () {
       if (self.oldModel.schema !== self.newModel.schema) {
-        $scope.isUnsaved = true;
         return self.newModel.schema;
-      } else {
-        $scope.isUnsaved = false;
       }
     }, saveCustomSchema);
-
 
     self.insertTypeAtChar = function (param) {
       var tokenAtCursor = getTokenAtCursor();

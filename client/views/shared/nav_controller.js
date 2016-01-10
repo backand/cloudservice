@@ -110,8 +110,11 @@
       return $state.includes('tables.columns');
     };
 
-    self.isObjectsOpened = function () {
-      return $stateParams.newApp;
+    self.getObjectMenuStyle = function () {
+      if ($stateParams.newApp) {
+        return "block";
+      }
+      return "none";
     };
 
     self.getDBStatus = function() {
