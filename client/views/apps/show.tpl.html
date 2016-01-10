@@ -59,9 +59,9 @@
           </div>
         </div>
 
-        <div class="divider divider-solid"></div>
+        <div class="divider divider-solid" ng-show="show.showOldDashboard"></div>
 
-        <div class="row">
+        <div class="row" ng-show="show.showOldDashboard">
           <div class="col-md-5 col-sm-6">
             <div log-list app-name="{{appName}}" log-limit="10"></div>
           </div>

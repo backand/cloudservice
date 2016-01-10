@@ -12,6 +12,7 @@
     self.currentApp = app;
     self.appName = app.Name;
     self.objects = {};
+    self.showOldDashboard = false;
     $scope.appName = self.appName;
 
     $scope.$root.$broadcast('fetchTables');
