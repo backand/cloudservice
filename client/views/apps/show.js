@@ -3,9 +3,9 @@
 
   'use strict';
   angular.module('backand.apps')
-    .controller('AppShowController',['$scope', 'AppsService', '$sce', '$state', 'ColumnsService', 'TablesService', 'RulesService', AppShowController]);
+    .controller('AppShowController',['$scope', 'AppsService', '$sce', '$state', 'ColumnsService', 'TablesService', 'RulesService', 'SecurityService', AppShowController]);
 
-  function AppShowController($scope, AppsService, $sce, $state, ColumnsService, TablesService, RulesService){
+  function AppShowController($scope, AppsService, $sce, $state, ColumnsService, TablesService, RulesService, SecurityService){
     var self = this;
 
     var app = AppsService.currentApp;
@@ -79,10 +79,17 @@
 
       TablesService.get(self.appName).then(function (data) {
         RulesService.appName = self.appName;
+        SecurityService.appName = self.appName;
+        SecurityService.getWorkspace().then(function (data) {
+          var a = data;
+        });
         data.forEach(function (object) {
-          // Currently using placeholders until we have Dbstat service
           self.objects[object.name] = {};
-          self.objects[object.name].isAuthSecurityOverridden = true;
+          ColumnsService.tableName = object.name;
+          ColumnsService.get().then(function (data) {
+            self.objects[object.name].isAuthSecurityOverridden = data.permissions.overrideinheritable;
+          });
+
           self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
           self.objects[object.name].id = object.__metadata.id;
 
@@ -91,6 +98,7 @@
             self.objects[object.name].actions = data.data.data.length;
           });
 
+          // Placeholders
           self.objects[object.name].isDataSecurityEnabled = false;
           self.objects[object.name].relatedObjects = ['Users', 'Files'];
         });
