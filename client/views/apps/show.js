@@ -1,11 +1,10 @@
-
-(function  () {
+(function () {
 
   'use strict';
   angular.module('backand.apps')
-    .controller('AppShowController',['$scope', 'AppsService', '$sce', '$state', 'ColumnsService', 'TablesService', 'RulesService', 'SecurityService', AppShowController]);
+    .controller('AppShowController', ['$scope', 'AppsService', '$sce', '$state', 'ColumnsService', 'TablesService', 'RulesService', AppShowController]);
 
-  function AppShowController($scope, AppsService, $sce, $state, ColumnsService, TablesService, RulesService, SecurityService){
+  function AppShowController($scope, AppsService, $sce, $state, ColumnsService, TablesService, RulesService) {
     var self = this;
 
     var app = AppsService.currentApp;
@@ -31,12 +30,12 @@
 
     init();
 
-    self.goToLocation = function(href) {
-        window.open(href, '_blank');
+    self.goToLocation = function (href) {
+      window.open(href, '_blank');
     };
 
     AppsService.appDbStat($state.params.appName)
-      .then(function(data){
+      .then(function (data) {
         if (data.data.tableCount == 0) {
           var msg = 'Your app has no objects! go to <a href="#/app/' + $state.params.appName + '/objects/model' +
             '">Backand Model</a> to populate the app or use any DB admin tool like Workbench or phpMyAdmin';
@@ -47,17 +46,17 @@
       });
 
 
-    self.setAlertStatus = function() {
+    self.setAlertStatus = function () {
       AppsService.setAlert(self.appName, '');
       self.alertMsg = '';
     };
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
 
     });
 
 
-    self.updateAppName = function() {
+    self.updateAppName = function () {
       AppsService.update(self.appName, self.appTitle)
     };
 
@@ -73,40 +72,40 @@
     };
 
     function init() {
-      AppsService.appDbStat(self.appName).then(function (data) {
-        var a = data;
-      });
-
-
       TablesService.get(self.appName).then(function (data) {
         RulesService.appName = self.appName;
-        SecurityService.appName = self.appName;
-        SecurityService.getWorkspace().then(function (data) {
-          var a = data;
-        });
+
         data.forEach(function (object) {
           self.objects[object.name] = {};
           ColumnsService.tableName = object.name;
           ColumnsService.get().then(function (data) {
+            self.objects[object.name].relatedObjects = extractRelatedObjectsForObject(data);
             self.objects[object.name].isAuthSecurityOverridden = data.permissions.overrideinheritable;
           });
-
           self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
           self.objects[object.name].id = object.__metadata.id;
-
           RulesService.tableId = self.objects[object.name].id;
           RulesService.get().then(function (data) {
             self.objects[object.name].actions = data.data.data.length;
           });
 
-          // Placeholders
+          // Placeholder
           self.objects[object.name].isDataSecurityEnabled = false;
-          self.objects[object.name].relatedObjects = ['Users', 'Files'];
         });
         var objectKey = _.keys(self.objects)[0];
         self.objects[objectKey].isDataSecurityEnabled = true;
       });
 
+
+      function extractRelatedObjectsForObject(columnsData) {
+        var relatedObjects = [];
+        columnsData.fields.forEach(function (field) {
+          if (field.relatedViewName != '') {
+            relatedObjects.push(field.relatedViewName);
+          }
+        });
+        return relatedObjects;
+      }
     }
   }
 }());
