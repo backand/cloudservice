@@ -29,7 +29,14 @@
       var record = {};
       self.editRowData.entities.forEach(function (entity) {
         if (!entity.hide && !entity.disable) {
-          record[entity.key] = entity.value;
+          // If item is point
+          if (entity.type === 'point') {
+            record[entity.key] = [];
+            record[entity.key].push(parseInt(entity.latitude));
+            record[entity.key].push(parseInt(entity.longitude));
+          } else {
+            record[entity.key] = entity.value;
+          }
           if (entity.type === 'checkbox' && entity.required && _.isEmpty(entity.value)) {
             record[entity.key] = false;
           }

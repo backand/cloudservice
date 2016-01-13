@@ -67,7 +67,7 @@
                    ng-disabled="item.disable"/>
           </div>-->
 
-          <div ng-switch-when="numeric" class="input-group">
+          <div ng-switch-when="numeric" class="input-group form-inline">
             <span class="input-group-addon" style="min-width: 39px">0</span>
             <input type="text"
                    class="form-control"
@@ -76,6 +76,13 @@
                    ng-model="item.value"
                    ng-required="item.required"
                    ng-disabled="item.disable"/>
+          </div>
+
+          <div ng-switch-when="point" class="form-inline">
+            <span>Latitude:</span>
+            <input id="{{item.key}}_latitude" type="text" class="form-control" ng-model="item.latitude"/>
+            <span>Longitude:</span>
+            <input id="{{item.key}}_longitude" type="text" class="form-control" ng-model="item.longitude"/>
           </div>
 
           <div ng-switch-default class="input-group">
