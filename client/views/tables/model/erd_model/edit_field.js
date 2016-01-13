@@ -33,6 +33,9 @@
     self.editFieldForm = 'edit-field';
     self.possibleUniqueTypes = ['string', 'datetime', 'float'];
 
+    // Data types that not support default value
+    self.defaultValueBlacklist = ['point'];
+
     // Indicate whether to display edit or add form
     self.isEdit = self.fieldName;
 
@@ -40,6 +43,7 @@
     if (self.isEdit) {
       populateInputs();
       self.showUniqueSection = _.contains(self.possibleUniqueTypes, self.fieldType);
+      self.hideDefaultValue = _.contains(self.defaultValueBlacklist, self.fieldType);
     }
 
     self.typeOptions = [
