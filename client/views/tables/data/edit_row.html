@@ -80,9 +80,9 @@
 
           <div ng-switch-when="point" class="form-inline">
             <span>Latitude:</span>
-            <input id="{{item.key}}_latitude" type="text" class="form-control" ng-model="item.latitude"/>
+            <input id="{{item.key}}_latitude" type="text" class="form-control" ng-model="item.value[0]"/>
             <span>Longitude:</span>
-            <input id="{{item.key}}_longitude" type="text" class="form-control" ng-model="item.longitude"/>
+            <input id="{{item.key}}_longitude" type="text" class="form-control" ng-model="item.value[1]"/>
           </div>
 
           <div ng-switch-default class="input-group">
