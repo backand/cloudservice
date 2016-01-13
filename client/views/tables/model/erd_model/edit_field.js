@@ -49,7 +49,8 @@
       'float',
       'boolean',
       'collection',
-      'object'
+      'object',
+      'point'
     ];
 
     self.objectOptions = getObjectNames();
