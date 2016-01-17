@@ -49,12 +49,12 @@
     self.typeOptions = [
       'string',
       'text',
+      'point',
       'datetime',
       'float',
       'boolean',
       'collection',
-      'object',
-      'point'
+      'object'
     ];
 
     self.objectOptions = getObjectNames();

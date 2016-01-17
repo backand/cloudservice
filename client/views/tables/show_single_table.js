@@ -32,8 +32,8 @@
       self.selectedField = null;
       self.tabs = [
         {
-          heading: 'Fields',
-          route: 'object_fields'
+          heading: 'Data',
+          route: 'object_data'
         },
         {
           heading: 'Actions',
@@ -43,13 +43,13 @@
           heading: 'Security',
           route: 'object_security'
         },
+        //{
+        //  heading: 'Fields',
+        //  route: 'object_fields'
+        //},
         {
           heading: 'Settings',
           route: 'object_settings'
-        },
-        {
-          heading: 'Data',
-          route: 'object_data'
         },
         {
           heading: 'REST API',
