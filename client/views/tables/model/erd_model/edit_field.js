@@ -31,7 +31,10 @@
     self.newModel = newModel;
     self.updateErd = updateErd;
     self.editFieldForm = 'edit-field';
-    self.showUniqueSection = false;
+    self.possibleUniqueTypes = ['string', 'datetime', 'float'];
+
+    // Data types that not support default value
+    self.defaultValueBlacklist = ['point'];
 
     // Indicate whether to display edit or add form
     self.isEdit = self.fieldName;
@@ -39,6 +42,8 @@
     // If editing a field, Populate the inputs by the field data
     if (self.isEdit) {
       populateInputs();
+      self.showUniqueSection = _.contains(self.possibleUniqueTypes, self.fieldType);
+      self.hideDefaultValue = _.contains(self.defaultValueBlacklist, self.fieldType);
     }
 
     self.typeOptions = [
@@ -48,19 +53,23 @@
       'float',
       'boolean',
       'collection',
-      'object'
+      'object',
+      'point'
     ];
 
     self.objectOptions = getObjectNames();
 
     self.editField = function () {
       // Validate default value
-      if (self.fieldType === 'float' && isNaN(self.field.defaultValue)) {
+      if (self.fieldType === 'float' && isNaN(self.field.defaultValue) && self.field.defaultValue) {
         NotificationService.add('warning', 'Default value is not a numeric value');
       }
       else {
-        // Cast value according to field type
-        if (self.fieldType === 'float') {
+        // Don't take null values
+        if (!self.field.defaultValue) {
+          delete self.field.defaultValue;
+          // Cast value according to field type
+        } else if (self.fieldType === 'float') {
           self.field.defaultValue = parseFloat(self.field.defaultValue);
         } else if (self.fieldType === 'boolean') {
           self.field.defaultValue = self.field.defaultValue === 'true';

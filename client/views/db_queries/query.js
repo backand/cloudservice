@@ -383,6 +383,7 @@
 
     function successQueryHandler(data) {
       self.gridOptions.data = data.data;
+      self.jsonQueryTestResult = JSON.stringify(data.data, null, 2);
       var columns = [];
       if (data.data.length > 0)
         columns = Object.keys(data.data[0]);

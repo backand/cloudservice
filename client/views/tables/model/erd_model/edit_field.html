@@ -56,7 +56,7 @@
         <div id="editable-properties"
              ng-show="::EditField.isEdit && !EditField.isCollectionOrObject">
 
-          <div class="form-group">
+          <div class="form-group" ng-hide="EditField.hideDefaultValue">
             <label for="default-value">Default Value:</label>
 
             <div id="default-value" ng-switch="EditField.fieldType">
