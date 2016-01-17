@@ -837,6 +837,8 @@
       '  CONSTS - CONSTS.apiUrl for Backands API URL\n' +
       '  Config - Global Configuration\n' +
       '  socket - Send realtime database communication\n' +
+      '  files - file handler, performs upload and delete of files\n' +
+      '  request - the current http request\n' +
       '\*/\n' +
       '\'use strict\';\n' +
       'function backandCallback(userInput, dbRow, parameters, userProfile) {',
