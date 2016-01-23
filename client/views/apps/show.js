@@ -2,14 +2,16 @@
 
   'use strict';
   angular.module('backand.apps')
-    .controller('AppShowController', ['$scope', 'AppsService', '$sce', '$state', 'ColumnsService', 'TablesService', 'RulesService', AppShowController]);
+    .controller('AppShowController', ['$scope', 'AppsService', '$sce', '$state', 'TablesService', 'RulesService', 'FieldsService', 'DbDataModel', 'usSpinnerService', AppShowController]);
 
-  function AppShowController($scope, AppsService, $sce, $state, ColumnsService, TablesService, RulesService) {
+  function AppShowController($scope, AppsService, $sce, $state, TablesService, RulesService, FieldsService, DbDataModel, usSpinnerService) {
     var self = this;
 
     var app = AppsService.currentApp;
     self.currentApp = app;
     self.appName = app.Name;
+    self.currentModel = DbDataModel.currentModel;
+    self.newModel = DbDataModel.newModel;
     self.objects = {};
     self.showOldDashboard = false;
     $scope.appName = self.appName;
@@ -72,40 +74,26 @@
     };
 
     function init() {
-      TablesService.get(self.appName).then(function (data) {
-        RulesService.appName = self.appName;
-
-        data.forEach(function (object) {
-          self.objects[object.name] = {};
-          ColumnsService.tableName = object.name;
-          ColumnsService.get().then(function (data) {
-            self.objects[object.name].relatedObjects = extractRelatedObjectsForObject(data);
-            self.objects[object.name].isAuthSecurityOverridden = data.permissions.overrideinheritable;
+      usSpinnerService.spin('loading');
+      DbDataModel.get(self.appName).finally(function () {
+        TablesService.get(self.appName).then(function (objectData) {
+          RulesService.appName = self.appName;
+          RulesService.get().then(function (rules) {
+            objectData.forEach(function (object) {
+              self.objects[object.name] = {};
+              self.objects[object.name].relatedObjects = FieldsService.getRelatedFieldsForObject(object.name);
+              self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
+              self.objects[object.name].isAuthSecurityOverridden = self.currentApp.stat.authorizationSecurity[object.name];
+              self.objects[object.name].isDataSecurityEnabled = self.currentApp.stat.dataSecurity[object.name];
+              self.objects[object.name].id = object.__metadata.id;
+              self.objects[object.name].actions = _.where(rules.data.data, {viewTable: object.__metadata.id}).length;
+            });
+            usSpinnerService.stop('loading');
           });
-          self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
-          self.objects[object.name].id = object.__metadata.id;
-          RulesService.tableId = self.objects[object.name].id;
-          RulesService.get().then(function (data) {
-            self.objects[object.name].actions = data.data.data.length;
-          });
-
-          // Placeholder
-          self.objects[object.name].isDataSecurityEnabled = false;
         });
-        var objectKey = _.keys(self.objects)[0];
-        self.objects[objectKey].isDataSecurityEnabled = true;
       });
 
 
-      function extractRelatedObjectsForObject(columnsData) {
-        var relatedObjects = [];
-        columnsData.fields.forEach(function (field) {
-          if (field.relatedViewName != '') {
-            relatedObjects.push(field.relatedViewName);
-          }
-        });
-        return relatedObjects;
-      }
     }
   }
 }());

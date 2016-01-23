@@ -92,6 +92,20 @@
       return field;
     };
 
+    self.getRelatedFieldsForObject = function (objectName) {
+      init();
+      var relatedFields = [];
+      var object = _.find(self.newModelObject, {name: objectName});
+      _.forEach(object.fields, function (field) {
+        if (field.object) {
+          relatedFields.push(field.object);
+        } else if (field.collection) {
+          relatedFields.push(field.collection);
+        }
+      });
+      return relatedFields;
+    };
+
 
     function createCollectionField(model, fieldName, relatedObject, viaField, objectName) {
       // Create field on the selected object
