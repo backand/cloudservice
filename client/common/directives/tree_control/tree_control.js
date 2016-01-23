@@ -15,11 +15,11 @@
       };
     });
 
-  TreeController.$inject = ['$state', 'HostingService', 'AppsService', 'NotificationService', 'usSpinnerService'];
-  function TreeController($state, HostingService, AppsService, NotificationService, usSpinnerService) {
+  TreeController.$inject = ['$state', 'HostingService', 'FilesService', 'AppsService', 'NotificationService', 'usSpinnerService'];
+  function TreeController($state, HostingService, FilesService, AppsService, NotificationService, usSpinnerService) {
     var self = this;
 
-    if ($state.current.name.indexOf('hosting') == -1) {
+    if ($state.current.name == 'hosting.files_tree') {
       self.service = 'file';
     } else {
       self.service = 'hosting';
@@ -34,7 +34,7 @@
       usSpinnerService.spin('loading');
       HostingService.get(self.appName).then(initTreeDataSuccess, failureHandler);
     } else {
-      // TODO: Implementation for file
+      FilesService.get(self.appName).then(initTreeDataSuccess, failureHandler);
     }
     self.treeOptions = {
       isLeaf: function (node) {
@@ -56,20 +56,26 @@
 
     self.onNodeToggle = function (node, expanded) {
       if (expanded && node.type === 'folder' && node.children.length === 0) {
+        usSpinnerService.spin('loading');
         if (self.service == 'hosting') {
-          usSpinnerService.spin('loading');
           HostingService.get(self.appName, node.path).then(function (data) {
-            var items = _.rest(data.data);
-            items.forEach(function (item) {
-              node.children.push(createTreeItem(item));
-            });
-            usSpinnerService.stop('loading');
+            treePathDataSuccess(data, node);
           }, failureHandler);
         } else {
-          // TODO: Implementation for file
+          FilesService.get(self.appName, node.path).then(function (data) {
+            treePathDataSuccess(data, node);
+          }, failureHandler);
         }
       }
     };
+
+    function treePathDataSuccess(data, node) {
+      var items = _.rest(data.data);
+      items.forEach(function (item) {
+        node.children.push(createTreeItem(item));
+      });
+      usSpinnerService.stop('loading');
+    }
 
     function initTreeDataSuccess(treeData) {
       var items = _.rest(treeData.data);
