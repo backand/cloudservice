@@ -1,5 +1,7 @@
 (function () {
 
+(function  () {
+
   'use strict';
   angular.module('backand.apps')
     .controller('AppShowController', ['$scope', 'AppsService', '$sce', '$state', 'TablesService', 'RulesService', 'FieldsService', 'DbDataModel', 'usSpinnerService', AppShowController]);
@@ -73,8 +75,14 @@
       $state.go(state);
     };
 
-    function init() {
+    self.refresh = function () {
       usSpinnerService.spin('loading');
+      AppsService.getApp(self.appName).then(function (data) {
+        init();
+      });
+    };
+
+    function init() {
       DbDataModel.get(self.appName).finally(function () {
         TablesService.get(self.appName).then(function (objectData) {
           RulesService.appName = self.appName;

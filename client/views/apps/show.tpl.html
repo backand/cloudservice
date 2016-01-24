@@ -1,7 +1,10 @@
 <div class="page">
   <alert type="danger" close="show.setAlertStatus()" ng-show="show.alertMsg != ''"><div ng-bind-html="show.alertMsg"></div></alert>
   <div class="panel panel-default dashboard">
-    <div class="panel-heading"><strong>Dashboard</strong></div>
+    <div class="panel-heading">
+      <strong>Dashboard</strong>
+      <a href="" id="dashboard-refresh" title="Refresh statistics" class="btn btn-sm" ng-click="show.refresh()"><i class="glyphicon glyphicon-refresh"></i></a>
+    </div>
     <div class="panel-body">
       <div class="row col-md-10 col-sm-offset-1">
         <div class="list-unstyled row">
@@ -55,6 +58,7 @@
             <span ng-repeat="relatedObject in object.relatedObjects">
               <a>{{relatedObject + ($last ? '' : ',')}}</a>
             </span>
+            <span ng-if="object.relatedObjects.length == 0">None</span>
           </div>
         </div>
 
