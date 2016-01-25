@@ -1,11 +1,13 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('FilesTreeController', [FilesTreeController]);
+    .controller('FilesTreeController', ['AppsService', FilesTreeController]);
 
-  function FilesTreeController() {
+  function FilesTreeController(AppsService) {
 
     var self = this;
+
+    self.appName = AppsService.currentApp.Name;
 
   }
 

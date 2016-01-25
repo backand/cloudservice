@@ -11,7 +11,7 @@
 				"width": 1205,
 				"grid": 0,
 				"tags": [
-					"stroage"
+					"storage"
 				]
 			},
 			"attrs": [],
@@ -20,7 +20,7 @@
 				"id": 36,
 				"prevSize": 32,
 				"code": 59652,
-				"name": "stroage2"
+				"name": "storage2"
 			},
 			"setIdx": 0,
 			"setId": 4,
