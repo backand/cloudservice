@@ -1,0 +1,231 @@
+@font-face {
+    font-family: 'backand-menu';
+    src:    url('fonts/backand-menu.eot?m337jp');
+    src:    url('fonts/backand-menu.eot?m337jp#iefix') format('embedded-opentype'),
+        url('fonts/backand-menu.ttf?m337jp') format('truetype'),
+        url('fonts/backand-menu.woff?m337jp') format('woff'),
+        url('fonts/backand-menu.svg?m337jp#backand-menu') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'backand-menu' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-stroage2:before {
+    content: "\e904";
+}
+.icon-console2:before {
+    content: "\e905";
+}
+.icon-hosting2:before {
+    content: "\e906";
+}
+.icon-hosting-files2:before {
+    content: "\e907";
+}
+.icon-angularjs-quickstart2:before {
+    content: "\e61a";
+}
+.icon-admins2:before {
+    content: "\e61b";
+}
+.icon-configuration2:before {
+    content: "\e61c";
+}
+.icon-dashboard2:before {
+    content: "\e61d";
+}
+.icon-database2:before {
+    content: "\e61e";
+}
+.icon-data-history2:before {
+    content: "\e61f";
+}
+.icon-docs-and-api2:before {
+    content: "\e620";
+}
+.icon-documentation2:before {
+    content: "\e621";
+}
+.icon-general2:before {
+    content: "\e622";
+}
+.icon-kickstart-tutorial2:before {
+    content: "\e623";
+}
+.icon-log2:before {
+    content: "\e624";
+}
+.icon-model2:before {
+    content: "\e625";
+}
+.icon-new-query2:before {
+    content: "\e626";
+}
+.icon-objects2:before {
+    content: "\e627";
+}
+.icon-quries2:before {
+    content: "\e628";
+}
+.icon-registered-users2:before {
+    content: "\e629";
+}
+.icon-rest-api-playground2:before {
+    content: "\e62a";
+}
+.icon-secruirty-templates2:before {
+    content: "\e62b";
+}
+.icon-security-and-auth2:before {
+    content: "\e62c";
+}
+.icon-server-side-exceptions2:before {
+    content: "\e62d";
+}
+.icon-settings2:before {
+    content: "\e62e";
+}
+.icon-social-login2:before {
+    content: "\e62f";
+}
+.icon-todo2:before {
+    content: "\e630";
+}
+.icon-todo-example2:before {
+    content: "\e631";
+}
+.icon-keys2:before {
+    content: "\e632";
+}
+.icon-security-actions2:before {
+    content: "\e633";
+}
+.icon-external-link2:before {
+    content: "\e801";
+}
+.icon-icon-copy:before {
+    content: "\e802";
+}
+.icon-icon-field-type-number:before {
+    content: "\e803";
+}
+.icon-icon-field-type-text:before {
+    content: "\e804";
+}
+.icon-icon-field-type-true:before {
+    content: "\e805";
+}
+.icon-icon-field-type-false:before {
+    content: "\e806";
+}
+.icon-icon-refresh:before {
+    content: "\e807";
+}
+.icon-hosting:before {
+    content: "\e900";
+}
+.icon-stroage:before {
+    content: "\e901";
+}
+.icon-hosting-files:before {
+    content: "\e902";
+}
+.icon-console:before {
+    content: "\e903";
+}
+.icon-security-actions:before {
+    content: "\e619";
+}
+.icon-keys:before {
+    content: "\e618";
+}
+.icon-admins:before {
+    content: "\e601";
+}
+.icon-angularjs-quickstart:before {
+    content: "\e600";
+}
+.icon-configuration:before {
+    content: "\e602";
+}
+.icon-dashboard:before {
+    content: "\e603";
+}
+.icon-database:before {
+    content: "\e604";
+}
+.icon-data-history:before {
+    content: "\e605";
+}
+.icon-docs-and-api:before {
+    content: "\e606";
+}
+.icon-documentation:before {
+    content: "\e607";
+}
+.icon-general:before {
+    content: "\e608";
+}
+.icon-kickstart-tutorial:before {
+    content: "\e609";
+}
+.icon-log:before {
+    content: "\e60a";
+}
+.icon-model:before {
+    content: "\e60b";
+}
+.icon-new-query:before {
+    content: "\e60c";
+}
+.icon-objects:before {
+    content: "\e60d";
+}
+.icon-quries:before {
+    content: "\e60e";
+}
+.icon-registered-users:before {
+    content: "\e60f";
+}
+.icon-rest-api-playground:before {
+    content: "\e610";
+}
+.icon-secruirty-templates:before {
+    content: "\e611";
+}
+.icon-security-and-auth:before {
+    content: "\e612";
+}
+.icon-server-side-exceptions:before {
+    content: "\e613";
+}
+.icon-settings:before {
+    content: "\e614";
+}
+.icon-social-login:before {
+    content: "\e615";
+}
+.icon-todo:before {
+    content: "\e616";
+}
+.icon-todo-example:before {
+    content: "\e617";
+}
+.icon-external-link:before {
+    content: "\e800";
+}
+
