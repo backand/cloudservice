@@ -134,7 +134,14 @@
 
     function init() {
       self.newModel = DbDataModel.newModel;
-      self.newModelObject = JSON.parse(self.newModel.schema);
+      try {
+        self.newModelObject = JSON.parse(self.newModel.schema);
+      }
+      catch (e) {
+        // Fall back to previous model in case the JSON is malformed
+        self.newModel = DbDataModel.currentModel;
+        self.newModelObject = JSON.parse(self.newModel.schema);
+      }
     }
 
     function updateNewModel() {

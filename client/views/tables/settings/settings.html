@@ -1,36 +1,51 @@
 <div class="panel-body panel-body-custom">
-      <div class="form-group form-group-half" >
+  <h3>Object Settings</h3>
+
+  <div class="field-group">
+    <div class="group-inner">
+
+      <div class="form-group form-group-half">
         <label class="strong" for="jsonName">Name</label>
-        <input  type="text" class="form-control" id="jsonName" ng-disabled="false"
+        <input type="text" class="form-control" id="jsonName" ng-disabled="false"
                ng-model="fields.view.name">
+
         <div class="field-description">The name of the object for any JSON representation</div>
       </div>
-      <div class="form-group form-group-half" >
+      <div class="form-group form-group-half">
         <label class="strong" for="dbName">Database Name</label>
         <input disabled type="text" class="form-control" id="dbName"
-                ng-model="fields.view.databaseName">
+               ng-model="fields.view.databaseName">
+
         <div class="field-description">The name of the object in the database</div>
       </div>
       <div class="form-group form-group-half">
-        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  id="History" type="checkbox" ng-model="fields.view.toolbarSettings.saveHistory" checked=""><i></i></label>
+        <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input id="History" type="checkbox"
+                                                                                  ng-model="fields.view.toolbarSettings.saveHistory"
+                                                                                  checked=""><i></i></label>
         <label class="strong" for="History">Track Changes</label>
-        <div class="field-description">When enabled, Backand will track all changes to the object's data. Enabling this option may negatively impact application performance</div>
+
+        <div class="field-description">When enabled, Backand will track all changes to the object's data. Enabling this
+          option may negatively impact application performance
+        </div>
       </div>
-      <div class="form-group form-group-half" >
+      <div class="form-group form-group-half">
         <label class="strong" for="dbName">Descriptive Column</label>
         <select class="form-control"
                 ng-options="field.name as field.name for field in fields.items"
                 ng-model="fields.view.columnDisplayinTitle">
         </select>
-        <div class="field-description">The descriptive column is used in MultiSelect and SingleSelect fields when this object has been selected as a "relatedTable"</div>
+
+        <div class="field-description">The descriptive column is used in MultiSelect and SingleSelect fields when this
+          object has been selected as a "relatedTable"
+        </div>
       </div>
-      <!--<div class="form-group form-group-half">-->
-        <!--<label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input  id="websockets" type="checkbox" ng-model="fields.view.sendRealTimeEvents" checked=""><i></i></label>-->
-        <!--<label class="strong" for="History">Send Rel-time events</label>-->
-        <!--<div class="field-description">When enabled, Backand will send messages using web sockets on every Create, Update and Delete of the object. The event names are: {{fields.view.name}}.created, {{fields.view.name}}.updated, {{fields.view.name}}.deleted</div>-->
-      <!--</div>-->
-      <!--<div class="form-group">-->
-        <!--<label  for="DefaultSort">Default Sort</label>-->
-       <!--<input  id="DefaultSort" ng-model="fields.view.dataEditing.defaultSort" class="form-control"/>-->
-      <!--</div>-->
+    </div>
+  </div>
+  <br/>
+  <h3>Fields Settings</h3>
+  <div class="field-group">
+    <div class="group-inner">
+      <ng-include src="'views/tables/fields/fields.html'"></ng-include>
+    </div>
+  </div>
 </div>

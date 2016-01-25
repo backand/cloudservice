@@ -3,10 +3,11 @@
  */
 (function () {
 
-  function LogActivity($stateParams, $state, $log, NotificationService, AppLogService, $scope, usSpinnerService) {
+  function LogActivity($stateParams, $state, $log, NotificationService, AppLogService, $scope, ConfirmationPopup, usSpinnerService) {
 
     var self = this;
-    var isException;
+    var typeFilter = "1";
+    var tempColDefs = [];
     this.title= '';
     this.sort = '[{fieldName:"ID", order:"desc"}]';
     self.showFilter = true;
@@ -22,14 +23,36 @@
      * init the data
      */
     (function init() {
-      isException = ($state.$current.url.source.indexOf('/exception') > -1);
-      if (isException){
-        self.title ='APP Exceptions';
+      if ($state.$current.url.source.indexOf('/exception') > -1)
+      {
+        typeFilter = "1";
         self.helpKey = 'appException';
+        self.title ='APP Exceptions';
+        tempColDefs = [
+          {name: 'ID', displayName: 'Exception Id', sort: {direction: 'desc', priority: 0}, width: 100},
+          {name: 'Username', displayName: 'Updated By', width: 200},
+          {name: 'Time', field: '__metadata.dates.Time', displayName: 'Time', type: 'datetime', width: 200},
+          {name: 'ExceptionMessage',minWidth: 200}
+        ];
       }
-      else {
+      else if ($state.$current.url.source.indexOf('/activity') > -1) {
+        typeFilter = "3";
+        self.helpKey = 'appException';
         self.title ='APP Activity';
+        tempColDefs = [];
       }
+      else if ($state.$current.url.source.indexOf('/console') > -1) {
+        typeFilter = "500";
+        self.helpKey = 'appException';
+        self.title ='App Console';
+        tempColDefs = [
+          {name: 'ID', displayName: 'Id', sort: {direction: 'desc', priority: 0}, width: 100},
+          {name: 'Username', displayName: 'Logged By', width: 200},
+          {name: 'Time', field: '__metadata.dates.Time', displayName: 'Time', type: 'datetime', width: 200},
+          {name: 'FreeText', 'displayName':'Trace', minWidth: 200}
+        ];
+      }
+
       getFilterOptions();
 
     }());
@@ -37,13 +60,7 @@
     this.gridOptions = {
       enablePaginationControls: false,
       useExternalSorting: true,
-      columnDefs: [
-        {name: 'ID', displayName: 'Exception Id', sort: {direction: 'desc', priority: 0}, width: 100},
-        {name: 'Username', displayName: 'Updated By', width: 100},
-        {name: 'Time', field: '__metadata.dates.Time', displayName: 'Time', type: 'datetime', width: 150},
-        {name: 'ExceptionMessage', minWidth: 300}
-        //{name: 'Trace', displayName: 'Additional Info'}
-      ],
+      columnDefs: tempColDefs,
       onRegisterApi: function( gridApi ) {
         $scope.gridApi = gridApi;
         //declare the events
@@ -59,6 +76,14 @@
           getLog();
         });
       }
+    };
+
+    this.gridOptions.columnDefs.forEach(function (columnDef) {
+      columnDef.cellTemplate = '<div class="ui-grid-cell-contents" style="cursor: pointer;" ng-click="grid.appScope.log.showCellData(COL_FIELD, col.displayName)">{{COL_FIELD}}</div>';
+    });
+
+    self.showCellData = function (COL_FIELD, displayName) {
+      ConfirmationPopup.confirm(COL_FIELD, 'OK', '', true, false, displayName, 'lg')
     };
 
     <!-- Filter -->
@@ -96,7 +121,7 @@
       self.lastQuery = query;
 
       //add isException status to the grid filter
-      self.lastQuery.push({fieldName:"LogType", operator:"equals", value: (isException ? "1" : "3")});
+      self.lastQuery.push({fieldName:"LogType", operator:"equals", value: typeFilter});
 
 
       getLog();
@@ -109,7 +134,7 @@
         operators: null
       };
       self.filterReady = true;
-      self.lastQuery = [{fieldName:"LogType", operator:"equals", value: (isException ? "1" : "3")}];
+      self.lastQuery = [{fieldName:"LogType", operator:"equals", value: typeFilter}];
     }
 
     function getFieldsForFilter () {
@@ -164,6 +189,7 @@
       'NotificationService',
       'AppLogService',
       '$scope',
+      'ConfirmationPopup',
       'usSpinnerService',
       LogActivity
     ]);

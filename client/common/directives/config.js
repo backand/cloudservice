@@ -1,5 +1,5 @@
 (function () {
 
-  angular.module('common.directives', ['flowChart']);
+  angular.module('common.directives', ['flowChart', 'treeControl']);
 
 })();

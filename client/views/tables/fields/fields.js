@@ -22,7 +22,8 @@
       DateTime: 'datetime',
       Boolean: 'boolean',
       SingleSelect: 'object',
-      MultiSelect: 'collection'
+      MultiSelect: 'collection',
+      Point: 'point'
     };
 
     /**

@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', '$stateParams', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', '$stateParams', 'NotificationService', ErdModelController]);
 
-  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q, $stateParams) {
+  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q, $stateParams, NotificationService) {
 
     var self = this;
 
@@ -14,6 +14,11 @@
       self.showHelpDialog = false;
       self.currentModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
+      try {
+        JSON.parse(self.newModel.schema);
+      } catch (e) {
+        NotificationService.add('error', 'Malformed JSON. Please edit the JSON Model.');
+      }
       self.currentObject = $state.params.tableName;
 
       if ($stateParams.isNewObject) {

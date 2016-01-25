@@ -1,10 +1,10 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('common.data_models')
     .service('DbDataModel', ['ModelService', '$localStorage', DbDataModel]);
 
-  function DbDataModel (ModelService, $localStorage) {
+  function DbDataModel(ModelService, $localStorage) {
 
     var self = this;
 
@@ -17,7 +17,10 @@
       schema: null
     };
 
-    function getAppLocalStorage (appName) {
+    function getAppLocalStorage(appName) {
+      if (!$localStorage.backand) {
+        $localStorage.backand = $localStorage.backand || {};
+      }
       if (!$localStorage.backand[appName]) {
         $localStorage.backand[appName] = {}
       }
@@ -31,9 +34,9 @@
     }
 
     self.getCustomSchema = function (appName) {
-      var customSchema =  getAppLocalStorage(appName).customSchema;
+      var customSchema = getAppLocalStorage(appName).customSchema;
       try {
-        if(customSchema != null)
+        if (customSchema != null)
           customSchema = angular.toJson(JSON.parse(customSchema), true);
       } finally {
         return customSchema;
@@ -54,7 +57,7 @@
     };
 
     self.getErdModelObject = function (appName, objectName) {
-      return _.find($localStorage.backand[appName].erdModel.nodes, { name: objectName });
+      return _.find($localStorage.backand[appName].erdModel.nodes, {name: objectName});
     };
 
     self.saveErdModel = function (appName) {
@@ -64,9 +67,9 @@
     self.get = function (appName) {
       getAppLocalStorage(appName);
       return ModelService.get(appName)
-        .then (function (response) {
+        .then(function (response) {
           return updateModels(appName, response)
-      })
+        })
     };
 
     self.update = function (appName, schema) {
@@ -84,13 +87,21 @@
       self.saveErdModel(appName);
     };
 
-    function updateModels (appName, model) {
+    function updateModels(appName, model) {
       self.currentModel.schema = angular.toJson(model.data, true);
       self.currentModel.json = model.data;
       self.currentModel.erdModel = self.modelToChartData(appName, model.data);
       self.newModel.schema =
         self.getCustomSchema(appName) || self.currentModel.schema;
-      self.newModel.erdModel = self.modelToChartData(appName, JSON.parse(self.newModel.schema));
+      var newModelObject;
+      // Handle case when JSON is malformed
+      try {
+        newModelObject = JSON.parse(self.newModel.schema);
+      }
+      catch (e) {
+        newModelObject = JSON.parse(self.currentModel.schema);
+      }
+      self.newModel.erdModel = self.modelToChartData(appName, newModelObject);
       self.saveErdModel(appName);
       return self.currentModel;
     }
@@ -162,8 +173,7 @@
             var destConnectorIndex = _.findIndex(dest.fields, {name: fieldname});
 
             var source = _.find(chartData.nodes, {name: field.collection});
-            if(source)
-            {
+            if (source) {
               var sourceConnectorIndex = _.findIndex(source.fields, {name: field.via});
 
               chartData.connections.push({
