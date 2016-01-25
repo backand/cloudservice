@@ -129,6 +129,12 @@ angular.module('backand.routes', []).
         parent: 'app',
         abstract: true,
         template: '<div ui-view></div>'
+      })
+      .state('hosting', {
+        url: '/hosting',
+        parent: 'app',
+        abstract: true,
+        template: '<div ui-view></div>'
       });
   })
   .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS', run]);

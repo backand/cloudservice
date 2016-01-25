@@ -21,6 +21,11 @@
         controller: 'LogActivity as log',
         templateUrl: 'views/log/activity.html'
       })
+      .state('log.console', {
+        url: '/console',
+        controller: 'LogActivity as log',
+        templateUrl: 'views/log/activity.html'
+      })
   }
 
 })();

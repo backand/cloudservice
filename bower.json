@@ -31,7 +31,8 @@
     "ngstorage": "~0.3.0",
     "angulartics": "~0.17.2",
     "fontawesome": "~4.3.0",
-    "ace-diff": "https://github.com/benkeen/ace-diff.git"
+    "ace-diff": "https://github.com/benkeen/ace-diff.git",
+    "angular-tree-control": "https://github.com/wix/angular-tree-control.git"
   },
   "devDependencies": {
     "angular-mocks": "1.3.0"
