@@ -17,7 +17,7 @@
     $localStorage.backand = $localStorage.backand || {};
   }
 
-  angular.module('controllers', []);
+  angular.module('controllers', ['perfect_scrollbar']);
   angular.module('services', []);
 
   angular.module('backand', [
