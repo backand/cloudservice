@@ -302,6 +302,8 @@
           return 'textarea';
         case 'Boolean':
           return 'checkbox';
+        case 'Point':
+          return 'point';
         default:
           return 'text'
       }
