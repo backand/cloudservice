@@ -30,8 +30,8 @@
 
     self.data = [];
 
+    usSpinnerService.spin('loading');
     if (self.service == 'hosting') {
-      usSpinnerService.spin('loading');
       HostingService.get(self.appName).then(initTreeDataSuccess, failureHandler);
     } else {
       FilesService.get(self.appName).then(initTreeDataSuccess, failureHandler);
@@ -82,6 +82,8 @@
       items.forEach(function (item) {
         self.data.push(createTreeItem(item));
       });
+      self.noFiles = items.length == 0;
+
       usSpinnerService.stop('loading');
     }
 

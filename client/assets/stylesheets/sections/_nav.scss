@@ -51,7 +51,7 @@
             @include transition( all .2s ease-in-out);
 
             &:first-child > a {
-                
+
                 border-top: 0;
             }
             >a {
@@ -142,5 +142,10 @@
             }
         }
     }
+}
+
+.scroller {
+  overflow-y: hidden;
+  position: relative;
 }
 
