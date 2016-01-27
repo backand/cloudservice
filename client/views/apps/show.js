@@ -1,4 +1,4 @@
-(function  () {
+(function () {
 
   'use strict';
   angular.module('backand.apps')
@@ -76,28 +76,32 @@
     self.refresh = function () {
       usSpinnerService.spin('loading');
       self.objects = {};
-      AppsService.getAppWithStat(self.appName).then(function (data) {
-        init();
-      });
+      init();
     };
 
     function init() {
-      DbDataModel.get(self.appName).finally(function () {
-        TablesService.get(self.appName).then(function (objectData) {
-          RulesService.appName = self.appName;
-          RulesService.get().then(function (rules) {
-            objectData.forEach(function (object) {
-              self.objects[object.name] = {};
-              self.objects[object.name].relatedObjects = FieldsService.getRelatedFieldsForObject(object.name);
-              self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
-              self.objects[object.name].isAuthSecurityOverridden = self.currentApp.stat.authorizationSecurity[object.name];
-              self.objects[object.name].isDataSecurityEnabled = self.currentApp.stat.dataSecurity[object.name];
-              self.objects[object.name].id = object.__metadata.id;
-              self.objects[object.name].actions = _.where(rules.data.data, {viewTable: object.__metadata.id}).length;
+      AppsService.getAppWithStat(self.appName).then(function (appData) {
+        DbDataModel.get(self.appName).finally(function () {
+          TablesService.get(self.appName).then(function (objectData) {
+            RulesService.appName = self.appName;
+            RulesService.get().then(function (rules) {
+              populateDashboard(objectData, rules);
+              usSpinnerService.stop('loading');
             });
-            usSpinnerService.stop('loading');
           });
         });
+      });
+    }
+
+    function populateDashboard(objectData, rules) {
+      objectData.forEach(function (object) {
+        self.objects[object.name] = {};
+        self.objects[object.name].relatedObjects = FieldsService.getRelatedFieldsForObject(object.name);
+        self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
+        self.objects[object.name].isAuthSecurityOverridden = self.currentApp.stat.authorizationSecurity[object.name];
+        self.objects[object.name].isDataSecurityEnabled = self.currentApp.stat.dataSecurity[object.name];
+        self.objects[object.name].id = object.__metadata.id;
+        self.objects[object.name].actions = _.where(rules.data.data, {viewTable: object.__metadata.id}).length;
       });
     }
   }
