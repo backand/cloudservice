@@ -169,6 +169,13 @@
       });
     };
 
+    self.setDebug = function (mode) {
+      return $http({
+        method: 'PUT',
+        url: CONSTS.appUrl + '/1/debugMode?mode=' + mode
+      });
+    };
+
     function getAllApps () {
       return $http({
         method: 'GET',

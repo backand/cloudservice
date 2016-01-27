@@ -2,11 +2,12 @@
   'use strict';
 
   angular.module('backand.docs')
-    .controller('Docs', ['AppsService', 'usSpinnerService', '$state','SessionService','SecurityService','$rootScope', Docs]);
+    .controller('Docs', ['AppsService', 'usSpinnerService', '$state','SessionService','SecurityService','$rootScope','CONSTS', Docs]);
 
-  function Docs(AppsService, usSpinnerService, $state, SessionService, SecurityService, $rootScope) {
+  function Docs(AppsService, usSpinnerService, $state, SessionService, SecurityService, $rootScope, CONSTS) {
 
     var self = this;
+    self.hostingUrl = CONSTS.hostingUrl;
 
     (function init() {
       usSpinnerService.spin("connecting-app-to-db");

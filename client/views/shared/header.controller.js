@@ -15,6 +15,7 @@
 
     self.apps = AppsService.apps;
     self.currentAppName = AppsService.currentApp.Name;
+    self.debugMode = AppsService.currentApp.debugMode;
     updateDefaultModelUse(self.currentAppName, false);
 
     $scope.$on('$stateChangeSuccess', function () {
@@ -29,6 +30,9 @@
       updateDefaultModelUse(self.currentAppName, false);
     });
 
+    $scope.$on('debugModeChange', function (fun, mode) {
+      self.debugMode = mode;
+    });
 
     $scope.$on('fetchTables', function () {
       updateDefaultModelUse(self.currentAppName, true);

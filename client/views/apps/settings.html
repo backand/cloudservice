@@ -20,6 +20,20 @@
           <label for="title">App Title</label>
           <input type="text" class="form-control" id="title" name="title" ng-model="settings.appTitle" required>
         </div>
+        <div class="field-group">
+          <div class="group-inner">
+            <div class="form-group">
+              <label class="strong" for="debugMode">Debug Mode</label>
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                <input id="debugMode" type="checkbox" ng-model="settings.debugMode"
+                       checked="" ng-change="settings.debugModeUpdate()"><i></i>
+              </label>
+              <div class="field-description">When enabled, all console.log() commands are saved for every call. You
+                can view them in <a href="" ui-sref="log.console">Log --> Console</a> menu.
+              </div>
+            </div>
+          </div>
+        </div>
         <!--<div class="form-group" ng-class="{'has-error': settingsForm.title.$invalid}">-->
           <!--<label for="title">Admin Notification Email</label>-->
           <!--<input type="email" class="form-control" id="adminEmail" name="adminEmail" ng-model="settings.adminEmail">-->
