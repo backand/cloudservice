@@ -76,7 +76,7 @@
     self.refresh = function () {
       usSpinnerService.spin('loading');
       self.objects = {};
-      AppsService.getApp(self.appName).then(function (data) {
+      AppsService.getAppWithStat(self.appName).then(function (data) {
         init();
       });
     };
