@@ -1,4 +1,6 @@
 {
   "appUrl":"http://api.backand.info:8098",
-  "env": "QA"
+  "env": "QA",
+  "hostingUrl": "http://hosting.backand.net",
+  "storageUrl": "http://files.backand.net"
 }

@@ -11,12 +11,15 @@
         templateUrl: '/common/directives/tree_control/tree_control.html',
         bindToController: true,
         controller: TreeController,
-        controllerAs: 'tree'
+        controllerAs: 'tree',
+        scope: {
+          baseUrl: '='
+        }
       };
     });
 
-  TreeController.$inject = ['$state', 'HostingService', 'FilesService', 'AppsService', 'NotificationService', 'usSpinnerService'];
-  function TreeController($state, HostingService, FilesService, AppsService, NotificationService, usSpinnerService) {
+  TreeController.$inject = ['$state', 'HostingService', 'FilesService', 'AppsService', 'NotificationService', 'usSpinnerService', 'CONSTS', '$window'];
+  function TreeController($state, HostingService, FilesService, AppsService, NotificationService, usSpinnerService, CONSTS, $window) {
     var self = this;
 
     if ($state.current.name == 'hosting.files_tree') {
@@ -27,11 +30,10 @@
 
     var app = AppsService.currentApp;
     self.appName = app.Name;
-
     self.data = [];
 
+    usSpinnerService.spin('loading');
     if (self.service == 'hosting') {
-      usSpinnerService.spin('loading');
       HostingService.get(self.appName).then(initTreeDataSuccess, failureHandler);
     } else {
       FilesService.get(self.appName).then(initTreeDataSuccess, failureHandler);
@@ -69,6 +71,18 @@
       }
     };
 
+    self.onClick = function (node, selected) {
+      $window.open(getBaseUrl() + '/' + self.appName + '/' + node.path);
+    };
+
+    function getBaseUrl () {
+      if (self.service == 'hosting') {
+        return CONSTS.hostingUrl;
+      } else {
+        return CONSTS.storageUrl;
+      }
+    }
+
     function treePathDataSuccess(data, node) {
       var items = _.rest(data.data);
       items.forEach(function (item) {
@@ -82,6 +96,8 @@
       items.forEach(function (item) {
         self.data.push(createTreeItem(item));
       });
+      self.noFiles = items.length == 0;
+
       usSpinnerService.stop('loading');
     }
 

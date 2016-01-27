@@ -6,13 +6,9 @@
     </div>
     <div class="panel-body docs">
       <div>
-        <p>
-        <h4>Backand offers high-performance, reliable, and secure hosting for AngularJS applications through the hosting and deployment tool. Built off of AWS, Backand's hosting gives you an effortless way to deploy your Angular project to a hosted server.<br/>
-        Your project files will be available for review at <a href="https://hosting.backand.io/{{docs.currentApp.Name}}" target="_blank">https://hosting.backand.io/{{docs.currentApp.Name}}</a></h4>
-        </p>
+        <h3>First Time Installation</h3>
         <br/>
-            <h3>First Time Installation</h3>
-        <p>The Backand CLI  (command-line interface), which is used to control deployment, requires Node.js and npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.<br/>
+        <p>The Backand CLI  (command-line interface), which is used to control deployment, requires Node.js and npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.<br/><br/>
           Run the following command to install Backand CLI tool:
         </p>
             <pre><code class="bash">
@@ -22,9 +18,9 @@
   # sudo npm install -g backand
             </code></pre>
             <p>
-              To <b>update</b> a previously-installed version of Backand CLI, run the following command to update the node package:
+              To <b>update</b> a previously-installed version of Backand CLI - <a href="" ng-click="docs.showUpdate = !docs.showUpdate">{{docs.showUpdate ? "Hide": "Show"}}</a>
             </p>
-            <pre><code class="bash">
+            <pre ng-if="docs.showUpdate"><code class="bash">
   $ npm update -g backand
 
   # or use sudo (with caution) if required by your system permissions
@@ -32,17 +28,25 @@
             </code></pre>
             <br/>
             <h3>Deploy your Angular Project</h3>
-        <p>To deploy and sync your local Angular project folder with the server, use the following command on the command line:</p>
+            <br/>
+            <p>To deploy and sync your local Angular project folder with the server, use the following command on the command line:</p>
             <pre><code>
-  backand sync --app {{docs.currentApp.Name}} --master {{docs.masterToken}} --user {{docs.userToken}} --folder /path/to/project/folder
+  $ backand sync --app {{docs.currentApp.Name}} --master {{docs.masterToken}} --user {{docs.userToken}} --folder /path/to/project/folder
             </code></pre>
             <p>
               <b>--app</b>: The current app name<br/>
-              <b>--master</b>: The master token of the app (get it from Social & Keys)<br/>
-              <b>--user</b>: The token of the current user (get it from Team and click on key icon)<br/>
+              <b>--master</b>: The master token of the app (get it from <a href="" ui-sref="security.keys">Social & Keys</a>)<br/>
+              <b>--user</b>: The token of the current user (get it from <a href="" ui-sref="security.team">Team</a> and click on key icon)<br/>
               <b>--folder</b>: The path of the local Angular folder to sync and deploy<br/>
             </p>
             <br/>
+            <h3>Test Out your App</h3>
+            <br/>
+            <p>Your app is now available at the following link: <a
+                    href="{{docs.hostingUrl}}/{{docs.currentApp.Name}}"
+                    target="_blank">{{docs.hostingUrl}}/{{docs.currentApp
+              .Name}}</a></p>
+            <p>Check out your hosting files here: <a ui-sref="hosting.hosting_tree" href="">Hosting Files</a></p>
         </div>
       </div>
   </div>

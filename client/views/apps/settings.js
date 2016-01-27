@@ -2,9 +2,9 @@
 
   'use strict';
   angular.module('backand.apps')
-    .controller('AppSettings', ['ConfirmationPopup', 'AppsService', '$state', 'NotificationService', AppSettings]);
+    .controller('AppSettings', ['$scope', 'ConfirmationPopup', 'AppsService', '$state', 'NotificationService', AppSettings]);
 
-  function AppSettings(ConfirmationPopup, AppsService, $state, NotificationService) {
+  function AppSettings($scope, ConfirmationPopup, AppsService, $state, NotificationService) {
     var self = this;
 
     (function init() {
@@ -18,6 +18,7 @@
       self.defaultPageSize = appData.settings.defaultPageSize;
       self.defaultLevelOfDept = appData.settings.defaultLevelOfDept;
       self.config = appData.settings.config || '{\n\n\n}';
+      self.debugMode = appData.debugMode;
     }());
 
     self.submitForm = function () {
@@ -75,6 +76,14 @@
           AppsService.reset(self.globalAppName).then(resetSuccess, errorHandler);
         })
     };
+
+    self.debugModeUpdate = function () {
+      AppsService.setDebug(self.debugMode).then(debugSuccess, errorHandler);
+    };
+
+    function debugSuccess(){
+      $scope.$root.$broadcast('debugModeChange',self.debugMode);
+    }
 
     self.ace = {
       onLoad: function (_editor) {
