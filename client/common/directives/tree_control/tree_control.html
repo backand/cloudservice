@@ -1,0 +1,10 @@
+<div>
+  <treecontrol class="tree-classic"
+               tree-model="tree.data"
+               options="tree.treeOptions"
+               on-node-toggle="tree.onNodeToggle(node, expanded)"
+               on-selection="tree.onClick(node, selected)">
+    {{node.name}}
+  </treecontrol>
+  <p ng-if="tree.noFiles" style="padding-left: 20px;">No Files</p>
+</div>

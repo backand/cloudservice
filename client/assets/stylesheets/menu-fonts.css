@@ -23,6 +23,18 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.ba-icon-icon-storage:before {
+    content: "\e904";
+}
+.ba-icon-icon-console:before {
+    content: "\e905";
+}
+.ba-icon-icon-hosting:before {
+    content: "\e906";
+}
+.ba-icon-icon-hosting-files:before {
+    content: "\e907";
+}
 .ba-icon-icon-copy:before {
 	content: "\e801";
 }

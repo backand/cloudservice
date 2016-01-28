@@ -1,4 +1,4 @@
-<div class="nav-wrapper">
+<div class="nav-wrapper scroller" perfect-scrollbar>
   <ul id="nav2" class="nav" slim-scroll collapse-nav>
 
   <li ng-class="{active: nav.state == 'app.show', disabled: nav.DatabaseStatus != 1}" >
@@ -100,7 +100,7 @@
       <i class="ti-angle-double-right pull-right"
          style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
     </a>
-    <ul class="scrollbar ex4" id="ex4" ng-style="{'display': nav.getObjectMenuStyle()}">
+    <ul class="ex4" id="ex4" ng-style="{'display': nav.getObjectMenuStyle()}">
       <li ng-if="nav.app.connectionSource === 'local'">
         <a ui-sref="erd_model">
           <i class="ba-icon-model"></i>
@@ -197,8 +197,7 @@
           <i class="ba-icon-security-actions"></i>
           <span>Security Actions</span>
           <ba-tooltip tooltip-text="Manage users actions, configure sign-up and social emails"
-                      tooltip-placement="right"
-                      class=""></ba-tooltip>
+                      tooltip-placement="right" class=""></ba-tooltip>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'security.templates', disabled: nav.DatabaseStatus != 1}">
@@ -213,7 +212,7 @@
 
   <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}">
     <a ng-class="{disabled: nav.DatabaseStatus != 1}"  href="">
-      <i class="ba-icon-angularjs-quickstart"></i>
+      <i class="ba-icon-icon-hosting-files"></i>
       <span>Hosting</span>
       <ba-tooltip tooltip-text="High-performance, reliable and secure hosting for AngularJS applications"
                   tooltip-placement="right" class=""></ba-tooltip>
@@ -224,6 +223,18 @@
         <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('docs.hosting')" href="">
           <i class="ba-icon-configuration"></i>
           <span>Configuration</span>
+        </a>
+      </li>
+      <li ng-class="{active: nav.state == 'hosting.hosting_tree', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('hosting.hosting_tree')" href="">
+          <i class="ba-icon-icon-hosting"></i>
+          <span>Hosting Files</span>
+        </a>
+      </li>
+      <li ng-class="{active: nav.state == 'hosting.files_tree', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('hosting.files_tree')" href="">
+          <i class="ba-icon-icon-storage"></i>
+          <span>Storage Files</span>
         </a>
       </li>
     </ul>
@@ -252,7 +263,7 @@
       </li>
       <li ng-class="{active: nav.state == 'log.console', disabled: nav.DatabaseStatus != 1}">
         <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('log.console')" href="">
-          <i class="ba-icon-data-history"></i>
+          <i class="ba-icon-icon-console"></i>
           <span>Console</span>
         </a>
       </li>
