@@ -8,7 +8,7 @@
     .directive('bkndTreeControl', function () {
       return {
         replace: true,
-        templateUrl: '/common/directives/tree_control/tree_control.html',
+        templateUrl: 'common/directives/tree_control/tree_control.html',
         bindToController: true,
         controller: TreeController,
         controllerAs: 'tree',
