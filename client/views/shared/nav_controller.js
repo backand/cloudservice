@@ -111,7 +111,7 @@
     };
 
     self.getObjectMenuStyle = function () {
-      if ($stateParams.newApp) {
+      if ($stateParams.newApp || self.isTablesActive) {
         return "block";
       }
       return "none";
