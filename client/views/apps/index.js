@@ -49,7 +49,7 @@ angular.module('backand.apps')
           self.loading = false;
           // the error message already shows
           //NotificationService.add('error', err);
-        })
+        });
     };
 
     function createDB(appName){
