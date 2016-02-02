@@ -47,7 +47,7 @@
 
     (function init() {
       getData(true, true);
-      initJSONUpload();
+      //initJSONUpload();
     }());
 
     self.toggleShowLog = function () {
@@ -334,6 +334,29 @@
       DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true);
       getEditRowEntity(rowItem);
       openModal();
+    };
+
+    self.uploadJson = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/data/upload_json.html',
+        controller: 'UploadJsonController as uploadJson',
+        resolve: {
+          tableName: function () {
+            return self.tableName;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        if (result && result.reopen) {
+          self.newRow();
+        }
+        else {
+          usSpinnerService.spin("loading-data");
+        }
+        loadData()
+          .then(successDataHandler);
+      });
     };
 
     function getEditRowEntity(rowItem) {

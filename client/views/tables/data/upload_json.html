@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h3 class="modal-title">
+    Upload Json
+  </h3>
+</div>
+<div class="modal-body">
+  <h4>Upload your JSON to add rows quickly</h4>
+  <div us-spinner spinner-key="upload-loading"></div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Templates
+      </h3>
+    </div>
+
+    <div class="panel-body">
+      Panel content
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Upload
+      </h3>
+    </div>
+
+    <div class="panel-body">
+      <div ngf-drop ngf-select ng-model="uploadJson.file" class="drop-box" ng-if="!uploadJson.jsonData"
+           ngf-drag-over-class="'dragover'" ngf-multiple="false">
+        Drop JSON here or click to upload</div>
+      <div ng-if="uploadJson.jsonData">Selected File: {{uploadJson.file.name}}</div>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="uploadJson.upload()">Upload</button>
+</div>
