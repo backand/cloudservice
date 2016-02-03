@@ -4,6 +4,7 @@
     .controller('UploadJsonController', [
       '$modalInstance',
       'tableName',
+      'columns',
       '$scope',
       'DataService',
       'NotificationService',
@@ -11,15 +12,15 @@
       UploadJsonController
     ]);
 
-  function UploadJsonController($modalInstance, tableName, $scope, DataService, NotificationService, usSpinnerService) {
+  function UploadJsonController($modalInstance, tableName, columns, $scope, DataService, NotificationService, usSpinnerService) {
     var self = this;
-    usSpinnerService.stop('upload-loading');
+    self.scheme = getJsonScheme();
+    initDownloadJsonScheme();
 
     $scope.$watch(function () {
       return self.file;
     }, function (file) {
       if (file) {
-        console.log(file.name);
         readFileFromInput(file);
       }
     });
@@ -36,15 +37,25 @@
       });
     };
 
+    self.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+    function initDownloadJsonScheme() {
+      var blob = new Blob([self.scheme], {type: 'text/plain'});
+      self.jsonDownloadUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+    }
+
     function readFileFromInput(fileInput) {
       readTextFile(fileInput);
     }
 
     function readTextFile(file) {
       var reader = new FileReader();
+      usSpinnerService.spin('upload-loading');
       reader.onload = function (e) {
+        usSpinnerService.stop('upload-loading');
         var fileContent = reader.result;
-        console.log(fileContent);
         self.jsonData = getJson(fileContent);
       };
       reader.readAsText(file);
@@ -77,6 +88,17 @@
           json: null
         };
       }
+    }
+
+    function getJsonScheme() {
+      var schemeToReturn = [];
+      schemeToReturn.push({});
+      columns.forEach(function (field) {
+        if (field.key != 'id') {
+          schemeToReturn[0][field.key] = field.value;
+        }
+      });
+      return JSON.stringify(schemeToReturn, null, 2);
     }
   }
 

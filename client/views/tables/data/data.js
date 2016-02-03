@@ -337,12 +337,16 @@
     };
 
     self.uploadJson = function () {
+      getEditRowEntity();
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/data/upload_json.html',
         controller: 'UploadJsonController as uploadJson',
         resolve: {
           tableName: function () {
             return self.tableName;
+          },
+          columns: function () {
+            return self.editRowData.entities;
           }
         }
       });

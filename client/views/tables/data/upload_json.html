@@ -5,6 +5,7 @@
 </div>
 <div class="modal-body">
   <h4>Upload your JSON to add rows quickly</h4>
+
   <div us-spinner spinner-key="upload-loading"></div>
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -14,7 +15,22 @@
     </div>
 
     <div class="panel-body">
-      Panel content
+      <div class="row upload-json-templates">
+        <a class="btn btn-default" download="scheme.json" ng-href="{{uploadJson.jsonDownloadUrl}}">Download JSON
+          Template</a>
+        <button class="btn btn-default" ng-click="uploadJson.showJsonScheme = !uploadJson.showJsonScheme">
+          {{uploadJson.showJsonScheme ? 'Hide JSON scheme' : 'Show JSON scheme'}}
+        </button>
+      </div>
+      <div ng-if="uploadJson.showJsonScheme"
+           ui-ace="{theme: 'monokai', mode: 'json', rendererOptions: { fontSize: 15 } }"
+           type="text"
+           class="form-form-controlcontrol upload-json-scheme"
+           id="json-result"
+           ng-model="uploadJson.scheme"
+           readonly
+           rows="10">
+      </div>
     </div>
   </div>
 
@@ -28,12 +44,16 @@
     <div class="panel-body">
       <div ngf-drop ngf-select ng-model="uploadJson.file" class="drop-box" ng-if="!uploadJson.jsonData"
            ngf-drag-over-class="'dragover'" ngf-multiple="false">
-        Drop JSON here or click to upload</div>
-      <div ng-if="uploadJson.jsonData">Selected File: {{uploadJson.file.name}}</div>
+        Drop JSON here or click to upload
+      </div>
+      <div ng-if="uploadJson.jsonData">Selected File: {{uploadJson.file.name}} <a href=""
+                                                                                  ng-click="uploadJson.jsonData = ''">Cancel</a>
+      </div>
     </div>
   </div>
 
 </div>
 <div class="modal-footer">
-  <button class="btn btn-default" ng-click="uploadJson.upload()">Upload</button>
+  <button class="btn btn-default" ng-click="uploadJson.cancel()">Cancel</button>
+  <button class="btn btn-primary" ng-click="uploadJson.upload()">Upload</button>
 </div>
