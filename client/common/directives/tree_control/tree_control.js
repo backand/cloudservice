@@ -12,9 +12,6 @@
         bindToController: true,
         controller: TreeController,
         controllerAs: 'tree',
-        scope: {
-          baseUrl: '='
-        }
       };
     });
 
@@ -32,12 +29,8 @@
     self.appName = app.Name;
     self.data = [];
 
-    usSpinnerService.spin('loading');
-    if (self.service == 'hosting') {
-      HostingService.get(self.appName).then(initTreeDataSuccess, failureHandler);
-    } else {
-      FilesService.get(self.appName).then(initTreeDataSuccess, failureHandler);
-    }
+    init();
+
     self.treeOptions = {
       isLeaf: function (node) {
         return node.type !== 'folder';
@@ -73,6 +66,11 @@
 
     self.onClick = function (node, selected) {
       $window.open(getBaseUrl() + '/' + self.appName + '/' + node.path);
+    };
+
+    self.reset = function () {
+      self.data = [];
+      init();
     };
 
     function getBaseUrl () {
@@ -123,6 +121,15 @@
     function failureHandler(data) {
       usSpinnerService.stop('loading');
       NotificationService.add('error', 'There was an error retrieving your hosting data. Please make sure hosting is configured correctly.');
+    }
+
+    function init() {
+      usSpinnerService.spin('loading');
+      if (self.service == 'hosting') {
+        HostingService.get(self.appName).then(initTreeDataSuccess, failureHandler);
+      } else {
+        FilesService.get(self.appName).then(initTreeDataSuccess, failureHandler);
+      }
     }
   }
 

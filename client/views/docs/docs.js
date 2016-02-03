@@ -2,15 +2,16 @@
   'use strict';
 
   angular.module('backand.docs')
-    .controller('Docs', ['AppsService', 'usSpinnerService', '$state','SessionService','SecurityService','$rootScope','CONSTS', Docs]);
+    .controller('Docs', ['AppsService', 'usSpinnerService', '$state','SessionService','SecurityService','$rootScope','CONSTS', '$modal', Docs]);
 
-  function Docs(AppsService, usSpinnerService, $state, SessionService, SecurityService, $rootScope, CONSTS) {
+  function Docs(AppsService, usSpinnerService, $state, SessionService, SecurityService, $rootScope, CONSTS, $modal) {
 
     var self = this;
     self.hostingUrl = CONSTS.hostingUrl;
 
     (function init() {
       usSpinnerService.spin("connecting-app-to-db");
+      self.isAppOpened = !_.isEmpty(AppsService.currentApp);
       self.currentApp = AppsService.currentApp;
       if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
@@ -26,6 +27,14 @@
       self.keys = data.data;
       self.masterToken = data.data.general;
     }
+
+    self.newApp = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/docs/new_app_modal.html',
+        controller: 'NewAppModalController',
+        controllerAs: 'newAppModal'
+      });
+    };
 
     self.goToKickstart = function () {
       if (_.isEmpty(AppsService.currentApp)) {
