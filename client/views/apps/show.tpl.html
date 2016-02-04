@@ -1,12 +1,14 @@
 <div class="page">
   <alert type="danger" close="show.setAlertStatus()" ng-show="show.alertMsg != ''"><div ng-bind-html="show.alertMsg"></div></alert>
   <div class="panel panel-default dashboard">
-    <div class="panel-heading"><strong>Dashboard</strong></div>
+    <div class="panel-heading">
+      <strong>Dashboard</strong>
+      <a href="" id="dashboard-refresh" title="Refresh statistics" class="btn btn-sm" ng-click="show.refresh()"><i class="glyphicon glyphicon-refresh"></i></a>
+    </div>
     <div class="panel-body">
       <div class="row col-md-10 col-sm-offset-1">
-
-        <div class="list-unstyled row col-sm-offset-1">
-          <ul class="list-inline text-center stats" >
+        <div class="list-unstyled row">
+          <ul class="list-inline text-center stats">
               <li class="col-md-3">
                 <h1>{{show.statisticsArray['last24hours'] | number:0}}</h1>
                 <p class="text-muted size-h5">Requests in the last 24h</p>
@@ -30,9 +32,41 @@
           </ul>
         </div>
 
-        <div class="divider divider-solid"></div>
+        <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
 
-        <div class="row">
+        <div ng-repeat="(objectName, object) in show.objects" class="row dashboard-row">
+          <div class="object-title-section">
+            <span class="object-title">{{objectName}}</span>
+            <a class="chart-illustration" ng-click="show.goToPage('log.history')"><img src="../../assets/images/chart_illustration.png"></a>
+          </div>
+          <div class="col-md-2 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_data')">
+            <span class="object-stat-title">Records:</span>
+            <a>{{object.records}}</a>
+          </div>
+          <div class="col-md-2 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_actions')">
+            <span class="object-stat-title">Actions:</span>
+            <a>{{object.actions}}</a>
+          </div>
+          <div class="col-md-3 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_security')">
+            <span class="object-stat-title">Authorization Security:</span>
+            {{object.isAuthSecurityOverridden ? 'OVERRIDDEN' : 'INHERITED'}}
+          </div>
+          <div class="col-md-2 object-stat-field" ng-click="">
+            <span class="object-stat-title">Data Security:</span>
+            <span ng-class="{'data-security-enabled': object.isDataSecurityEnabled}">{{object.isDataSecurityEnabled ? 'ENABLED' : 'DISABLED'}}</span>
+          </div>
+          <div class="col-md-3 object-stat-field" ng-click="">
+            <span class="object-stat-title">Related Objects:</span>
+            <span ng-repeat="relatedObject in object.relatedObjects">
+              <a>{{relatedObject + ($last ? '' : ',')}}</a>
+            </span>
+            <span ng-if="object.relatedObjects.length == 0">None</span>
+          </div>
+        </div>
+
+        <div class="divider divider-solid" ng-show="show.showOldDashboard"></div>
+
+        <div class="row" ng-show="show.showOldDashboard">
           <div class="col-md-5 col-sm-6">
             <div log-list app-name="{{appName}}" log-limit="10"></div>
           </div>

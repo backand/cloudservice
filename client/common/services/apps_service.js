@@ -75,6 +75,20 @@
       return deferred.promise;
     };
 
+    self.getAppWithStat = function (appName) {
+      var deferred = $q.defer();
+      getAppWithStat(appName)
+        .success(function (data) {
+          setCurrentApp(data);
+          deferred.resolve(self.currentApp);
+        })
+        .error(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    };
+
     function setCurrentApp (data) {
       angular.copy(data, self.currentApp);
       if(self.currentApp !== null){
@@ -199,6 +213,13 @@
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps/' + appName + '?deep=true'
+      });
+    }
+
+    function getAppWithStat (appName) {
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/admin/myApps/' + appName + '?deep=true' + '&stat=true'
       });
     }
 
