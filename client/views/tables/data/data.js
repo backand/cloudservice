@@ -47,7 +47,7 @@
 
     (function init() {
       getData(true, true);
-      initJSONUpload();
+      //initJSONUpload();
     }());
 
     self.toggleShowLog = function () {
@@ -336,6 +336,33 @@
       openModal();
     };
 
+    self.uploadJson = function () {
+      getEditRowEntity();
+      var modalInstance = $modal.open({
+        templateUrl: 'views/tables/data/upload_json.html',
+        controller: 'UploadJsonController as uploadJson',
+        resolve: {
+          tableName: function () {
+            return self.tableName;
+          },
+          columns: function () {
+            return self.editRowData.entities;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        if (result && result.reopen) {
+          self.newRow();
+        }
+        else {
+          usSpinnerService.spin("loading-data");
+        }
+        loadData()
+          .then(successDataHandler);
+      });
+    };
+
     function getEditRowEntity(rowItem) {
       self.editRowData.id = rowItem ? rowItem.entity.__metadata.id : null;
       self.editRowData.entities = [];
@@ -517,70 +544,6 @@
     //resize the tab to fix the width issue with UI grid
     function resizeGrid () {
       setTimeout("$('#grid-container').trigger('resize');", 50);
-    }
-
-    function initJSONUpload(){
-      var fileInput = document.getElementById('fileInput');
-
-      fileInput.addEventListener('change', function(e) {
-        readFileFromInput(fileInput);
-      });
-    }
-
-    function readFileFromInput(fileInput){
-      var file = fileInput.files[0];
-      if(!file){
-        return;
-      }
-      readTextFile(file);
-      fileInput.value = ""; //clear for next time
-    }
-
-    function readTextFile(file){
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        var fileContent = reader.result;
-        var result = getJson(fileContent);
-        if(result.err){
-          NotificationService.add('error', result.err);
-          return;
-        }
-        DataService.bulkPost(tableName, result.json, true).then(function(result){
-          usSpinnerService.spin("loading-data");
-          loadData().then(successDataHandler);
-        });
-
-      };
-      reader.readAsText(file);
-    }
-
-    function getJson(fileContent){
-      var maxDocuments = 1000;
-      try{
-        var json = JSON.parse(fileContent);
-        if(Array.isArray(json)){
-          if(json.length > maxDocuments){
-            return {
-              err: "Too much documents in file.",
-              json: null
-            };
-          }
-          return {
-            err: null,
-            json: json
-          };
-        }
-        return {
-          err: null,
-          json: [json]
-        };
-      }
-      catch(ex){
-        return {
-          err: "Invalid json file.",
-          json: null
-        };
-      }
     }
   }
 }());

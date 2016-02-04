@@ -6,6 +6,7 @@
 
   function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams){
     var self = this;
+    self.isTablesClicked = false;
 
     (function init() {
       self.app = AppsService.currentApp;
@@ -107,11 +108,11 @@
     }
 
     self.isTablesActive = function() {
-      return $state.includes('tables.columns');
+      return $state.includes('tables.columns') || $state.current.name == 'erd_model' || $state.current.name == 'json_model';
     };
 
     self.getObjectMenuStyle = function () {
-      if ($stateParams.newApp) {
+      if ($stateParams.newApp || self.isTablesActive()) {
         return "block";
       }
       return "none";
@@ -134,6 +135,7 @@
     };
 
     self.goTo = function(state) {
+
       if (self.app.DatabaseStatus === 1) {
         $state.go(state);
       }

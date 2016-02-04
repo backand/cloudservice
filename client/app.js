@@ -64,7 +64,8 @@
     'ngStorage',
     'angulartics',
     'angulartics.segment.io',
-    'flowChart'
+    'flowChart',
+    'ngFileUpload'
   ])
     .config(['ngClipProvider', function (ngClipProvider) {
       ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");
