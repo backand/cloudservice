@@ -303,6 +303,13 @@
             <span>Connect</span>
           </a>
         </li>
+        <li ng-class="{active: nav.state == 'app.configuration'}">
+          <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goTo('app.configuration')" href="">
+            <i class="ti-wand"></i>
+            <span>Configuration</span>
+          </a>
+        </li>
+
         <!--<li ng-class="{active: nav.state == 'database.add-tables', disabled: nav.DatabaseStatus != 1}">
           <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('database.add-tables')" href="">
             <i class="ti-file"></i>

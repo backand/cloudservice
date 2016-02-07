@@ -30,5 +30,10 @@
         controller: 'AppSettings as settings',
         templateUrl: 'views/apps/settings.html'
       })
+      .state('app.configuration', {
+        url: '/configuration',
+        controller: 'AppConfiguration as configuration',
+        templateUrl: 'views/apps/configuration.html'
+      })
   }
 })();

@@ -1,0 +1,30 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong>Configuration</strong>
+    </div>
+    <div class="panel-body">
+      <div class="configuration-description">Import and export your app's configuration</div>
+      <div class="backup-buttons">
+        <button class="btn btn-success" ng-click="configuration.downloadConfiguration()">Export Current Setting</button>
+        <button type="file" class="btn btn-success" ngf-select="configuration.uploadConfiguration($file)">Import External Setting</button>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Date and Time</th>
+            <th>Set as Current</th>
+            <th>Export as File</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="configEntry in configuration.latestConfigurations">
+            <td>{{configEntry.dateTime | date : 'MM/dd/yyyy HH:mm'}}</td>
+            <td><a href="" ng-click="configuration.setConfiguration(configEntry.version)">Set</a></td>
+            <td><a href="" ng-click="configuration.downloadConfiguration(configEntry.version)">Export</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>
