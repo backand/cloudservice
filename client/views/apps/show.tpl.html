@@ -39,26 +39,26 @@
             <span class="object-title">{{objectName}}</span>
             <a class="chart-illustration" ng-click="show.goToPage('log.history')"><img src="../../assets/images/chart_illustration.png"></a>
           </div>
-          <div class="col-md-2 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_data')">
+          <div class="col-md-2">
             <span class="object-stat-title">Records:</span>
-            <a>{{object.records}}</a>
+            <a href="" ng-click="show.goToObjectPage(objectName, object.id, 'object_data')">{{object.records}}</a>
           </div>
-          <div class="col-md-2 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_actions')">
+          <div class="col-md-2">
             <span class="object-stat-title">Actions:</span>
-            <a>{{object.actions}}</a>
+            <a href="" ng-click="show.goToObjectPage(objectName, object.id, 'object_actions')">{{object.actions}}</a>
           </div>
-          <div class="col-md-3 object-stat-field" ng-click="show.goToObjectPage(objectName, object.id, 'object_security')">
-            <span class="object-stat-title">Authorization Security:</span>
-            {{object.isAuthSecurityOverridden ? 'OVERRIDDEN' : 'INHERITED'}}
+          <div class="col-md-3" >
+            <span class="object-stat-title">Security Template:</span>
+            <a href="" ng-click="show.goToObjectPage(objectName, object.id, 'object_security')">{{object.isAuthSecurityOverridden ? 'Overrides' : 'Inherites'}}</a>
           </div>
-          <div class="col-md-2 object-stat-field" ng-click="">
+          <div class="col-md-2" ng-click="">
             <span class="object-stat-title">Data Security:</span>
-            <span ng-class="{'data-security-enabled': object.isDataSecurityEnabled}">{{object.isDataSecurityEnabled ? 'ENABLED' : 'DISABLED'}}</span>
+            <a href="" ng-click="show.goToObjectPage(objectName, object.id, 'object_security')">{{object.isDataSecurityEnabled ? 'Enabled' : 'Disabled'}}</a>
           </div>
-          <div class="col-md-3 object-stat-field" ng-click="">
+          <div class="col-md-3">
             <span class="object-stat-title">Related Objects:</span>
             <span ng-repeat="relatedObject in object.relatedObjects">
-              <a>{{relatedObject + ($last ? '' : ',')}}</a>
+              {{relatedObject + ($last ? '' : ',')}}
             </span>
             <span ng-if="object.relatedObjects.length == 0">None</span>
           </div>
