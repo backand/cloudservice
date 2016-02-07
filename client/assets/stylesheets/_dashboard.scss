@@ -69,3 +69,43 @@
 {
   color: red !important;
 }
+
+.dashboard-row {
+  border: 1px #F0F0F0 solid;
+  padding: 10px 15px 12px 7px;
+  margin-bottom: 10px;
+}
+
+.object-stat-title {
+  font-weight: bold;
+}
+
+.object-title {
+  text-transform: uppercase;
+  font-size: 17px;
+  font-weight: 600;
+  margin-left: 9px;
+}
+
+.object-title-section {
+  padding-bottom: 13px;
+}
+
+.object-stat-field {
+  cursor: pointer;
+}
+
+.data-security-enabled {
+  color: #009900;
+}
+
+.chart-illustration {
+  float: right;
+  cursor: pointer;
+  margin-right: 7px;
+}
+
+#dashboard-refresh {
+  float: right;
+  margin-top: -5px;
+}

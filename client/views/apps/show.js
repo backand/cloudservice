@@ -1,16 +1,19 @@
-
-(function  () {
+(function () {
 
   'use strict';
   angular.module('backand.apps')
-    .controller('AppShowController',['$scope', 'AppsService', '$sce', '$state', AppShowController]);
+    .controller('AppShowController', ['$scope', 'AppsService', '$sce', '$state', 'TablesService', 'RulesService', 'FieldsService', 'DbDataModel', 'usSpinnerService', AppShowController]);
 
-  function AppShowController($scope, AppsService, $sce, $state){
+  function AppShowController($scope, AppsService, $sce, $state, TablesService, RulesService, FieldsService, DbDataModel, usSpinnerService) {
     var self = this;
 
     var app = AppsService.currentApp;
     self.currentApp = app;
     self.appName = app.Name;
+    self.currentModel = DbDataModel.currentModel;
+    self.newModel = DbDataModel.newModel;
+    self.objects = {};
+    self.showOldDashboard = false;
     $scope.appName = self.appName;
 
     $scope.$root.$broadcast('fetchTables');
@@ -27,12 +30,14 @@
     self.connectionStatus = '';
     self.alertMsg = '';
 
-    self.goToLocation = function(href) {
-        window.open(href, '_blank');
+    init();
+
+    self.goToLocation = function (href) {
+      window.open(href, '_blank');
     };
 
     AppsService.appDbStat($state.params.appName)
-      .then(function(data){
+      .then(function (data) {
         if (data.data.tableCount == 0) {
           var msg = 'Your app has no objects! go to <a href="#/app/' + $state.params.appName + '/objects/model' +
             '">Backand Model</a> to populate the app or use any DB admin tool like Workbench or phpMyAdmin';
@@ -43,18 +48,61 @@
       });
 
 
-    self.setAlertStatus = function() {
+    self.setAlertStatus = function () {
       AppsService.setAlert(self.appName, '');
       self.alertMsg = '';
     };
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
 
     });
 
 
-    self.updateAppName = function() {
+    self.updateAppName = function () {
       AppsService.update(self.appName, self.appTitle)
+    };
+
+    self.goToObjectPage = function (objectName, objectId, state) {
+      $state.go(state, {
+        tableName: objectName,
+        tableId: objectId
+      });
+    };
+
+    self.goToPage = function (state) {
+      $state.go(state);
+    };
+
+    self.refresh = function () {
+      usSpinnerService.spin('loading');
+      self.objects = {};
+      init();
+    };
+
+    function init() {
+      AppsService.getAppWithStat(self.appName).then(function (appData) {
+        DbDataModel.get(self.appName).finally(function () {
+          TablesService.get(self.appName).then(function (objectData) {
+            RulesService.appName = self.appName;
+            RulesService.get().then(function (rules) {
+              populateDashboard(objectData, rules);
+              usSpinnerService.stop('loading');
+            });
+          });
+        });
+      });
+    }
+
+    function populateDashboard(objectData, rules) {
+      objectData.forEach(function (object) {
+        self.objects[object.name] = {};
+        self.objects[object.name].relatedObjects = FieldsService.getRelatedFieldsForObject(object.name);
+        self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
+        self.objects[object.name].isAuthSecurityOverridden = self.currentApp.stat.authorizationSecurity[object.name];
+        self.objects[object.name].isDataSecurityEnabled = self.currentApp.stat.dataSecurity[object.name];
+        self.objects[object.name].id = object.__metadata.id;
+        self.objects[object.name].actions = _.where(rules.data.data, {viewTable: object.__metadata.id}).length;
+      });
     }
   }
 }());
