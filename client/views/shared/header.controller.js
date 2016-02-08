@@ -8,6 +8,7 @@
   function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService) {
     var self = this;
     self.usingDefaultModel = false;
+    self.showParseMigrationTool = true;
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
@@ -94,7 +95,14 @@
         templateUrl: 'views/auth/change_password.html',
         controller: 'ChangePasswordController as ChangePassword'
       })
-    }
+    };
+
+    self.openParseMigrationTool = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/shared/parse_migration.html',
+        controller: 'ParseMigrationController as parseMigration'
+      });
+    };
 
   }
 
