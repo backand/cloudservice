@@ -31,7 +31,7 @@
       font-size: 48px;
       @media screen and (max-width:$screen-md) {
         font-size:30px;
-        
+
       }
     }
   }
@@ -44,7 +44,7 @@
      }
      padding-left:2%;
     padding-right:2%;
-   
+
   }
 
   .apps-jumbo-sections {
@@ -52,7 +52,7 @@
     margin: 0 auto;
     font-size: 16px;
     @media screen and (max-width:700px) {
-      
+
       width:100%;
       font-size:14px;
 
@@ -74,13 +74,13 @@
           margin-right:10px;
           text-align:left;
           margin-bottom:0;
-          
+
         }
         .apps-jumbo-section-title {
             text-align:left;
             float:left;
             margin-left:10px;
-            
+
           }
       }
     }
@@ -115,5 +115,15 @@
     vertical-align: middle;
 
 
+  }
+}
+
+form[name="parse-migration-form"] {
+  input, textarea {
+    margin-bottom: 10px;
+  }
+
+  .migration-description {
+    margin-bottom: 5px;
   }
 }

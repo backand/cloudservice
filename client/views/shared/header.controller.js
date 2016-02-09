@@ -8,7 +8,7 @@
   function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService) {
     var self = this;
     self.usingDefaultModel = false;
-    self.showParseMigrationTool = true;
+    self.showParseMigrationTool = $state.current.name == 'apps.index';
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
@@ -27,6 +27,8 @@
         return;
 
       self.currentAppName = AppsService.currentApp.Name;
+
+      self.showParseMigrationTool = $state.current.name == 'apps.index';
 
       updateDefaultModelUse(self.currentAppName, false);
     });
@@ -101,6 +103,13 @@
       var modalInstance = $modal.open({
         templateUrl: 'views/shared/parse_migration.html',
         controller: 'ParseMigrationController as parseMigration'
+      });
+      modalInstance.result.then(function (result) {
+        if(result.success) {
+          $modal.open({
+            templateUrl: 'views/shared/parse_migration_success.html'
+          })
+        }
       });
     };
 
