@@ -89,9 +89,9 @@
       return deferred.promise;
     };
 
-    function setCurrentApp (data) {
+    function setCurrentApp(data) {
       angular.copy(data, self.currentApp);
-      if(self.currentApp !== null){
+      if (self.currentApp !== null) {
         self.currentApp.databaseName =
           data.Database_Source ? DatabaseNamesService.getDBSource(data.Database_Connection.Database_Source) : undefined;
         stopRefreshDBStatus();
@@ -106,6 +106,7 @@
     }
 
     var refreshDBStatus;
+
     function startRefreshDBStatus() {
       refreshDBStatus = $interval(getAppStatus, 3000);
     }
@@ -123,6 +124,23 @@
             $rootScope.$broadcast('AppDbReady', result.Name);
           }
         });
+    }
+
+    function initGetParseStatus() {
+      $interval(getParseStatus, 3000);
+    }
+
+    function getParseStatus() {
+      if (self.currentStatus && self.currentStatus != 2) {
+        self.currentStatus = ParseService.get(self.appName)
+      }
+    }
+
+    function stopGetParseStatus() {
+      if (angular.isDefined(getParseStatus)) {
+        $interval.cancel(getParseStatus);
+        getParseStatus = undefined;
+      }
     }
 
     function stopRefreshDBStatus() {
@@ -191,7 +209,7 @@
       });
     };
 
-    function getAllApps () {
+    function getAllApps() {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps?pageSize=200'
@@ -209,21 +227,21 @@
       })
     }
 
-    function getApp (appName) {
+    function getApp(appName) {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps/' + appName + '?deep=true'
       });
     }
 
-    function getAppWithStat (appName) {
+    function getAppWithStat(appName) {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps/' + appName + '?deep=true' + '&stat=true'
       });
     }
 
-    function updateApp (name, data) {
+    function updateApp(name, data) {
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/admin/myApps/' + name,
@@ -231,14 +249,14 @@
       });
     }
 
-    function deleteApp (name) {
+    function deleteApp(name) {
       return $http({
         method: 'DELETE',
         url: CONSTS.appUrl + '/admin/myApps/' + name
       });
     }
 
-    function resetApp (appName) {
+    function resetApp(appName) {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/1/app/reload/',

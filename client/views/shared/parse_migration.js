@@ -3,9 +3,9 @@
 
   angular.module('controllers')
     .controller('ParseMigrationController',
-    ['AppsService', 'ParseService', 'AnalyticsService', 'DatabaseService', 'ModelService', 'usSpinnerService', '$modalInstance', ParseMigrationController]);
+    ['AppsService', 'ParseService', 'AnalyticsService', 'DatabaseService', 'ModelService', 'usSpinnerService', '$modalInstance', '$scope', ParseMigrationController]);
 
-  function ParseMigrationController(AppsService, ParseService, AnalyticsService, DatabaseService, ModelService, usSpinnerService, $modalInstance) {
+  function ParseMigrationController(AppsService, ParseService, AnalyticsService, DatabaseService, ModelService, usSpinnerService, $modalInstance, $scope) {
     var self = this;
     self.parseSchemeDescription = "With this we can create your database. To get your app scheme do that and this.";
 
@@ -13,7 +13,7 @@
 
     self.create = function () {
       usSpinnerService.spin('loading');
-      AppsService.add(self.appName, self.appDescription)
+      AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
           createDB(self.appName);
         });
@@ -28,13 +28,17 @@
 
       DatabaseService.createDB(appName, product, '', ModelService.defaultSchema())
         .success(function (data) {
+          startMigration();
           AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
           AnalyticsService.track('create app', {app: appName});
-          ParseService.post(self.parseUrl, self.parseSchema, appName).then(function (data) {
-            usSpinnerService.stop('loading');
-            $modalInstance.close({success: true});
-          })
         });
+    }
+
+    function startMigration() {
+      ParseService.post(self.parseUrl, self.parseSchema, self.appName).then(function (data) {
+        usSpinnerService.stop('loading');
+        $modalInstance.close({success: true});
+      });
     }
   }
 

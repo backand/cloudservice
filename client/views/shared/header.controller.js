@@ -107,8 +107,9 @@
       modalInstance.result.then(function (result) {
         if(result.success) {
           $modal.open({
-            templateUrl: 'views/shared/parse_migration_success.html'
-          })
+            templateUrl: 'views/shared/parse_migration_success.html',
+            controller: 'ParseSuccessController as parseSuccess'
+          });
         }
       });
     };

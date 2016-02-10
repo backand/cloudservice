@@ -8,10 +8,13 @@
 
     var self = this;
 
-    self.get = function () {
+    self.get = function (appName) {
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/1/parse/'
+        url: CONSTS.appUrl + '/1/parse/',
+        headers: {
+          AppName: appName
+        }
       });
     };
 
@@ -27,7 +30,7 @@
           AppName: appName
         }
       })
-    }
+    };
   }
 
 })();
