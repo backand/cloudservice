@@ -4,7 +4,8 @@
       <strong>Configuration</strong>
     </div>
     <div class="panel-body">
-      <div class="configuration-description">Import and export your app's configuration</div>
+      <div us-spinner spinner-key="loading"></div>
+      <div class="configuration-description">Import and export your app's configuration. Current version: {{configuration.currentVersion}}</div>
       <div class="backup-buttons">
         <button class="btn btn-success" ng-click="configuration.downloadConfiguration()">Export Current Setting</button>
         <button type="file" class="btn btn-success" ngf-select="configuration.uploadConfiguration($file)">Import External Setting</button>
@@ -12,14 +13,14 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Date and Time</th>
+            <th>Version</th>
             <th>Set as Current</th>
             <th>Export as File</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="configEntry in configuration.latestConfigurations">
-            <td>{{configEntry.dateTime | date : 'MM/dd/yyyy HH:mm'}}</td>
+          <tr ng-repeat="configEntry in configuration.latestConfigurations | orderBy: '-version'">
+            <td>{{configEntry.version}}</td>
             <td><a href="" ng-click="configuration.setConfiguration(configEntry.version)">Set</a></td>
             <td><a href="" ng-click="configuration.downloadConfiguration(configEntry.version)">Export</a></td>
           </tr>
