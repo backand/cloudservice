@@ -10,6 +10,11 @@
       <a ui-sref="database.show" class="btn btn-ghost">Connect Your Database</a></span>
     </div>
 
+    <div ng-if="header.showParseMigrationTool"
+         class="alert db-alert alert-info">Want to migrate your Parse.com project to Backand?
+      <span class="button-wrapper"><a ng-click="header.openParseMigrationTool()" class="btn btn-ghost">Click Here</a></span>
+    </div>
+
     <!-- Logo -->
     <div class="logo bg-dark">
       <a ui-sref="apps.index">
