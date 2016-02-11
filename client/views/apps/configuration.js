@@ -2,9 +2,9 @@
 
   'use strict';
   angular.module('backand.apps')
-    .controller('AppConfiguration', ['AppsService', AppConfiguration]);
+    .controller('AppConfiguration', ['AppsService', 'Upload', AppConfiguration]);
 
-  function AppConfiguration(AppsService) {
+  function AppConfiguration(AppsService, Upload) {
     var self = this;
     self.appName = AppsService.currentApp.Name;
     init();
@@ -18,7 +18,9 @@
     }
 
     self.uploadConfiguration = function (file) {
-      AppsService.uploadBackup(file.name, file);
+      Upload.dataUrl(file, true).then(function (dataUrl) {
+        AppsService.uploadBackup(file.name, dataUrl.replace('data:;base64,', ''));
+      })
     };
 
     self.setConfiguration = function (version) {

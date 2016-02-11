@@ -222,7 +222,7 @@
         method: 'POST',
         headers: {'AppName': self.currentApp.Name},
         url: CONSTS.appUrl + '/1/app/upload',
-        body: {
+        data: {
           filename: fileName,
           filedata: fileData
         }
