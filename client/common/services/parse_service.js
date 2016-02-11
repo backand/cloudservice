@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('common.services')
-    .service('ParseService', ['$http', 'CONSTS', 'AppsService', ParseService]);
+    .service('ParseService', ['$http', 'CONSTS', ParseService]);
 
-  function ParseService($http, CONSTS, AppsService) {
+  function ParseService($http, CONSTS) {
 
     var self = this;
 

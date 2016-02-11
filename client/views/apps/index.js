@@ -4,11 +4,11 @@
   angular.module('backand.apps')
     .controller('AppsIndexController', ['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
       'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',
-      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', '$q', AppsIndexController]);
+      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
                                usSpinnerService, LayoutService, AnalyticsService, SessionService,
-                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService, $q) {
+                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService) {
 
     var self = this;
     self.loading = false;
@@ -83,11 +83,12 @@
       if (!$localStorage.backand[app.Name]) {
         $localStorage.backand[app.Name] = {}
       }
+
       if (!$localStorage.backand[app.Name].isParseMigrationReady) {
         ParseService.get(app.Name).then(function (data) {
-          if (data.status == 0 || data.status == 1) {
+          if (data.data.status == 0 || data.data.status == 1) {
             $localStorage.backand[app.Name].isParseMigrationReady = false;
-          } else if (data.status == 2 || data.status == null) {
+          } else if (data.data.status == 2 || data.data.status == null) {
             $localStorage.backand[app.Name].isParseMigrationReady = true;
           }
           if (!$localStorage.backand[app.Name].isParseMigrationReady) {
@@ -95,16 +96,18 @@
               templateUrl: 'views/shared/parse_migration_success.html',
               controller: 'ParseSuccessController as parseSuccess'
             });
+
+            self.appSpinner[app.Name] = false;
           } else {
-            manageAppDirect();
+            manageAppDirect(app);
           }
         });
       } else {
-        manageAppDirect();
+        manageAppDirect(app);
       }
     };
 
-    function manageAppDirect() {
+    function manageAppDirect(app) {
       if (app.DatabaseStatus !== 0) {
         $state.go('app', {appName: app.Name});
       }
@@ -217,37 +220,6 @@
       LayoutService.openJumbo();
       self.showJumbo = true;
     };
-
-    function isParseMigrationPending(appName) {
-      //if force read check otherwise get from local storage
-      if (!$localStorage.backand[appName]) {
-        $localStorage.backand[appName] = {}
-      }
-
-      if ($localStorage.backand[appName].isParseMigrationReady === undefined) {
-
-      } else {
-        return $localStorage.backand[appName].isParseMigrationReady;
-      }
-    }
-
-    function isParseMigrationPending(appName) {
-      var deferred = $q.defer();
-      ParseService.get(appName).then(
-        function (data) {
-          deferred.resolve();
-          if (data.status == 0 || data.status == 1) {
-            $localStorage.backand[appName].isParseMigrationReady = false;
-            return false;
-          } else {
-            $localStorage.backand[appName].isParseMigrationReady = true;
-            return true;
-          }
-        }, function () {
-
-        });
-      return deferred;
-    }
 
   }
 }());

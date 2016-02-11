@@ -126,23 +126,6 @@
         });
     }
 
-    function initGetParseStatus() {
-      $interval(getParseStatus, 3000);
-    }
-
-    function getParseStatus() {
-      if (self.currentStatus && self.currentStatus != 2) {
-        self.currentStatus = ParseService.get(self.appName)
-      }
-    }
-
-    function stopGetParseStatus() {
-      if (angular.isDefined(getParseStatus)) {
-        $interval.cancel(getParseStatus);
-        getParseStatus = undefined;
-      }
-    }
-
     function stopRefreshDBStatus() {
       if (angular.isDefined(refreshDBStatus)) {
         $interval.cancel(refreshDBStatus);
