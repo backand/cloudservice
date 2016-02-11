@@ -11,6 +11,9 @@
 
     self.dataExportDescription = "Instructions for Data Export";
 
+    self.dataSchemePlaceholder = "Place Parse data scheme here!\n" +
+    "It's so easy!";
+
     self.create = function () {
       usSpinnerService.spin('loading');
       AppsService.add(self.appName, self.appTitle)

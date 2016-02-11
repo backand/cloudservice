@@ -14,7 +14,9 @@
 
     <label for="parse-scheme">Parse Scheme:</label>
     <div class="migration-description">{{::parseMigration.parseSchemeDescription}}</div>
-    <textarea class="form-control" id="parse-scheme" ng-model="parseMigration.parseSchema"></textarea>
+    <textarea class="form-control" id="parse-scheme"
+              ng-model="parseMigration.parseSchema"
+              placeholder="{{parseMigration.dataSchemePlaceholder}}"></textarea>
 
     <label for="data-export">Data Export:</label>
     <div class="migration-description">{{::parseMigration.dataExportDescription}}</div>
