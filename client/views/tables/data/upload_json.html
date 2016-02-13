@@ -55,5 +55,5 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-default" ng-click="uploadJson.cancel()">Cancel</button>
-  <button class="btn btn-primary" ng-click="uploadJson.upload()">Upload</button>
+  <button class="btn btn-primary" ng-click="uploadJson.upload()" ng-disabled="!uploadJson.jsonData">Upload</button>
 </div>
