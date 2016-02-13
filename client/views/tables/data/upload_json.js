@@ -9,13 +9,16 @@
       'DataService',
       'NotificationService',
       'usSpinnerService',
+      'AppsService',
       UploadJsonController
     ]);
 
-  function UploadJsonController($modalInstance, tableName, columns, $scope, DataService, NotificationService, usSpinnerService) {
+  function UploadJsonController($modalInstance, tableName, columns, $scope, DataService, NotificationService, usSpinnerService, AppsService) {
     var self = this;
     self.scheme = getJsonScheme();
     initDownloadJsonScheme();
+    self.appName = AppsService.currentApp.Name;
+    self.schemeFileName = self.appName + '.json';
 
     $scope.$watch(function () {
       return self.file;
@@ -94,7 +97,7 @@
       var schemeToReturn = [];
       schemeToReturn.push({});
       columns.forEach(function (field) {
-        if (field.key != 'id') {
+        if (!field.disable && !field.hide) {
           schemeToReturn[0][field.key] = field.value;
         }
       });
