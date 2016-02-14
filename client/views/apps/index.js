@@ -1,14 +1,14 @@
-(function  () {
-    'use strict';
+(function () {
+  'use strict';
 
-angular.module('backand.apps')
-  .controller('AppsIndexController',['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
-    'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',
-    'DatabaseService','ModelService', '$stateParams', AppsIndexController]);
+  angular.module('backand.apps')
+    .controller('AppsIndexController', ['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
+      'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',
+      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
                                usSpinnerService, LayoutService, AnalyticsService, SessionService,
-                               DatabaseService, ModelService, $stateParams) {
+                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService) {
 
     var self = this;
     self.loading = false;
@@ -18,7 +18,7 @@ angular.module('backand.apps')
       self.apps = appsList.data;
       self.showJumbo = LayoutService.showJumbo();
 
-      if ($stateParams.deletedApp){
+      if ($stateParams.deletedApp) {
         self.apps = _.reject(self.apps, {Name: $stateParams.deletedApp});
       }
 
@@ -27,17 +27,17 @@ angular.module('backand.apps')
       if (userId != 0) {
         var exampleAppName = 'todo' + userId;
         if (!_.find(self.apps, {Name: exampleAppName})) {
-            AppsService.add(exampleAppName, 'My First App - Todo list example');
-          }
+          AppsService.add(exampleAppName, 'My First App - Todo list example');
+        }
       }
 
     }());
 
-    self.addApp = function() {
+    self.addApp = function () {
       self.loading = true;
       self.appName = angular.lowercase(self.appName);
-      if(self.appTitle === '')
-          self.appTitle = self.appName;
+      if (self.appTitle === '')
+        self.appTitle = self.appName;
 
       NotificationService.add('info', 'Creating new app...');
 
@@ -45,14 +45,14 @@ angular.module('backand.apps')
         .then(function (data) {
           createDB(self.appName);
         },
-        function(err) {
+        function (err) {
           self.loading = false;
           // the error message already shows
           //NotificationService.add('error', err);
         });
     };
 
-    function createDB(appName){
+    function createDB(appName) {
 
       AnalyticsService.track('CreatedApp', {appName: appName});
 
@@ -64,7 +64,7 @@ angular.module('backand.apps')
 
           AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
           AnalyticsService.track('create app', {app: appName});
-          $state.go('docs.kickstart',{appName: appName, newApp:true});
+          $state.go('docs.kickstart', {appName: appName, newApp: true});
         })
         .error(function () {
           self.loading = false;
@@ -80,16 +80,43 @@ angular.module('backand.apps')
       self.appSpinner = [];
       self.appSpinner[app.Name] = true;
 
-      if(app.DatabaseStatus !== 0) {
+      if (!$localStorage.backand[app.Name]) {
+        $localStorage.backand[app.Name] = {}
+      }
+
+      if (!$localStorage.backand[app.Name].isParseMigrationReady) {
+        ParseService.get(app.Name).then(function (data) {
+          if (data.data.status == 0 || data.data.status == 1) {
+            $localStorage.backand[app.Name].isParseMigrationReady = false;
+          } else if (data.data.status == 2 || data.data.status == null) {
+            $localStorage.backand[app.Name].isParseMigrationReady = true;
+          }
+          if (!$localStorage.backand[app.Name].isParseMigrationReady) {
+            $modal.open({
+              templateUrl: 'views/shared/parse_migration_success.html',
+              controller: 'ParseSuccessController as parseSuccess'
+            });
+
+            self.appSpinner[app.Name] = false;
+          } else {
+            manageAppDirect(app);
+          }
+        });
+      } else {
+        manageAppDirect(app);
+      }
+    };
+
+    function manageAppDirect(app) {
+      if (app.DatabaseStatus !== 0) {
         $state.go('app', {appName: app.Name});
       }
-      else if (AppsService.isExampleApp(app)){
-          $state.go('database.example', {appName: app.Name});
+      else if (AppsService.isExampleApp(app)) {
+        $state.go('database.example', {appName: app.Name});
       } else {
         createDB(app.Name);
       }
-
-    };
+    }
 
     /**
      *
@@ -117,8 +144,8 @@ angular.module('backand.apps')
       }
     };
 
-    self.goToLocation = function(href) {
-        window.open(href, '_blank');
+    self.goToLocation = function (href) {
+      window.open(href, '_blank');
     };
 
     self.getAppManageTitle = function (app) {
@@ -133,24 +160,24 @@ angular.module('backand.apps')
 
     self.namePattern = /^\w+$/;
 
-    self.getRibboninfo = function(app) {
+    self.getRibboninfo = function (app) {
       return convertStateNumber(app);
     };
 
     function convertStateNumber(app) {
       var ribbonInfo;
-      switch(app.DatabaseStatus) {
+      switch (app.DatabaseStatus) {
         case 0:
-          ribbonInfo = { class: "ui-ribbon-warning", text: 'Pending'};
+          ribbonInfo = {class: "ui-ribbon-warning", text: 'Pending'};
           break;
         case 1:
-          ribbonInfo = { class: 'ui-ribbon-success', text: 'Connected'};
+          ribbonInfo = {class: 'ui-ribbon-success', text: 'Connected'};
           break;
         case 2:
-          ribbonInfo = { class: "ui-ribbon-info", text: 'Create'};
+          ribbonInfo = {class: "ui-ribbon-info", text: 'Create'};
           break;
         default:
-          ribbonInfo = { class: 'ui-ribbon-danger', text: 'Error'};
+          ribbonInfo = {class: 'ui-ribbon-danger', text: 'Error'};
           break;
       }
       if (self.exampleApp(app))
@@ -158,18 +185,18 @@ angular.module('backand.apps')
       return ribbonInfo;
     }
 
-    self.exampleApp = function(app){
+    self.exampleApp = function (app) {
       return AppsService.isExampleApp(app);
     };
 
-    stop = $interval(function() {
+    stop = $interval(function () {
       AppsService.all()
-        .then(function(apps) {
+        .then(function (apps) {
           self.apps = apps.data;
         },
-        function(error) {
+        function (error) {
           stopRefresh();
-      });
+        });
     }, 10000);
 
     function stopRefresh() {
@@ -179,7 +206,7 @@ angular.module('backand.apps')
       }
     }
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       // Make sure that the interval is destroyed too
       stopRefresh();
     });

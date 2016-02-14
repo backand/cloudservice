@@ -128,3 +128,13 @@
     margin-right: 40px;
   }
 }
+
+form[name="parse-migration-form"] {
+  input, textarea {
+    margin-bottom: 10px;
+  }
+
+  .migration-description {
+    margin-bottom: 5px;
+  }
+}
