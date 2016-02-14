@@ -22,6 +22,10 @@
         });
     };
 
+    self.cancel = function(){
+      $modalInstance.close();
+    }
+
     function createDB(appName) {
 
       AnalyticsService.track('CreatedApp', {appName: appName});
