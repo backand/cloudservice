@@ -17,6 +17,10 @@
       "{\"className\":\"_Product\",\"fields\":{\ ...\n" +
       "\"targetClass\":\"_User\"}}}]}";
 
+    self.schemaPopoverTemplateUrl = "/views/shared/parse_schema_popover.html";
+
+    self.dataExportPopoverTemplateUrl = "/views/shared/parse_data_export_popover.html";
+
     self.create = function () {
       usSpinnerService.spin('loading');
       AppsService.add(self.appName, self.appTitle)
@@ -27,7 +31,7 @@
 
     self.cancel = function(){
       $modalInstance.close();
-    }
+    };
 
     function createDB(appName) {
 

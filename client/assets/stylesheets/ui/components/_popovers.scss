@@ -1,12 +1,25 @@
 // .popover {}
 
-.popover-title {
-    padding: 8px 14px 0;
-    color: #aaa;
-    font-weight: bold;
-    border-bottom: none;
+.popover {
+  max-width: 500px;
 }
 
-.popover-content {
-    color: $bright;
+.no-bullets-list li {
+  list-style-type: none;
+}
+
+.popover ol li {
+  margin-left: 5px;
+}
+
+.popover-title {
+  font-size: 16px;
+}
+
+.popover {
+  width: 450px;
+}
+
+.popover ol li {
+  padding-bottom: 7px;
 }
