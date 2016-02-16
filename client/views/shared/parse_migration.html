@@ -5,10 +5,15 @@
 </div>
 <div class="modal-body">
   <div us-spinner spinner-key="loading-migration"></div>
-  <form role="form" ng-submit="" name="parse-migration-form">
+  <form role="form" ng-submit="" name="form" id="parse-migration-form">
     <label for="app-name">App Name:</label>
-    <input type="text" class="form-control" id="app-name" ng-model="parseMigration.appName"
-           placeholder="Your new app name in Backand">
+    <input type="text" class="form-control" id="app-name" name="appName" ng-model="parseMigration.appName"
+           placeholder="Your new app name in Backand"
+           ng-pattern="parseMigration.namePattern" required>
+
+    <div ng-show="form.appName.$error.pattern" class="input-error">no
+      spaces or %$#@^&* allowed
+    </div>
 
     <label for="app-description">App Title:</label>
     <input type="text" class="form-control" id="app-description" ng-model="parseMigration.appTitle"
@@ -26,7 +31,7 @@
               ng-model="parseMigration.parseSchema"
               placeholder="{{parseMigration.dataSchemePlaceholder}}"
               rows="6">
-    </textarea>
+    </textarea required>
 
     <label for="data-export">Data Export:</label>
 
@@ -38,10 +43,10 @@
     </div>
     <input type="text" class="form-control" id="data-export"
            placeholder="https://s3.amazonaws.com/export.parse.com/e41158a4-03cd-476e-b998-9adc784bfabd_1455115374_export.zip?AWSAccessKeyId=AKIAIOZ4MOVEOQZ2326Q&Expires=1457793774&Signature=4L6NAv9p4QixXvUSZ%2FMiRKZNaao%3D"
-           ng-model="parseMigration.parseUrl">
+           ng-model="parseMigration.parseUrl" required>
   </form>
 </div>
 <div class="modal-footer">
   <button class="btn btn-default" ng-click="parseMigration.cancel()">Cancel</button>
-  <button class="btn btn-primary" ng-click="parseMigration.create()">Create</button>
+  <button class="btn btn-primary" ng-click="parseMigration.create()" ng-disabled="form.$invalid">Create</button>
 </div>
