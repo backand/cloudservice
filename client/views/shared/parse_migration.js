@@ -22,7 +22,7 @@
     self.dataExportPopoverTemplateUrl = "/views/shared/parse_data_export_popover.html";
 
     self.create = function () {
-      usSpinnerService.spin('loading');
+      usSpinnerService.spin('loading-migration');
       AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
           createDB(self.appName);
