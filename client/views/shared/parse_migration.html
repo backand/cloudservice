@@ -12,15 +12,29 @@
     <label for="app-description">App Title:</label>
     <input type="text" class="form-control" id="app-description" ng-model="parseMigration.appTitle">
 
-    <label for="parse-scheme">Parse Scheme:</label>
-    <div class="migration-description">{{::parseMigration.parseSchemeDescription}}</div>
+    <label for="parse-scheme">Parse Schema:</label>
+    <div class="migration-description">{{::parseMigration.parseSchemeDescription}}
+      <button popover-placement="bottom" popover-title="You can get the Parse database schema by running:"popover="
+MAC:
+
+curl -X GET-H &quot;X-Parse-Application-Id:YourParseAppID&quot; -H &quot;X-Parse-Master-Key:YourParseAppMasterKey&quot;-H &quot;Content-Type: application/json&quot; https://api.parse.com/1/schemas
+
+Windows:
+
+If you use Windows, you can use Postman, use GET and make a request from https://api.parse.com/1/schemas with the following headers:
+X-Parse-Application-Id: YourParseAppID
+X-Parse-Master-Key: YourParseAppMasterKey
+Content-Type: application/json"
+
+              class="btn btn-link">How do I get my schema?</button></div>
     <textarea class="form-control" id="parse-scheme"
               ng-model="parseMigration.parseSchema"
               placeholder="{{parseMigration.dataSchemePlaceholder}}"></textarea>
 
     <label for="data-export">Data Export:</label>
-    <div class="migration-description">{{::parseMigration.dataExportDescription}}</div>
-    <input type="text" class="form-control" id="data-export" ng-model="parseMigration.parseUrl">
+    <div class="migration-description">{{::parseMigration.dataExportDescription}}
+      <button popover="Export that data from parse by logging in to your Parse app --> App Settings --> General and then &quot;Export app data&quot; few minutes later you will recive an email with a link to download your data, copy and paste this link here" popover-title="Instructions for exporting data" class="btn btn-link">How do I export my data?</button></div>
+    <input type="text" class="form-control" id="data-export" placeholder="for example https://s3.amazonaws.com/export.parse.com/e41158a4-03cd-476e-b998-9adc784bfabd_1455115374_export.zip?AWSAccessKeyId=AKIAIOZ4MOVEOQZ2326Q&Expires=1457793774&Signature=4L6NAv9p4QixXvUSZ%2FMiRKZNaao%3D" ng-model="parseMigration.parseUrl">
   </form>
 </div>
 <div class="modal-footer">

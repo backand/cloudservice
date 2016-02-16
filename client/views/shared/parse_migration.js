@@ -3,16 +3,17 @@
 
   angular.module('controllers')
     .controller('ParseMigrationController',
-    ['AppsService', 'ParseService', 'AnalyticsService', 'DatabaseService', 'ModelService', 'usSpinnerService', '$modalInstance', '$scope', ParseMigrationController]);
+      ['AppsService', 'ParseService', 'AnalyticsService', 'DatabaseService', 'ModelService', 'usSpinnerService', '$modalInstance', '$scope', ParseMigrationController]);
 
   function ParseMigrationController(AppsService, ParseService, AnalyticsService, DatabaseService, ModelService, usSpinnerService, $modalInstance, $scope) {
     var self = this;
-    self.parseSchemeDescription = "With this we can create your database. To get your app scheme do that and this.";
+    self.parseSchemeDescription = "With this we can create your database schema. Please copy past your Parse schema in the following text area."
+    ;
 
-    self.dataExportDescription = "Instructions for Data Export";
+    self.dataExportDescription = "With the exported data we can load your entire data easily";
 
     self.dataSchemePlaceholder = "Place Parse data scheme here!\n" +
-    "It's so easy!";
+      "It's so easy!";
 
     self.create = function () {
       usSpinnerService.spin('loading');
@@ -48,7 +49,6 @@
       });
     }
   }
-
 
 }());
 
