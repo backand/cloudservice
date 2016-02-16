@@ -7,13 +7,15 @@
 
   function ParseMigrationController(AppsService, ParseService, AnalyticsService, DatabaseService, ModelService, usSpinnerService, $modalInstance, $scope) {
     var self = this;
-    self.parseSchemeDescription = "With this we can create your database schema. Please copy past your Parse schema in the following text area."
+    self.parseSchemeDescription = "Please copy past your Parse schema in the following text area:"
     ;
 
     self.dataExportDescription = "With the exported data we can load your entire data easily";
 
-    self.dataSchemePlaceholder = "Place Parse data scheme here!\n" +
-      "It's so easy!";
+    self.dataSchemePlaceholder = "Parse scheme goes here:\n" +
+      "{\"results\":[{\"className\":\"_User\", ...\n" +
+      "{\"className\":\"_Product\",\"fields\":{\ ...\n" +
+      "\"targetClass\":\"_User\"}}}]}";
 
     self.create = function () {
       usSpinnerService.spin('loading');
