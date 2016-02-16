@@ -8,11 +8,11 @@
   <form role="form" ng-submit="" name="parse-migration-form">
     <label for="app-name">App Name:</label>
     <input type="text" class="form-control" id="app-name" ng-model="parseMigration.appName"
-           placeholder="Your new app name in Backand">
+           ng-pattern="parseMigration.namePattern" placeholder="Your new app name in Backand">
 
     <label for="app-description">App Title:</label>
     <input type="text" class="form-control" id="app-description" ng-model="parseMigration.appTitle"
-           placeholder="Optional description">
+           placeholder="Optional: Short app's description">
 
     <label for="parse-scheme">Parse Schema:</label>
 
@@ -26,13 +26,13 @@
     <textarea class="form-control" id="parse-scheme"
               ng-model="parseMigration.parseSchema"
               placeholder="{{parseMigration.dataSchemePlaceholder}}"
-              rows="6">
+              rows="4">
     </textarea>
 
     <label for="data-export">Data Export:</label>
 
     <div class="migration-description">{{::parseMigration.dataExportDescription}}
-      <button
+      <br/><button
         popover-title="Instructions for exporting data" popover-template="parseMigration.dataExportPopoverTemplateUrl" class="btn btn-link">
         How do I export my data?
       </button>

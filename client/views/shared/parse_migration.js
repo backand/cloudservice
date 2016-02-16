@@ -10,7 +10,7 @@
     self.parseSchemeDescription = "Please copy past your Parse schema in the following text area:"
     ;
 
-    self.dataExportDescription = "With the exported data we can load your entire data easily";
+    self.dataExportDescription = "With the exported data we can load your entire data easily:";
 
     self.dataSchemePlaceholder = "Parse scheme goes here:\n" +
       "{\"results\":[{\"className\":\"_User\", ...\n" +
@@ -20,6 +20,8 @@
     self.schemaPopoverTemplateUrl = "/views/shared/parse_schema_popover.html";
 
     self.dataExportPopoverTemplateUrl = "/views/shared/parse_data_export_popover.html";
+
+    self.namePattern = /^\w+$/;
 
     self.create = function () {
       usSpinnerService.spin('loading');
