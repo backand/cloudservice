@@ -16,17 +16,15 @@
 
     <label for="parse-scheme">Parse Schema:</label>
 
-    <div class="migration-description">{{::parseMigration.parseSchemeDescription}}
       <button popover-placement="bottom" popover-title="You can get the Parse database schema by running:"
               popover-template="parseMigration.schemaPopoverTemplateUrl"
               class="btn btn-link">How do I get my schema?
       </button>
-    </div>
 
     <textarea class="form-control" id="parse-scheme"
               ng-model="parseMigration.parseSchema"
               placeholder="{{parseMigration.dataSchemePlaceholder}}"
-              rows="6">
+              rows="15">
     </textarea>
 
     <label for="data-export">Data Export:</label>
