@@ -4,15 +4,15 @@
   </h3>
 </div>
 <div class="modal-body">
-  <div us-spinner spinner-key="loading"></div>
+  <div us-spinner spinner-key="loading-migration"></div>
   <form role="form" ng-submit="" name="parse-migration-form">
     <label for="app-name">App Name:</label>
     <input type="text" class="form-control" id="app-name" ng-model="parseMigration.appName"
-           ng-pattern="parseMigration.namePattern" placeholder="Your new app name in Backand">
+           placeholder="Your new app name in Backand">
 
     <label for="app-description">App Title:</label>
     <input type="text" class="form-control" id="app-description" ng-model="parseMigration.appTitle"
-           placeholder="Optional: Short app's description">
+           placeholder="Optional description">
 
     <label for="parse-scheme">Parse Schema:</label>
 
@@ -21,12 +21,11 @@
               popover-template="parseMigration.schemaPopoverTemplateUrl"
               class="btn btn-link">How do I get my schema?
       </button>
-    </div>
 
     <textarea class="form-control" id="parse-scheme"
               ng-model="parseMigration.parseSchema"
               placeholder="{{parseMigration.dataSchemePlaceholder}}"
-              rows="4">
+              rows="6">
     </textarea>
 
     <label for="data-export">Data Export:</label>
