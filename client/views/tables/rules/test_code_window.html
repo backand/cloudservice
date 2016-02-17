@@ -15,12 +15,24 @@
   <hr class="narrow-top-margin">
   <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
     <label>Item Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
-    <input type="number"
-           name="rowId"
-           id="rowId"
-           class="form-control"
-           max="{{rules.lastRowId}}"
-           ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
+    <div ng-switch="rules.test.isGuid">
+
+      <input type="number"
+             ng-switch-when="false"
+             name="rowId"
+             id="rowId"
+             class="form-control"
+             max="{{rules.lastRowId}}"
+             ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
+
+      <input type="text"
+             ng-switch-when="true"
+             name="rowId"
+             id="rowId"
+             class="form-control"
+             ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
+    </div>
+
   </div>
 
   <div class="form-group">
