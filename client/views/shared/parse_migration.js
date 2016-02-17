@@ -17,9 +17,9 @@
       "{\"className\":\"_Product\",\"fields\":{\ ...\n" +
       "\"targetClass\":\"_User\"}}}]}";
 
-    self.schemaPopoverTemplateUrl = "/views/shared/parse_schema_popover.html";
+    self.schemaPopoverTemplateUrl = "views/shared/parse_schema_popover.html";
 
-    self.dataExportPopoverTemplateUrl = "/views/shared/parse_data_export_popover.html";
+    self.dataExportPopoverTemplateUrl = "views/shared/parse_data_export_popover.html";
 
     self.namePattern = /^\w+$/;
 
