@@ -7,10 +7,10 @@
 
   function ParseMigrationController(AppsService, ParseService, AnalyticsService, DatabaseService, ModelService, usSpinnerService, $modalInstance, $scope) {
     var self = this;
-    self.parseSchemeDescription = "Please copy past your Parse schema in the following text area:"
+    self.parseSchemeDescription = "Paste your Parse schema here:"
     ;
 
-    self.dataExportDescription = "With the exported data we can load your entire data easily:";
+    self.dataExportDescription = "Paste your Parse data zip file link here:";
 
     self.dataSchemePlaceholder = "Parse scheme goes here:\n" +
       "{\"results\":[{\"className\":\"_User\", ...\n" +

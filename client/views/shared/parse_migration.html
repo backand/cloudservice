@@ -6,7 +6,7 @@
 <div class="modal-body">
   <div us-spinner spinner-key="loading-migration"></div>
   <form role="form" ng-submit="" name="form" id="parse-migration-form">
-    <label for="app-name">App Name:</label>
+    <label for="app-name">Give your app a name:</label>
     <input type="text" class="form-control" id="app-name" name="appName" ng-model="parseMigration.appName"
            placeholder="Your new app name in Backand"
            ng-pattern="parseMigration.namePattern" required>
@@ -17,28 +17,30 @@
 
     <label for="app-description">App Title:</label>
     <input type="text" class="form-control" id="app-description" ng-model="parseMigration.appTitle"
-           placeholder="Optional description">
+           placeholder="Optional: short description">
 
     <label for="parse-scheme">Parse Schema:</label>
 
     <div class="migration-description">{{::parseMigration.parseSchemeDescription}}
-      <button popover-placement="bottom" popover-title="You can get the Parse database schema by running:"
+      <br/><button popover-placement="bottom" popover-title="You can get the Parse database schema by running:"
               popover-template="parseMigration.schemaPopoverTemplateUrl"
-              class="btn btn-link">How do I get my schema?
+              class="btn btn-link">
+        How do I get the schema?
       </button>
 
     <textarea class="form-control" id="parse-scheme"
               ng-model="parseMigration.parseSchema"
               placeholder="{{parseMigration.dataSchemePlaceholder}}"
-              rows="6" required>
+              rows="4" required>
     </textarea>
 
-    <label for="data-export">Data Export:</label>
+    <label for="data-export">Parse Data:</label>
 
     <div class="migration-description">{{::parseMigration.dataExportDescription}}
       <br/><button
-        popover-title="Instructions for exporting data" popover-template="parseMigration.dataExportPopoverTemplateUrl" class="btn btn-link">
-        How do I export my data?
+        popover-title="Instructions on how to get the data zip file"
+        popover-template="parseMigration.dataExportPopoverTemplateUrl" class="btn btn-link">
+        How do I get the data zip file link?
       </button>
     </div>
     <input type="text" class="form-control" id="data-export"
