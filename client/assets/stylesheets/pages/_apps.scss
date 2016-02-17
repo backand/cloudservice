@@ -118,6 +118,17 @@
   }
 }
 
+.configuration-description {
+  padding-bottom: 10px;
+}
+
+.backup-buttons {
+  padding-bottom: 10px;
+  button {
+    margin-right: 40px;
+  }
+}
+
 form[name="parse-migration-form"] {
   input, textarea {
     margin-bottom: 10px;

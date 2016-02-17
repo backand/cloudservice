@@ -16,7 +16,7 @@
 
     <div class="panel-body">
       <div class="row upload-json-templates">
-        <a class="btn btn-default" download="scheme.json" ng-href="{{uploadJson.jsonDownloadUrl}}">Download JSON
+        <a class="btn btn-default" download="{{uploadJson.schemeFileName}}" ng-href="{{uploadJson.jsonDownloadUrl}}">Download JSON
           Template</a>
         <button class="btn btn-default" ng-click="uploadJson.showJsonScheme = !uploadJson.showJsonScheme">
           {{uploadJson.showJsonScheme ? 'Hide JSON scheme' : 'Show JSON scheme'}}
@@ -55,5 +55,5 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-default" ng-click="uploadJson.cancel()">Cancel</button>
-  <button class="btn btn-primary" ng-click="uploadJson.upload()">Upload</button>
+  <button class="btn btn-primary" ng-click="uploadJson.upload()" ng-disabled="!uploadJson.jsonData">Upload</button>
 </div>

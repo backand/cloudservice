@@ -192,7 +192,54 @@
       });
     };
 
-    function getAllApps() {
+    self.getBackupVersions = function () {
+      return $http({
+        method: 'GET',
+        headers: {'AppName': self.currentApp.Name},
+        url: CONSTS.appUrl + '/1/app/versions'
+      });
+    };
+
+    self.createBackup = function () {
+      return $http({
+        method: 'GET',
+        headers: {'AppName': self.currentApp.Name},
+        url: CONSTS.appUrl + '/1/app/sync'
+      });
+    };
+
+    self.downloadBackup = function (version) {
+      return $http({
+        method: 'GET',
+        headers: {'AppName': self.currentApp.Name},
+        url: CONSTS.appUrl + '/1/app/download',
+        responseType: 'arraybuffer',
+        params: {version: version}
+      });
+    };
+
+    self.uploadBackup = function (fileName, fileData) {
+      return $http({
+        method: 'POST',
+        headers: {'AppName': self.currentApp.Name},
+        url: CONSTS.appUrl + '/1/app/upload',
+        data: {
+          filename: fileName,
+          filedata: fileData
+        }
+      });
+    };
+
+    self.restoreBackup = function (version) {
+      return $http({
+        method: 'GET',
+        headers: {'AppName': self.currentApp.Name},
+        url: CONSTS.appUrl + '/1/app/restore',
+        params: {version: version}
+      });
+    };
+
+    function getAllApps () {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + '/admin/myApps?pageSize=200'
