@@ -12,11 +12,6 @@
 
     self.dataExportDescription = "Paste your Parse data zip file link here:";
 
-    self.dataSchemePlaceholder = "Parse scheme goes here:\n" +
-      "{\"results\":[{\"className\":\"_User\", ...\n" +
-      "{\"className\":\"_Product\",\"fields\":{\ ...\n" +
-      "\"targetClass\":\"_User\"}}}]}";
-
     self.schemaPopoverTemplateUrl = "views/shared/parse_schema_popover.html";
 
     self.dataExportPopoverTemplateUrl = "views/shared/parse_data_export_popover.html";
