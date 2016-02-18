@@ -80,29 +80,40 @@
     };
 
     function init() {
-      AppsService.getAppWithStat(self.appName).then(function (appData) {
-        DbDataModel.get(self.appName).finally(function () {
-          TablesService.get(self.appName).then(function (objectData) {
-            RulesService.appName = self.appName;
-            RulesService.get().then(function (rules) {
-              populateDashboard(objectData, rules);
-              usSpinnerService.stop('loading');
-            });
-          });
-        });
-      });
+      // Starts a chain of requests, after each request the dashboard is updated
+      TablesService.get(self.appName).then(tablesSuccessHandler);
     }
 
-    function populateDashboard(objectData, rules) {
+    function tablesSuccessHandler(objectData) {
       objectData.forEach(function (object) {
         self.objects[object.name] = {};
-        self.objects[object.name].relatedObjects = FieldsService.getRelatedFieldsForObject(object.name);
-        self.objects[object.name].records = self.currentApp.stat.totalRows[object.name];
-        self.objects[object.name].isAuthSecurityOverridden = self.currentApp.stat.authorizationSecurity[object.name];
-        self.objects[object.name].isDataSecurityEnabled = self.currentApp.stat.dataSecurity[object.name];
         self.objects[object.name].id = object.__metadata.id;
-        self.objects[object.name].actions = _.where(rules.data.data, {viewTable: object.__metadata.id}).length;
+        self.objects[object.name].relatedObjects = FieldsService.getRelatedFieldsForObject(object.name);
       });
+      AppsService.getAppWithStat(self.appName).then(appsSuccessHandler);
+    }
+
+    function appsSuccessHandler(appData) {
+      _.each(self.objects, function (val, key) {
+        if(self.currentApp.stat.totalRows !== null){
+          val.records = self.currentApp.stat.totalRows[key];
+          val.isAuthSecurityOverridden = self.currentApp.stat.authorizationSecurity[key];
+          val.isDataSecurityEnabled = self.currentApp.stat.dataSecurity[key];
+        }
+      });
+      DbDataModel.get(self.appName).finally(dbDataModelSuccessHandler);
+    }
+
+    function dbDataModelSuccessHandler() {
+      RulesService.appName = self.appName;
+      RulesService.get().then(rulesSuccessHandler);
+    }
+
+    function rulesSuccessHandler(rules) {
+      _.each(self.objects, function (val, key) {
+        val.actions = _.where(rules.data.data, {viewTable: val.id}).length;
+      });
+      usSpinnerService.stop('loading');
     }
   }
 }());
