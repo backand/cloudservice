@@ -24,7 +24,7 @@
     self.uploadConfiguration = function (file) {
       usSpinnerService.spin('loading');
       Upload.dataUrl(file, true).then(function (dataUrl) {
-        AppsService.uploadBackup(file.name, dataUrl.replace('data:;base64,', '')).then(function (data) {
+        AppsService.uploadBackup(file.name, dataUrl.replace(/data.*base64,/g, '')).then(function (data) {
           AppsService.reset(self.appName).then(function (data) {
             init();
             NotificationService.add('success', 'Configuration imported successfully')
