@@ -3,7 +3,7 @@
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, AnalyticsService) {
+  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, AnalyticsService, AuthService) {
 
     var self = this;
 
@@ -466,12 +466,13 @@
       $scope.closeModal = function (user) {
         user.password = user.password || '';
         user.confirmPassword = user.confirmPassword || '';
-
-        SecurityService.newUser(user)
-          .then(function () {
-            self.modalInstance.close();
-            getRoles();
-          });
+        if (AuthService.validatePassword(user.password)) {
+          SecurityService.newUser(user)
+            .then(function () {
+              self.modalInstance.close();
+              getRoles();
+            });
+        }
       };
       /**
        * close the modal window if user confirm
@@ -479,6 +480,10 @@
       $scope.cancel = function () {
         self.modalInstance.dismiss();
       };
+
+      function validatePassword(password) {
+        return !password.includes(' ');
+      }
 
     }
 
@@ -497,6 +502,7 @@
       'SessionService',
       'AppsService',
       'AnalyticsService',
+      'AuthService',
       SecurityUsers
     ]);
 
