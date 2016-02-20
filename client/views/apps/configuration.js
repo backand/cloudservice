@@ -12,10 +12,10 @@
 
     function init() {
       usSpinnerService.spin('loading');
-      self.currentVersion = '1.0.0';
       AppsService.getBackupVersions().then(function (data) {
+        self.currentVersion = data.data.current;
         self.latestConfigurations = _.map(data.data.versions, function (value) {
-          return {version: value, dateTime: new Date()};
+          return {version: value};
         });
         usSpinnerService.stop('loading');
       });
