@@ -28,6 +28,8 @@
 
       self.currentAppName = AppsService.currentApp.Name;
 
+      self.showParseMigrationTool = $state.current.name == 'apps.index';
+
       updateDefaultModelUse(self.currentAppName, false);
     });
 
