@@ -36,7 +36,8 @@
     };
 
     self.signUp = function (fullName, email, password) {
-      if(self.validatePassword(password)) {
+      var deferred = $q.defer();
+      if (self.validatePassword(password)) {
         return signUp(fullName, email, password)
           .then(function () {
             return self.signIn({username: email, password: password})
@@ -44,9 +45,12 @@
           .then(function (response) {
             //AnalyticsService.identify(fullName, email);
             //AnalyticsService.trackSignupEvent(fullName, email);
-            return response;
+            deferred.resolve(response);
           })
+      } else {
+        deferred.reject();
       }
+      return deferred.promise;
     };
 
     self.validatePassword = function (password) {

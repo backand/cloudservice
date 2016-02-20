@@ -24,21 +24,23 @@
     }());
 
     self.signUp = function () {
-        self.flags.authenticating = true;
-        self.loading = true;
-        AuthService.signUp(self.fullName, self.email, self.password)
-          .then(function (response) {
-            var requestedState = SessionService.getRequestedState();
-            $state.go(requestedState.state || 'apps.index', requestedState.params);
-          })
-          .catch(function (data) {
-            self.flags.authenticating = false;
-            self.loading = false;
+      self.flags.authenticating = true;
+      self.loading = true;
+      AuthService.signUp(self.fullName, self.email, self.password)
+        .then(function (response) {
+          var requestedState = SessionService.getRequestedState();
+          $state.go(requestedState.state || 'apps.index', requestedState.params);
+        })
+        .catch(function (data) {
+          self.flags.authenticating = false;
+          self.loading = false;
+          if (data) {
             self.error = data.error_description;
             $timeout(function () {
               self.error = undefined;
             }, 3000);
-          })
+          }
+        });
     };
 
 

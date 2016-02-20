@@ -480,11 +480,6 @@
       $scope.cancel = function () {
         self.modalInstance.dismiss();
       };
-
-      function validatePassword(password) {
-        return !password.includes(' ');
-      }
-
     }
 
   }
