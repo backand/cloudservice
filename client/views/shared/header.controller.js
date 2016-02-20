@@ -3,12 +3,12 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ['$scope', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal','ModelService', HeaderController]);
+    ['$scope', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService', HeaderController]);
 
   function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService) {
     var self = this;
     self.usingDefaultModel = false;
-    self.showParseMigrationTool = $state.current.name == 'apps.index';
+    self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
@@ -21,14 +21,12 @@
 
     $scope.$on('$stateChangeSuccess', function () {
 
-      if( AppsService.currentApp === null ||
-          AppsService.currentApp === undefined ||
-          self.currentAppName === AppsService.currentApp.Name)
+      if (AppsService.currentApp === null ||
+        AppsService.currentApp === undefined ||
+        self.currentAppName === AppsService.currentApp.Name)
         return;
 
       self.currentAppName = AppsService.currentApp.Name;
-
-      self.showParseMigrationTool = $state.current.name == 'apps.index';
 
       updateDefaultModelUse(self.currentAppName, false);
     });
@@ -49,11 +47,11 @@
       updateDefaultModelUse(self.currentAppName, true);
     });
 
-    function updateDefaultModelUse(appName, force){
+    function updateDefaultModelUse(appName, force) {
 
-      if(appName != undefined){
+      if (appName != undefined) {
         ModelService.usingDefaultSchema(appName, force)
-          .then(function(result){
+          .then(function (result) {
             self.usingDefaultModel = result;
           });
       } else {
@@ -93,7 +91,7 @@
     };
 
     self.changePassword = function () {
-      var modalInstance = $modal.open ({
+      var modalInstance = $modal.open({
         templateUrl: 'views/auth/change_password.html',
         controller: 'ChangePasswordController as ChangePassword'
       })
@@ -105,14 +103,32 @@
         controller: 'ParseMigrationController as parseMigration'
       });
       modalInstance.result.then(function (result) {
-        if(result.success) {
-          $modal.open({
+        if (result.success) {
+          var successModal = $modal.open({
             templateUrl: 'views/shared/parse_migration_success.html',
             controller: 'ParseSuccessController as parseSuccess'
           });
+          successModal.result.then(goBackToIndex, goBackToIndex);
+        } else {
+          $state.go('apps.index');
         }
-      });
+      },
+        goBackToIndex);
     };
+
+    self.initMigrationModal = function () {
+      self.openParseMigrationTool();
+      $state.go('apps.parse');
+    };
+
+    function goBackToIndex() {
+      $state.go('apps.index');
+    }
+
+    if ($state.current.name == 'apps.parse') {
+      self.openParseMigrationTool();
+    }
+
 
   }
 
