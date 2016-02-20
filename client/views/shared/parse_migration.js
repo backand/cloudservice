@@ -3,19 +3,28 @@
 
   angular.module('controllers')
     .controller('ParseMigrationController',
-    ['AppsService', 'ParseService', 'AnalyticsService', 'DatabaseService', 'ModelService', 'usSpinnerService', '$modalInstance', '$scope', ParseMigrationController]);
+      ['AppsService', 'ParseService', 'AnalyticsService', 'DatabaseService', 'ModelService', 'usSpinnerService', '$modalInstance', '$scope', ParseMigrationController]);
 
   function ParseMigrationController(AppsService, ParseService, AnalyticsService, DatabaseService, ModelService, usSpinnerService, $modalInstance, $scope) {
     var self = this;
-    self.parseSchemeDescription = "With this we can create your database. To get your app scheme do that and this.";
+    self.parseSchemeDescription = "Please copy past your Parse schema in the following text area:"
+    ;
 
-    self.dataExportDescription = "Instructions for Data Export";
+    self.dataExportDescription = "With the exported data we can load your entire data easily:";
 
-    self.dataSchemePlaceholder = "Place Parse data scheme here!\n" +
-    "It's so easy!";
+    self.dataSchemePlaceholder = "Parse scheme goes here:\n" +
+      "{\"results\":[{\"className\":\"_User\", ...\n" +
+      "{\"className\":\"_Product\",\"fields\":{\ ...\n" +
+      "\"targetClass\":\"_User\"}}}]}";
+
+    self.schemaPopoverTemplateUrl = "/views/shared/parse_schema_popover.html";
+
+    self.dataExportPopoverTemplateUrl = "/views/shared/parse_data_export_popover.html";
+
+    self.namePattern = /^\w+$/;
 
     self.create = function () {
-      usSpinnerService.spin('loading');
+      usSpinnerService.spin('loading-migration');
       AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
           createDB(self.appName);
@@ -24,7 +33,7 @@
 
     self.cancel = function(){
       $modalInstance.close();
-    }
+    };
 
     function createDB(appName) {
 
@@ -48,7 +57,6 @@
       });
     }
   }
-
 
 }());
 

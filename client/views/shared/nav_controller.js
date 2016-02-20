@@ -153,9 +153,6 @@
 
     self.showTable = function(table) {
       var path = 'object_fields';
-      if (self.isTablesActive()) {
-        path = $state.current.name;
-      }
       $state.go(path, {
         tableName: table.name,
         tableId: table.__metadata.id
