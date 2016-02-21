@@ -130,10 +130,6 @@
       $state.go('apps.index');
     }
 
-    if ($state.current.name == 'apps.parse') {
-      self.openParseMigrationTool();
-    }
-
 
   }
 
