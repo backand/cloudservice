@@ -21,6 +21,10 @@
 
     $scope.$on('$stateChangeSuccess', function () {
 
+      if ($state.current.name == 'apps.parse') {
+        self.openParseMigrationTool();
+      }
+
       if (AppsService.currentApp === null ||
         AppsService.currentApp === undefined ||
         self.currentAppName === AppsService.currentApp.Name)
@@ -28,7 +32,7 @@
 
       self.currentAppName = AppsService.currentApp.Name;
 
-      self.showParseMigrationTool = $state.current.name == 'apps.index';
+      self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
 
       updateDefaultModelUse(self.currentAppName, false);
     });
