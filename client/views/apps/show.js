@@ -95,9 +95,11 @@
 
     function appsSuccessHandler(appData) {
       _.each(self.objects, function (val, key) {
-        val.records = self.currentApp.stat.totalRows[key];
-        val.isAuthSecurityOverridden = self.currentApp.stat.authorizationSecurity[key];
-        val.isDataSecurityEnabled = self.currentApp.stat.dataSecurity[key];
+        if(self.currentApp.stat.totalRows !== null){
+          val.records = self.currentApp.stat.totalRows[key];
+          val.isAuthSecurityOverridden = self.currentApp.stat.authorizationSecurity[key];
+          val.isDataSecurityEnabled = self.currentApp.stat.dataSecurity[key];
+        }
       });
       DbDataModel.get(self.appName).finally(dbDataModelSuccessHandler);
     }
