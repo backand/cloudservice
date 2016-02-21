@@ -124,7 +124,6 @@
 
     self.initMigrationModal = function () {
       self.openParseMigrationTool();
-      $state.go('apps.parse');
     };
 
     function goBackToIndex() {
