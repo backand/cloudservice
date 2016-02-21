@@ -2,10 +2,10 @@
   'use strict';
 
   angular.module('common.services')
-    .service('AuthService', ['SessionService', '$http', 'CONSTS', 'SocialProvidersService', '$window', '$q', 'AnalyticsService', 'HttpBufferService', '$interval', AuthService]);
+    .service('AuthService', ['SessionService', '$http', 'CONSTS', 'SocialProvidersService', '$window', '$q', 'AnalyticsService', 'HttpBufferService', '$interval', 'NotificationService', AuthService]);
 
 
-  function AuthService (SessionService, $http, CONSTS, SocialProvidersService, $window, $q, AnalyticsService, HttpBufferService, $interval) {
+  function AuthService (SessionService, $http, CONSTS, SocialProvidersService, $window, $q, AnalyticsService, HttpBufferService, $interval, NotificationService) {
 
     var self = this;
 
@@ -36,15 +36,29 @@
     };
 
     self.signUp = function (fullName, email, password) {
-      return signUp(fullName, email, password)
-        .then(function () {
-          return self.signIn({username: email, password: password})
-        })
-        .then(function (response) {
-          //AnalyticsService.identify(fullName, email);
-          //AnalyticsService.trackSignupEvent(fullName, email);
-          return response;
-        })
+      var deferred = $q.defer();
+      if (self.validatePassword(password)) {
+        return signUp(fullName, email, password)
+          .then(function () {
+            return self.signIn({username: email, password: password})
+          })
+          .then(function (response) {
+            //AnalyticsService.identify(fullName, email);
+            //AnalyticsService.trackSignupEvent(fullName, email);
+            deferred.resolve(response);
+          })
+      } else {
+        deferred.reject();
+      }
+      return deferred.promise;
+    };
+
+    self.validatePassword = function (password) {
+      if (password.includes(' ')) {
+        NotificationService.add('error', 'Invalid password. Password cannot contain spaces.');
+        return false;
+      }
+      return true;
     };
 
     function signIn (userData) {

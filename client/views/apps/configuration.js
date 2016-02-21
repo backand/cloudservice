@@ -12,10 +12,10 @@
 
     function init() {
       usSpinnerService.spin('loading');
-      self.currentVersion = '1.0.0';
       AppsService.getBackupVersions().then(function (data) {
+        self.currentVersion = data.data.current;
         self.latestConfigurations = _.map(data.data.versions, function (value) {
-          return {version: value, dateTime: new Date()};
+          return {version: value};
         });
         usSpinnerService.stop('loading');
       });
@@ -24,7 +24,7 @@
     self.uploadConfiguration = function (file) {
       usSpinnerService.spin('loading');
       Upload.dataUrl(file, true).then(function (dataUrl) {
-        AppsService.uploadBackup(file.name, dataUrl.replace('data:;base64,', '')).then(function (data) {
+        AppsService.uploadBackup(file.name, dataUrl.replace(/data.*base64,/g, '')).then(function (data) {
           AppsService.reset(self.appName).then(function (data) {
             init();
             NotificationService.add('success', 'Configuration imported successfully')
