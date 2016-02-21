@@ -15,12 +15,24 @@
   <hr class="narrow-top-margin">
   <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
     <label>Item Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
-    <input type="number"
-           name="rowId"
-           id="rowId"
-           class="form-control"
-           max="{{rules.lastRowId}}"
-           ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
+    <div ng-switch="rules.test.isGuid">
+
+      <input type="number"
+             ng-switch-when="false"
+             name="rowId"
+             id="rowId"
+             class="form-control"
+             max="{{rules.lastRowId}}"
+             ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
+
+      <input type="text"
+             ng-switch-when="true"
+             name="rowId"
+             id="rowId"
+             class="form-control"
+             ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
+    </div>
+
   </div>
 
   <div class="form-group">
@@ -35,9 +47,9 @@
       required
       ng-pattern="codeRegex"
       style="resize: vertical; height: 200px;">
-  </div>
-    <div ng-show="rules.testRowObjectNotification" class="text-danger">{{rules.testRowObjectNotification}}</div>
     </div>
+    <div ng-show="rules.testRowObjectNotification" class="text-danger">{{rules.testRowObjectNotification}}</div>
+  </div>
 
   <div class="row">
     <div class="col-md-12">
@@ -62,36 +74,36 @@
     </div>
   </div>
 
-<div ng-if="rules.test.resultStatus">
-  <hr/>
-  <label>Response Status:</label>
-  <br/>
-  {{ rules.test.resultStatus.code }} - {{ rules.test.resultStatus.text }}
-  <br/><br/>
-  <label>Response Body:</label>
-  <br/>
-  {{ rules.test.result | json }}
-  <br/>
+  <div ng-if="rules.test.resultStatus">
+    <hr/>
+    <label>Response Status:</label>
+    <br/>
+    {{ rules.test.resultStatus.code }} - {{ rules.test.resultStatus.text }}
+    <br/><br/>
+    <label>Response Body:</label>
+    <br/>
+    {{ rules.test.result | json }}
+    <br/>
 
-</div>
+  </div>
 
 
-<div ng-if="rules.test.resultStatus">
-  <hr class="narrow-top-margin"/>
-  <label>Debug Console:</label>
-  <br/>
+  <div ng-if="rules.test.resultStatus">
+    <hr class="narrow-top-margin"/>
+    <label>Debug Console:</label>
+    <br/>
 
-  <table class="table log-table">
-    <tbody>
-    <tr ng-repeat="message in rules.test.logMessages | orderBy: 'time' "
-        ng-class="{'text-danger': message.isError}">
-      <td class="log-icon" ng-bind="message.isError? 'X' : '>' "></td>
-      <td class="log-text">{{ message.text }}</td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="table log-table">
+      <tbody>
+      <tr ng-repeat="message in rules.test.logMessages | orderBy: 'time' "
+          ng-class="{'text-danger': message.isError}">
+        <td class="log-icon" ng-bind="message.isError? 'X' : '>' "></td>
+        <td class="log-text">{{ message.text }}</td>
+      </tr>
+      </tbody>
+    </table>
 
-</div>
+  </div>
 
   <div ng-show="rules.getDataActionType() === 'On Demand'">
     <label>Request URL:</label>

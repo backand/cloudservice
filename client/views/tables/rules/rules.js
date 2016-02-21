@@ -543,7 +543,17 @@
         .then(function (data) {
           if(data.data.data.length>0){
             setTestRowData(data.data.data[0]);
-            self.test.rowId = parseInt(data.data.data[0].__metadata.id);
+            var id = data.data.data[0].__metadata.id;
+            if (!isNaN(parseFloat(id)) && isFinite(id)) {
+              // numeric id
+              self.test.isGuid = false;
+              self.test.rowId = parseInt(data.data.data[0].__metadata.id)
+            } else {
+              // guid
+              self.test.isGuid = true;
+              self.test.rowId = data.data.data[0].__metadata.id
+            }
+            console.log(self.test.rowId);
           }
           else
             self.test.rowId = null;

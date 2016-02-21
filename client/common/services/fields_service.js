@@ -44,7 +44,7 @@
         createCollectionField(self.newModelObject, fieldName, relatedObject, viaField, objectName);
       }
       else if (fieldType == 'object') {
-        createCollectionField(self.newModelObject, fieldName, objectName, viaField, relatedObject);
+        createObjectField(self.newModelObject, fieldName, objectName, viaField, relatedObject);
       }
       else {
         createSimpleField(self.newModelObject, fieldName, fieldType, objectName);
@@ -118,6 +118,18 @@
       // Create field on the related object
       fieldToAdd = {};
       fieldToAdd[viaField] = {object: objectName};
+      addGenericField(model, relatedObject, fieldToAdd);
+    }
+
+    function createObjectField(model, fieldName, objectName, viaField, relatedObject) {
+      // Create field on the selected object
+      var fieldToAdd = {};
+      fieldToAdd[fieldName] = {object: relatedObject};
+      addGenericField(model, objectName, fieldToAdd);
+
+      // Create field on the related object
+      fieldToAdd = {};
+      fieldToAdd[viaField] = {collection: objectName, via: fieldName};
       addGenericField(model, relatedObject, fieldToAdd);
     }
 

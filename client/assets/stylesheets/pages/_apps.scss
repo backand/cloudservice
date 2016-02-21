@@ -128,14 +128,11 @@
   }
 }
 
-form[name="parse-migration-form"] {
-  #parse-migration-form {
-    input, textarea {
-      margin-bottom: 10px;
-    }
-
-    .migration-description {
-      margin-bottom: 5px;
-    }
+#parse-migration-form {
+  input, textarea {
+    margin-bottom: 10px;
+  }
+  .migration-description {
+    margin-bottom: 5px;
   }
 }

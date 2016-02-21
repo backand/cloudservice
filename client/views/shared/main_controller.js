@@ -10,7 +10,7 @@
     }());
 
     self.hideNav = function () {
-      return ($state.current.name == 'apps.index' && self.showJumbo)
+      return ($state.current.name == 'apps.index' || $state.current.name == 'apps.parse' && self.showJumbo)
     };
 
     self.getAppName = function () {

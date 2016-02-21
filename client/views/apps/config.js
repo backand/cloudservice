@@ -20,6 +20,19 @@
           'deletedApp': ''
         }
       })
+      .state('apps.parse', {
+        url: 'parse',
+        controller: 'AppsIndexController as index',
+        templateUrl: 'views/apps/index.tpl.html',
+        resolve: {
+          appsList: ['AppsService', function (AppsService) {
+            return AppsService.all();
+          }]
+        },
+        params: {
+          'deletedApp': ''
+        }
+      })
       .state('app.show', {
         url: '/',
         controller: 'AppShowController as show',
