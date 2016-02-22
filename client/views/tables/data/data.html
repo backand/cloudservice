@@ -8,7 +8,15 @@
     <input id="fileInput" type="file" class="upload" />
   </div>-->
   <button class="fileUpload btn btn-primary" ng-click="ObjectData.uploadJson()">Upload JSON</button>
-  <button class="btn btn-default glyphicon glyphicon-repeat refresh-data-button" ng-click="ObjectData.refresh()"></button>
+
+  <button class="btn btn-default"
+          id="delete-multiple-rows"
+          ng-disabled="gridApi.selection.getSelectedRows().length === 0"
+          ng-click="ObjectData.deleteRows()">Delete Selected Items</button>
+
+  <button class="btn btn-default glyphicon glyphicon-repeat refresh-data-button"
+          ng-click="ObjectData.refresh()"></button>
+
 
   <a class="btn btn-success btn-xs btn-wide pull-right" ng-click="ObjectData.toggleShowLog()">
     <i class="ti-angle-left" ng-show="ObjectData.showLog"></i>
@@ -43,7 +51,7 @@
 
       <!-- Data Grid -->
       <div ui-grid="ObjectData.gridOptions"
-           class="datagrid" ui-grid-resize-columns
+           class="datagrid" ui-grid-resize-columns ui-grid-selection
            external-scopes="$scope">
       </div>
       <div ng-show="ObjectData.gridOptions.totalItems > 0" class="row">

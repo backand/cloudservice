@@ -86,6 +86,7 @@
       enablePaginationControls: false,
       useExternalSorting: true,
       excludeProperties: '__metadata',
+      multiSelect: true,
       excessColumns: 20,
       onRegisterApi: function (gridApi) {
         $scope.gridApi = gridApi;
@@ -455,6 +456,23 @@
               return loadData()
             })
             .then(successDataHandler);
+        });
+    };
+
+    self.deleteRows = function () {
+      var items = $scope.gridApi.selection.getSelectedRows();
+      ConfirmationPopup.confirm('Are you sure you want to delete the selected objects?')
+        .then(function (result) {
+          if (!result)
+            return;
+          usSpinnerService.spin("loading-data");
+          angular.forEach(items, function (rowItem) {
+            DataService.delete(self.tableName, rowItem, rowItem.__metadata.id, true)
+              .then(function () {
+                return loadData();
+              })
+              .then(successDataHandler);
+          });
         });
     };
 
