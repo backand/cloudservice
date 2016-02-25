@@ -86,6 +86,7 @@
       enablePaginationControls: false,
       useExternalSorting: true,
       excludeProperties: '__metadata',
+      multiSelect: true,
       excessColumns: 20,
       onRegisterApi: function (gridApi) {
         $scope.gridApi = gridApi;
@@ -171,13 +172,6 @@
         enableSorting: false,
         enableColumnMenu: false
       };
-
-      var deleteColumnOptions = {
-        name: 'delete',
-        cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.ObjectData.deleteRow($event, row)"><i class="ti-trash"/></div>'
-      };
-      angular.extend(deleteColumnOptions, actionColumnOptions);
-      self.gridOptions.columnDefs.unshift(deleteColumnOptions);
 
       var editColumnOptions = {
         name: 'edit',
@@ -444,17 +438,20 @@
       });
     }
 
-    self.deleteRow = function (event, rowItem) {
-      ConfirmationPopup.confirm('Are you sure you want to delete the object?')
+    self.deleteRows = function () {
+      var items = $scope.gridApi.selection.getSelectedRows();
+      ConfirmationPopup.confirm('Are you sure you want to delete the selected objects?')
         .then(function (result) {
           if (!result)
             return;
           usSpinnerService.spin("loading-data");
-          DataService.delete(self.tableName, rowItem.entity, rowItem.entity.__metadata.id, true)
-            .then(function () {
-              return loadData()
-            })
-            .then(successDataHandler);
+          angular.forEach(items, function (rowItem) {
+            DataService.delete(self.tableName, rowItem, rowItem.__metadata.id, true)
+              .then(function () {
+                return loadData();
+              })
+              .then(successDataHandler);
+          });
         });
     };
 

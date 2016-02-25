@@ -49,6 +49,8 @@
                 state.transitionTo('sign_in');
                 return $q.reject(rejection);
               }
+            } else if (rejection.data && rejection.data.Message.includes('is unauthorized for ' + rejection.config.headers.AppName)) {
+              state.transitionTo('apps.index');
             } else {
               SessionService.clearCredentials(); // notification is shown in the next block
               state.transitionTo('sign_in');
