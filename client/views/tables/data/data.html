@@ -3,17 +3,14 @@
               style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
 
   <a href="" class="btn btn-success" ng-click="ObjectData.newRow()"><i class="ti-plus"></i> Add Row</a>
-  <!--<div class="fileUpload btn btn-primary">
-    <span>Upload JSON</span>
-    <input id="fileInput" type="file" class="upload" />
-  </div>-->
-  <button class="btn btn-default glyphicon glyphicon-cloud-upload refresh-data-button"
-          title="Upload data using JSON"
-          ng-click="ObjectData.uploadJson()"></button>
 
   <button class="btn btn-default glyphicon glyphicon-repeat refresh-data-button"
           title="Relaod data from server"
           ng-click="ObjectData.refresh()"></button>
+
+  <button class="btn btn-default glyphicon glyphicon-cloud-upload refresh-data-button"
+          title="Upload data using JSON"
+          ng-click="ObjectData.uploadJson()"></button>
 
   <button class="btn btn-default glyphicon glyphicon-trash refresh-data-button"
           id="delete-multiple-rows"
