@@ -94,8 +94,8 @@
     }
 
     function validateData(data) {
-      if (!data.startsWith("https://s3.amazonaws.com")) {
-        NotificationService.add('error', 'Parse data should start with "https://s3.amazonaws.com"');
+      if (!data.startsWith("http")) {
+        NotificationService.add('error', 'Parse data should be a valid URL');
         return false;
       }
       return true;
