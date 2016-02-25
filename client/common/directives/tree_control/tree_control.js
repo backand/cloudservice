@@ -82,7 +82,11 @@
     }
 
     function treePathDataSuccess(data, node) {
-      var items = _.rest(data.data);
+      var items = [];
+      if(data.data.length >0 && data.data[0].StorageClass) //server side bug that sometime doesn't bring the description
+      // in the first item
+        items = _.rest(data.data);
+
       items.forEach(function (item) {
         node.children.push(createTreeItem(item));
       });
@@ -90,7 +94,12 @@
     }
 
     function initTreeDataSuccess(treeData) {
-      var items = _.rest(treeData.data);
+
+      var items = [];
+      if(treeData.data.length >0 && treeData.data[0].StorageClass) //server side bug that sometime doesn't bring the
+      // description in the first item
+        items = _.rest(treeData.data);
+
       items.forEach(function (item) {
         self.data.push(createTreeItem(item));
       });
