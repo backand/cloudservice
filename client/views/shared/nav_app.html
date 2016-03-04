@@ -2,7 +2,7 @@
   <ul id="nav2" class="nav" slim-scroll collapse-nav>
 
   <li ng-class="{active: nav.state == 'app.show', disabled: nav.DatabaseStatus != 1}" >
-    <a ng-click="nav.goTo('app.show')" href="" ng-class="{disabled: nav.DatabaseStatus != 1}">
+    <a ng-click="nav.goTo($event, 'app.show')" href="" ng-class="{disabled: nav.DatabaseStatus != 1}">
       <i class="ba-icon-dashboard"></i>
       <span>Dashboard</span>
     </a>
@@ -25,25 +25,25 @@
         </a>
       </li>
       <li ng-class="{active: nav.state == 'docs.get-started'}">
-        <a ng-click="nav.goToAlways('docs.get-started')" href="">
+        <a ng-click="nav.goToAlways($event, 'docs.get-started')" href="">
           <i class="ba-icon-angularjs-quickstart"></i>
           <span>AngularJS Quickstart</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'docs.mobile'}">
-        <a ng-click="nav.goToAlways('docs.mobile')" href="">
+        <a ng-click="nav.goToAlways($event, 'docs.mobile')" href="">
           <i class="ba-icon-angularjs-quickstart"></i>
           <span>Ionic Mobile Starter</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'docs.kickstart'}">
-        <a ng-click="nav.goToAlways('docs.kickstart')" href="">
+        <a ng-click="nav.goToAlways($event, 'docs.kickstart')" href="">
           <i class="ba-icon-kickstart-tutorial"></i>
           <span>Kickstart Tutorial</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'docs.realtime'}">
-        <a ng-click="nav.goToAlways('docs.realtime')" href="">
+        <a ng-click="nav.goToAlways($event, 'docs.realtime')" href="">
           <i class="ba-icon-documentation"></i>
           <span>Realtime Database</span>
         </a>
@@ -55,32 +55,32 @@
         </a>
       </li>
       <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('playground.show')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'playground.show')" href="">
           <i class="ba-icon-rest-api-playground"></i>
           <span>REST API Playground</span>
         </a>
       </li>
 
       <!--<li ng-class="{active: nav.state == 'playground.orm', disabled: nav.DatabaseStatus != 1}">-->
-      <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('playground.orm')" href="">-->
+      <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'playground.orm')" href="">-->
       <!--<i class="icon-orm-icon"></i>-->
       <!--<span>ORM Playground</span>-->
       <!--</a>-->
       <!--</li>-->
       <!--<li ng-class="{active: nav.state == 'playground.orm-usage'}">-->
-      <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways('playground.orm-usage')" href="">-->
+      <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways($event, 'playground.orm-usage')" href="">-->
       <!--<i class="ti-shortcode"></i>-->
       <!--<span>ORM Usage</span>-->
       <!--</a>-->
       <!--</li>-->
       <!--<li ng-class="{active: nav.state == 'playground.orm-config'}">-->
-      <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways('playground.orm-config')" href="">-->
+      <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways($event, 'playground.orm-config')" href="">-->
       <!--<i class="ti-github"></i>-->
       <!--<span>ORM Configuration</span>-->
       <!--</a>-->
       <!--</li>-->
       <li ng-class="{active: nav.state == 'playground.todo'}" ng-show="nav.isExampleApp()">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways('playground.todo')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goToAlways($event, 'playground.todo')" href="">
           <i class="ba-icon-todo-example"></i>
           <span>Todo Example</span>
         </a>
@@ -89,7 +89,7 @@
   </li>
   <li ng-class="{active: nav.isTablesActive(), disabled: nav.DatabaseStatus != 1}">
     <a ng-class="{disabled: nav.DatabaseStatus != 1}"
-       ng-click="nav.tables.length == 0 && nav.app.connectionSource !== 'local' ? nav.goTo('tables.notables') : {}"
+       ng-click="nav.tables.length == 0 && nav.app.connectionSource !== 'local' ? nav.goTo($event, 'tables.notables') : {}"
        href="">
       <i class="ba-icon-objects"></i>
       <span>Objects</span>
@@ -122,7 +122,7 @@
       </li>
 
       <li ng-class="{active: false }" ng-repeat="table in nav.tables">
-        <a ng-class="{disabled: false}"  ng-click="nav.showTable(table)" href="">
+        <a ng-class="{disabled: false}"  ng-click="nav.showTable($event, table)" href="">
           <i class="ba-icon-todo"></i>
           <span>{{table.name}}</span>
         </a>
@@ -140,7 +140,7 @@
     </a>
     <ul>
       <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newDbQuery()" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newDbQuery($event)" href="">
           <i class="ba-icon-new-query"></i>
           <span>New Query</span>
         </a>
@@ -148,7 +148,7 @@
     </ul>
     <ul class="scrollbar ex4">
       <li ng-class="{active: nav.state == 'dbQueries.query'}" ng-repeat="query in nav.queries">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.showDbQuery(query)" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.showDbQuery($event, query)" href="">
           <i class="ti-write"></i>
           <span>{{query.name}}</span>
         </a>
@@ -165,35 +165,35 @@
     </a>
     <ul>
       <li ng-class="{active: nav.state == 'security.auth', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.auth')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'security.auth')" href="">
           <i class="ba-icon-configuration"></i>
           <span>Configuration</span>
           <ba-tooltip tooltip-text="Setting your application to be public or private" tooltip-placement="right" class=""></ba-tooltip>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'security.keys', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.keys')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'security.keys')" href="">
           <i class="ba-icon-keys"></i>
           <span>Social & Keys</span>
           <ba-tooltip tooltip-text="configure social sign-up and get API keys" tooltip-placement="right" class=""></ba-tooltip>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'security.users', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.users')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'security.users')" href="">
           <i class="ba-icon-registered-users"></i>
           <span>Registered Users</span>
           <ba-tooltip tooltip-text="Manage your app's users" tooltip-placement="right" class=""></ba-tooltip>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'security.team', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.team')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'security.team')" href="">
           <i class="ba-icon-admins"></i>
           <span>Team</span>
           <ba-tooltip tooltip-text="Manage your administration team" tooltip-placement="right" class=""></ba-tooltip>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'security.actions', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.actions')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'security.actions')" href="">
           <i class="ba-icon-security-actions"></i>
           <span>Security Actions</span>
           <ba-tooltip tooltip-text="Manage users actions, configure sign-up and social emails"
@@ -201,7 +201,7 @@
         </a>
       </li>
       <li ng-class="{active: nav.state == 'security.templates', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('security.templates')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'security.templates')" href="">
           <i class="ba-icon-secruirty-templates"></i>
           <span>Security Templates</span>
           <ba-tooltip tooltip-text="Reusable permissions that allows you to have more granular control over the CRUD actions of each object" tooltip-placement="right" class=""></ba-tooltip>
@@ -220,19 +220,19 @@
     </a>
     <ul>
       <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('docs.hosting')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'docs.hosting')" href="">
           <i class="ba-icon-configuration"></i>
           <span>Configuration</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'hosting.hosting_tree', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('hosting.hosting_tree')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'hosting.hosting_tree')" href="">
           <i class="ba-icon-icon-hosting"></i>
           <span>Hosting Files</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'hosting.files_tree', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('hosting.files_tree')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'hosting.files_tree')" href="">
           <i class="ba-icon-icon-storage"></i>
           <span>Storage Files</span>
         </a>
@@ -250,25 +250,25 @@
     </a>
     <ul>
       <li ng-class="{active: nav.state == 'log.config', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('log.config')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.config')" href="">
           <i class="ba-icon-configuration"></i>
           <span>Configuration</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'log.history', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('log.history')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.history')" href="">
           <i class="ba-icon-data-history"></i>
           <span>Data History</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'log.console', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('log.console')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.console')" href="">
           <i class="ba-icon-icon-console"></i>
           <span>Console</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'log.exception', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo('log.exception')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.exception')" href="">
           <i class="ba-icon-server-side-exceptions"></i>
           <span>Server Side Exceptions</span>
         </a>
@@ -286,32 +286,32 @@
       </a>
       <ul>
         <li ng-class="{active: nav.state == 'app.edit', disabled: nav.DatabaseStatus != 1}">
-          <a ng-click="nav.goTo('app.edit')" href="">
+          <a ng-click="nav.goTo($event, 'app.edit')" href="">
             <i class="ba-icon-general"></i>
             <span>General</span>
           </a>
         </li>
         <li ng-if="nav.DatabaseStatus == 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('database.show')" href="">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'database.show')" href="">
             <i class="ba-icon-database"></i>
             <span>Database</span>
           </a>
         </li>
         <li ng-if="nav.DatabaseStatus == 0" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goToAlways('database.edit')" href="">
+          <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goToAlways($event, 'database.edit')" href="">
             <i class="ti-wand"></i>
             <span>Connect</span>
           </a>
         </li>
         <li ng-class="{active: nav.state == 'app.configuration'}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goTo('app.configuration')" href="">
+          <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goTo($event, 'app.configuration')" href="">
             <i class="ti-wand"></i>
             <span>Configuration</span>
           </a>
         </li>
 
         <!--<li ng-class="{active: nav.state == 'database.add-tables', disabled: nav.DatabaseStatus != 1}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo('database.add-tables')" href="">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'database.add-tables')" href="">
             <i class="ti-file"></i>
             <span>Templates</span>
           </a>
@@ -327,7 +327,7 @@
     </a>
     <ul>
       <li ng-class="{active: nav.state == 'backoffice.edit', disabled: nav.DatabaseStatus !== 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo('backoffice.edit')" href="">
+        <a ng-class="{disabled: nav.DatabaseStatus !== 1}"  ng-click="nav.goTo($event, 'backoffice.edit')" href="">
           <i class="icon-style"></i>
           <span>Templates</span>
         </a>
@@ -340,14 +340,14 @@
       </li>
 
       <li ng-class="{active: nav.state == 'backoffice.cust'}">
-        <a ng-click="nav.goToAlways('backoffice.cust')" href="">
+        <a ng-click="nav.goToAlways($event, 'backoffice.cust')" href="">
           <i class="icon-magic"></i>
           <span>Customization</span>
         </a>
       </li>
 
       <li ng-class="{active: nav.state == 'backoffice.code'}">
-        <a ng-click="nav.goToAlways('backoffice.code')" href="">
+        <a ng-click="nav.goToAlways($event, 'backoffice.code')" href="">
           <i class="icon-file-code-o"></i>
           <span>Code Example</span>
         </a>
