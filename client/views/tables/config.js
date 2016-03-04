@@ -68,7 +68,8 @@
         templateUrl: 'views/tables/data/data.html',
         controller: 'ObjectDataController as ObjectData',
         params: {
-          showLog: true
+          showLog: true,
+          defaultFilter: null
         }
       })
       .state('object_restapi', {

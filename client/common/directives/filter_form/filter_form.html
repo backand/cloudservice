@@ -28,7 +28,8 @@
             <select class="form-control"
                     ng-change="filterForm.submit()"
                     ng-model="predicate.operator"
-                    ng-options="operator for operator in filterForm.operatorsList[predicate.field.type]"></select>
+                    ng-options="operator for operator in filterForm.operatorsList[predicate.field.type]">
+                    </select>
           </span>
 
           <!-- Value -->
@@ -43,7 +44,7 @@
                 <span class="ui-select">
                   <select class="form-control"
                         name="predicate.key"
-                        ng-model="predicate.value"
+                        placeholder="{{predicate.value}}"
                         ng-change="filterForm.submit()"
                         ng-options="bool for bool in ['true', 'false']"></select>
                 </span>
