@@ -28,6 +28,12 @@ angular.module('backand.routes', []).
         templateUrl: 'views/auth/sign_in.html',
         controller : 'SignInController as signin'
       })
+      .state('link_email', {
+        parent: 'auth',
+        url: '/link_email',
+        templateUrl: 'views/auth/link_email.html',
+        controller : 'LinkEmailController as linkEmail'
+      })
       .state('change_password', {
         url: '/change_password',
         templateUrl: 'views/auth/reset_password.html',
