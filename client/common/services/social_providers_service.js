@@ -20,7 +20,8 @@
         url: 'www.github.com',
         css: 'github',
         id: 1,
-        helpUrl: "socialAndKeysGithub"
+        helpUrl: "socialAndKeysGithub",
+        requireEmail: false
       },
       {
         name: 'google',
@@ -28,7 +29,8 @@
         url: 'www.google.com',
         css: 'google-plus',
         id: 2,
-        helpUrl: "socialAndKeysGoogle"
+        helpUrl: "socialAndKeysGoogle",
+        requireEmail: false
       },
       {
         name: 'facebook',
@@ -38,7 +40,8 @@
         id: 3,
         helpUrl: "socialAndKeysFacebook",
         clientIdTitle: 'App ID',
-        secretIdTitle: 'App Secret'
+        secretIdTitle: 'App Secret',
+        requireEmail: false
       }
     ];
 
