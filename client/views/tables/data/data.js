@@ -14,6 +14,7 @@
       '$filter',
       '$state',
       'TablesService',
+      '$stateParams',
       ObjectDataController
     ]);
 
@@ -27,7 +28,8 @@
                                 ConfirmationPopup,
                                 $filter,
                                 $state,
-                                TablesService) {
+                                TablesService,
+                                $stateParams) {
 
     var self = this;
 
@@ -139,6 +141,7 @@
     function successColumnsHandlerWithDefaultFilter(data) {
       successColumnsHandler(data);
       self.filterData();
+      self.showFilter = true;
     }
 
     function successDataHandler(response) {
@@ -215,7 +218,7 @@
       var type = getFieldType(column.type);
 
       if (type === 'multiSelect') {
-        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">View</a></div>';
+        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">' + column.name + '</a></div>';
       }
 
       if (type == 'dateTime')
@@ -593,8 +596,8 @@
 
     function initDefaultFilter() {
       self.filterQuery = [];
-      if ($state.params.defaultFilter) {
-        self.defaultFilter = $state.params.defaultFilter;
+      if ($stateParams.defaultFilter) {
+        self.defaultFilter = $stateParams.defaultFilter;
       }
     }
   }
