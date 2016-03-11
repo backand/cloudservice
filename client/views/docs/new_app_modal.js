@@ -3,12 +3,14 @@
   angular.module('backand')
     .controller('NewAppModalController', [
       '$modalInstance',
-      EditObjectController
+      'AnalyticsService',
+      NewAppModalController
     ]);
-  function EditObjectController($modalInstance) {
+  function NewAppModalController($modalInstance, AnalyticsService) {
     var self = this;
 
     self.onAppAdded = function () {
+      AnalyticsService.track('create app from docs', {app: self.appName});
       $modalInstance.dismiss();
     }
   }
