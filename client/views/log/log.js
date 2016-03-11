@@ -167,6 +167,7 @@
     };
 
     function errorHandler(error, message) {
+      usSpinnerService.stop("loading");
       NotificationService.add('error', message);
       $log.debug(error);
     }
