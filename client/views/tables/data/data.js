@@ -577,12 +577,13 @@
         };
         usSpinnerService.spin('loading');
 
-        $state.go($state.current, {
+        var collection = true;
+        $state.go('object_data', {
             tableName: relatedObject,
             tableId: relatedObjectId,
-            defaultFilter: filter
-          },
-          {location: 'replace'}).then(function () {
+            defaultFilter: filter,
+            collection: collection
+          }).then(function () {
             usSpinnerService.stop('loading');
           });
       });
@@ -596,9 +597,8 @@
 
     function initDefaultFilter() {
       self.filterQuery = [];
-      if ($stateParams.defaultFilter) {
+      if ($stateParams.collection === 'true' && $stateParams.defaultFilter) {
         self.defaultFilter = $stateParams.defaultFilter;
-        $stateParams.defaultFilter = undefined;
       }
     }
   }
