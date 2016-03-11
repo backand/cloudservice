@@ -582,7 +582,7 @@
             tableId: relatedObjectId,
             defaultFilter: filter
           },
-          {reload: true}).then(function () {
+          {location: 'replace'}).then(function () {
             usSpinnerService.stop('loading');
           });
       });
@@ -598,6 +598,7 @@
       self.filterQuery = [];
       if ($stateParams.defaultFilter) {
         self.defaultFilter = $stateParams.defaultFilter;
+        $stateParams.defaultFilter = undefined;
       }
     }
   }
