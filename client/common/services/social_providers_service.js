@@ -42,6 +42,15 @@
         clientIdTitle: 'App ID',
         secretIdTitle: 'App Secret',
         requireEmail: false
+      },
+      {
+        name: 'twitter',
+        label: 'Twitter',
+        url: 'www.twitter.com',
+        css: 'twitter',
+        id: 4,
+        helpUrl: "socialAndKeysTwitter",
+        requireEmail: true
       }
     ];
 
