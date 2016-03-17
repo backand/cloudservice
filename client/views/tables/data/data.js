@@ -218,7 +218,7 @@
       var type = getFieldType(column.type);
 
       if (type === 'multiSelect') {
-        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">' + column.name + '</a></div>';
+        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">' + column.relatedViewName + '</a></div>';
       }
 
       if (type == 'dateTime')
