@@ -458,7 +458,7 @@
 
     self.deleteRows = function () {
       var items = $scope.gridApi.selection.getSelectedRows();
-      ConfirmationPopup.confirm('Are you sure you want to delete the selected objects?')
+      ConfirmationPopup.confirm('Are you sure you want to delete the selected rows?')
         .then(function (result) {
           if (!result)
             return;
