@@ -12,6 +12,7 @@
         fields: '=',
         operators: '=',
         disableValue: '=',
+        defaultFilter: '=',
         onSubmit: '&'
       },
       bindToController: true,
@@ -21,10 +22,12 @@
     };
   }
 
-  function filterFormController () {
+  function filterFormController ($scope) {
     var self = this;
 
-    self.query = [{}];
+    if(!self.query) {
+      self.query = [{}];
+    }
 
     self.operatorsList = self.operators ||
         {
@@ -32,8 +35,9 @@
           Numeric: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
           DateTime: ['equals', 'notEquals', 'greaterThan', 'greaterThanOrEqualsTo', 'lessThan', 'lessThanOrEqualsTo', 'empty', 'notEmpty'],
           select: ['in'],
+          SingleSelect: ['in'],
           Boolean: ['is']
-        }
+        };
 
 
     // Don't allow adding a new predicate when there are no more fields to filter
@@ -80,7 +84,15 @@
 
     self.submit = function () {
       return self.onSubmit();
+    };
+
+    function addDefaultFilter() {
+      if (self.defaultFilter) {
+        self.query[0] = self.defaultFilter;
+      }
     }
+
+    addDefaultFilter();
 
   }
 

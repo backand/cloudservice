@@ -33,6 +33,7 @@
       self.currentAppName = AppsService.currentApp.Name;
 
       self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
+      self.debugMode = AppsService.currentApp.debugMode;
 
       updateDefaultModelUse(self.currentAppName, false);
     });
@@ -67,7 +68,7 @@
 
     self.goToApp = function () {
       usSpinnerService.spin('loading-app');
-      $state.go('app', {appName: self.currentAppName});
+      $state.go('app', {appName: self.currentAppName}, {reload: true});
     };
 
     self.hideAppList = function () {
