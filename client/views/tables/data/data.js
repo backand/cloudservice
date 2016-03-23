@@ -279,7 +279,7 @@
       var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id, true);
       updatePromise
         .then(function () {
-          return loadData()
+          return self.filterData();
         })
         .then(successDataHandler);
       return updatePromise;
