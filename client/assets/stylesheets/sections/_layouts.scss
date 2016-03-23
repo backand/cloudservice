@@ -18,6 +18,9 @@ html {
     min-height: 100%; // important!
 }
 
+.modal-word-warp {
+  word-wrap: break-word;
+}
 // default
 .app {
     position: static; //

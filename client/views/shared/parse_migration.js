@@ -12,10 +12,16 @@
 
     self.dataExportDescription = "Paste your Parse data zip file link here:";
 
-    self.dataSchemePlaceholder = "Parse scheme goes here:\n" +
-    "{\"results\":[{\"className\":\"_User\", ...\n" +
-    "{\"className\":\"_Product\",\"fields\":{\ ...\n" +
-    "\"targetClass\":\"_User\"}}}]}";
+    self.dataSchemePlaceholder = "JSON schema goes here:\n\n" +
+    "{\n" + "\"results\":[ \n" +
+    "{\n" +
+    "\"className\":\"_User\",\n"+
+    "\"fields\":{\ \n" +
+    "\"targetClass\":\"_User\"}" +
+      "} \n" +
+      "} \n" +
+      "} \n"
+      + "]}";
 
     self.schemaPopoverTemplateUrl = "views/shared/parse_schema_popover.html";
 

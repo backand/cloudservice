@@ -218,7 +218,7 @@
       var type = getFieldType(column.type);
 
       if (type === 'multiSelect') {
-        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">' + column.name + '</a></div>';
+        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">' + column.relatedViewName + '</a></div>';
       }
 
       if (type == 'dateTime')
@@ -458,7 +458,7 @@
 
     self.deleteRows = function () {
       var items = $scope.gridApi.selection.getSelectedRows();
-      ConfirmationPopup.confirm('Are you sure you want to delete the selected objects?')
+      ConfirmationPopup.confirm('Are you sure you want to delete the selected rows?')
         .then(function (result) {
           if (!result)
             return;
@@ -571,12 +571,13 @@
         };
         usSpinnerService.spin('loading');
 
-        $state.go($state.current, {
+        var collection = true;
+        $state.go('object_data', {
             tableName: relatedObject,
             tableId: relatedObjectId,
-            defaultFilter: filter
-          },
-          {reload: true}).then(function () {
+            defaultFilter: filter,
+            collection: collection
+          }).then(function () {
             usSpinnerService.stop('loading');
           });
       });
@@ -590,7 +591,7 @@
 
     function initDefaultFilter() {
       self.filterQuery = [];
-      if ($stateParams.defaultFilter) {
+      if ($stateParams.collection === 'true' && $stateParams.defaultFilter) {
         self.defaultFilter = $stateParams.defaultFilter;
       }
     }

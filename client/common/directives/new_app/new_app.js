@@ -30,6 +30,7 @@
       self.chosenAppName = angular.lowercase(self.chosenAppName);
       if (self.chosenAppTitle === '')
         self.chosenAppTitle = self.chosenAppName;
+      self.appName = self.chosenAppName;
 
       NotificationService.add('info', 'Creating new app...');
 

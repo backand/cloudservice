@@ -17,41 +17,41 @@
 
     self.videos = [
       {
-        img: "https://img.youtube.com/vi/-35LHkNiorc/mqdefault.jpg",
-        href: "https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1",
-        title: "2 minutes overview",
+        img: "https://img.youtube.com/vi/1cAPczLvAb8/mqdefault.jpg",
+        href: "https://www.youtube.com/embed/1cAPczLvAb8?rel=0&autoplay=1",
+        title: "Getting Started with Back&",
         desc: ""
       },
       {
-        img: "https://img.youtube.com/vi/IU_qp2yzU9Q/mqdefault.jpg",
-        href: "https://www.youtube.com/embed/IU_qp2yzU9Q?rel=0&autoplay=1",
-        title: "15 min product tour",
+        img: "https://img.youtube.com/vi/RqsElDFAdHY/mqdefault.jpg",
+        href: "https://www.youtube.com/embed/RqsElDFAdHY?rel=0&autoplay=1",
+        title: "Migrating Your Parse App to Back&",
         desc: ""
       },
       {
-        img: "https://img.youtube.com/vi/mFYSe4VFHCI/mqdefault.jpg",
-        href: "https://www.youtube.com/embed/mFYSe4VFHCI?rel=0&autoplay=1",
-        title: "Working with Database and schema model",
-        desc: ""
-      },
-      {
-        img: "https://img.youtube.com/vi/7C6AHmK-zcM/mqdefault.jpg",
-        href: "https://www.youtube.com/embed/7C6AHmK-zcM?rel=0&autoplay=1",
-        title: "How to build server side logic using Backand's Actions",
-        desc: ""
-        },
-      {
-        img: "https://img.youtube.com/vi/mzxjDxozmLQ/mqdefault.jpg",
-        href: "https://www.youtube.com/embed/mzxjDxozmLQ?rel=0&autoplay=1",
-        title: "How to build a Query",
-        desc: ""
-      },
-      {
-        img: "https://img.youtube.com/vi/KG3rL1xHEg4/mqdefault.jpg",
-        href: "https://www.youtube.com/embed/KG3rL1xHEg4?rel=0&autoplay=1",
-        title: "How to use security",
+        img: "https://img.youtube.com/vi/5C7hd3Z6qcE/mqdefault.jpg",
+        href: "https://www.youtube.com/embed/5C7hd3Z6qcE?rel=0&autoplay=1",
+        title: "Back& live coding at the AWS Loft in San Francisco ",
         desc: ""
       }
+      //{
+      //  img: "https://img.youtube.com/vi/7C6AHmK-zcM/mqdefault.jpg",
+      //  href: "https://www.youtube.com/embed/7C6AHmK-zcM?rel=0&autoplay=1",
+      //  title: "How to build server side logic using Backand's Actions",
+      //  desc: ""
+      //  },
+      //{
+      //  img: "https://img.youtube.com/vi/mzxjDxozmLQ/mqdefault.jpg",
+      //  href: "https://www.youtube.com/embed/mzxjDxozmLQ?rel=0&autoplay=1",
+      //  title: "How to build a Query",
+      //  desc: ""
+      //},
+      //{
+      //  img: "https://img.youtube.com/vi/KG3rL1xHEg4/mqdefault.jpg",
+      //  href: "https://www.youtube.com/embed/KG3rL1xHEg4?rel=0&autoplay=1",
+      //  title: "How to use security",
+      //  desc: ""
+      //}
     ];
 
   }
