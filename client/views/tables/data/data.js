@@ -481,7 +481,6 @@
         operators: null
       };
       self.filterReady = true;
-      self.lastQuery = [];
     }
 
     function getFieldsForFilter() {
@@ -544,11 +543,6 @@
       });
 
       query = _.compact(query);
-      if (_.isEqual(query, self.lastQuery)) {
-        usSpinnerService.stop("loading-data");
-        return;
-      }
-      self.lastQuery = query;
 
       return DataService.get(
         self.tableName,
