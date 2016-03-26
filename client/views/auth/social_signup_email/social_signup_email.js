@@ -10,6 +10,10 @@
     self.submit = function () {
       // TODO send email to server
       $modalInstance.close();
+    };
+
+    self.cancel = function () {
+      $modalInstance.dismiss();
     }
   }
 
