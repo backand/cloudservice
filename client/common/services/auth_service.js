@@ -166,7 +166,8 @@
 
         if (errorData.message === 'The user is not signed up to ' + CONSTS.mainAppName) {
           self.socialLogin(errorData.provider, true);
-
+        } else if (errorData.message.indexOf('NO_EMAIL_SOCIAL') !== -1) {
+          // TODO: require an email
         } else {
           var errorMessage = errorData.message + ' (signing in with ' + errorData.provider + ')';
 
