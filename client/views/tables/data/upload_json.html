@@ -16,20 +16,22 @@
 
     <div class="panel-body">
       <div class="row upload-json-templates">
-        <a class="btn btn-default" download="{{uploadJson.schemeFileName}}" ng-href="{{uploadJson.jsonDownloadUrl}}">Download JSON
+        <a class="btn btn-default" download="{{uploadJson.schemeFileName}}" ng-href="{{uploadJson.jsonDownloadUrl}}">Download
+          JSON
           Template</a>
         <button class="btn btn-default" ng-click="uploadJson.showJsonScheme = !uploadJson.showJsonScheme">
           {{uploadJson.showJsonScheme ? 'Hide JSON scheme' : 'Show JSON scheme'}}
         </button>
       </div>
-      <div ng-if="uploadJson.showJsonScheme"
-           ui-ace="{theme: 'monokai', mode: 'json', rendererOptions: { fontSize: 15 } }"
-           type="text"
-           class="form-form-controlcontrol upload-json-scheme"
-           id="json-result"
-           ng-model="uploadJson.scheme"
-           readonly
-           rows="10">
+      <div ng-if="uploadJson.showJsonScheme">
+        <div
+          ui-ace="{theme: 'monokai', mode: 'json', rendererOptions: { fontSize: 15 } }"
+          type="text"
+          class="form-form-controlcontrol upload-json-scheme"
+          id="json-result"
+          ng-model="uploadJson.scheme"
+          rows="10">
+        </div>
       </div>
     </div>
   </div>
@@ -55,5 +57,5 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-default" ng-click="uploadJson.cancel()">Cancel</button>
-  <button class="btn btn-primary" ng-click="uploadJson.upload()" ng-disabled="!uploadJson.jsonData">Upload</button>
+  <button class="btn btn-primary" ng-click="uploadJson.upload()" ng-disabled="!(uploadJson.jsonData || uploadJson.showJsonScheme)">Upload</button>
 </div>
