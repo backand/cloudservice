@@ -18,7 +18,7 @@
     self.scheme = getJsonScheme();
     initDownloadJsonScheme();
     self.appName = AppsService.currentApp.Name;
-    self.schemeFileName = self.appName + '.json';
+    self.schemeFileName = tableName + '.json';
 
     $scope.$watch(function () {
       return self.file;
