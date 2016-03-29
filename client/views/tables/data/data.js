@@ -218,7 +218,7 @@
       var type = getFieldType(column.type);
 
       if (type === 'multiSelect') {
-        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">' + column.name + '</a></div>';
+        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">' + column.relatedViewName + '</a></div>';
       }
 
       if (type == 'dateTime')
@@ -279,7 +279,7 @@
       var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id, true);
       updatePromise
         .then(function () {
-          return loadData()
+          return self.filterData();
         })
         .then(successDataHandler);
       return updatePromise;
@@ -458,7 +458,7 @@
 
     self.deleteRows = function () {
       var items = $scope.gridApi.selection.getSelectedRows();
-      ConfirmationPopup.confirm('Are you sure you want to delete the selected objects?')
+      ConfirmationPopup.confirm('Are you sure you want to delete the selected rows?')
         .then(function (result) {
           if (!result)
             return;
@@ -481,7 +481,6 @@
         operators: null
       };
       self.filterReady = true;
-      self.lastQuery = [];
     }
 
     function getFieldsForFilter() {
@@ -544,11 +543,6 @@
       });
 
       query = _.compact(query);
-      if (_.isEqual(query, self.lastQuery)) {
-        usSpinnerService.stop("loading-data");
-        return;
-      }
-      self.lastQuery = query;
 
       return DataService.get(
         self.tableName,

@@ -242,6 +242,14 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
   });
 });
 
+//run the dev in the dist folder
+gulp.task('dev:dist', ['env:dev', 'build:dist'], function() {
+  browserSync({
+    notify: false,
+    server: [config.dist]
+  });
+});
+
 //deploy the code into production
 gulp.task('qa:deploy',['sts'], function() {
   return backandSync.dist(config.dist, 'qa1');
