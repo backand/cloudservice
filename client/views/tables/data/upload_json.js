@@ -18,7 +18,7 @@
     self.scheme = getJsonScheme();
     initDownloadJsonScheme();
     self.appName = AppsService.currentApp.Name;
-    self.schemeFileName = self.appName + '.json';
+    self.schemeFileName = tableName + '.json';
 
     $scope.$watch(function () {
       return self.file;
@@ -28,20 +28,28 @@
       }
     });
 
-    self.upload = function () {
-      if (self.jsonData.err) {
-        NotificationService.add('error', self.jsonData.err);
-        return;
+    self.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+    self.upload = function (jsonData) {
+      var data;
+      if (self.jsonData) {
+        // Get the data from the uploaded file
+        if (self.jsonData.err) {
+          NotificationService.add('error', self.jsonData.err);
+          return;
+        }
+        data = self.jsonData.json;
+      } else {
+        // Get json from the editor
+        data = JSON.parse(self.scheme);
       }
       usSpinnerService.spin('upload-loading');
-      DataService.bulkPost(tableName, self.jsonData.json, true).then(function (result) {
+      DataService.bulkPost(tableName, data, true).then(function (result) {
         usSpinnerService.stop('upload-loading');
         $modalInstance.close({});
       });
-    };
-
-    self.cancel = function () {
-      $modalInstance.dismiss('cancel');
     };
 
     function initDownloadJsonScheme() {
