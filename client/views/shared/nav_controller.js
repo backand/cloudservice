@@ -1,10 +1,9 @@
-
-(function  () {
-    'use strict';
+(function () {
+  'use strict';
   angular.module('controllers')
     .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams){
+  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams) {
     var self = this;
     self.isTablesClicked = false;
 
@@ -52,7 +51,7 @@
             if (self.tables.length == 0) { //only check the database if there are no tables
               AppsService.appDbStat(self.appName).then(successDbStats);
             }
-            else{
+            else {
               self.dbEmpty = false;
             }
 
@@ -65,7 +64,7 @@
       );
     }
 
-    function successDbStats(data){
+    function successDbStats(data) {
       if (data.data) {
         self.dbEmpty = data.data.tableCount == 0;
       }
@@ -82,7 +81,7 @@
       );
     }
 
-    $scope.$on('$stateChangeSuccess', function() {
+    $scope.$on('$stateChangeSuccess', function () {
       self.state = $state.current.name;
       self.appName = $state.params.appName;
       loadApp();
@@ -98,16 +97,16 @@
         .then(successGetCurrentApp);
     }
 
-    function successGetCurrentApp(data){
+    function successGetCurrentApp(data) {
       self.app = data;
       self.DatabaseStatus = self.app.DatabaseStatus;
       if (self.DatabaseStatus == 0)
         self.tables = [];
-      else if(self.DatabaseStatus == 1)
+      else if (self.DatabaseStatus == 1)
         loadTables();
     }
 
-    self.isTablesActive = function() {
+    self.isTablesActive = function () {
       return $state.includes('tables.columns') || $state.current.name == 'erd_model' || $state.current.name == 'json_model';
     };
 
@@ -118,12 +117,12 @@
       return "none";
     };
 
-    self.getDBStatus = function() {
+    self.getDBStatus = function () {
       if (_.isEmpty(self.app)) {
         return 'unknown';
       }
 
-      switch(parseInt(self.app.DatabaseStatus)) {
+      switch (parseInt(self.app.DatabaseStatus)) {
         case 0:
         case 2:
           return 'warning';
@@ -134,44 +133,56 @@
       }
     };
 
-    self.goTo = function(state) {
+    self.goTo = function ($event, state) {
 
       if (self.app.DatabaseStatus === 1) {
-        $state.go(state);
+        goToState($event, state);
       }
     };
 
-    self.goToAlways = function(state) {
-      $state.go(state);
+    self.goToAlways = function ($event, state) {
+      goToState($event, state);
     };
 
-    self.goToLocation = function(href) {
-        if (self.app.DatabaseStatus === 1) {
-            window.open(href, '_blank');
-        }
+    self.goToLocation = function (href) {
+      if (self.app.DatabaseStatus === 1) {
+        window.open(href, '_blank');
+      }
     };
 
-    self.showTable = function(table) {
+    self.showTable = function ($event, table) {
       var path = 'object_fields';
-      $state.go(path, {
+      var params = {
         tableName: table.name,
         tableId: table.__metadata.id
-      });
+      };
+      goToState($event, path, params);
     };
 
-    self.showDbQuery = function(query) {
+    self.showDbQuery = function ($event, query) {
       var params = {
         queryId: query.__metadata.id
       };
-      $state.go('dbQueries.query', params);
+      goToState($event, 'dbQueries.query', params);
     };
 
-    self.newDbQuery = function() {
-      $state.go('dbQueries.newQuery');
+    self.newDbQuery = function ($event) {
+      goToState($event, 'dbQueries.newQuery');
     };
 
     self.newObject = function () {
-      $state.go('erd_model',{isNewObject: true});
+      var params = {isNewObject: true};
+      $state.go('erd_model', params);
+    };
+
+    // Used to support opening links in new tab
+    function goToState($event, state, params) {
+      if ($event.which === 2 || ($event.which === 1 && ($event.metaKey || $event.ctrlKey))) {
+        var url = $state.href(state, params, {absolute: true});
+        window.open(url, '_blank');
+      } else {
+        $state.go(state, params);
+      }
     }
 
   }

@@ -63,12 +63,14 @@
         controller: 'FieldsController as fields'
       })
       .state('object_data', {
-        url: '/data?showLog',
+        url: '/data?collection',
         parent: 'tables.columns',
         templateUrl: 'views/tables/data/data.html',
         controller: 'ObjectDataController as ObjectData',
         params: {
-          showLog: true
+          showLog: true,
+          collection: false,
+          defaultFilter: null
         }
       })
       .state('object_restapi', {

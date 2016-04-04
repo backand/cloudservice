@@ -13,21 +13,23 @@
       'ConfirmationPopup',
       '$filter',
       '$state',
+      'TablesService',
+      '$stateParams',
       ObjectDataController
     ]);
 
-  function ObjectDataController(
-    NotificationService,
-    ColumnsService,
-    DataService,
-    $scope,
-    $modal,
-    usSpinnerService,
-    tableName,
-    ConfirmationPopup,
-    $filter,
-    $state
-  ) {
+  function ObjectDataController(NotificationService,
+                                ColumnsService,
+                                DataService,
+                                $scope,
+                                $modal,
+                                usSpinnerService,
+                                tableName,
+                                ConfirmationPopup,
+                                $filter,
+                                $state,
+                                TablesService,
+                                $stateParams) {
 
     var self = this;
 
@@ -46,8 +48,13 @@
     };
 
     (function init() {
-      getData(true, true);
-      //initJSONUpload();
+      initDefaultFilter();
+      if (self.defaultFilter) {
+        ColumnsService.get(true)
+          .then(successColumnsHandlerWithDefaultFilter, errorHandler);
+      } else {
+        getData(true, true);
+      }
     }());
 
     self.toggleShowLog = function () {
@@ -125,10 +132,16 @@
       return DataService.get(self.tableName, self.paginationOptions.pageSize, self.paginationOptions.pageNumber, self.sort, null, log);
     }
 
-    function successColumnsHandler (data) {
+    function successColumnsHandler(data) {
       self.columnDefs = data.fields;
       getFilterOptions();
       getEditRowData();
+    }
+
+    function successColumnsHandlerWithDefaultFilter(data) {
+      successColumnsHandler(data);
+      self.filterData();
+      self.showFilter = true;
     }
 
     function successDataHandler(response) {
@@ -157,7 +170,7 @@
 
       addActionColumns();
 
-      if(_.last(self.gridOptions.columnDefs))
+      if (_.last(self.gridOptions.columnDefs))
         _.last(self.gridOptions.columnDefs).minWidth = 286; //for edit widget to be shown properly
 
       setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
@@ -197,15 +210,16 @@
       NotificationService.add('error', message);
     }
 
-    function getCellEditTemplate (column) {
+    function getCellEditTemplate(column) {
       if (column.form.hideInEdit || column.form.disableInEdit || column.advancedLayout.excludeInUpdate) return undefined;
 
       var callbackOptions = ' onbeforesave="grid.appScope.ObjectData.onUpdateRowCell(row, col, $data)"';
 
       var type = getFieldType(column.type);
 
-      if(type === 'multiSelect')
-        return undefined;
+      if (type === 'multiSelect') {
+        return '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.ObjectData.goToCollection(row, col)">' + column.relatedViewName + '</a></div>';
+      }
 
       if (type == 'dateTime')
         return '<div class="ui-grid-cell-contents"><span editable-date="MODEL_COL_FIELD" class="editable-grid-cell" '
@@ -225,15 +239,17 @@
           + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
       }
 
-      if (type === 'numeric') { type = 'text';} // todo: fix single-select
+      if (type === 'numeric') {
+        type = 'text';
+      } // todo: fix single-select
       // Search of Multi-Select keys doesn't work currently
       /*if (!_.isEmpty(column.relatedViewName)) {
-        return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" ' +
-          'e-typeahead="item.value as item.value + \'. \' + item.label ' +
-          'for item in grid.appScope.ObjectData.getAutocomplete(col.field, $viewValue)" '
-          + callbackOptions
-          + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
-      }*/
+       return '<div class="ui-grid-cell-contents" editable-text="MODEL_COL_FIELD" ' +
+       'e-typeahead="item.value as item.value + \'. \' + item.label ' +
+       'for item in grid.appScope.ObjectData.getAutocomplete(col.field, $viewValue)" '
+       + callbackOptions
+       + '>{{COL_FIELD CUSTOM_FILTERS}}</div>';
+       }*/
 
       return '<div class="ui-grid-cell-contents" editable-' + type + '="MODEL_COL_FIELD" '
         + callbackOptions
@@ -242,7 +258,7 @@
 
     self.getSingleAutocomplete = function (item, query) {
       return DataService.search(self.relatedViews[item.field].object, query)
-        .then(function(result) {
+        .then(function (result) {
           results = $filter('orderBy')(result.data.data, '__matadata.id');
           return results;
         });
@@ -251,28 +267,28 @@
 
     self.getAutocomplete = function (columnName, term) {
       return DataService.getAutocomplete(self.tableName, columnName, term)
-        .then(function(result) {
+        .then(function (result) {
           results = $filter('orderBy')(result.data, 'value');
           return results;
         });
     };
 
-    self.onUpdateRowCell = function(row, col, newValue) {
+    self.onUpdateRowCell = function (row, col, newValue) {
       var updatedObject = {};
       updatedObject[col.name] = newValue;
       var updatePromise = DataService.update(self.tableName, updatedObject, row.entity.__metadata.id, true);
       updatePromise
         .then(function () {
-          return loadData()
+          return self.filterData();
         })
         .then(successDataHandler);
       return updatePromise;
     };
 
     function fixDatesInData() {
-      self.columnDefs.forEach(function(columnDef) {
+      self.columnDefs.forEach(function (columnDef) {
         if (columnDef.type == 'DateTime') {
-          self.gridOptions.data.forEach(function(row) {
+          self.gridOptions.data.forEach(function (row) {
             var date = row[columnDef.name];
             row[columnDef.name] = date ? new Date(date) : '- - - - - - -';
           });
@@ -380,7 +396,7 @@
       self.relatedViews = {};
     }
 
-    function getEditRowData () {
+    function getEditRowData() {
       resetEditRowData();
       self.columnDefs.forEach(function (column) {
 
@@ -402,8 +418,10 @@
                 object: column.relatedViewName,
                 descriptiveColumn: response.data.columnDisplayinTitle
               };
-              self.relatedViews[column.name] = {object: column.relatedViewName,
-                descriptiveColumn: response.data.columnDisplayinTitle};
+              self.relatedViews[column.name] = {
+                object: column.relatedViewName,
+                descriptiveColumn: response.data.columnDisplayinTitle
+              };
             })
         }
 
@@ -412,7 +430,7 @@
       });
     }
 
-    function openModal () {
+    function openModal() {
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/data/edit_row.html',
         controller: 'EditRowController as EditRow',
@@ -457,16 +475,15 @@
 
     // filter data
 
-    function getFilterOptions () {
+    function getFilterOptions() {
       self.filterOptions = {
         fields: getFieldsForFilter(),
         operators: null
       };
       self.filterReady = true;
-      self.lastQuery = [];
     }
 
-    function getFieldsForFilter () {
+    function getFieldsForFilter() {
 
       var fields = _.map(self.columnDefs, function (field, index) {
         var fieldData = {
@@ -489,6 +506,10 @@
       });
 
       _.remove(fields, {type: null});
+
+      if (self.defaultFilter) {
+        _.remove(fields, {name: self.defaultFilter.field.name})
+      }
       return fields;
     }
 
@@ -496,7 +517,7 @@
       return ['empty', 'notEmpty'].indexOf(operator) > -1;
     };
 
-    function filterValid (item) {
+    function filterValid(item) {
       return item.field
         && item.operator
         && (item.value || self.disableValue(item.operator));
@@ -522,11 +543,6 @@
       });
 
       query = _.compact(query);
-      if (_.isEqual(query, self.lastQuery)) {
-        usSpinnerService.stop("loading-data");
-        return;
-      }
-      self.lastQuery = query;
 
       return DataService.get(
         self.tableName,
@@ -538,9 +554,46 @@
         .then(successDataHandler, errorHandler);
     };
 
+    self.goToCollection = function (row, col) {
+      var id = row.entity.__metadata.id;
+
+      var currentField = _.where(self.columnDefs, {name: col.name})[0];
+      var relatedFieldName = currentField.relatedParentFieldName;
+      var relatedObject = currentField.relatedViewName;
+      var relatedObjectId = TablesService.getTableByName(relatedObject).__metadata.id;
+
+      ColumnsService.getColumns(relatedObject).then(function (data) {
+        var relatedField = _.where(data.data.fields, {name: relatedFieldName})[0];
+        var filter = {
+          field: relatedField,
+          operator: 'in',
+          value: id
+        };
+        usSpinnerService.spin('loading');
+
+        var collection = true;
+        $state.go('object_data', {
+            tableName: relatedObject,
+            tableId: relatedObjectId,
+            defaultFilter: filter,
+            collection: collection
+          }).then(function () {
+            usSpinnerService.stop('loading');
+          });
+      });
+
+    };
+
     //resize the tab to fix the width issue with UI grid
-    function resizeGrid () {
+    function resizeGrid() {
       setTimeout("$('#grid-container').trigger('resize');", 50);
+    }
+
+    function initDefaultFilter() {
+      self.filterQuery = [];
+      if ($stateParams.collection === 'true' && $stateParams.defaultFilter) {
+        self.defaultFilter = $stateParams.defaultFilter;
+      }
     }
   }
 }());
