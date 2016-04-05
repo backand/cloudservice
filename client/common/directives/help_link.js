@@ -57,6 +57,11 @@
             "section": "Facebook",
             "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#facebook-app-configuration"
           },
+          "socialAndKeysTwitter": {
+            "page": "security/social_and_keys",
+            "section": "Twitter",
+            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/#twitter-app-configuration"
+          },
           "socialAndKeysGoogle": {
             "page": "security/social_and_keys",
             "section": "Google",

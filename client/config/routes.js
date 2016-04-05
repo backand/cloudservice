@@ -11,7 +11,7 @@ angular.module('backand.routes', []).
 
     $stateProvider
       .state('auth', {
-        url: '?data&error&st',
+        url: '?data&error&email',
         templateUrl: 'views/auth/auth.html',
         abstract: true,
         controller : 'AuthController as Auth'
@@ -27,6 +27,12 @@ angular.module('backand.routes', []).
         url: '/sign_in',
         templateUrl: 'views/auth/sign_in.html',
         controller : 'SignInController as signin'
+      })
+      .state('link_email', {
+        parent: 'auth',
+        url: '/link_email',
+        templateUrl: 'views/auth/link_email.html',
+        controller : 'LinkEmailController as linkEmail'
       })
       .state('change_password', {
         url: '/change_password',
@@ -137,13 +143,13 @@ angular.module('backand.routes', []).
         template: '<div ui-view></div>'
       });
   })
-  .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS', run]);
+  .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS','$window', run]);
 
 function isStateForSignedOutUser(state) {
   return (state.name === 'sign_in' || state.name === 'sign_up' || state.name === 'change_password');
 }
 
-function run($rootScope, $state, SessionService, AuthService, CONSTS) {
+function run($rootScope, $state, SessionService, AuthService, CONSTS, $window) {
 
   if (CONSTS.env === 'DEV') {
     $rootScope.$on("$stateChangeError", console.log.bind(console));
@@ -156,9 +162,23 @@ function run($rootScope, $state, SessionService, AuthService, CONSTS) {
 
       if (toParams.error) {
         var errorData = JSON.parse(toParams.error);
+        console.log(toParams);
 
         if (errorData.message === 'The user is not signed up to ' + CONSTS.mainAppName) {
-          AuthService.socialLogin(errorData.provider, true);
+          AuthService.socialLogin(errorData.provider, true, toParams.email);
+        }
+        else {
+          window.close();
+
+          //build better error message
+          var err = errorData.message;
+
+          if(err.indexOf('NO_EMAIL_SOCIAL') > -1)
+              err = "Sign up with social requires a valid email";
+          else if (err.indexOf('The user already signed up') > -1)
+              err = "The email is already been used";
+
+          $window.opener.alert(err);
         }
       } else if (window.opener) {
         window.opener.postMessage(JSON.stringify(toParams), location.origin);
