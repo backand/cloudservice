@@ -29,9 +29,21 @@
         desc: ""
       },
       {
+        img: "https://img.youtube.com/vi/o5rDGBfpfxE/mqdefault.jpg",
+        href: "https://www.youtube.com/embed/o5rDGBfpfxE?rel=0&autoplay=1",
+        title: "How to use Back& database editor",
+        desc: ""
+      },
+      {
         img: "https://img.youtube.com/vi/5C7hd3Z6qcE/mqdefault.jpg",
         href: "https://www.youtube.com/embed/5C7hd3Z6qcE?rel=0&autoplay=1",
-        title: "Back& live coding at the AWS Loft in San Francisco ",
+        title: "Back& live coding at the AWS Loft in San Francisco",
+        desc: ""
+      },
+      {
+        img: "https://img.youtube.com/vi/zrFpUdPn38Q/mqdefault.jpg",
+        href: "https://www.youtube.com/embed/zrFpUdPn38Q?rel=0&autoplay=1",
+        title: "Building a hybrid app in less than an hour with Ionic and Back&",
         desc: ""
       }
       //{
