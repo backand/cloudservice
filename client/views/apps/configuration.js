@@ -49,11 +49,19 @@
         var blob = new Blob([data.data], {type: 'application/octet-stream'});
         var downloadUrl = (window.URL || window.webkitURL).createObjectURL(blob);
         var anchor = document.createElement("a");
-        anchor.download = self.appName + ".zip";
+        anchor.download = createFileName(version);
         anchor.href = downloadUrl;
+        document.body.appendChild(anchor);
         anchor.click();
         usSpinnerService.stop('loading');
       });
     };
+
+    function createFileName(version) {
+      if (!version) {
+        version = self.currentVersion;
+      }
+      return self.appName + "_" + version + ".zip";
+    }
   }
 }());
