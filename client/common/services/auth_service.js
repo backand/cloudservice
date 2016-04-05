@@ -116,31 +116,33 @@
     };
 
 
-    function getSocialUrl (social, isSignup) {
+    function getSocialUrl (social, isSignup, email) {
       var action = isSignup ? 'up' : 'in';
+      var emailUrl = (email) ? '&email=' + email : '';
       return 'user/socialSign' + action +
-        '?provider=' + social.label +
+        '?provider=' + social.label + emailUrl +
         '&response_type=token&client_id=self&redirect_uri=' + social.url +
         '&state=rcFNVUMsUOSNMJQZ%2bDTzmpqaGgSRGhUfUOyQHZl6gas%3d';
     }
 
-    self.socialLogin = function (provider, isSignup) {
+    self.socialLogin = function (provider, isSignup, email) {
       startCheckingSocialWindow();
 
       if (typeof provider === 'string') {
         provider = _.find(self.socials, {name: provider});
       }
 
-      //monitor when users click on social
-      var st = '?st=' + (isSignup ? provider.id : '0');
+      //add email to the url to get it back in case of twitter
+      var emailUrl = (email) ? '?email=' + email : '';
 
       var returnAddress = encodeURIComponent($window.location.href.replace(/\?.*/g, ''));
 
       self.loginPromise = $q.defer();
 
       var loginUrl = CONSTS.appUrl + '/1/' +
-          getSocialUrl(provider, isSignup) +
-          '&appname=' + CONSTS.mainAppName + '&returnAddress=' + returnAddress + st;
+          getSocialUrl(provider, isSignup, email) +
+          '&appname=' + CONSTS.mainAppName + '&returnAddress=' + returnAddress + emailUrl;
+
       if (isSignup) {
         $window.location = loginUrl;
       } else {
@@ -166,9 +168,8 @@
 
         if (errorData.message === 'The user is not signed up to ' + CONSTS.mainAppName) {
           self.socialLogin(errorData.provider, true);
-        } else if (errorData.message.indexOf('NO_EMAIL_SOCIAL') !== -1) {
-          // TODO: require an email
-        } else {
+        } 
+        else {
           var errorMessage = errorData.message + ' (signing in with ' + errorData.provider + ')';
 
           self.loginPromise.reject({
@@ -192,13 +193,6 @@
         accessToken: userData.access_token,
         appName: userData.appName
       };
-
-      //if (st != '0') { //this is sign up
-      //  AnalyticsService.trackSignupEvent(
-      //    tokenData.username,
-      //    tokenData.username,
-      //    _.find(self.socials, {id: Number(st)}));
-      //}
 
       return self.signIn(tokenData);
     }

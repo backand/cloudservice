@@ -50,7 +50,9 @@
         css: 'twitter',
         id: 4,
         helpUrl: "socialAndKeysTwitter",
-        requireEmail: true
+        requireEmail: true,
+        clientIdTitle: 'Consumer Key (API Key)',
+        secretIdTitle: 'Consumer Secret (API Secret)'
       }
     ];
 

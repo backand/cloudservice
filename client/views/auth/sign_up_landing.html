@@ -22,7 +22,6 @@
                  required>
         </div>
       </div>
-
       <div class="form-group">
         <div class="input-group">
                                 <span class="input-group-addon">
@@ -35,13 +34,17 @@
                  test-hook="signup.email"
                  ng-model="signup.email"
                  ng-model-options="{updateOn: 'blur'}"
-                 ng-focus="emailInput.focus = true"
-                 ng-blur="emailInput.focus = false"
+                 ng-focus="emailInput.focus = true;"
+                 ng-blur="emailInput.focus = false; signup.twitterMissingEmail = false;"
+                 ng-change="signup.emailChanged(form.uEmail)"
                  required>
 
         </div>
         <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false">
           This is not a valid email
+        </div>
+        <div class="text-danger" ng-show="signup.twitterMissingEmail">
+          Must provide email in order to sign up with Twitter
         </div>
       </div>
 
