@@ -368,8 +368,7 @@
         else {
           usSpinnerService.spin("loading-data");
         }
-        loadData()
-          .then(successDataHandler);
+        self.filterData();
       });
     };
 
@@ -451,8 +450,7 @@
         else {
           usSpinnerService.spin("loading-data");
         }
-        loadData()
-          .then(successDataHandler);
+        self.filterData();
       });
     }
 
