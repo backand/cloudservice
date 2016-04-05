@@ -41,20 +41,24 @@
     };
 
     self.editObject = function () {
-      var newModelObject = JSON.parse(self.newModel.schema);
-      var objectToEdit = _.where(newModelObject, {name: self.objectName})[0];
-      objectToEdit.name = self.selectedObjectName;
+      if (self.selectedObjectName.toLowerCase() === self.objectName.toLowerCase()) {
+        NotificationService.add('warning', 'Cannot rename object by case only');
+      } else {
+        var newModelObject = JSON.parse(self.newModel.schema);
+        var objectToEdit = _.where(newModelObject, {name: self.objectName})[0];
+        objectToEdit.name = self.selectedObjectName;
 
-      // Change object name in related objects
-      _.each(newModelObject, function (object) {
-        _.each(object.fields, function (field) {
-          if (field.collection == self.objectName) {
-            field.collection = self.selectedObjectName;
-          }
+        // Change object name in related objects
+        _.each(newModelObject, function (object) {
+          _.each(object.fields, function (field) {
+            if (field.collection == self.objectName) {
+              field.collection = self.selectedObjectName;
+            }
+          });
         });
-      });
 
-      modalInstance.close({model: newModelObject});
+        modalInstance.close({model: newModelObject});
+      }
     };
 
     self.deleteObject = function (objectName) {
