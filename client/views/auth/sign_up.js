@@ -1,15 +1,16 @@
 (function () {
 
   angular.module('backand')
-    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', 'NotificationService', SignUpController]);
+    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', 'NotificationService','$rootScope', SignUpController]);
 
-  function SignUpController(AuthService, $state, SessionService, $timeout, NotificationService) {
+  function SignUpController(AuthService, $state, SessionService, $timeout, NotificationService, $rootScope) {
 
     var self = this;
 
     (function init() {
       self.flags = AuthService.flags;
       self.loading = false;
+      self.twitterMissingEmail = false;
 
       //for automatic sign up
       if ($state.params.i == 1) {
@@ -22,10 +23,22 @@
         }, 100);
       }
     }());
+    
+    self.emailChanged = function (email){
+      self.twitterMissingEmail = false;
+      if(email.$valid){
+        $rootScope.$emit('email:changed', email.$viewValue);
+      }
+    };
+
+    $rootScope.$on('no-required-email', function (event, data) {
+      self.twitterMissingEmail = true;
+    });
 
     self.signUp = function () {
       self.flags.authenticating = true;
       self.loading = true;
+
       AuthService.signUp(self.fullName, self.email, self.password)
         .then(function (response) {
           var requestedState = SessionService.getRequestedState();
