@@ -7,8 +7,9 @@
       <div us-spinner spinner-key="loading"></div>
       <div class="configuration-description">Import and export your app's configuration. Current version: {{configuration.currentVersion}}</div>
       <div class="backup-buttons">
-        <button class="btn btn-success" ng-click="configuration.downloadConfiguration()">Export Current Setting</button>
-        <button type="file" class="btn btn-success" ngf-select="configuration.uploadConfiguration($file)">Import External Setting</button>
+        <button class="btn btn-success" ng-click="configuration.downloadConfiguration()">Export Settings</button>
+        <button type="file" class="btn btn-success" ngf-select="configuration.uploadConfiguration($file)">Import
+          Settings</button>
       </div>
       <table class="table table-striped">
         <thead>
