@@ -1,5 +1,6 @@
 #apps-page.panel-body {
   margin-left: 0;
+  padding-top: 50px;
 }
 
 .apps-jumbo {
@@ -135,4 +136,28 @@
   .migration-description {
     margin-bottom: 5px;
   }
+}
+
+.add-app-button {
+  height: 70px;
+  width: 70px;
+  font-size: 40px;
+  position: relative;
+  margin: 60px;
+  border-radius: 8px;
+}
+
+.add-app-button-container {
+  text-align: center;
+}
+
+.app-panel-body {
+  .btn-primary {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+}
+
+.app-name-headline {
+  font-weight: bold;
 }

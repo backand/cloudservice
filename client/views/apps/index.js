@@ -152,7 +152,7 @@
       if (app.DatabaseStatus == 2)
         return 'Creating App ...';
       if (app.DatabaseStatus == 1)
-        return 'Manage App';
+        return 'Manage';
       if (AppsService.isExampleApp(app))
         return 'Create Example App';
       return 'Create App';
