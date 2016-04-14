@@ -145,6 +145,8 @@
   position: relative;
   margin: 60px;
   border-radius: 8px;
+  background-color: #84B4DC;
+  border: 0;
 }
 
 .add-app-button-container {
@@ -160,4 +162,10 @@
 
 .app-name-headline {
   font-weight: bold;
+}
+
+.app-page-button {
+  background-color: #84B4DC;
+  border: 0;
+  height: 40px;
 }
