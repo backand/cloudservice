@@ -48,5 +48,10 @@
         controller: 'AppConfiguration as configuration',
         templateUrl: 'views/apps/configuration.html'
       })
+      .state('app.platform_select', {
+        url: '/platform_select',
+        controller: 'PlatformSelectController as platform',
+        templateUrl: 'views/apps/app_creation/platform_select.html'
+      })
   }
 })();
