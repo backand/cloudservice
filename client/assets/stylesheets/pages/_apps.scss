@@ -169,3 +169,51 @@
   border: 0;
   height: 40px;
 }
+
+.choose-app-section {
+  padding-right: 400px;
+}
+
+.apps-quickstart-sidebar {
+  width: 273px;
+  background-size: cover;
+  position: absolute;
+  right: 100px;
+  text-align: center;
+  img {
+    vertical-align: middle;
+    padding: 25px;
+    margin-top: 10px;
+  }
+  .quickstart-description {
+    color: #ffffff;
+    margin-top: 10px;
+  }
+
+  .quickstart-title {
+    color: #ffffff;
+    font-size: 20px;
+  }
+  .btn {
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 40px;
+  }
+}
+
+.docs-quickstart-sidebar {
+  background-image: url('/assets/images/apps_page/docs_background.png');
+  height: 400px;
+  .btn {
+    padding: 15px 40px;
+  }
+}
+
+.video-quickstart-sidebar {
+  background-image: url('/assets/images/apps_page/video_background.png');
+  height: 300px;
+  top: 550px;
+  .btn {
+    padding: 15px 30px;
+  }
+}

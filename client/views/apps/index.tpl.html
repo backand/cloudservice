@@ -30,7 +30,7 @@
 
 <div class="page ng-scope">
   <div class="panel-body" id="apps-page">
-    <div class="row col-lg-9 col-md-9 col-sm-12">
+    <div class="choose-app-section">
       <div us-spinner spinner-key="loading" spinner-start-active
            us-spinner="{color: 'black', top: '50%', left: '50%%'}"></div>
       <div class="col-lg-4 col-md-4 col-sm-6 app-panel add-app-button-container">
@@ -42,7 +42,9 @@
            test-hook="apps.app-panel">
 
         <div class="panel panel-default">
-          <span ng-if="app.DatabaseStatus === 2" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
+          <span ng-if="app.DatabaseStatus === 2"
+                us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
+
           <div class="panel-heading app-name-headline">
             <a href="" class="pull-right" ng-if="app.DatabaseStatus === 1"
                ng-click="index.appSettings(app.Name)" class="pull-in">
@@ -55,17 +57,35 @@
               <div>&nbsp;</div>
             </div>
             <button
-                ng-click="index.appManage(app)"
-                class="btn btn-primary btn-w-md btn-block app-page-button"
-                data-spinner-color="#000000"
-                test-hook="apps.app-panel.manage-button">
-                {{index.getAppManageTitle(app)}}
+              ng-click="index.appManage(app)"
+              class="btn btn-primary btn-w-md btn-block app-page-button"
+              data-spinner-color="#000000"
+              test-hook="apps.app-panel.manage-button">
+              {{index.getAppManageTitle(app)}}
             </button>
             <div ng-if="index.appSpinner[app.Name]" us-spinner spinner-start-active
                  us-spinner="{color: 'black', left: '50%%'}"></div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="docs-quickstart-sidebar apps-quickstart-sidebar">
+      <img src="assets/images/apps_page/docs_icon.png">
+
+      <div class="quickstart-title">Not Sure where to Start? Browse our Docs</div>
+
+      <div class="quickstart-description">Some text about our docs</div>
+      <button class="btn btn-lg btn-success">browse docs
+      </button>
+    </div>
+
+    <div class="video-quickstart-sidebar apps-quickstart-sidebar">
+      <img src="assets/images/apps_page/video_icon.png">
+
+      <div class="quickstart-title">Browse our Video Tutorials</div>
+
+      <button class="btn btn-lg btn-success">youtube playlist
+      </button>
     </div>
   </div>
 </div>
