@@ -126,6 +126,10 @@
       $state.go('app.edit', {appName: appName});
     };
 
+    self.createApp = function () {
+      $state.go('apps.platform_select', {});
+    };
+
     self.goToLink = function (app) {
       $state.go(self.getGoToLink(app).state, {appName: app.Name});
     };

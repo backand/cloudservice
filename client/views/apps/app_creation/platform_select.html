@@ -1,0 +1,17 @@
+<div class="page ng-scope">
+  <div class="create-app-platform-select">
+    <div class="platform-select-top">
+      <h2>Welcome to Back&amp;</h2>
+
+      <h1>What platform would you like to connect to Backand?</h1>
+    </div>
+    <div class="platform-select-main">
+      <div class="row center-block">
+        <div class="backand-platform col-md-3 col-lg-3 col-sm-6" ng-repeat="platformOption in platform.platforms">
+          <img src="{{platformOption.image}}">
+          <span>{{platformOption.platform}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

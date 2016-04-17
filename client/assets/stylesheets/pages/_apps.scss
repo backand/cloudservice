@@ -217,3 +217,39 @@
     padding: 15px 30px;
   }
 }
+
+.create-app-platform-select {
+  border: 1px #E1E1E1 solid;
+  text-align: center;
+  margin: 20px 200px 0 200px;
+  border-radius: 5px;
+  background: #ffffff;
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 16px;
+    padding-top: 50px;
+  }
+}
+
+.platform-select-main {
+  overflow: hidden;
+}
+
+.backand-platform {
+  width: 208px;
+  height: 193px;
+  border: 1px #E1E1E1 solid;
+  margin: 0 5px 5px 0;
+  font-size: 15px;
+  span {
+    display: block;
+    font-weight: bold;
+    margin-top: 7px;
+    padding-bottom: 25px;
+  }
+  img {
+    margin-top: 30px;
+  }
+}

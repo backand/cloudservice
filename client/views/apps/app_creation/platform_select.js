@@ -2,12 +2,12 @@
   'use strict';
 
   angular.module('backand.apps')
-    .controller('PlatformSelectController', [PlatformSelectController]);
+    .controller('PlatformSelectController', ['PlatformsService', PlatformSelectController]);
 
-  function PlatformSelectController() {
+  function PlatformSelectController(PlatformsService) {
 
     var self = this;
 
-
+    self.platforms = PlatformsService.get();
   }
 }());
