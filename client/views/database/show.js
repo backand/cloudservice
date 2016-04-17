@@ -27,7 +27,7 @@
             self.data.server = dataIn.ServerName;
             self.data.username = dataIn.Username;
             self.data.usingSsh  = dataIn.SshUses;
-            self.data.usingSsl  = dataIn.SslUses;
+            self.data.SslUses  = dataIn.SslUses;
             self.data.sshRemoteHost  = dataIn.SshRemoteHost;
             self.data.sshUser   = dataIn.SshUser;
             self.data.sshPort   = dataIn.SshPort;
