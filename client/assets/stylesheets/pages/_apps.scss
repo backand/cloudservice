@@ -246,8 +246,9 @@
   span {
     display: block;
     font-weight: bold;
-    margin-top: 7px;
-    padding-bottom: 25px;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
   }
   img {
     margin-top: 30px;
