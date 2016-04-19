@@ -280,8 +280,7 @@
       updatePromise
         .then(function () {
           return self.filterData();
-        })
-        .then(successDataHandler);
+        });
       return updatePromise;
     };
 
