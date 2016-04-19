@@ -221,7 +221,8 @@
 .create-app-platform-select {
   border: 1px #E1E1E1 solid;
   text-align: center;
-  margin: 20px 200px 0 200px;
+  width: 80%;
+  margin: 0 auto;
   border-radius: 5px;
   background: #ffffff;
   h1 {
@@ -235,6 +236,12 @@
 
 .platform-select-main {
   overflow: hidden;
+  width: 80%;
+  margin: 0 auto;
+  .row {
+    width: 80%;
+    margin: 0 auto;
+  }
 }
 
 .backand-platform {

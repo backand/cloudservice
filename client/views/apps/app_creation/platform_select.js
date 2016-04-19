@@ -9,5 +9,6 @@
     var self = this;
 
     self.platforms = PlatformsService.get();
+    self.platforms = _.chunk(self.platforms, 4);
   }
 }());

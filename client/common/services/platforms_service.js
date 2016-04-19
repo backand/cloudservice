@@ -11,16 +11,16 @@
     self.get = function () {
       return [{
         platform: 'iOS',
-        image: 'assets/images/platforms/ios.png'
+        image: 'assets/images/platforms/angular2.png'
       },{
         platform: 'AngularJS',
-        image: 'assets/images/platforms/angular.png'
+        image: 'assets/images/platforms/android.png'
       },{
         platform: 'Ionic',
-        image: 'assets/images/platforms/ionic.png'
+        image: 'assets/images/platforms/angular2.png'
       }, {
         platform: 'React',
-        image: 'assets/images/platforms/react.png'
+        image: 'assets/images/platforms/angular2.png'
       },{
         platform: 'Android',
         image: 'assets/images/platforms/android.png'
@@ -29,10 +29,10 @@
         image: 'assets/images/platforms/angular2.png'
       },{
         platform: 'Ionic 2',
-        image: 'assets/images/platforms/ionic2.png'
+        image: 'assets/images/platforms/angular2.png'
       },{
         platform: 'RESTful API',
-        image: 'assets/images/platforms/rest.png'
+        image: 'assets/images/platforms/android.png'
       }];
     };
   }
