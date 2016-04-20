@@ -7,5 +7,6 @@
   "backandRoleObject": "backandRoles",
   "env": "PROD",
   "hostingUrl": "https://hosting.backand.io",
-  "storageUrl": "https://files.backand.io"
+  "storageUrl": "https://files.backand.io",
+  "nodejsUrl": "https://nodejs.backand.io"
 }

@@ -45,7 +45,7 @@
       </div>
       <div class="col-lg-3 col-md-3 col-sm-4">
 
-        <input type="button" ng-show="rules.allowEditAction()"
+        <input type="button" ng-show="rules.allowEditAction() && !rules.isNodeJS()"
                 ng-click="rules.editAction()"
                 class="btn btn-primary pull-right with-margin"
           value="Edit Action">
@@ -60,7 +60,8 @@
 
           <button ng-disabled="rules.newRuleForm.$invalid"
                   class="btn btn-primary pull-right with-margin"
-                  ladda="rules.saving" data-style="expand-right">Save
+                  ladda="rules.saving" data-style="expand-right"
+                  ng-show="!rules.isNodeJS()">Save
           </button>
           <input type="button" ng-if="false"
                  ng-click="rules.saveActionTemplate()"
@@ -98,7 +99,8 @@
                   ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
                   ng-model="rules.action.dataAction"
                   required
-                  ng-disabled="!rules.editMode">
+                  ng-disabled="!rules.editMode"
+                  ng-change="rules.onDataActionChange()">
             <option value="">Select trigger...</option>
           </select>
         </div>
@@ -114,7 +116,7 @@
                   name="action"
                   id="workflowAction"
                   required
-                  ng-options="workflowAction.value as workflowAction.label for workflowAction in modal.workflowActions"
+                  ng-options="workflowAction.value as workflowAction.label for workflowAction in rules.workflowActions"
                   ng-model="rules.action.workflowAction"
                   ng-init="rules.action.workflowAction = rules.action.workflowAction || 'JavaScript'"
                   ng-model-options="{debounce: 0}"
@@ -124,7 +126,7 @@
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-show="rules.action.workflowAction"
+             ng-show="rules.action.workflowAction && !rules.isNodeJS()"
              ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
           <label>Input Parameters</label>
           <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
@@ -231,7 +233,7 @@
             <!-- ./code -->
             <!-- end switch -->
           </div>
-          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction"
+          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction && !rules.isNodeJS()"
                ng-class="{'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty}">
             <label for="whereCondition">Where Condition</label>
             <ba-tooltip tooltip-text="SQL where clause that determines if the action will be performed"
@@ -255,9 +257,74 @@
             <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
           </div>
 
+          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.isNodeJS()">
+            <div class="panel-body docs">
+              <div ng-show="rules.allowEditAction()">
+                <section class="panel panel-default">
+                  <div class="panel-heading">
+                    <strong>Hosted node.js Files</strong>
+                    <a href="" title="Refresh tree" class="btn btn-sm"
+                       ng-click="rules.refresh()"><i
+                      class="glyphicon glyphicon-refresh"></i></a>
+                  </div>
+                  <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
+                  <div class="panel-body">
+                    <p>
+                    <h4 style="padding-left: 20px;">{{rules.getStorageUrl()}}</h4>
+                    </p>
+                    <bknd-tree-control></bknd-tree-control>
+                  </div>
+                </section>
+              </div>
+              <div>
+                <h3>First Time Installation <font size="2"><a ng-show="rules.allowEditAction()" href="" ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></font></h3 >
+                <br/>
+                <div ng-show="rules.showFirstTimeInstallation || !rules.allowEditAction()">
+                  <p>The Backand CLI  (command-line interface), which is used to control deployment, requires Node.js and npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.<br/><br/>
+                    Run the following command to install Backand CLI tool:
+                  </p>
+                  <pre><code class="bash">
+                    $ npm install -g backand
+
+                    # or use sudo (with caution) if required by your system permissions
+                    # sudo npm install -g backand
+                  </code></pre>
+                      <p>
+                        To <b>update</b> a previously-installed version of Backand CLI - <a href="" ng-click="rules.showUpdate = !rules.showUpdate">{{rules.showUpdate ? "Hide": "Show"}}</a>
+                      </p>
+                  <pre ng-if="rules.showUpdate"><code class="bash">
+                    $ npm update -g backand
+
+                    # or use sudo (with caution) if required by your system permissions
+                    # sudo npm update -g backand
+                  </code></pre>
+                  <br/>
+                </div>
+
+                <h3 ng-show="!rules.allowEditAction()">Initiate your node.js action</h3>
+                <h3 ng-show="rules.allowEditAction()">Deploy your node.js action</h3>
+                <br/>
+                <p>To initiate and sync your local node.js action folder with the server, use the following command on the command line:</p>
+            <pre ng-show="!rules.allowEditAction()"><code>
+              $ backand action init --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+            </code></pre>
+            <pre ng-show="rules.allowEditAction()"><code>
+              $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+            </code></pre>
+                <p>
+                  <b>--app</b>: The current app name<br/>
+                  <b>--object</b>: The object that the action belongs to<br/>
+                  <b>--action</b>: The action name<br/>
+                  <b>--master</b>: The master token of the app (get it from <a href="" ui-sref="security.keys">Social & Keys</a>)<br/>
+                  <b>--user</b>: The token of the current user (get it from <a href="" ui-sref="security.team">Team</a> and click on key icon)<br/>
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div class="modal-footer" ng-show="rules.action && rules.editMode">
             <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid"
-                    ladda="rules.saving" data-style="expand-right">Save
+                    ladda="rules.saving" data-style="expand-right" ng-show="!rules.isNodeJS()">Save
             </button>
             <input type="button"
                    class="btn btn-danger pull-left"

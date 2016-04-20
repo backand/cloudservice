@@ -2,5 +2,6 @@
   "appUrl":"http://api.backand.info:8098",
   "env": "QA",
   "hostingUrl": "http://hosting.backand.net",
-  "storageUrl": "http://files.backand.net"
+  "storageUrl": "http://files.backand.net",
+  "nodejsUrl": "http://nodejs.backand.net"
 }

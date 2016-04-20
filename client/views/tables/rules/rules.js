@@ -5,6 +5,9 @@
   angular.module('backand')
     .controller('RulesController',
     ['$scope',
+      'AppsService',
+      'SecurityService',
+      'SessionService',
       'ConfirmationPopup',
       '$filter',
       'RulesService',
@@ -21,10 +24,16 @@
       'AnalyticsService',
       'EscapeSpecialChars',
       '$modal',
+      'NodejsService',
+      '$state',
+      '$rootScope',
       'stringifyHttp',
       RulesController]);
 
   function RulesController($scope,
+                           AppsService,
+                           SecurityService,
+                           SessionService,
                            ConfirmationPopup,
                            $filter,
                            RulesService,
@@ -41,6 +50,9 @@
                            AnalyticsService,
                            EscapeSpecialChars,
                            $modal,
+                           NodejsService,
+                           $state,
+                           $rootScope,
                            stringifyHttp) {
 
     var self = this;
@@ -55,6 +67,28 @@
       setTestActionTitle();
       getRules();
       self.getActionTemplates();
+
+      usSpinnerService.spin("connecting-app-to-db");
+      self.isAppOpened = !_.isEmpty(AppsService.currentApp);
+      self.currentApp = AppsService.currentApp;
+      if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
+        AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
+      self.getTokens();
+    }
+
+    function setKeysInfo(data){
+      self.keys = data.data;
+      self.masterToken = data.data.general;
+    }
+
+    self.getTokens = function(){
+
+      //get first admin user token
+      SecurityService.appName = self.currentApp.Name;
+      SecurityService.getUserToken(SessionService.currentUser.username)
+        .then(function (response) {
+          self.userToken = response.data;
+        });
     }
 
     self.getActionTemplates = function () {
@@ -181,6 +215,11 @@
 
     function loadAction(data) {
       self.action = data.data;
+      if (self.isNodeJS()){
+        NodejsService.actionName = self.action.name;
+        NodejsService.objectName = self.getTableName();
+        self.refresh();
+      }
     }
 
     self.allowEditAction = function () {
@@ -200,6 +239,7 @@
       getTestRow();
       setTestActionTitle();
       buildParametersDictionary();
+
     };
 
     function getTestRow() {
@@ -214,10 +254,16 @@
     };
 
     self.cancelEdit = function () {
-      ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
-        .then(function (result) {
-          result ? refreshAction(self.action) : false;
-        });
+      if (!self.isNodeJS()) {
+        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
+          .then(function (result) {
+            result ? refreshAction(self.action) : false;
+          });
+      }
+      else{
+        refreshAction(self.action);
+      }
+
     };
 
     self.saveAction = function (withTest) {
@@ -305,6 +351,7 @@
       dataActions: RulesService.dataActions,
       workflowActions: [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
+        {value: 'NodeJS', label: 'Server side node.js code'},
         {value: 'Notify', label: 'Send Email'},
         {value: 'Execute', label: 'Transactional sql script'}
       ],
@@ -313,6 +360,36 @@
       toggleGroup: toggleGroup,
       isCurGroup: isCurGroup,
       buildParameters: buildParametersDictionary
+    };
+    self.workflowActions = [
+      {value: 'JavaScript', label: 'Server side JavaScript code'},
+      {value: 'NodeJS', label: 'Server side node.js code'},
+      {value: 'Notify', label: 'Send Email'},
+      {value: 'Execute', label: 'Transactional sql script'}
+    ];
+
+    self.onDataActionChange = function(){
+      self.workflowActions = [
+        {value: 'JavaScript', label: 'Server side JavaScript code'},
+        {value: 'NodeJS', label: 'Server side node.js code'},
+        {value: 'Notify', label: 'Send Email'},
+        {value: 'Execute', label: 'Transactional sql script'}
+      ];
+      if (self.isOnDemand()){
+        self.workflowActions = [
+          {value: 'JavaScript', label: 'Server side JavaScript code'},
+          {value: 'Notify', label: 'Send Email'},
+          {value: 'Execute', label: 'Transactional sql script'}
+        ];
+      }
+    };
+
+    self.isOnDemand = function () {
+      return self.action && self.action.dataAction == "OnDemand";
+    };
+
+    self.isNodeJS = function () {
+      return self.action && self.action.workflowAction == 'NodeJS';
     };
 
     self.anchorParams = {
@@ -817,6 +894,25 @@
       getUrl: getTestHttp,
       getInputForm: getInputParametersForm,
       getTestForm: getRuleForm
+    };
+
+    self.getCliActionName = function () {
+      if (self.action.name){
+        return '--action ' + self.action.name;
+      }
+      return '';
+    }
+
+    self.appName = AppsService.currentApp.Name;
+    self.getStorageUrl = function () {
+      if (self.action && self.action.name)
+        return CONSTS.nodejsUrl + '/' + self.appName + '/' + getTableName() + '/' + self.action.name;
+      return '';
+
+    }
+
+    self.refresh = function () {
+      $rootScope.$emit('refreshTree', {});
     };
 
     function getInputParametersForm() {
