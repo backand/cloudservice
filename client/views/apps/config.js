@@ -57,5 +57,13 @@
         controller: 'PlatformSelectController as platform',
         templateUrl: 'views/apps/app_creation/platform_select.html'
       })
+      .state('apps.starter_app_select', {
+        url: 'starter_app?platform',
+        controller: 'StarterAppSelectController as starterApp',
+        templateUrl: 'views/apps/app_creation/starter_app_select.html',
+        params: {
+          platformName: 'RESTful API'
+        }
+      })
   }
 })();
