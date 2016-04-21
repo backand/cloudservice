@@ -40,7 +40,7 @@
         method: 'GET',
         url: CONSTS.appUrl + baseUrl
           + '?filter=[{fieldName:"viewTable", operator:"in", value:'
-          + self.tableId + '}]&sort=[{fieldName:"name", order:"asc"}]',
+          + self.tableId + '}]&sort=[{fieldName:"name", order:"asc"}]&pageSize=200',
         headers: { AppName: self.appName }
       });
     };
