@@ -96,9 +96,10 @@
         .then(function (result) {
           result.data.data.forEach(function (template) {
             try {
-              template.json = angular.fromJson(template.json);
+              if (template.json)
+                template.json = angular.fromJson(template.json);
             } catch (error) {
-              console.log(error);
+                console.log(error);
             }
 
             var groupedNotOrdered = _.groupBy(_.sortBy(result.data.data, 'ordinal'), 'category');
