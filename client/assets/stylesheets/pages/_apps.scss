@@ -279,20 +279,20 @@
   width: 95%;
   margin: 0 auto;
   h3 {
-    font-size: 15px;
+    font-size: 17px;
   }
   h2 {
-    font-size: 20px;
+    font-size: 25px;
   }
 }
 
 .starter-apps-container {
-  width: 60%;
+  width: 65%;
 }
 
 .backand-starter-app {
-  width: 200px;
-  height: 170px;
+  width: 170px;
+  height: 150px;
   border: 1px #E1E1E1 solid;
   margin: 0 12px 12px 0;
   font-size: 15px;
@@ -310,4 +310,22 @@
   img {
     margin-top: 30px;
   }
+}
+
+.platform-nav {
+  padding-top: 40px;
+  border-bottom: 1px #E1E1E1 solid;
+}
+
+.platform-choice-nav {
+  height: 40px;
+  width: 130px;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+}
+
+.inactive-platform {
+  -webkit-filter: grayscale(100%) brightness(130%);
+  filter: grayscale(100%) brightness(130%);
 }

@@ -10,29 +10,37 @@
 
     self.get = function () {
       return [{
+        platform: 'RESTful API',
+        image: 'assets/images/platforms/android.png',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
+      }, {
         platform: 'iOS',
-        image: 'assets/images/platforms/angular2.png'
-      },{
+        image: 'assets/images/platforms/angular2.png',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
+      }, {
         platform: 'AngularJS',
-        image: 'assets/images/platforms/android.png'
-      },{
+        image: 'assets/images/platforms/android.png',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
+      }, {
         platform: 'Ionic',
-        image: 'assets/images/platforms/angular2.png'
+        image: 'assets/images/platforms/angular2.png',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'React',
-        image: 'assets/images/platforms/angular2.png'
-      },{
+        image: 'assets/images/platforms/angular2.png',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
+      }, {
         platform: 'Android',
-        image: 'assets/images/platforms/android.png'
-      },{
+        image: 'assets/images/platforms/android.png',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
+      }, {
         platform: 'Angular 2',
-        image: 'assets/images/platforms/angular2.png'
-      },{
+        image: 'assets/images/platforms/angular2.png',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
+      }, {
         platform: 'Ionic 2',
-        image: 'assets/images/platforms/angular2.png'
-      },{
-        platform: 'RESTful API',
-        image: 'assets/images/platforms/android.png'
+        image: 'assets/images/platforms/angular2.png',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
       }];
     };
   }

@@ -1,7 +1,12 @@
 <div class="page ng-scope">
   <div class="create-app-starter-app-select">
     <div class="platform-nav">
-
+      <div ng-repeat="platform in starterApp.platforms" class="platform-choice-nav"
+           ng-class="{'platform-choice-nav': true, 'active-platform': platform.platform === starterApp.selectedPlatform,
+           'inactive-platform': platform.platform !== starterApp.selectedPlatform}">
+        <span>{{platform.platform}}</span>
+        <img src="{{platform.icon}}">
+      </div>
     </div>
     <div class="starter-app-select-content">
       <h3>{{starterApp.selectedPlatform}}</h3>

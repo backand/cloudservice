@@ -10,6 +10,7 @@
 
     self.starterApps = StarterAppService.get();
     self.platforms = PlatformsService.get();
+    self.platforms = self.platforms.slice(0, 4);
     self.selectedPlatform = $state.params.platformName;
     self.starterApps = _.chunk(self.starterApps, 3);
   }
