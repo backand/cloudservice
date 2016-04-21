@@ -321,7 +321,7 @@
             </div>
           </div>
 
-          <div class="modal-footer" ng-show="rules.action && rules.editMode">
+          <div class="modal-footer" ng-show="rules.action && (rules.editMode || rules.isNodeJS()) ">
             <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid"
                     ladda="rules.saving" data-style="expand-right" ng-show="!rules.isNodeJS()">Save
             </button>
@@ -332,6 +332,7 @@
                    value="Delete">
             </input>
             <input type="button"
+                   ng-hide="rules.isNodeJS()"
                    class="btn btn-default"
                    ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
                    value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">
