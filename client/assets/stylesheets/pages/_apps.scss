@@ -287,7 +287,8 @@
 }
 
 .starter-apps-container {
-  width: 65%;
+  width: 60%;
+  display: inline-block;
 }
 
 .backand-starter-app {
@@ -323,13 +324,38 @@
   display: inline-block;
   text-align: center;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .inactive-platform {
-  -webkit-filter: grayscale(100%) brightness(130%);
-  filter: grayscale(100%) brightness(130%);
+  -webkit-filter: grayscale(100%) brightness(200%);
+  filter: grayscale(100%) brightness(200%);
 }
 
 .add-template-box {
   background-color: #1C2B36;
+  color: #ffffff;
+  padding: 15px;
+  width: 350px;
+  h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  button {
+    display: block;
+    margin: 10px auto 0 auto;
+    text-align: center;
+    padding: 8px 12px;
+  }
 }
+
+.side-box {
+  display: inline-block;
+  position: absolute;
+}
+
+.active-platform {
+  border-bottom: 3px solid #000000;
+}
+
