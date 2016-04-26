@@ -12,7 +12,8 @@
       return [{
         name: "Blank Project",
         image: "assets/images/app_templates/blank_project.png",
-        description: "An awesome project"
+        description: "An awesome project",
+        images: ['assets/images/postgresql.jpg', 'assets/images/mysql.png']
       },
         {
           name: "Seed Project",

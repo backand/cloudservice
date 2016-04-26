@@ -273,11 +273,14 @@
   margin: 0 auto;
   border-radius: 5px;
   background: #ffffff;
+  overflow: hidden;
 }
 
 .starter-app-select-content {
-  width: 95%;
-  margin: 0 auto;
+  width: 60%;
+  display: inline-block;
+  float: left;
+  margin-left: 25px;
   h3 {
     font-size: 17px;
   }
@@ -287,7 +290,6 @@
 }
 
 .starter-apps-container {
-  width: 60%;
   display: inline-block;
 }
 
@@ -359,3 +361,56 @@
   border-bottom: 3px solid #000000;
 }
 
+.starter-app-description {
+  border-left: 1px solid #cacaca;
+  width: 37%;
+  display: inline-block;
+  height: 95%;
+  margin: 15px 0;
+  position: relative;
+}
+
+.starter-app-description-top {
+  border-bottom: 1px solid #cacaca;
+  margin: 0 13px;
+  padding-bottom: 5px;
+  h2 {
+    font-weight: bold;
+    font-size: 22px;
+  }
+  span {
+    font-size: 17px;
+  }
+}
+
+.starter-app-description-content {
+  margin: 10px 13px 0 13px;
+}
+
+.horizontal-slideshow {
+  img {
+    margin-right: 5px;
+  }
+}
+
+.starter-app-columns-wrapper {
+  display: table;
+  width: 100%;
+}
+
+.starter-app-description-footer {
+  position: absolute;
+  bottom: 0;
+  margin: 0 13px;
+  width: 90%;
+  button {
+    padding: 12px 30px;
+    font-weight: bold;
+    float: left;
+  }
+  a {
+    float: right;
+    margin: 12px 15px 0 0;
+    font-weight: bold;
+  }
+}
