@@ -3,7 +3,8 @@
     <div class="platform-nav">
       <div ng-repeat="platform in starterApp.platforms" class="platform-choice-nav"
            ng-class="{'platform-choice-nav': true, 'active-platform': platform.platform === starterApp.selectedPlatform,
-           'inactive-platform': platform.platform !== starterApp.selectedPlatform}">
+           'inactive-platform': platform.platform !== starterApp.selectedPlatform}"
+        ng-click="starterApp.changePlatform(platform.platform)">
         <img src="{{platform.icon}}">
         <span>{{platform.platform}}</span>
       </div>
