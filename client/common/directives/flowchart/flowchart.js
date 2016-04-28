@@ -10,7 +10,7 @@ angular.module('common.directives')
         chart: "=chart",
         onUpdate: '&',
         showModelControls: '=',
-        onIconClick: '&',
+        onObjectClick: '&',
         editFieldDialog: '&',
         editObjectDialog: '&',
         updateErd: '&',

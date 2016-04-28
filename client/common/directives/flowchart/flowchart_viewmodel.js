@@ -151,7 +151,12 @@ var flowchart = {
 		this.name = function () {
 			return this.data.name || "";
 		};
-
+    
+    // Navigate to object data tab
+    this.goToDataTab = function () {
+      
+    }
+    
 		//
 		// X coordinate of the node.
 		//
