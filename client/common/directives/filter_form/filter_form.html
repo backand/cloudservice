@@ -44,9 +44,12 @@
                 <span class="ui-select">
                   <select class="form-control"
                         name="predicate.key"
-                        placeholder="{{predicate.value}}"
-                        ng-change="filterForm.submit()"
-                        ng-options="bool for bool in ['true', 'false']"></select>
+                        ng-model="predicate.value"
+                        ng-change="filterForm.submit()">
+                    <option></option>
+                    <option>true</option>
+                    <option>false</option>
+                        </select>
                 </span>
               </span>
             </span>
