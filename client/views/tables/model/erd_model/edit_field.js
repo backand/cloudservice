@@ -106,7 +106,6 @@
         self.updateErd().then(function (data) {
           self.editFieldForm.$setPristine();
           resetAddFieldValues();
-          NotificationService.add('success', 'Field added successfully');
         });
       }
     };

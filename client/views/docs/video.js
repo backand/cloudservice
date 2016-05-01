@@ -45,19 +45,19 @@
         href: "https://www.youtube.com/embed/zrFpUdPn38Q?rel=0&autoplay=1",
         title: "Building a hybrid app in less than an hour with Ionic and Back&",
         desc: ""
-      }
-      //{
-      //  img: "https://img.youtube.com/vi/7C6AHmK-zcM/mqdefault.jpg",
-      //  href: "https://www.youtube.com/embed/7C6AHmK-zcM?rel=0&autoplay=1",
-      //  title: "How to build server side logic using Backand's Actions",
-      //  desc: ""
-      //  },
-      //{
-      //  img: "https://img.youtube.com/vi/mzxjDxozmLQ/mqdefault.jpg",
-      //  href: "https://www.youtube.com/embed/mzxjDxozmLQ?rel=0&autoplay=1",
-      //  title: "How to build a Query",
-      //  desc: ""
-      //},
+      },
+      {
+        img: "https://img.youtube.com/vi/CEsndv0Lmaw/mqdefault.jpg",
+        href: "https://www.youtube.com/embed/CEsndv0Lmaw?rel=0&autoplay=1",
+        title: "How to build server side logic using Backand's Actions",
+        desc: ""
+      },
+      {
+        img: "https://img.youtube.com/vi/PDo-MeUmoVY/mqdefault.jpg",
+        href: "https://www.youtube.com/embed/PDo-MeUmoVY?rel=0&autoplay=1",
+        title: "How to query your data using Backand",
+        desc: ""
+      },
       //{
       //  img: "https://img.youtube.com/vi/KG3rL1xHEg4/mqdefault.jpg",
       //  href: "https://www.youtube.com/embed/KG3rL1xHEg4?rel=0&autoplay=1",
