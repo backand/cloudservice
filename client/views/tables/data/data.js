@@ -340,9 +340,13 @@
     };
 
     self.editRow = function (event, rowItem) {
-      DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true);
-      getEditRowEntity(rowItem);
-      openModal();
+      DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true).then(function(results){
+        var row = {};
+        row.entity = results.data;
+        getEditRowEntity(row);
+        openModal();
+      });
+
     };
 
     self.uploadJson = function () {
