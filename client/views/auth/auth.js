@@ -29,15 +29,19 @@
 
     self.socialLogin = function (social) {
       self.flags.authenticating = true;
+      var isSignup = false;
 
       if(social.requireEmail && self.email === '' && $state.current.name === 'sign_up'){
         $rootScope.$emit('no-required-email');
         self.flags.authenticating = false;
         return;
       }
+      if(social.requireEmail && self.email !== '' && $state.current.name === 'sign_up') {
+        isSignup = true;
+      }
 
       usSpinnerService.spin("socialSignin");
-      AuthService.socialLogin(social, false, self.email)
+      AuthService.socialLogin(social, isSignup, self.email, isSignup)
         .then(function (response) {
           var requestedState = SessionService.getRequestedState();
           $state.go(requestedState.state || 'apps.index', requestedState.params);
