@@ -15,11 +15,13 @@
       };
     });
 
-  TreeController.$inject = ['$state', 'HostingService', 'FilesService', 'AppsService', 'NotificationService', 'usSpinnerService', 'CONSTS', '$window'];
-  function TreeController($state, HostingService, FilesService, AppsService, NotificationService, usSpinnerService, CONSTS, $window) {
+  TreeController.$inject = ['$state', 'HostingService', 'FilesService', 'NodejsService', 'AppsService', 'NotificationService', 'usSpinnerService', 'CONSTS', '$window', '$rootScope'];
+  function TreeController($state, HostingService, FilesService, NodejsService, AppsService, NotificationService, usSpinnerService, CONSTS, $window, $rootScope) {
     var self = this;
 
-    if ($state.current.name == 'hosting.files_tree') {
+    if ($state.current.name == 'object_actions') {
+      self.service = 'nodejs';
+    } else if ($state.current.name == 'hosting.files_tree') {
       self.service = 'file';
     } else {
       self.service = 'hosting';
@@ -29,7 +31,14 @@
     self.appName = app.Name;
     self.data = [];
 
+    $rootScope.$on('refreshTree', function (event, data) {
+      self.data = [];
+      init();
+    });
+
     init();
+
+
 
     self.treeOptions = {
       isLeaf: function (node) {
@@ -52,7 +61,11 @@
     self.onNodeToggle = function (node, expanded) {
       if (expanded && node.type === 'folder' && node.children.length === 0) {
         usSpinnerService.spin('loading');
-        if (self.service == 'hosting') {
+        if (self.service == 'nodejs') {
+          NodejsService.get(self.appName, node.path).then(function (data) {
+            treePathDataSuccess(data, node);
+          }, failureHandler);
+        } else if (self.service == 'hosting') {
           HostingService.get(self.appName, node.path).then(function (data) {
             treePathDataSuccess(data, node);
           }, failureHandler);
@@ -74,7 +87,9 @@
     };
 
     function getBaseUrl () {
-      if (self.service == 'hosting') {
+      if (self.service == 'nodejs') {
+        return CONSTS.nodejsUrl;
+      } else if (self.service == 'hosting') {
         return CONSTS.hostingUrl;
       } else {
         return CONSTS.storageUrl;
@@ -143,7 +158,9 @@
 
     function init() {
       usSpinnerService.spin('loading');
-      if (self.service == 'hosting') {
+      if (self.service == 'nodejs') {
+        NodejsService.get(self.appName).then(initTreeDataSuccess, failureHandler);
+      } else if (self.service == 'hosting') {
         HostingService.get(self.appName).then(initTreeDataSuccess, failureHandler);
       } else {
         FilesService.get(self.appName).then(initTreeDataSuccess, failureHandler);

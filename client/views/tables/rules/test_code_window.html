@@ -64,6 +64,7 @@
       <button type="button"
               style=""
               class="btn btn-primary pull-right"
+              ng-show="rules.action.workflowAction != 'NodeJS'"
               data-style="expand-right" ladda="rules.savingAndTesting"
               ng-disabled="rules.allowTest()"
               ng-click="rules.saveAction(true)">Save & Test

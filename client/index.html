@@ -29,9 +29,7 @@
   <!-- endbuild -->
 
   <script type="text/javascript">
-    if(this.window.location.hostname != 'localhost')
-    {
-      (function(e, t) {
+    (function(e, t) {
       function r(e, t) {
         e[t] = function() {
           e.push([ t ].concat(Array.prototype.slice.call(arguments, 0)));
@@ -50,8 +48,7 @@
           f.appendChild(a);
         }
       })(e, t, e[n] || [], "//recorder-assets.getjaco.com/recorder.js");
-      }).call(window, window, document), window.JacoRecorder.push([ "init", "6656e2be-5e88-42cc-a5d3-8881595f29fe", {} ]);
-    }
+    }).call(window, window, document), window.JacoRecorder.push([ "init", "6656e2be-5e88-42cc-a5d3-8881595f29fe", {} ]);
   </script>
 </head>
 
@@ -132,6 +129,7 @@
   <script type="text/javascript" src="common/services/fields_service.js"></script>
   <script type="text/javascript" src="common/services/hosting_service.js"></script>
   <script type="text/javascript" src="common/services/files_service.js"></script>
+  <script type="text/javascript" src="common/services/nodejs_service.js"></script>
   <script type="text/javascript" src="common/services/parse_service.js"></script>
 
   <script type="text/javascript" src="common/data_models/config.js"></script>

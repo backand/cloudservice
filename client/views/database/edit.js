@@ -31,7 +31,7 @@ angular.module('backand.database')
       self.dbConnected = currentApp.DatabaseStatus === 1;
       self.dataName = currentApp.databaseName || 'mysql';
       self.data = {
-        usingSsl: 'true',
+        SslUses: 'true',
         usingSsh: 'false'
       };
 
@@ -52,7 +52,7 @@ angular.module('backand.database')
             self.data.server = dataIn.ServerName;
             self.data.username = dataIn.Username;
             self.data.usingSsh  = String(dataIn.SshUses);
-            self.data.usingSsl  = String(dataIn.SslUses);
+            self.data.SslUses  = String(dataIn.SslUses);
             self.data.sshRemoteHost  = dataIn.SshRemoteHost;
             self.data.sshUser   = dataIn.SshUser;
             self.data.sshPort   = dataIn.SshPort;

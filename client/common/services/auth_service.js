@@ -125,8 +125,11 @@
         '&state=rcFNVUMsUOSNMJQZ%2bDTzmpqaGgSRGhUfUOyQHZl6gas%3d';
     }
 
-    self.socialLogin = function (provider, isSignup, email) {
+    self.socialLogin = function (provider, isSignup, email, openWindow) {
       startCheckingSocialWindow();
+
+      if(openWindow === undefined)
+        openWindow = false;
 
       if (typeof provider === 'string') {
         provider = _.find(self.socials, {name: provider});
@@ -143,7 +146,7 @@
           getSocialUrl(provider, isSignup, email) +
           '&appname=' + CONSTS.mainAppName + '&returnAddress=' + returnAddress + emailUrl;
 
-      if (isSignup) {
+      if (isSignup && !openWindow) {
         $window.location = loginUrl;
       } else {
         self.socialAuthWindow = window.open(loginUrl, 'socialSigninWindow', 'left=10, top=10, width=600, height=600');
