@@ -1,6 +1,6 @@
 {
   "mainAppName":"www",
-  "appUrl":"http://localhost:4110",
+  "appUrl":"http://api.backand.co:8099",
   "playgroundUrl": "//s3-us-west-2.amazonaws.com/demoqa.backand.net/",
   "IntercomAppId":"dvn78u",
   "backandUserObject": "backandUsers",
