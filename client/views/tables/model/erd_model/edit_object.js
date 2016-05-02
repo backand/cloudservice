@@ -29,6 +29,8 @@
           return object.name == self.selectedObjectName;
         })) {
         NotificationService.add('warning', 'Object already exists');
+      } else if (self.selectedObjectName.indexOf('-') > -1) {
+        NotificationService.add('warning', 'Object name cannot contain dashes');
       } else {
         var objectToAdd = {name: self.selectedObjectName};
         if (!objectToAdd.fields) {
@@ -43,6 +45,8 @@
     self.editObject = function () {
       if (self.selectedObjectName.toLowerCase() === self.objectName.toLowerCase()) {
         NotificationService.add('warning', 'Cannot rename object by case only');
+      } else if (self.selectedObjectName.indexOf('-') > -1) {
+        NotificationService.add('warning', 'Object name cannot contain dashes');
       } else {
         var newModelObject = JSON.parse(self.newModel.schema);
         var objectToEdit = _.where(newModelObject, {name: self.objectName})[0];

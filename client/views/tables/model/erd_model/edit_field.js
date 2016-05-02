@@ -63,8 +63,9 @@
       // Validate default value
       if (self.fieldType === 'float' && isNaN(self.field.defaultValue) && self.field.defaultValue) {
         NotificationService.add('warning', 'Default value is not a numeric value');
-      }
-      else {
+      } else if (self.fieldName.indexOf('-') > -1) {
+        NotificationService.add('warning', 'Field name cannot contain dashes');
+      } else {
         // Don't take null values
         if (!self.field.defaultValue) {
           delete self.field.defaultValue;
@@ -101,6 +102,8 @@
         NotificationService.add('warning', 'Field already exists');
       } else if (self.relatedObject && FieldsService.getField(self.relatedObject, self.viaField)) {
         NotificationService.add('warning', 'Related field already exists');
+      } else if (self.fieldName.indexOf('-') > -1 || self.viaField.indexOf('-') > -1) {
+        NotificationService.add('warning', 'Field cannot contain dashes');
       } else {
         FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
         self.updateErd().then(function (data) {
