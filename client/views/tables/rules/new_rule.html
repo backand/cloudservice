@@ -282,21 +282,23 @@
                   <p>The Backand CLI  (command-line interface), which is used to control deployment, requires Node.js and npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.<br/><br/>
                     Run the following command to install Backand CLI tool:
                   </p>
-                  <pre><code class="bash">
-                    $ npm install -g backand
+<pre><code class="bash">
+  $ npm install -g backand
 
-                    # or use sudo (with caution) if required by your system permissions
-                    # sudo npm install -g backand
-                  </code></pre>
+  # or use sudo (with caution) if required by your system permissions
+  # sudo npm install -g backand
+
+</code></pre>
                       <p>
                         To <b>update</b> a previously-installed version of Backand CLI - <a href="" ng-click="rules.showUpdate = !rules.showUpdate">{{rules.showUpdate ? "Hide": "Show"}}</a>
                       </p>
-                  <pre ng-if="rules.showUpdate"><code class="bash">
-                    $ npm update -g backand
+<pre ng-if="rules.showUpdate"><code class="bash">
+  $ npm update -g backand
 
-                    # or use sudo (with caution) if required by your system permissions
-                    # sudo npm update -g backand
-                  </code></pre>
+  # or use sudo (with caution) if required by your system permissions
+  # sudo npm update -g backand
+
+</code></pre>
                   <br/>
                 </div>
 
@@ -304,12 +306,14 @@
                 <h3 ng-show="rules.allowEditAction()">Deploy your node.js action</h3>
                 <br/>
                 <p>To initiate and sync your local node.js action folder with the server, use the following command on the command line:</p>
-            <pre ng-show="!rules.allowEditAction()"><code>
-              $ backand action init --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
-            </code></pre>
-            <pre ng-show="rules.allowEditAction()"><code>
-              $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
-            </code></pre>
+<pre ng-show="!rules.allowEditAction()"><code>
+  $ backand action init --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+
+</code></pre>
+<pre ng-show="rules.allowEditAction()"><code>
+  $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+
+</code></pre>
                 <p>
                   <b>--app</b>: The current app name<br/>
                   <b>--object</b>: The object that the action belongs to<br/>

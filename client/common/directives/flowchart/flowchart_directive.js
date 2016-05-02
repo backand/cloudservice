@@ -13,7 +13,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
       replace: true,
       scope: {
         chart: "=chart",
-        onIconClick: '&',
+        onObjectClick: '&',
         editFieldDialog: '&',
         editObjectDialog: '&',
         deleteRelationship: '&',
@@ -130,7 +130,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
     this.nodeClass = 'node';
 
     $scope.onNodeClick = function (node) {
-      this.onIconClick({node: node})
+      this.onObjectClick({node: node})
     };
 
 

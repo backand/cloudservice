@@ -54,12 +54,15 @@
       ng-attr-width="{{node.width()-2}}"
       y="1"
       x="1"></rect>
-    <text
+    <a class="cursor-pointer">
+      <text
       class="node-title"
       x="12"
-      y="23">
+      y="23"
+      ng-click="onNodeClick(node)">
       {{node.name()}}
-    </text>
+      </text>
+    </a>
 
     <image ng-click="onEditObjectClick(node.name())"
            class="edit-object-icon"

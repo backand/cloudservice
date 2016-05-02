@@ -2,9 +2,9 @@
 
   'use strict';
   angular.module('backand.apps')
-    .controller('AppSettings', ['$scope', 'ConfirmationPopup', 'AppsService', '$state', 'NotificationService', AppSettings]);
+    .controller('AppSettings', ['$scope', 'ConfirmationPopup', 'AppsService', '$state', 'NotificationService', '$modal', 'usSpinnerService', AppSettings]);
 
-  function AppSettings($scope, ConfirmationPopup, AppsService, $state, NotificationService) {
+  function AppSettings($scope, ConfirmationPopup, AppsService, $state, NotificationService, $modal, usSpinnerService) {
     var self = this;
 
     (function init() {
@@ -57,14 +57,24 @@
     }
 
     self.delete = function () {
-      ConfirmationPopup.confirm('Are you sure you want to delete the app?')
-        .then(function (result) {
-          if (!result)
-            return;
-          self.loading = true;
-          AppsService.delete(self.globalAppName).then(deleteSuccess, errorHandler);
-          $state.go('apps.index', {deletedApp: self.globalAppName});
-        })
+      var modalInstance = $modal.open({
+        templateUrl: 'views/apps/confirm_delete_app.html',
+        controller: 'ConfirmDeleteApp as deleteApp',
+        resolve: {
+          appName: function () {
+            return self.globalAppName;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (result) {
+        if (!result)
+          return;
+        self.loading = true;
+        usSpinnerService.spin('settings-loading');
+        AppsService.delete(self.globalAppName).then(deleteSuccess, errorHandler);
+        $state.go('apps.index', {deletedApp: self.globalAppName});
+      });
     };
 
     self.reset = function () {
@@ -104,6 +114,7 @@
     function deleteSuccess() {
       NotificationService.add('success', 'The application was deleted');
       self.loading = false;
+      usSpinnerService.stop('settings-loading');
     }
     function resetSuccess() {
       NotificationService.add('success', 'The cache was cleared');
@@ -118,6 +129,7 @@
     function errorHandler(error, message) {
       NotificationService.add('error', message);
       self.loading = false;
+      usSpinnerService.stop('settings-loading');
     }
   }
 }());
