@@ -362,6 +362,15 @@
                   specify for other location</span>
                   <br/>
                 </p>
+                <br/>
+                <h3 ng-if="rules.allowEditAction()">Add Backand SDK to node.js</h3>
+                <br/>
+                <p>In order to call objects or other actions in Back& you need to install Back& SDK for node.js. Code
+                  example on how to use it is included in index.js in remark.</p>
+<pre ng-if="rules.allowEditAction()"><code>
+  $ npm install backandsdk --save
+
+</code></pre>
               </div>
             </div>
           </div>
