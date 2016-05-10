@@ -28,28 +28,28 @@
   <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans'>
   <!-- endbuild -->
 
-  <script type="text/javascript">
-    (function(e, t) {
-      function r(e, t) {
-        e[t] = function() {
-          e.push([ t ].concat(Array.prototype.slice.call(arguments, 0)));
-        };
-      }
-      var n = "JacoRecorder";
-      (function(e, t, i, s) {
-        if (!i.__VERSION) {
-          e[n] = i;
-          var o = [ "init", "identify", "startRecording", "stopRecording", "removeUserTracking", "setUserInfo" ];
-          for (var u = 0; u < o.length; u++) r(i, o[u]);
-          i.__VERSION = .9, i.__INIT_TIME = 1 * new Date;
-          var a = t.createElement("script");
-          a.async = !0, a.setAttribute("crossorigin", "anonymous"), a.src = s;
-          var f = t.getElementsByTagName("head")[0];
-          f.appendChild(a);
-        }
-      })(e, t, e[n] || [], "//recorder-assets.getjaco.com/recorder.js");
-    }).call(window, window, document), window.JacoRecorder.push([ "init", "6656e2be-5e88-42cc-a5d3-8881595f29fe", {} ]);
-  </script>
+  <!--<script type="text/javascript">-->
+    <!--(function(e, t) {-->
+      <!--function r(e, t) {-->
+        <!--e[t] = function() {-->
+          <!--e.push([ t ].concat(Array.prototype.slice.call(arguments, 0)));-->
+        <!--};-->
+      <!--}-->
+      <!--var n = "JacoRecorder";-->
+      <!--(function(e, t, i, s) {-->
+        <!--if (!i.__VERSION) {-->
+          <!--e[n] = i;-->
+          <!--var o = [ "init", "identify", "startRecording", "stopRecording", "removeUserTracking", "setUserInfo" ];-->
+          <!--for (var u = 0; u < o.length; u++) r(i, o[u]);-->
+          <!--i.__VERSION = .9, i.__INIT_TIME = 1 * new Date;-->
+          <!--var a = t.createElement("script");-->
+          <!--a.async = !0, a.setAttribute("crossorigin", "anonymous"), a.src = s;-->
+          <!--var f = t.getElementsByTagName("head")[0];-->
+          <!--f.appendChild(a);-->
+        <!--}-->
+      <!--})(e, t, e[n] || [], "//recorder-assets.getjaco.com/recorder.js");-->
+    <!--}).call(window, window, document), window.JacoRecorder.push([ "init", "6656e2be-5e88-42cc-a5d3-8881595f29fe", {} ]);-->
+  <!--</script>-->
 </head>
 
 <body>
@@ -57,6 +57,9 @@
 <toaster-container></toaster-container>
 <ui-view></ui-view>
 
+  <!-- Backand Realtime -->
+  <script src="https://api.backand.com:4000/socket.io/socket.io.js"></script>
+<!---->
   <!-- build:js assets/js/vendor.js -->
   <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="common/plugins/insertAtCaret_plugin.js"></script>
@@ -131,6 +134,7 @@
   <script type="text/javascript" src="common/services/files_service.js"></script>
   <script type="text/javascript" src="common/services/nodejs_service.js"></script>
   <script type="text/javascript" src="common/services/parse_service.js"></script>
+  <script type="text/javascript" src="common/services/socket_service.js"></script>
 
   <script type="text/javascript" src="common/data_models/config.js"></script>
   <script type="text/javascript" src="common/data_models/db_data_model.js"></script>

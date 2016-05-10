@@ -8,5 +8,6 @@
   "env": "DEV",
   "hostingUrl": "http://hosting.backand.net",
   "storageUrl": "http://files.backand.net",
-  "nodejsUrl": "http://nodejs.backand.net"
+  "nodejsUrl": "http://nodejs.backand.net",
+  "socketUrl": "http://api.backand.co:4000"
 }

@@ -45,7 +45,7 @@
       </div>
       <div class="col-lg-3 col-md-3 col-sm-4">
 
-        <input type="button" ng-show="rules.allowEditAction() && !rules.isNodeJS()"
+        <input type="button" ng-show="rules.allowEditAction() && !rules.isNodeJS"
                 ng-click="rules.editAction()"
                 class="btn btn-primary pull-right with-margin"
           value="Edit Action">
@@ -61,7 +61,7 @@
           <button ng-disabled="rules.newRuleForm.$invalid"
                   class="btn btn-primary pull-right with-margin"
                   ladda="rules.saving" data-style="expand-right"
-                  ng-show="!rules.isNodeJS()">Save
+                  ng-show="!rules.isNodeJS">Save
           </button>
           <input type="button" ng-if="false"
                  ng-click="rules.saveActionTemplate()"
@@ -88,7 +88,7 @@
     <div class="clearfix">
 
       <fieldset>
-
+        <br/>
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
              ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}">
           <label>Event Trigger</label>
@@ -118,15 +118,16 @@
                   required
                   ng-options="workflowAction.value as workflowAction.label for workflowAction in rules.workflowActions"
                   ng-model="rules.action.workflowAction"
-                  ng-init="rules.action.workflowAction = rules.action.workflowAction || 'JavaScript'"
+                  ng-init="rules.action.workflowAction = rules.action.workflowAction || 'JavaScript'; rules.onDataActionChange();"
                   ng-model-options="{debounce: 0}"
-                  ng-disabled="!rules.editMode">
+                  ng-change="rules.onTypeChange()"
+                  ng-disabled="!rules.editMode || !rules.isNewAction">
             <option value="">Select what to do...</option>
           </select>
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-show="rules.action.workflowAction && !rules.isNodeJS()"
+             ng-show="rules.action.workflowAction && !rules.isNodeJS"
              ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
           <label>Input Parameters</label>
           <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
@@ -233,7 +234,7 @@
             <!-- ./code -->
             <!-- end switch -->
           </div>
-          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction && !rules.isNodeJS()"
+          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction && !rules.isNodeJS"
                ng-class="{'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty}">
             <label for="whereCondition">Where Condition</label>
             <ba-tooltip tooltip-text="SQL where clause that determines if the action will be performed"
@@ -257,7 +258,7 @@
             <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
           </div>
 
-          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.isNodeJS()">
+          <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.isNodeJS">
             <div class="panel-body docs">
               <div ng-show="rules.allowEditAction()">
                 <section class="panel panel-default">
@@ -276,9 +277,40 @@
                 </section>
               </div>
               <div>
-                <h3>First Time Installation <font size="2"><a ng-show="rules.allowEditAction()" href="" ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></font></h3 >
+                  <h3>How it works?</h3>
+                  <div>
+                    <br/>
+                    <p>The server side node.js code is developed on your local computer, and runs on Back& server.
+                      The project is been developed like any other node.js project and can be fully debug locally. To
+                      have it running on Back& server you just call the deploy command.<br/>
+                      Follow these steps to initiate and run the action with the server side node.js code:</p>
+                    <ul style="padding-left: 20px;">
+                      <li>First, name the action and use the init command by copy paste "backand action init...".
+                        The action init command creates two levels of folders on your local file system. The top
+                        level folder is the name of the object ('--object {{rules.getTableName()}}') and the second
+                        level folder is
+                        the name of the action ('{{rules.getCliActionName()}}'). We recommend to run the <b>action
+                          init</b> command for additional actions from the root folder of the app's project. This
+                        means you
+                        will have sub folder for each object and under it sub folder for each action.
+                      </li>
+                      <li>Second, build your node.js code in the <b>action</b> folder like any other project using your
+                        local IDE. Add npm packages as many as you need.</li>
+                      <li>Your code <b>must</b> start with the index.js file.</li>
+                      <li>To debug your code locally, run the debug.js file (the debug.js file is ignored on the
+                        Back& server).
+                      </li>
+                      <li>In order to run your code on Back& server, use the deploy command by copy paste "backand
+                        action deploy...". The deploy command will be available in this page <b>after</b> running the
+                        init action.</li>
+                      <li>To test the action on Back& you can do it from the Test section on this page.</li>
+                    </ul>
+                </div>
                 <br/>
-                <div ng-show="rules.showFirstTimeInstallation || !rules.allowEditAction()">
+                <h3>First Time Installation <font size="2"><a ng-if="rules.allowEditAction()" href=""
+                     ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></font></h3 >
+                <br/>
+                <div ng-if="rules.showFirstTimeInstallation || !rules.allowEditAction()">
                   <p>The Backand CLI  (command-line interface), which is used to control deployment, requires Node.js and npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.<br/><br/>
                     Run the following command to install Backand CLI tool:
                   </p>
@@ -302,16 +334,22 @@
                   <br/>
                 </div>
 
-                <h3 ng-show="!rules.allowEditAction()">Initiate your node.js action</h3>
-                <h3 ng-show="rules.allowEditAction()">Deploy your node.js action</h3>
+                <h3 ng-if="!rules.allowEditAction()">Initiate your node.js action</h3>
+                <h3 ng-if="rules.allowEditAction()">Deploy your node.js action</h3>
                 <br/>
-                <p>To initiate and sync your local node.js action folder with the server, use the following command on the command line:</p>
-<pre ng-show="!rules.allowEditAction()"><code>
+                <p ng-if="rules.allowEditAction()">To deploy your local node.js code to Back&, use the following
+                  command on the command
+                  line:</p>
+                <p ng-if="!rules.allowEditAction()">To initiate on your local folder the node.js code for the action,
+                  use the following command on the command line:</p>
+
+<pre ng-if="!rules.allowEditAction()"><code>
   $ backand action init --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
 
 </code></pre>
-<pre ng-show="rules.allowEditAction()"><code>
-  $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+<pre ng-if="rules.allowEditAction()"><code>
+  $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}}
+  {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
 
 </code></pre>
                 <p>
@@ -320,14 +358,20 @@
                   <b>--action</b>: The action name<br/>
                   <b>--master</b>: The master token of the app (get it from <a href="" ui-sref="security.keys">Social & Keys</a>)<br/>
                   <b>--user</b>: The token of the current user (get it from <a href="" ui-sref="security.team">Team</a> and click on key icon)<br/>
+                  <span ng-if="rules.allowEditAction()"><b>--folder</b>: Optional, By default the deployment is from the current folder,
+                  specify for other location</span>
+                  <br/>
                 </p>
               </div>
             </div>
           </div>
 
-          <div class="modal-footer" ng-show="rules.action && (rules.editMode || rules.isNodeJS()) ">
-            <button class="btn btn-primary" ng-disabled="rules.newRuleForm.$invalid"
-                    ladda="rules.saving" data-style="expand-right" ng-show="!rules.isNodeJS()">Save
+          <div class="modal-footer" ng-show="rules.action && (rules.editMode || rules.isNodeJS) ">
+            <button class="btn btn-primary"
+                    ng-disabled="rules.newRuleForm.$invalid"
+                    ladda="rules.saving"
+                    data-style="expand-right"
+                    ng-show="!rules.isNodeJS">Save
             </button>
             <input type="button"
                    class="btn btn-danger pull-left"
@@ -336,7 +380,7 @@
                    value="Delete">
             </input>
             <input type="button"
-                   ng-hide="rules.isNodeJS()"
+                   ng-hide="rules.isNodeJS"
                    class="btn btn-default"
                    ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
                    value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">

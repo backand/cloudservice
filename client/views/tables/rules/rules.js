@@ -14,7 +14,6 @@
       'NotificationService',
       'DictionaryService',
       '$stateParams',
-      'AppsService',
       'AppLogService',
       'DataService',
       'ObjectsService',
@@ -25,7 +24,7 @@
       'EscapeSpecialChars',
       '$modal',
       'NodejsService',
-      '$state',
+      'SocketService',
       '$rootScope',
       'stringifyHttp',
       RulesController]);
@@ -40,7 +39,6 @@
                            NotificationService,
                            DictionaryService,
                            $stateParams,
-                           AppsService,
                            AppLogService,
                            DataService,
                            ObjectsService,
@@ -51,7 +49,7 @@
                            EscapeSpecialChars,
                            $modal,
                            NodejsService,
-                           $state,
+                           SocketService,
                            $rootScope,
                            stringifyHttp) {
 
@@ -75,6 +73,20 @@
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
       self.getTokens();
     }
+
+    //Wait for server updates on 'items' object
+    SocketService.on('Rule.created', function (data) {
+      //Get the 'items' object that have changed
+      if(self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
+        getRules().then(function(){
+          self.showAction(self.action.name);
+        });
+      };
+      if(!self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
+        //todo: need to refresh the files of the nodeJS
+      };
+      //console.log(data);
+    });
 
     function setKeysInfo(data){
       self.keys = data.data;
@@ -189,6 +201,7 @@
       self.clearTest();
       self.editAction();
       self.isNewAction = true;
+      self.isNodeJS = self.action && self.action.workflowAction == 'NodeJS';
     };
 
     self.showAction = function (actionName) {
@@ -203,20 +216,24 @@
       self.editMode = false;
       self.requestTestForm = false;
       self.showJsCodeHelpDialog = false;
+      self.isNodeJS = action && action.workflowAction == 'NodeJS';
+
       $scope.modal.toggleGroup();
-      if (self.newRuleForm)
+      if (self.newRuleForm){
         self.newRuleForm.$setPristine();
+      }
       if (action && action.__metadata) {
         return RulesService.getRule(action.__metadata.id).then(loadAction, errorHandler);
       }
       else {
         self.action = null;
       }
+
     }
 
     function loadAction(data) {
       self.action = data.data;
-      if (self.isNodeJS()){
+      if (self.isNodeJS){
         NodejsService.actionName = self.action.name;
         NodejsService.objectName = self.getTableName();
         self.refresh();
@@ -255,7 +272,7 @@
     };
 
     self.cancelEdit = function () {
-      if (!self.isNodeJS()) {
+      if (!self.isNodeJS) {
         ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
           .then(function (result) {
             result ? refreshAction(self.action) : false;
@@ -350,48 +367,43 @@
     $scope.modal = {
       title: 'Action',
       dataActions: RulesService.dataActions,
-      workflowActions: [
-        {value: 'JavaScript', label: 'Server side JavaScript code'},
-        {value: 'NodeJS', label: 'Server side node.js code'},
-        {value: 'Notify', label: 'Send Email'},
-        {value: 'Execute', label: 'Transactional sql script'}
-      ],
+      workflowActions: getWorkflowActions(),
       insertAtChar: insertTokenAtChar,
       digest: digestIn,
       toggleGroup: toggleGroup,
       isCurGroup: isCurGroup,
       buildParameters: buildParametersDictionary
     };
-    self.workflowActions = [
-      {value: 'JavaScript', label: 'Server side JavaScript code'},
-      {value: 'NodeJS', label: 'Server side node.js code'},
-      {value: 'Notify', label: 'Send Email'},
-      {value: 'Execute', label: 'Transactional sql script'}
-    ];
+    self.workflowActions = getWorkflowActions();
 
     self.onDataActionChange = function(){
-      self.workflowActions = [
-        {value: 'JavaScript', label: 'Server side JavaScript code'},
-        {value: 'NodeJS', label: 'Server side node.js code'},
-        {value: 'Notify', label: 'Send Email'},
-        {value: 'Execute', label: 'Transactional sql script'}
-      ];
-      if (self.isOnDemand()){
-        self.workflowActions = [
+      self.workflowActions = getWorkflowActions();
+      self.onTypeChange();
+    };
+
+    self.onTypeChange = function(){
+      if(self.action.workflowAction == "NodeJS" && self.action.dataAction != "OnDemand")
+        self.action.workflowAction = "";
+
+      self.isNodeJS = self.action && self.action.workflowAction == 'NodeJS';
+    };
+
+    function getWorkflowActions(){
+      if (self.action && self.action.dataAction == "OnDemand") {
+        return [
+          {value: 'JavaScript', label: 'Server side JavaScript code'},
+          {value: 'NodeJS', label: 'Server side node.js code'},
+          {value: 'Notify', label: 'Send Email'},
+          {value: 'Execute', label: 'Transactional sql script'}
+        ];
+      } else {
+        return [
           {value: 'JavaScript', label: 'Server side JavaScript code'},
           {value: 'Notify', label: 'Send Email'},
           {value: 'Execute', label: 'Transactional sql script'}
         ];
       }
-    };
-
-    self.isOnDemand = function () {
-      return self.action && self.action.dataAction == "OnDemand";
-    };
-
-    self.isNodeJS = function () {
-      return self.action && self.action.workflowAction == 'NodeJS';
-    };
+    }
 
     self.anchorParams = {
       showAnchorCondition: isEditMode,
@@ -462,7 +474,7 @@
             populateDictionaryItems(crudAction, data.data)
           });
       });
-      RulesService.get().then(buildTree, errorHandler);
+      return RulesService.get().then(buildTree, errorHandler);
     }
 
     /**
@@ -693,6 +705,7 @@
       if (self.action)
         return self.getDataActionType();
     }, function (newVal, oldVal) {
+
       if (self.ace && self.ace.editor) {
         self.clearTest(); //clear the data
         if (newVal === 'On Demand' || newVal === 'Delete') {
@@ -869,8 +882,9 @@
     }
 
     self.getDataActionType = function () {
-      if (self.action)
+      if (self.action){
         return self.dataActionToType[self.action.dataAction];
+      }
     };
 
     function setTestActionTitle() {
