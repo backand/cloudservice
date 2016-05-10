@@ -348,8 +348,7 @@
 
 </code></pre>
 <pre ng-if="rules.allowEditAction()"><code>
-  $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}}
-  {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+  $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
 
 </code></pre>
                 <p>
