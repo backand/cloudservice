@@ -307,9 +307,16 @@
                 <br/>
                 <p>To initiate and sync your local node.js action folder with the server, use the following command on the command line:</p>
 <pre ng-show="!rules.allowEditAction()"><code>
-  $ backand action init --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+  $ {{rules.getNodeCommand()}}
 
 </code></pre>
+                <button class="btn btn-default copy-cli-command"
+                        type="button"
+                        clip-copy="rules.getNodeCommand()"
+                        ng-click="rules.copied = true"
+                        ng-class="{'btn-success': rules.copied === true}">Copy</button>
+
+
 <pre ng-show="rules.allowEditAction()"><code>
   $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
 

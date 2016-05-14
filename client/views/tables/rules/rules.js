@@ -56,6 +56,7 @@
                            stringifyHttp) {
 
     var self = this;
+
     /**
      * init an empty items array on scope
      * register an event listener.
@@ -71,17 +72,17 @@
       usSpinnerService.spin("connecting-app-to-db");
       self.isAppOpened = !_.isEmpty(AppsService.currentApp);
       self.currentApp = AppsService.currentApp;
-      if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
+      if (self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
       self.getTokens();
     }
 
-    function setKeysInfo(data){
+    function setKeysInfo(data) {
       self.keys = data.data;
       self.masterToken = data.data.general;
     }
 
-    self.getTokens = function(){
+    self.getTokens = function () {
 
       //get first admin user token
       SecurityService.appName = self.currentApp.Name;
@@ -99,14 +100,14 @@
               if (template.json)
                 template.json = angular.fromJson(template.json);
             } catch (error) {
-                console.log(error);
+              console.log(error);
             }
 
             var groupedNotOrdered = _.groupBy(_.sortBy(result.data.data, 'ordinal'), 'category');
             var res = [];
-            _.each(RulesService.actionTemplateCategories, function(rule){
-              var fromService = _.find(groupedNotOrdered, function(g){
-                return rule.id ==  g[0].category;
+            _.each(RulesService.actionTemplateCategories, function (rule) {
+              var fromService = _.find(groupedNotOrdered, function (g) {
+                return rule.id == g[0].category;
               });
 
               fromService.label = rule.label;
@@ -120,7 +121,7 @@
 
     self.selectTemplate = function (template) {
       if (!self.action) {
-        self.newAction(null,template.name);
+        self.newAction(null, template.name);
       }
 
       self.action.name = self.action.name || template.ruleName;
@@ -140,7 +141,7 @@
       openActionTemplateModal();
     };
 
-    function openActionTemplateModal () {
+    function openActionTemplateModal() {
       var modalInstance = $modal.open({
         templateUrl: 'views/tables/rules/action_template_modal.html',
         controller: 'ActionTemplateController as actionTemplateCtrl',
@@ -199,6 +200,10 @@
         .then(self.clearTest);
     };
 
+    self.getNodeCommand = function () {
+      return 'backand action init --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+    };
+
     function refreshAction(action) {
       self.editMode = false;
       self.requestTestForm = false;
@@ -216,7 +221,7 @@
 
     function loadAction(data) {
       self.action = data.data;
-      if (self.isNodeJS()){
+      if (self.isNodeJS()) {
         NodejsService.actionName = self.action.name;
         NodejsService.objectName = self.getTableName();
         self.refresh();
@@ -261,7 +266,7 @@
             result ? refreshAction(self.action) : false;
           });
       }
-      else{
+      else {
         refreshAction(self.action);
       }
 
@@ -331,7 +336,7 @@
 
     self.allowTest = function () {
 
-      if(self.test)
+      if (self.test)
         self.allowTestEditMode = self.test.rowId != null || (self.test.rowId == null && self.getDataActionType() != 'Delete' && self.getDataActionType() != 'Update');
 
       return self.newRuleForm && self.newRuleForm.$pristine;
@@ -369,14 +374,14 @@
       {value: 'Execute', label: 'Transactional sql script'}
     ];
 
-    self.onDataActionChange = function(){
+    self.onDataActionChange = function () {
       self.workflowActions = [
         {value: 'JavaScript', label: 'Server side JavaScript code'},
         {value: 'NodeJS', label: 'Server side node.js code'},
         {value: 'Notify', label: 'Send Email'},
         {value: 'Execute', label: 'Transactional sql script'}
       ];
-      if (self.isOnDemand()){
+      if (self.isOnDemand()) {
         self.workflowActions = [
           {value: 'JavaScript', label: 'Server side JavaScript code'},
           {value: 'Notify', label: 'Send Email'},
@@ -519,7 +524,7 @@
       })[0])
     }
 
-    var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup','backandAuthOverride'];
+    var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup', 'backandAuthOverride'];
 
     self.isConstName = function (ruleName) {
       return (self.getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);
@@ -536,8 +541,8 @@
 
         // set textarea value to: text before caret + tab + text after caret
         target.value = value.substring(0, start)
-          + "\t"
-          + value.substring(end);
+        + "\t"
+        + value.substring(end);
 
         // put caret at right position again (add one for the tab)
         e.currentTarget.selectionStart = e.currentTarget.selectionEnd = start + 1;
@@ -619,7 +624,7 @@
       usSpinnerService.spin('loading-row');
       return DataService.get(getTableName(), 1, 1, '')
         .then(function (data) {
-          if(data.data.data.length>0){
+          if (data.data.data.length > 0) {
             setTestRowData(data.data.data[0]);
             var id = data.data.data[0].__metadata.id;
             if (!isNaN(parseFloat(id)) && isFinite(id)) {
@@ -641,7 +646,7 @@
     };
 
     self.getRow = function (id) {
-      if(id == null || id == ''){
+      if (id == null || id == '') {
         self.testRowObjectNotification = null;
         self.rowData = '';
         usSpinnerService.stop('loading-row');
@@ -898,7 +903,7 @@
     };
 
     self.getCliActionName = function () {
-      if (self.action.name){
+      if (self.action.name) {
         return '--action ' + self.action.name;
       }
       return '';
