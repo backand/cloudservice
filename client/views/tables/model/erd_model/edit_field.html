@@ -37,7 +37,7 @@
                     ng-model="EditField.relatedObject"
                     ng-options="option for option in EditField.objectOptions"
                     ng-disabled="::EditField.isEdit"
-                    ng-required="EditField.fieldType == 'collection'"></select>
+                    ng-required="EditField.fieldType == 'collection' || EditField.fieldType == 'object'"></select>
           </div>
 
           <div class="form-group">
@@ -49,7 +49,7 @@
                    class="form-control"
                    ng-model="EditField.viaField"
                    ng-disabled="::EditField.isEdit"
-                   ng-required="EditField.fieldType == 'collection'">
+                   ng-required="EditField.fieldType == 'collection' || EditField.fieldType == 'object'">
           </div>
         </div>
 
