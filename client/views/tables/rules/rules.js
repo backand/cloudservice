@@ -224,7 +224,7 @@
       if (self.isNodeJS()) {
         NodejsService.actionName = self.action.name;
         NodejsService.objectName = self.getTableName();
-        self.refresh();
+        self.refreshTree();
       }
     }
 
