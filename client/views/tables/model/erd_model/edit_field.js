@@ -102,16 +102,22 @@
         NotificationService.add('warning', 'Field already exists');
       } else if (self.relatedObject && FieldsService.getField(self.relatedObject, self.viaField)) {
         NotificationService.add('warning', 'Related field already exists');
-      } else if (self.fieldName.indexOf('-') > -1 || self.viaField.indexOf('-') > -1) {
+      } else if (self.fieldName.indexOf('-') > -1) {
         NotificationService.add('warning', 'Field cannot contain dashes');
-      } else {
+      } else if (self.viaField) {
+        if (self.viaField.indexOf('-') > -1) {
+          NotificationService.add('warning', 'Field cannot contain dashes');
+        }
+      }
+      else {
         FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
         self.updateErd().then(function (data) {
           self.editFieldForm.$setPristine();
           resetAddFieldValues();
         });
       }
-    };
+    }
+    ;
 
     self.cancelEditField = function () {
       modalInstance.dismiss('cancel');
@@ -154,4 +160,5 @@
       self.isCollectionOrObject = self.fieldType == 'collection' || self.fieldType == 'object';
     }
   }
-})();
+})
+();
