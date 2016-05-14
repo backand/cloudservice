@@ -12,6 +12,9 @@
         bindToController: true,
         controller: TreeController,
         controllerAs: 'tree',
+        scope: {
+          refreshTree: '='
+        }
       };
     });
 
@@ -31,10 +34,10 @@
     self.appName = app.Name;
     self.data = [];
 
-    $rootScope.$on('refreshTree', function (event, data) {
+    self.refreshTree = function () {
       self.data = [];
       init();
-    });
+    };
 
     init();
 

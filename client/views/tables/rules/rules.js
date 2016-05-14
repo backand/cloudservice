@@ -915,10 +915,6 @@
         return CONSTS.nodejsUrl + '/' + self.appName + '/' + getTableName() + '/' + self.action.name;
       return '';
 
-    }
-
-    self.refresh = function () {
-      $rootScope.$emit('refreshTree', {});
     };
 
     function getInputParametersForm() {
