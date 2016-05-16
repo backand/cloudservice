@@ -1,5 +1,5 @@
 {
-  "mainAppName":"www",
+  "mainAppName":"bko",
   "appUrl":"http://api.backand.co:8099",
   "playgroundUrl": "//s3-us-west-2.amazonaws.com/demoqa.backand.net/",
   "IntercomAppId":"dvn78u",
@@ -8,5 +8,6 @@
   "env": "DEV",
   "hostingUrl": "http://hosting.backand.net",
   "storageUrl": "http://files.backand.net",
-  "nodejsUrl": "http://nodejs.backand.net"
+  "nodejsUrl": "http://nodejs.backand.net",
+  "socketUrl": "http://api.backand.co:4000"
 }

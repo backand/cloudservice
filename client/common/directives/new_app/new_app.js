@@ -10,7 +10,7 @@
           appTitle: '=',
           onAppAdded: '&'
         },
-        templateUrl: '/common/directives/new_app/new_app.html',
+        templateUrl: 'common/directives/new_app/new_app.html',
         controller: NewAppController,
         controllerAs: 'newApp',
         bindToController: true

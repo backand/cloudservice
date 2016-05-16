@@ -3,9 +3,9 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ['$scope', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService', HeaderController]);
+    ['$scope', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService', HeaderController]);
 
-  function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService) {
+  function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService) {
     var self = this;
     self.usingDefaultModel = false;
     self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
@@ -17,6 +17,8 @@
     self.apps = AppsService.apps;
     self.currentAppName = AppsService.currentApp.Name;
     self.debugMode = AppsService.currentApp.debugMode;
+    //when app change login to the socket
+      SocketService.login(self.currentAppName);
     updateDefaultModelUse(self.currentAppName, false);
 
     $scope.$on('$stateChangeSuccess', function () {
@@ -44,6 +46,9 @@
 
     $scope.$on('fetchTables', function () {
       updateDefaultModelUse(self.currentAppName, true);
+
+      //when app change login to the socket
+      SocketService.login(self.currentAppName);
     });
 
     $scope.$on('appname:saved', function () {
