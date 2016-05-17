@@ -6,16 +6,21 @@
     </h3>
   </div>
   <div class="modal-body edit-row-modal">
-    <form role="form" name="EditField.editFieldForm" novalidate>
+    <form role="form" name="editFieldForm" novalidate>
       <fieldset>
         <div class="form-group">
           <label for="field-name">Field Name:</label>
           <input id="field-name"
+                 name="fieldName"
                  type="text"
                  class="form-control"
                  ng-model="EditField.fieldName"
-                 ng-disabled="::EditField.isEdit"
+                 ng-disabled="::EditField.isEdit" ng-pattern="EditField.namePattern"
                  required>
+        </div>
+
+        <div ng-show="editFieldForm.fieldName.$error.pattern" class="input-error">
+          Only alphanumeric characters and underscores are allowed
         </div>
 
         <div class="form-group">
@@ -110,7 +115,7 @@
     <button class="btn btn-success"
             type="submit"
             ng-click="::EditField.isEdit ? EditField.editField() : EditField.addField()"
-            ng-disabled="EditField.editFieldForm.$invalid">
+            ng-disabled="editFieldForm.$invalid">
       {{::EditField.isEdit ? 'Update' : 'Add Field'}}
     </button>
     <button class="btn btn-default"

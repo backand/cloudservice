@@ -16,11 +16,11 @@
     self.appName = appName;
     self.newModel = newModel;
     self.objectName = objectName;
-    self.editObjectForm = 'edit-object';
     self.isEdit = self.objectName;
     if (self.objectName) {
       self.selectedObjectName = self.objectName
     }
+    self.namePattern = /^\w+$/;
 
     self.addObject = function () {
       var newModelObject = JSON.parse(self.newModel.schema);

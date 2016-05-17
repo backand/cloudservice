@@ -30,8 +30,8 @@
     self.fieldName = fieldName;
     self.newModel = newModel;
     self.updateErd = updateErd;
-    self.editFieldForm = 'edit-field';
     self.possibleUniqueTypes = ['string', 'datetime', 'float'];
+    self.namePattern = /^\w+$/;
 
     // Data types that not support default value
     self.defaultValueBlacklist = ['point'];
