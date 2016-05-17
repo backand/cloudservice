@@ -83,7 +83,7 @@
         });
       };
       if(!self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
-        //todo: need to refresh the files of the nodeJS
+        self.refreshTree();
       };
       //console.log(data);
     });
@@ -128,6 +128,14 @@
             self.actionTemplates = res;
           });
         });
+    };
+
+    self.getNodeInitCommand = function () {
+      return 'backand action init --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+    };
+
+    self.getNodeDeployCommand = function () {
+      return 'backand action deploy --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
     };
 
     self.selectTemplate = function (template) {
@@ -236,7 +244,9 @@
       if (self.isNodeJS){
         NodejsService.actionName = self.action.name;
         NodejsService.objectName = self.getTableName();
-        self.refresh();
+        if (self.refreshTree) {
+          self.refreshTree();
+        }
       }
     }
 
@@ -924,10 +934,6 @@
         return CONSTS.nodejsUrl + '/' + self.appName + '/' + getTableName() + '/' + self.action.name;
       return '';
 
-    }
-
-    self.refresh = function () {
-      $rootScope.$emit('refreshTree', {});
     };
 
     function getInputParametersForm() {

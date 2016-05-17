@@ -265,14 +265,11 @@
                   <div class="panel-heading">
                     <strong>Hosted node.js Files</strong>
                     <a href="" title="Refresh tree" class="btn btn-sm"
-                       ng-click="rules.refresh()"><i
+                       ng-click="rules.refreshTree()"><i
                       class="glyphicon glyphicon-refresh"></i></a>
                   </div>
                   <div class="panel-body">
-                    <p>
-                    <h4 style="padding-left: 20px;">{{rules.getStorageUrl()}}</h4>
-                    </p>
-                    <bknd-tree-control></bknd-tree-control>
+                    <bknd-tree-control refresh-tree="rules.refreshTree"></bknd-tree-control>
                   </div>
                 </section>
               </div>
@@ -343,14 +340,27 @@
                 <p ng-if="!rules.allowEditAction()">To initiate on your local folder the node.js code for the action,
                   use the following command on the command line:</p>
 
-<pre ng-if="!rules.allowEditAction()"><code>
-  $ backand action init --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+<div ng-show="!rules.allowEditAction()"><pre><code>
+  $ {{rules.getNodeInitCommand()}}
 
 </code></pre>
-<pre ng-if="rules.allowEditAction()"><code>
-  $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+      <button class="btn btn-default copy-cli-command"
+              type="button"
+              clip-copy="rules.getNodeInitCommand()"
+              ng-click="rules.initCopied = true"
+              ng-class="{'btn-success': rules.initCopied === true}">Copy</button>
+</div>
+
+<div ng-if="rules.allowEditAction()"><pre><code>
+  $ {{rules.getNodeDeployCommand()}}
 
 </code></pre>
+  <button class="btn btn-default copy-cli-command"
+          type="button"
+          clip-copy="rules.getNodeDeployCommand()"
+          ng-click="rules.deployCopied = true"
+          ng-class="{'btn-success': rules.deployCopied === true}">Copy</button>
+  </div>
                 <p>
                   <b>--app</b>: The current app name<br/>
                   <b>--object</b>: The object that the action belongs to<br/>

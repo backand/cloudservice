@@ -63,7 +63,7 @@
 
     self.onNodeToggle = function (node, expanded) {
       if (expanded && node.type === 'folder' && node.children.length === 0) {
-        usSpinnerService.spin('loading');
+        usSpinnerService.spin('loading-tree');
         if (self.service == 'nodejs') {
           NodejsService.get(self.appName, node.path).then(function (data) {
             treePathDataSuccess(data, node);
@@ -113,7 +113,7 @@
       items.forEach(function (item) {
         node.children.push(createTreeItem(item));
       });
-      usSpinnerService.stop('loading');
+      usSpinnerService.stop('loading-tree');
     }
 
     function initTreeDataSuccess(treeData) {
@@ -132,7 +132,7 @@
       });
       self.noFiles = items.length == 0;
 
-      usSpinnerService.stop('loading');
+      usSpinnerService.stop('loading-tree');
     }
 
     function createTreeItem(item) {
@@ -155,12 +155,12 @@
     }
 
     function failureHandler(data) {
-      usSpinnerService.stop('loading');
+      usSpinnerService.stop('loading-tree');
       NotificationService.add('error', 'There was an error retrieving your hosting data. Please make sure hosting is configured correctly.');
     }
 
     function init() {
-      usSpinnerService.spin('loading');
+      usSpinnerService.spin('loading-tree');
       if (self.service == 'nodejs') {
         NodejsService.get(self.appName).then(initTreeDataSuccess, failureHandler);
       } else if (self.service == 'hosting') {
