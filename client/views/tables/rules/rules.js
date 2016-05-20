@@ -68,6 +68,11 @@
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
       self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
+
+      if ($localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation === undefined) {
+        $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = false;
+      }
+      self.showFirstTimeInstallation = $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation;
       setTestActionTitle();
       getRules();
       self.getActionTemplates();
@@ -739,6 +744,12 @@
       return self.showHowItWorks;
     }, function (newVal, oldVal) {
       $localStorage.backand[self.appName].nodeJsShowHowItWorks = newVal;
+    });
+
+    $scope.$watch(function() {
+      return self.showFirstTimeInstallation;
+    }, function (newVal, oldVal) {
+      $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = newVal;
     });
 
     self.testData = function () {
