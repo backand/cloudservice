@@ -274,8 +274,11 @@
                 </section>
               </div>
               <div>
-                  <h3>How it works?</h3>
-                  <div>
+                  <h3>How it works?
+                    <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href=""
+                       ng-click="rules.showHowItWorks = !rules.showHowItWorks">{{rules.showHowItWorks ? "Hide": "Show"}}</a>
+                  </h3>
+                  <div ng-if="rules.showHowItWorks">
                     <br/>
                     <p>The server side node.js code is developed on your local computer, and runs on Back& server.
                       The project is been developed like any other node.js project and can be fully debug locally. To
@@ -304,8 +307,8 @@
                     </ul>
                 </div>
                 <br/>
-                <h3>First Time Installation <font size="2"><a ng-if="rules.allowEditAction()" href=""
-                     ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></font></h3 >
+                <h3>First Time Installation <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href=""
+                     ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></h3>
                 <br/>
                 <div ng-if="rules.showFirstTimeInstallation || !rules.allowEditAction()">
                   <p>The Backand CLI  (command-line interface), which is used to control deployment, requires Node.js and npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.<br/><br/>

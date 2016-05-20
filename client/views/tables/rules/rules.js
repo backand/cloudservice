@@ -27,6 +27,7 @@
       'SocketService',
       '$rootScope',
       'stringifyHttp',
+      '$localStorage',
       RulesController]);
 
   function RulesController($scope,
@@ -51,7 +52,8 @@
                            NodejsService,
                            SocketService,
                            $rootScope,
-                           stringifyHttp) {
+                           stringifyHttp,
+                           $localStorage) {
 
     var self = this;
     /**
@@ -62,6 +64,10 @@
     function init() {
       self.isNewAction = false;
       self.showJsCodeHelpDialog = false;
+      if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
+        $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
+      }
+      self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
       setTestActionTitle();
       getRules();
       self.getActionTemplates();
@@ -727,6 +733,12 @@
           self.ace.editor.setReadOnly(false);
         }
       }
+    })
+
+    $scope.$watch(function() {
+      return self.showHowItWorks;
+    }, function (newVal, oldVal) {
+      $localStorage.backand[self.appName].nodeJsShowHowItWorks = newVal;
     });
 
     self.testData = function () {
@@ -981,6 +993,7 @@
       NotificationService.add('error', message);
       self.test.testLoading = false;
     }
+
 
     init();
   }
