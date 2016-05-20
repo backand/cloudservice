@@ -104,15 +104,12 @@
         NotificationService.add('warning', 'Related field already exists');
       } else if (self.fieldName.indexOf('-') > -1) {
         NotificationService.add('warning', 'Field cannot contain dashes');
-      } else if (self.viaField) {
-        if (self.viaField.indexOf('-') > -1) {
-          NotificationService.add('warning', 'Field cannot contain dashes');
-        }
+      } else if (self.viaField && self.viaField.indexOf('-') > -1) {
+        NotificationService.add('warning', 'Field cannot contain dashes');
       }
       else {
         FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
         self.updateErd().then(function (data) {
-          self.editFieldForm.$setPristine();
           resetAddFieldValues();
         });
       }
@@ -125,10 +122,7 @@
 
     function getObjectNames() {
       var newModelObject = JSON.parse(self.newModel.schema);
-      var allObjects = _.pluck(newModelObject, 'name');
-      return _.reject(allObjects, function (object) {
-        return object === self.tableName;
-      });
+      return _.pluck(newModelObject, 'name');
     }
 
     function resetAddFieldValues() {
