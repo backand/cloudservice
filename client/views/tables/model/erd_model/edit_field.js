@@ -75,7 +75,7 @@
         } else if (self.fieldType === 'boolean') {
           self.field.defaultValue = self.field.defaultValue === 'true';
         }
-        FieldsService.editField(self.tableName, self.fieldName, self.field);
+        FieldsService.editField(self.tableName, self.fieldName, self.field, self.selectedFieldName);
         modalInstance.close({model: FieldsService.newModelObject});
       }
     };
@@ -98,17 +98,17 @@
     };
 
     self.addField = function () {
-      if (isFieldNameExists(self.fieldName)) {
+      if (isFieldNameExists(self.selectedFieldName)) {
         NotificationService.add('warning', 'Field already exists');
       } else if (self.relatedObject && FieldsService.getField(self.relatedObject, self.viaField)) {
         NotificationService.add('warning', 'Related field already exists');
-      } else if (self.fieldName.indexOf('-') > -1) {
+      } else if (self.selectedFieldName.indexOf('-') > -1) {
         NotificationService.add('warning', 'Field cannot contain dashes');
       } else if (self.viaField && self.viaField.indexOf('-') > -1) {
         NotificationService.add('warning', 'Field cannot contain dashes');
       }
       else {
-        FieldsService.addField(self.tableName, self.fieldName, self.fieldType, self.relatedObject, self.viaField);
+        FieldsService.addField(self.tableName, self.selectedFieldName, self.fieldType, self.relatedObject, self.viaField);
         self.updateErd().then(function (data) {
           resetAddFieldValues();
         });
@@ -126,7 +126,7 @@
     }
 
     function resetAddFieldValues() {
-      self.fieldName = '';
+      self.selectedFieldName = '';
       self.fieldType = '';
       self.relatedObject = '';
       self.viaField = '';
@@ -142,13 +142,15 @@
     function populateInputs() {
       self.field = FieldsService.getField(self.tableName, self.fieldName);
       self.fieldType = FieldsService.getFieldType(self.tableName, self.fieldName);
-
+      self.selectedFieldName = self.fieldName;
       if (self.fieldType == 'collection') {
         self.relatedObject = self.field.collection;
         self.viaField = self.field.via;
+        self.isFieldNameDisabled = true;
       } else if (self.fieldType == 'object') {
         self.relatedObject = self.field.object;
         self.viaField = FieldsService.getFieldRelatingToField(self.field.object, self.tableName, self.fieldName);
+        self.isFieldNameDisabled = true;
       }
 
       self.isCollectionOrObject = self.fieldType == 'collection' || self.fieldType == 'object';

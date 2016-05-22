@@ -14,8 +14,9 @@
                  name="fieldName"
                  type="text"
                  class="form-control"
-                 ng-model="EditField.fieldName"
-                 ng-disabled="::EditField.isEdit" ng-pattern="EditField.namePattern"
+                 ng-model="EditField.selectedFieldName"
+                 ng-pattern="EditField.namePattern"
+                 ng-disabled="EditField.isFieldNameDisabled"
                  required>
         </div>
 

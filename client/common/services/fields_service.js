@@ -10,7 +10,18 @@
     init();
 
     self.getField = function (objectName, fieldName) {
-      return self.getObjectFields(objectName)[fieldName];
+      var objectFields = self.getObjectFields(objectName);
+      if (objectFields[fieldName]) {
+        return objectFields[fieldName];
+      } else {
+        return _.where(objectFields, {rename: fieldName})[0];
+      }
+    };
+
+    // Need another method for finding a renamed object (because the name is under "rename" property in the json)
+    self.getRenamedField = function (objectName, newFieldName) {
+      var objectFields = self.getObjectFields(objectName);
+      return _.where(objectFields, {rename: newFieldName})[0];
     };
 
     self.getFieldType = function (objectName, fieldName) {
@@ -58,10 +69,12 @@
       updateNewModel();
     };
 
-    self.editField = function (objectName, fieldName, field) {
+    self.editField = function (objectName, fieldName, field, selectedFieldName) {
       init();
       var uneditedField = self.getField(objectName, fieldName);
-      _.extend(uneditedField, field)
+      _.extend(uneditedField, field);
+      handleFieldRename(objectName, fieldName, uneditedField, selectedFieldName);
+      updateNewModel();
     };
 
     self.removeFieldsRelatingToObject = function (model, relatedObjectName) {
@@ -167,6 +180,30 @@
       return _.some(self.newModelObject, function (object) {
         return object.name == objectName;
       });
+    }
+
+    function handleFieldRename(objectName, fieldName, field, newName) {
+      if (fieldName == newName) {
+        return;
+      }
+      // If field has already been renamed, change the rename property (don't have to create one)
+      if (field.rename) {
+        field.rename = newName;
+      } else if (checkFieldExistInServer(objectName, fieldName)) {
+        field.rename = newName;
+      } else {
+        var object = _.find(self.newModelObject, {name: objectName});
+        delete object.fields[fieldName];
+        object.fields[newName] = field;
+      }
+    }
+
+    function checkFieldExistInServer(objectName, fieldName) {
+      var serverModel = DbDataModel.currentModel;
+      var serverObject = _.find(serverModel.json, {name: objectName});
+      if (serverObject) {
+        return serverObject.fields[fieldName];
+      }
     }
   }
 })();
