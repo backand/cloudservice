@@ -9,7 +9,7 @@
     var typeFilter = "1";
     var tempColDefs = [];
     this.title= '';
-    this.sort = '[{fieldName:"ID", order:"desc"}]';
+    this.sort = '[{fieldName:"Time", order:"desc"},{fieldName:"ID", order:"desc"}]';
     self.showFilter = true;
     self.lastQuery = [];
 
@@ -29,9 +29,9 @@
         self.helpKey = 'appException';
         self.title ='APP Exceptions';
         tempColDefs = [
-          {name: 'ID', displayName: 'Exception Id', sort: {direction: 'desc', priority: 0}, width: 100},
+          {name: 'ID', displayName: 'Exception Id', sort: {direction: 'desc', priority: 1}, width: 100},
           {name: 'Username', displayName: 'Updated By', width: 200},
-          {name: 'Time', field: '__metadata.dates.Time', displayName: 'Time', type: 'datetime', width: 200},
+          {name: 'Time', field: '__metadata.dates.Time', displayName: 'Time', sort: {direction: 'desc', priority: 0}, type: 'datetime', width: 200},
           {name: 'ExceptionMessage',minWidth: 200}
         ];
       }
@@ -46,9 +46,9 @@
         self.helpKey = 'appException';
         self.title ='App Console';
         tempColDefs = [
-          {name: 'ID', displayName: 'Id', sort: {direction: 'desc', priority: 0}, width: 100},
+          {name: 'ID', displayName: 'Id', width: 100, sort: {direction: 'desc', priority: 1}},
           {name: 'Username', displayName: 'Logged By', width: 200},
-          {name: 'Time', field: '__metadata.dates.Time', displayName: 'Time', type: 'datetime', width: 200},
+          {name: 'Time', field: '__metadata.dates.Time', displayName: 'Time', sort: {direction: 'desc', priority: 0}, type: 'datetime', width: 200},
           {name: 'FreeText', 'displayName':'Trace', minWidth: 200}
         ];
       }

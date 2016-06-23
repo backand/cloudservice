@@ -48,5 +48,20 @@
         controller: 'AppConfiguration as configuration',
         templateUrl: 'views/apps/configuration.html'
       })
+      .state('app.billing', {
+        url: '/billing?id&state',
+        controller: 'BillingPortalController as vm',
+        templateUrl: 'views/apps/billing_portal.html',
+      })
+      .state('app.billingupgrade', {
+        url: '/billing/upgrade?id&state',
+        controller: 'BillingPortalController as vm',
+        templateUrl: 'views/apps/billing_portal.html'
+      })
+      .state('app.billingpayment', {
+        url: '/billing/payment',
+        controller: 'BillingPortalController as vm',
+        templateUrl: 'views/apps/billing_portal.html'
+      })
   }
 })();
