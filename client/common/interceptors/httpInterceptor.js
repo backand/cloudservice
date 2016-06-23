@@ -8,7 +8,7 @@
     return {
       request: function(config) {
         usSpinnerService.spin("spinner-1");
-        if (SessionService.currentUser && SessionService.currentUser.access_token) {
+        if (SessionService.currentUser && SessionService.currentUser.access_token && config.url.startsWith(CONSTS.appUrl)) {
           config.headers['Authorization'] = SessionService.getAuthHeader();
         }
         return config;
@@ -49,7 +49,10 @@
                 state.transitionTo('sign_in');
                 return $q.reject(rejection);
               }
-            } else if (rejection.data && rejection.data.Message.includes('is unauthorized for ' + rejection.config.headers.AppName)) {
+            } else if (rejection.data && (
+                rejection.data.Message.includes('is unauthorized for ' + rejection.config.headers.AppName) ||
+                rejection.data.Message.includes('The app ' + rejection.config.headers.AppName + " is locked")
+            )){
               state.transitionTo('apps.index');
             } else {
               SessionService.clearCredentials(); // notification is shown in the next block

@@ -132,7 +132,7 @@
 
   .rule-group-title {
     padding-top: 10px;
-    
+
 
     a{
       font-size: 150%;
@@ -199,15 +199,15 @@
         margin-bottom: 0;
         vertical-align: middle;
         white-space: nowrap;
-        
+
         font-size: 15px;
         border-radius: 4px;
         position: relative;
         line-height: 18px;
-       
+
         list-style: decimal;
 
-        
+
       }
     }
   }
@@ -280,7 +280,7 @@ bknd-copy-url[type="textarea"] .request-url-copy {
   padding-top: 3px;
   .or {
     clear:both;
-    
+
     margin:10px;
     color:#c2c2c2;
     font-style:italic;
@@ -357,9 +357,9 @@ bknd-copy-url[type="textarea"] .request-url-copy {
   .action-template-icon, .new-action-button {
     padding: 5px;
     display:block;
-  
 
-  
+
+
   }
 
   .new-action-button {
@@ -462,4 +462,16 @@ bknd-copy-url[type="textarea"] .request-url-copy {
 
 .ace-monokai.form-control {
   background:#272822;
+}
+
+.copy-cli-command {
+  margin-bottom: 5px;
+}
+
+.tree-spinner {
+  position: relative;
+}
+
+.node-js-show-hide {
+  font-size: 14px;
 }

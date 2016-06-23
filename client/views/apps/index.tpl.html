@@ -50,7 +50,7 @@
                                  ng-pattern="index.namePattern" test-hook="apps.new-app.name" name="appName" required >
 
                         </div>
-                      <div ng-show="form.appName.$error.pattern" test-hook="apps.new-app.error" class="input-error">no spaces or %$#@^&* allowed</div>
+                      <div ng-show="form.appName.$error.pattern" test-hook="apps.new-app.error" class="input-error">Only alphanumeric characters are allowed</div>
                     </div>
                     <div class="form-group">
                       <input type="text" class="form-control" placeholder="app title"
@@ -90,10 +90,19 @@
             </div>
             <button
                 ng-click="index.appManage(app)"
-                class="btn btn-default btn-w-md btn-block"
+                class="btn btn-default col-sm-6 pull-left"
+                style="margin-left: -5px;"
                 data-spinner-color="#000000"
                 test-hook="apps.app-panel.manage-button">
                 {{index.getAppManageTitle(app)}}
+            </button>
+            <button
+                ng-click="index.appBilling(app.Name)"
+                class="btn btn-default col-sm-6 pull-right"
+                data-spinner-color="#000000"
+                style="margin-right: -5px;"
+                test-hook="apps.app-panel.manage-button">
+                Upgrade Plan
             </button>
             <div ng-if="index.appSpinner[app.Name]" us-spinner spinner-start-active
                  us-spinner="{color: 'black', left: '50%%'}"></div>

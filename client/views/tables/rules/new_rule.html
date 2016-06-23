@@ -265,20 +265,20 @@
                   <div class="panel-heading">
                     <strong>Hosted node.js Files</strong>
                     <a href="" title="Refresh tree" class="btn btn-sm"
-                       ng-click="rules.refresh()"><i
+                       ng-click="rules.refreshTree()"><i
                       class="glyphicon glyphicon-refresh"></i></a>
                   </div>
                   <div class="panel-body">
-                    <p>
-                    <h4 style="padding-left: 20px;">{{rules.getStorageUrl()}}</h4>
-                    </p>
-                    <bknd-tree-control></bknd-tree-control>
+                    <bknd-tree-control refresh-tree="rules.refreshTree"></bknd-tree-control>
                   </div>
                 </section>
               </div>
               <div>
-                  <h3>How it works?</h3>
-                  <div>
+                  <h3>How it works?
+                    <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href=""
+                       ng-click="rules.showHowItWorks = !rules.showHowItWorks">{{rules.showHowItWorks ? "Hide": "Show"}}</a>
+                  </h3>
+                  <div ng-if="rules.showHowItWorks">
                     <br/>
                     <p>The server side node.js code is developed on your local computer, and runs on Back& server.
                       The project is been developed like any other node.js project and can be fully debug locally. To
@@ -307,8 +307,8 @@
                     </ul>
                 </div>
                 <br/>
-                <h3>First Time Installation <font size="2"><a ng-if="rules.allowEditAction()" href=""
-                     ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></font></h3 >
+                <h3>First Time Installation <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href=""
+                     ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></h3>
                 <br/>
                 <div ng-if="rules.showFirstTimeInstallation || !rules.allowEditAction()">
                   <p>The Backand CLI  (command-line interface), which is used to control deployment, requires Node.js and npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/" target="_blank">https://nodejs.org/</a>.<br/><br/>
@@ -343,14 +343,27 @@
                 <p ng-if="!rules.allowEditAction()">To initiate on your local folder the node.js code for the action,
                   use the following command on the command line:</p>
 
-<pre ng-if="!rules.allowEditAction()"><code>
-  $ backand action init --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+<div ng-show="!rules.allowEditAction()"><pre><code>
+  $ {{rules.getNodeInitCommand()}}
 
 </code></pre>
-<pre ng-if="rules.allowEditAction()"><code>
-  $ backand action deploy --app {{rules.currentApp.Name}} --object {{rules.getTableName()}} {{rules.getCliActionName()}} --master {{rules.masterToken}} --user {{rules.userToken}}
+      <button class="btn btn-default copy-cli-command"
+              type="button"
+              clip-copy="rules.getNodeInitCommand()"
+              ng-click="rules.initCopied = true"
+              ng-class="{'btn-success': rules.initCopied === true}">Copy</button>
+</div>
+
+<div ng-if="rules.allowEditAction()"><pre><code>
+  $ {{rules.getNodeDeployCommand()}}
 
 </code></pre>
+  <button class="btn btn-default copy-cli-command"
+          type="button"
+          clip-copy="rules.getNodeDeployCommand()"
+          ng-click="rules.deployCopied = true"
+          ng-class="{'btn-success': rules.deployCopied === true}">Copy</button>
+  </div>
                 <p>
                   <b>--app</b>: The current app name<br/>
                   <b>--object</b>: The object that the action belongs to<br/>

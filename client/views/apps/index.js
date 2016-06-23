@@ -126,6 +126,13 @@
       $state.go('app.edit', {appName: appName});
     };
 
+    self.appBilling = function (appName) {
+      AnalyticsService.track('BillingUpgradePlanInAppsPage', {appName: appName});
+
+      $state.go('app.billingupgrade', {appName: appName});
+
+    };
+
     self.goToLink = function (app) {
       $state.go(self.getGoToLink(app).state, {appName: app.Name});
     };

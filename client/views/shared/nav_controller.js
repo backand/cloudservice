@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams','AnalyticsService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams) {
+  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService) {
     var self = this;
     self.isTablesClicked = false;
 
@@ -134,6 +134,19 @@
     };
 
     self.goTo = function ($event, state) {
+
+      //track events
+      if(state == "app.billing"){
+        AnalyticsService.track('BillingLeftMenuBillingPortal', {appName: $state.params.appName});
+      }
+      //track events
+      if(state == "app.billingupgrade"){
+        AnalyticsService.track('BillingLeftMenuBillingUpgrade', {appName: $state.params.appName});
+      }
+      //track events
+      if(state == "app.billingpayment"){
+        AnalyticsService.track('BillingLeftMenuBillingPayment', {appName: $state.params.appName});
+      }
 
       if (self.app.DatabaseStatus === 1) {
         goToState($event, state);

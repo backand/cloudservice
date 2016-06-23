@@ -6,13 +6,18 @@
   </div>
 
   <div class="modal-body edit-row-modal">
-    <form role="form" name="EditObject.editObjectForm">
+    <form role="form" name="editObjectForm">
       <fieldset>
         <label for="object-name">Object Name:</label>
         <input id="object-name"
+               name="objectName"
                type="text"
                class="form-control"
+               ng-pattern="EditObject.namePattern"
                ng-model="EditObject.selectedObjectName" required>
+        <div ng-show="editObjectForm.objectName.$error.pattern" class="input-error">
+          Only alphanumeric characters and underscores are allowed
+        </div>
       </fieldset>
     </form>
 
@@ -31,7 +36,7 @@
     <button class="btn btn-success"
             type="submit"
             ladda="EditRow.savingRow"
-            ng-disabled="EditObject.editObjectForm.$invalid"
+            ng-disabled="editObjectForm.$invalid"
             ng-click="EditObject.objectName ? EditObject.editObject() : EditObject.addObject()">
       {{::EditObject.isEdit ? 'Update' : 'Add Object'}}
     </button>

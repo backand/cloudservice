@@ -39,6 +39,11 @@ angular.module('backand.routes', []).
         templateUrl: 'views/auth/reset_password.html',
         controller : 'resetPasswordController as change'
       })
+      .state('account.billing', {
+        url: '/billing',
+        controller: 'BillingPortalController as vm',
+        templateUrl: 'views/account/billing_portal.html'
+      })
       .state('session', {
         url: '/',
         abstract: true,

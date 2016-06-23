@@ -82,7 +82,7 @@
         .then(function (result) {
           if (result) {
             self.loading = true;
-            return DbDataModel.update(self.appName, schema)
+            return DbDataModel.update(self.appName, schema, true)
           }
           return $q.reject(null);
         })

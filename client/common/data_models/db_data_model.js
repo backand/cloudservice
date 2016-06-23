@@ -72,10 +72,10 @@
         })
     };
 
-    self.update = function (appName, schema) {
+    self.update = function (appName, schema, afterServerUpdate) {
       return ModelService.update(appName, schema)
         .then(function (response) {
-          return updateModels(appName, response)
+          return updateModels(appName, response, afterServerUpdate)
         })
     };
 
@@ -87,12 +87,16 @@
       self.saveErdModel(appName);
     };
 
-    function updateModels(appName, model) {
+    function updateModels(appName, model, afterServerUpdate) {
       self.currentModel.schema = angular.toJson(model.data, true);
       self.currentModel.json = model.data;
       self.currentModel.erdModel = self.modelToChartData(appName, model.data);
+      if (afterServerUpdate) {
+        self.newModel.schema = self.currentModel.schema;
+      } else {
       self.newModel.schema =
         self.getCustomSchema(appName) || self.currentModel.schema;
+      }
       var newModelObject;
       // Handle case when JSON is malformed
       try {
@@ -133,6 +137,9 @@
 
         _.forIn(obj.fields, function (field, fieldname) {
           var fieldToBeAdded = {name: fieldname, type: '', dbType: ''};
+          if (field.rename) {
+            fieldToBeAdded.name = field.rename;
+          }
           // set db type
           if (field.type) {
             fieldToBeAdded.dbType = field.type;

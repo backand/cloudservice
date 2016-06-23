@@ -9,7 +9,7 @@
 
     self.getAppLog = function (appName, size, page, filterParam, sort) {
       //var filterParam =  '[{fieldName:"Admin", operator:"equals", value:"' + isAdmin + '"}]';
-      var sortParam = sort || '[{fieldName:"id", order:"desc"}]';
+      var sortParam = sort || '[{fieldName:"UpdateDate", order:"desc"},{fieldName:"id", order:"desc"}]';
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + self.HISTORY_URL,

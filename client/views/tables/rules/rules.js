@@ -27,6 +27,7 @@
       'SocketService',
       '$rootScope',
       'stringifyHttp',
+      '$localStorage',
       RulesController]);
 
   function RulesController($scope,
@@ -51,7 +52,8 @@
                            NodejsService,
                            SocketService,
                            $rootScope,
-                           stringifyHttp) {
+                           stringifyHttp,
+                           $localStorage) {
 
     var self = this;
     /**
@@ -62,6 +64,15 @@
     function init() {
       self.isNewAction = false;
       self.showJsCodeHelpDialog = false;
+      if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
+        $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
+      }
+      self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
+
+      if ($localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation === undefined) {
+        $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = false;
+      }
+      self.showFirstTimeInstallation = $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation;
       setTestActionTitle();
       getRules();
       self.getActionTemplates();
@@ -83,7 +94,7 @@
         });
       };
       if(!self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
-        //todo: need to refresh the files of the nodeJS
+        self.refreshTree();
       };
       //console.log(data);
     });
@@ -128,6 +139,14 @@
             self.actionTemplates = res;
           });
         });
+    };
+
+    self.getNodeInitCommand = function () {
+      return 'backand action init --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+    };
+
+    self.getNodeDeployCommand = function () {
+      return 'backand action deploy --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
     };
 
     self.selectTemplate = function (template) {
@@ -236,7 +255,9 @@
       if (self.isNodeJS){
         NodejsService.actionName = self.action.name;
         NodejsService.objectName = self.getTableName();
-        self.refresh();
+        if (self.refreshTree) {
+          self.refreshTree();
+        }
       }
     }
 
@@ -717,6 +738,18 @@
           self.ace.editor.setReadOnly(false);
         }
       }
+    })
+
+    $scope.$watch(function() {
+      return self.showHowItWorks;
+    }, function (newVal, oldVal) {
+      $localStorage.backand[self.appName].nodeJsShowHowItWorks = newVal;
+    });
+
+    $scope.$watch(function() {
+      return self.showFirstTimeInstallation;
+    }, function (newVal, oldVal) {
+      $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = newVal;
     });
 
     self.testData = function () {
@@ -924,10 +957,6 @@
         return CONSTS.nodejsUrl + '/' + self.appName + '/' + getTableName() + '/' + self.action.name;
       return '';
 
-    }
-
-    self.refresh = function () {
-      $rootScope.$emit('refreshTree', {});
     };
 
     function getInputParametersForm() {
@@ -975,6 +1004,7 @@
       NotificationService.add('error', message);
       self.test.testLoading = false;
     }
+
 
     init();
   }

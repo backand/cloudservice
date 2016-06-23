@@ -23,6 +23,7 @@
              id="rowId"
              class="form-control"
              max="{{rules.lastRowId}}"
+             ng-model-options="{debounce: 400}"
              ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
 
       <input type="text"
@@ -30,6 +31,7 @@
              name="rowId"
              id="rowId"
              class="form-control"
+             ng-model-options="{debounce: 400}"
              ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
     </div>
 
