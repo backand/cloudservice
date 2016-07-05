@@ -783,6 +783,7 @@
       } else {
         self.test.logMessages = [];
         self.test.logMessages.push({text: '** In Test Mode "Production" there are no debug messages', isError: false, time: new Date()});
+        self.test.testLoading = false;
       }
     }
 
