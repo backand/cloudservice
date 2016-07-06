@@ -343,6 +343,7 @@
       DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true).then(function(results){
         var row = {};
         row.entity = results.data;
+        convertDates(row);
         getEditRowEntity(row);
         openModal();
       });
@@ -379,6 +380,10 @@
       self.editRowData.id = rowItem ? rowItem.entity.__metadata.id : null;
       self.editRowData.entities = [];
       self.editRowData.form.forEach(function (formItem) {
+        // Convert date string to Date object
+        if (formItem.type == 'dateTime') {
+          rowItem.entity[formItem.key] = new Date(rowItem.entity[formItem.key]);
+        }
         self.editRowData.entities.push({
           key: formItem.key,
           hide: formItem.hideInCreate && !rowItem || formItem.hideInEdit && rowItem || formItem.type === 'multiSelect',
@@ -389,6 +394,10 @@
           relatedView: formItem.relatedView
         });
       });
+    }
+
+    function convertDates(rowItem) {
+      var a;
     }
 
     function resetEditRowData() {
