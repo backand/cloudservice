@@ -343,7 +343,6 @@
       DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true).then(function(results){
         var row = {};
         row.entity = results.data;
-        convertDates(row);
         getEditRowEntity(row);
         openModal();
       });
@@ -394,10 +393,6 @@
           relatedView: formItem.relatedView
         });
       });
-    }
-
-    function convertDates(rowItem) {
-      var a;
     }
 
     function resetEditRowData() {
