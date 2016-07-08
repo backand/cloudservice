@@ -97,7 +97,7 @@
                 {{index.getAppManageTitle(app)}}
             </button>
             <button
-                ng-click="index.appBilling(app.Name)"
+                ng-click="index.appBilling(app.Name, (app.PaymentLocked || app.PaymentStatus === 1))"
                 class="btn btn-default col-sm-6 pull-right"
                 data-spinner-color="#000000"
                 style="margin-right: -5px;"

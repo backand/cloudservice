@@ -126,11 +126,18 @@
       $state.go('app.edit', {appName: appName});
     };
 
-    self.appBilling = function (appName) {
+    self.appBilling = function (appName, payment) {
       AnalyticsService.track('BillingUpgradePlanInAppsPage', {appName: appName});
 
-      $state.go('app.billingupgrade', {appName: appName});
-
+      //Check if the app is locked or suspended
+      if(!payment) {
+        $state.go('app.billingupgrade', {appName: appName});
+      } else {
+        $modal.open({
+          templateUrl: 'views/apps/billing_portal.html',
+          controller: 'BillingPortalController as vm'
+        });
+      }
     };
 
     self.goToLink = function (app) {

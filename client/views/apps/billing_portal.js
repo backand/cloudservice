@@ -5,21 +5,31 @@
 
   function BillingPortalController($sce, BillingService, $scope, $state){
     var self = this;
+    var height = "1778";
 
     var url = "";
     if($state.is('app.billingupgrade')){
-      url = BillingService.getPortalPlansUrl();
+      setUrlPrefix(BillingService.getPortalPlansUrl(),height);
+
     }
     else if ($state.is('app.billingpayment')) {
-      url = BillingService.getPortalPaymentUrl();
+      setUrlPrefix(BillingService.getPortalPaymentUrl(),height);
+
+    } else if($state.current.name == "apps.index") {
+      //need to find first an app for the payment
+      BillingService.getAppWithSubscription().then(function (data) {
+        setUrlPrefix(BillingService.getGlobalPaymentUrl(data.data.appName),"778");
+      })
     }
     else {
-      url = BillingService.getPortalUrl();
+      setUrlPrefix(BillingService.getPortalUrl(),height);
     }
 
-    self.urlPrefix = $sce.trustAsHtml('<iframe id="billIframe" src="'
-         + url + '"  style="height:1778px;width:100%;border:none"' +
-        '></iframe>');
+    function setUrlPrefix(url, height) {
+      self.urlPrefix = $sce.trustAsHtml('<iframe id="billIframe" src="'
+          + url + '"  style="height:' + height + 'px;width:100%;border:none"' +
+          '></iframe>');
+    }
 
     $scope.$on('$destroy', function () {
       //window.removeEventListener('message', eventListener, false);
