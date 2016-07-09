@@ -380,7 +380,7 @@
       self.editRowData.entities = [];
       self.editRowData.form.forEach(function (formItem) {
         // Convert date string to Date object
-        if (formItem.type == 'dateTime') {
+        if (formItem.type == 'dateTime' && rowItem) {
           rowItem.entity[formItem.key] = new Date(rowItem.entity[formItem.key]);
         }
         self.editRowData.entities.push({
