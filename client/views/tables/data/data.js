@@ -379,6 +379,10 @@
       self.editRowData.id = rowItem ? rowItem.entity.__metadata.id : null;
       self.editRowData.entities = [];
       self.editRowData.form.forEach(function (formItem) {
+        // Convert date string to Date object
+        if (formItem.type == 'dateTime') {
+          rowItem.entity[formItem.key] = new Date(rowItem.entity[formItem.key]);
+        }
         self.editRowData.entities.push({
           key: formItem.key,
           hide: formItem.hideInCreate && !rowItem || formItem.hideInEdit && rowItem || formItem.type === 'multiSelect',
