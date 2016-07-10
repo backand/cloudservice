@@ -109,7 +109,16 @@
 
     function manageAppDirect(app) {
       if (app.DatabaseStatus !== 0) {
-        $state.go('app', {appName: app.Name});
+        if(app.PaymentLocked || app.PaymentStatus === 1){
+          $modal.open({
+            templateUrl: 'views/apps/billing_portal.html',
+            controller: 'BillingPortalController as vm',
+          });
+          $modal.appName = app.Name;
+          self.appSpinner[app.Name] = false;
+        } else {
+          $state.go('app', {appName: app.Name});
+        }
       }
       else if (AppsService.isExampleApp(app)) {
         $state.go('database.example', {appName: app.Name});
@@ -135,8 +144,9 @@
       } else {
         $modal.open({
           templateUrl: 'views/apps/billing_portal.html',
-          controller: 'BillingPortalController as vm'
+          controller: 'BillingPortalController as vm',
         });
+        $modal.appName = appName;
       }
     };
 
