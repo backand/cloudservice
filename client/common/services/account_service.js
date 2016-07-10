@@ -2,16 +2,16 @@
   'use strict';
 
   angular.module('common.services')
-    .service('AccountService', ['$http', 'SessionService']);
+    .service('AccountService', ['$http', 'SessionService', 'CONSTS', AccountService]);
 
-  function AccountService($http, SessionService) {
+  function AccountService($http, SessionService, CONSTS) {
 
     var self = this;
 
     self.delete = function () {
       return $http({
         method: 'DELETE',
-        url: CONSTS.appUrl + '/1/user/backand?username=' + SessionService.currentUser
+        url: CONSTS.appUrl + '/1/user/backand?username=' + SessionService.currentUser.username
       });
     };
   }

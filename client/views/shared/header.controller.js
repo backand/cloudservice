@@ -136,7 +136,7 @@
       var modalInstance = $modal.open({
         templateUrl: 'views/auth/delete_account.html',
         controller: 'DeleteAccountController as deleteAccount'
-      })
+      });
     };
 
     function goBackToIndex() {

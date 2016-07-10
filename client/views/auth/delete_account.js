@@ -1,14 +1,14 @@
-(function  () {
+(function(){
   'use strict';
   angular.module('backand')
-    .controller('DeleteAccountController',['$modalInstance', 'AccountService', 'SessionService', 'usSpinnerService', '$state', DeleteAccountController]);
+    .controller('DeleteAccountController', ['SessionService', '$modalInstance', '$state', 'usSpinnerService', 'AccountService', DeleteAccountController]);
 
-  function DeleteAccountController($modalInstance, AccountService, SessionService, usSpinnerService, $state){
+  function DeleteAccountController (SessionService, $modalInstance, $state, usSpinnerService, AccountService) {
     var self = this;
 
-    self.email = SessionService.currentUser;
+    self.email = SessionService.currentUser.username;
 
-    self.delete = function () {
+    self.deleteAccount = function () {
       usSpinnerService.spin('delete-app');
       AccountService.delete().then(deleteSuccessHandler, deleteFailureHandler);
     };
@@ -20,7 +20,12 @@
     }
 
     function deleteFailureHandler(data) {
+      usSpinnerService.stop('delete-app');
       self.error = data.data.error;
+    }
+
+    self.cancel = function () {
+      $modalInstance.dismiss('cancel');
     }
   }
 }());
