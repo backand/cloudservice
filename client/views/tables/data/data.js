@@ -101,7 +101,7 @@
 
         $scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
           self.sort = sortColumns[0] ? '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]' : '';
-          getData(false, true);
+          self.filterData();
         });
       }
     };
@@ -113,7 +113,7 @@
 
     function getPageData(newVal, oldVal) {
       if (newVal !== oldVal) {
-        getData(false, true);
+        self.filterData();
       }
     }
 
@@ -471,7 +471,7 @@
           angular.forEach(items, function (rowItem) {
             DataService.delete(self.tableName, rowItem, rowItem.__metadata.id, true)
               .then(function () {
-                return loadData();
+                return self.filterData();
               })
               .then(successDataHandler);
           });
