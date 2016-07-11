@@ -13,7 +13,7 @@
         controller: TreeController,
         controllerAs: 'tree',
         scope: {
-          refreshTree: '='
+          refreshTree: '=?'
         }
       };
     });
@@ -133,6 +133,7 @@
       self.noFiles = items.length == 0;
 
       usSpinnerService.stop('loading-tree');
+      usSpinnerService.stop('loading');
     }
 
     function createTreeItem(item) {
