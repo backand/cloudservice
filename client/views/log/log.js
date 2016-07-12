@@ -1,6 +1,6 @@
 (function () {
 
-  function LogConfig($stateParams, $state, $log, NotificationService, AppLogService, $scope, ConfirmationPopup, usSpinnerService) {
+  function LogConfig($stateParams, $state, $log, NotificationService, AppLogService, $scope, ConfirmationPopup, usSpinnerService, $timeout) {
 
     var self = this;
     var isAdmin;
@@ -159,6 +159,9 @@
     function logSuccsessHandler(data) {
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
+      $timeout(1).then(function () {
+        self.gridApi.core.handleWindowResize();
+      });
       usSpinnerService.stop("loading");
     }
 
@@ -183,6 +186,7 @@
       '$scope',
       'ConfirmationPopup',
       'usSpinnerService',
+      '$timeout',
       LogConfig
     ]);
 
