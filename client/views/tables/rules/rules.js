@@ -64,6 +64,7 @@
     function init() {
       self.isNewAction = false;
       self.showJsCodeHelpDialog = false;
+      self.debugMode = 'debug';
       if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
@@ -755,8 +756,8 @@
     self.testData = function () {
       //getTestRow();
       self.test.testLoading = true;
-      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData)
-        .then(getLog, errorHandler);
+      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug')
+        .then(getLog, getLog);
     };
 
     $scope.$watch(function () {
@@ -771,13 +772,19 @@
       self.test.resultStatus = {code: response.status, text: response.statusText};
       self.test.result = response.data;
       var guid = response.headers('Action-Guid');
-      self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName());
-      self.testHttp = stringifyHttp(RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData));
+      self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(),self.debugMode == 'debug');
+      self.testHttp = stringifyHttp(RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug'));
       self.inputParametersForm.$setPristine();
       self.testUrlCopied = false;
       self.testHttpCopied = false;
-      AppLogService.getActionLog($stateParams.appName, guid)
-        .then(showLog, errorHandler);
+      if(self.debugMode == 'debug'){
+        AppLogService.getActionLog($stateParams.appName, guid)
+          .then(showLog, errorHandler);
+      } else {
+        self.test.logMessages = [];
+        self.test.logMessages.push({text: '** In Test Mode "Production" there are no debug messages', isError: true, time: new Date()});
+        self.test.testLoading = false;
+      }
     }
 
     function showLog(response) {

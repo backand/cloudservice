@@ -109,7 +109,16 @@
 
     function manageAppDirect(app) {
       if (app.DatabaseStatus !== 0) {
-        $state.go('app', {appName: app.Name});
+        if(app.PaymentLocked || app.PaymentStatus === 1){
+          $modal.open({
+            templateUrl: 'views/apps/billing_portal.html',
+            controller: 'BillingPortalController as vm',
+          });
+          $modal.appName = app.Name;
+          self.appSpinner[app.Name] = false;
+        } else {
+          $state.go('app', {appName: app.Name});
+        }
       }
       else if (AppsService.isExampleApp(app)) {
         $state.go('database.example', {appName: app.Name});
@@ -126,11 +135,19 @@
       $state.go('app.edit', {appName: appName});
     };
 
-    self.appBilling = function (appName) {
+    self.appBilling = function (appName, payment) {
       AnalyticsService.track('BillingUpgradePlanInAppsPage', {appName: appName});
 
-      $state.go('app.billingupgrade', {appName: appName});
-
+      //Check if the app is locked or suspended
+      if(!payment) {
+        $state.go('app.billingupgrade', {appName: appName});
+      } else {
+        $modal.open({
+          templateUrl: 'views/apps/billing_portal.html',
+          controller: 'BillingPortalController as vm',
+        });
+        $modal.appName = appName;
+      }
     };
 
     self.goToLink = function (app) {

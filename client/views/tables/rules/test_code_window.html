@@ -76,7 +76,19 @@
       <div ng-show="!rules.allowTestEditMode">** Must have data first. Click Data tab to add new rows.</div>
     </div>
   </div>
-
+  <br/>
+  <div class="row">
+    <div class="col-md-12">
+      <label>Test Mode:&nbsp;&nbsp;</label>
+      <input type="radio"
+             ng-model="rules.debugMode"
+             value="debug">&nbsp;&nbsp;Debugging&nbsp;&nbsp;
+      <input type="radio"
+             ng-model="rules.debugMode"
+             value="production">&nbsp;&nbsp;Production&nbsp;&nbsp;
+    </div>
+  </div>
+  <br/>
   <div ng-if="rules.test.resultStatus">
     <hr/>
     <label>Response Status:</label>

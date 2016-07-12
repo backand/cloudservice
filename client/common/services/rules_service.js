@@ -128,8 +128,8 @@
         (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
     };
 
-    self.testRule = function (rule, test, actionType, tableName, rowData) {
-      return $http(self.getTestHttp(rule, test, actionType, tableName, rowData, true))
+    self.testRule = function (rule, test, actionType, tableName, rowData, debug) {
+      return $http(self.getTestHttp(rule, test, actionType, tableName, rowData, debug))
     };
 
 
@@ -155,12 +155,15 @@
         method: method,
         url : self.getTestUrl(rule, test, actionType, tableName, debug, true)
       };
-      debug ?
-        http.headers = { AppName: self.appName } :
+      http.headers = { AppName: self.appName };
+      if(!debug){
         http.params = {
           name: rule.name,
           parameters: test.parameters
         };
+
+        http.config = {ignoreError: true};
+      }
 
       if (actionType === 'Create' || actionType === 'Update') {
         http.data = angular.fromJson(rowData);

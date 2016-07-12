@@ -1,25 +1,49 @@
 (function  () {
   'use strict';
   angular.module('backand')
-    .controller('BillingPortalController', ['$sce','BillingService','$scope','$state', BillingPortalController]);
+    .controller('BillingPortalController', ['$sce','BillingService','$scope','$state','$injector','$modal', BillingPortalController]);
 
-  function BillingPortalController($sce, BillingService, $scope, $state){
+  function BillingPortalController($sce, BillingService, $scope, $state, $injector, $modal){
     var self = this;
+    var height = "1778";
 
-    var url = "";
+    self.title = "Billing Portal";
+    self.subTitle = "";
+    self.titleStyle = "";
+
     if($state.is('app.billingupgrade')){
-      url = BillingService.getPortalPlansUrl();
+      setUrlPrefix(BillingService.getPortalPlansUrl(),height);
+
     }
     else if ($state.is('app.billingpayment')) {
-      url = BillingService.getPortalPaymentUrl();
+      setUrlPrefix(BillingService.getPortalPaymentUrl(),height);
+
+    } else if($state.current.name == "apps.index") {
+
+      if($modal.appName) {
+      //need to find first an app for the payment
+      self.titleStyle = "color:red;";
+      self.title = "The " + $modal.appName + " Application is Locked!";
+      self.subTitle = "Due to unsettled invoice this application has been locked! Please provide a valid credit card" +
+          " to allow the application to continue to operate. If no valid credit card will be provided soon this" +
+          " application will be automatically deleted.";
+      } else {
+        self.title = "Update Payment Method";
+      }
+
+      BillingService.getAppWithSubscription().then(function (data) {
+        setUrlPrefix(BillingService.getGlobalPaymentUrl(data.data.appName),"778");
+      })
     }
     else {
-      url = BillingService.getPortalUrl();
+      setUrlPrefix(BillingService.getPortalUrl(),height);
     }
 
-    self.urlPrefix = $sce.trustAsHtml('<iframe id="billIframe" src="'
-         + url + '"  style="height:1778px;width:100%;border:none"' +
-        '></iframe>');
+    function setUrlPrefix(url, height) {
+      self.urlPrefix = $sce.trustAsHtml('<iframe id="billIframe" src="'
+          + url + '"  style="height:' + height + 'px;width:100%;border:none"' +
+          '></iframe>');
+    }
 
     $scope.$on('$destroy', function () {
       //window.removeEventListener('message', eventListener, false);

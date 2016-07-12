@@ -11,7 +11,7 @@
     self.delete = function () {
       return $http({
         method: 'DELETE',
-        url: CONSTS.appUrl + '/1/user/backand?username=' + SessionService.currentUser.username
+        url: CONSTS.appUrl + '/1/user/backand'
       });
     };
   }

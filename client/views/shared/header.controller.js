@@ -109,6 +109,13 @@
       })
     };
 
+    self.openPaymentMethod = function(){
+      $modal.open({
+        templateUrl: 'views/apps/billing_portal.html',
+        controller: 'BillingPortalController as vm'
+      });
+    };
+
     self.openParseMigrationTool = function () {
       var modalInstance = $modal.open({
         templateUrl: 'views/shared/parse_migration.html',

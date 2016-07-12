@@ -1,8 +1,9 @@
 <div class="modal-header">
-  <h3 class="modal-title">Billing Portal</h3>
+  <h3 class="modal-title" style="{{vm.titleStyle}}">{{vm.title}}</h3>
 </div>
-
 <div class="modal-body">
+  <label class="alert-danger">{{vm.subTitle}}</label>
+  <br/><br/>
   <div ng-bind-html="vm.urlPrefix"></div>
   <!--<iframe id="ddd" src="https://backand-test.chargebeeportal.com/portal/access/3syfucd9h1zYVtkzLs16LnNxBmmHVMQIh"-->
           <!--style="height:778px;width:100%;border: none"></iframe>-->
