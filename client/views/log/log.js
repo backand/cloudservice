@@ -159,9 +159,6 @@
     function logSuccsessHandler(data) {
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = data.data.totalRows;
-      $timeout(1).then(function () {
-        self.gridApi.core.handleWindowResize();
-      });
       usSpinnerService.stop("loading");
     }
 
