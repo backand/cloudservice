@@ -57,8 +57,8 @@
             <a ng-click="header.showUserDropdown = !header.showUserDropdown; $event.stopPropagation();"
                href="" class="dropdown-toggle header-item" data-toggle="dropdown">
                 <span>
-                    <i class="ti-user"></i>
                     <span class="bknd-username">{{::header.getCurrentUser().username}}</span>
+                    <i class="ti-arrow-circle-down"></i>
                 </span>
             </a>
             <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
@@ -73,6 +73,12 @@
                   <a href="" ng-click="header.openPaymentMethod()">
                     <i class="ti-money"></i>
                     <span>Payment Method</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="" ng-click="header.deleteAccount()">
+                    <i class="ti-trash"></i>
+                    <span>Delete Account</span>
                   </a>
                 </li>
                 <li>

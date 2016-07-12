@@ -139,6 +139,13 @@
       self.openParseMigrationTool();
     };
 
+    self.deleteAccount = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/auth/delete_account.html',
+        controller: 'DeleteAccountController as deleteAccount'
+      });
+    };
+
     function goBackToIndex() {
       $state.go('apps.index');
     }

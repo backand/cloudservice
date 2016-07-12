@@ -1,0 +1,30 @@
+<div class="modal-content">
+  <div us-spinner spinner-key="delete-app" spinner-start-active></div>
+  <div class="modal-header">
+    <h3 class="modal-title">Delete Account</h3>
+  </div>
+  <div class="modal-body">
+    <span>In order to delete your account, please type your email:</span>
+    <ng-form name="deleteAccountDialog" novalidate role="form">
+      <div class="form-group input-group-lg">
+        <input type="text"
+               class="form-control"
+               name="email"
+               ng-model="deleteAccount.emailInput"
+               ng-model-options="{debounce: 500}"
+               placeholder="myemail@example.com"
+               required>
+      </div>
+    </ng-form>
+  </div>
+  <div class="modal-footer">
+    <div ng-show="deleteAccount.error">
+      {{deleteAccount.error}}
+    </div>
+    <button class="btn btn-danger" data-style="expand-right" ng-click="deleteAccount.deleteAccount()"
+            ng-disabled="deleteAccount.emailInput != deleteAccount.email">
+      Delete
+    </button>
+    <button class="btn btn-default" ng-click="deleteAccount.cancel()">Cancel</button>
+  </div>
+</div>
