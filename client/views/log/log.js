@@ -1,6 +1,6 @@
 (function () {
 
-  function LogConfig($stateParams, $state, $log, NotificationService, AppLogService, $scope, ConfirmationPopup, usSpinnerService) {
+  function LogConfig($stateParams, $state, $log, NotificationService, AppLogService, $scope, ConfirmationPopup, usSpinnerService, $timeout) {
 
     var self = this;
     var isAdmin;
@@ -183,6 +183,7 @@
       '$scope',
       'ConfirmationPopup',
       'usSpinnerService',
+      '$timeout',
       LogConfig
     ]);
 
