@@ -936,6 +936,10 @@
         text += dataActionType === 'On Demand' ? " Action" : " Trigger";
       }
 
+      // Reset test URL & http when changing actions
+      self.testUrl = '';
+      self.testHttp = '';
+
       self.testActionTitle = text;
     }
 
