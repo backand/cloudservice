@@ -12,6 +12,16 @@
            ng-model="rules.test.parameters[inputParam]">
   </div>
 
+  <div>
+    <label>Method:&nbsp;&nbsp;</label>
+    <input type="radio"
+           ng-model="rules.httpMethod"
+           value="get">&nbsp;&nbsp;GET&nbsp;&nbsp;
+    <input type="radio"
+           ng-model="rules.httpMethod"
+           value="post">&nbsp;&nbsp;POST&nbsp;&nbsp;
+  </div>
+
   <hr class="narrow-top-margin">
   <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
     <label>Item Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
