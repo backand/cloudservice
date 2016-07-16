@@ -274,7 +274,9 @@
 
     self.clearTest = function () {
       self.test = {
-        parameters: {}
+        parameters: {},
+        body: '{}',
+        method: 'GET'
       };
       getTestRow();
       setTestActionTitle();

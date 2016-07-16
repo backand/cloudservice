@@ -12,14 +12,14 @@
            ng-model="rules.test.parameters[inputParam]">
   </div>
 
-  <div>
+  <div ng-if="rules.getDataActionType() === 'On Demand'">
     <label>Method:&nbsp;&nbsp;</label>
     <input type="radio"
-           ng-model="rules.httpMethod"
-           value="get">&nbsp;&nbsp;GET&nbsp;&nbsp;
+           ng-model="rules.test.method"
+           value="GET">&nbsp;&nbsp;GET&nbsp;&nbsp;
     <input type="radio"
-           ng-model="rules.httpMethod"
-           value="post">&nbsp;&nbsp;POST&nbsp;&nbsp;
+           ng-model="rules.test.method"
+           value="POST">&nbsp;&nbsp;POST&nbsp;&nbsp;
   </div>
 
   <hr class="narrow-top-margin">
@@ -45,6 +45,18 @@
              ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
     </div>
 
+  </div>
+
+  <div class="form-group" ng-if="rules.test.method == 'POST'">
+    <label>Body</label>
+    <div
+      ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+      class="form-control ace-db-template"
+      name="requestBody"
+      id="requestBody"
+      ng-model="rules.test.body"
+      style="resize: vertical; height: 200px;">
+    </div>
   </div>
 
   <div class="form-group">
