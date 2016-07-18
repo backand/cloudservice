@@ -12,7 +12,7 @@
      */
     (function init() {
 
-      self.roleFieldName = 'durados_User_Role';
+      self.roleFieldName = 'Role';
       self.open = newUser;
       self.roles = null;
       self.gridOptions = {};
