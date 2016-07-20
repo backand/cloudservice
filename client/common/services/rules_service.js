@@ -135,20 +135,24 @@
 
     self.getTestHttp = function (rule, test, actionType, tableName, rowData, debug) {
       var method;
-      switch (actionType) {
-        case 'Create':
-          method = 'POST';
-          break;
-        case 'Update':
-          method = 'PUT';
-          break;
-        case 'Delete':
-          method = 'DELETE';
-          break;
-        case 'On Demand':
-        default:
-          method = 'GET';
-          break;
+      if (actionType == 'On Demand' && test.method) {
+        method = test.method;
+      } else {
+        switch (actionType) {
+          case 'Create':
+            method = 'POST';
+            break;
+          case 'Update':
+            method = 'PUT';
+            break;
+          case 'Delete':
+            method = 'DELETE';
+            break;
+          case 'On Demand':
+          default:
+            method = 'GET';
+            break;
+        }
       }
 
       var http = {
@@ -167,6 +171,8 @@
 
       if (actionType === 'Create' || actionType === 'Update') {
         http.data = angular.fromJson(rowData);
+      } else if (method == 'POST') {
+        http.data = angular.fromJson(test.body);
       }
 
       return http;
