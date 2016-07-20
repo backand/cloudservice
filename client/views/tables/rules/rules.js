@@ -734,7 +734,7 @@
         self.clearTest(); //clear the data
         if (newVal === 'On Demand' || newVal === 'Delete') {
           self.ace.editor.setReadOnly(true);
-          self.ace.message = 'Item data (read only)';
+          self.ace.message = 'Row data (read only)';
         }
         else {
           self.ace.message = 'Data to send in the test';
