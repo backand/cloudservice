@@ -2,7 +2,7 @@
 <br/>
 <form role="form" name="rules.inputParametersForm" novalidate>
 
-  <label>Parameters</label>
+  <label ng-show="rules.test.inputParametersArray">Parameters</label>
 
   <div class="form-group" ng-repeat="inputParam in rules.test.inputParametersArray">
     <label for="inputParam">{{inputParam}}</label>
@@ -13,8 +13,31 @@
   </div>
 
   <hr class="narrow-top-margin">
+  <div ng-if="rules.getDataActionType() === 'On Demand'">
+    <label>Method:&nbsp;&nbsp;</label>
+    <input type="radio"
+           ng-model="rules.test.method"
+           value="GET">&nbsp;&nbsp;GET&nbsp;&nbsp;
+    <input type="radio"
+           ng-model="rules.test.method"
+           value="POST">&nbsp;&nbsp;POST&nbsp;&nbsp;
+  </div>
+
+  <div class="form-group" ng-if="rules.test.method == 'POST'">
+    <label>Body</label>
+    <div
+            ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+            class="form-control ace-db-template"
+            name="requestBody"
+            id="requestBody"
+            ng-model="rules.test.body"
+            style="resize: vertical; height: 200px;">
+    </div>
+  </div>
+
+  <hr class="narrow-top-margin">
   <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
-    <label>Item Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
+    <label>Row Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
     <div ng-switch="rules.test.isGuid">
 
       <input type="number"
@@ -53,6 +76,7 @@
     <div ng-show="rules.testRowObjectNotification" class="text-danger">{{rules.testRowObjectNotification}}</div>
   </div>
 
+  <hr class="narrow-top-margin">
   <div class="row">
     <div class="col-md-12">
       <button type="submit"
