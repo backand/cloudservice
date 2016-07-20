@@ -28,6 +28,7 @@
       '$rootScope',
       'stringifyHttp',
       '$localStorage',
+      '$state',
       RulesController]);
 
   function RulesController($scope,
@@ -493,6 +494,7 @@
       crud.forEach(function (crudAction) {
         DictionaryService.get(crudAction)
           .then(function (data) {
+            usSpinnerService.stop('loading');
             populateDictionaryItems(crudAction, data.data)
           });
       });
@@ -936,6 +938,10 @@
         text += dataActionType === 'On Demand' ? " Action" : " Trigger";
       }
 
+      // Reset test URL & http when changing actions
+      self.testUrl = '';
+      self.testHttp = '';
+
       self.testActionTitle = text;
     }
 
@@ -964,6 +970,17 @@
         return CONSTS.nodejsUrl + '/' + self.appName + '/' + getTableName() + '/' + self.action.name;
       return '';
 
+    };
+
+    self.refresh = function () {
+      ConfirmationPopup.confirm('Are you sure you want to reload? Unsaved changes will be discarded.')
+        .then(function (result) {
+          if (result) {
+            usSpinnerService.spin('loading');
+            refreshAction(self.action);
+            init();
+          }
+        });
     };
 
     function getInputParametersForm() {

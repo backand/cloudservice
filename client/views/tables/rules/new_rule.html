@@ -36,6 +36,8 @@
             <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">In system action the name cannot be
               modified.</span>
 
+            <a ng-if="rules.action && !rules.newRuleForm.$pristine" href="" id="action-refresh" title="Refresh Action" class="btn btn-sm" ng-click="rules.refresh()"><i class="glyphicon glyphicon-refresh"></i></a>
+
             <div ng-messages="rules.newRuleForm.ruleName.$error">
               <div ng-message="pattern" class="text-danger">Use only letters, numbers, space or underscore</div>
             </div>

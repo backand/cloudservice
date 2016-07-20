@@ -43,7 +43,10 @@
         data = self.jsonData.json;
       } else {
         // Get json from the editor
-        data = JSON.parse(self.scheme);
+        data = getInlineJson(self.scheme);
+        if (!data) {
+          return;
+        }
       }
       usSpinnerService.spin('upload-loading');
       DataService.bulkPost(tableName, data, true).then(function (result) {
@@ -67,12 +70,22 @@
       reader.onload = function (e) {
         usSpinnerService.stop('upload-loading');
         var fileContent = reader.result;
-        self.jsonData = getJson(fileContent);
+        self.jsonData = getJsonFromFile(fileContent);
       };
       reader.readAsText(file);
     }
 
-    function getJson(fileContent) {
+    function getInlineJson(json) {
+      try {
+        return JSON.parse(json);
+      }
+      catch (ex) {
+        NotificationService.add('error', 'Invalid JSON');
+        return null;
+      }
+    }
+
+    function getJsonFromFile(fileContent) {
       var maxDocuments = 1000;
       try {
         var json = JSON.parse(fileContent);
