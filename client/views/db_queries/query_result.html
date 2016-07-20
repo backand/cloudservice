@@ -20,7 +20,7 @@
 
   <div ui-grid="DbQuery.gridOptions"
        class="querygrid" ui-grid-resize-columns
-       ng-show="DbQuery.gridOptions.totalItems > 0">
+       ng-if="DbQuery.gridOptions.totalItems > 0">
   </div>
 
   <div ng-show="DbQuery.gridOptions.totalItems == 0">
