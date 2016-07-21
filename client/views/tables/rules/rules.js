@@ -774,7 +774,7 @@
 
     function getLog(response) {
       self.test.resultStatus = {code: response.status, text: response.statusText};
-      self.test.result = response.data;
+      self.test.result = JSON.stringify(response.data, null, 2);
       var guid = response.headers('Action-Guid');
       self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(),self.debugMode == 'debug');
       self.testHttp = stringifyHttp(RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug'));
@@ -947,6 +947,12 @@
       self.testActionTitle = text;
     }
 
+    self.copyResult = {
+      getUrl: getResultUrl,
+      getInputForm: getInputParametersForm,
+      getTestForm: getRuleForm
+    };
+
     self.copyUrlParams = {
       getUrl: getTestUrl,
       getInputForm: getInputParametersForm,
@@ -999,6 +1005,10 @@
 
     function getTestHttp() {
       return self.testHttp;
+    }
+
+    function getResultUrl() {
+      return self.test.result;
     }
 
     self.namePattern = /^\w+[\w ]*$/;
