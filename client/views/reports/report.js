@@ -15,11 +15,10 @@
     ];
     self.todaysDate = new Date();
 
-    self.dateParam = "";
+    self.dateParam = "last7days";
+    setLastSevenDaysDate();
+    setReportUrl();
 
-    // ReportService.getReportlUrl('daily_active_identified_users').then(function (data) {
-    //   setUrlPrefix(data.data.url, height);
-    // });
 
     function setUrlPrefix(url, height) {
       self.urlPrefix = $sce.trustAsHtml('<iframe id="billIframe" src="'
@@ -36,6 +35,17 @@
       }
 
     });
+
+    self.runReport = function(){
+      setReportUrl();
+    };
+
+    function setReportUrl(){
+      ReportService.getReportlUrl('daily_active_identified_users', self.startDate, self.endDate).then(function (data) {
+        setUrlPrefix(data.data.url, height);
+      });
+    }
+
 
     // Set the dates according to the selected option
     self.onDateParamChanged = function () {

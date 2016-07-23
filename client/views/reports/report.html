@@ -29,6 +29,15 @@
                    min="{{vm.startDate | date:'yyyy-MM-dd'}}" max="{{vm.todaysDate | date:'yyyy-MM-dd'}}"
                    ng-disabled="vm.dateParam!='custom'"/>
         </div>
+        <div class="col-sm-2">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary form-control"
+                  ladda="rules.saving"
+                  data-style="expand-right"
+                  ng-click="vm.runReport()">
+          Run Report
+          </button>
+        </div>
       </div>
       <div ng-bind-html="vm.urlPrefix"></div>
       <!--<iframe id="ddd" src="https://backand-test.chargebeeportal.com/portal/access/3syfucd9h1zYVtkzLs16LnNxBmmHVMQIh"-->
