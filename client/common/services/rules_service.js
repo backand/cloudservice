@@ -1,6 +1,6 @@
 (function () {
 
-  function RulesService($http, CONSTS) {
+  function RulesService($http, CONSTS, NotificationService, $q) {
 
     var self = this;
     var baseUrl = '/1/businessRule';
@@ -129,7 +129,12 @@
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData, debug) {
-      return $http(self.getTestHttp(rule, test, actionType, tableName, rowData, debug))
+      var httpRequest = self.getTestHttp(rule, test, actionType, tableName, rowData, debug);
+      if (httpRequest) {
+        return $http(httpRequest);
+      } else {
+        return $q.reject('Invalid JSON');
+      }
     };
 
 
@@ -172,7 +177,13 @@
       if (actionType === 'Create' || actionType === 'Update') {
         http.data = angular.fromJson(rowData);
       } else if (method == 'POST') {
-        http.data = angular.fromJson(test.body);
+        try {
+          http.data = angular.fromJson(test.body);
+        }
+        catch (e){
+          NotificationService.add('error', 'Invalid JSON');
+          return;
+        }
       }
 
       return http;
@@ -181,5 +192,5 @@
   }
 
   angular.module('common.services')
-    .service('RulesService', ['$http', 'CONSTS', RulesService]);
+    .service('RulesService', ['$http', 'CONSTS', 'NotificationService', '$q', RulesService]);
 }());
