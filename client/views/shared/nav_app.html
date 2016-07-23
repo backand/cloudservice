@@ -156,6 +156,23 @@
     </ul>
   </li>
 
+  <li ng-class="{active: nav.state == 'reports', disabled: nav.DatabaseStatus != 1}" >
+    <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
+      <i class="ba-icon-general"></i>
+      <span>Analytics</span>
+      <ba-tooltip tooltip-text="Analytics reports" tooltip-placement="right" class=""></ba-tooltip>
+      <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;" ng-if="nav.DatabaseStatus == 1"></i>
+    </a>
+    <ul>
+      <li ng-class="{active: nav.state == 'report.portal'}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 0}" ng-click="nav.goTo($event, 'report.portal')" href="">
+          <i class="ti-dashboard"></i>
+          <span>Report 1</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
   <li ng-class="{active: nav.state == 'security.users', disabled: nav.DatabaseStatus != 1}">
     <a ng-class="{disabled: nav.DatabaseStatus != 1}"  href="">
       <i class="ba-icon-security-and-auth"></i>
