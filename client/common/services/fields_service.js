@@ -73,6 +73,9 @@
       init();
       var uneditedField = self.getField(objectName, fieldName);
       _.extend(uneditedField, field);
+      if (!_.has(field, 'defaultValue') && _.has(uneditedField, 'defaultValue')){
+        removeDefaultValue(objectName, fieldName);
+      }
       handleFieldRename(objectName, fieldName, uneditedField, selectedFieldName);
       updateNewModel();
     };
@@ -203,6 +206,15 @@
       var serverObject = _.find(serverModel.json, {name: objectName});
       if (serverObject) {
         return serverObject.fields[fieldName];
+      }
+    }
+
+    function removeDefaultValue(objectName, fieldName) {
+      var objectFields = self.getObjectFields(objectName);
+      if (objectFields[fieldName]) {
+        delete objectFields[fieldName].defaultValue;
+      } else {
+        delete _.where(objectFields, {rename: fieldName})[0].defaultValue;
       }
     }
   }

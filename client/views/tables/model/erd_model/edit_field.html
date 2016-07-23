@@ -68,10 +68,11 @@
             <div id="default-value" ng-switch="EditField.fieldType">
               <select
                 class="form-control"
-                ng-model="EditField.field.defaultValue"
-                ng-switch-when="boolean">
-                <option value="true">true</option>
-                <option value="false">false</option>
+                ng-switch-when="boolean"
+                ng-model="EditField.field.defaultValue">
+                <option value="" ng-selected="EditField.field.defaultValue === undefined"></option>
+                <option value="true" ng-selected="EditField.field.defaultValue === true">true</option>
+                <option value="false" ng-selected="EditField.field.defaultValue === false">false</option>
               </select>
               <input
                 type="date"
