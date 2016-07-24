@@ -13,12 +13,15 @@
         url: CONSTS.appUrl + '/1/general/getReportURL',
         params:{
           report: reportName,
-          startDate: startDate,
-          endDate: endDate
+          startDate: onlyDate(startDate),
+          endDate: onlyDate(endDate)
         }
       });
     };
-    
+
+    function onlyDate(date){
+      return date;
+    }
 
   }
 

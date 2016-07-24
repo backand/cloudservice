@@ -5,7 +5,14 @@
 
   function ReportController($sce, ReportService, $scope) {
     var self = this;
-    var height = "778";
+    var height = "678";
+
+    self.reports = [
+      {name: "daily_active_identified_users", label: "Daily Active Identified Users"},
+      {name: "daily_active_devices", label: "Daily Active Devices"},
+      {name: "backand_compute", label: "Backand Compute"},
+      {name: "cache_memory", label: "Cache Memory"}
+    ];
 
     self.dateParams = [
       {value: "today", label: "Today", action: setTodayDates},
@@ -13,7 +20,9 @@
       {value: "last7days", label: "Last 7 Days", action: setLastSevenDaysDate},
       {value: "custom", label: "Custom..."}
     ];
-    self.todaysDate = new Date();
+
+    self.report = "";
+    self.todaysDate = today();
 
     self.dateParam = "last7days";
     setLastSevenDaysDate();
@@ -35,15 +44,21 @@
       }
 
     });
+    
+    self.onReportChanged = function(){
+      setReportUrl();
+    };
 
     self.runReport = function(){
       setReportUrl();
     };
 
     function setReportUrl(){
-      ReportService.getReportlUrl('daily_active_identified_users', self.startDate, self.endDate).then(function (data) {
-        setUrlPrefix(data.data.url, height);
-      });
+      if(self.report != "") {
+        ReportService.getReportlUrl(self.report, self.startDate, self.endDate).then(function (data) {
+          setUrlPrefix(data.data.url, height);
+        });
+      }
     }
 
 
@@ -55,21 +70,27 @@
       }
     };
 
+    function today(){
+      return new Date(new Date().setUTCHours(0,0,0,0));
+    }
+
     function setTodayDates() {
-      self.startDate = new Date();
+      self.startDate = today();
       self.endDate = self.startDate;
     }
 
     function setYesterdayDates() {
-      self.endDate = new Date();
-      self.startDate = new Date();
-      self.startDate.setDate(self.endDate.getDate() - 1);
+      self.startDate = today();
+      self.startDate.setDate(today().getUTCDate() - 1);
+      self.endDate = today();
     }
 
     function setLastSevenDaysDate() {
-      self.endDate = new Date();
-      self.startDate = new Date();
-      self.startDate.setDate(self.endDate.getDate() - 7);
+      self.startDate = today();
+      self.startDate.setDate(self.startDate.getUTCDate() - 7);
+      self.endDate = today();
+      self.endDate.setDate(self.endDate.getUTCDate() - 1);
+
     }
 
   }

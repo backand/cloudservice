@@ -8,6 +8,16 @@
 
       <div class="row">
         <div class="col-sm-2">
+          <label>Report</label>
+          <select class="form-control"
+                  ng-options="report.name as report.label for report in vm.reports"
+                  ng-model="vm.report"
+                  required
+                  ng-change="vm.onReportChanged()">
+            <option value="" disabled selected>Select Report...</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
           <label>Default Values</label>
           <select class="form-control"
                   ng-options="date.value as date.label for date in vm.dateParams"
@@ -20,13 +30,12 @@
         <div class="col-sm-2">
             <label>Start date</label>
             <input type="date" class="form-control" ng-model="vm.startDate"
-                   min="2016-06-01" max="{{vm.todaysDate | date:'yyyy-MM-dd'}}"
+                   min="{{'2016-06-01' | date:'yyyy-MM-dd'}}"
                    ng-disabled="vm.dateParam!='custom'"/>
         </div>
         <div class="col-sm-2">
             <label>End date</label>
             <input type="date" class="form-control" ng-model="vm.endDate"
-                   min="{{vm.startDate | date:'yyyy-MM-dd'}}" max="{{vm.todaysDate | date:'yyyy-MM-dd'}}"
                    ng-disabled="vm.dateParam!='custom'"/>
         </div>
         <div class="col-sm-2">
