@@ -5,8 +5,8 @@
       <!--<ba-help-link key="reports" with-text="false"></ba-help-link>-->
     </div>
     <div class="panel-body">
-
-      <div class="row">
+      <form name="vm.reportForm" insert-at-caret novalidate>
+        <div class="row">
         <div class="col-sm-2">
           <label>Report</label>
           <select class="form-control"
@@ -43,11 +43,13 @@
           <button class="btn btn-primary form-control"
                   ladda="rules.saving"
                   data-style="expand-right"
+                  ng-disabled="vm.reportForm.$invalid"
                   ng-click="vm.runReport()">
           Run Report
           </button>
         </div>
       </div>
+      </form>
       <div ng-bind-html="vm.urlPrefix"></div>
       <!--<iframe id="ddd" src="https://backand-test.chargebeeportal.com/portal/access/3syfucd9h1zYVtkzLs16LnNxBmmHVMQIh"-->
               <!--style="height:778px;width:100%;border: none"></iframe>-->

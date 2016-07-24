@@ -15,9 +15,13 @@
     ];
 
     self.dateParams = [
-      {value: "today", label: "Today", action: setTodayDates},
-      {value: "yesterday", label: "Yesterday", action: setYesterdayDates},
-      {value: "last7days", label: "Last 7 Days", action: setLastSevenDaysDate},
+      {value: "today", label: "Today", action: setTodayDates, days: 0},
+      {value: "yesterday", label: "Yesterday", action: setLastDates, days: 1},
+      {value: "last7days", label: "Last 7 Days", action: setLastDates, days: 7},
+      {value: "last30days", label: "Last 30 Days", action: setLastDates, days: 30},
+      {value: "last90days", label: "Last 90 Days", action: setLastDates, days: 90},
+      {value: "currentweek", label: "Current Week", action: setCurrentWeek},
+      {value: "currentmonth", label: "Current Month", action: setCurrentMonth},
       {value: "custom", label: "Custom..."}
     ];
 
@@ -25,7 +29,7 @@
     self.todaysDate = today();
 
     self.dateParam = "last7days";
-    setLastSevenDaysDate();
+    setLastDates(7);
     setReportUrl();
 
 
@@ -55,10 +59,14 @@
 
     function setReportUrl(){
       if(self.report != "") {
-        ReportService.getReportlUrl(self.report, self.startDate, self.endDate).then(function (data) {
+        ReportService.getReportlUrl(self.report, returnDateOnly(self.startDate), returnDateOnly(self.endDate)).then(function (data) {
           setUrlPrefix(data.data.url, height);
         });
       }
+    }
+
+    function returnDateOnly(date){
+      return date.toLocaleString('en-US').split(',')[0];
     }
 
 
@@ -66,12 +74,12 @@
     self.onDateParamChanged = function () {
       var chosenDateParam = _.where(self.dateParams, {value: self.dateParam})[0];
       if (chosenDateParam.action) {
-        chosenDateParam.action()
+        chosenDateParam.action(chosenDateParam.days)
       }
     };
 
     function today(){
-      return new Date(new Date().setUTCHours(0,0,0,0));
+      return new Date(new Date().setHours(0,0,0,0));
     }
 
     function setTodayDates() {
@@ -79,18 +87,21 @@
       self.endDate = self.startDate;
     }
 
-    function setYesterdayDates() {
+    function setLastDates(days) {
       self.startDate = today();
-      self.startDate.setDate(today().getUTCDate() - 1);
+      self.startDate.setDate(self.startDate.getDate() - days);
       self.endDate = today();
+      self.endDate.setDate(self.endDate.getDate() - 1);
     }
 
-    function setLastSevenDaysDate() {
-      self.startDate = today();
-      self.startDate.setDate(self.startDate.getUTCDate() - 7);
-      self.endDate = today();
-      self.endDate.setDate(self.endDate.getUTCDate() - 1);
+    function setCurrentWeek(){
+      var day = today().getDay();
+      setLastDates(day);
+    }
 
+    function setCurrentMonth(){
+      var day = today().getDate();
+      setLastDates(day-1);
     }
 
   }

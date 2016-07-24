@@ -123,8 +123,8 @@ angular.module('backand.routes', []).
         abstract: true,
         template: '<div ui-view></div>'
       })
-      .state('report', {
-        url: '/report',
+      .state('analytics', {
+        url: '/analytics',
         parent: 'app',
         abstract: true,
         template: '<div ui-view></div>'
