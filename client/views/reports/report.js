@@ -9,9 +9,18 @@
 
     self.reports = [
       {name: "daily_active_identified_users", label: "Daily Active Identified Users"},
+      {name: "weekly_active_identified_users", label: "Weekly Active Identified Users"},
+      {name: "monthly_active_identified_users", label: "Monthly Active Identified Users"},
       {name: "daily_active_devices", label: "Daily Active Devices"},
+      {name: "weekly_active_devices", label: "Weekly Active Devices"},
+      {name: "monthly_active_devices", label: "Monthly Active Devices"},
       {name: "backand_compute", label: "Backand Compute"},
-      {name: "cache_memory", label: "Cache Memory"}
+      {name: "cache_memory", label: "Cache Memory"},
+      {name: "requests_per_second", label: "Requests Per Second"},
+      {name: "data_hosting", label: "Data Hosting"},
+      {name: "database_size", label: "Database Size"},
+      {name: "most_active_users", label: "Most Active Users"},
+      {name: "slow_requests", label: "Slow Requests"}
     ];
 
     self.dateParams = [
@@ -48,7 +57,7 @@
       }
 
     });
-    
+
     self.onReportChanged = function(){
       setReportUrl();
     };
