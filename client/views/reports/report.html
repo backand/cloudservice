@@ -10,7 +10,7 @@
         <div class="col-sm-2">
           <label>Report</label>
           <select class="form-control"
-                  ng-options="report.name as report.label for report in vm.reports"
+                  ng-options="report.name as report.label group by report.group for report in vm.reports"
                   ng-model="vm.report"
                   required
                   ng-change="vm.onReportChanged()">
