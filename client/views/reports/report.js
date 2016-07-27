@@ -43,7 +43,7 @@
 
 
     function setUrlPrefix(url, height) {
-      self.urlPrefix = $sce.trustAsHtml('<iframe id="billIframe" src="'
+      self.urlPrefix = $sce.trustAsHtml('<iframe id="reportIframe" src="'
       + url + '"  style="height:' + height + 'px;width:100%;border:none"' +
       '></iframe>');
     }
@@ -51,7 +51,7 @@
     $scope.$on('$destroy', function () {
       //window.removeEventListener('message', eventListener, false);
       // clear the iframe
-      var iframe = angular.element('#reportframe');
+      var iframe = angular.element('#reportIframe');
       if (iframe && iframe.length > 0) {
         iframe[0].src = "javascript:void(0);";
       }
