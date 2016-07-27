@@ -1,0 +1,59 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> Reports </strong>
+      <!--<ba-help-link key="reports" with-text="false"></ba-help-link>-->
+    </div>
+    <div class="panel-body">
+      <form name="vm.reportForm" insert-at-caret novalidate>
+        <div class="row">
+        <div class="col-sm-2">
+          <label>Report</label>
+          <select class="form-control"
+                  ng-options="report.name as report.label group by report.group for report in vm.reports"
+                  ng-model="vm.report"
+                  required
+                  ng-change="vm.onReportChanged()">
+            <option value="" disabled selected>Select Report...</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label>Default Values</label>
+          <select class="form-control"
+                  ng-options="date.value as date.label for date in vm.dateParams"
+                  ng-model="vm.dateParam"
+                  required
+                  ng-change="vm.onDateParamChanged()">
+            <option value="" disabled selected>Select Date...</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+            <label>Start date</label>
+            <input type="date" class="form-control" ng-model="vm.startDate"
+                   min="{{'2016-06-01' | date:'yyyy-MM-dd'}}"
+                   ng-disabled="vm.dateParam!='custom'"/>
+        </div>
+        <div class="col-sm-2">
+            <label>End date</label>
+            <input type="date" class="form-control" ng-model="vm.endDate"
+                   ng-disabled="vm.dateParam!='custom'"/>
+        </div>
+        <div class="col-sm-2">
+          <label>&nbsp;</label>
+          <button class="btn btn-primary form-control"
+                  ladda="rules.saving"
+                  data-style="expand-right"
+                  ng-disabled="vm.reportForm.$invalid"
+                  ng-click="vm.runReport()">
+          Run Report
+          </button>
+        </div>
+      </div>
+      </form>
+      <div ng-bind-html="vm.urlPrefix"></div>
+      <!--<iframe id="ddd" src="https://backand-test.chargebeeportal.com/portal/access/3syfucd9h1zYVtkzLs16LnNxBmmHVMQIh"-->
+              <!--style="height:778px;width:100%;border: none"></iframe>-->
+    </div>
+
+  </section>
+</section>
