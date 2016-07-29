@@ -102,11 +102,20 @@
         parameters['$$debug$$'] =  true;
       }
 
+      // Filter empty params
+      var filteredParams = {};
+
+      for (var paramKey in parameters) {
+        if (parameters[paramKey] != "") {
+          filteredParams[paramKey] = parameters[paramKey]
+        }
+      }
+
       if (tableName === 'backandUsers' && actionType === 'Create') {
         return encodeURI(
           CONSTS.appUrl +
           self.addUserUrl +
-          (debug ? '?parameters=' + JSON.stringify(parameters) : ''));
+          (debug ? '?parameters=' + JSON.stringify(filteredParams) : ''));
       }
 
       var rowId = test.rowId || '';
@@ -124,8 +133,8 @@
       return encodeURI(uri +
         ((onDemand || debug) ? '?' : '') +
         ( onDemand ? 'name=' + rule.name : '') +
-        ((onDemand && !_.isEmpty(parameters)) ? '&' : '') +
-        (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
+        ((onDemand && !_.isEmpty(filteredParams)) ? '&' : '') +
+        (!_.isEmpty(filteredParams) ? 'parameters=' + JSON.stringify(filteredParams) : ''));
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData, debug) {
