@@ -98,24 +98,12 @@
     self.getTestUrl = function (rule, test, actionType, tableName, debug, fromGetHttp) {
       var onDemand = actionType === 'On Demand';
       var parameters = angular.copy(test.parameters);
-      if (debug) {
-        parameters['$$debug$$'] =  true;
-      }
-
-      // Filter empty params
-      var filteredParams = {};
-
-      for (var paramKey in parameters) {
-        if (parameters[paramKey] != "") {
-          filteredParams[paramKey] = parameters[paramKey]
-        }
-      }
 
       if (tableName === 'backandUsers' && actionType === 'Create') {
         return encodeURI(
           CONSTS.appUrl +
           self.addUserUrl +
-          (debug ? '?parameters=' + JSON.stringify(filteredParams) : ''));
+          (debug ? '?parameters=' + JSON.stringify(parameters) : ''));
       }
 
       var rowId = test.rowId || '';
@@ -133,8 +121,8 @@
       return encodeURI(uri +
         ((onDemand || debug) ? '?' : '') +
         ( onDemand ? 'name=' + rule.name : '') +
-        ((onDemand && !_.isEmpty(filteredParams)) ? '&' : '') +
-        (!_.isEmpty(filteredParams) ? 'parameters=' + JSON.stringify(filteredParams) : ''));
+        ((onDemand && !_.isEmpty(parameters)) ? '&' : '') +
+        (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData, debug) {
@@ -169,6 +157,8 @@
         }
       }
 
+      test.parameters = getFilteredParams(test.parameters);
+
       var http = {
         method: method,
         url : self.getTestUrl(rule, test, actionType, tableName, debug, true)
@@ -181,6 +171,10 @@
         };
 
         http.config = {ignoreError: true};
+      } else {
+        http.params = {
+          $$debug$$: true
+        }
       }
 
       if (actionType === 'Create' || actionType === 'Update') {
@@ -197,6 +191,19 @@
 
       return http;
     };
+
+    function getFilteredParams(parameters) {
+      // Filter empty params
+      var filteredParams = {};
+
+      for (var paramKey in parameters) {
+        if (parameters[paramKey] != "") {
+          filteredParams[paramKey] = parameters[paramKey]
+        }
+      }
+
+      return filteredParams;
+    }
 
   }
 
