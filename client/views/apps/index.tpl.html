@@ -93,7 +93,8 @@
                 class="btn btn-default col-sm-6 pull-left"
                 style="margin-left: -5px;"
                 data-spinner-color="#000000"
-                test-hook="apps.app-panel.manage-button">
+                test-hook="apps.app-panel.manage-button"
+                ng-disabled="!index.isExampleApp() && app.DatabaseStatus != 1">
                 {{index.getAppManageTitle(app)}}
             </button>
             <button
