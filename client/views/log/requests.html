@@ -1,0 +1,38 @@
+<section class="page-form-ele page ng-scope">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> {{vm.title}} </strong>
+      <!--<ba-help-link key="{{vm.helpKey}}" with-text="false"></ba-help-link>-->
+      <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
+    </div>
+    <div class="panel-body">
+      <fieldset class="collapsible-fieldset"
+                ng-class="{'fieldset-open': vm.showFilter, 'fieldset-closed': !vm.showFilter}">
+
+        <legend ng-click="vm.toggleShowFilter()">
+          <a href="">
+            Filter Log</a>
+        </legend>
+
+        <div ng-show="log.showFilter">
+
+          <bknd-filter-form query="vm.filterQuery"
+                            fields="vm.filterOptions.fields"
+                            operators="vm.filterOptions.operators"
+                            no-repeat="true"
+                            disable-value="vm.disableValue"
+                            on-submit="vm.filterData()">
+          </bknd-filter-form>
+
+        </div>
+      </fieldset>
+
+      <!-- Data Grid -->
+
+      <div id="requestGrid" ui-grid="vm.gridOptions" class="grid"></div>
+      <div ng-show="vm.gridOptions.totalItems == 0">
+        <h3>No Requests</h3>
+      </div>
+    </div>
+  </section>
+</section>
