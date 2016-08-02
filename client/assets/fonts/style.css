@@ -23,7 +23,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
+.icon-icon-reports:before {
+    content: "\e908";
+}
+.icon-icon-analtyics:before {
+    content: "\e909";
+}
 .icon-stroage2:before {
     content: "\e904";
 }

@@ -23,6 +23,12 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.ba-icon-icon-reports:before {
+    content: "\e908";
+}
+.ba-icon-icon-analtyics:before {
+    content: "\e909";
+}
 .ba-icon-icon-storage:before {
     content: "\e904";
 }
