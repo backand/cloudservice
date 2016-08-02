@@ -25,6 +25,11 @@
         url: '/console',
         controller: 'LogActivity as log',
         templateUrl: 'views/log/activity.html'
+      })      
+      .state('log.requests', {
+        url: '/requests',
+        controller: 'RequestsLog as vm',
+        templateUrl: 'views/log/requests.html'
       })
   }
 
