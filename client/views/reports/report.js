@@ -8,21 +8,21 @@
     var height = "678";
 
     self.reports = [
-      {name: "daily_active_identified_users", label: "Daily Active Identified Users", group:"Activity"},
-      {name: "weekly_active_identified_users", label: "Weekly Active Identified Users", group:"Activity"},
-      {name: "monthly_active_identified_users", label: "Monthly Active Identified Users", group:"Activity"},
-      {name: "users_by_country", label: "Users by Country", group:"Activity"},
-      {name: "daily_active_devices", label: "Daily Active Devices", group:"Activity"},
-      {name: "weekly_active_devices", label: "Weekly Active Devices", group:"Activity"},
-      {name: "monthly_active_devices", label: "Monthly Active Devices", group:"Activity"},
-      {name: "devices_by_country", label: "Devices by Country", group:"Activity"},
-      {name: "backand_compute", label: "Backand Compute", group:"Performance"},
-      {name: "cache_memory", label: "Cache Memory", group:"Performance"},
-      {name: "requests_per_second", label: "Requests Per Second", group:"Performance"},
-      {name: "data_hosting", label: "Data Hosting", group:"Performance"},
-      {name: "database_size", label: "Database Size", group:"Performance"},
-      {name: "most_active_users", label: "Most Active Users", group:"Performance"},
-      {name: "slow_requests", label: "Slow Requests", group:"Performance"}
+      {name: "devices_by_country", label: "Devices by Country", group:"- Activity"},
+      {name: "daily_active_devices", label: "Daily Active Devices", group:"- Activity"},
+      {name: "weekly_active_devices", label: "Weekly Active Devices", group:"- Activity"},
+      {name: "monthly_active_devices", label: "Monthly Active Devices", group:"- Activity"},
+      {name: "users_by_country", label: "Registered Users by Country", group:"- Activity"},
+      {name: "daily_active_identified_users", label: "Daily Active Registered Users", group:"- Activity"},
+      {name: "weekly_active_identified_users", label: "Weekly Active Registered Users", group:"- Activity"},
+      {name: "monthly_active_identified_users", label: "Monthly Active Registered Users", group:"- Activity"},
+      {name: "most_active_users", label: "Top Active Registered Users", group:"- Performance"},
+      {name: "slow_requests", label: "Slow Requests", group:"- Performance"},
+      {name: "backand_compute", label: "Backand Compute", group:"- Usage"},
+      {name: "cache_memory", label: "Cache Memory", group:"- Usage"},
+      {name: "requests_per_second", label: "Requests Per Second", group:"- Usage"},
+      {name: "data_hosting", label: "Data Hosting", group:"- Usage"},
+      {name: "database_size", label: "Database Size", group:"- Usage"}
     ];
 
     self.dateParams = [
@@ -36,7 +36,7 @@
       {value: "custom", label: "Custom..."}
     ];
 
-    self.report = "";
+    self.report = "devices_by_country";
     self.todaysDate = today();
 
     self.dateParam = "last7days";
