@@ -98,9 +98,6 @@
     self.getTestUrl = function (rule, test, actionType, tableName, debug, fromGetHttp) {
       var onDemand = actionType === 'On Demand';
       var parameters = angular.copy(test.parameters);
-      if (debug) {
-        parameters['$$debug$$'] =  true;
-      }
 
       if (tableName === 'backandUsers' && actionType === 'Create') {
         return encodeURI(
@@ -160,6 +157,8 @@
         }
       }
 
+      test.parameters = getFilteredParams(test.parameters);
+
       var http = {
         method: method,
         url : self.getTestUrl(rule, test, actionType, tableName, debug, true)
@@ -172,6 +171,10 @@
         };
 
         http.config = {ignoreError: true};
+      } else {
+        http.params = {
+          $$debug$$: true
+        }
       }
 
       if (actionType === 'Create' || actionType === 'Update') {
@@ -188,6 +191,19 @@
 
       return http;
     };
+
+    function getFilteredParams(parameters) {
+      // Filter empty params
+      var filteredParams = {};
+
+      for (var paramKey in parameters) {
+        if (parameters[paramKey] != "") {
+          filteredParams[paramKey] = parameters[paramKey]
+        }
+      }
+
+      return filteredParams;
+    }
 
   }
 
