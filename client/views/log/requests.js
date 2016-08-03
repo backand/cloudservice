@@ -7,8 +7,13 @@
     self.title= '';
     self.sort = '[{fieldName:"Time", order:"desc"}]';
     self.showFilter = true;
-    self.lastQuery = [];
+    self.filter = "Request = '/1/query/data/getLatestReactions'";
 
+    self.paginationOptions = {
+      pageNumber: 1,
+      pageSize: 100,
+      pageSizes: [100,500, 1000]
+    };
 
     /**
      * init the data
@@ -18,13 +23,11 @@
       if(isRequests){
         self.title = 'API Requests';
         self.helpKey = 'logConfiguration';
-        self.names = {ViewName: 'Entity', PK:'Entity Name / Id', FieldName: 'Property Name', Action: 'Event'};
       }
       else {
       }
 
       setGridOptions();
-      getFilterOptions();
     }());
 
     function setGridOptions () {
@@ -67,71 +70,13 @@
     };
 
     self.toggleShowFilter = function () {
-      if (self.filterReady) {
-        self.showFilter = !self.showFilter;
-      }
+      self.showFilter = !self.showFilter;
     };
-
-    <!-- Filter -->
-
-    self.disableValue = function (operator) {
-      return ['empty', 'notEmpty'].indexOf(operator) > -1;
-    };
-
-    function filterValid (item) {
-      return item.field
-          && item.operator
-          && (item.value || self.disableValue(item.operator));
-    }
-
-    self.filterData = function () {
-
-      usSpinnerService.spin("loading");
-
-      var query = _.map(self.filterQuery, function (item) {
-
-        if (filterValid(item)) {
-          return {
-            fieldName: item.field.name,
-            operator: item.operator || 'equals',
-            value: self.disableValue(item.operator) ? '' : item.value || ''
-          };
-        }
-      });
-
-      query = _.compact(query);
-      if (_.isEqual(query, self.lastQuery)) {
-        usSpinnerService.stop("loading");
-        return;
-      }
-      self.lastQuery = query;
-
-      getLog();
-
-    };
-
-    function getFilterOptions () {
-      self.filterOptions = {
-        fields: getFieldsForFilter(),
-        operators: null
-      };
-      self.filterReady = true;
-    }
-
-    function getFieldsForFilter () {
-      return [
-        {name: "Time", "type":"DateTime"},
-        {name: "Request",type:"text"},
-        {name: "Username",type:"text"},
-        {name: "ClientIP",type:"text"}
-      ];
-    }
-
-    <!-- End Filter -->
+    
 
     function getLog() {
       usSpinnerService.spin('loading');
-      AppLogService.getRequestsLog('log',$stateParams.appName, self.lastQuery, self.sort)
+      AppLogService.getRequestsLog('requests',$stateParams.appName, self.filter, self.sort, self.paginationOptions.pageSize)
         .then(logSuccsessHandler, errorHandler);
     }
 

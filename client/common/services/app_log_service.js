@@ -70,7 +70,7 @@
         params: {
           'pageSize': String(size),
           'pageNumber': String(page),
-          'filter' : filterParam,
+          'filter' : String(filterParam),
           'sort' : sort
         }
       });
@@ -91,13 +91,13 @@
       })
     };
 
-    self.getRequestsLog = function (QueryName, appName, filterParam, sort) {
+    self.getRequestsLog = function (QueryName, appName, filterParam, sort, pageSize) {
       return $http({
         method: 'GET',
         url : CONSTS.appUrl + self.REQUESTS_URL + '/' + QueryName,
         headers: { AppName: appName },
         params: {
-          'pageSize': '1000',
+          'pageSize': String(pageSize),
           'filter' : filterParam,
           'sort' : sort
         }

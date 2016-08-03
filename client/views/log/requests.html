@@ -11,19 +11,11 @@
 
         <legend ng-click="vm.toggleShowFilter()">
           <a href="">
-            Filter Log</a>
+            Filter Requests</a>
         </legend>
 
-        <div ng-show="log.showFilter">
-
-          <bknd-filter-form query="vm.filterQuery"
-                            fields="vm.filterOptions.fields"
-                            operators="vm.filterOptions.operators"
-                            no-repeat="true"
-                            disable-value="vm.disableValue"
-                            on-submit="vm.filterData()">
-          </bknd-filter-form>
-
+        <div class="row col-md-5" ng-show="vm.showFilter">
+          <textarea style="width:100%" rows="2" ng-model="vm.filter"></textarea>
         </div>
       </fieldset>
 
@@ -32,6 +24,19 @@
       <div id="requestGrid" ui-grid="vm.gridOptions" class="grid"></div>
       <div ng-show="vm.gridOptions.totalItems == 0">
         <h3>No Requests</h3>
+      </div>
+      <div ng-show="vm.gridOptions.totalItems > 0" class="row">
+        <div class="col-md-5">
+        </div>
+        <div class="col-md-2" style="margin-top:20px;">
+          Page size:
+          <select class="ui-select" ng-model="vm.paginationOptions.pageSize" >
+            <option ng-repeat="size in vm.paginationOptions.pageSizes">{{ ::size}}</option>
+          </select>
+        </div>
+        <div class="col-md-5" style="margin-top:20px;">
+          <span class="pull-right">Showing {{ vm.paginationOptions.pageSize * (vm.paginationOptions.pageNumber-1) +1}} to {{vm.pageMax(vm.paginationOptions.pageSize, vm.paginationOptions.pageNumber, vm.gridOptions.totalItems)}} of {{vm.gridOptions.totalItems}} rows</span>
+        </div>
       </div>
     </div>
   </section>
