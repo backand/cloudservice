@@ -27,7 +27,7 @@
         templateUrl: 'views/log/activity.html'
       })      
       .state('log.requests', {
-        url: '/requests',
+        url: '/requests?q',
         controller: 'RequestsLog as vm',
         templateUrl: 'views/log/requests.html'
       })

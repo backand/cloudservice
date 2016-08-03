@@ -3,7 +3,7 @@
     <div class="panel-heading">
       <strong> {{vm.title}} </strong>
       <!--<ba-help-link key="{{vm.helpKey}}" with-text="false"></ba-help-link>-->
-      <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
+      <div us-spinner spinner-key="loading"></div>
     </div>
     <div class="panel-body">
       <fieldset class="collapsible-fieldset"
@@ -13,15 +13,70 @@
           <a href="">
             Filter Requests</a>
         </legend>
-
-        <div class="row col-md-5" ng-show="vm.showFilter">
-          <textarea style="width:100%" rows="2" ng-model="vm.filter"></textarea>
+        <div ng-show="vm.showFilter">
+          <div class="row">
+            <div class="col-sm-2">
+              <label>Entity Type</label>
+              <select class="form-control"
+                      ng-options="entity.name as entity.label for entity in vm.entities"
+                      ng-model="vm.filterEntityType"
+                      ng-disabled="vm.filterChanged"
+                      ng-change="vm.onFilterChanged()">
+                <option value="" disabled selected>Select Entity...</option>
+              </select>
+            </div>
+            <div class="col-sm-2">
+              <label>Entity Name</label>
+              <input type="text"
+                     class="form-control"
+                     ng-model="vm.filterEntityName"
+                     ng-disabled="vm.filterChanged"
+                     ng-model-options="{debounce: 500}"
+                     ng-change="vm.onFilterChanged()"/>
+            </div>
+            <div class="col-sm-6">
+              <label>&nbsp;</label>
+              <label>
+                * Use Entity Type and Name to filter and/or customized the Filter Condition
+              </label>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="col-sm-10">
+              <label>Filter Condition</label>
+              <div ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
+                   id="whereCondition"
+                   name="whereCondition"
+                   class="form-control ace-action-where"
+                   placeholder=""
+                   ng-model="vm.filter"
+                   style="resize: vertical"
+                   ng-change="vm.onFilterTextChanged()">
+              </div>
+              <span>** Enter filter condition by using 'or' & 'and', e.g. Request='/1/object' and
+                Type='object'</span>
+              <!--<textarea class="request-url"-->
+                        <!--rows="2"-->
+                        <!--ng-model="vm.filter"-->
+                        <!--&gt;</textarea>-->
+            </div>
+            <div class="col-sm-2">
+              <label>&nbsp;</label>
+              <button class="btn btn-primary form-control"
+                      ng-disabled="false"
+                      data-style="expand-right"
+                      ng-click="vm.applyFilter()"
+                      >Apply Filter
+              </button>
+            </div>
+          </div>
         </div>
       </fieldset>
 
       <!-- Data Grid -->
 
-      <div id="requestGrid" ui-grid="vm.gridOptions" class="grid"></div>
+      <div id="requestGrid" ui-grid="vm.gridOptions" class="grid" ui-grid-resize-columns></div>
       <div ng-show="vm.gridOptions.totalItems == 0">
         <h3>No Requests</h3>
       </div>
@@ -30,7 +85,7 @@
         </div>
         <div class="col-md-2" style="margin-top:20px;">
           Page size:
-          <select class="ui-select" ng-model="vm.paginationOptions.pageSize" >
+          <select class="ui-select" ng-model="vm.paginationOptions.pageSize" ng-change="vm.applyFilter()">
             <option ng-repeat="size in vm.paginationOptions.pageSizes">{{ ::size}}</option>
           </select>
         </div>
