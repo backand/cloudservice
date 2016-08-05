@@ -10,7 +10,7 @@
               <div class="group-inner">
                 <div class="form-group form-group-half">
                   <label class="strong" for="jsonName">Name</label>
-                  <input ng-disabled="field.advancedLayout.delete" type="text" class="form-control" id="jsonName"
+                  <input ng-disabled="true" type="text" class="form-control" id="jsonName"
                          ng-model="field.name">
                   <div class="field-description">The name of the field for any JSON representation</div>
                 </div>
@@ -66,40 +66,40 @@
               </div><!--group inner-->
 
             </div><!--field-group-->
-            <div class="field-group">
-              <h4 class="group-label">Server Side Validation</h4>
-              <div class="group-inner">
+            <!--<div class="field-group">-->
+              <!--<h4 class="group-label">Server Side Validation</h4>-->
+              <!--<div class="group-inner">-->
 
-                <div class="form-group form-group-half" ng-show="field.type=='Numeric'">
-                  <label class="strong" for="minVal">Min Value</label>
-                  <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="minVal"
-                         ng-model="field.advancedLayout.minimumValue">
-                  <div class="field-description">The minimum value of the field</div>
-                </div>
-                <div class="form-group form-group-half" ng-show="field.type=='Numeric'">
-                  <label class="strong" for="maxVal">Max Value</label>
-                  <input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="maxVal"
-                         ng-model="field.advancedLayout.maximumValue">
-                  <div class="field-description">The maximum value of the field</div>
-                </div>
-                <!--<div class="form-group" ng-show="field.type=='DateTime'">-->
-                  <!--<label class="strong" for="Format">Format</label>-->
-                  <!--<input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="Format"-->
-                         <!--ng-model="field.advancedLayout.format">-->
-                  <!--<div class="field-description">Date or number format to be forced in the server side</div>-->
+                <!--<div class="form-group form-group-half" ng-show="field.type=='Numeric'">-->
+                  <!--<label class="strong" for="minVal">Min Value</label>-->
+                  <!--<input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="minVal"-->
+                         <!--ng-model="field.advancedLayout.minimumValue">-->
+                  <!--<div class="field-description">The minimum value of the field</div>-->
                 <!--</div>-->
-                <div class="form-group form-group-half">
-                  <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeUpdate" type="checkbox" ng-model="field.advancedLayout.excludeInUpdate" checked=""><i></i></label>
-                  <label class="strong" for="ExcludeUpdate">Exclude in Update</label>
-                  <div class="field-description">Use the field in any server side rule but don't save to the database when updating a row</div>
-                </div>
-                <div class="form-group form-group-half">
-                  <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeInsert" type="checkbox" ng-model="field.advancedLayout.excludeInInsert" checked=""><i></i></label>
-                  <label class="strong" for="ExcludeInsert">Exclude in Create</label>
-                  <div class="field-description">Use the field in any server side rule but don't save to the database when creating new row</div>
-                </div>
-              </div>
-            </div>
+                <!--<div class="form-group form-group-half" ng-show="field.type=='Numeric'">-->
+                  <!--<label class="strong" for="maxVal">Max Value</label>-->
+                  <!--<input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="maxVal"-->
+                         <!--ng-model="field.advancedLayout.maximumValue">-->
+                  <!--<div class="field-description">The maximum value of the field</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="form-group" ng-show="field.type=='DateTime'">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<label class="strong" for="Format">Format</label>&ndash;&gt;-->
+                  <!--&lt;!&ndash;<input ng-disabled="field.advancedLayout.delete"  type="text" class="form-control" id="Format"&ndash;&gt;-->
+                         <!--&lt;!&ndash;ng-model="field.advancedLayout.format">&ndash;&gt;-->
+                  <!--&lt;!&ndash;<div class="field-description">Date or number format to be forced in the server side</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--<div class="form-group form-group-half">-->
+                  <!--<label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeUpdate" type="checkbox" ng-model="field.advancedLayout.excludeInUpdate" checked=""><i></i></label>-->
+                  <!--<label class="strong" for="ExcludeUpdate">Exclude in Update</label>-->
+                  <!--<div class="field-description">Use the field in any server side rule but don't save to the database when updating a row</div>-->
+                <!--</div>-->
+                <!--<div class="form-group form-group-half">-->
+                  <!--<label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="ExcludeInsert" type="checkbox" ng-model="field.advancedLayout.excludeInInsert" checked=""><i></i></label>-->
+                  <!--<label class="strong" for="ExcludeInsert">Exclude in Create</label>-->
+                  <!--<div class="field-description">Use the field in any server side rule but don't save to the database when creating new row</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
             <!--<div class="row">
               <div class="form-group col-md-6" ng-show="field.type=='ShortText' || field.type=='LongText'">
                 <label for="minLen">Min Length</label>
@@ -134,15 +134,15 @@
               <!--<label  for="EnableUpload">Enable Upload</label>-->
               <!--<label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input ng-disabled="field.advancedLayout.delete"  id="EnableUpload" type="checkbox" ng-model="field.EnableUpload" checked=""><i></i></label>-->
             <!--</div>-->
-            <div class="field-group">
-              <div class="group-inner">
-                <div class="form-group">
-                  <label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.advancedLayout.delete" checked=""><i></i></label>
-                  <label class="strong" for="excluded">Ignore this field</label>
-                  <div class="field-description">When true, this field will be ignored by any server-side actions</div>
-                </div>
-              </div>
-            </div>
+            <!--<div class="field-group">-->
+              <!--<div class="group-inner">-->
+                <!--<div class="form-group">-->
+                  <!--<label class="pull-right ui-switch ui-switch-success ui-switch-sm"><input id="excluded" type="checkbox"  ng-model="field.advancedLayout.delete" checked=""><i></i></label>-->
+                  <!--<label class="strong" for="excluded">Ignore this field</label>-->
+                  <!--<div class="field-description">When true, this field will be ignored by any server-side actions</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
           </form>
         </tab>
       </tabset>

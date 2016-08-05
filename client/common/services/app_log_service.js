@@ -5,6 +5,7 @@
 
     var self = this;
     self.LOG_URL = '/1/table/data/durados_Log';
+    self.REQUESTS_URL = '/1/log';
     self.HISTORY_URL = '/1/table/data/durados_v_ChangeHistory';
 
     self.getAppLog = function (appName, size, page, filterParam, sort) {
@@ -69,7 +70,7 @@
         params: {
           'pageSize': String(size),
           'pageNumber': String(page),
-          'filter' : filterParam,
+          'filter' : String(filterParam),
           'sort' : sort
         }
       });
@@ -86,6 +87,19 @@
           'filter' : '[{"fieldName":"LogType", "operator":"greaterThanOrEqualsTo","value":"500"},' +
             '{"fieldName":"Guid", "operator":"equals","value":"' + guid + '"}]',
           'sort' : '[{fieldName:"ID", order:"desc"}]'
+        }
+      })
+    };
+
+    self.getRequestsLog = function (QueryName, appName, filterParam, sort, pageSize) {
+      return $http({
+        method: 'GET',
+        url : CONSTS.appUrl + self.REQUESTS_URL + '/' + QueryName,
+        headers: { AppName: appName },
+        params: {
+          'pageSize': String(pageSize),
+          'filter' : filterParam,
+          'sort' : sort
         }
       })
     };
