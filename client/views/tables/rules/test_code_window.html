@@ -121,7 +121,14 @@
     <br/><br/>
     <label>Response Body:</label>
     <br/>
-    <bknd-copy-url type="textarea" copy-url-params="rules.copyResult"></bknd-copy-url>
+    <div ui-ace="{theme:'dawn', mode: 'json'}"
+         type="text"
+         class="form-control"
+         rows="10"
+         ng-readonly="true"
+         ng-model="rules.test.result"
+         style="resize: vertical; height: 200px;">
+    </div>
     <br/>
   </div>
 
