@@ -1,6 +1,6 @@
 (function () {
 
-  function RequestsLog($stateParams, $state, $log, NotificationService, AppLogService, $scope, ConfirmationPopup, usSpinnerService, $timeout) {
+  function RequestsLog($stateParams, $state, $log, NotificationService, AppLogService, $scope, ConfirmationPopup, usSpinnerService, uiGridConstants) {
 
     var self = this;
     var isRequests;
@@ -9,26 +9,14 @@
     self.sort = '[{fieldName:"Time", order:"desc"}]';
     self.showFilter = true;
     self.filter = "";// "Request = '/1/query/data/getLatestReactions'";
-    self.filterChanged = false;
-    self.filterEntityType = "";
-    self.filterEntityName = "";
-
-    self.entities = [
-      {name: "all", label:"All"},
-      {name: "object", label:"Object"},
-      {name: "action", label:"Action"},
-      {name: "query", label:"Query"},
-      {name: "other", label:"Other"}
-    ];
+    self.customizeFilter = false;
+    self.refreshOnce = false;
+    
     self.paginationOptions = {
       pageNumber: 1,
       pageSize: 100,
       pageSizes: [100,500, 1000]
     };
-
-    if($stateParams.q != null){
-      self.filter = $stateParams.q;
-    }
 
     /**
      * init the data
@@ -45,18 +33,56 @@
       setGridOptions();
     }());
 
+    //Guid,Request,Type,ObjectName,QueryName,ActionName,Username,ClientIP,Time,Refferer, Duration,Method,LogMessage,ExceptionMessage ,Trace
+
     function setGridOptions () {
       self.gridOptions = {
         enablePaginationControls: false,
         useExternalSorting: true,
+        useExternalFiltering: true,
+        enableFiltering: true,
         columnDefs: [
-          {name: 'Guid'},
+          {name: 'Guid',
+            minWidth: 120,
+            filter:{
+              term: $stateParams.q
+            }
+          },
+          {name: 'Time', type:"date", sort: {direction: 'desc', priority: 0}
+            // ,cellFilter: 'date:"MM/dd/yyyy"',
+            // filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><input type="datetime" ng-model="colFilter.term" style="font-size:12px"/></div>',
+            // filters:
+            // [
+            //   {
+            //     filterName: "greaterThan",
+            //     condition: uiGridConstants.filter.GREATER_THAN,
+            //     placeholder: 'greater than'
+            //   },
+            //   {
+            //     filterName: "lessThan",
+            //     condition: uiGridConstants.filter.LESS_THAN,
+            //     placeholder: 'less than'
+            //   }
+            // ]
+          },
           {name: 'Request'},
+          {name: 'Type',
+            filter: {
+              type: uiGridConstants.filter.SELECT,
+              selectOptions: [{value: 'object', label: 'Object'}, {value: 'query', label: 'Query'}, {value: 'action',label: 'Action'}]
+            }
+          },
+          {name: 'ObjectName', displayName:"ObjectName", minWidth: 80},
+          {name: 'QueryName', displayName: "QueryName", minWidth: 80},
+          {name: 'ActionName', displayName:"ActionName"},
+          {name: 'Method'},
           {name: 'Username'},
-          {name: 'ClientIP'},
-          {name: 'Time', sort: {direction: 'desc', priority: 0}},
+          {name: 'ClientIP', displayName: "ClientIP"},
           {name: 'Refferer'},
-          {name: 'Duration'}
+          {name: 'Duration'},
+          {name: 'LogMessage', displayName:"LogMessage"},
+          {name: 'ExceptionMessage', displayName: "ExceptionMessage"},
+          {name: 'Trace'}
         ],
         onRegisterApi: function (gridApi) {
           $scope.gridApi = gridApi;
@@ -69,7 +95,26 @@
             self.sort = '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]';
             getLog();
           });
+
+          $scope.gridApi.core.on.filterChanged($scope, function () {
+            self.buildFilter();
+          });
         }
+      };
+
+      self.buildFilter = function(){
+        self.filter = "";
+        angular.forEach($scope.gridApi.grid.columns, function (column) {
+
+          var value = column.filters[0].term;
+          if(value) {
+            if (self.filter != "")
+              self.filter += " and ";
+
+            self.filter += column.name + " = '" + value + "'";
+
+          }
+        });
       };
 
       self.gridOptions.columnDefs.forEach(function (columnDef) {
@@ -79,6 +124,11 @@
           columnDef.cellTemplate = '<div class="ui-grid-cell-contents ng-binding ng-scope"><a href="" ng-click="grid.appScope.vm.filterOnGuid(COL_FIELD, col)">{{COL_FIELD}}</a></div>';
       });
 
+      //q is only for guid
+      if($stateParams.q != null){
+        self.filter = "guid='"+$stateParams.q + "'";
+      }
+
       getLog();
     }
 
@@ -87,42 +137,18 @@
     };
 
     self.filterOnGuid = function(COL_FIELD, col){
-      $state.go('log.requests',{q:"guid='" + COL_FIELD + "'"});
+      $state.go('log.requests',{q:COL_FIELD});
     };
 
     self.toggleShowFilter = function () {
       self.showFilter = !self.showFilter;
     };
     
-    self.onFilterTextChanged = function(){
-      self.filterChanged = (self.filter != "");
-      if(self.filterChanged){
-        self.filterEntityType = "";
-        self.filterEntityName = "";
-      }
-    };
-
-    self.onFilterChanged = function() {
-      if(!self.filterChanged){
-        if(self.filterEntityType != ""){
-          self.filter = "Type = '" + self.filterEntityType + "'";
-        }
-        if(self.filterEntityName != ""){
-          self.filter += " and ";
-          switch (self.filterEntityType){
-            case "object":
-              self.filter += "ObjectName = '" + self.filterEntityName + "'";
-              break;
-            case "action":
-              self.filter += "ActionName = '" + self.filterEntityName + "'";
-              break;
-            case "query":
-              self.filter += "QueryName = '" + self.filterEntityName + "'";
-              break;
-          }
-
-        }
-      }
+    self.filterCustomized = function(status){
+      self.customizeFilter = status;
+      self.gridOptions.enableFiltering = !self.customizeFilter;
+      self.buildFilter();
+      $scope.gridApi.core.notifyDataChange( uiGridConstants.dataChange.ALL );
     };
 
     $scope.ace = {
@@ -151,7 +177,18 @@
     function logSuccsessHandler(data) {
       self.gridOptions.data = data.data.data;
       self.gridOptions.totalItems = self.gridOptions.data.length;
+      setTimeout(refreshGridDisplay(), 1); //fix bug with bootstrap tab and ui grid
       usSpinnerService.stop("loading");
+    }
+
+    function refreshGridDisplay() {
+      if (!self.refreshOnce) {
+        resizeGrid();
+        self.refreshOnce = true;
+      }
+    }
+    function resizeGrid() {
+      setTimeout("$('#grid-container').trigger('resize');", 50);
     }
 
     function errorHandler(error, message) {
@@ -171,7 +208,7 @@
       '$scope',
       'ConfirmationPopup',
       'usSpinnerService',
-      '$timeout',
+      'uiGridConstants',
       RequestsLog
     ]);
 
