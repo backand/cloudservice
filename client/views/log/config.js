@@ -21,11 +21,16 @@
         controller: 'LogActivity as log',
         templateUrl: 'views/log/activity.html'
       })
+      // .state('log.console', {
+      //   url: '/console',
+      //   controller: 'LogActivity as log',
+      //   templateUrl: 'views/log/activity.html'
+      // })  
       .state('log.console', {
-        url: '/console',
-        controller: 'LogActivity as log',
-        templateUrl: 'views/log/activity.html'
-      })      
+        url: '/console?q',
+        controller: 'RequestsLog as vm',
+        templateUrl: 'views/log/requests.html'
+      })
       .state('log.requests', {
         url: '/requests?q',
         controller: 'RequestsLog as vm',

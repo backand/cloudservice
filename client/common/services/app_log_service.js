@@ -70,7 +70,7 @@
         params: {
           'pageSize': String(size),
           'pageNumber': String(page),
-          'filter' : String(filterParam),
+          'filter' : filterParam,
           'sort' : sort
         }
       });

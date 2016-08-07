@@ -3,7 +3,6 @@
   function RequestsLog($stateParams, $state, $log, NotificationService, AppLogService, $scope, ConfirmationPopup, usSpinnerService, uiGridConstants) {
 
     var self = this;
-    var isRequests;
     self.loading = false;
     self.title= '';
     self.sort = '[{fieldName:"Time", order:"desc"}]';
@@ -22,13 +21,17 @@
      * init the data
      */
     (function init() {
-      isRequests = ($state.$current.url.source.indexOf('/requests') == -1);
-      if(isRequests){
+      if($state.$current.url.source.indexOf('/log/requests') > -1){
         self.title = 'API Requests';
         self.helpKey = 'logConfiguration';
+        self.addFilter = '';
       }
-      else {
+      else if ($state.$current.url.source.indexOf('/log/console') > -1){
+        self.title = 'Log Messages';
+        self.helpKey = 'logConfiguration';
+        self.addFilter = 'LogMessage <> ""';
       }
+
 
       setGridOptions();
     }());
@@ -137,7 +140,7 @@
     };
 
     self.filterOnGuid = function(COL_FIELD, col){
-      $state.go('log.requests',{q:COL_FIELD});
+      $state.go($state.current.name,{q:COL_FIELD});
     };
 
     self.toggleShowFilter = function () {
@@ -170,7 +173,9 @@
     
     function getLog() {
       usSpinnerService.spin('loading');
-      AppLogService.getRequestsLog('requests',$stateParams.appName, self.filter, self.sort, self.paginationOptions.pageSize)
+      var lFilter = (self.filter == "") ? self.addFilter : (self.addFilter == "") ? self.filter : self.addFilter + " and (" + self.filter + ")";
+
+      AppLogService.getRequestsLog('requests',$stateParams.appName, lFilter, self.sort, self.paginationOptions.pageSize)
         .then(logSuccsessHandler, errorHandler);
     }
 
