@@ -10,7 +10,7 @@
     self.filter = "";// "Request = '/1/query/data/getLatestReactions'";
     self.customizeFilter = false;
     self.refreshOnce = false;
-    
+
     self.paginationOptions = {
       pageNumber: 1,
       pageSize: 100,
@@ -50,12 +50,12 @@
         enableFiltering: true,
         columnDefs: [
           {name: 'Guid',
-            minWidth: 120,
+            minWidth: 300,
             filter:{
               term: $stateParams.q
             }
           },
-          {name: 'Time', type:"date", sort: {direction: 'desc', priority: 0}
+          {name: 'Time', type:"date", minWidth: 180, sort: {direction: 'desc', priority: 0}
             // ,cellFilter: 'date:"MM/dd/yyyy"',
             // filterHeaderTemplate: '<div class="ui-grid-filter-container" ng-repeat="colFilter in col.filters"><input type="datetime" ng-model="colFilter.term" style="font-size:12px"/></div>',
             // filters:
@@ -72,24 +72,25 @@
             //   }
             // ]
           },
-          {name: 'Request'},
-          {name: 'LogMessage', displayName:"LogMessage"},
+          {name: 'Request', minWidth: 200},
+          {name: 'LogMessage', displayName:"LogMessage", minWidth: 200},
           {name: 'Type',
             filter: {
               type: uiGridConstants.filter.SELECT,
               selectOptions: [{value: 'object', label: 'Object'}, {value: 'query', label: 'Query'}, {value: 'action',label: 'Action'}]
-            }
+            },
+            minWidth: 100
           },
-          {name: 'ObjectName', displayName:"ObjectName", minWidth: 80},
-          {name: 'QueryName', displayName: "QueryName", minWidth: 80},
-          {name: 'ActionName', displayName:"ActionName"},
-          {name: 'Method'},
-          {name: 'Username'},
-          {name: 'ClientIP', displayName: "ClientIP"},
-          {name: 'Refferer'},
-          {name: 'Duration'},
-          {name: 'ExceptionMessage', displayName: "ExceptionMessage"},
-          {name: 'Trace'}
+          {name: 'ObjectName', displayName:"ObjectName", minWidth: 110},
+          {name: 'QueryName', displayName: "QueryName", minWidth: 110},
+          {name: 'ActionName', displayName:"ActionName", minWidth: 110},
+          {name: 'Method', minWidth: 80},
+          {name: 'Username', minWidth: 200},
+          {name: 'ClientIP', displayName: "ClientIP", minWidth: 120},
+          {name: 'Refferer', minWidth: 200},
+          {name: 'Duration', minWidth: 80},
+          {name: 'ExceptionMessage', displayName: "ExceptionMessage", minWidth: 140},
+          {name: 'Trace', minWidth: 120}
         ],
         onRegisterApi: function (gridApi) {
           $scope.gridApi = gridApi;
@@ -150,7 +151,7 @@
     self.toggleShowFilter = function () {
       self.showFilter = !self.showFilter;
     };
-    
+
     self.filterCustomized = function(status){
       self.customizeFilter = status;
       self.gridOptions.enableFiltering = !self.customizeFilter;
@@ -174,7 +175,7 @@
     self.applyFilter = function(){
       getLog();
     };
-    
+
     function getLog() {
       usSpinnerService.spin('loading');
       var lFilter = (self.filter == "") ? self.addFilter : (self.addFilter == "") ? self.filter : self.addFilter + " and (" + self.filter + ")";
