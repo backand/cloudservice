@@ -27,9 +27,13 @@
         self.addFilter = '';
       }
       else if ($state.$current.url.source.indexOf('/log/console') > -1){
-        self.title = 'Log Messages';
+        self.title = 'Console Log Messages';
         self.helpKey = 'logConfiguration';
         self.addFilter = 'LogMessage <> ""';
+      } else if ($state.$current.url.source.indexOf('/log/exception') > -1){
+        self.title = 'Server Side Exceptions';
+        self.helpKey = 'logConfiguration';
+        self.addFilter = 'ExceptionMessage <> ""';
       }
 
 
@@ -69,6 +73,7 @@
             // ]
           },
           {name: 'Request'},
+          {name: 'LogMessage', displayName:"LogMessage"},
           {name: 'Type',
             filter: {
               type: uiGridConstants.filter.SELECT,
@@ -83,7 +88,6 @@
           {name: 'ClientIP', displayName: "ClientIP"},
           {name: 'Refferer'},
           {name: 'Duration'},
-          {name: 'LogMessage', displayName:"LogMessage"},
           {name: 'ExceptionMessage', displayName: "ExceptionMessage"},
           {name: 'Trace'}
         ],

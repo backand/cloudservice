@@ -17,15 +17,10 @@
         templateUrl: 'views/log/log.html'
       })
       .state('log.exception', {
-        url: '/exception',
-        controller: 'LogActivity as log',
-        templateUrl: 'views/log/activity.html'
+        url: '/exception?q',
+        controller: 'RequestsLog as vm',
+        templateUrl: 'views/log/requests.html'
       })
-      // .state('log.console', {
-      //   url: '/console',
-      //   controller: 'LogActivity as log',
-      //   templateUrl: 'views/log/activity.html'
-      // })  
       .state('log.console', {
         url: '/console?q',
         controller: 'RequestsLog as vm',
