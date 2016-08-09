@@ -1006,11 +1006,15 @@
     }
 
     function getTestUrl() {
-      return self.testUrl;
+      // return the test url for display WITHOUT DEBUG PARAM
+      // If the parameters object is empty it omits the object from the url
+      return self.testUrl.replace('%22$$debug$$%22:true', '').replace('&parameters=%7B%7D', '');
     }
 
     function getTestHttp() {
-      return self.testHttp;
+      // return the test $http for display WITHOUT DEBUG PARAM
+      // If the parameters object is empty it omits the object from the $http example
+      return self.testHttp.replace('%22$$debug$$%22:true', '').replace('&parameters=%7B%7D', '');
     }
 
     function getResultUrl() {
