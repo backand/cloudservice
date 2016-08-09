@@ -2,7 +2,7 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> {{vm.title}} </strong>
-      <!--<ba-help-link key="{{vm.helpKey}}" with-text="false"></ba-help-link>-->
+      <ba-help-link key="logConfiguration" with-text="false"></ba-help-link>
       <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     </div>
     <div class="panel-body" id="grid-container">
@@ -64,7 +64,8 @@
         </div>
       </div>
       <div class="row" style="margin-left: 1px; margin-top: 20px;">
-        * Data is displayed up to two minutes after the event was received
+        * Data is displayed up to two minutes after the event was received <span ng-if="(vm.viewMode != 'requests')"> or view <a href=""
+                                                                                              ng-click="vm.gotoRealtime()">real-time messages</a></span>
       </div>
     </div>
   </section>

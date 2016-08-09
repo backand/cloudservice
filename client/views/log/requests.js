@@ -10,6 +10,7 @@
     self.filter = "";// "Request = '/1/query/data/getLatestReactions'";
     self.customizeFilter = false;
     self.refreshOnce = false;
+    self.viewMode = "";
 
     self.paginationOptions = {
       pageNumber: 1,
@@ -21,21 +22,26 @@
      * init the data
      */
     (function init() {
-      if($state.$current.url.source.indexOf('/log/requests') > -1){
-        self.title = 'API Requests';
-        self.helpKey = 'logConfiguration';
-        self.addFilter = '';
-      }
-      else if ($state.$current.url.source.indexOf('/log/console') > -1){
-        self.title = 'Console Log Messages';
-        self.helpKey = 'logConfiguration';
-        self.addFilter = 'LogMessage <> ""';
-      } else if ($state.$current.url.source.indexOf('/log/exception') > -1){
-        self.title = 'Server Side Exceptions';
-        self.helpKey = 'logConfiguration';
-        self.addFilter = 'ExceptionMessage <> ""';
-      }
-
+      switch($state.current.name){
+        case "log.requests":
+          self.viewMode = "requests";
+          self.title = 'API Requests';
+          self.helpKey = 'logConfiguration';
+          self.addFilter = '';
+          break;
+        case "log.console":
+          self.viewMode = "console";
+          self.title = 'Console Log Messages';
+          self.helpKey = 'logConfiguration';
+          self.addFilter = 'LogMessage <> ""';
+          break;
+        case "log.exception":
+          self.viewMode = "exception";
+          self.title = 'Server Side Exceptions';
+          self.helpKey = 'logConfiguration';
+          self.addFilter = 'ExceptionMessage <> ""';
+          break;
+      };
 
       setGridOptions();
     }());
@@ -174,6 +180,10 @@
 
     self.applyFilter = function(){
       getLog();
+    };
+
+    self.gotoRealtime = function(){
+      $state.go($state.current.name + "realtime");
     };
 
     function getLog() {

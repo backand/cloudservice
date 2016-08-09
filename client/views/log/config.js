@@ -31,6 +31,16 @@
         controller: 'RequestsLog as vm',
         templateUrl: 'views/log/requests.html'
       })
+      .state('log.exceptionrealtime', {
+        url: '/exception/realtime',
+        controller: 'LogActivity as log',
+        templateUrl: 'views/log/activity.html'
+      })
+      .state('log.consolerealtime', {
+        url: '/console/realtime',
+        controller: 'LogActivity as log',
+        templateUrl: 'views/log/activity.html'
+      })
   }
 
 })();
