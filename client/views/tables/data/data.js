@@ -15,6 +15,7 @@
       '$state',
       'TablesService',
       '$stateParams',
+      '$rootScope',
       ObjectDataController
     ]);
 
@@ -29,7 +30,8 @@
                                 $filter,
                                 $state,
                                 TablesService,
-                                $stateParams) {
+                                $stateParams,
+                                $rootScope) {
 
     var self = this;
 
@@ -40,6 +42,9 @@
     self.httpRequestsLog = DataService.log = [];
     self.showLog = $state.params.showLog === 'false' ? false : $state.params.showLog;
     self.logIndex = DataService.logIndex;
+    $rootScope.$on('SyncSuccess', function () {
+      self.filterData();
+    });
 
     this.paginationOptions = {
       pageNumber: 1,

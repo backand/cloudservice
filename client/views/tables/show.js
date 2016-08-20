@@ -45,6 +45,12 @@
           if($stateParams.sync)
             $rootScope.$broadcast('AppDbReady', self.appName);
 
+          $rootScope.$broadcast('SyncSuccess');
+          usSpinnerService.spin('loading');
+          $state.go($state.current, {}, {reload: true}).then(function () {
+            usSpinnerService.stop('loading');
+          });
+
         }, function (err) {
           self.syncing = false;
           NotificationService.add('error', 'Cannot sync tables');
