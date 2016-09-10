@@ -28,6 +28,7 @@
 
     self.actionTemplateCategories = [
       {id: 5, label: 'Real-time Communication'},
+      {id: 7, label: 'Bot'},
       {id: 6, label: 'Push Notifications'},
       {id: 1, label: 'Email & SMS'},
       {id: 2, label: 'Payment Processing'},
