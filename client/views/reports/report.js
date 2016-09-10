@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ReportController', ['$sce', 'ReportService', '$scope', ReportController]);
+    .controller('ReportController', ['$sce', 'ReportService', '$scope','$state', ReportController]);
 
-  function ReportController($sce, ReportService, $scope) {
+  function ReportController($sce, ReportService, $scope, $state) {
     var self = this;
     var height = "678";
 
@@ -36,7 +36,12 @@
       {value: "custom", label: "Custom..."}
     ];
 
-    self.report = "devices_by_country";
+    if($state.params.id != undefined){
+      self.report = $state.params.id;
+    } else {
+      self.report = "devices_by_country";
+    }
+
     self.todaysDate = today();
 
     self.dateParam = "last7days";
@@ -70,6 +75,8 @@
 
     function setReportUrl(){
       if(self.report != "") {
+        $state.go('analytics.report', {id: self.report}, {notify: false});
+
         ReportService.getReportlUrl(self.report, returnDateOnly(self.startDate), returnDateOnly(self.endDate)).then(function (data) {
           setUrlPrefix(data.data.url, height);
         });
