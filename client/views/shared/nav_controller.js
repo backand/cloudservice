@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams','AnalyticsService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', NavCtrl]);
 
   function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService) {
     var self = this;
@@ -81,6 +81,17 @@
       );
     }
 
+    function fetchCronJobs() {
+      CronService.getAll().then(
+        function (response) {
+          self.cronJobs = response;
+        },
+        function (error) {
+          $log.debug("Error fetching cron jobs", data);
+        }
+      )
+    }
+
     $scope.$on('$stateChangeSuccess', function () {
       self.state = $state.current.name;
       self.appName = $state.params.appName;
@@ -136,15 +147,15 @@
     self.goTo = function ($event, state) {
 
       //track events
-      if(state == "app.billing"){
+      if (state == "app.billing") {
         AnalyticsService.track('BillingLeftMenuBillingPortal', {appName: $state.params.appName});
       }
       //track events
-      if(state == "app.billingupgrade"){
+      if (state == "app.billingupgrade") {
         AnalyticsService.track('BillingLeftMenuBillingUpgrade', {appName: $state.params.appName});
       }
       //track events
-      if(state == "app.billingpayment"){
+      if (state == "app.billingpayment") {
         AnalyticsService.track('BillingLeftMenuBillingPayment', {appName: $state.params.appName});
       }
 
@@ -181,6 +192,12 @@
 
     self.newDbQuery = function ($event) {
       goToState($event, 'dbQueries.newQuery');
+    };
+
+    self.showCronJob = function ($event, job) {
+      var params = {
+        jobId: job.__metadata.id
+      }
     };
 
     self.newObject = function () {
