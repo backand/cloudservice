@@ -58,6 +58,7 @@
     'backand.playground',
     'backand.docs',
     'backand.dbQueries',
+    'backand.cronJobs',
     'ngMessages',
     'pascalprecht.translate',
     'angled-windows.directives',
