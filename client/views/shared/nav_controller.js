@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService) {
+  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService) {
     var self = this;
     self.isTablesClicked = false;
 
@@ -56,6 +56,7 @@
             }
 
             fetchDbQueries();
+            fetchCronJobs();
           }
         },
         function (data) {
@@ -82,12 +83,12 @@
     }
 
     function fetchCronJobs() {
-      CronService.getAll().then(
-        function (response) {
-          self.cronJobs = response;
+      CronService.appName = self.appName;
+      CronService.getAll().then(function (response) {
+          self.cronJobs = response.data.data;
         },
         function (error) {
-          $log.debug("Error fetching cron jobs", data);
+          $log.debug("Error fetching cron jobs", error);
         }
       )
     }

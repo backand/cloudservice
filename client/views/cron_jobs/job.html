@@ -25,6 +25,7 @@
                 <div ng-show="cronJobs.jobForm.name.$error.pattern" class="input-error">no spaces or %$#@^&* allowed
                 </div>
               </div>
+
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea type="text"
@@ -32,15 +33,17 @@
                           class="form-control"
                           id="description"
                           name="description"
-                          ng-model="cronJobs.jobs.description"></textarea>
+                          ng-model="cronJobs.job.description"></textarea>
               </div>
 
               <div class="form-group">
-                <label for="scheduler">Scheduler</label>
-                <input class="form-control"
-                       type="text"
-                       ng-model="cronJobs.job.schedule"
-                       id="scheduler">
+                <h3><label for="scheduler">Scheduler</label></h3>
+                <!--<input class="form-control"-->
+                <!--type="text"-->
+                <!--ng-model="cronJobs.job.schedule"-->
+                <!--id="scheduler">-->
+                <cron-selection ng-model="cronJobs.job.schedule"
+                                id="scheduler"></cron-selection>
               </div>
 
               <div class="form-group">
@@ -57,7 +60,7 @@
                 <div ng-switch-when="Action">
                   <label for="action-chooser">Choose Action:</label>
                   <select class="form-control"
-                          ng-options="action as action.name for action in cronJobs.actions track by action.id"
+                          ng-options="action.iD as action.name for action in cronJobs.actions"
                           id="action-chooser"
                           ng-model="cronJobs.job.entityId">
                   </select>
@@ -66,7 +69,7 @@
                 <div ng-switch-when="Query">
                   <label for="query-chooser">Choose Query:</label>
                   <select class="form-control"
-                          ng-options="query as query.name for query in cronJobs.queries track by query.iD"
+                          ng-options="query.iD as query.name for query in cronJobs.queries"
                           id="query-chooser"
                           ng-model="cronJobs.job.entityId">
                   </select>
@@ -86,7 +89,7 @@
                            ng-model="cronJobs.job.queryString">
                     <label for="headers">Headers</label>
                     <textarea class="form-control"
-                      rows="6"
+                              rows="6"
                               id="headers"
                               ng-model="cronJobs.job.headers"></textarea>
                     <label for="method">Method</label>

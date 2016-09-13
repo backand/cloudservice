@@ -8,14 +8,16 @@
       'DbQueriesService',
       'RulesService',
       'AppsService',
+      'NotificationService',
       CronJobsController]);
 
-  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService) {
+  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService) {
 
     var self = this;
 
     function init() {
       self.appName = AppsService.currentApp.Name;
+      RulesService.appName = self.appName;
       self.types = ['Action', 'Query', 'External'];
       self.namePattern = /^\w+$/;
       self.new = $state.current.name === "cronJobs.new";
@@ -33,20 +35,36 @@
       });
     }
 
-    init();
+    self.saveJob = function () {
+      self.loading = true;
+      CronService.post(self.job).then(function (response) {
+        self.loading = false;
+        console.log(response);
+        NotificationService.add('success', 'Cron job added successfully');
+      },
+      function (error) {
+        self.loading = false;
+      });
+    };
 
     function fetchActions() {
-      RulesService.get().then(function (response) {
-        var a = response.data;
-      });
+      if (!self.actions) {
+        RulesService.get().then(function (response) {
+          self.actions = _.filter(response.data.data, function (action) {
+            return action.dataAction == 'OnDemand';
+          });
+        });
+      }
     }
 
     function fetchQueries() {
-      DbQueriesService.getQueries(self.appName).then(function (response) {
-        if (!self.queries) {
+      if (!self.queries) {
+        DbQueriesService.getQueries(self.appName).then(function (response) {
           self.queries = response;
-        }
-      });
+        });
+      }
     }
+
+    init();
   }
 })();
