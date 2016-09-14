@@ -37,13 +37,14 @@
               </div>
 
               <div class="form-group">
-                <h3><label for="scheduler">Scheduler</label></h3>
+                <label for="scheduler">Scheduler</label>
                 <!--<input class="form-control"-->
                 <!--type="text"-->
                 <!--ng-model="cronJobs.job.schedule"-->
                 <!--id="scheduler">-->
                 <cron-selection ng-model="cronJobs.job.schedule"
-                                id="scheduler"></cron-selection>
+                                id="scheduler"
+                                ng-disabled="!cronJobs.editMode"></cron-selection>
               </div>
 
               <div class="form-group">
@@ -142,13 +143,13 @@
               <button type="button"
                       class="btn btn-success btn-lg btn-w-lg"
                       data-style="expand-right" ladda="cronJobs.loading"
-                      ng-click="cronJobs.editQuery()">Edit
+                      ng-click="cronJobs.editJob()">Edit
               </button>
             </div>
           </form>
 
         </div>
-        <!--<div class="right-col" ng-include="'views/db_queries/query_test.html'"></div>-->
+        <div class="right-col" ng-include="'views/cron_jobs/job_test.html'"></div>
       </div>
     </div>
   </section>

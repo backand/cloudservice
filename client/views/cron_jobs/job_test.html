@@ -1,0 +1,35 @@
+<form>
+  <label>HTTP Request URL:</label>
+  <!--<bknd-copy-url copy-url-params="cronJobs.copyUrlParams"></bknd-copy-url>-->
+  <br/>
+  <label>Request $http:</label>
+  <!--<bknd-copy-url type="textarea" copy-url-params="cronJobs.copyHttpParams"></bknd-copy-url>-->
+  <br/>
+
+  <button type="button"
+          class="btn btn-success btn-lg btn-w-lg"
+          data-style="expand-right" ladda="cronJobs.testLoading"
+          ng-disabled="!(cronJobs.allowTest() && !DbQuery.inputParametersForm.$invalid)"
+          ng-click="cronJobs.testData()">Test Job
+  </button>
+  <button type="button"
+          style=""
+          class="btn btn-success btn-lg btn-w-lg"
+          data-style="expand-right" ladda="DbQuery.loading"
+          ng-disabled="cronJobs.allowTest()"
+          ng-click="cronJobs.saveQuery(true)">Save & Test
+  </button>
+  <div ng-if="!cronJobs.allowTest()">** Must save first to enable Test cron job</div>
+</form>
+
+<div ng-show="cronJobs.testError" class="input-error">{{ cronJobs.testError }}</div>
+
+<div ui-ace="{theme: 'monokai', mode: 'json', rendererOptions: { fontSize: 15 } }"
+     type="text"
+     class="form-form-controlcontrol"
+     id="json-result"
+     ng-model="cronJobs.testResult"
+     readonly
+     rows="7"
+     ng-hide="cronJobs.testError">
+</div>

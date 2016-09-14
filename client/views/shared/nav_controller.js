@@ -198,7 +198,8 @@
     self.showCronJob = function ($event, job) {
       var params = {
         jobId: job.__metadata.id
-      }
+      };
+      goToState($event, 'cronJobs.job', params);
     };
 
     self.newObject = function () {

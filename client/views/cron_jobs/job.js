@@ -9,20 +9,29 @@
       'RulesService',
       'AppsService',
       'NotificationService',
+      '$stateParams',
+      'ConfirmationPopup',
       CronJobsController]);
 
-  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService) {
+  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup) {
 
     var self = this;
 
     function init() {
       self.appName = AppsService.currentApp.Name;
       RulesService.appName = self.appName;
+      CronService.appName = self.appName;
       self.types = ['Action', 'Query', 'External'];
       self.namePattern = /^\w+$/;
       self.new = $state.current.name === "cronJobs.new";
       self.editMode = self.new || $state.current.name === "cronJobs.newSavedJob";
       self.job = {};
+      if (!self.new) {
+        CronService.get($stateParams.jobId).then(function (response) {
+          console.log(response);
+          self.job = response.data;
+        });
+      }
 
       $scope.$watch(function () {
         return self.job.cronType;
@@ -47,6 +56,17 @@
       });
     };
 
+    self.cancel = function () {
+      if (self.jobForm.name.$pristine)
+        self.editMode = false;
+      else {
+        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
+          .then(function (result) {
+            result ? init() : false;
+          });
+      }
+    };
+
     function fetchActions() {
       if (!self.actions) {
         RulesService.get().then(function (response) {
@@ -56,6 +76,10 @@
         });
       }
     }
+
+    self.editJob = function () {
+      self.editMode = true;
+    };
 
     function fetchQueries() {
       if (!self.queries) {
