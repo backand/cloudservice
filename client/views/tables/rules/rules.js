@@ -134,8 +134,10 @@
                 return rule.id ==  g[0].category;
               });
 
-              fromService.label = rule.label;
-              res.push(fromService);
+              if(fromService) {
+                fromService.label = rule.label;
+                res.push(fromService);
+              }
             });
 
             self.actionTemplates = res;
