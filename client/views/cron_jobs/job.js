@@ -21,6 +21,9 @@
       self.appName = AppsService.currentApp.Name;
       RulesService.appName = self.appName;
       CronService.appName = self.appName;
+      self.cronConfig = {
+        allowMultiple: true
+      };
       self.types = ['Action', 'Query', 'External'];
       self.namePattern = /^\w+$/;
       self.new = $state.current.name === "cronJobs.new";
@@ -28,7 +31,6 @@
       self.job = {};
       if (!self.new) {
         CronService.get($stateParams.jobId).then(function (response) {
-          console.log(response);
           self.job = response.data;
         });
       }
@@ -48,7 +50,6 @@
       self.loading = true;
       CronService.post(self.job).then(function (response) {
         self.loading = false;
-        console.log(response);
         NotificationService.add('success', 'Cron job added successfully');
       },
       function (error) {

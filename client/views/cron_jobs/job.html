@@ -44,6 +44,7 @@
                 <!--id="scheduler">-->
                 <cron-selection ng-model="cronJobs.job.schedule"
                                 id="scheduler"
+                                config="cronJobs.cronConfig"
                                 ng-disabled="!cronJobs.editMode"></cron-selection>
               </div>
 
