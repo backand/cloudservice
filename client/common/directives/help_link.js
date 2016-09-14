@@ -123,6 +123,10 @@
           "realtime":{
             "url":"http://docs.backand.com/en/latest/apidocs/realtime/index.html",
             "page":"actoinhelp"
+          },
+          "ContinuousDeployment":{
+            "page":"configuration",
+            "url":"http://docs.backand.com/en/latest/what_would_you_like_to_do/continuous_deployment/index.html"
           }
         }
 

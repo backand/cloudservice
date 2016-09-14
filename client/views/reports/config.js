@@ -7,7 +7,7 @@
   function config($stateProvider) {
     $stateProvider
         .state('analytics.report', {
-          url: '/report',
+          url: '/report?id',
           controller: 'ReportController as vm',
           templateUrl: 'views/reports/report.html'
         })

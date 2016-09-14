@@ -779,7 +779,9 @@
         self.test.result = JSON.stringify(response.data, null, 2);
         var guid = response.headers('Action-Guid');
         self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
-        self.testHttp = stringifyHttp(RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug'));
+        self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
+        self.testHttpObject.params = {parameters: self.test.parameters};
+        self.testHttp = stringifyHttp(self.testHttpObject);
         self.inputParametersForm.$setPristine();
         self.testUrlCopied = false;
         self.testHttpCopied = false;
@@ -1006,11 +1008,15 @@
     }
 
     function getTestUrl() {
-      return self.testUrl;
+      // return the test url for display WITHOUT DEBUG PARAM
+      // If the parameters object is empty it omits the object from the url
+      return self.testUrl.replace('%22$$debug$$%22:true', '').replace(/&parameters.*%7D/, '');
     }
 
     function getTestHttp() {
-      return self.testHttp;
+      // return the test $http for display WITHOUT DEBUG PARAM
+      // If the parameters object is empty it omits the object from the $http example
+      return self.testHttp.replace('%22$$debug$$%22:true', '').replace(/&parameters.*%7D/, '');
     }
 
     function getResultUrl() {

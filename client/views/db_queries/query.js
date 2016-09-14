@@ -75,10 +75,13 @@
 
     function init() {
       self.appName = $stateParams.appName;
-      self.inputValues = {};
+      if($stateParams.inputValues) {
+        self.inputValues = $stateParams.inputValues;
+      } else {
+        self.inputValues = {};
+      }
       if (self.queryForm)
         self.queryForm.$setPristine();
-
       loadQueries();
       loadDbType();
     }
@@ -104,6 +107,9 @@
           }
           if (!self.query.noSQL && self.query.sQL) {
             self.mode = 'sql';
+          }
+          if ($stateParams.testData) {
+            populateTestResults($stateParams.testData);
           }
         }
         self.currentST = String(self.query.workspaceID);
@@ -166,7 +172,7 @@
       self.loading = true;
       self.savingAndTesting = true;
       if (self.mode === 'sql') {
-        return saveQuery().then(function(){
+        return saveQuery(withTest).then(function(){
           if(withTest){
             self.testData();
           }
@@ -181,7 +187,7 @@
       }
     };
 
-    function saveQuery () {
+    function saveQuery (isTest) {
       self.queryUrl = '';
       self.queryHttp = '';
       self.openParamsModal = false;
@@ -189,8 +195,15 @@
 
       rolesToString();
       var queryToSend = EscapeSpecialChars(self.query);
-      return DbQueriesService.saveQuery(queryToSend)
-        .then(reload);
+      if(!isTest) {
+        return DbQueriesService.saveQuery(queryToSend)
+          .then(reload);
+      } else {
+        return DbQueriesService.saveQuery(queryToSend).then(function (data) {
+          self.queryId = data.__metadata.id;
+          self.loading = false;
+        });
+      }
     }
 
     function saveNoSql () {
@@ -258,7 +271,8 @@
       self.loading = false;
       if (query) {
         var params = {
-          queryId: query.__metadata.id
+          queryId: query.__metadata.id,
+          testData: self.gridOptions.data
         };
 
         if (self.queryForm.params.$dirty)
@@ -373,36 +387,50 @@
     };
 
     self.testData = function () {
+      self.inputValues = _.pick(self.inputValues, self.getParameters());
       self.testError = null;
-      if (!self.query.__metadata)
-        return;
       self.testLoading = true;
       DbQueriesService.runQuery(self.query.name, self.inputValues)
         .then(successQueryHandler, errorHandler);
     };
 
     function successQueryHandler(data) {
-      self.gridOptions.data = data.data;
-      self.jsonQueryTestResult = JSON.stringify(data.data, null, 2);
+      populateTestResults(data.data);
+      var params = {
+        queryId: self.queryId,
+        testData: self.gridOptions.data,
+        inputValues: self.inputValues
+      };
+
+      self.queryForm.$setPristine();
+      if(self.new){
+        $state.go('dbQueries.newSavedQuery', params);
+      }
+    }
+
+    function populateTestResults(result) {
+      self.gridOptions.data = result;
+      self.jsonQueryTestResult = JSON.stringify(result, null, 2);
       var columns = [];
-      if (data.data.length > 0)
-        columns = Object.keys(data.data[0]);
+      if (result.length > 0)
+        columns = Object.keys(result[0]);
       self.gridOptions.columnDefs = columns.map(function (column) {
         return {
           minWidth: 80,
           name: column
         }
       });
-      self.gridOptions.totalItems = data.data.length;
+      self.gridOptions.totalItems = result.length;
 
       self.queryUrl = DbQueriesService.getQueryUrl(self.query.name, self.inputValues, true);
       self.queryHttp = stringifyHttp(DbQueriesService.getQueryHttp(self.query.name, self.inputValues));
-      self.inputParametersForm.$setPristine();
+      if (self.inputParametersForm) {
+        self.inputParametersForm.$setPristine();
+      }
       self.queryUrlCopied = false;
 
       self.testLoading = false;
       self.savingAndTesting = false;
-
     }
 
     function stringifyHttp (http) {

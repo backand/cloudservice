@@ -2,36 +2,70 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> {{vm.title}} </strong>
-      <!--<ba-help-link key="{{vm.helpKey}}" with-text="false"></ba-help-link>-->
+      <ba-help-link key="logConfiguration" with-text="false"></ba-help-link>
       <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" id="grid-container">
       <fieldset class="collapsible-fieldset"
                 ng-class="{'fieldset-open': vm.showFilter, 'fieldset-closed': !vm.showFilter}">
 
         <legend ng-click="vm.toggleShowFilter()">
-          <a href="">
-            Filter Log</a>
+          <a href="">Filter Requests</a>
         </legend>
-
-        <div ng-show="log.showFilter">
-
-          <bknd-filter-form query="vm.filterQuery"
-                            fields="vm.filterOptions.fields"
-                            operators="vm.filterOptions.operators"
-                            no-repeat="true"
-                            disable-value="vm.disableValue"
-                            on-submit="vm.filterData()">
-          </bknd-filter-form>
-
+        <div ng-show="vm.showFilter">
+          <div class="row">
+            <div class="col-sm-10">
+              <label>Filter Condition
+                <a ng-if="!vm.customizeFilter" href="" ng-click="vm.filterCustomized(true)">(Customize Filter)</a>
+                <a ng-if="vm.customizeFilter" href="" ng-click="vm.filterCustomized(false)">(Clear Filter)</a>
+              </label>
+              <div ui-ace="{onLoad : ace.onLoad, theme:'dawn', mode: ace.dbType, rendererOptions: { fontSize: 15 }}"
+                   id="whereCondition"
+                   name="whereCondition"
+                   class="form-control ace-action-where"
+                   ng-readonly="!vm.customizeFilter"
+                   placeholder=""
+                   ng-model="vm.filter"
+                   style="resize: vertical">
+              </div>
+              <span>** Enter filter condition by using 'or' & 'and', e.g. Request like '/1/object%' and
+                Type = 'object'</span>
+            </div>
+            <div class="col-sm-2">
+              <label>&nbsp;</label>
+              <button class="btn btn-primary form-control"
+                      ng-disabled="false"
+                      data-style="expand-right"
+                      ng-click="vm.applyFilter()"
+                      >Apply Filter
+              </button>
+            </div>
+          </div>
         </div>
       </fieldset>
 
       <!-- Data Grid -->
 
-      <div id="requestGrid" ui-grid="vm.gridOptions" class="grid"></div>
+      <div id="requestGrid" ui-grid="vm.gridOptions" class="grid" ui-grid-resize-columns></div>
       <div ng-show="vm.gridOptions.totalItems == 0">
         <h3>No Requests</h3>
+      </div>
+      <div ng-show="vm.gridOptions.totalItems > 0" class="row">
+        <div class="col-md-5">
+        </div>
+        <div class="col-md-2" style="margin-top:20px;">
+          Page size:
+          <select class="ui-select" ng-model="vm.paginationOptions.pageSize" ng-change=x"vm.applyFilter()">
+            <option ng-repeat="size in vm.paginationOptions.pageSizes">{{ ::size}}</option>
+          </select>
+        </div>
+        <div class="col-md-5" style="margin-top:20px;">
+          <span class="pull-right">Showing {{ vm.paginationOptions.pageSize * (vm.paginationOptions.pageNumber-1) +1}} to {{vm.pageMax(vm.paginationOptions.pageSize, vm.paginationOptions.pageNumber, vm.gridOptions.totalItems)}} of {{vm.gridOptions.totalItems}} rows</span>
+        </div>
+      </div>
+      <div class="row" style="margin-left: 1px; margin-top: 20px;">
+        * Data is displayed up to two minutes after the event was received <span ng-if="(vm.viewMode == 'console')">
+        or view <a href="" ng-click="vm.gotoRealtime()">real-time messages</a></span>
       </div>
     </div>
   </section>

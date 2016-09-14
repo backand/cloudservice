@@ -19,7 +19,8 @@
         .state('dbQueries.newSavedQuery', {
             url: '/new/:queryId',
             controller: 'DbQueryController as DbQuery',
-            templateUrl: 'views/db_queries/query.html'
+            templateUrl: 'views/db_queries/query.html',
+            params: {testData: null, inputValues: null}
         });
 
   }

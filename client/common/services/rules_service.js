@@ -28,6 +28,7 @@
 
     self.actionTemplateCategories = [
       {id: 5, label: 'Real-time Communication'},
+      {id: 7, label: 'Bot'},
       {id: 6, label: 'Push Notifications'},
       {id: 1, label: 'Email & SMS'},
       {id: 2, label: 'Payment Processing'},
@@ -98,6 +99,9 @@
     self.getTestUrl = function (rule, test, actionType, tableName, debug, fromGetHttp) {
       var onDemand = actionType === 'On Demand';
       var parameters = angular.copy(test.parameters);
+      if (debug) {
+        parameters['$$debug$$'] = true;
+      }
 
       if (tableName === 'backandUsers' && actionType === 'Create') {
         return encodeURI(
@@ -171,10 +175,6 @@
         };
 
         http.config = {ignoreError: true};
-      } else {
-        http.params = {
-          $$debug$$: true
-        }
       }
 
       if (actionType === 'Create' || actionType === 'Update') {
