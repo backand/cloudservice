@@ -36,17 +36,11 @@
                           ng-model="cronJobs.job.description"></textarea>
               </div>
 
-              <div class="form-group">
-                <label for="scheduler">Scheduler</label>
-                <!--<input class="form-control"-->
-                <!--type="text"-->
-                <!--ng-model="cronJobs.job.schedule"-->
-                <!--id="scheduler">-->
-                <cron-selection ng-model="cronJobs.job.schedule"
-                                id="scheduler"
-                                config="cronJobs.cronConfig"
-                                ng-disabled="!cronJobs.editMode"></cron-selection>
-              </div>
+              <cron-selection ng-model="cronJobs.job.schedule"
+                              id="scheduler"
+                              config="cronJobs.cronConfig"
+                              template="views/cron_jobs/cron_selection_template.html"
+                              ng-disabled="!cronJobs.editMode"></cron-selection>
 
               <div class="form-group">
                 <label for="type">Type</label>

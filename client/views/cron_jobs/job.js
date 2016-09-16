@@ -22,7 +22,7 @@
       RulesService.appName = self.appName;
       CronService.appName = self.appName;
       self.cronConfig = {
-        allowMultiple: true
+        allowMinute: false
       };
       self.types = ['Action', 'Query', 'External'];
       self.namePattern = /^\w+$/;
