@@ -11,9 +11,10 @@
       'NotificationService',
       '$stateParams',
       'ConfirmationPopup',
+      'stringifyHttp',
       CronJobsController]);
 
-  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup) {
+  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp) {
 
     var self = this;
 
@@ -29,9 +30,14 @@
       self.new = $state.current.name === "cronJobs.new";
       self.editMode = self.new || $state.current.name === "cronJobs.newSavedJob";
       self.job = {};
+      self.testHttp = stringifyHttp(CronService.getTestHttp($stateParams.jobId));
+      self.testUrl = CronService.getTestUrl($stateParams.jobId);
       if (!self.new) {
         CronService.get($stateParams.jobId).then(function (response) {
           self.job = response.data;
+          if ($stateParams.isTest) {
+            self.test();
+          }
         });
       }
 
@@ -46,15 +52,31 @@
       });
     }
 
-    self.saveJob = function () {
+    self.saveJob = function (isTest) {
       self.loading = true;
-      CronService.post(self.job).then(function (response) {
-        self.loading = false;
-        NotificationService.add('success', 'Cron job added successfully');
-      },
-      function (error) {
-        self.loading = false;
-      });
+      if ($stateParams.jobId) {
+        updateJob(isTest);
+      } else {
+        createJob(isTest);
+      }
+    };
+
+    self.deleteJob = function () {
+      ConfirmationPopup.confirm('Are you sure you want to delete this cron job?')
+        .then(function (result) {
+          if (result) {
+            self.loading = true;
+            CronService.delete($stateParams.jobId).then(function (response) {
+              self.loading = false;
+              NotificationService.add('success', "Cron job deleted successfully");
+              $state.go('cronJobs.new');
+            });
+          }
+        });
+    };
+
+    self.editJob = function () {
+      self.editMode = true;
     };
 
     self.cancel = function () {
@@ -68,24 +90,63 @@
       }
     };
 
+    self.test = function () {
+      CronService.test($stateParams.jobId).then(function (response) {
+        self.testResult = JSON.stringify(response.data.response, null, 2);
+      }, function (error) {
+        self.testError = error.data.Message;
+      });
+    };
+
+    self.allowTest = function () {
+      return self.job && self.job.__metadata && self.jobForm.$pristine;
+    };
+
     function fetchActions() {
       if (!self.actions) {
+        self.loadingActions = true;
         RulesService.get().then(function (response) {
           self.actions = _.filter(response.data.data, function (action) {
             return action.dataAction == 'OnDemand';
           });
+          self.loadingActions = false;
         });
       }
     }
 
-    self.editJob = function () {
-      self.editMode = true;
-    };
+    function errorHandler(error) {
+      self.loading = false;
+    }
+
+    function createJob(isTest) {
+      CronService.post(self.job).then(function (response) {
+        self.loading = false;
+        NotificationService.add('success', 'Cron job added successfully');
+        var params = {jobId: response.data.__metadata.id};
+        if(isTest) {
+          params.isTest = true;
+        }
+        $state.go('cronJobs.job', params)
+      }, errorHandler);
+    }
+
+    function updateJob(isTest) {
+      CronService.update($stateParams.jobId, self.job).then(function (response) {
+        self.loading = false;
+        NotificationService.add('success', 'Cron job updated successfully');
+        if (isTest) {
+          self.test();
+        }
+      }, errorHandler);
+      self.jobForm.$setPristine();
+    }
 
     function fetchQueries() {
       if (!self.queries) {
+        self.loadingQueries = true;
         DbQueriesService.getQueries(self.appName).then(function (response) {
           self.queries = response;
+          self.loadingQueries = false;
         });
       }
     }

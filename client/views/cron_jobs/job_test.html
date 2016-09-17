@@ -1,23 +1,35 @@
+<h3>Test Job</h3>
+<br/>
 <form>
-  <label>HTTP Request URL:</label>
-  <!--<bknd-copy-url copy-url-params="cronJobs.copyUrlParams"></bknd-copy-url>-->
-  <br/>
-  <label>Request $http:</label>
-  <!--<bknd-copy-url type="textarea" copy-url-params="cronJobs.copyHttpParams"></bknd-copy-url>-->
+  <div class="form-group">
+    <label>HTTP Request URL</label>
+    <button class="btn btn-xs request-url-copy" clip-copy="cronJobs.testUrl" tooltip="Copy to Clipboard">
+      <span class="ti-clipboard"></span>
+    </button>
+    <input type="text" class="form-control" readonly ng-model="cronJobs.testUrl">
+  </div>
+
+  <div class="form-group">
+    <label>Request $http</label>
+    <button class="btn btn-xs request-url-copy" clip-copy="cronJobs.testHttp" tooltip="Copy to Clipboard">
+      <span class="ti-clipboard"></span>
+    </button>
+    <textarea class="form-control" rows="10" readonly ng-model="cronJobs.testHttp"></textarea>
+  </div>
   <br/>
 
   <button type="button"
           class="btn btn-success btn-lg btn-w-lg"
           data-style="expand-right" ladda="cronJobs.testLoading"
-          ng-disabled="!(cronJobs.allowTest() && !DbQuery.inputParametersForm.$invalid)"
-          ng-click="cronJobs.testData()">Test Job
+          ng-disabled="!cronJobs.allowTest()"
+          ng-click="cronJobs.test()">Test Job
   </button>
   <button type="button"
           style=""
           class="btn btn-success btn-lg btn-w-lg"
           data-style="expand-right" ladda="DbQuery.loading"
           ng-disabled="cronJobs.allowTest()"
-          ng-click="cronJobs.saveQuery(true)">Save & Test
+          ng-click="cronJobs.saveJob(true)">Save & Test
   </button>
   <div ng-if="!cronJobs.allowTest()">** Must save first to enable Test cron job</div>
 </form>
@@ -25,11 +37,11 @@
 <div ng-show="cronJobs.testError" class="input-error">{{ cronJobs.testError }}</div>
 
 <div ui-ace="{theme: 'monokai', mode: 'json', rendererOptions: { fontSize: 15 } }"
+     ng-show="cronJobs.testResult && !cronJobs.testError"
      type="text"
      class="form-form-controlcontrol"
      id="json-result"
      ng-model="cronJobs.testResult"
      readonly
-     rows="7"
-     ng-hide="cronJobs.testError">
+     rows="7">
 </div>

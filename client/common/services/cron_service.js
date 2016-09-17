@@ -36,7 +36,8 @@
       return $http({
         method: 'PUT',
         url: CONSTS.appUrl + '/1/cron/' + id,
-        headers: {AppName: self.appName}
+        headers: {AppName: self.appName},
+        data: job
       });
     };
 
@@ -47,5 +48,23 @@
         headers: {AppName: self.appName}
       });
     };
+
+    self.test = function (id) {
+      return $http(self.getTestHttp(id));
+    };
+
+    self.getTestUrl = function (id) {
+      return CONSTS.appUrl + '/1/cron/run/' + id + "/test";
+    };
+
+    self.getTestHttp = function (id) {
+      return {
+        method: 'GET',
+        url: self.getTestUrl(id),
+        headers: {AppName: self.appName}
+      };
+    };
+
+
   }
 })();

@@ -14,7 +14,10 @@
       .state('cronJobs.job', {
         url: '/:jobId',
         controller: 'CronJobsController as cronJobs',
-        templateUrl: 'views/cron_jobs/job.html'
+        templateUrl: 'views/cron_jobs/job.html',
+        params: {
+          isTest: false
+        }
       })
       .state('cronJobs.newSavedJob', {
         url: '/new/:jobId',
