@@ -51,7 +51,8 @@
                   <select class="form-control"
                           ng-options="type for type in cronJobs.types"
                           id="type"
-                          ng-model="cronJobs.job.cronType">
+                          ng-model="cronJobs.job.cronType"
+                          required>
                   </select>
                 </div>
 
@@ -87,7 +88,7 @@
                 </div>
 
                 <fieldset class="collapsible-fieldset"
-                       ng-class="{'fieldset-open': cronJobs.showAdvanced, 'fieldset-closed': !cronJobs.showAdvanced}">
+                          ng-class="{'fieldset-open': cronJobs.showAdvanced, 'fieldset-closed': !cronJobs.showAdvanced}">
 
                   <legend ng-click="cronJobs.showAdvanced = !cronJobs.showAdvanced">
                     <a href="">Advanced Options</a>
@@ -106,11 +107,11 @@
                       <div class="form-group" ng-if="cronJobs.job.method == 'POST'">
                         <label for="request-data">Request Data:</label>
                         <div
-                                ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
-                                class="form-control ace-db-template"
-                                id="request-data"
-                                ng-model="cronJobs.job.data"
-                                style="resize: vertical; height: 200px;">
+                          ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+                          class="form-control ace-db-template"
+                          id="request-data"
+                          ng-model="cronJobs.job.data"
+                          style="resize: vertical; height: 200px;">
                         </div>
                       </div>
                     </div>
@@ -123,10 +124,13 @@
                     </div>
                     <div class="form-group">
                       <label for="headers">Headers</label>
-                      <textarea class="form-control"
-                                rows="6"
-                                id="headers"
-                                ng-model="cronJobs.job.headers"></textarea>
+                      <div ui-ace="{theme: 'monokai'}"
+                           type="text"
+                           id="headers"
+                           ng-model="cronJobs.job.headers"
+                           style="height: 200px;">
+                      </div>
+
                     </div>
 
                   </div>
@@ -145,8 +149,8 @@
                           ng-click="cronJobs.cancel()">Cancel
                   </button>
 
-              </div>
-            </fieldset>
+                </div>
+              </fieldset>
             </fieldset>
             <div class="save-bar" ng-show="!cronJobs.editMode">
               <br/>

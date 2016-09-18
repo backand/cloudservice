@@ -23,7 +23,7 @@
       RulesService.appName = self.appName;
       CronService.appName = self.appName;
       self.cronConfig = {
-        allowMinute: false
+        allowMultiple: true
       };
       self.types = ['Action', 'Query', 'External'];
       self.namePattern = /^\w+$/;
@@ -96,7 +96,10 @@
 
     self.test = function () {
       CronService.test($stateParams.jobId).then(function (response) {
-        self.testResult = JSON.stringify(response.data.response, null, 2);
+        self.testResult = {
+          request: JSON.stringify(response.data.request, null, 2),
+          response: JSON.stringify(response.data.response, null, 2)
+        };
       }, function (error) {
         self.testError = error.data.Message;
       });

@@ -23,7 +23,6 @@
     };
 
     self.post = function (job) {
-      console.log(job);
       return $http({
         method: 'POST',
         url: CONSTS.appUrl + '/1/cron',
