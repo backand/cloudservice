@@ -41,6 +41,10 @@
         });
       }
 
+      //default values of the Job
+      self.job.method = "GET";
+      self.showAdvanced = false;
+
       $scope.$watch(function () {
         return self.job.cronType;
       }, function (newValue, oldValue) {
@@ -107,7 +111,7 @@
         self.loadingActions = true;
         RulesService.get().then(function (response) {
           self.actions = _.filter(response.data.data, function (action) {
-            return action.dataAction == 'OnDemand';
+            return action.dataAction == 'OnDemand' && action.viewTable != 4;
           });
           self.loadingActions = false;
         });
