@@ -28,7 +28,7 @@
           style=""
           class="btn btn-success btn-lg btn-w-lg"
           data-style="expand-right" ladda="DbQuery.loading"
-          ng-disabled="cronJobs.allowTest()"
+          ng-disabled="cronJobs.jobForm.$invalid"
           ng-click="cronJobs.saveJob(true)">Save & Test
   </button>
   <div ng-if="!cronJobs.allowTest()">** Must save first to enable Test cron job</div>
