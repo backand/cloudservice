@@ -1,7 +1,7 @@
 <section class="page-form-ele page database-query-section">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong style="text-transform:none">Cron Job</strong>
+      <strong style="text-transform:none">Cron</strong>
       <span ng-show="!cronJobs.new">
         <a href="javascript:;"
            class="btn btn-lg pull-right"
@@ -14,14 +14,15 @@
     <div class="panel-body database-query-panel">
       <div class="row">
         <div class="left-col">
-
           <form role="form" ng-submit="cronJobs.saveJob()" name="cronJobs.jobForm" novalidate>
             <fieldset ng-disabled="!cronJobs.editMode">
               <div class="form-group">
-                <label for="name">Cron Job Name</label>
-                <input type="text" class="form-control" id="name" name="name" ng-model="cronJobs.job.name" required
-                       ng-pattern="cronJobs.namePattern" placeholder="Name your cron job">
-
+                <label for="name">Cron Name</label>
+                <input type="text"
+                       class="form-control"
+                       id="name" name="name" ng-model="cronJobs.job.name" required
+                       ng-pattern="cronJobs.namePattern"
+                       placeholder="Name your cron job">
                 <div ng-show="cronJobs.jobForm.name.$error.pattern" class="input-error">no spaces or %$#@^&* allowed
                 </div>
               </div>
@@ -29,12 +30,13 @@
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea type="text"
-                          rows="3"
+                          rows="2"
                           class="form-control"
                           id="description"
                           name="description"
                           ng-model="cronJobs.job.description"></textarea>
               </div>
+
 
               <cron-selection ng-model="cronJobs.job.schedule"
                               id="scheduler"
@@ -42,97 +44,110 @@
                               template="views/cron_jobs/cron_selection_template.html"
                               ng-disabled="!cronJobs.editMode"></cron-selection>
 
-              <div class="form-group">
-                <label for="type">Type</label>
-                <select class="form-control"
-                        ng-options="type for type in cronJobs.types"
-                        id="type"
-                        ng-model="cronJobs.job.cronType">
-                </select>
-              </div>
+              <fieldset ng-disabled="!cronJobs.editMode">
 
-              <div ng-switch="cronJobs.job.cronType">
-
-                <div ng-switch-when="Action">
-                  <label for="action-chooser">Choose Action:</label>
+                <div class="form-group">
+                  <label for="type">Job Type</label>
                   <select class="form-control"
-                          ng-options="action.iD as action.name for action in cronJobs.actions"
-                          id="action-chooser"
-                          ng-model="cronJobs.job.entityId">
+                          ng-options="type for type in cronJobs.types"
+                          id="type"
+                          ng-model="cronJobs.job.cronType">
                   </select>
                 </div>
 
-                <div ng-switch-when="Query">
-                  <label for="query-chooser">Choose Query:</label>
-                  <select class="form-control"
-                          ng-options="query.iD as query.name for query in cronJobs.queries"
-                          id="query-chooser"
-                          ng-model="cronJobs.job.entityId">
-                  </select>
-                </div>
+                <div ng-switch="cronJobs.job.cronType">
 
-                <div ng-switch-when="External">
-                  <div class="form-group">
-                    <label for="url">URL</label>
+                  <div ng-switch-when="Action">
+                    <label for="action-chooser">Choose Action:</label>
+                    <select class="form-control"
+                            ng-options="action.iD as action.name for action in cronJobs.actions"
+                            id="action-chooser"
+                            ng-model="cronJobs.job.entityId">
+                    </select>
+                  </div>
+
+                  <div ng-switch-when="Query">
+                    <label for="query-chooser">Choose Query:</label>
+                    <select class="form-control"
+                            ng-options="query.iD as query.name for query in cronJobs.queries"
+                            id="query-chooser"
+                            ng-model="cronJobs.job.entityId">
+                    </select>
+                  </div>
+
+                  <div ng-switch-when="External">
+                    <label for="url">URL:</label>
                     <input class="form-control"
                            type="text"
                            id="url"
+                           placeholder="http://"
                            ng-model="cronJobs.job.externalUrl">
-                    <label for="query-string">Query String</label>
-                    <input class="form-control"
-                           type="text"
-                           id="query-string"
-                           ng-model="cronJobs.job.queryString">
-                    <label for="headers">Headers</label>
-                    <textarea class="form-control"
-                              rows="6"
-                              id="headers"
-                              ng-model="cronJobs.job.headers"></textarea>
-                    <label for="method">Method</label>
-                    <div id="method">
-                      <input type="radio"
-                             ng-model="cronJobs.job.method"
-                             value="GET">&nbsp;&nbsp;GET&nbsp;&nbsp;
-                      <input type="radio"
-                             ng-model="cronJobs.job.method"
-                             value="POST">&nbsp;&nbsp;POST&nbsp;&nbsp;
-                    </div>
-                    <div ng-if="cronJobs.job.method == 'POST'">
-                      <label for="request-data">Request Data:</label>
-                      <div
-                        ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
-                        class="form-control ace-db-template"
-                        id="request-data"
-                        ng-model="cronJobs.job.data"
-                        style="resize: vertical; height: 200px;">
-                      </div>
-                    </div>
                   </div>
+
                 </div>
 
+                <fieldset class="collapsible-fieldset"
+                       ng-class="{'fieldset-open': cronJobs.showAdvanced, 'fieldset-closed': !cronJobs.showAdvanced}">
+
+                  <legend ng-click="cronJobs.showAdvanced = !cronJobs.showAdvanced">
+                    <a href="">Advanced Options</a>
+                  </legend>
+                  <div ng-if="cronJobs.showAdvanced">
+                    <div class="form-group">
+                      <label for="method">Method</label>
+                      <div id="method">
+                        <input type="radio"
+                               ng-model="cronJobs.job.method"
+                               value="GET">&nbsp;&nbsp;GET&nbsp;&nbsp;
+                        <input type="radio"
+                               ng-model="cronJobs.job.method"
+                               value="POST">&nbsp;&nbsp;POST&nbsp;&nbsp;
+                      </div>
+                      <div class="form-group" ng-if="cronJobs.job.method == 'POST'">
+                        <label for="request-data">Request Data:</label>
+                        <div
+                                ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+                                class="form-control ace-db-template"
+                                id="request-data"
+                                ng-model="cronJobs.job.data"
+                                style="resize: vertical; height: 200px;">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="query-string">Query String</label>
+                      <input class="form-control"
+                             type="text"
+                             id="query-string"
+                             ng-model="cronJobs.job.queryString">
+                    </div>
+                    <div class="form-group">
+                      <label for="headers">Headers</label>
+                      <textarea class="form-control"
+                                rows="6"
+                                id="headers"
+                                ng-model="cronJobs.job.headers"></textarea>
+                    </div>
+
+                  </div>
+                </fieldset>
+                <br/>
+                <div class="save-bar" ng-show="cronJobs.editMode">
+                  <button type="submit"
+                          ng-disabled="cronJobs.jobForm.$invalid"
+                          class="btn btn-success btn-lg btn-w-lg" ladda="cronJobs.loading"
+                          data-style="expand-right">Save
+                  </button>
+                  <button type="button"
+                          ng-show="cronJobs.editMode"
+                          class="btn btn-default btn-lg btn-w-lg"
+                          data-style="expand-right"
+                          ng-click="cronJobs.cancel()">Cancel
+                  </button>
+
               </div>
             </fieldset>
-
-            <fieldset ng-disabled="!cronJobs.editMode">
-
-              <div class="save-bar" ng-show="cronJobs.editMode">
-                <button type="submit"
-                        ng-disabled="cronJobs.jobForm.$invalid"
-                        class="btn btn-success btn-lg btn-w-lg" ladda="cronJobs.loading"
-                        data-style="expand-right">Save
-                </button>
-                <button type="button"
-                        ng-show="cronJobs.editMode"
-                        class="btn btn-default btn-lg btn-w-lg"
-                        data-style="expand-right"
-                        ng-click="cronJobs.cancel()">Cancel
-                </button>
-                <button class="btn btn-info btn-lg btn-w-lg pull-right" type="button"
-                        ng-click="cronJobs.showHelp()">Help
-                </button>
-              </div>
             </fieldset>
-
             <div class="save-bar" ng-show="!cronJobs.editMode">
               <br/>
               <button type="button"
@@ -142,7 +157,6 @@
               </button>
             </div>
           </form>
-
         </div>
         <div class="right-col" ng-include="'views/cron_jobs/job_test.html'"></div>
       </div>
