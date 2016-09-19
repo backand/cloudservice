@@ -14,6 +14,15 @@
              id="cron-expression"
              ng-model="cronValue">
     </div>
+    <div class="form-group" ng-show="myFrequency.base == 1">
+      <span>Every</span>
+      <select class="cron-select minute-value form-control"
+              ng-model="myFrequency.everyMinuteValues"
+              multiple
+              ng-options="value as value for value in everyMinuteValues">
+      </select>
+      <span>Minutes</span>
+    </div>
     <div class="form-group" ng-show="myFrequency.base == 2">
       <select class="cron-select minute-value form-control"
               ng-model="myFrequency.minuteValues"

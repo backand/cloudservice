@@ -167,6 +167,7 @@ angular.module('angular-cron-jobs').directive('cronSelection', ['cronService', f
         }
       }
 
+      $scope.everyMinuteValues = fillEveryMinuteValues();
       $scope.minuteValues = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
       $scope.hourValues = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
       $scope.dayOfMonthValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
@@ -185,6 +186,14 @@ angular.module('angular-cron-jobs').directive('cronSelection', ['cronService', f
           $ngModel.$setViewValue(newVal);
         }
       }, true);
+
+      function fillEveryMinuteValues() {
+        var values = [];
+        for(var i = 1; i < 60; i++) {
+          values.push(i);
+        }
+        return values;
+      }
 
       function setInitialValuesForBase(freq) {
         freq.base = parseInt(freq.base);
@@ -285,6 +294,10 @@ angular.module('angular-cron-jobs').factory('cronService', function () {
   service.setCron = function (n) {
     var cron = ['*', '*', '*', '*', '*'];
 
+    if (n && n.base && n.base == 1) {
+      cron[0] = typeof n.everyMinuteValues !== 'undefined' ? '*/' + n.everyMinuteValues : '*';
+    }
+
     if (n && n.base && n.base >= 2) {
       cron[0] = typeof n.minuteValues !== 'undefined' ? n.minuteValues : '*';
     }
@@ -311,7 +324,9 @@ angular.module('angular-cron-jobs').factory('cronService', function () {
     var cron = value.replace(/\s+/g, ' ').split(' ');
     var frequency = {base: '1'}; // default: every minute
 
-    if (cron[0] === '*' && cron[1] === '*' && cron[2] === '*' && cron[3] === '*' && cron[4] === '*') {
+    if (cron[0].startsWith("*/")) {
+      frequency.base = 1; // every X minutes
+    } else if (cron[0] === '*' && cron[1] === '*' && cron[2] === '*' && cron[3] === '*' && cron[4] === '*') {
       frequency.base = 1; // every minute
     } else if (cron[1] === '*' && cron[2] === '*' && cron[3] === '*' && cron[4] === '*') {
       frequency.base = 2; // every hour
@@ -323,6 +338,22 @@ angular.module('angular-cron-jobs').factory('cronService', function () {
       frequency.base = 5; // every month
     } else if (cron[4] === '*') {
       frequency.base = 6; // every year
+    }
+
+    // In case of choosing "every X minutes"
+    if (frequency.base == 1) {
+      var minutesPart = cron[0].replace('*/', '');
+      if (allowMultiple) {
+        var tempArray = minutesPart.split(',');
+        for (var i = 0; i < tempArray.length; i++) {
+          tempArray[i] = +tempArray[i];
+        }
+        frequency.everyMinuteValues = tempArray;
+      } else {
+        frequency.everyMinuteValues = parseInt(minutesPart);
+      }
+      // The "every X minutes" mode only allows to choose minutes
+      return frequency
     }
 
     if (cron[0] !== '*') {
