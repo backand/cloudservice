@@ -353,7 +353,7 @@ angular.module('angular-cron-jobs').factory('cronService', function () {
         frequency.everyMinuteValues = parseInt(minutesPart);
       }
       // The "every X minutes" mode only allows to choose minutes
-      return frequency
+      return frequency;
     }
 
     if (cron[0] !== '*') {
