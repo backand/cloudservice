@@ -340,8 +340,8 @@ angular.module('angular-cron-jobs').factory('cronService', function () {
       frequency.base = 6; // every year
     }
 
-    // In case of choosing "every X minutes"
-    if (frequency.base == 1) {
+    // In case of "every X minutes"
+    if (frequency.base == 1 && cron[0].startsWith("*/")) {
       var minutesPart = cron[0].replace('*/', '');
       if (allowMultiple) {
         var tempArray = minutesPart.split(',');
