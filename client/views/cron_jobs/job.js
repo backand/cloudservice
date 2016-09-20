@@ -12,9 +12,11 @@
       '$stateParams',
       'ConfirmationPopup',
       'stringifyHttp',
+      'TablesService',
+      'usSpinnerService',
       CronJobsController]);
 
-  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp) {
+  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp,TablesService,usSpinnerService) {
 
     var self = this;
 
@@ -25,8 +27,11 @@
       self.cronConfig = {
         allowMultiple: true
       };
+      self.frequency = {
+        base: 1
+      }
       self.types = ['Action', 'Query', 'External'];
-      self.namePattern = /^\w+$/;
+      //self.namePattern = /^\w+$/;
       self.new = $state.current.name === "cronJobs.new";
       self.editMode = self.new || $state.current.name === "cronJobs.newSavedJob";
       self.job = {};
@@ -34,11 +39,15 @@
       self.testUrl = CronService.getTestUrl($stateParams.jobId);
       if (!self.new) {
         CronService.get($stateParams.jobId).then(function (response) {
+          usSpinnerService.stop("loading");
           self.job = response.data;
           if ($stateParams.isTest) {
             self.test();
           }
         });
+      }
+      else{
+        usSpinnerService.stop("loading");
       }
 
       //default values of the Job
@@ -114,6 +123,10 @@
         self.loadingActions = true;
         RulesService.get().then(function (response) {
           self.actions = _.filter(response.data.data, function (action) {
+            var view = TablesService.getTableNameById(TablesService.tables,action.viewTable);
+            if(view) {
+              action.name = view.name + '.' + action.name;
+            }
             return action.dataAction == 'OnDemand' && action.viewTable != 4;
           });
           self.loadingActions = false;

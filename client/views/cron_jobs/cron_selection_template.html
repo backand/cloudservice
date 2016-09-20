@@ -6,6 +6,8 @@
             ng-model="myFrequency.base"
             ng-options="item.value as item.label for item in frequency"></select>
   </div>
+  {{myFrequency}}
+
   <div class="select-options">
     <div class="form-group"
          ng-show="myFrequency.base == 6">
@@ -18,7 +20,6 @@
       <span>Every</span>
       <select class="cron-select minute-value form-control"
               ng-model="myFrequency.everyMinuteValues"
-              multiple
               ng-options="value as value for value in everyMinuteValues">
       </select>
       <span>Minutes</span>
@@ -26,7 +27,6 @@
     <div class="form-group" ng-show="myFrequency.base == 2">
       <select class="cron-select minute-value form-control"
               ng-model="myFrequency.minuteValues"
-              multiple
               ng-options="value as value for value in minuteValues">
       </select>
       <span ng-show="myFrequency.base == 2"> past the hour</span>

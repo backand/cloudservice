@@ -9,22 +9,26 @@
            ng-click="cronJobs.deleteJob()">
           <i class="ti-trash"></i></a>
       </span>
-
+      <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     </div>
     <div class="panel-body database-query-panel">
       <div class="row">
         <div class="left-col">
           <form role="form" ng-submit="cronJobs.saveJob()" name="cronJobs.jobForm" novalidate>
             <fieldset ng-disabled="!cronJobs.editMode">
+              <div class="form-group" ng-if="!cronJobs.new">
+                <label class="strong" for="active">Active</label>
+                <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                  <input id="active" type="checkbox" ng-model="cronJobs.job.active"
+                         checked=""><i></i>
+                </label>
+              </div>
               <div class="form-group">
                 <label for="name">Cron Name</label>
                 <input type="text"
                        class="form-control"
                        id="name" name="name" ng-model="cronJobs.job.name" required
-                       ng-pattern="cronJobs.namePattern"
                        placeholder="Name your cron job">
-                <div ng-show="cronJobs.jobForm.name.$error.pattern" class="input-error">no spaces or %$#@^&* allowed
-                </div>
               </div>
 
               <div class="form-group">
@@ -37,6 +41,7 @@
                           ng-model="cronJobs.job.description"></textarea>
               </div>
 
+{{cronJobs.job.schedule}}
 
               <cron-selection ng-model="cronJobs.job.schedule"
                               id="scheduler"

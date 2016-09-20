@@ -175,7 +175,8 @@
       <ul class="scrollbar ex4">
         <li ng-class="{active: nav.state == 'cronJobs.job'}" ng-repeat="cronJob in nav.cronJobs">
           <a ng-click="nav.showCronJob($event, cronJob)" href="">
-            <i class="ti-write"></i>
+            <i class=""></i>
+            <span class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>
             <span>{{cronJob.name}}</span>
           </a>
         </li>

@@ -130,6 +130,13 @@
       return "none";
     };
 
+    self.getCronStatus = function(active){
+      if(active)
+        return 'success';
+      else
+        return 'error';
+    };
+
     self.getDBStatus = function () {
       if (_.isEmpty(self.app)) {
         return 'unknown';
