@@ -114,6 +114,8 @@ angular.module('angular-cron-jobs').directive('cronSelection', ['cronService', f
     },
     link: function ($scope, $el, $attr, $ngModel) {
 
+      var modelChanged = false;
+
       $scope.frequency = [{
         value: 1,
         label: 'Minute'
@@ -136,6 +138,7 @@ angular.module('angular-cron-jobs').directive('cronSelection', ['cronService', f
 
       $scope.$watch('ngModel', function (newValue) {
         if (angular.isDefined(newValue) && newValue) {
+          modelChanged = true;
           $scope.myFrequency = cronService.fromCron(newValue, $scope.allowMultiple);
         } else if (newValue === '') {
           $scope.myFrequency = undefined;
@@ -172,9 +175,11 @@ angular.module('angular-cron-jobs').directive('cronSelection', ['cronService', f
       $scope.monthValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
       $scope.$watch('myFrequency', function (n, o) {
-        if (n !== undefined) {
-          if (n && n.base && (!o || n.base !== o.base)) {
+        if (n !== undefined && n.base !== 6) {
+          if (n && n.base && (!o || n.base !== o.base) && !modelChanged) {
             setInitialValuesForBase(n);
+          } else if (n && n.base && o && o.base) {
+            modelChanged = false;
           }
 
           var newVal = cronService.setCron(n);
