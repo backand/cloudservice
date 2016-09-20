@@ -76,11 +76,11 @@
 
       <div ng-switch on="dbedit.dataName">
         <div class="form-group row" ng-switch-when='mysql'>
-          <label for="usingSsh" class="col-sm-4 control-label">Use SSH</label>
+          <label for="SshUses" class="col-sm-4 control-label">Use SSH</label>
 
           <div class="col-sm-8">
-              <span class="ui-select" id="usingSsh">
-                  <select name="usingSsh" class="Sitedropdown" ng-model="dbedit.data.usingSsh" required>
+              <span class="ui-select" id="SshUses">
+                  <select name="SshUses" class="Sitedropdown" ng-model="dbedit.data.SshUses" required>
                       <option value=true>Yes</option>
                       <option value=false>No</option>
                   </select>
@@ -125,7 +125,7 @@
   </div>
 
 
-  <div ng-if="dbedit.data.usingSsh === 'true'">
+  <div ng-if="dbedit.data.SshUses === 'true'">
 
     <div class="divider divider-dashed divider-lg pull-in"></div>
 
@@ -169,7 +169,7 @@
       </div>
     </div>
 
-    <div class="form-group" ng-if="!dbedit.data.usingSsh">
+    <div class="form-group" ng-if="!dbedit.data.SshUses">
       <div class="row">
         <div class="col-md-5 col-md-offset-1">
 

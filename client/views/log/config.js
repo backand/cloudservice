@@ -17,19 +17,29 @@
         templateUrl: 'views/log/log.html'
       })
       .state('log.exception', {
-        url: '/exception',
+        url: '/exception?q',
+        controller: 'RequestsLog as vm',
+        templateUrl: 'views/log/requests.html'
+      })
+      .state('log.console', {
+        url: '/console?q',
+        controller: 'RequestsLog as vm',
+        templateUrl: 'views/log/requests.html'
+      })
+      .state('log.requests', {
+        url: '/requests?q',
+        controller: 'RequestsLog as vm',
+        templateUrl: 'views/log/requests.html'
+      })
+      .state('log.exceptionrealtime', {
+        url: '/exception/realtime',
         controller: 'LogActivity as log',
         templateUrl: 'views/log/activity.html'
       })
-      .state('log.console', {
-        url: '/console',
+      .state('log.consolerealtime', {
+        url: '/console/realtime',
         controller: 'LogActivity as log',
         templateUrl: 'views/log/activity.html'
-      })      
-      .state('log.requests', {
-        url: '/requests',
-        controller: 'RequestsLog as vm',
-        templateUrl: 'views/log/requests.html'
       })
   }
 

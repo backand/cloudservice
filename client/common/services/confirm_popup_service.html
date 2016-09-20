@@ -7,10 +7,19 @@
 <div class="modal-header">
   <h3>{{!Title ? 'Confirmation':Title}}</h3>
 </div>
-<div class="modal-body">
-  <span>
-      <label class="modal-word-warp"><span ng-bind-html="msg"></span></label>
-  </span>
+<div class="modal-body" ng-switch="type">
+  <div ng-switch-when="json">
+    <div
+      ui-ace="{theme:'dawn', mode: 'json', rendererOptions: { fontSize: 15 } }"
+      type="text"
+      class="form-control"
+      ng-model="msg"
+      rows="10">
+    </div>
+  </div>
+  <div ng-switch-default>
+      <span id="confirmation-message" ng-bind-html="msg"></span>
+  </div>
   <br>
 </div>
 <div class="modal-footer">

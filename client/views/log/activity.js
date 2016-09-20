@@ -27,7 +27,7 @@
       {
         typeFilter = "1";
         self.helpKey = 'appException';
-        self.title ='APP Exceptions';
+        self.title ='Real-time Server Side Exceptions';
         tempColDefs = [
           {name: 'ID', displayName: 'Exception Id', sort: {direction: 'desc', priority: 1}, width: 100},
           {name: 'Username', displayName: 'Updated By', width: 200},
@@ -44,7 +44,7 @@
       else if ($state.$current.url.source.indexOf('/console') > -1) {
         typeFilter = "500";
         self.helpKey = 'appException';
-        self.title ='App Console';
+        self.title ='Real-time Console Log Messages';
         tempColDefs = [
           {name: 'ID', displayName: 'Id', width: 100, sort: {direction: 'desc', priority: 1}},
           {name: 'Username', displayName: 'Logged By', width: 200},

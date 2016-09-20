@@ -37,7 +37,6 @@
       };
 
       self.gridOptions = {
-        enableColumnResize: true,
         enablePaginationControls: false,
         useExternalSorting: true,
         multiSelect: true,

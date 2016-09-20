@@ -292,16 +292,10 @@
       <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
     </a>
     <ul>
-      <li ng-class="{active: nav.state == 'log.config', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.config')" href="">
-          <i class="ba-icon-configuration"></i>
-          <span>Configuration</span>
-        </a>
-      </li>
-      <li ng-class="{active: nav.state == 'log.history', disabled: nav.DatabaseStatus != 1}">
-        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.history')" href="">
-          <i class="ba-icon-data-history"></i>
-          <span>Data History</span>
+      <li ng-class="{active: nav.state == 'log.requests', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.requests')" href="">
+          <i class="ba-icon-documentation"></i>
+          <span>API Requests</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'log.console', disabled: nav.DatabaseStatus != 1}">
@@ -316,12 +310,18 @@
           <span>Server Side Exceptions</span>
         </a>
       </li>
-      <!--<li ng-class="{active: nav.state == 'log.requests', disabled: nav.DatabaseStatus != 1}">-->
-        <!--<a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.requests')" href="">-->
-          <!--<i class="ba-icon-server-side-exceptions"></i>-->
-          <!--<span>API Requests</span>-->
-        <!--</a>-->
-      <!--</li>-->
+      <li ng-class="{active: nav.state == 'log.config', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.config')" href="">
+          <i class="ba-icon-configuration"></i>
+          <span>Configuration</span>
+        </a>
+      </li>
+      <li ng-class="{active: nav.state == 'log.history', disabled: nav.DatabaseStatus != 1}">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'log.history')" href="">
+          <i class="ba-icon-data-history"></i>
+          <span>Data History</span>
+        </a>
+      </li>
     </ul>
   </li>
 

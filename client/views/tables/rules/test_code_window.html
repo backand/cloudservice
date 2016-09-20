@@ -26,7 +26,7 @@
   <div class="form-group" ng-if="rules.test.method == 'POST'">
     <label>Body</label>
     <div
-            ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+            ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
             class="form-control ace-db-template"
             name="requestBody"
             id="requestBody"
@@ -64,7 +64,7 @@
     <label for="rowData">{{ rules.ace.message }}</label>
     <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
     <div
-      ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+      ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
       class="form-control ace-db-template"
       name="rowData"
       id="rowData"
@@ -121,7 +121,14 @@
     <br/><br/>
     <label>Response Body:</label>
     <br/>
-    <bknd-copy-url type="textarea" copy-url-params="rules.copyResult"></bknd-copy-url>
+    <div ui-ace="{theme:'dawn', mode: 'json'}"
+         type="text"
+         class="form-control"
+         rows="10"
+         ng-readonly="true"
+         ng-model="rules.test.result"
+         style="resize: vertical; height: 200px;">
+    </div>
     <br/>
   </div>
 

@@ -27,6 +27,12 @@
     self.confirm = function (msg, okText, cancelText, showOk, showCancel, title, size) {
 
       self.modalScope.msg = msg;
+      if (isJson(msg)) {
+        self.modalScope.type = 'json';
+      } else {
+        self.modalScope.type = '';
+      }
+
       self.modalScope.okBtnText = okText || 'OK';
       self.modalScope.cancelBtnText = cancelText || 'CANCEL';
       self.modalScope.showOk = angular.isDefined(showOk) ? showOk : true;
@@ -39,13 +45,30 @@
 
       var modalInstance = $modal.open({
         templateUrl: 'common/services/confirm_popup_service.html',
-        backdrop: 'static',
         scope: self.modalScope,
         keyboard: false,
         size: size || 'sm'
       });
 
       return modalInstance.result;
+    };
+
+    function isJson(item) {
+      item = typeof item !== "string"
+        ? JSON.stringify(item)
+        : item;
+
+      try {
+        item = JSON.parse(item);
+      } catch (e) {
+        return false;
+      }
+
+      if (typeof item === "object" && item !== null) {
+        return true;
+      }
+
+      return false;
     }
   }
 

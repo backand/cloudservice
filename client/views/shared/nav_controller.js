@@ -34,6 +34,7 @@
 
     $scope.$on('fetchTables', fetchTables);
     $scope.$on('appname:saved', fetchTables);
+    $scope.$on('after:sync', fetchTables);
 
     function fetchTables() {
       clearTables();

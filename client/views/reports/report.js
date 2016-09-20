@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ReportController', ['$sce', 'ReportService', '$scope', ReportController]);
+    .controller('ReportController', ['$sce', 'ReportService', '$scope','$state', ReportController]);
 
-  function ReportController($sce, ReportService, $scope) {
+  function ReportController($sce, ReportService, $scope, $state) {
     var self = this;
     var height = "678";
 
@@ -16,7 +16,8 @@
       {name: "daily_active_identified_users", label: "Daily Active Registered Users", group:"- Activity"},
       {name: "weekly_active_identified_users", label: "Weekly Active Registered Users", group:"- Activity"},
       {name: "monthly_active_identified_users", label: "Monthly Active Registered Users", group:"- Activity"},
-      {name: "most_active_users", label: "Top Active Registered Users", group:"- Performance"},
+      {name: "most_active_users", label: "Top Active Registered Users", group:"- Activity"},
+      {name: "requests_per_objects", label: "Requests per Objects", group:"- Performance"},
       {name: "slow_requests", label: "Slow Requests", group:"- Performance"},
       {name: "backand_compute", label: "Backand Compute", group:"- Usage"},
       {name: "cache_memory", label: "Cache Memory", group:"- Usage"},
@@ -36,7 +37,12 @@
       {value: "custom", label: "Custom..."}
     ];
 
-    self.report = "devices_by_country";
+    if($state.params.id != undefined){
+      self.report = $state.params.id;
+    } else {
+      self.report = "devices_by_country";
+    }
+
     self.todaysDate = today();
 
     self.dateParam = "last7days";
@@ -70,6 +76,8 @@
 
     function setReportUrl(){
       if(self.report != "") {
+        $state.go('analytics.report', {id: self.report}, {notify: false});
+
         ReportService.getReportlUrl(self.report, returnDateOnly(self.startDate), returnDateOnly(self.endDate)).then(function (data) {
           setUrlPrefix(data.data.url, height);
         });

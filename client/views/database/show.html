@@ -52,7 +52,7 @@
                   <div class="form-group" ng-switch-when='mysql'>
                   <label for="usessh" class="col-sm-3 control-label">Use SSH:</label>
                     <div class="col-sm-9">
-                        <div class="form-control-static" id="usessh">{{dbshow.data.usingSsh}}</div>
+                        <div class="form-control-static" id="usessh">{{dbshow.data.SshUses}}</div>
                     </div>
                   </div>
 
@@ -65,7 +65,7 @@
                 </div>
 
 
-                <div ng-if="dbedit.data.usingSsh === true">
+                <div ng-if="dbedit.data.SshUses === true">
 
                   <div class="divider divider-dashed divider-lg pull-in"></div>
 
