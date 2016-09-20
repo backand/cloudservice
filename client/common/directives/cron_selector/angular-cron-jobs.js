@@ -347,30 +347,13 @@ angular.module('angular-cron-jobs').factory('cronService', function () {
     // In case of "every X minutes"
     if (frequency.base == 1 && cron[0].startsWith("*/")) {
       var minutesPart = cron[0].replace('*/', '');
-      if (allowMultiple) {
-        var tempArray = minutesPart.split(',');
-        for (var i = 0; i < tempArray.length; i++) {
-          tempArray[i] = +tempArray[i];
-        }
-        frequency.everyMinuteValues = tempArray;
-      } else {
-        frequency.everyMinuteValues = parseInt(minutesPart);
-      }
+      frequency.everyMinuteValues = parseInt(minutesPart);
       // The "every X minutes" mode only allows to choose minutes
       return frequency;
     }
 
     if (cron[0] !== '*') {
-      //preparing to handle multiple minutes
-      if (allowMultiple) {
-        var tempArray = cron[0].split(',');
-        for (var i = 0; i < tempArray.length; i++) {
-          tempArray[i] = +tempArray[i];
-        }
-        frequency.minuteValues = tempArray;
-      } else {
-        frequency.minuteValues = parseInt(cron[0]);
-      }
+      frequency.minuteValues = parseInt(cron[0]);
     }
     if (cron[1] !== '*') {
       //preparing to handle multiple hours
