@@ -6,8 +6,6 @@
             ng-model="myFrequency.base"
             ng-options="item.value as item.label for item in frequency"></select>
   </div>
-  {{myFrequency}}
-
   <div class="select-options">
     <div class="form-group"
          ng-show="myFrequency.base == 6">
@@ -15,6 +13,9 @@
       <input class="form-control"
              id="cron-expression"
              ng-model="ngModel">
+      <label class="pull-right"><a href="http://cronexpressiondescriptor.azurewebsites.net/?Expression={{ngModel}}"
+                target="_blank">Cron
+        Expression</a></label>
     </div>
     <div class="form-group" ng-show="myFrequency.base == 1">
       <span>Every</span>
@@ -25,11 +26,12 @@
       <span>Minutes</span>
     </div>
     <div class="form-group" ng-show="myFrequency.base == 2">
+      <span>Past the hour</span>
       <select class="cron-select minute-value form-control"
               ng-model="myFrequency.minuteValues"
               ng-options="value as value for value in minuteValues">
       </select>
-      <span ng-show="myFrequency.base == 2"> past the hour</span>
+      <span>Minutes</span>
     </div>
     <div ng-show="myFrequency.base == 4" class="form-group">
       <label for="week-day" ng-show="myFrequency.base == 4">Day of Week</label>

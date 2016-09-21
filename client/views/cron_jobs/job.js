@@ -29,10 +29,13 @@
       };
       self.frequency = {
         base: 1
-      }
+      };
       self.types = ['Action', 'Query', 'External'];
       //self.namePattern = /^\w+$/;
       self.new = $state.current.name === "cronJobs.new";
+      if(!self.new){
+        usSpinnerService.spin("loading");
+      }
       self.editMode = self.new || $state.current.name === "cronJobs.newSavedJob";
       self.job = {};
       self.testHttp = stringifyHttp(CronService.getTestHttp($stateParams.jobId));
@@ -45,9 +48,6 @@
             self.test();
           }
         });
-      }
-      else{
-        usSpinnerService.stop("loading");
       }
 
       //default values of the Job
@@ -93,14 +93,24 @@
     };
 
     self.cancel = function () {
-      if (self.jobForm.name.$pristine)
-        self.editMode = false;
-      else {
+
+      if(!self.new){
         ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?')
           .then(function (result) {
-            result ? init() : false;
+            if(result){
+              self.editMode = false;
+              init();
+            }
+          });
+      } else {
+        ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel new Cron?')
+          .then(function (result) {
+            if(result){
+              init();
+            }
           });
       }
+
     };
 
     self.test = function () {

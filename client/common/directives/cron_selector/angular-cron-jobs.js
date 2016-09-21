@@ -138,8 +138,10 @@ angular.module('angular-cron-jobs').directive('cronSelection', ['cronService', f
 
       $scope.$watch('ngModel', function (newValue) {
         if (angular.isDefined(newValue) && newValue) {
-          modelChanged = true;
-          $scope.myFrequency = cronService.fromCron(newValue, $scope.allowMultiple);
+          if(!angular.isDefined($scope.myFrequency) || (angular.isDefined($scope.myFrequency) && $scope.myFrequency.base != 6)){
+            modelChanged = true;
+            $scope.myFrequency = cronService.fromCron(newValue, $scope.allowMultiple);
+          }
         } else if (newValue === '') {
           $scope.myFrequency = undefined;
         }

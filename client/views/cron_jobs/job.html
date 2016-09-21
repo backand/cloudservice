@@ -9,7 +9,7 @@
            ng-click="cronJobs.deleteJob()">
           <i class="ti-trash"></i></a>
       </span>
-      <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
+      <div us-spinner spinner-key="loading"></div>
     </div>
     <div class="panel-body database-query-panel">
       <div class="row">
@@ -41,8 +41,6 @@
                           ng-model="cronJobs.job.description"></textarea>
               </div>
 
-{{cronJobs.job.schedule}}
-
               <cron-selection ng-model="cronJobs.job.schedule"
                               id="scheduler"
                               config="cronJobs.cronConfig"
@@ -63,25 +61,27 @@
 
                 <div ng-switch="cronJobs.job.cronType">
 
-                  <div ng-switch-when="Action">
+                  <div class="form-group" ng-switch-when="Action">
                     <label for="action-chooser">Choose Action:</label>
                     <select class="form-control"
+                            ng-disabled="cronJobs.actions.length === 0"
                             ng-options="action.iD as action.name for action in cronJobs.actions"
                             id="action-chooser"
                             ng-model="cronJobs.job.entityId">
                     </select>
                   </div>
 
-                  <div ng-switch-when="Query">
+                  <div class="form-group" ng-switch-when="Query">
                     <label for="query-chooser">Choose Query:</label>
                     <select class="form-control"
+                            ng-disabled="cronJobs.queries.length === 0"
                             ng-options="query.iD as query.name for query in cronJobs.queries"
                             id="query-chooser"
                             ng-model="cronJobs.job.entityId">
                     </select>
                   </div>
 
-                  <div ng-switch-when="External">
+                  <div class="form-group" ng-switch-when="External">
                     <label for="url">URL:</label>
                     <input class="form-control"
                            type="text"
