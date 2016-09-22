@@ -114,13 +114,16 @@
     };
 
     self.test = function () {
+      self.loadingTest = true;
       CronService.test($stateParams.jobId).then(function (response) {
         self.testResult = {
           request: JSON.stringify(response.data.request, null, 2),
           response: JSON.stringify(response.data.response, null, 2)
         };
+        self.loadingTest = false;
       }, function (error) {
         self.testError = error.data.Message;
+        errorHandler(error);
       });
     };
 
@@ -146,6 +149,7 @@
 
     function errorHandler(error) {
       self.loading = false;
+      self.loadingTest = false;
     }
 
     function createJob(isTest) {

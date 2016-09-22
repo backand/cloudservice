@@ -2,6 +2,7 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong style="text-transform:none">Cron</strong>
+      <ba-help-link key="crons" with-text="false"></ba-help-link>
       <span ng-show="!cronJobs.new">
         <a href="javascript:;"
            class="btn btn-lg pull-right"
@@ -112,7 +113,7 @@
                       <div class="form-group" ng-if="cronJobs.job.method == 'POST'">
                         <label for="request-data">Request Data:</label>
                         <div
-                          ui-ace="{onLoad : rules.ace.onLoad, theme:'monokai', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+                          ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
                           class="form-control ace-db-template"
                           id="request-data"
                           ng-model="cronJobs.job.data"
@@ -129,7 +130,7 @@
                     </div>
                     <div class="form-group">
                       <label for="headers">Headers</label>
-                      <div ui-ace="{theme: 'monokai'}"
+                      <div ui-ace="{theme: 'dawn'}"
                            type="text"
                            id="headers"
                            ng-model="cronJobs.job.headers"
