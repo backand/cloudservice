@@ -12,6 +12,7 @@
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
+      self.showIntercom = LayoutService.loadShowIntercomConfig();
     }());
 
     self.apps = AppsService.apps;
@@ -57,6 +58,12 @@
 
     $scope.$on('AppDbReady', function () {
       updateDefaultModelUse(self.currentAppName, true);
+    });
+
+    $scope.$watch(function () {
+      return self.showIntercom;
+    }, function (newVal, oldVal) {
+      newVal ? self.showIntercomLabel = 'Hide Intercom Icon' : self.showIntercomLabel = "Show Intercom Icon";
     });
 
     function updateDefaultModelUse(appName, force) {
@@ -144,6 +151,10 @@
         templateUrl: 'views/auth/delete_account.html',
         controller: 'DeleteAccountController as deleteAccount'
       });
+    };
+
+    self.toggleIntercom = function () {
+      LayoutService.toggleIntercomIconVisibility();
     };
 
     function goBackToIndex() {

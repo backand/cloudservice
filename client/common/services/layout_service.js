@@ -23,6 +23,23 @@
 
     };
 
+    self.loadShowIntercomConfig = function () {
+      if (window.intercomSettings) {
+        var storage = getLocalStorage();
+        window.intercomSettings.hide_default_launcher = storage.hideIntercom;
+      }
+    };
+
+    self.toggleIntercomIconVisibility = function () {
+      if (window.intercomSettings) {
+        window.intercomSettings.hide_default_launcher = !window.intercomSettings.hide_default_launcher;
+        var storage = getLocalStorage();
+        storage.hideIntercom = window.intercomSettings.hide_default_launcher;
+        return !window.intercomSettings.hide_default_launcher;
+      }
+      return false;
+    };
+
     self.closeJumbo = function () {
       $localStorage.backand[self.userId].hideJumbo = true;
     };
@@ -30,6 +47,16 @@
     self.openJumbo = function () {
       $localStorage.backand[self.userId].hideJumbo = false;
     };
+
+    function getLocalStorage() {
+      if (!$localStorage.backand) {
+        $localStorage.backand = $localStorage.backand || {};
+      }
+      if (!$localStorage.backand[userId]) {
+        $localStorage.backand[userId] = {};
+      }
+      return $localStorage.backand[userId];
+    }
 
   }
 
