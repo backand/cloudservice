@@ -1,7 +1,7 @@
 <section class="page-form-ele page database-query-section">
   <section class="panel panel-default">
     <div class="panel-heading">
-      <strong style="text-transform:none">Cron</strong>
+      <strong style="text-transform:none">Background Job</strong>
       <ba-help-link key="crons" with-text="false"></ba-help-link>
       <span ng-show="!cronJobs.new">
         <a href="javascript:;"
@@ -25,7 +25,7 @@
                 </label>
               </div>
               <div class="form-group">
-                <label for="name">Cron Name</label>
+                <label for="name">Name</label>
                 <input type="text"
                        class="form-control"
                        id="name" name="name" ng-model="cronJobs.job.name" required
@@ -51,7 +51,7 @@
               <fieldset ng-disabled="!cronJobs.editMode">
 
                 <div class="form-group">
-                  <label for="type">Job Type</label>
+                  <label for="type">Type</label>
                   <select class="form-control"
                           ng-options="type for type in cronJobs.types"
                           id="type"
@@ -119,6 +119,7 @@
                           ng-model="cronJobs.job.data"
                           style="resize: vertical; height: 200px;">
                         </div>
+                        <label for="request-data">* Request data must be in a JSON format</label>
                       </div>
                     </div>
                     <div class="form-group">

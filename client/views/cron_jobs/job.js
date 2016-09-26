@@ -30,7 +30,7 @@
       self.frequency = {
         base: 1
       };
-      self.types = ['Action', 'Query', 'External'];
+      self.types = ['Action', 'Query', 'External HTTP request'];
       //self.namePattern = /^\w+$/;
       self.new = $state.current.name === "cronJobs.new";
       if(!self.new){

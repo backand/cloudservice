@@ -156,21 +156,21 @@
     </ul>
   </li>
 
-  <li ng-class="{active: nav.state == 'cronJobs', disabled: nav.DatabaseStatus != 1}" >
+  <li ng-class="{active: nav.state == 'Jobs', disabled: nav.DatabaseStatus != 1}" >
     <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
-      <i class="ba-icon-quries"></i>
-      <span>Crons</span>
-      <ba-tooltip tooltip-text="Schedule background jobs to call to an action, a query or any external URL"
-                  tooltip-placement="right"
+      <i class="fa fa-clock-o"></i>
+      <span>Background Jobs</span>
+      <ba-tooltip tooltip-text="Schedule a background job to perform an action, query, or external HTTP call"
+                  tooltipcron-placement="right"
                   class=""></ba-tooltip>
 
-      <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
+      <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: -17px; padding-left: 20px;"></i>
     </a>
     <ul>
       <li ng-class="{active: false }">
         <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'cronJobs.new')" href="">
           <i class="ba-icon-new-query"></i>
-          <span>New Cron</span>
+          <span>New Job</span>
         </a>
       </li>
     </ul>
