@@ -154,7 +154,24 @@
     };
 
     self.toggleIntercom = function () {
-      LayoutService.toggleIntercomIconVisibility();
+      self.showIntercom = LayoutService.toggleIntercomIconVisibility();
+    };
+
+    self.hideDropdowns = function () {
+      self.showUserDropdown = false;
+      self.showHelpDropdown = false;
+    };
+
+    self.toggleUserDropdown = function ($event) {
+      self.showUserDropdown = !self.showUserDropdown;
+      self.showHelpDropdown = false;
+      $event.stopPropagation();
+    };
+
+    self.toggleHelpDropdown = function ($event) {
+      self.showHelpDropdown = !self.showHelpDropdown;
+      self.showUserDropdown = false;
+      $event.stopPropagation();
     };
 
     function goBackToIndex() {

@@ -250,7 +250,7 @@
                         border-left: 1px solid $header-border;
 
                         &.header-video-btn {
-                            
+
                           text-transform: uppercase;
                           color: white;
                           font-size: 14px;
@@ -265,6 +265,9 @@
                         }
                     }
                 }
+              .help-dropdown {
+                background-color: #e3e3e3;
+              }
             }
         }
 
@@ -383,10 +386,10 @@
     display: none;
   }
 @media screen and (max-width:550px) {
-   
+
    .top-header {
     .nav-right {
-        
+
         width:100%;
         text-align:left;
         position:relative;
@@ -395,12 +398,12 @@
             float:none;
             text-align:left;
         }
-        
+
 
     }
-   
-  } 
-    
+
+  }
+
 }
   .header-container > .top-header .dropdown-menu .bknd-username {
     display: inline;
@@ -422,7 +425,7 @@
     .nav-right {
         width:42% !important;
     }
-    
+
 }
 @media screen and (max-width:380px) {
     .top-nav .search-box .input-group-addon {

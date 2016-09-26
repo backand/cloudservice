@@ -1,7 +1,7 @@
 <section class="header-container ng-scope header-fixed bg-white"
          id="header">
   <header class="top-header clearfix"
-          ng-click="header.showUserDropdown = false">
+          ng-click="header.hideDropdowns()">
 
     <div ng-if="header.usingDefaultModel"
          class="alert db-alert alert-info">You’re Currently using the <strong> Default Data Model </strong>
@@ -54,7 +54,7 @@
       </ul>
       <ul class="nav-right pull-right list-unstyled">
         <li class="dropdown text-normal nav-profile">
-          <a ng-click="header.showUserDropdown = !header.showUserDropdown; $event.stopPropagation();"
+          <a ng-click="header.toggleUserDropdown($event)"
              href="" class="dropdown-toggle header-item" data-toggle="dropdown">
                 <span>
                     <span class="bknd-username">{{::header.getCurrentUser().username}}</span>
@@ -89,8 +89,8 @@
             </li>
           </ul>
         </li>
-        <li>
-          <a ng-click="header.showHelpDropdown = !header.showHelpDropdown; $event.stopPropagation();"
+        <li class="help-dropdown">
+          <a ng-click="header.toggleHelpDropdown($event)"
              href="" class="dropdown-toggle header-item" data-toggle="dropdown">
                 <span>
                     <i class="ti-help"></i>
