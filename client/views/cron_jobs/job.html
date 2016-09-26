@@ -16,9 +16,9 @@
       <div class="row">
         <div class="left-col">
           <form role="form" ng-submit="cronJobs.saveJob()" name="cronJobs.jobForm" novalidate>
-            <div class="form-group text-danger" ng-show="cronJobs.jobForm.$error.toomany">You have reached the
+            <div class="form-group text-danger" ng-show="cronJobs.tooMany">You have reached the
               maximum amount of jobs. Please contact Back& support for more jobs.</div>
-            <fieldset ng-disabled="!cronJobs.editMode || cronJobs.jobForm.$error.toomany">
+            <fieldset ng-disabled="!cronJobs.editMode || cronJobs.tooMany">
               <div class="form-group" ng-if="!cronJobs.new">
                 <label class="strong" for="active">Active</label>
                 <label class="pull-right ui-switch ui-switch-success ui-switch-sm">

@@ -53,7 +53,7 @@
       } else {
         LimitsService.get('cron').then(function (response) {
           if(response.data.limit <= response.data.count) {
-            self.jobForm.$error.toomany = true;
+            self.tooMany = true;
           }
 
         });
