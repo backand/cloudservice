@@ -14,9 +14,10 @@
       'stringifyHttp',
       'TablesService',
       'usSpinnerService',
+      'LimitsService',
       CronJobsController]);
 
-  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp,TablesService,usSpinnerService) {
+  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp,TablesService,usSpinnerService, LimitsService) {
 
     var self = this;
 
@@ -24,6 +25,7 @@
       self.appName = AppsService.currentApp.Name;
       RulesService.appName = self.appName;
       CronService.appName = self.appName;
+      LimitsService.appName = self.appName;
       self.cronConfig = {
         allowMultiple: true
       };
@@ -47,6 +49,13 @@
           if ($stateParams.isTest) {
             self.test();
           }
+        });
+      } else {
+        LimitsService.get('cron').then(function (response) {
+          if(response.data.limit <= response.data.count) {
+            self.jobForm.$error.toomany = true;
+          }
+
         });
       }
 
