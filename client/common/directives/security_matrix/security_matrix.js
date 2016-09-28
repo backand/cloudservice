@@ -11,6 +11,7 @@
       scope: {
         securityTemplate: '=',
         override: '=',
+        showAddRole: '=?',
         actions: '=?',
         onUpdate: '&',
         onRoleAdd: '&',
@@ -21,6 +22,7 @@
 
       controller: function($scope) {
         $scope.actions = $scope.actions || ['read', 'create', 'update', 'delete'];
+        $scope.showAddRole = $scope.showAddRole || true;
       },
 
       link: function securityMatrixLink(scope) {
