@@ -138,6 +138,27 @@
                         right: 5px;
                         top: 12px;
                     }
+
+                    .status {
+                      position: relative;
+                      top: 4px;
+                      left: 2px;
+                      border: 6px solid #aaa;
+                      border-radius: 6px;
+                      margin-right: 8px;
+
+                      &.status-error {
+                        border-color: $brand-danger;
+                      }
+
+                      &.status-warning {
+                        border-color: $brand-warning;
+                      }
+
+                      &.status-success {
+                        border-color: $brand-success;
+                      }
+                    }
                 }
             }
         }

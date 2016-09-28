@@ -39,51 +39,55 @@
         <li>GET example:
   <pre><code>
     var response = $http({
-      method: "GET",
-      url: CONSTS.apiUrl + "/1/objects/objectexample",
-      params: {
-        filter: [{
-          fieldName: "fieldexample",
-          operator:"contains",
-          value:"somestring"
-        }]
-      },
-      headers: {"Authorization": userProfile.token}
+        method: "GET",
+        url: CONSTS.apiUrl + "/1/objects/objectexample",
+        params: {
+            filter: [{
+                fieldName: "fieldexample",
+                operator:"contains",
+                value:"somestring"
+            }]
+        },
+        headers: {"Authorization": userProfile.token}
     });
   </code></pre>
+  <li><b>Note about "Authorization" header </b>: Sending the authorization header to the $http function is optional.
+        without Authorization the context of the request will be as admin role.
+      </li><br/>
+
         </li>
         <li>POST example:
   <pre><code>
     var response = $http({
-      method: "POST",
-      url:CONSTS.apiUrl + "/1/objects/objectexample",
-      data: {
-        fieldexample1: "somevalue",
-        fieldexample2: "somevalue"
-      },
-      headers: {"Authorization": userProfile.token}
+        method: "POST",
+        url:CONSTS.apiUrl + "/1/objects/objectexample",
+        data: {
+            fieldexample1: "somevalue",
+            fieldexample2: "somevalue"
+        },
+        headers: {"Authorization": userProfile.token}
     });
   </code></pre>
         </li>
         <li>PUT example:
   <pre><code>
     var response = $http({
-      method: "PUT",
-      url: CONSTS.apiUrl + "/1/objects/objectexample/5",
-      data: {
-        fieldexample1: "somevalue",
-        fieldexample2: "somevalue"
-      },
-      headers: {"Authorization": userProfile.token}
+        method: "PUT",
+        url: CONSTS.apiUrl + "/1/objects/objectexample/5",
+        data: {
+            fieldexample1: "somevalue",
+            fieldexample2: "somevalue"
+        },
+        headers: {"Authorization": userProfile.token}
     });
   </code></pre>
         </li>
         <li>DELETE example:
   <pre><code>
     var response = $http({
-      method: "DELETE",
-      url: CONSTS.apiUrl + "/1/objects/objectexample/5",
-      headers: {"Authorization": userProfile.token}
+        method: "DELETE",
+        url: CONSTS.apiUrl + "/1/objects/objectexample/5",
+        headers: {"Authorization": userProfile.token}
     });
   </code></pre>
         </li>

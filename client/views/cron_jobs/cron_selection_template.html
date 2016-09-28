@@ -1,0 +1,64 @@
+<div class="cron-wrap">
+  <div class="form-group">
+    <label for="scheduler">Frequency</label>
+    <select id="scheduler"
+            class="cron-select form-control"
+            ng-model="myFrequency.base"
+            ng-options="item.value as item.label for item in frequency"></select>
+  </div>
+  <div class="select-options">
+    <div class="form-group"
+         ng-show="myFrequency.base == 6">
+      <label for="cron-expression">Cron Expression</label>
+      <input class="form-control"
+             id="cron-expression"
+             ng-model="ngModel">
+      <label class="pull-right"><a href="http://cronexpressiondescriptor.azurewebsites.net/?Expression={{ngModel}}"
+                target="_blank">Cron
+        Expression</a></label>
+    </div>
+    <div class="form-group" ng-show="myFrequency.base == 1">
+      <span>Every</span>
+      <select class="cron-select minute-value form-control"
+              ng-model="myFrequency.everyMinuteValues"
+              ng-options="value as value for value in everyMinuteValues">
+      </select>
+      <span>Minutes</span>
+    </div>
+    <div class="form-group" ng-show="myFrequency.base == 2">
+      <span>Past the hour</span>
+      <select class="cron-select minute-value form-control"
+              ng-model="myFrequency.minuteValues"
+              ng-options="value as value for value in minuteValues">
+      </select>
+      <span>Minutes</span>
+    </div>
+    <div ng-show="myFrequency.base == 4" class="form-group">
+      <label for="week-day" ng-show="myFrequency.base == 4">Day of Week</label>
+      <select class="form-control"
+              id="week-day"
+              ng-model="myFrequency.dayValues"
+              multiple="multiple"
+              ng-options="value as (value | cronDayName) for value in dayValues">
+      </select>
+    </div>
+    <div ng-show="myFrequency.base >= 5 && myFrequency.base < 6" class="form-group">
+      <label for="day-of-month" ng-show="myFrequency.base >= 5">Day of Month</label>
+      <select class="form-control"
+              id="day-of-month"
+              ng-model="myFrequency.dayOfMonthValues"
+              multiple="multiple"
+              ng-options="value as (value | cronMonthName) for value in monthValues">
+      </select>
+    </div>
+    <div ng-show="myFrequency.base >= 3 && myFrequency.base < 6" class="form-group">
+      <label for="hour-values" ng-show="myFrequency.base >= 3">Hour of Day (UTC)</label>
+      <select class="form-control"
+              id="hour-values"
+              ng-model="myFrequency.hourValues"
+              multiple
+              ng-options="value as value for value in hourValues">
+      </select>
+    </div>
+  </div>
+</div>
