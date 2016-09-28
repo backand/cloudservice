@@ -32,7 +32,7 @@ angular.module('backand.database')
       self.dataName = currentApp.databaseName || 'mysql';
       self.data = {
         SslUses: 'true',
-        usingSsh: 'false'
+        SshUses: 'false'
       };
 
       if (self.databaseStatus !== 0) {
@@ -51,7 +51,7 @@ angular.module('backand.database')
             self.data.database = dataIn.Catalog;
             self.data.server = dataIn.ServerName;
             self.data.username = dataIn.Username;
-            self.data.usingSsh  = String(dataIn.SshUses);
+            self.data.SshUses  = String(dataIn.SshUses);
             self.data.SslUses  = String(dataIn.SslUses);
             self.data.sshRemoteHost  = dataIn.SshRemoteHost;
             self.data.sshUser   = dataIn.SshUser;
@@ -304,11 +304,11 @@ angular.module('backand.database')
           return;
         case 'postgresql':
           self.dataName = 'postgresql';
-          self.data.usingSsh = false;
+          self.data.SshUses = false;
           return;
         case 'sqlserver':
           self.dataName = 'sqlserver';
-          self.data.usingSsh = false;
+          self.data.SshUses = false;
           return;
         case 'oracle':
           self.Confirmation('Oracle is available only in the Enterprise edition.');
