@@ -478,7 +478,14 @@
     }
 
     function onOverrideChange(newVal, oldVal) {
-      if (oldVal !== undefined) {
+      if (oldVal !== undefined && newVal != oldVal) {
+
+        //loop on all the fields to update the Precedent (which is override by Relly)
+
+        self.fields.forEach(function(field) {
+          field.permissions.overrideinheritable = self.view.permissions.overrideinheritable;
+        });
+
         ColumnsService.commit(self.view);
         rebuildTemplate();
       }
