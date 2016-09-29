@@ -154,6 +154,7 @@
     <security-matrix security-template="security.sTemplate"
                      override="security.view.permissions.overrideinheritable"
                      on-update="security.templateChanged(template)"
+                     show-add-role="false"
                      on-role-add="security.templateRoleAdd(role)"
                      on-role-rename="security.templateRoleRename(role, newRole)"
                      on-role-remove="security.templateRoleRemove(role)">
