@@ -40,11 +40,18 @@
             <div class="ui-select" style="font-weight: bold;">
               <select ng-model="header.currentAppName"
                       ng-change="header.goToApp()"
-                      ng-options="app.Name as app.Name for app in header.apps.list | orderBy:'Name'">
+                      ng-options="app.Name as app.Name for app in header.apps.list | orderBy:'Name'"
+                      class="app-select">
               </select>
             </div>
             <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
                  style="position: relative;left: 150px;top: -18px;"></div>
+          </div>
+        </li>
+
+        <li class="search-box" id="search">
+          <div class="input-group">
+            <bknd-search results="header.searchResults"></bknd-search>
           </div>
         </li>
         <li ng-if="header.debugMode">
