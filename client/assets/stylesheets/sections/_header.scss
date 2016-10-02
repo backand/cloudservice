@@ -432,3 +432,17 @@
         display:none;
     }
 }
+
+.search-results {
+  position: fixed;
+  top: $header_height;
+  min-height: 150px;
+  min-width: 600px;
+  background: #D6DADC;
+  box-shadow: 0 0 3px 0 rgba(128,126,128,1);
+  border-radius: 3px 3px 3px 3px;
+
+  .search-results-footer {
+
+  }
+}

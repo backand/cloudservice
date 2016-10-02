@@ -1,6 +1,27 @@
-<input type="text" ng-model="search.query"
-       placeholder="Search..." class="form-control">
-<i ng-show="search.loading" class="glyphicon glyphicon-refresh"></i>
-<div ng-show="search.noResults">
-  <i class="glyphicon glyphicon-remove"></i> No Results Found
+<div>
+  <input type="text" ng-model="search.query"
+         placeholder="Search..." class="form-control"
+         ng-focus="search.showResultPopover = true"
+         ng-blur="search.showResultPopover = false">
+  <div class="search-results" ng-show="search.showResultPopover" ng-mousedown="$event.preventDefault();">
+    <div>
+      <h3>Search Results</h3>
+
+      <div ng-show="search.results.Action">
+        <h3>Actions</h3>
+        <div ng-repeat="action in search.results.Action.actionName">{{action.name}}</div>
+      </div>
+
+      <div ng-show="search.results.Query">
+        <h3>Queries</h3>
+        <div ng-repeat="query in search.results.Query.queryName">{{action.name}}</div>
+      </div>
+
+      <div class="search-results-footer">
+        <h3>Looking for help?</h3>
+        <p>Check out <a href="http://docs.backand.com">our documentation</a></p>
+      </div>
+
+    </div>
+  </div>
 </div>
