@@ -1,27 +1,53 @@
 <div>
   <input type="text" ng-model="search.query"
-         placeholder="Search..." class="form-control"
+         placeholder="Search..." class="form-control search-input"
          ng-focus="search.showResultPopover = true"
          ng-blur="search.showResultPopover = false">
   <div class="search-results" ng-show="search.showResultPopover" ng-mousedown="$event.preventDefault();">
-    <div>
-      <h3>Search Results</h3>
+    <div class="popover-wrapper">
 
-      <div ng-show="search.results.Action">
-        <h3>Actions</h3>
-        <div ng-repeat="action in search.results.Action.actionName">{{action.name}}</div>
+      <div class="results" ng-show="!search.loading && search.isAnyResult()">
+        <h3>Search Results</h3>
+
+        <div class="result-category" ng-show="search.results.Action">
+          <h3>Actions</h3>
+          <div class="result" ng-repeat="action in search.results.Action.actionName">
+            <div class="result-box">{{action.name}}</div>
+            <div class="result-label">{{action.snippets}}</div>
+          </div>
+        </div>
+
+        <div class="result-category" ng-show="search.results.Query">
+          <h3>Queries</h3>
+          <div class="result" ng-repeat="query in search.results.Query.queryName">
+            <div class="result-box">{{query.name}}</div>
+            <div class="result-label">{{query.snippets}}</div>
+          </div>
+        </div>
+
+        <div class="result-category" ng-show="search.results.Object">
+          <h3>Objects</h3>
+          <div class="result" ng-repeat="object in search.results.Object.objectName">
+            <div class="result-box">{{object.name}}</div>
+            <div class="result-label">{{object.snippets}}</div>
+          </div>
+        </div>
       </div>
 
-      <div ng-show="search.results.Query">
-        <h3>Queries</h3>
-        <div ng-repeat="query in search.results.Query.queryName">{{action.name}}</div>
+
+      <div ng-show="search.loading">
+        <h3>Loading results...</h3>
+      </div>
+
+      <div ng-show="!search.loading && !search.isAnyResult() && search.isValidQuery()">
+        <h3>No results found</h3>
+        <p>Please refine your search</p>
       </div>
 
       <div class="search-results-footer">
         <h3>Looking for help?</h3>
-        <p>Check out <a href="http://docs.backand.com">our documentation</a></p>
+        <p>Check out our <a href="http://docs.backand.com" target="_blank">documentation</a></p>
       </div>
-
     </div>
   </div>
 </div>

@@ -20,7 +20,9 @@
     SearchService.appName = self.appName;
 
     self.search = function (query) {
+      self.loading = true;
       SearchService.get(query).then(function (response) {
+        self.loading = false;
         console.log(response);
         self.results = response.data;
         $rootScope.$broadcast('searchResults', self.results);
@@ -30,9 +32,20 @@
     $scope.$watch(function () {
       return self.query;
     }, function (newVal, oldVal) {
-      if (newVal && newVal.length > 1) {
+      if (self.isValidQuery()) {
         self.search(newVal);
+      } else {
+        self.results = {};
       }
     });
+
+    // Returns whether there is any result to the query
+    self.isAnyResult = function () {
+      return self.results.Action || self.results.Query || self.results.Object;
+    };
+
+    self.isValidQuery = function () {
+      return self.query && self.query.length > 1;
+    }
   }
 }());
