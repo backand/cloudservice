@@ -54,7 +54,8 @@
                            SocketService,
                            $rootScope,
                            stringifyHttp,
-                           $localStorage) {
+                           $localStorage,
+                           $state) {
 
     var self = this;
     /**

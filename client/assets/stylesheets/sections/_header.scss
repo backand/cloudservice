@@ -452,6 +452,8 @@
   box-shadow: 0 0 3px 0 rgba(128,126,128,1);
   border-radius: 3px 3px 3px 3px;
   font-size: 12px;
+  overflow-y: scroll;
+  max-height: 800px;
 
   div.popover-wrapper {
     margin: 0 15px;
@@ -477,6 +479,7 @@
         padding: 2px 5px;
         display: inline-block;
         float: left;
+        cursor: pointer;
       }
       .result-label {
         margin-left: 20px;

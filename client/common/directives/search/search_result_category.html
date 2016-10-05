@@ -1,0 +1,8 @@
+<div class="result-category" ng-show="categoryData">
+  <h3>{{categoryName}}</h3>
+  <div class="result" ng-repeat="action in search.results.Action.actionName">
+    <div class="result-box">{{action.name}}</div>
+    <div class="result-label">{{action.snippets}}</div>
+  </div>
+</div>
+

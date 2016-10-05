@@ -9,12 +9,12 @@
           results: '='
         },
         templateUrl: 'common/directives/search/search.html',
-        controller: ['SearchService', 'AppsService', '$scope', '$rootScope', SearchController],
+        controller: ['SearchService', 'AppsService', '$scope', '$rootScope', '$state', SearchController],
         controllerAs: 'search'
       }
     });
 
-  function SearchController(SearchService, AppsService, $scope, $rootScope) {
+  function SearchController(SearchService, AppsService, $scope, $rootScope, $state) {
     var self = this;
     self.appName = AppsService.currentApp.Name;
     SearchService.appName = self.appName;
@@ -46,6 +46,18 @@
 
     self.isValidQuery = function () {
       return self.query && self.query.length > 1;
-    }
+    };
+
+    self.goToAction = function (action) {
+      $state.go('object_actions', {actionId: action.id, tableId: action.objectId});
+    };
+
+    self.goToQuery = function (query) {
+      $state.go('dbQueries.query', {queryId: query.id});
+    };
+
+    self.goToObject = function (object) {
+      $state.go('object_data', {tableId: object.id});
+    };
   }
 }());

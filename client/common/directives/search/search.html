@@ -11,25 +11,31 @@
 
         <div class="result-category" ng-show="search.results.Action">
           <h3>Actions</h3>
-          <div class="result" ng-repeat="action in search.results.Action.actionName">
-            <div class="result-box">{{action.name}}</div>
-            <div class="result-label">{{action.snippets}}</div>
+          <div class="result" ng-repeat="action in search.results.Action">
+            <div class="result-box" ng-click="search.goToAction(action)">{{action.name}}</div>
+            <div class="result-label">
+              <p ng-repeat="snippet in action.snippets | limitTo: 3">{{snippet.snippet}}</p>
+            </div>
           </div>
         </div>
 
         <div class="result-category" ng-show="search.results.Query">
           <h3>Queries</h3>
-          <div class="result" ng-repeat="query in search.results.Query.queryName">
-            <div class="result-box">{{query.name}}</div>
-            <div class="result-label">{{query.snippets}}</div>
+          <div class="result" ng-repeat="query in search.results.Query">
+            <div class="result-box" ng-click="search.goToQuery(query)">{{query.name}}</div>
+            <div class="result-label">
+              <p ng-repeat="snippet in query.snippets | limitTo: 3">{{snippet.snippet}}</p>
+            </div>
           </div>
         </div>
 
         <div class="result-category" ng-show="search.results.Object">
           <h3>Objects</h3>
-          <div class="result" ng-repeat="object in search.results.Object.objectName">
-            <div class="result-box">{{object.name}}</div>
-            <div class="result-label">{{object.snippets}}</div>
+          <div class="result" ng-repeat="object in search.results.Object">
+            <div class="result-box" ng-click="search.goToObject(object)">{{object.name}}</div>
+            <div class="result-label">
+              <p ng-repeat="snippet in object.snippets | limitTo: 3">{{snippet.snippet}}</p>
+            </div>
           </div>
         </div>
       </div>
