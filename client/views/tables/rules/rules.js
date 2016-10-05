@@ -934,6 +934,15 @@
         }
       });
 
+      if ($stateParams.actionId) {
+        var action = _.first(self.ruleList, function (rule) {
+          return rule.__metadata.id == $stateParams.actionId;
+        });
+        if (action) {
+          self.showAction(action.name);
+        }
+      }
+
     }
 
     self.getDataActionType = function () {
