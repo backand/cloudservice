@@ -4,17 +4,16 @@
 
   function SearchService($http, CONSTS) {
     var self = this;
-    self.appName = null;
     var SEARCH_URL = '/1/admin/search';
 
-    self.get = function (query) {
+    self.get = function (query, appName) {
       return $http({
         method: 'GET',
         url: CONSTS.appUrl + SEARCH_URL,
         params: {
           q: query
         },
-        headers: {AppName: self.appName}
+        headers: {AppName: appName}
       });
     };
   }

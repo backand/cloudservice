@@ -230,6 +230,14 @@
                 }
                 .search-input {
                   height: 30px;
+                  width: 200px;
+                  transition: width 1s;
+                }
+
+                .search-input-clicked {
+                  height: 30px;
+                  width: 400px;
+                  transition: width 1s;
                 }
 
                 .app-select {
@@ -444,8 +452,8 @@
 }
 
 .search-results {
-  position: fixed;
-  top: $header_height;
+  position: absolute;
+  top: $header_height - 10;
   min-height: 100px;
   min-width: 400px;
   background: #ebeff1;
@@ -486,6 +494,11 @@
         display: inline-block;
         word-wrap: break-word;
         max-width: 500px;
+        .search-result-snippet {
+          b {
+            font-weight: 800;
+          }
+        }
       }
     }
   }

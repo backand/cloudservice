@@ -935,9 +935,9 @@
       });
 
       if ($stateParams.actionId) {
-        var action = _.first(self.ruleList, function (rule) {
-          return rule.__metadata.id == $stateParams.actionId;
-        });
+        var action = _.filter(self.ruleList, function (rule) {
+          return rule.__metadata.id === $stateParams.actionId;
+        })[0];
         if (action) {
           self.showAction(action.name);
         }
