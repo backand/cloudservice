@@ -1,7 +1,7 @@
 <section class="header-container ng-scope header-fixed bg-white"
          id="header">
   <header class="top-header clearfix"
-          ng-click="header.showUserDropdown = false">
+          ng-click="header.hideDropdowns()">
 
     <div ng-if="header.usingDefaultModel"
          class="alert db-alert alert-info">You’re Currently using the <strong> Default Data Model </strong>
@@ -49,51 +49,80 @@
         </li>
         <li ng-if="header.debugMode">
           <p style="color:red;position: relative;left: 220px;top: 13px;"><span
-                  class="glyphicon glyphicon-wrench"></span> debug mode</p>
+            class="glyphicon glyphicon-wrench"></span> debug mode</p>
         </li>
       </ul>
       <ul class="nav-right pull-right list-unstyled">
-        <li class="dropdown text-normal nav-profile">
-            <a ng-click="header.showUserDropdown = !header.showUserDropdown; $event.stopPropagation();"
-               href="" class="dropdown-toggle header-item" data-toggle="dropdown">
-                <span>
-                    <span class="bknd-username">{{::header.getCurrentUser().username}}</span>
-                    <i class="ti-arrow-circle-down"></i>
-                </span>
-            </a>
-            <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
-                <li class="bknd-username"><a>{{::header.getCurrentUser().username}}</a></li>
-                <li>
-                    <a href="" ng-click="header.changePassword()">
-                        <i class="ti-lock"></i>
-                        <span>Change Password</span>
-                    </a>
-                </li>
-                <li>
-                  <a href="" ng-click="header.openPaymentMethod()">
-                    <i class="ti-money"></i>
-                    <span>Payment Method</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="" ng-click="header.deleteAccount()">
-                    <i class="ti-trash"></i>
-                    <span>Delete Account</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="" ng-click="header.logout()">
-                    <i class="ti-export"></i>
-                    <span>Log Out</span>
-                  </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-          <a href="" ng-click="header.openVideoModal()" class="header-item header-video-btn">
-            <img class="header-video-img" src="assets/images/docs_pages/video-tutorials-button.png" />
-            <span class="header-video-title" analytics-wrapper target="video">Video Tutorials</span>
+        <li class="text-normal">
+          <a href="http://status.backand.com" target="_blank" style="margin-left: 15px;">
+            <span tooltip="{{header.currentStatus}}" tooltip-placement="bottom">
+              <i class="current-status-indicator"></i>
+              System Status
+            </span>
           </a>
+        </li>
+        <li class="dropdown text-normal nav-profile">
+          <a ng-click="header.toggleUserDropdown($event)"
+             href="" class="dropdown-toggle header-item" data-toggle="dropdown">
+              <span class="bknd-username">{{::header.getCurrentUser().username}}
+                <i class="ti-arrow-circle-down"></i>
+              </span>
+          </a>
+          <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
+            <li class="bknd-username"><a>{{::header.getCurrentUser().username}}</a></li>
+            <li>
+              <a href="" ng-click="header.changePassword()">
+                <i class="ti-lock"></i>
+                <span>Change Password</span>
+              </a>
+            </li>
+            <li>
+              <a href="" ng-click="header.openPaymentMethod()">
+                <i class="ti-money"></i>
+                <span>Payment Method</span>
+              </a>
+            </li>
+            <li>
+              <a href="" ng-click="header.deleteAccount()">
+                <i class="ti-trash"></i>
+                <span>Delete Account</span>
+              </a>
+            </li>
+            <li>
+              <a href="" ng-click="header.logout()">
+                <i class="ti-export"></i>
+                <span>Log Out</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="help-dropdown">
+          <a ng-click="header.toggleHelpDropdown($event)"
+             href="" class="dropdown-toggle header-item" data-toggle="dropdown">
+                <span>
+                    <i class="ti-help"></i>
+                </span>
+          </a>
+          <ul ng-show="header.showHelpDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
+            <li>
+              <a target="_blank" href="http://docs.backand.com">
+                <i class="ti-agenda"></i>
+                <span>Backand Documentation</span>
+              </a>
+            </li>
+            <li>
+              <a href="" ng-click="header.openVideoModal()">
+                <i class="ti-video-clapper"></i>
+                <span>Video Tutorials</span>
+              </a>
+            </li>
+            <li>
+              <a href="" ng-click="header.toggleIntercom()">
+                <i class="ti-comment-alt"></i>
+                <span>{{header.showIntercomLabel}}</span>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>

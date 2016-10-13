@@ -3,15 +3,17 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ['$scope', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService', HeaderController]);
+    ['$scope', '$http', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService', HeaderController]);
 
-  function HeaderController($scope, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService) {
+  function HeaderController($scope, $http, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService) {
     var self = this;
     self.usingDefaultModel = false;
     self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
+      self.showIntercom = LayoutService.loadShowIntercomConfig();
+      displayStatus();
     }());
 
     self.apps = AppsService.apps;
@@ -57,6 +59,12 @@
 
     $scope.$on('AppDbReady', function () {
       updateDefaultModelUse(self.currentAppName, true);
+    });
+
+    $scope.$watch(function () {
+      return self.showIntercom;
+    }, function (newVal, oldVal) {
+      newVal ? self.showIntercomLabel = 'Hide Intercom Icon' : self.showIntercomLabel = "Show Intercom Icon";
     });
 
     function updateDefaultModelUse(appName, force) {
@@ -146,8 +154,81 @@
       });
     };
 
+    self.toggleIntercom = function () {
+      self.showIntercom = LayoutService.toggleIntercomIconVisibility();
+    };
+
+    self.hideDropdowns = function () {
+      self.showUserDropdown = false;
+      self.showHelpDropdown = false;
+    };
+
+    self.toggleUserDropdown = function ($event) {
+      self.showUserDropdown = !self.showUserDropdown;
+      self.showHelpDropdown = false;
+      $event.stopPropagation();
+    };
+
+    self.toggleHelpDropdown = function ($event) {
+      self.showHelpDropdown = !self.showHelpDropdown;
+      self.showUserDropdown = false;
+      $event.stopPropagation();
+    };
+
     function goBackToIndex() {
       $state.go('apps.index');
+    }
+
+    function displayStatus(){
+      var statusAPI = "https://api.status.io/1.0/status/57f4ccbf9d490a4723000a05";
+      var maxStatusCode = "";
+      var maxStatusDescription = "";
+      var sc = "";
+      var sd = "";
+
+      $http.get(statusAPI).then(function(results){
+        var data = results.data;
+        angular.forEach(data.result.status, function(s){
+          angular.forEach(s.containers, function(c){
+            sc = c.status_code;
+            sd = c.status;
+            if (maxStatusCode < sc){
+              maxStatusCode = sc;
+              maxStatusDescription = sd;
+            }
+          })
+        });
+
+        if (maxStatusCode === ""){
+          return;
+        }
+
+        self.currentStatus = "Current System Status: ";
+        // Operational
+        if (maxStatusCode === 100){
+          angular.element(".current-status-indicator").addClass("green");
+          self.currentStatus += maxStatusDescription;
+          //$("#current-status-description").text(maxStatusDescription);
+        }
+        // Scheduled Maintenance
+        if (maxStatusCode === 200){
+          angular.element(".current-status-indicator").addClass("blue");
+          self.currentStatus += maxStatusDescription;
+        }
+        // Degraded Performance || Partial Outage
+        if (maxStatusCode === 300 || maxStatusCode === 400){
+          angular.element(".current-status-indicator").addClass("yellow");
+          self.currentStatus += maxStatusDescription;
+        }
+        // Service Disrtuption || Security Issue
+        if (maxStatusCode === 500 || maxStatusCode === 600){
+          angular.element(".current-status-indicator").addClass("red");
+          self.currentStatus += maxStatusDescription;
+        }
+
+
+      })
+
     }
 
 
