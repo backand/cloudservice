@@ -127,6 +127,10 @@
           "ContinuousDeployment":{
             "page":"configuration",
             "url":"http://docs.backand.com/en/latest/what_would_you_like_to_do/continuous_deployment/index.html"
+          },
+          "crons":{
+            "page":"cron",
+            "url":"http://docs.backand.com/en/latest/getting_started/crons/index.html"
           }
         }
 

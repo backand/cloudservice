@@ -152,6 +152,12 @@ angular.module('backand.routes', []).
         parent: 'app',
         abstract: true,
         template: '<div ui-view></div>'
+      })
+      .state('cronJobs', {
+        url: '/cron',
+        parent: 'app',
+        abstract: true,
+        template: '<div ui-view></div>'
       });
   })
   .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS','$window', run]);

@@ -156,6 +156,35 @@
     </ul>
   </li>
 
+  <li ng-class="{active: nav.state == 'Jobs', disabled: nav.DatabaseStatus != 1}" >
+    <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
+      <i class="fa fa-clock-o"></i>
+      <span>Background Jobs</span>
+      <ba-tooltip tooltip-text="Schedule a background job to perform an action, query, or external HTTP call"
+                  tooltipcron-placement="right"
+                  class=""></ba-tooltip>
+
+      <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: -17px; padding-left: 20px;"></i>
+    </a>
+    <ul>
+      <li ng-class="{active: false }">
+        <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'cronJobs.new')" href="">
+          <i class="ba-icon-new-query"></i>
+          <span>New Job</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="scrollbar ex4">
+      <li ng-class="{active: nav.state == 'cronJobs'}" ng-repeat="cronJob in nav.cronJobs">
+        <a ng-click="nav.showCronJob($event, cronJob)" ng-class="{disabled: false}" href="">
+          <i class=""></i>
+          <span class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>
+          <span>{{cronJob.name}}</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+
   <li ng-class="{active: nav.state == 'reports', disabled: nav.DatabaseStatus != 1}" >
     <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
       <i class="ba-icon-icon-analtyics"  style="font-size: 14px;"></i>

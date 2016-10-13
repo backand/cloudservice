@@ -1,0 +1,45 @@
+<h3>Test Cron</h3>
+<br/>
+<form>
+  <button type="button"
+          class="btn btn-success btn-lg btn-w-lg"
+          data-style="expand-right" ladda="cronJobs.loadingTest"
+          ng-disabled="!cronJobs.allowTest()"
+          ng-click="cronJobs.test()">Test
+  </button>
+  <button type="button"
+          style=""
+          class="btn btn-success btn-lg btn-w-lg"
+          data-style="expand-right" ladda="cronJobs.loading || cronJobs.loadingTest"
+          ng-disabled="cronJobs.jobForm.$invalid"
+          ng-click="cronJobs.saveJob(true)">Save & Test
+  </button>
+  <div ng-if="!cronJobs.allowTest()">** Must save first to enable Test cron job</div>
+</form>
+
+<div ng-show="cronJobs.testError" class="input-error">{{ cronJobs.testError }}</div>
+
+<div id="test-request-wrapper" ng-show="cronJobs.testResult && !cronJobs.testError">
+  <label>Request</label>
+  <div
+       ui-ace="{theme:'dawn', mode: 'json', rendererOptions: { fontSize: 15 } }"
+       type="text"
+       class="form-control"
+       id="test-request"
+       ng-model="cronJobs.testResult.request"
+       readonly
+       style="resize: vertical; height: 200px;">
+  </div>
+</div>
+
+<div id="test-response-wrapper" ng-show="cronJobs.testResult && !cronJobs.testError">
+  <label>Response</label>
+  <div ui-ace="{theme: 'dawn', mode: 'json', rendererOptions: { fontSize: 15 } }"
+       type="text"
+       class="form-control"
+       id="test-response"
+       ng-model="cronJobs.testResult.response"
+       readonly
+       >
+  </div>
+</div>
