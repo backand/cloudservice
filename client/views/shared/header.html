@@ -53,13 +53,20 @@
         </li>
       </ul>
       <ul class="nav-right pull-right list-unstyled">
+        <li class="text-normal">
+          <a href="http://status.backand.com" target="_blank" style="margin-left: 15px;">
+            <span tooltip="{{header.currentStatus}}" tooltip-placement="bottom">
+              <i class="current-status-indicator"></i>
+              System Status
+            </span>
+          </a>
+        </li>
         <li class="dropdown text-normal nav-profile">
           <a ng-click="header.toggleUserDropdown($event)"
              href="" class="dropdown-toggle header-item" data-toggle="dropdown">
-                <span>
-                    <span class="bknd-username">{{::header.getCurrentUser().username}}</span>
-                    <i class="ti-arrow-circle-down"></i>
-                </span>
+              <span class="bknd-username">{{::header.getCurrentUser().username}}
+                <i class="ti-arrow-circle-down"></i>
+              </span>
           </a>
           <ul ng-show="header.showUserDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
             <li class="bknd-username"><a>{{::header.getCurrentUser().username}}</a></li>
