@@ -29,6 +29,7 @@
       'stringifyHttp',
       '$localStorage',
       '$state',
+      '$timeout',
       RulesController]);
 
   function RulesController($scope,
@@ -55,7 +56,8 @@
                            $rootScope,
                            stringifyHttp,
                            $localStorage,
-                           $state) {
+                           $state,
+                           $timeout) {
 
     var self = this;
     /**
@@ -115,7 +117,26 @@
         .then(function (response) {
           self.userToken = response.data;
         });
-    }
+    };
+
+    $scope.$watch(function () {
+      if(self.action) {
+        return self.action.workflowAction;
+      }
+    }, function (newVal, oldVal) {
+      if (newVal == 'JavaScript') {
+        $scope.$evalAsync(function () {
+          var editor = ace.edit('code');
+          if ($stateParams.line && $stateParams.col) {
+            editor.resize(true);
+            editor.scrollToLine($stateParams.line, true, true, function () {
+            });
+            editor.gotoLine($stateParams.line, $stateParams.col);
+          }
+        });
+      }
+    });
+
 
     self.getActionTemplates = function () {
       return RulesService.getActionTemplates()

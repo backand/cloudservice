@@ -48,7 +48,11 @@
       .state('object_actions', {
         parent: 'tables.columns',
         url: '/actions/:actionId?',
-        templateUrl: 'views/tables/rules/rules.html'
+        templateUrl: 'views/tables/rules/rules.html',
+        params: {
+          line: null,
+          col: null
+        }
       })
       .state('object_security', {
         url: '/security',

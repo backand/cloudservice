@@ -180,8 +180,7 @@
                     id="sqlCommand"
                     ng-model="rules.action.command"
                     required
-                    style="resize: vertical"
-                    ng-readonly="!rules.editMode">
+                    style="resize: vertical">
                   </div>
                 </bknd-ace-features>
               </div>
@@ -203,7 +202,7 @@
             <!-- ./execute SQL-->
 
             <!--code-->
-            <div ng-switch-when="JavaScript">
+            <div ng-switch-when="JavaScript" onload="rules.actionCodeAceLoaded = true">
 
               <div ng-class="{'has-error': rules.newRuleForm.code.$invalid}">
 

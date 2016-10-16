@@ -1,4 +1,4 @@
-<div>
+<div class="search-directive-wrapper">
   <input type="text" ng-model="search.query"
          placeholder="Search..." class="form-control search-input"
          ng-focus="search.showResultPopover = true"
@@ -13,10 +13,10 @@
         <div class="result-category" ng-show="search.results.Action">
           <h3>Actions</h3>
           <div class="result" ng-repeat="action in search.results.Action">
-            <div class="result-box" ng-click="search.goToAction(action, $event)">{{action.name}}</div>
+            <div class="result-box" ng-click="search.goToAction(action)">{{action.name}}</div>
             <div class="result-label">
               <p ng-repeat="snippet in action.snippets | limitTo: 3">
-                <span class="search-result-snippet" ng-bind-html="snippet.snippet"></span>
+                <span class="search-result-snippet" ng-click="search.goToAction(action, snippet.line, snippet.column)" ng-bind-html="snippet.snippet"></span>
               </p>
             </div>
           </div>

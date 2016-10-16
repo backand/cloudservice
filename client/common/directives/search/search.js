@@ -9,12 +9,12 @@
           results: '='
         },
         templateUrl: 'common/directives/search/search.html',
-        controller: ['SearchService', 'AppsService', '$scope', '$rootScope', '$state', 'TablesService', SearchController],
+        controller: ['SearchService', 'AppsService', '$scope', '$rootScope', '$state', SearchController],
         controllerAs: 'search'
       }
     });
 
-  function SearchController(SearchService, AppsService, $scope, $rootScope, $state, TablesService) {
+  function SearchController(SearchService, AppsService, $scope, $rootScope, $state) {
     var self = this;
 
     self.search = function (query) {
@@ -22,7 +22,6 @@
       var appName = AppsService.currentApp.Name;
       SearchService.get(query, appName).then(function (response) {
         self.loading = false;
-        console.log(response);
         self.results = response.data;
         $rootScope.$broadcast('searchResults', self.results);
       });
@@ -52,11 +51,11 @@
       return self.query && self.query.length > 1;
     };
 
-    self.goToAction = function (action) {
+    self.goToAction = function (action, line, col) {
       if (action.objectId == 4) {
-        $state.go('security.actions', {actionId: action.id});
+        $state.go('security.actions', {actionId: action.id, line: line, col: col});
       } else {
-        $state.go('object_actions', {actionId: action.id, tableId: action.objectId});
+        $state.go('object_actions', {actionId: action.id, tableId: action.objectId, line: line, col: col});
       }
     };
 
