@@ -30,6 +30,7 @@
       '$localStorage',
       '$state',
       '$timeout',
+      '$location',
       RulesController]);
 
   function RulesController($scope,
@@ -57,7 +58,8 @@
                            stringifyHttp,
                            $localStorage,
                            $state,
-                           $timeout) {
+                           $timeout,
+                           $location) {
 
     var self = this;
     /**
@@ -222,6 +224,9 @@
     };
 
     self.newAction = function (trigger, templateName) {
+      // Remove action id route param
+      $state.go("object_actions", {actionId: null});
+
       if (self.action) {
         refreshAction();
         self.clearTest();
@@ -255,6 +260,14 @@
       var action = getRuleByName(actionName);
       refreshAction(action)
         .then(self.clearTest);
+    };
+
+    // Show action with route change
+    self.goToAction = function (name) {
+      var action = _.filter(self.ruleList, function (rule) {
+        return rule.name == name;
+      })[0];
+      $state.go('object_actions', {actionId: action.__metadata.id});
     };
 
     function refreshAction(action) {
@@ -963,7 +976,6 @@
           self.showAction(action.name);
         }
       }
-
     }
 
     self.getDataActionType = function () {
