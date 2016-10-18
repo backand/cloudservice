@@ -5,7 +5,7 @@
 
     var self = this;
 
-    self.getReportlUrl = function (reportName, startDate, endDate) {
+    self.getReportUrl = function (reportName, startDate, endDate) {
       var appName = AppsService.currentApp.Name;
       return $http({
         method: 'POST',
