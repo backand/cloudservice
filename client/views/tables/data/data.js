@@ -278,6 +278,24 @@
         });
     };
 
+    self.getSingleSelectLabel = function (row, col) {
+      if (typeof row !== 'object')
+        return row;
+
+      var descriptive = self.relatedViews[col.field].descriptiveColumn;
+      var descriptiveLabel = row.__metadata.id + ': ' + row[descriptive];
+
+      var fields = [];
+
+      _.forEach(row, function (value, key) {
+        if (key !== '__metadata' && key !== descriptive && !_.isEmpty(value)) {
+          fields.push({key: key, value: value});
+        }
+      });
+
+      return {descriptiveLabel: descriptiveLabel, fields: fields};
+    };
+
     self.onUpdateRowCell = function (row, col, newValue) {
       var updatedObject = {};
       updatedObject[col.name] = newValue;
