@@ -112,14 +112,7 @@
         <div class="panel-body">
           <div class="object-data-log-container">
             <div>
-              <label for="log-item-url">Endpoint</label>
-              <bknd-copy-box id="log-item-url"
-                             content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestUrl"></bknd-copy-box>
-
-              <label for="log-item-request">Request Angular $HTTP code</label>
-              <bknd-copy-box id="log-item-request"
-                             type="textarea"
-                             content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestJson"></bknd-copy-box>
+              <bknd-code-generator relative-url="/1/objects/items"></bknd-code-generator>
 
               <label for="log-item-response">Response JSON</label>
               <bknd-copy-box id="log-item-response"
