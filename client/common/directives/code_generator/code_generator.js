@@ -11,23 +11,22 @@
         require: 'relativeUrl',
         scope: {
           method: '@?',
-          relativeUrl: '@',
-          params: '@?',
-          data: '@?'
+          url: '@',
+          params: '=?',
+          data: '=?'
         }
       }
     });
 
-  CodeGeneratorController.$inject = ['$injector', 'CONSTS', 'LocalStorageService', '$scope'];
+  CodeGeneratorController.$inject = ['CONSTS', 'LocalStorageService', '$scope', 'AngularGeneratorService'];
 
-  function CodeGeneratorController($injector, CONSTS, LocalStorageService, $scope){
+  function CodeGeneratorController(CONSTS, LocalStorageService, $scope, AngularGeneratorService){
     var self = this;
-
-    self.baseUrl = CONSTS.appUrl;
 
     self.languageOptions = [{
       value: 1,
-      label: 'Angular'
+      label: 'Angular',
+      generator: AngularGeneratorService
     }, {
       value: 2,
       label: 'React (via Fetch)'
@@ -47,9 +46,18 @@
     }, function (newVal) {
       if (newVal) {
         self.storage.favoriteLanguage = newVal;
+        if (self.method.toUpperCase() == "POST" || self.method.toUpperCase == "PUT") {
+          self.generateCode({method: self.method, url: self.url, params: self.params, data: self.data});
+        } else {
+          self.generateCode({method: self.method, url: self.url, params: self.params});
+        }
       }
     });
 
+    self.generateCode = function (opts) {
+      var chosenLanguageOption = _.where(self.languageOptions, {value: self.chosenLanguage})[0];
+      self.code = chosenLanguageOption.generator.generateCode(opts);
+    };
 
   }
 }());

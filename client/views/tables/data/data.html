@@ -112,7 +112,10 @@
         <div class="panel-body">
           <div class="object-data-log-container">
             <div>
-              <bknd-code-generator relative-url="/1/objects/items"></bknd-code-generator>
+              <bknd-code-generator url="{{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestUrl}}"
+                                   method="{{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestMethod}}"
+                                   params="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestParams"
+                                   data="ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestData"></bknd-code-generator>
 
               <label for="log-item-response">Response JSON</label>
               <bknd-copy-box id="log-item-response"
