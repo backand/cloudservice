@@ -20,7 +20,7 @@
         url: 'www.github.com',
         css: 'github',
         id: 1,
-        helpUrl: "socialAndKeysGithub",
+        helpUrl: 'socialAndKeysGithub',
         requireEmail: false
       },
       {
@@ -29,7 +29,7 @@
         url: 'www.google.com',
         css: 'google-plus',
         id: 2,
-        helpUrl: "socialAndKeysGoogle",
+        helpUrl: 'socialAndKeysGoogle',
         requireEmail: false
       },
       {
@@ -38,7 +38,7 @@
         url: 'www.facebook.com',
         css: 'facebook',
         id: 3,
-        helpUrl: "socialAndKeysFacebook",
+        helpUrl: 'socialAndKeysFacebook',
         clientIdTitle: 'App ID',
         secretIdTitle: 'App Secret',
         requireEmail: false
@@ -49,10 +49,32 @@
         url: 'www.twitter.com',
         css: 'twitter',
         id: 4,
-        helpUrl: "socialAndKeysTwitter",
+        helpUrl: 'socialAndKeysTwitter',
         requireEmail: true,
         clientIdTitle: 'Consumer Key (API Key)',
         secretIdTitle: 'Consumer Secret (API Secret)'
+      },
+      {
+        name: 'azuread',
+        label: 'Azure AD',
+        url: 'www.backand.com',
+        css: 'windows',
+        id: 5,
+        helpUrl: 'socialAndKeysAzure',
+        requireEmail: false,
+        clientIdTitle: 'Client Id (Application Id)',
+        secretIdTitle: 'OAUTH 2.0 Endpoint (https://login.windows.net/{}/oauth2)'
+      },
+      {
+        name: 'adfs',
+        label: 'ADFS',
+        url: 'www.backand.com',
+        css: 'windows',
+        id: 6,
+        helpUrl: 'socialAndKeysADFS',
+        requireEmail: false,
+        clientIdTitle: 'Client Id',
+        secretIdTitle: 'Redirect Uri (/adfs/oauth2)'
       }
     ];
 
