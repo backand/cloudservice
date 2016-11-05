@@ -55,7 +55,7 @@
         secretIdTitle: 'Consumer Secret (API Secret)'
       },
       {
-        name: 'azuread',
+        name: 'azureAd',
         label: 'Azure AD',
         url: 'www.backand.com',
         css: 'windows',

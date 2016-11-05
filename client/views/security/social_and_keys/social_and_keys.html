@@ -107,7 +107,7 @@
                       <div class="form-group">
                         <label for="{{::socialProvider.name}}-secret-key" class="control-label">{{::socialProvider.secretIdTitle || 'Client Secret'}}</label>
 
-                        <input ng-if="socialProvider.name != 'adfs' && socialProvider.name != 'azuread'"
+                        <input ng-if="socialProvider.name !== 'adfs' && socialProvider.name !== 'azureAd'"
                                type="text"
                                class="form-control"
                                ng-disabled="!socialProvider.useOwnApp"
@@ -115,7 +115,7 @@
                                ng-model="socialProvider.clientSecret"
                                ng-change="keys.updateSocialSettings(socialProvider)">
 
-                        <input ng-if="socialProvider.name == 'adfs' || socialProvider.name == 'azuread'"
+                        <input ng-if="socialProvider.name === 'adfs' || socialProvider.name === 'azureAd'"
                                type="text"
                                class="form-control"
                                ng-disabled="!socialProvider.useOwnApp"
