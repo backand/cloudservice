@@ -145,6 +145,17 @@
                   <ba-help-link key="emailVerification"></ba-help-link>
               </div>
             </div>
+            <div class="form-group">
+              <label class="strong" for="allowAnonymousPublic">Enable sign-out API</label>
+              <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                <input id="enableSignout" type="checkbox" ng-model="auth.data.settings.enableTokenRevokation"
+                       checked=""><i></i>
+              </label>
+              <div class="field-description">When enabled, you can start using /1/user/signout api which is invalidating
+                an access_token. This command has a performance impact.
+                <ba-help-link key="emailVerification"></ba-help-link>
+              </div>
+            </div>
           </div>
         </div>
       </form>
