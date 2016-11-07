@@ -10,5 +10,6 @@
   "storageUrl": "http://files.backand.net",
   "nodejsUrl": "http://nodejs.backand.net",
   "socketUrl": "http://api.backand.co:4000",
-  "billingUrl": "http://billqa.backand.com"
+  "billingUrl": "http://billqa.backand.com",
+  "adfsResourse": "https://api.backand.co"
 }

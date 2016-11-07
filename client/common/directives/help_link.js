@@ -62,6 +62,16 @@
             "section": "Twitter",
             "url": "http://docs.backand.com/en/latest/getting_started/security_auth/#twitter-app-configuration"
           },
+          "socialAndKeysAzure": {
+            "page": "security/social_and_keys",
+            "section": "Azure",
+            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#azure-ad-app-configuration"
+          },
+          "socialAndKeysADFS": {
+            "page": "security/social_and_keys",
+            "section": "ADFS",
+            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#local-adfs-app-configuration"
+          },
           "socialAndKeysGoogle": {
             "page": "security/social_and_keys",
             "section": "Google",
