@@ -229,15 +229,17 @@
                   padding-left: 12px;
                 }
                 .search-input {
-                  height: 30px;
-                  width: 200px;
+                  height: 34px;
+                  width: 202px;
                   transition: width 1s;
+                  border-radius: 4px;
                 }
 
                 .search-input-clicked {
-                  height: 30px;
+                  height: 34px;
                   width: 400px;
                   transition: width 1s;
+                  border-radius: 4px;
                 }
 
                 .app-select {
