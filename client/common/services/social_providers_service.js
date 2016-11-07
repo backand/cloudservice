@@ -21,7 +21,8 @@
         css: 'github',
         id: 1,
         helpUrl: 'socialAndKeysGithub',
-        requireEmail: false
+        requireEmail: false,
+        useForSignin: true
       },
       {
         name: 'google',
@@ -30,7 +31,8 @@
         css: 'google-plus',
         id: 2,
         helpUrl: 'socialAndKeysGoogle',
-        requireEmail: false
+        requireEmail: false,
+        useForSignin: true
       },
       {
         name: 'facebook',
@@ -41,7 +43,8 @@
         helpUrl: 'socialAndKeysFacebook',
         clientIdTitle: 'App ID',
         secretIdTitle: 'App Secret',
-        requireEmail: false
+        requireEmail: false,
+        useForSignin: true
       },
       {
         name: 'twitter',
@@ -52,7 +55,8 @@
         helpUrl: 'socialAndKeysTwitter',
         requireEmail: true,
         clientIdTitle: 'Consumer Key (API Key)',
-        secretIdTitle: 'Consumer Secret (API Secret)'
+        secretIdTitle: 'Consumer Secret (API Secret)',
+        useForSignin: true
       },
       {
         name: 'azureAd',
@@ -63,7 +67,8 @@
         helpUrl: 'socialAndKeysAzure',
         requireEmail: false,
         clientIdTitle: 'Client Id (Application Id)',
-        secretIdTitle: 'OAUTH 2.0 Endpoint (https://login.windows.net/{}/oauth2)'
+        secretIdTitle: 'OAUTH 2.0 Endpoint (https://login.windows.net/{}/oauth2)',
+        useForSignin: false
       },
       {
         name: 'adfs',
@@ -74,7 +79,8 @@
         helpUrl: 'socialAndKeysADFS',
         requireEmail: false,
         clientIdTitle: 'Client Id',
-        secretIdTitle: 'Redirect Uri (/adfs/oauth2)'
+        secretIdTitle: 'Redirect Uri (/adfs/oauth2)',
+        useForSignin: false
       }
     ];
 
