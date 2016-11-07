@@ -454,7 +454,7 @@
 
 }
 @media screen and (max-width:380px) {
-    .top-nav .search-box .input-group-addon {
+    .top-nav .search-box .input-group-addon .system-status-label {
         display:none;
     }
 }
@@ -526,6 +526,18 @@
         text-decoration: underline;
       }
     }
+  }
+}
+@media screen and (max-width:520px) {
+  .system-status-label {
+    display:none;
+  }
+}
+
+@media screen and (max-width:400px) {
+  .system-status-link {
+    padding: 0;
+    width: 15px;
   }
 }
 

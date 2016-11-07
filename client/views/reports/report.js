@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ReportController', ['$sce', 'ReportService', '$scope','$state', ReportController]);
+    .controller('ReportController', ['$sce', 'ReportService', '$scope', '$state', '$filter', ReportController]);
 
-  function ReportController($sce, ReportService, $scope, $state) {
+  function ReportController($sce, ReportService, $scope, $state, $filter) {
     var self = this;
     var height = "678";
 
@@ -66,6 +66,14 @@
 
     });
 
+    $scope.$watch(function () {
+      return self.endDate;
+    }, formatDate);
+
+    $scope.$watch(function () {
+      return self.startDate;
+    }, formatDate);
+
     self.onReportChanged = function(){
       setReportUrl();
     };
@@ -78,7 +86,8 @@
       if(self.report != "") {
         $state.go('analytics.report', {id: self.report}, {notify: false});
 
-        ReportService.getReportlUrl(self.report, returnDateOnly(self.startDate), returnDateOnly(self.endDate)).then(function (data) {
+        ReportService.getReportUrl(self.report, returnDateOnly(formatDate(self.startDate)),
+          returnDateOnly(formatDate(self.endDate))).then(function (data) {
           setUrlPrefix(data.data.url, height);
         });
       }
@@ -121,6 +130,10 @@
     function setCurrentMonth(){
       var day = today().getDate();
       setLastDates(day-1);
+    }
+
+    function formatDate(date) {
+      return $filter('date')(date, 'yyyy-MM-dd');
     }
 
   }

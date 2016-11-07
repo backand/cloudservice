@@ -10,6 +10,6 @@
   "storageUrl": "https://files.backand.io",
   "nodejsUrl": "https://nodejs.backand.io",
   "socketUrl": "https://api.backand.com:4000",
-  "billingUrl": "https://bill.backand.com"
-
+  "billingUrl": "https://bill.backand.com",
+  "adfsResourse": "https://api.backand.com"
 }
