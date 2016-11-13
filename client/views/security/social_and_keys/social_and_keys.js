@@ -15,7 +15,7 @@
         .then(setKeysInfo, errorHandler);
     }
 
-    var settings = ['enable', 'clientId', 'clientSecret', 'Oauth2EndPoint'];
+    var settings = ['enable', 'clientId', 'clientSecret', 'Oauth2EndPoint', 'Scope'];
 
     self.displayedTokens = [
       {
