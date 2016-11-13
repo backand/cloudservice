@@ -141,8 +141,9 @@
     };
 
     function fetchActions() {
-      if (!self.actions) {
+      if (!self.actxions) {
         self.loadingActions = true;
+        RulesService.tableId = null;
         RulesService.get().then(function (response) {
           self.actions = _.filter(response.data.data, function (action) {
             var view = TablesService.getTableNameById(TablesService.tables,action.viewTable);
