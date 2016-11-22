@@ -2,7 +2,7 @@
 <br/>
 <form role="form" name="rules.inputParametersForm" novalidate>
 
-  <label ng-show="rules.test.inputParametersArray">Parameters</label>
+  <label ng-if="rules.test.inputParametersArray">Parameters</label>
 
   <div class="form-group" ng-repeat="inputParam in rules.test.inputParametersArray">
     <label for="inputParam">{{inputParam}}</label>
@@ -12,7 +12,7 @@
            ng-model="rules.test.parameters[inputParam]">
   </div>
 
-  <hr class="narrow-top-margin">
+  <hr ng-if="rules.test.inputParametersArray" class="narrow-top-margin">
   <div ng-if="rules.getDataActionType() === 'On Demand'">
     <label>Method:&nbsp;&nbsp;</label>
     <input type="radio"
@@ -35,9 +35,11 @@
     </div>
   </div>
 
-  <hr class="narrow-top-margin">
-  <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
-    <label>Row Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
+  <hr ng-if="rules.getDataActionType() === 'On Demand'" class="narrow-top-margin">
+  <div class="form-group" ng-if="rules.getDataActionType() !== 'Create' || rules.test.rowId != null">
+    <label><a href="" ng-click="rules.getFirstRow()">Row Id </a><span
+            ng-if="rules.getDataActionType() === 'On Demand'">(Optional)
+    </span></label>
     <div ng-switch="rules.test.isGuid">
 
       <input type="number"
@@ -59,8 +61,7 @@
     </div>
 
   </div>
-
-  <div class="form-group">
+  <div class="form-group" ng-if="rules.test.rowId != null || rules.getDataActionType() === 'Create'">
     <label for="rowData">{{ rules.ace.message }}</label>
     <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
     <div
@@ -76,7 +77,7 @@
     <div ng-show="rules.testRowObjectNotification" class="text-danger">{{rules.testRowObjectNotification}}</div>
   </div>
 
-  <hr class="narrow-top-margin">
+  <hr ng-if="rules.test.rowId != null" class="narrow-top-margin">
   <div class="row">
     <div class="col-md-12">
       <button type="submit"
@@ -112,7 +113,6 @@
              value="production">&nbsp;&nbsp;Production&nbsp;&nbsp;
     </div>
   </div>
-  <br/>
   <div ng-if="rules.test.resultStatus">
     <hr/>
     <label>Response Status:</label>
@@ -121,7 +121,7 @@
     <br/><br/>
     <label>Response Body:</label>
     <br/>
-    <div ui-ace="{theme:'dawn', mode: 'json'}"
+    <div ui-ace="{theme:'dawn', mode: 'json', useWrapMode: true}"
          type="text"
          class="form-control"
          rows="10"
@@ -150,7 +150,23 @@
 
   </div>
 
+  <div ng-if="rules.test.resultStatus">
+    <hr/>
+    <label>Call Stack:</label>
+    <br/>
+    <div ui-ace="{theme:'dawn', mode: 'json'}"
+         type="text"
+         class="form-control"
+         rows="10"
+         ng-readonly="true"
+         ng-model="rules.test.callStack"
+         style="resize: vertical; height: 200px;">
+    </div>
+    <br/>
+  </div>
+
   <div ng-show="rules.getDataActionType() === 'On Demand'">
+    <br/>
     <label>Request URL:</label>
     <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
   </div>

@@ -173,9 +173,8 @@
           name: rule.name,
           parameters: test.parameters
         };
-
-        http.config = {ignoreError: true};
       }
+      http.config = {ignoreError: true};
 
       if (actionType === 'Create' || actionType === 'Update') {
         http.data = angular.fromJson(rowData);
