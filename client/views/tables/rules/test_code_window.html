@@ -61,7 +61,8 @@
     </div>
 
   </div>
-  <div class="form-group" ng-if="rules.test.rowId != null || rules.getDataActionType() === 'Create'">
+  <div class="form-group"
+       ng-if="(rules.test.rowId != null && rules.rowData != '') || rules.getDataActionType() === 'Create'">
     <label for="rowData">{{ rules.ace.message }}</label>
     <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
     <div
@@ -154,7 +155,7 @@
     <hr/>
     <label>Call Stack:</label>
     <br/>
-    <div ui-ace="{theme:'dawn', mode: 'json'}"
+    <div ui-ace="{onLoad: rules.aceStack.onLoad, theme:'dawn', mode: 'json'}"
          type="text"
          class="form-control"
          rows="10"

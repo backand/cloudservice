@@ -168,7 +168,7 @@
         url : self.getTestUrl(rule, test, actionType, tableName, debug, true)
       };
       http.headers = { AppName: self.appName };
-      if(!debug){
+      if(!debug && actionType == 'On Demand'){
         http.params = {
           name: rule.name,
           parameters: test.parameters

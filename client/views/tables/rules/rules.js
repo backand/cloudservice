@@ -735,6 +735,15 @@
       }
     };
 
+    self.aceStack = {
+      onLoad: function (_editor) {
+        self.aceStack.editor = _editor;
+        _editor.$blockScrolling = Infinity;
+        //_editor.getSession().foldAll();
+        //window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(); }, 100);
+      }
+    };
+
     $scope.$watch(function () {
       if (self.action)
         return self.getDataActionType();
@@ -821,6 +830,7 @@
 
     function showCallStack(response){
       self.test.callStack = JSON.stringify(response.data.ActionRoot, null, 2);
+      window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(2,null,2); }, 100);
     }
 
     self.treeSign = function (item) {

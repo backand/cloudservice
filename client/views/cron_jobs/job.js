@@ -15,9 +15,10 @@
       'TablesService',
       'usSpinnerService',
       'LimitsService',
+      'AnalyticsService',
       CronJobsController]);
 
-  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp,TablesService,usSpinnerService, LimitsService) {
+  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp,TablesService,usSpinnerService, LimitsService, AnalyticsService) {
 
     var self = this;
 
@@ -141,7 +142,7 @@
     };
 
     function fetchActions() {
-      if (!self.actxions) {
+      if (!self.actions) {
         self.loadingActions = true;
         RulesService.tableId = null;
         RulesService.get().then(function (response) {
@@ -166,6 +167,7 @@
       CronService.post(self.job).then(function (response) {
         self.loading = false;
         NotificationService.add('success', 'Cron job added successfully');
+        AnalyticsService.track('CreatedJob', {job: self.job.name, description: self.job.description});
         var params = {jobId: response.data.__metadata.id};
         if(isTest) {
           params.isTest = true;
