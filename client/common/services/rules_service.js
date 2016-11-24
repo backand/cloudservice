@@ -197,7 +197,18 @@
 
       for (var paramKey in parameters) {
         if (parameters[paramKey] != "") {
-          filteredParams[paramKey] = parameters[paramKey]
+
+            var param = parameters[paramKey];
+
+            if(param === "true" || param === "false"){
+              filteredParams[paramKey] = Boolean(param);
+            }
+            else if (!isNaN(parseFloat(param)) && isFinite(param)){
+              filteredParams[paramKey] = Number(param);
+            }
+            else {
+              filteredParams[paramKey] = param;
+            }
         }
       }
 
