@@ -239,6 +239,9 @@
                   width: 202px;
                   transition: width 1s;
                   border-radius: 4px;
+                  background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-32.png);
+                  background-position: 170px center;
+                  background-repeat: no-repeat;
                 }
 
                 .search-input-clicked {
@@ -500,6 +503,7 @@
           display: inline-block;
           float: left;
           cursor: pointer;
+          font-size: 14px;
         }
         .result-label {
           margin-left: 20px;

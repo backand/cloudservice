@@ -1,15 +1,16 @@
 <div class="search-directive-wrapper">
   <input type="text" ng-model="search.query"
          placeholder="Search..." class="form-control search-input"
-         ng-focus="search.showResultPopover = true"
-         ng-blur="search.showResultPopover = false"
+         ng-focus="search.showResultPopover = true;"
+         ng-blur="search.showResultPopover = false; search.query = '';"
          ng-class="{'search-input-clicked': search.showResultPopover, 'search-input': !search.showResultPopover}">
-  <div class="search-results" ng-show="search.showResultPopover" ng-mousedown="$event.preventDefault();">
-    <div class="popover-wrapper">
 
+  <div class="search-results"
+       ng-show="search.showResultPopover"
+       ng-mousedown="$event.preventDefault();">
+    <div class="popover-wrapper">
       <div class="results" ng-show="!search.loading && search.isAnyResult()">
         <h3>Search Results</h3>
-
         <div class="result-category" ng-show="search.results.Action">
           <h3>Actions</h3>
           <div class="result" ng-repeat="action in search.results.Action">
@@ -37,11 +38,12 @@
         <div class="result-category" ng-show="search.results.Object">
           <h3>Objects</h3>
           <div class="result" ng-repeat="object in search.results.Object">
-            <div class="result-box" ng-click="search.goToObject(object)">{{object.name}}</div>
+            <div class="result-box" ng-click="search.goToObject(object)">{{search.found(object.foundAt)}} : {{object.name}}</div>
             <div class="result-label">
               <p ng-repeat="snippet in object.snippets | limitTo: 3">
                 <span class="search-result-snippet" ng-bind-html="snippet.snippet"></span>
               </p>
+              <p><span class="search-result-snippet" ng-bind-html="object.snippets.snippet"></span></p>
             </div>
           </div>
         </div>
