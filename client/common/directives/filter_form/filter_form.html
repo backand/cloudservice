@@ -101,6 +101,8 @@
 
         <i class="fa fa-close close-button" ng-click="filterForm.removePredicate(predicate)"></i>
 
+        <i ng-if="filterForm.showRefresh" class="fa fa-refresh close-button" ng-click="filterForm.submit()"></i>
+
         </div>
 
         <div ng-show="filterForm.showAddButton()">

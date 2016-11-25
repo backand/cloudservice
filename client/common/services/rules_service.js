@@ -168,14 +168,13 @@
         url : self.getTestUrl(rule, test, actionType, tableName, debug, true)
       };
       http.headers = { AppName: self.appName };
-      if(!debug){
+      if(!debug && actionType == 'On Demand'){
         http.params = {
           name: rule.name,
           parameters: test.parameters
         };
-
-        http.config = {ignoreError: true};
       }
+      http.config = {ignoreError: true};
 
       if (actionType === 'Create' || actionType === 'Update') {
         http.data = angular.fromJson(rowData);
@@ -198,7 +197,18 @@
 
       for (var paramKey in parameters) {
         if (parameters[paramKey] != "") {
-          filteredParams[paramKey] = parameters[paramKey]
+
+            var param = parameters[paramKey];
+
+            if(param === "true" || param === "false"){
+              filteredParams[paramKey] = Boolean(param);
+            }
+            else if (!isNaN(parseFloat(param)) && isFinite(param)){
+              filteredParams[paramKey] = Number(param);
+            }
+            else {
+              filteredParams[paramKey] = param;
+            }
         }
       }
 

@@ -323,10 +323,16 @@
     };
 
     function getTestRow() {
-      if (self.getDataActionType() === 'Create')
-        self.getNewRow();
-      else
-        self.getFirstRow();
+
+      if(self.getDataActionType() === 'On Demand'){
+        self.test.rowId = "";
+        self.test.isGuid = false;
+      } else {
+        if (self.getDataActionType() === 'Create')
+          self.getNewRow();
+        else
+          self.getFirstRow();
+      }
     }
 
     self.doneEdit = function () {
@@ -764,6 +770,15 @@
       }
     };
 
+    self.aceStack = {
+      onLoad: function (_editor) {
+        self.aceStack.editor = _editor;
+        _editor.$blockScrolling = Infinity;
+        //_editor.getSession().foldAll();
+        //window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(); }, 100);
+      }
+    };
+
     $scope.$watch(function () {
       if (self.action)
         return self.getDataActionType();
@@ -825,6 +840,8 @@
         if (self.debugMode == 'debug') {
           AppLogService.getActionLog($stateParams.appName, guid)
             .then(showLog, errorHandler);
+          AppLogService.getCallStack($stateParams.appName, guid)
+              .then(showCallStack, errorHandler);
         } else {
           self.test.logMessages = [];
           self.test.logMessages.push({
@@ -839,9 +856,16 @@
     function showLog(response) {
       self.test.logMessages = [];
       response.data.data.forEach(function (log) {
-        self.test.logMessages.push({text: log.FreeText, isError: log.LogType == 501, time: log.Time});
+        if(log.LogType == 500 || log.LogType == 501){
+          self.test.logMessages.push({text: log.FreeText, isError: log.LogType == 501, time: log.Time});
+        }
       });
       self.test.testLoading = false;
+    }
+
+    function showCallStack(response){
+      self.test.callStack = JSON.stringify(response.data.ActionRoot, null, 2);
+      window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(2,null,2); }, 100);
     }
 
     self.treeSign = function (item) {

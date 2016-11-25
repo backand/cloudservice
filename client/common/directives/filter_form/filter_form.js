@@ -8,6 +8,7 @@
     return {
       scope: {
         noRepeat: '@',
+        showRefresh: '@',
         query: '=',
         fields: '=',
         operators: '=',
