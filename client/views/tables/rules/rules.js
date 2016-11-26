@@ -131,9 +131,10 @@
           var editor = ace.edit('code');
           if ($stateParams.line && $stateParams.col) {
             editor.resize(true);
-            editor.scrollToLine($stateParams.line, true, true, function () {
-            });
-            editor.gotoLine($stateParams.line, $stateParams.col);
+            // editor.scrollToLine($stateParams.line, true, true, function () {
+            // });
+            editor.gotoLine($stateParams.line, $stateParams.col, true);
+            editor.setHighlightActiveLine(true);
           }
         });
       }

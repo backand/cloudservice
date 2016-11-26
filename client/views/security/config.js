@@ -38,7 +38,7 @@
 
       })
       .state('security.actions', {
-        url: '/actions/:actionId?',
+        url: '/actions/:actionId?line&col',
         controller: 'SecurityActions as actions',
         templateUrl: 'views/security/actions/actions.html',
         resolve: {
