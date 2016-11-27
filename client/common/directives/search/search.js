@@ -68,9 +68,9 @@
 
     self.goToAction = function (action, line, col) {
       if (action.objectId == 4) {
-        $state.go('security.actions', {actionId: action.id, line: line, col: col});
+        $state.go('security.actions', {actionId: action.id, line: line, col: col, q: self.query});
       } else {
-        $state.go('object_actions', {actionId: action.id, tableId: action.objectId, line: line, col: col});
+        $state.go('object_actions', {actionId: action.id, tableId: action.objectId, line: line, col: col, q:self.query});
       }
     };
 

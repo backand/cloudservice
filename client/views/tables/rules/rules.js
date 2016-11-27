@@ -131,10 +131,15 @@
           var editor = ace.edit('code');
           if ($stateParams.line && $stateParams.col) {
             editor.resize(true);
-            // editor.scrollToLine($stateParams.line, true, true, function () {
-            // });
-            editor.gotoLine($stateParams.line, $stateParams.col, true);
-            editor.setHighlightActiveLine(true);
+
+
+            var range = new Range($stateParams.line, 0, $stateParams.line, 10000);
+            var searchOptions = {};
+            searchOptions.start = range;
+            editor.findAll($stateParams.q, {}, true);
+            //editor.scrollToLine($stateParams.line, true, true, function () {});
+            //editor.gotoLine($stateParams.line, $stateParams.col, true);
+            //editor.setHighlightActiveLine(true);
           }
         });
       }

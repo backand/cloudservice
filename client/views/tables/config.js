@@ -51,7 +51,8 @@
         templateUrl: 'views/tables/rules/rules.html',
         params: {
           line: null,
-          col: null
+          col: null,
+          q: null
         }
       })
       .state('object_security', {
