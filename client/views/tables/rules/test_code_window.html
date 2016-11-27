@@ -25,14 +25,16 @@
 
   <div class="form-group" ng-if="rules.test.method == 'POST'">
     <label>Body</label>
-    <div
-            ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
-            class="form-control ace-db-template"
-            name="requestBody"
-            id="requestBody"
-            ng-model="rules.test.body"
-            style="resize: vertical; height: 200px;">
-    </div>
+    <bknd-ace-features editor="rules.aceBody.editor" nesting-form="rules.inputParametersForm">
+      <div
+        ui-ace="{onLoad : rules.aceBody.onLoad, theme:'dawn', mode: 'json', rendererOptions: { fontSize: 15 } }"
+        class="form-control ace-db-template"
+        name="requestBody"
+        id="requestBody"
+        ng-model="rules.test.body"
+        style="resize: vertical; height: 200px;">
+      </div>
+    </bknd-ace-features>
   </div>
 
   <hr ng-if="rules.getDataActionType() === 'On Demand'" class="narrow-top-margin">
@@ -66,7 +68,7 @@
     <label for="rowData">{{ rules.ace.message }}</label>
     <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
     <div
-      ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+      ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json',rendererOptions: { fontSize: 15 } }"
       class="form-control ace-db-template"
       name="rowData"
       id="rowData"
@@ -122,14 +124,15 @@
     <br/><br/>
     <label>Response Body:</label>
     <br/>
-    <div ui-ace="{theme:'dawn', mode: 'json', useWrapMode: true}"
-         type="text"
-         class="form-control"
-         rows="10"
-         ng-readonly="true"
-         ng-model="rules.test.result"
-         style="resize: vertical; height: 200px;">
-    </div>
+    <bknd-ace-features editor="rules.aceResponse.editor" nesting-form="rules.inputParametersForm">
+      <div ui-ace="{onLoad : rules.aceResponse.onLoad, theme:'dawn', mode: 'json', useWrapMode: true}"
+           type="text"
+           class="form-control"
+           ng-readonly="true"
+           ng-model="rules.test.result"
+           style="resize: vertical; height: 200px;">
+      </div>
+    </bknd-ace-features>
     <br/>
   </div>
 
@@ -155,14 +158,15 @@
     <hr/>
     <label>Call Stack:</label>
     <br/>
-    <div ui-ace="{onLoad: rules.aceStack.onLoad, theme:'dawn', mode: 'json'}"
-         type="text"
-         class="form-control"
-         rows="10"
-         ng-readonly="true"
-         ng-model="rules.test.callStack"
-         style="resize: vertical; height: 200px;">
-    </div>
+    <bknd-ace-features editor="rules.aceStack.editor" nesting-form="rules.inputParametersForm">
+      <div ui-ace="{onLoad: rules.aceStack.onLoad, theme:'dawn', mode: 'json'}"
+           type="text"
+           class="form-control"
+           ng-readonly="true"
+           ng-model="rules.test.callStack"
+           style="resize: vertical; height: 200px;">
+      </div>
+    </bknd-ace-features>
     <br/>
   </div>
 

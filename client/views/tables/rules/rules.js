@@ -775,10 +775,25 @@
       onLoad: function (_editor) {
         self.aceStack.editor = _editor;
         _editor.$blockScrolling = Infinity;
-        //_editor.getSession().foldAll();
-        //window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(); }, 100);
       }
     };
+
+    self.aceResponse = {
+      onLoad: function (_editor) {
+        self.aceResponse.editor = _editor;
+        _editor.renderer.setOption('showLineNumbers', false);
+        _editor.$blockScrolling = Infinity;
+      }
+    };
+
+    self.aceBody = {
+      onLoad: function (_editor) {
+        self.aceBody.editor = _editor;
+        _editor.renderer.setOption('showLineNumbers', false);
+        _editor.$blockScrolling = Infinity;
+      }
+    };
+
 
     $scope.$watch(function () {
       if (self.action)
@@ -829,7 +844,7 @@
       self.test.testLoading = false;
       if (response != 'Invalid JSON') {
         self.test.resultStatus = {code: response.status, text: response.statusText};
-        self.test.result = JSON.stringify(response.data, null, 2);
+        self.test.result = "\n\n" + JSON.stringify(response.data, null, 2);
         var guid = response.headers('Action-Guid');
         self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
         self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
@@ -865,8 +880,9 @@
     }
 
     function showCallStack(response){
-      self.test.callStack = JSON.stringify(response.data.ActionRoot, null, 2);
-      window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(2,null,2); }, 100);
+      self.test.callStack = "\n\n" + JSON.stringify(response.data.ActionRoot, null, 2);
+      window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(6,null,2); }, 100);
+      self.aceStack.editor.renderer.setOption('showLineNumbers', false);
     }
 
     self.treeSign = function (item) {
