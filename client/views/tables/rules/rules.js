@@ -71,6 +71,8 @@
       self.isNewAction = false;
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
+      self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
+
       if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
@@ -190,6 +192,7 @@
 
       self.action.name = self.action.name || template.ruleName;
       self.action.dataAction = self.action.dataAction || template.action || 'OnDemand';
+      self.showTemplatesForm = false;
 
       _.assign(self.action, {
         workflowAction: template.ruleType,
@@ -231,7 +234,7 @@
 
     self.newAction = function (trigger, templateName) {
       // Remove action id route param
-      $state.go("object_actions", {actionId: null});
+      $state.go(".", {actionId: null}, {notify: false});
 
       if (self.action) {
         refreshAction();
@@ -242,6 +245,7 @@
       AnalyticsService.track('Template Selected', {template: templateName || "New Blank"});
 
       self.showJsCodeHelpDialog = false;
+      self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
       self.action = {
         whereCondition: 'true',
         code: backandCallbackConstCode.start + '\n' +
@@ -278,7 +282,7 @@
 
     function refreshAction(action) {
       //self.editMode = false;
-      self.requestTestForm = false;
+      self.requestTestForm = ($stateParams.test === "true");
       self.showJsCodeHelpDialog = false;
       self.isNodeJS = action && action.workflowAction == 'NodeJS';
 
@@ -291,6 +295,8 @@
       }
       else {
         self.action = null;
+        self.showTemplatesForm = true;
+        self.toggleTestForm(false);
       }
 
     }
@@ -418,8 +424,15 @@
       return allow;
     };
 
-    self.toggleTestForm = function () {
-      self.requestTestForm = !self.requestTestForm;
+    self.toggleTestForm = function (show) {
+
+      if(angular.isDefined(show)) {
+        self.requestTestForm = show;
+      } else{
+        self.requestTestForm = !self.requestTestForm;
+      }
+
+      $state.go('.', {test: self.requestTestForm}, {notify: false});
     };
 
     self.showTestForm = function () {
@@ -855,7 +868,8 @@
       self.test.testLoading = false;
       if (response != 'Invalid JSON') {
         self.test.resultStatus = {code: response.status, text: response.statusText};
-        self.test.result = "\n\n" + JSON.stringify(response.data, null, 2);
+        self.test.result = "\n\n\n" + JSON.stringify(response.data, null, 2).replace(/\\t/g, "\t").replace(/\\n/g, "\n");
+
         var guid = response.headers('Action-Guid');
         //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
         self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
