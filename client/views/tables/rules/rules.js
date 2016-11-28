@@ -851,9 +851,10 @@
         self.test.resultStatus = {code: response.status, text: response.statusText};
         self.test.result = "\n\n" + JSON.stringify(response.data, null, 2);
         var guid = response.headers('Action-Guid');
-        self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
+        //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
         self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
-        self.testHttpObject.params = {parameters: self.test.parameters};
+        self.testUrl = self.testHttpObject.url;
+        self.testHttpObject.params = {parameters: self.test.parametersToSend};
         self.testHttp = stringifyHttp(self.testHttpObject);
         self.inputParametersForm.$setPristine();
         self.testUrlCopied = false;
@@ -1101,7 +1102,7 @@
     function getTestUrl() {
       // return the test url for display WITHOUT DEBUG PARAM
       // If the parameters object is empty it omits the object from the url
-      return self.testUrl.replace('%22$$debug$$%22:true', '').replace(/&parameters.*%7D/, '');
+      return decodeURIComponent(self.testUrl.replace('%22$$debug$$%22:true', ''));//.replace(/&parameters.*%7D/, '');
     }
 
     function getTestHttp() {

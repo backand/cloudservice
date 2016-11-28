@@ -96,9 +96,9 @@
       });
     };
 
-    self.getTestUrl = function (rule, test, actionType, tableName, debug, fromGetHttp) {
+    self.getTestUrl =  function(rule, test, actionType, tableName, debug, fromGetHttp) {
       var onDemand = actionType === 'On Demand';
-      var parameters = angular.copy(test.parameters);
+      var parameters = angular.copy(test.parametersToSend);
       if (debug) {
         parameters['$$debug$$'] = true;
       }
@@ -161,7 +161,7 @@
         }
       }
 
-      test.parameters = getFilteredParams(test.parameters);
+      test.parametersToSend = getFilteredParams(test.parameters);
 
       var http = {
         method: method,
@@ -171,7 +171,7 @@
       if(!debug && actionType == 'On Demand'){
         http.params = {
           name: rule.name,
-          parameters: test.parameters
+          parameters: test.parametersToSend
         };
       }
       http.config = {ignoreError: true};
@@ -198,16 +198,10 @@
       for (var paramKey in parameters) {
         if (parameters[paramKey] != "") {
 
-            var param = parameters[paramKey];
-
-            if(param === "true" || param === "false"){
-              filteredParams[paramKey] = Boolean(param);
-            }
-            else if (!isNaN(parseFloat(param)) && isFinite(param)){
-              filteredParams[paramKey] = Number(param);
-            }
-            else {
-              filteredParams[paramKey] = param;
+            try{
+              filteredParams[paramKey] = JSON.parse(parameters[paramKey]);
+            } catch(e){
+              filteredParams[paramKey] = parameters[paramKey];
             }
         }
       }
