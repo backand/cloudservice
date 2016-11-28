@@ -277,7 +277,7 @@
     };
 
     function refreshAction(action) {
-      self.editMode = false;
+      //self.editMode = false;
       self.requestTestForm = false;
       self.showJsCodeHelpDialog = false;
       self.isNodeJS = action && action.workflowAction == 'NodeJS';
@@ -342,6 +342,7 @@
     }
 
     self.doneEdit = function () {
+      self.editMode = false;
       refreshAction(self.action);
     };
 
@@ -349,10 +350,14 @@
       if (!self.isNodeJS) {
         ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
           .then(function (result) {
-            result ? refreshAction(self.action) : false;
+            if(result) {
+              self.editMode = false;
+              refreshAction(self.action);
+            }
           });
       }
       else{
+        self.editMode = false;
         refreshAction(self.action);
       }
 
@@ -399,6 +404,7 @@
       ConfirmationPopup.confirm('Are sure you want to delete this rule?')
         .then(function (result) {
           if (result) {
+            self.editMode = false;
             RulesService.remove(self.action)
               .then(getRules)
               .then(refreshAction);
@@ -1085,6 +1091,7 @@
         .then(function (result) {
           if (result) {
             usSpinnerService.spin('loading');
+            self.isNewAction = false;
             refreshAction(self.action);
             init();
           }
