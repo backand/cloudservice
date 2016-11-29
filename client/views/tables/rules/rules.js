@@ -868,7 +868,13 @@
       self.test.testLoading = false;
       if (response != 'Invalid JSON') {
         self.test.resultStatus = {code: response.status, text: response.statusText};
-        self.test.result = "\n\n\n" + JSON.stringify(response.data, null, 2).replace(/\\t/g, "\t").replace(/\\n/g, "\n");
+        if($.isPlainObject(response.data)){ //check if the response is a JSON
+          self.test.result = "\n\n" + JSON.stringify(response.data, null, 2);
+          window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/json');},100);
+        } else {
+          self.test.result = "\n\n\n" + response.data.replace(/"/g, "");
+          window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/text');},100);
+        }
 
         var guid = response.headers('Action-Guid');
         //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
