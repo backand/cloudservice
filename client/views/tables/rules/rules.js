@@ -29,6 +29,8 @@
       'stringifyHttp',
       '$localStorage',
       '$state',
+      '$timeout',
+      '$location',
       RulesController]);
 
   function RulesController($scope,
@@ -54,7 +56,10 @@
                            SocketService,
                            $rootScope,
                            stringifyHttp,
-                           $localStorage) {
+                           $localStorage,
+                           $state,
+                           $timeout,
+                           $location) {
 
     var self = this;
     /**
@@ -66,6 +71,8 @@
       self.isNewAction = false;
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
+      self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
+
       if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
@@ -114,7 +121,32 @@
         .then(function (response) {
           self.userToken = response.data;
         });
-    }
+    };
+
+    $scope.$watch(function () {
+      if(self.action) {
+        return self.action.workflowAction;
+      }
+    }, function (newVal, oldVal) {
+      if (newVal == 'JavaScript') {
+        $scope.$evalAsync(function () {
+          var editor = ace.edit('code');
+          if ($stateParams.line && $stateParams.col) {
+            editor.resize(true);
+
+
+            var range = new Range($stateParams.line, 0, $stateParams.line, 10000);
+            var searchOptions = {};
+            searchOptions.start = range;
+            editor.findAll($stateParams.q, {}, true);
+            //editor.scrollToLine($stateParams.line, true, true, function () {});
+            //editor.gotoLine($stateParams.line, $stateParams.col, true);
+            //editor.setHighlightActiveLine(true);
+          }
+        });
+      }
+    });
+
 
     self.getActionTemplates = function () {
       return RulesService.getActionTemplates()
@@ -160,6 +192,7 @@
 
       self.action.name = self.action.name || template.ruleName;
       self.action.dataAction = self.action.dataAction || template.action || 'OnDemand';
+      self.showTemplatesForm = false;
 
       _.assign(self.action, {
         workflowAction: template.ruleType,
@@ -200,6 +233,9 @@
     };
 
     self.newAction = function (trigger, templateName) {
+      // Remove action id route param
+      $state.go(".", {actionId: null}, {notify: false});
+
       if (self.action) {
         refreshAction();
         self.clearTest();
@@ -209,6 +245,7 @@
       AnalyticsService.track('Template Selected', {template: templateName || "New Blank"});
 
       self.showJsCodeHelpDialog = false;
+      self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
       self.action = {
         whereCondition: 'true',
         code: backandCallbackConstCode.start + '\n' +
@@ -235,9 +272,17 @@
         .then(self.clearTest);
     };
 
+    // Show action with route change
+    self.goToAction = function (name) {
+      var action = _.filter(self.ruleList, function (rule) {
+        return rule.name == name;
+      })[0];
+      $state.go('object_actions', {actionId: action.__metadata.id});
+    };
+
     function refreshAction(action) {
-      self.editMode = false;
-      self.requestTestForm = false;
+      //self.editMode = false;
+      self.requestTestForm = ($stateParams.test === "true");
       self.showJsCodeHelpDialog = false;
       self.isNodeJS = action && action.workflowAction == 'NodeJS';
 
@@ -250,6 +295,8 @@
       }
       else {
         self.action = null;
+        self.showTemplatesForm = true;
+        self.toggleTestForm(false);
       }
 
     }
@@ -301,6 +348,7 @@
     }
 
     self.doneEdit = function () {
+      self.editMode = false;
       refreshAction(self.action);
     };
 
@@ -308,10 +356,14 @@
       if (!self.isNodeJS) {
         ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
           .then(function (result) {
-            result ? refreshAction(self.action) : false;
+            if(result) {
+              self.editMode = false;
+              refreshAction(self.action);
+            }
           });
       }
       else{
+        self.editMode = false;
         refreshAction(self.action);
       }
 
@@ -358,6 +410,7 @@
       ConfirmationPopup.confirm('Are sure you want to delete this rule?')
         .then(function (result) {
           if (result) {
+            self.editMode = false;
             RulesService.remove(self.action)
               .then(getRules)
               .then(refreshAction);
@@ -371,8 +424,15 @@
       return allow;
     };
 
-    self.toggleTestForm = function () {
-      self.requestTestForm = !self.requestTestForm;
+    self.toggleTestForm = function (show) {
+
+      if(angular.isDefined(show)) {
+        self.requestTestForm = show;
+      } else{
+        self.requestTestForm = !self.requestTestForm;
+      }
+
+      $state.go('.', {test: self.requestTestForm}, {notify: false});
     };
 
     self.showTestForm = function () {
@@ -739,10 +799,25 @@
       onLoad: function (_editor) {
         self.aceStack.editor = _editor;
         _editor.$blockScrolling = Infinity;
-        //_editor.getSession().foldAll();
-        //window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(); }, 100);
       }
     };
+
+    self.aceResponse = {
+      onLoad: function (_editor) {
+        self.aceResponse.editor = _editor;
+        _editor.renderer.setOption('showLineNumbers', false);
+        _editor.$blockScrolling = Infinity;
+      }
+    };
+
+    self.aceBody = {
+      onLoad: function (_editor) {
+        self.aceBody.editor = _editor;
+        _editor.renderer.setOption('showLineNumbers', false);
+        _editor.$blockScrolling = Infinity;
+      }
+    };
+
 
     $scope.$watch(function () {
       if (self.action)
@@ -793,11 +868,19 @@
       self.test.testLoading = false;
       if (response != 'Invalid JSON') {
         self.test.resultStatus = {code: response.status, text: response.statusText};
-        self.test.result = JSON.stringify(response.data, null, 2);
+        if($.isPlainObject(response.data)){ //check if the response is a JSON
+          self.test.result = "\n\n" + JSON.stringify(response.data, null, 2);
+          window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/json');},100);
+        } else {
+          self.test.result = "\n\n\n" + response.data.replace(/"/g, "");
+          window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/text');},100);
+        }
+
         var guid = response.headers('Action-Guid');
-        self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
+        //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
         self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
-        self.testHttpObject.params = {parameters: self.test.parameters};
+        self.testUrl = self.testHttpObject.url;
+        self.testHttpObject.params = {parameters: self.test.parametersToSend};
         self.testHttp = stringifyHttp(self.testHttpObject);
         self.inputParametersForm.$setPristine();
         self.testUrlCopied = false;
@@ -829,8 +912,9 @@
     }
 
     function showCallStack(response){
-      self.test.callStack = JSON.stringify(response.data.ActionRoot, null, 2);
-      window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(2,null,2); }, 100);
+      self.test.callStack = "\n\n" + JSON.stringify(response.data.ActionRoot, null, 2);
+      window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(6,null,2); }, 100);
+      self.aceStack.editor.renderer.setOption('showLineNumbers', false);
     }
 
     self.treeSign = function (item) {
@@ -957,6 +1041,14 @@
         }
       });
 
+      if ($stateParams.actionId) {
+        var action = _.filter(self.ruleList, function (rule) {
+          return rule.__metadata.id === $stateParams.actionId;
+        })[0];
+        if (action) {
+          self.showAction(action.name);
+        }
+      }
     }
 
     self.getDataActionType = function () {
@@ -1019,6 +1111,7 @@
         .then(function (result) {
           if (result) {
             usSpinnerService.spin('loading');
+            self.isNewAction = false;
             refreshAction(self.action);
             init();
           }
@@ -1036,7 +1129,7 @@
     function getTestUrl() {
       // return the test url for display WITHOUT DEBUG PARAM
       // If the parameters object is empty it omits the object from the url
-      return self.testUrl.replace('%22$$debug$$%22:true', '').replace(/&parameters.*%7D/, '');
+      return decodeURIComponent(self.testUrl.replace('%22$$debug$$%22:true', ''));//.replace(/&parameters.*%7D/, '');
     }
 
     function getTestHttp() {

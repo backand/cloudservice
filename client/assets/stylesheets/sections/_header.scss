@@ -218,7 +218,7 @@
             }
 
             .search-box {
-                max-width: 180px;
+                max-width: 250px;
                 padding: ($header_height/2 - 18px) 0;
 
                 .input-group-addon {
@@ -228,8 +228,31 @@
                 }
 
                 .form-control {
-                    border: none;
                     background: transparent;
+                }
+
+                .search-wrapper {
+                  padding-left: 12px;
+                }
+                .search-input {
+                  height: 34px;
+                  width: 202px;
+                  transition: width 1s;
+                  border-radius: 4px;
+                  background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-32.png);
+                  background-position: 170px center;
+                  background-repeat: no-repeat;
+                }
+
+                .search-input-clicked {
+                  height: 34px;
+                  width: 400px;
+                  transition: width 1s;
+                  border-radius: 4px;
+                }
+
+                .app-select {
+                  width: 100%;
                 }
             }
 
@@ -439,6 +462,75 @@
     }
 }
 
+.search-directive-wrapper {
+  .search-results {
+    position: absolute;
+    top: $header_height - 10;
+    min-height: 100px;
+    min-width: 400px;
+    background: #ebeff1;
+    box-shadow: 0 0 3px 0 rgba(128, 126, 128, 1);
+    border-radius: 3px 3px 3px 3px;
+    font-size: 12px;
+    overflow-y: auto;
+    max-height: 800px;
+    max-width: 800px;
+    width: auto;
+
+    div.popover-wrapper {
+      margin: 0 15px;
+    }
+
+    div.result-category {
+      margin-left: 10px;
+      h3 {
+        font-size: 14px;
+      }
+      .result {
+        margin-left: 10px;
+        overflow: auto;
+        padding: 5px;
+
+        .result-box {
+          width: 150px;
+          max-height: 100px;
+          min-height: 45px;
+          background: #FAFAFA;
+          border-bottom: 1px solid #ccc;
+          border-radius: 2px 2px 2px 2px;
+          padding: 2px 5px;
+          display: inline-block;
+          float: left;
+          cursor: pointer;
+          font-size: 14px;
+        }
+        .result-label {
+          margin-left: 20px;
+          display: inline-block;
+          word-wrap: break-word;
+          max-width: 550px;
+          .search-result-snippet {
+            cursor: pointer;
+            b {
+              font-weight: 800;
+            }
+          }
+        }
+      }
+    }
+
+    h3 {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .search-results-footer {
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+}
 @media screen and (max-width:520px) {
   .system-status-label {
     display:none;

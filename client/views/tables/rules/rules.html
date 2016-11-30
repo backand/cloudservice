@@ -48,7 +48,7 @@
 
                 <li ng-repeat="rule in subitem.items" >
 
-                  <a href="" ng-click="rules.showAction(rule.name)" class="rule-name">
+                  <a href="" ng-click="rules.goToAction(rule.name)" class="rule-name">
                   {{ ::rule.name}}</a>
                 </li>
 
@@ -59,7 +59,7 @@
       </ul>
     </div>
 
-    <div ng-hide="rules.action" ng-include="'views/tables/rules/action_templates.html'"></div>
+    <div ng-if="rules.showTemplatesForm" ng-include="'views/tables/rules/action_templates.html'"></div>
 
     <div ng-class="(!rules.editMode || rules.showTestForm()) ? 'col-xs-8 col-md-9' : 'col-xs-12'"
          class="actions-display"

@@ -131,7 +131,8 @@
 
 <div class="row security-header">
   <div class="col-lg-12">
-    <h3>Security Template</h3>
+    <h3>Object Security</h3>
+    <br/>
     <select class="form-control"
             ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in security.workspaces"
             ng-model="security.currentST"
@@ -144,7 +145,7 @@
     </div>
   </div>
   <div class="col-lg-12" style="padding-top: 20px;">
-    <div class="strong"><label> Override the Security Template</label>
+    <div class="strong"><label> Override the Object Security</label>
       <label class="ui-switch ui-switch-success ui-switch-sm pull-right" for="override-checkbox">
         <input id="override-checkbox" type="checkbox"
                ng-model="security.view.permissions.overrideinheritable"/><i></i>
@@ -153,9 +154,36 @@
     <security-matrix security-template="security.sTemplate"
                      override="security.view.permissions.overrideinheritable"
                      on-update="security.templateChanged(template)"
+                     show-add-role="false"
                      on-role-add="security.templateRoleAdd(role)"
                      on-role-rename="security.templateRoleRename(role, newRole)"
                      on-role-remove="security.templateRoleRemove(role)">
     </security-matrix>
+  </div>
+</div>
+
+
+<div class="row security-header">
+  <div class="col-lg-12">
+    <h3>Fields Security</h3>
+    <br/>
+    <div class="slimScrollDiv ui-tab-container ui-tab-vertical" style="overflow:auto">
+      <tabset class="ui-tab" >
+        <tab ng-repeat="field in security.fields track by field.__metadata.id"
+             heading="{{ field.name }}">
+          <form role="form" style="min-height: 400px;">
+            <div class="strong"><label> Override the Field Security</label></div>
+            <security-matrix security-template="field.sTemplate"
+                             override="security.view.permissions.overrideinheritable"
+                             actions="['read', 'create', 'update']"
+                             show-add-role="false"
+                             on-update="security.templateFieldChanged(field, template)"
+                             >
+            </security-matrix>
+
+          </form>
+        </tab>
+      </tabset>
+    </div>
   </div>
 </div>

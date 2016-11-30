@@ -250,6 +250,16 @@ gulp.task('dev:dist', ['env:dev', 'build:dist'], function() {
   });
 });
 
+//run the dev in the dist folder
+gulp.task('local:dist', ['env:local', 'build:dist'], function() {
+  browserSync({
+    notify: false,
+    server: [config.dist]
+  });
+
+  //backand sync --app bklocal --master 2021e4b3-50e1-4e24-8ff0-f512e13b6e51 --user ff46366b-840f-11e6-8eff-0e00ae4d21e3 --folder /Users/itay/dev/cloudservice-baas/build/dist
+});
+
 //deploy the code into production
 gulp.task('qa:deploy',['sts'], function() {
   //backand sync --app qa1 --master 9b37748c-0646-40da-9100-59a86d4c7da4 --user d94c5b9e-9f2a-11e5-be83-0ed7053426cb --folder /Users/itay/dev/cloudservice-baas/build/dist
@@ -285,4 +295,8 @@ gulp.task('env:dev', function () {
 
 gulp.task('env:prod', function () {
   setEnv('prod');
+});
+
+gulp.task('env:local', function () {
+  setEnv('local');
 });
