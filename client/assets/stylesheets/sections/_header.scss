@@ -136,7 +136,7 @@
                 margin-bottom: 0;
             }
 
-            //
+
             .nav-left,
             .nav-right {
                 width:50%;
@@ -258,10 +258,16 @@
 
             //
             .nav-left {
-                float: left;
                 padding: 0;
+                width:100%;
+                float:none;
+                font-size: 16px;
+                line-height: $header_line_height;
+                position: absolute;
+                left: 220px;
+
                 > li {
-                    border-right: 1px solid $header-border;
+                  border-right: 1px solid $header-border;
                 }
             }
 
