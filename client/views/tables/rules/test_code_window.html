@@ -147,7 +147,7 @@
       <tr ng-repeat="message in rules.test.logMessages | orderBy: 'time' "
           ng-class="{'text-danger': message.isError}">
         <td class="log-icon" ng-bind="message.isError? 'X' : '>' "></td>
-        <td class="log-text">{{ message.text }}</td>
+        <td class="log-text" ng-bind-html="message.text"></td>
       </tr>
       </tbody>
     </table>

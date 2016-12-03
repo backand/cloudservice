@@ -36,6 +36,15 @@
       {id: 4, label: 'Metrics & Analytics'}
     ];
 
+    self.all = function () {
+
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + baseUrl + '?pageSize=200',
+        headers: { AppName: self.appName }
+      });
+    };
+
     self.get = function () {
       return $http({
         method: 'GET',

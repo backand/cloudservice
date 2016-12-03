@@ -25,12 +25,10 @@
       '$modal',
       'NodejsService',
       'SocketService',
-      '$rootScope',
       'stringifyHttp',
       '$localStorage',
       '$state',
-      '$timeout',
-      '$location',
+      'TablesService',
       RulesController]);
 
   function RulesController($scope,
@@ -54,12 +52,10 @@
                            $modal,
                            NodejsService,
                            SocketService,
-                           $rootScope,
                            stringifyHttp,
                            $localStorage,
                            $state,
-                           $timeout,
-                           $location) {
+                           TablesService) {
 
     var self = this;
     /**
@@ -92,6 +88,7 @@
       if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
       self.getTokens();
+      getAllActions(); //load all actions names for the test
     }
 
     //Wait for server updates on 'items' object
@@ -873,7 +870,7 @@
           window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/json');},100);
         } else {
           self.test.result = "\n\n\n" + response.data.replace(/"/g, "");
-          window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/text');},100);
+          window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/html');},100);
         }
 
         var guid = response.headers('Action-Guid');
@@ -905,7 +902,8 @@
       self.test.logMessages = [];
       response.data.data.forEach(function (log) {
         if(log.LogType == 500 || log.LogType == 501){
-          self.test.logMessages.push({text: log.FreeText, isError: log.LogType == 501, time: log.Time});
+          var newText = addLinksToActions(log.FreeText);
+          self.test.logMessages.push({text: newText, isError: log.LogType == 501, time: log.Time});
         }
       });
       self.test.testLoading = false;
@@ -915,6 +913,61 @@
       self.test.callStack = "\n\n" + JSON.stringify(response.data.ActionRoot, null, 2);
       window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(6,null,2); }, 100);
       self.aceStack.editor.renderer.setOption('showLineNumbers', false);
+    }
+
+    function getAllActions(){
+      RulesService.all().then(function(response){
+        self.allAcitons = response.data.data;
+      });
+    }
+
+    function addLinksToActions(text){
+
+      //load first all the actions but do it once
+      if(self.allAcitons == null){
+        return;
+      }
+
+      var matches = text.match(/\(.*?\)/g);
+
+      if(matches != null && matches.length > 0) {
+        matches.map(function (str) {
+
+          try {
+            var entities = str.replace('(', '').replace(')', '').split('/');
+            var objectName = entities[0];
+            var actionDetails = entities[1].split(':');
+            var actionName = actionDetails[0];
+            var actionLine = actionDetails[1];
+
+            if (self.action.name === actionName)
+              return;
+
+            var objectId = TablesService.getTableByName(objectName).__metadata.id;
+
+            var actionId = _.findWhere(self.allAcitons, {name: actionName, viewTable: objectId}).iD;
+
+            var uri = "";
+
+            if (objectId == 4) {
+              uri = $state.href('security.actions', {actionId: actionId, line: actionLine}, {absolute: true});
+            } else {
+              uri = $state.href('object_actions', {actionId: actionId,tableId: objectId,line: actionLine}, {absolute: true});
+            }
+
+            var newStr = '<a href="' + uri + '" target="_blank">' + str + '</a>';
+
+            text = text.replace(str, newStr);
+          }
+          catch(e){
+            consoel.log(e); //ignore errors just log them
+          }
+
+        });
+      }
+
+      return text.replace(/\n/g, "<br/>").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
     }
 
     self.treeSign = function (item) {
