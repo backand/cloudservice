@@ -902,7 +902,10 @@
       self.test.logMessages = [];
       response.data.data.forEach(function (log) {
         if(log.LogType == 500 || log.LogType == 501){
-          var newText = addLinksToActions(log.FreeText);
+          var newText = log.FreeText;
+          if(log.LogType == 501){
+            newText = addLinksToActions(log.FreeText);
+          }
           self.test.logMessages.push({text: newText, isError: log.LogType == 501, time: log.Time});
         }
       });
