@@ -274,7 +274,12 @@
       var action = _.filter(self.ruleList, function (rule) {
         return rule.name == name;
       })[0];
-      $state.go('object_actions', {actionId: action.__metadata.id});
+
+      if (action.viewTable == 4) {
+        $state.go('security.actions', {actionId: action.__metadata.id});
+      } else {
+        $state.go('object_actions', {actionId: action.__metadata.id});
+      }
     };
 
     function refreshAction(action) {
