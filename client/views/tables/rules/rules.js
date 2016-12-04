@@ -242,7 +242,7 @@
       AnalyticsService.track('Template Selected', {template: templateName || "New Blank"});
 
       self.showJsCodeHelpDialog = false;
-      self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
+      self.showTemplatesForm = false;
       self.action = {
         whereCondition: 'true',
         code: backandCallbackConstCode.start + '\n' +
