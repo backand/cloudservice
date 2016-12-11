@@ -870,12 +870,25 @@
       self.test.testLoading = false;
       if (response != 'Invalid JSON') {
         self.test.resultStatus = {code: response.status, text: response.statusText};
-        if($.isPlainObject(response.data)){ //check if the response is a JSON
-          self.test.result = "\n\n" + JSON.stringify(response.data, null, 2);
-          window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/json');},100);
-        } else {
-          self.test.result = "\n\n\n" + response.data.replace(/"/g, "");
-          window.setTimeout(function() { self.aceResponse.editor.getSession().setMode('ace/mode/html');},100);
+
+        try {
+          if ($.isPlainObject(response.data) || $.isArray(response.data)) { //check if the response is a JSON
+            self.test.result = "\n\n" + JSON.stringify(response.data, null, 2);
+            window.setTimeout(function () {
+              self.aceResponse.editor.getSession().setMode('ace/mode/json');
+            }, 100);
+          } else {
+            self.test.result = "\n\n\n" + response.data.replace(/"/g, "");
+            window.setTimeout(function () {
+              self.aceResponse.editor.getSession().setMode('ace/mode/html');
+            }, 100);
+          }
+        }
+        catch(e){
+          self.test.result = response.data;
+          window.setTimeout(function () {
+            self.aceResponse.editor.getSession().setMode('ace/mode/html');
+          }, 100);
         }
 
         var guid = response.headers('Action-Guid');
