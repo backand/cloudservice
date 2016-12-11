@@ -250,7 +250,7 @@ gulp.task('dev:dist', ['env:dev', 'build:dist'], function() {
   });
 });
 
-//run the dev in the dist folder
+//run the local in the dist folder
 gulp.task('local:dist', ['env:local', 'build:dist'], function() {
   browserSync({
     notify: false,
@@ -258,6 +258,16 @@ gulp.task('local:dist', ['env:local', 'build:dist'], function() {
   });
 
   //backand sync --app bklocal --master 2021e4b3-50e1-4e24-8ff0-f512e13b6e51 --user ff46366b-840f-11e6-8eff-0e00ae4d21e3 --folder /Users/itay/dev/cloudservice-baas/build/dist
+});
+
+//run the Blue in the dist folder
+gulp.task('blue:dist', ['env:blue', 'build:dist'], function() {
+  browserSync({
+    notify: false,
+    server: [config.dist]
+  });
+
+  //backand sync --app blue --master 229e14c2-9229-4f9e-9908-5bd41d8bddaf --user e6b8e25f-6eb3-4919-a44f-91c95f480cf8 --folder /Users/itay/dev/cloudservice-baas/build/dist
 });
 
 //deploy the code into production
@@ -299,4 +309,8 @@ gulp.task('env:prod', function () {
 
 gulp.task('env:local', function () {
   setEnv('local');
+});
+
+gulp.task('env:blue', function () {
+  setEnv('blue');
 });
