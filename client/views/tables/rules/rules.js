@@ -931,7 +931,8 @@
     }
 
     function showCallStack(response){
-      self.test.callStack = "\n\n" + JSON.stringify(response.data.actionRoot, null, 2);
+      var res = (response.data.length === 1) ? response.data[0] : response.data;
+      self.test.callStack = "\n\n" + JSON.stringify(res, null, 2);
       window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(6,null,2); }, 100);
       self.aceStack.editor.renderer.setOption('showLineNumbers', false);
     }
