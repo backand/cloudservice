@@ -31,6 +31,20 @@
         }
       });
     }
+
+    self.delete = function(filename, appName){
+      return $http({
+        method: 'DELETE',
+        url : CONSTS.appUrl + '/1/file/',
+        headers: {
+          'Content-Type': 'application/json',
+          AppName: appName
+        },
+        data: {
+          "filename": filename
+        }
+      });
+    }
   }
 
 

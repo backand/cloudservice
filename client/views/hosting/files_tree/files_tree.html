@@ -8,13 +8,24 @@
     </div>
     <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     <div class="panel-body">
-      <button class="btn btn-primary"
-              ng-click="filesTree.upload()"
-              >Upload Files</button>
+      <form class="form-inline">
+        <button class="btn btn-primary"
+                ng-click="filesTree.upload()"
+                >Upload Files</button>
+        <select class="form-group form-control"
+                ng-options="action for action in filesTree.actions"
+                ng-disabled="filesTree.node == null"
+                ng-change="filesTree.runAction()"
+                ng-model="filesTree.action"
+                ng-model-options="{debounce:{default:400}}">
+          <option value="">Actions</option>
+        </select>
+      </form>
       <p>
       <h4 style="padding-left: 20px;">{{filesTree.storageUrl}}</h4>
       </p>
-      <bknd-tree-control></bknd-tree-control>
+      <bknd-tree-control on-selected="filesTree.selected(node)" external-action="true"
+                         action="filesTree.action"></bknd-tree-control>
     </div>
   </section>
 </section>

@@ -1,11 +1,13 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('FilesTreeController', ['AppsService', 'CONSTS', '$state', 'usSpinnerService','$modal', FilesTreeController]);
+    .controller('FilesTreeController', ['AppsService', 'CONSTS', '$state', 'usSpinnerService','$modal','$window', FilesTreeController]);
 
-  function FilesTreeController(AppsService, CONSTS, $state, usSpinnerService, $modal) {
+  function FilesTreeController(AppsService, CONSTS, $state, usSpinnerService, $modal, $window) {
 
     var self = this;
+    self.actions = ['Download','Delete'];
+    self.node = null;
 
     self.appName = AppsService.currentApp.Name;
     self.storageUrl = CONSTS.storageUrl + '/' + self.appName;
@@ -15,6 +17,14 @@
       $state.go($state.current, {}, {reload: true}).then(function () {
         usSpinnerService.stop('loading');
       });
+    };
+
+    self.selected = function(node){
+      self.node = node;
+    };
+
+    self.runAction = function(){
+      //self.action = null;
     };
 
     self.upload = function () {

@@ -891,7 +891,7 @@
           }, 100);
         }
 
-        var guid = response.headers('Action-Guid');
+        var guid = response.headers('Backand-Action-Guid');
         //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
         self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
         self.testUrl = self.testHttpObject.url;
