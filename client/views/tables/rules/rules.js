@@ -65,6 +65,7 @@
      */
     function init() {
       self.isNewAction = false;
+      self.actionChangeInTree = false;
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
       self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
@@ -266,7 +267,9 @@
       self.isNewAction = false;
       var action = getRuleByName(actionName);
       refreshAction(action)
-        .then(self.clearTest);
+        .then(function(){
+          self.clearTest();
+        });
     };
 
     // Show action with route change
@@ -352,6 +355,8 @@
     self.doneEdit = function () {
       self.editMode = false;
       refreshAction(self.action);
+      self.clearTest();
+      self.toggleTestForm(false);
     };
 
     self.cancelEdit = function () {
@@ -361,12 +366,14 @@
             if(result) {
               self.editMode = false;
               refreshAction(self.action);
+              self.clearTest();
             }
           });
       }
       else{
         self.editMode = false;
         refreshAction(self.action);
+        self.clearTest();
       }
 
     };
@@ -381,13 +388,18 @@
 
       var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
-        .then(getRules)
+        .then(function(){
+          if(self.isNewAction || self.actionChangeInTree){
+            getRules();
+          }
+        })
         .then(function () {
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
           AnalyticsService.track('AddedRule', {rule: self.action.name});
 
+          self.actionChangeInTree = false;
           self.saving = false;
           self.savingAndTesting = false;
           self.isNewAction = false;
@@ -597,6 +609,11 @@
     }
 
     function buildParametersDictionary() {
+
+      if(!self.test){
+        self.clearTest();
+      }
+
       var keys = [];
       if (self.action && self.action.inputParameters) {
         self.test.inputParametersArray = _.compact(self.action.inputParameters.replace(/ /g, '').split(','));
@@ -820,12 +837,22 @@
       }
     };
 
+    $scope.$watch(function () {
+      if (self.action && self.action.name)
+        return self.action.name;
+    }, function (newVal, oldVal) {
+      if(newVal != oldVal){
+        self.actionChangeInTree = true;
+      }
+    });
 
     $scope.$watch(function () {
       if (self.action)
         return self.getDataActionType();
     }, function (newVal, oldVal) {
-
+      if(newVal != oldVal){
+        self.actionChangeInTree = true;
+      }
       if (self.ace && self.ace.editor) {
         self.clearTest(); //clear the data
         if (newVal === 'On Demand' || newVal === 'Delete') {
