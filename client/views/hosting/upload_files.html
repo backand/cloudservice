@@ -17,12 +17,13 @@
 
     <div class="panel-body">
       <div ngf-drop ngf-select ng-model="vm.files" class="drop-box"
-           ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true">
+           ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-keep="'distinct'" ngf-allow-dir="true">
         Drop files here or click to upload
       </div>
-      <ul>
-        <li ng-repeat="f in vm.files">{{f.name}} <a href="" ng-click="vm.cacnelFile(f.name)">X</a></li>
-      </ul>
+      <label>Files to upload:</label>
+
+        <div ng-repeat="f in vm.files"><a href="" ng-click="vm.cacnelFile(f.name)"><i class="glyphicon glyphicon-remove"></i></a> {{f.name}}</div>
+
     </div>
   </div>
 
