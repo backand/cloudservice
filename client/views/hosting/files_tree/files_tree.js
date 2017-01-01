@@ -35,7 +35,7 @@
       });
 
       modalInstance.result.then(function (result) {
-        if (result && result.reopen) {
+        if (result) {
           self.refresh();
         }
       });

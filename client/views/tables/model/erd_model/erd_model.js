@@ -44,14 +44,17 @@
 
     self.reset = function () {
       DbDataModel.removeCustomSchema(self.appName);
-      getSchema();
-      self.updateErd(JSON.parse(self.currentModel.schema));
-      $scope.isUnsaved = false;
+      getSchema().then(function(){
+        self.updateErd(JSON.parse(self.currentModel.schema)).then(function(){
+          $scope.isUnsaved = false;
+          AppsService.reset(self.appName);
+        });
+      });
     };
 
     function getSchema() {
       usSpinnerService.spin('loading');
-      DbDataModel.get(self.appName)
+      return DbDataModel.get(self.appName)
         .finally(function () {
           $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
           if (!$scope.isChartReady) {
@@ -131,6 +134,8 @@
       modalInstance.result.then(function (result) {
         self.updateErd(result.model).then(function () {
           deferred.resolve();
+        }, function(error){
+          console.log(error);
         });
       });
       return deferred.promise;

@@ -21,7 +21,7 @@
         Drop files here or click to upload
       </div>
       <ul>
-        <li ng-repeat="f in vm.files">{{f.name}} <a href="" ng-click="vm.cacnelFile(f)">X</a></li>
+        <li ng-repeat="f in vm.files">{{f.name}} <a href="" ng-click="vm.cacnelFile(f.name)">X</a></li>
       </ul>
     </div>
   </div>
@@ -31,5 +31,5 @@
   <button class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
   <button class="btn btn-primary"
           ng-click="vm.upload()"
-          ng-disabled="vm.files.length === 0">Upload</button>
+          ng-disabled="vm.files == null || vm.files.length === 0">Upload</button>
 </div>

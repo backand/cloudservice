@@ -7,10 +7,11 @@
       'usSpinnerService',
       'FilesService',
       'AppsService',
+      '$filter',
       UploadFilesController
     ]);
 
-  function UploadFilesController($modalInstance, Upload, usSpinnerService, FilesService, AppsService) {
+  function UploadFilesController($modalInstance, Upload, usSpinnerService, FilesService, AppsService, $filter) {
     var self = this;
 
     self.appName = AppsService.currentApp.Name;
@@ -38,7 +39,7 @@
               c--;
               if(c===0){
                 usSpinnerService.stop('upload-loading');
-                $modalInstance.close({});
+                $modalInstance.close({files:files});
               }
             });
           }
@@ -47,6 +48,9 @@
       }
     };
 
+    self.cacnelFile = function(fileName){
+      self.files = $filter('filter')(self.files, {name: '!' + fileName},true)
+    };
   }
 
 }());
