@@ -925,8 +925,6 @@
         self.testHttpObject.params = {parameters: self.test.parametersToSend};
         self.testHttp = stringifyHttp(self.testHttpObject);
         self.inputParametersForm.$setPristine();
-        self.testUrlCopied = false;
-        self.testHttpCopied = false;
         if (self.debugMode == 'debug') {
           AppLogService.getActionLog($stateParams.appName, guid)
             .then(showLog, errorHandler);
@@ -1231,7 +1229,7 @@
     function getTestUrl() {
       // return the test url for display WITHOUT DEBUG PARAM
       // If the parameters object is empty it omits the object from the url
-      return decodeURIComponent(self.testUrl.replace('%22$$debug$$%22:true', ''));//.replace(/&parameters.*%7D/, '');
+      return decodeURIComponent(self.testUrl.replace(',%22$$debug$$%22:true', '').replace('%22$$debug$$%22:true', ''));
     }
 
     function getTestHttp() {
