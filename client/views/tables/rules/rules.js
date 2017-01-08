@@ -997,9 +997,9 @@
             var uri = "";
 
             if (objectId == 4) {
-              uri = $state.href('security.actions', {actionId: actionId, line: actionLine}, {absolute: true});
+              uri = $state.href('security.actions', {actionId: actionId, line: actionLine}, {absolute: false});
             } else {
-              uri = $state.href('object_actions', {actionId: actionId,tableId: objectId,line: actionLine}, {absolute: true});
+              uri = $state.href('object_actions', {actionId: actionId,tableId: objectId,line: actionLine}, {absolute: false});
             }
 
             var newStr = '<a href="' + uri + '" target="_blank">' + str + '</a>';
@@ -1007,7 +1007,7 @@
             text = text.replace(str, newStr);
           }
           catch(e){
-            consoel.log(e); //ignore errors just log them
+            console.log(e); //ignore errors just log them
           }
 
         });
