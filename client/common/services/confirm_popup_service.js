@@ -29,6 +29,8 @@
       self.modalScope.msg = msg;
       if (isJson(msg)) {
         self.modalScope.type = 'json';
+      } else if(msg.indexOf('function backandCallback')>-1)  {
+        self.modalScope.type = 'text';
       } else {
         self.modalScope.type = '';
       }

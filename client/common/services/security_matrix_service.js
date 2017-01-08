@@ -62,8 +62,10 @@
       var EVERYONE = 'everyone';
       var createPermission = permissions.allowCreate.split(',');
       var editPermission = permissions.allowEdit.split(',');
-      var deletePermission = permissions.allowDelete.split(',');
       var readPermission = permissions.allowRead.split(',');
+
+      var deletePermission = (permissions.allowDelete)  ? permissions.allowDelete.split(',') : [];
+
 
       angular.forEach(_tempTemplate, function (role) {
         if (self.contains(createPermission,role.title)) {

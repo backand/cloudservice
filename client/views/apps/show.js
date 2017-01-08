@@ -106,7 +106,7 @@
 
     function dbDataModelSuccessHandler() {
       RulesService.appName = self.appName;
-      RulesService.get().then(rulesSuccessHandler);
+      RulesService.all().then(rulesSuccessHandler);
     }
 
     function rulesSuccessHandler(rules) {

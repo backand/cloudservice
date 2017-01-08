@@ -48,7 +48,7 @@
 
       self.placeHolderSql = "'{{sys::username}}' = ProjectUserEmail";
       self.placeHolderNoSql = '{"title":{"$gt":"aaa"}}';
-      self._lastPermissions = null;
+
       self.workspaces = null;
       self.view = null;
 
@@ -59,6 +59,7 @@
       self.templateRoleAdd = templateRoleAdd;
       self.templateRoleRename = templateRoleRename;
       self.templateRoleRemove = templateRoleRemove;
+      self.templateFieldChanged = templateFieldChanged;
 
       getWorkspaces();
 
@@ -311,8 +312,14 @@
     function workspaceSuccessHandler(data) {
       self.workspaces = data.data.data;
 
-      if (self.view == null)
-        ColumnsService.get().then(successHandler, errorHandler)
+      if (self.view == null){
+        loadView();
+      }
+
+    }
+
+    function loadView(){
+      ColumnsService.get().then(successHandler, errorHandler);
     }
 
     /**
@@ -321,6 +328,14 @@
      */
     function successHandler(data) {
       self.view = data;
+
+      //make the view permission like the ws and fields
+      self.view.permissions.allowCreate = self.view.permissions.allowCreateRoles;
+      self.view.permissions.allowEdit = self.view.permissions.allowEditRoles;
+      self.view.permissions.allowDelete = self.view.permissions.allowDeleteRoles;
+      self.view.permissions.allowRead = self.view.permissions.allowReadRoles;
+
+      //set the current workspace - security template
       self.currentST = String(self.view.permissions.securityWorkspace);
 
       // Default view is NoSQL, unless only SQL has value
@@ -331,7 +346,8 @@
           self.showWizard = true;
         }
       }
-      buildTemplate();
+
+      rebuildTemplate();
     }
 
     /**
@@ -340,9 +356,9 @@
      */
     function templateChanged (template) {
       var permissions = SecurityMatrixService.getPermission(template);
-      if(self._lastPermissions == null || JSON.stringify(permissions) == JSON.stringify(self._lastPermissions))
+      if(self.view.permissions._lastPermissions == null || JSON.stringify(permissions) == JSON.stringify(self.view.permissions._lastPermissions))
       {
-        self._lastPermissions = permissions;
+        self.view.permissions._lastPermissions = permissions;
         return;
       }
       self.view.permissions.allowCreateRoles = permissions.allowCreate;
@@ -353,6 +369,25 @@
       ColumnsService.commit(self.view);
     }
 
+    /**
+     * Save the changes in the matrix to the view
+     * @param template
+     */
+    function templateFieldChanged (field, template) {
+      var permissions = SecurityMatrixService.getPermission(template);
+      delete permissions.allowDelete;
+
+      if(field.permissions._lastPermissions == null || JSON.stringify(permissions) == JSON.stringify(field.permissions._lastPermissions))
+      {
+        field.permissions._lastPermissions = permissions;
+        return;
+      }
+      field.permissions.allowCreate = permissions.allowCreate;
+      field.permissions.allowEdit = permissions.allowEdit;
+      field.permissions.allowRead = permissions.allowRead;
+
+      ColumnsService.commit(self.view);
+    }
 
     /**
      * Add new role
@@ -360,29 +395,44 @@
      * @returns {*}
      */
     function templateRoleAdd (roleName){
-      return SecurityService.postRole({Name: roleName, Description: roleName});
+      return SecurityService.postRole({Name: roleName, Description: roleName}).then(loadView);
     }
 
-    function  templateRoleRename(roleName, newName){
-      return SecurityService.updateRole({Name: newName, Description: newName}, roleName);
+    function  templateRoleRename(roleName, newName) {
+      return SecurityService.updateRole({Name: newName, Description: newName}, roleName).then(loadView);
     }
 
     function templateRoleRemove(roleName){
-      return SecurityService.deleteRole(roleName);
+      return SecurityService.deleteRole(roleName).then(loadView);
     }
 
+    /**
+     * Rebuild the UI for the roles value for object and fields
+     */
+    function rebuildTemplate(){
+
+      self.view.permissions.securityWorkspace = Number(self.currentST);
+      buildTemplate(self.view.permissions).then(function (data) {
+        self.sTemplate = data;
+      });
+
+      self.fields = self.view.fields;
+      self.fields.forEach(function(field){
+        buildTemplate(field.permissions).then(function (data) {
+          field.sTemplate = data;
+        });
+      });
+    }
 
 
     $scope.$watch(function () { return self.currentST }, function (newVal, oldValue) {
       if (newVal != null && oldValue != null && newVal !== oldValue)
       {
-        self.view.permissions.securityWorkspace = Number(self.currentST);
-        buildTemplate();
+        rebuildTemplate();
       }
     });
 
-    function buildTemplate() {
-      self.sTemplate = [];
+    function buildTemplate(inputPermissions) {
       var permissions = {};
       self.appName = SecurityMatrixService.appName = $state.params.appName;
 
@@ -407,16 +457,14 @@
       }
       else {
 
-        permissions.allowCreate = self.view.permissions.allowCreateRoles;
-        permissions.allowEdit = self.view.permissions.allowEditRoles;
-        permissions.allowDelete = self.view.permissions.allowDeleteRoles;
-        permissions.allowRead = self.view.permissions.allowReadRoles;
-        self._lastPermissions = permissions;
+        permissions.allowCreate = inputPermissions.allowCreate;
+        permissions.allowEdit = inputPermissions.allowEdit;
+        permissions.allowDelete = inputPermissions.allowDelete;
+        permissions.allowRead = inputPermissions.allowRead;
+        inputPermissions._lastPermissions = permissions;
       }
       //if no, read the permissions from the User
-      SecurityMatrixService.loadMatrix(permissions).then(function (data) {
-        self.sTemplate = data;
-      })
+      return SecurityMatrixService.loadMatrix(permissions);
     }
 
     function errorHandler(error, message) {
@@ -430,8 +478,16 @@
     }
 
     function onOverrideChange(newVal, oldVal) {
-      if (oldVal !== undefined) {
+      if (oldVal !== undefined && newVal != oldVal) {
+
+        //loop on all the fields to update the Precedent (which is override by Relly)
+
+        self.fields.forEach(function(field) {
+          field.permissions.overrideinheritable = self.view.permissions.overrideinheritable;
+        });
+
         ColumnsService.commit(self.view);
+        rebuildTemplate();
       }
     }
 

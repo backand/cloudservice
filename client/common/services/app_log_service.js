@@ -5,6 +5,7 @@
 
     var self = this;
     self.LOG_URL = '/1/table/data/durados_Log';
+    self.CALL_STACK_URL = '/1/actions/CallStack';
     self.REQUESTS_URL = '/1/log';
     self.HISTORY_URL = '/1/table/data/durados_v_ChangeHistory';
 
@@ -91,16 +92,24 @@
       })
     };
 
-    self.getRequestsLog = function (QueryName, appName, filterParam, sort, pageSize) {
+    self.getRequestsLog = function (queryName, appName, filterParam, sort, pageSize) {
       return $http({
         method: 'GET',
-        url : CONSTS.appUrl + self.REQUESTS_URL + '/' + QueryName,
+        url : CONSTS.appUrl + self.REQUESTS_URL + '/' + queryName,
         headers: { AppName: appName },
         params: {
           'pageSize': String(pageSize),
           'filter' : filterParam,
           'sort' : sort
         }
+      })
+    };
+
+    self.getCallStack = function (appName, guid) {
+      return $http({
+        method: 'GET',
+        url : CONSTS.appUrl + self.CALL_STACK_URL + '/' + guid,
+        headers: { AppName: appName }
       })
     };
 

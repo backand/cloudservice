@@ -13,8 +13,9 @@
 
         <!--<td ng-if="override"-->
             <!--editable-text="role.title">{{ role.title }}</td>-->
-      <td ng-if="override && !role.readonly"><a  href="" ng-click="OpenRole(role.title, 'update')" ng-bind="role.title"></a></td>
-      <td ng-if="!override || role.readonly" ng-bind="role.title"></td>
+      <td ng-if="override && !role.readonly && showAddRole"><a href="" ng-click="OpenRole(role.title, 'update')"
+                                                 ng-bind="role.title"></a></td>
+      <td ng-if="!override || role.readonly || !showAddRole" ng-bind="role.title"></td>
 
       <td class="text-center" ng-repeat="action in actions">
         <input ng-checked="role.permissions[action]"
@@ -28,6 +29,6 @@
 
 </table>
 <button class="btn btn-primary"
-        ng-if="override"
+        ng-if="override && showAddRole"
         ng-click="OpenRole(role.name, 'new')">+ Add Role</button>
 

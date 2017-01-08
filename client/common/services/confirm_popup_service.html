@@ -17,6 +17,15 @@
       rows="10">
     </div>
   </div>
+  <div ng-switch-when="text">
+    <div
+      ui-ace="{theme:'monokai', mode: 'javascript', rendererOptions: { fontSize: 15 } }"
+      type="text"
+      class="form-control"
+      ng-model="msg"
+      rows="10">
+    </div>
+  </div>
   <div ng-switch-default>
       <span id="confirmation-message" ng-bind-html="msg"></span>
   </div>

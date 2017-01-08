@@ -55,7 +55,7 @@
                 <div class="form-group">
                   <label for="type">Type</label>
                   <select class="form-control"
-                          ng-options="type for type in cronJobs.types"
+                          ng-options="type.id as type.label for type in cronJobs.types"
                           id="type"
                           ng-model="cronJobs.job.cronType"
                           required>

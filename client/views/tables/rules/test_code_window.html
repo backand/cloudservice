@@ -2,7 +2,7 @@
 <br/>
 <form role="form" name="rules.inputParametersForm" novalidate>
 
-  <label ng-show="rules.test.inputParametersArray">Parameters</label>
+  <label ng-if="rules.test.inputParametersArray">Parameters</label>
 
   <div class="form-group" ng-repeat="inputParam in rules.test.inputParametersArray">
     <label for="inputParam">{{inputParam}}</label>
@@ -12,7 +12,7 @@
            ng-model="rules.test.parameters[inputParam]">
   </div>
 
-  <hr class="narrow-top-margin">
+  <hr ng-if="rules.test.inputParametersArray" class="narrow-top-margin">
   <div ng-if="rules.getDataActionType() === 'On Demand'">
     <label>Method:&nbsp;&nbsp;</label>
     <input type="radio"
@@ -25,19 +25,23 @@
 
   <div class="form-group" ng-if="rules.test.method == 'POST'">
     <label>Body</label>
-    <div
-            ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
-            class="form-control ace-db-template"
-            name="requestBody"
-            id="requestBody"
-            ng-model="rules.test.body"
-            style="resize: vertical; height: 200px;">
-    </div>
+    <bknd-ace-features editor="rules.aceBody.editor" nesting-form="rules.inputParametersForm">
+      <div
+        ui-ace="{onLoad : rules.aceBody.onLoad, theme:'dawn', mode: 'json', rendererOptions: { fontSize: 15 } }"
+        class="form-control ace-db-template"
+        name="requestBody"
+        id="requestBody"
+        ng-model="rules.test.body"
+        style="resize: vertical; height: 200px;">
+      </div>
+    </bknd-ace-features>
   </div>
 
-  <hr class="narrow-top-margin">
-  <div class="form-group" ng-if="rules.getDataActionType() !== 'Create'">
-    <label>Row Id <span ng-show="rules.getDataActionType() === 'On Demand'">(Optional)</span></label>
+  <hr ng-if="rules.getDataActionType() === 'On Demand'" class="narrow-top-margin">
+  <div class="form-group" ng-if="rules.getDataActionType() !== 'Create' || rules.test.rowId != null">
+    <label><a href="" ng-click="rules.getFirstRow()">Row Id </a><span
+            ng-if="rules.getDataActionType() === 'On Demand'">(Optional)
+    </span></label>
     <div ng-switch="rules.test.isGuid">
 
       <input type="number"
@@ -59,12 +63,12 @@
     </div>
 
   </div>
-
-  <div class="form-group">
+  <div class="form-group"
+       ng-if="(rules.test.rowId != null && rules.rowData != '') || rules.getDataActionType() === 'Create'">
     <label for="rowData">{{ rules.ace.message }}</label>
     <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
     <div
-      ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json', firstLineNumber: 1, rendererOptions: { fontSize: 15 } }"
+      ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json',rendererOptions: { fontSize: 15 } }"
       class="form-control ace-db-template"
       name="rowData"
       id="rowData"
@@ -76,7 +80,7 @@
     <div ng-show="rules.testRowObjectNotification" class="text-danger">{{rules.testRowObjectNotification}}</div>
   </div>
 
-  <hr class="narrow-top-margin">
+  <hr ng-if="rules.test.rowId != null" class="narrow-top-margin">
   <div class="row">
     <div class="col-md-12">
       <button type="submit"
@@ -96,7 +100,6 @@
               ng-click="rules.saveAction(true)">Save & Test
       </button>
 
-      <div ng-show="!rules.allowTest()">** Must save first to enable Test</div>
       <div ng-show="!rules.allowTestEditMode">** Must have data first. Click Data tab to add new rows.</div>
     </div>
   </div>
@@ -112,7 +115,6 @@
              value="production">&nbsp;&nbsp;Production&nbsp;&nbsp;
     </div>
   </div>
-  <br/>
   <div ng-if="rules.test.resultStatus">
     <hr/>
     <label>Response Status:</label>
@@ -121,14 +123,15 @@
     <br/><br/>
     <label>Response Body:</label>
     <br/>
-    <div ui-ace="{theme:'dawn', mode: 'json'}"
-         type="text"
-         class="form-control"
-         rows="10"
-         ng-readonly="true"
-         ng-model="rules.test.result"
-         style="resize: vertical; height: 200px;">
-    </div>
+    <bknd-ace-features editor="rules.aceResponse.editor" nesting-form="rules.inputParametersForm">
+      <div ui-ace="{onLoad : rules.aceResponse.onLoad, theme:'dawn', useWrapMode: true}"
+           type="text"
+           class="form-control"
+           ng-readonly="true"
+           ng-model="rules.test.result"
+           style="resize: vertical; height: 200px;">
+      </div>
+    </bknd-ace-features>
     <br/>
   </div>
 
@@ -143,14 +146,31 @@
       <tr ng-repeat="message in rules.test.logMessages | orderBy: 'time' "
           ng-class="{'text-danger': message.isError}">
         <td class="log-icon" ng-bind="message.isError? 'X' : '>' "></td>
-        <td class="log-text">{{ message.text }}</td>
+        <td class="log-text" ng-bind-html="message.text"></td>
       </tr>
       </tbody>
     </table>
 
   </div>
 
+  <div ng-if="rules.test.resultStatus">
+    <hr/>
+    <label>Call Stack:</label>
+    <br/>
+    <bknd-ace-features editor="rules.aceStack.editor" nesting-form="rules.inputParametersForm">
+      <div ui-ace="{onLoad: rules.aceStack.onLoad, theme:'dawn', mode: 'json'}"
+           type="text"
+           class="form-control"
+           ng-readonly="true"
+           ng-model="rules.test.callStack"
+           style="resize: vertical; height: 200px;">
+      </div>
+    </bknd-ace-features>
+    <br/>
+  </div>
+
   <div ng-show="rules.getDataActionType() === 'On Demand'">
+    <br/>
     <label>Request URL:</label>
     <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
   </div>

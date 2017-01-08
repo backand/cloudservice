@@ -1,0 +1,15 @@
+{
+  "mainAppName":"bko",
+  "appUrl":"http://blue.backand.com",
+  "playgroundUrl":"//s3.amazonaws.com/demo.backand.net/misc/rest-api/",
+  "IntercomAppId":"ufkkj816",
+  "backandUserObject": "backandUsers",
+  "backandRoleObject": "backandRoles",
+  "env": "BLUE",
+  "hostingUrl": "https://hosting.backand.io",
+  "storageUrl": "https://files.backand.io",
+  "nodejsUrl": "https://nodejs.backand.io",
+  "socketUrl": "https://socket.backand.com",
+  "billingUrl": "https://bill.backand.com",
+  "adfsResourse": "http://blue.backand.com"
+}

@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('common.data_models')
-    .service('DbDataModel', ['ModelService', '$localStorage', DbDataModel]);
+    .service('DbDataModel', ['ModelService', '$localStorage','$q', DbDataModel]);
 
-  function DbDataModel(ModelService, $localStorage) {
+  function DbDataModel(ModelService, $localStorage, $q) {
 
     var self = this;
 
@@ -64,12 +64,20 @@
       $localStorage.backand[appName].erdModel = self.newModel.erdModel;
     };
 
-    self.get = function (appName) {
+    self.get = function (appName, force) {
       getAppLocalStorage(appName);
-      return ModelService.get(appName)
-        .then(function (response) {
-          return updateModels(appName, response)
-        })
+
+      if(self.currentModel.json == null || force || false) {
+        return ModelService.get(appName)
+          .then(function (response) {
+            return updateModels(appName, response)
+          })
+      } else {
+        var deferred = $q.defer();
+        var model = {"data": self.currentModel.json};
+        deferred.resolve(updateModels(appName, model));
+        return deferred.promise;
+      }
     };
 
     self.update = function (appName, schema, afterServerUpdate) {

@@ -15,9 +15,10 @@
       'TablesService',
       'usSpinnerService',
       'LimitsService',
+      'AnalyticsService',
       CronJobsController]);
 
-  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp,TablesService,usSpinnerService, LimitsService) {
+  function CronJobsController(CronService, $state, $scope, DbQueriesService, RulesService, AppsService, NotificationService, $stateParams, ConfirmationPopup, stringifyHttp,TablesService,usSpinnerService, LimitsService, AnalyticsService) {
 
     var self = this;
 
@@ -32,7 +33,9 @@
       self.frequency = {
         base: 1
       };
-      self.types = ['Action', 'Query', 'External HTTP request'];
+      self.types = [{id: 'Action',   label:"Action - On Demand"}
+                   ,{id: 'Query',    label:"Query"}];
+                   //,{id: 'External', label:'External HTTP request'}];
       //self.namePattern = /^\w+$/;
       self.new = $state.current.name === "cronJobs.new";
       if(!self.new){
@@ -124,6 +127,8 @@
 
     self.test = function () {
       self.loadingTest = true;
+      self.testError = null;
+      self.testResult = null;
       CronService.test($stateParams.jobId).then(function (response) {
         self.testResult = {
           request: JSON.stringify(response.data.request, null, 2),
@@ -131,7 +136,7 @@
         };
         self.loadingTest = false;
       }, function (error) {
-        self.testError = error.data.Message;
+        self.testError = error.data;
         errorHandler(error);
       });
     };
@@ -141,7 +146,7 @@
     };
 
     function fetchActions() {
-      if (!self.actxions) {
+      if (!self.actions) {
         self.loadingActions = true;
         RulesService.tableId = null;
         RulesService.get().then(function (response) {
@@ -166,6 +171,7 @@
       CronService.post(self.job).then(function (response) {
         self.loading = false;
         NotificationService.add('success', 'Cron job added successfully');
+        AnalyticsService.track('CreatedJob', {job: self.job.name, description: self.job.description});
         var params = {jobId: response.data.__metadata.id};
         if(isTest) {
           params.isTest = true;
