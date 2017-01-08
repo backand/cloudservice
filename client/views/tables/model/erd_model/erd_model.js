@@ -25,7 +25,9 @@
         self.editObjectDialog();
         $stateParams.isNewObject = false;
       }
+
       getSchema();
+
     }
 
     self.saveModel = function () {
@@ -44,7 +46,7 @@
 
     self.reset = function () {
       DbDataModel.removeCustomSchema(self.appName);
-      getSchema().then(function(){
+      getSchema(true).then(function(){
         self.updateErd(JSON.parse(self.currentModel.schema)).then(function(){
           $scope.isUnsaved = false;
           AppsService.reset(self.appName);
@@ -52,9 +54,9 @@
       });
     };
 
-    function getSchema() {
+    function getSchema(force) {
       usSpinnerService.spin('loading');
-      return DbDataModel.get(self.appName)
+      return DbDataModel.get(self.appName, force)
         .finally(function () {
           $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
           if (!$scope.isChartReady) {
