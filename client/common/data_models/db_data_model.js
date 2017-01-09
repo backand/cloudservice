@@ -119,6 +119,9 @@
         if(self.newModel.schema == null){
           self.newModel.schema = self.getCustomSchema(appName) || self.currentModel.schema;
         }
+        else{
+          self.newModel.schema = angular.toJson(JSON.parse(self.newModel.schema), true);
+        }
       }
       var newModelObject;
       // Handle case when JSON is malformed
