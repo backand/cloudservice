@@ -17,6 +17,7 @@
       try {
         JSON.parse(self.newModel.schema);
       } catch (e) {
+        self.reset(); //reset the model in case coming from other app
         NotificationService.add('error', 'Malformed JSON. Please edit the JSON Model.');
       }
       self.currentObject = $state.params.tableName;
