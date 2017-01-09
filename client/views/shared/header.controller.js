@@ -3,9 +3,9 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ['$scope', '$http', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService', HeaderController]);
+    ['$scope', '$http', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService','DbDataModel', HeaderController]);
 
-  function HeaderController($scope, $http, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService) {
+  function HeaderController($scope, $http, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService, DbDataModel) {
     var self = this;
     self.usingDefaultModel = false;
     self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
@@ -19,8 +19,7 @@
     self.apps = AppsService.apps;
     self.currentAppName = AppsService.currentApp.Name;
     self.debugMode = AppsService.currentApp.debugMode;
-    //when app change login to the socket
-      SocketService.login(self.currentAppName);
+
     updateDefaultModelUse(self.currentAppName, false);
 
     $scope.$on('$stateChangeSuccess', function () {
@@ -37,7 +36,13 @@
       self.currentAppName = AppsService.currentApp.Name;
 
       self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
-      self.debugMode = AppsService.currentApp.debugMode;
+      self.debugMode = AppsService.currentApp.debugMode
+
+      //when app change login to the socket
+      SocketService.login(self.currentAppName);
+
+      //clear the model
+      DbDataModel.get(self.currentAppName, true);
 
       updateDefaultModelUse(self.currentAppName, false);
     });
@@ -51,6 +56,9 @@
 
       //when app change login to the socket
       SocketService.login(self.currentAppName);
+
+      //clear the model
+      DbDataModel.get(self.currentAppName, true);
     });
 
     $scope.$on('appname:saved', function () {

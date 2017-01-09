@@ -45,12 +45,12 @@
 
     self.reset = function(){
       DbDataModel.removeCustomSchema(self.appName);
-      getSchema();
+      getSchema(true);
     };
 
-    function getSchema () {
+    function getSchema (force) {
       usSpinnerService.spin('loading');
-      DbDataModel.get(self.appName)
+      DbDataModel.get(self.appName, force)
         .finally(function () {
           $scope.isUnsaved = self.oldModel.schema !== self.newModel.schema;
           usSpinnerService.stop('loading');
