@@ -7,6 +7,8 @@
     <a href="" title="Discard the current changes" class="btn btn-sm"
        ng-click="erdModel.reset()"><i
       class="glyphicon glyphicon-refresh"></i> reset local changes</a>
+
+    <div class=" alert alert-danger" ng-if="erdModel.errorJson">Malformed JSON - Please edit the Model JSON</div>
   </div>
 
   <div class="col-md-3">

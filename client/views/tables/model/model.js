@@ -11,6 +11,8 @@
       var currentApp = AppsService.currentApp;
       self.appName = currentApp.Name;
       self.showHelpDialog = false;
+
+      DbDataModel.init(currentApp.Name);
       self.oldModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
 
@@ -28,6 +30,13 @@
       getSchema();
     }
 
+    $scope.$watch(function () {
+      if (self.oldModel.schema !== self.newModel.schema) {
+        return self.newModel.schema;
+      }
+    }, function(){
+      $scope.isUnsaved = self.oldModel.schema !== self.newModel.schema;
+    });
 
     self.showHelp = function (event) {
       self.showHelpDialog = true;

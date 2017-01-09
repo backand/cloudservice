@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', '$stateParams', 'NotificationService', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', '$stateParams', ErdModelController]);
 
-  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q, $stateParams, NotificationService) {
+  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q, $stateParams) {
 
     var self = this;
 
@@ -15,11 +15,13 @@
       self.currentModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
       try {
+        self.errorJson = false;
         JSON.parse(self.newModel.schema);
       } catch (e) {
-        self.reset(); //reset the model in case coming from other app
-        NotificationService.add('error', 'Malformed JSON. Please edit the JSON Model.');
+        self.errorJson = true;
+        return;
       }
+
       self.currentObject = $state.params.tableName;
 
       if ($stateParams.isNewObject) {
@@ -27,7 +29,7 @@
         $stateParams.isNewObject = false;
       }
 
-      getSchema();
+      getSchema(true);
 
     }
 
@@ -59,6 +61,14 @@
       usSpinnerService.spin('loading');
       return DbDataModel.get(self.appName, force)
         .finally(function () {
+          try {
+            self.errorJson = false;
+            JSON.parse(self.newModel.schema);
+          } catch (e) {
+            self.errorJson = true;
+            usSpinnerService.stop('loading');
+            return;
+          }
           $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
           if (!$scope.isChartReady) {
             $scope.isChartReady = true;

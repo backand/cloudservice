@@ -19,7 +19,13 @@
       self.oldModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
 
-      getSchema();
+      try {
+        JSON.parse(self.newModel.schema);
+        getSchema(true);
+      } catch (e) {
+        //when Malformed json don't do anything
+      }
+
     }
 
     self.aceDiffOptions = {
@@ -57,8 +63,8 @@
       usSpinnerService.spin('loading');
       DbDataModel.get(self.appName, force)
         .finally(function () {
-          if(self.currentModel && self.newModel) {
-            $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
+          if(self.oldModel && self.newModel) {
+            $scope.isUnsaved = self.oldModel.schema !== self.newModel.schema;
           }
           usSpinnerService.stop('loading');
         })
