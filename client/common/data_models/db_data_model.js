@@ -22,10 +22,8 @@
 
     _init();
 
-    self.init = function(appName){
-      if(appName != self.currentModel.appName){
-        _init();
-      }
+    self.init = function(){
+      _init();
     };
 
 

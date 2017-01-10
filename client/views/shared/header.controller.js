@@ -41,10 +41,12 @@
       //when app change login to the socket
       SocketService.login(self.currentAppName);
 
-      //clear the model
-      DbDataModel.get(self.currentAppName, true);
+      if(self.currentAppName) {
+        //clear the model
+        DbDataModel.get(self.currentAppName, true);
 
-      updateDefaultModelUse(self.currentAppName, false);
+        updateDefaultModelUse(self.currentAppName, false);
+      }
     });
 
     $scope.$on('debugModeChange', function (fun, mode) {
@@ -55,10 +57,12 @@
       updateDefaultModelUse(self.currentAppName, true);
 
       //when app change login to the socket
-      SocketService.login(self.currentAppName);
+      if(self.currentAppName) {
+        SocketService.login(self.currentAppName);
 
-      //clear the model
-      DbDataModel.get(self.currentAppName, true);
+        //clear the model
+        DbDataModel.get(self.currentAppName, true);
+      }
     });
 
     $scope.$on('appname:saved', function () {

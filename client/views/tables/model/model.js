@@ -12,7 +12,7 @@
       self.appName = currentApp.Name;
       self.showHelpDialog = false;
 
-      DbDataModel.init(currentApp.Name);
+      DbDataModel.init();
       self.oldModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
 
