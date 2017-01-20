@@ -5,20 +5,16 @@
           <div class="tab-content" ui-view></div>
 
         </div>
-        <div class="panel-heading"><strong>backand-angular-kickstart</strong>
-            <h2>Follow these steps to install angular-kickstart with Backand inside</h2>
+        <div class="panel-heading"><strong>Backand Angular 1 Kickstart</strong>
+            <h2>Follow these steps to install angular-kickstart, with Backand built-in!</h2>
         </div>
         <div class="panel-body docs">
-
-
-
-
             <div class="quickstart-body">
                 <div class="quickstart-connecting-db" ng-show="docs.isNew()">
                     <h3>
-            We're creating your database and will notify you when it's ready.<br/>
-            In the meantime, you can review below how to setup new app with angular-kickstart...
-          </h3>
+            We're creating your database, and will notify you when it's ready.<br/>
+            In the meantime, you can review our kickstart guides below.
+                    </h3>
                     <div us-spinner spinner-key="connecting-app-to-db"></div>
                     <br/>
                     <br/>
@@ -28,20 +24,20 @@
                 <section class="panel panel-box" ng-if="!docs.currentApp.Name">
                     <div class="panel-item bg-info">
                         <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
-              gulpjs based build system that scaffolds the project for you.</h3>
+              gulpjs-based build system that scaffolds the project for you.</h3>
                     </div>
                 </section>
 
                 <br/>
                 <h2>Installation</h2>
-                <h5>Install <b>node.js</b>. Then <b>sass</b>, <b>gulp</b> and <b>bower</b> if you haven't yet.</h5>
-
+                <h5>Install <b>node.js</b>. Then <b>sass</b>, <b>gulp</b> and <b>bower,</b> if you haven't yet.</h5>
+                <h6><em>Note: on Windows computers, installing sass requires installing Ruby, as sass is implemented as a ruby gem. Simply visit <a href='https://www.ruby-lang.org/en/'>ruby-lang.org</a> for more info.<br /></em></h6>
                 <pre><code class="hljs">
     $ gem install sass
     $ npm install -g gulp bower
     </code></pre>
                 <br/>
-                <h5>Clone the backand-angular-kickstart or download the
+                <h5>Clone the backand-angular-kickstart project from github, or download the
           <a href="https://github.com/backand/angular-kickstart/archive/master.zip" target="_blank">
             master release</a>.</h5>
                 <pre><code class="hljs">
@@ -49,7 +45,7 @@
     $ cd angular-kickstart
     </code></pre>
                 <br/>
-                <h5>Install bower and npm dependencies, and run the application in development mode.</h5>
+                <h5>Install the bower and npm dependencies, then use gulp to run the application in development mode.</h5>
                 <pre><code class="hljs">
     $ npm install
     $ bower install
@@ -57,19 +53,19 @@
     </code></pre>
                 <br/>
                 <h2>Run & Deploy</h2>
-                <h5>You are now ready to go, your application is available at <code>http://127.0.0.1:3000</code>.</h5>
+                <h5>Your application is now ready for development! It is available at <code>http://127.0.0.1:3000</code>.</h5>
                 <br/>
-                <h5><b>Every file you add, edit or delete into the /client folder will be handled by the build system.</b></h5>
-                <h5>When you are ready to build a production release there is a task for that:</h5>
+                <h5><b><em>Every file you add, edit or delete in the <code>/client</code> folder will be detected by gulp, and your application will automatically be reloaded.</em></b></h5>
+                <h5>When you are ready to build a production release, you can use our pre-built Gulp task to generate a distribution:</h5>
                 <pre><code class="hljs">
     $ gulp serve:dist
    </code></pre>
                 <br/>
-                <h5>This task will lint your code, optimize css js and images files, run unit tests.
-          After the task has successfully finished, you can find an optimized version of your project inside the <code>/build/dist folder</code>.</h5>
+                <h5>This task will lint your code, optimize your assets (css, js, and image files), and run unit tests.
+          Once the task has finished successfully, you can find an optimized, ready-to-deploy version of your project in the <code>/build/dist folder</code>.</h5>
                 <br/>
-                <h5>To read more about the features, directory structure, build system and more, visit
-          <a href="https://github.com/backand/angular-kickstart/" target="_blank">github page</a>.</h5>
+                <h5>To read more about the kickstart app's features, the directory structure, the build system, and more, visit
+          <a href="https://github.com/backand/angular-kickstart/" target="_blank">the project's github page</a>.</h5>
               <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
             </div>
             <br/>
