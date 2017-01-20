@@ -1,0 +1,101 @@
+<section class="page-form-ele page ng-scope ba-docs">
+    <div class="panel panel-default">
+        <div class="ui-tab-container ui-tab-horizontal">
+          <tabs data="docs.kickstartTabs" type="tabs" />
+          <div class="tab-content" ui-view></div>
+
+        </div>
+        <div class="panel-heading"><strong>IONIC 1 backand-angular-kickstart</strong>
+            <h2>Follow these steps to install angular-kickstart with Backand inside</h2>
+        </div>
+        <div class="panel-body docs">
+
+
+
+
+            <div class="quickstart-body">
+                <div class="quickstart-connecting-db" ng-show="docs.isNew()">
+                    <h3>
+            We're creating your database and will notify you when it's ready.<br/>
+            In the meantime, you can review below how to setup new app with angular-kickstart...
+          </h3>
+                    <div us-spinner spinner-key="connecting-app-to-db"></div>
+                    <br/>
+                    <br/>
+                </div>
+
+
+                <section class="panel panel-box" ng-if="!docs.currentApp.Name">
+                    <div class="panel-item bg-info">
+                        <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
+              gulpjs based build system that scaffolds the project for you.</h3>
+                    </div>
+                </section>
+
+                <br/>
+                <h2>Installation</h2>
+                <h5>Install <b>node.js</b>. Then <b>sass</b>, <b>gulp</b> and <b>bower</b> if you haven't yet.</h5>
+
+                <pre><code class="hljs">
+    $ gem install sass
+    $ npm install -g gulp bower
+    </code></pre>
+                <br/>
+                <h5>Clone the backand-angular-kickstart or download the
+          <a href="https://github.com/backand/angular-kickstart/archive/master.zip" target="_blank">
+            master release</a>.</h5>
+                <pre><code class="hljs">
+    $ git clone https://github.com/backand/angular-kickstart.git
+    $ cd angular-kickstart
+    </code></pre>
+                <br/>
+                <h5>Install bower and npm dependencies, and run the application in development mode.</h5>
+                <pre><code class="hljs">
+    $ npm install
+    $ bower install
+    $ gulp serve
+    </code></pre>
+                <br/>
+                <h2>Run & Deploy</h2>
+                <h5>You are now ready to go, your application is available at <code>http://127.0.0.1:3000</code>.</h5>
+                <br/>
+                <h5><b>Every file you add, edit or delete into the /client folder will be handled by the build system.</b></h5>
+                <h5>When you are ready to build a production release there is a task for that:</h5>
+                <pre><code class="hljs">
+    $ gulp serve:dist
+   </code></pre>
+                <br/>
+                <h5>This task will lint your code, optimize css js and images files, run unit tests.
+          After the task has successfully finished, you can find an optimized version of your project inside the <code>/build/dist folder</code>.</h5>
+                <br/>
+                <h5>To read more about the features, directory structure, build system and more, visit
+          <a href="https://github.com/backand/angular-kickstart/" target="_blank">github page</a>.</h5>
+              <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
+            </div>
+            <br/>
+            <div class="quickstart-sidebar">
+
+                <div class="quickstart-sidebox" id="kickstart-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                        <div class="quickstart-sidebox-title">Already have an Angular project?</div>
+                        <br/>
+                        <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your project:</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToQuickstart()">Get Started</button>
+                    </div>
+                </div>
+
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-video.png" />
+                        <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

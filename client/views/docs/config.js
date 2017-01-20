@@ -93,6 +93,30 @@
         templateUrl: 'views/docs/hosting.html',
         controller: 'Docs as docs'
       })
+      .state('docs.kickstart_ng1',{
+        parent: 'app',
+        url: '/docs/kickstart?ng1',
+        templateUrl: 'views/docs/kickstarts/ng1.html',
+        controller: 'Docs as docs'
+      })
+      .state('docs.kickstart_ng2',{
+        parent: 'app',
+        url: '/docs/kickstart?ng2',
+        templateUrl: 'views/docs/kickstarts/ng2.html',
+        controller: 'Docs as docs'
+      })
+      .state('docs.kickstart_ionic1',{
+        parent: 'app',
+        url: '/docs/kickstart?ionic1',
+        templateUrl: 'views/docs/kickstarts/ionic1.html',
+        controller: 'Docs as docs'
+      })
+      .state('docs.kickstart_ionic2',{
+        parent: 'app',
+        url: '/docs/kickstart?ionic2',
+        templateUrl: 'views/docs/kickstarts/ionic2.html',
+        controller: 'Docs as docs'
+      })
   }
 
 })();

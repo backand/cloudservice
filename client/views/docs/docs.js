@@ -8,6 +8,24 @@
 
     var self = this;
     self.hostingUrl = CONSTS.hostingUrl;
+    self.kickstartTabs = [
+      {
+        heading: 'Angular 1',
+        route: 'docs.kickstart_ng1'
+      },
+      {
+        heading: 'Angular 2',
+        route: 'docs.kickstart_ng2'
+      },
+      {
+        heading: 'Ionic 1',
+        route: 'docs.kickstart_ionic1'
+      },
+      {
+        heading: 'Ionic 2',
+        route: 'docs.kickstart_ionic2'
+      }
+    ];
 
     (function init() {
       usSpinnerService.spin("connecting-app-to-db");
