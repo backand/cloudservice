@@ -5,20 +5,16 @@
           <div class="tab-content" ui-view></div>
 
         </div>
-        <div class="panel-heading"><strong>NG2backand-angular-kickstart</strong>
-            <h2>Follow these steps to install angular-kickstart with Backand inside</h2>
+        <div class="panel-heading"><strong>Backand Angular 2 Kickstart</strong>
+            <h2>Follow these steps to install our Angular 2 SDK!</h2>
         </div>
         <div class="panel-body docs">
-
-
-
-
             <div class="quickstart-body">
                 <div class="quickstart-connecting-db" ng-show="docs.isNew()">
                     <h3>
-            We're creating your database and will notify you when it's ready.<br/>
-            In the meantime, you can review below how to setup new app with angular-kickstart...
-          </h3>
+            We're creating your database, and will notify you when it's ready.<br/>
+            In the meantime, you can review our kickstart guides below.
+                    </h3>
                     <div us-spinner spinner-key="connecting-app-to-db"></div>
                     <br/>
                     <br/>
@@ -27,49 +23,49 @@
 
                 <section class="panel panel-box" ng-if="!docs.currentApp.Name">
                     <div class="panel-item bg-info">
-                        <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
-              gulpjs based build system that scaffolds the project for you.</h3>
+                        <h3 style="text-align:center;">Speed up your AngularJS development with a super simple back-end and a complete and scalable
+              gulpjs-based build system that scaffolds the project for you.</h3>
                     </div>
                 </section>
 
                 <br/>
                 <h2>Installation</h2>
-                <h5>Install <b>node.js</b>. Then <b>sass</b>, <b>gulp</b> and <b>bower</b> if you haven't yet.</h5>
-
+                <h5>Install Node and NPM, if you have not already done so. To install the backand SDK, use the following npm command:</h5>
                 <pre><code class="hljs">
-    $ gem install sass
-    $ npm install -g gulp bower
-    </code></pre>
-                <br/>
-                <h5>Clone the backand-angular-kickstart or download the
-          <a href="https://github.com/backand/angular-kickstart/archive/master.zip" target="_blank">
-            master release</a>.</h5>
+    $ npm install angular2bknd-sdk --save
+                </code></pre>
+                <h5>Once this is done, you'll also need to install the SDK's dependencies. Do so with the following commands:</h5>
                 <pre><code class="hljs">
-    $ git clone https://github.com/backand/angular-kickstart.git
-    $ cd angular-kickstart
-    </code></pre>
+    $ npm install @types/node --save-dev
+    $ npm install @types/socket.io-client --save-dev
+                </code></pre>
                 <br/>
-                <h5>Install bower and npm dependencies, and run the application in development mode.</h5>
+                <h2>Configuring your Angular 2 app for Backand</h2>
+                <h5>Once you've installed the package, you'll need to include it in your application. To do so, start by including Backand in each component in which it will be used:</h5>
                 <pre><code class="hljs">
-    $ npm install
-    $ bower install
-    $ gulp serve
-    </code></pre>
+    import { BackandService } from 'angular2bknd-sdk';
+                </code></pre>
                 <br/>
-                <h2>Run & Deploy</h2>
-                <h5>You are now ready to go, your application is available at <code>http://127.0.0.1:3000</code>.</h5>
-                <br/>
-                <h5><b>Every file you add, edit or delete into the /client folder will be handled by the build system.</b></h5>
-                <h5>When you are ready to build a production release there is a task for that:</h5>
+                <h5>Once you've included the library, you just need to add the service to your object's constructor:</h5>
                 <pre><code class="hljs">
-    $ gulp serve:dist
-   </code></pre>
+    constructor(private backandService:BackandService){}
+                </code></pre>
                 <br/>
-                <h5>This task will lint your code, optimize css js and images files, run unit tests.
-          After the task has successfully finished, you can find an optimized version of your project inside the <code>/build/dist folder</code>.</h5>
+                <h2>Configuring Back&</h2>
+                <h5>Back& uses OAuth authenticaation, which requires you to include the authentication token with every HTTP call. Luckily, the Back& SDK takes care of this for you. To connect your app to Back&, use the following code:</h5>
+                <pre><code class="hljs">
+    this.backandService.setAppName('your app name');
+    this.backandService.setSignUpToken('your backand signup token');
+    this.backandService.setAnonymousToken('your backand anonymous token');
+                </code></pre>
                 <br/>
-                <h5>To read more about the features, directory structure, build system and more, visit
-          <a href="https://github.com/backand/angular-kickstart/" target="_blank">github page</a>.</h5>
+                <h5>If you are developing a mobile app, you'll also want to set the <code>isMobile</code> flag in the SDK:</h5>
+                <pre><code class="hljs">
+    this.backandService.setIsMobile(true);
+                </code></pre>
+                <br/>
+                <h5>At this point, you're ready to work with Back&! Follow our <a href="https://www.backand.com/app-examples/#all" target="_blank">sample apps</a>, or review our <a href="https://docs.backand.com" target="_blank">documentation</a> to get started.</h5>
+                <br/>
               <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
             </div>
             <br/>
@@ -80,7 +76,7 @@
                         <img src="../assets/images/docs_pages/kickstart-icon.png" />
                         <div class="quickstart-sidebox-title">Already have an Angular project?</div>
                         <br/>
-                        <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your project:</div>
+                        <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your existing project</div>
                         <br/>
                         <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToQuickstart()">Get Started</button>
                     </div>
