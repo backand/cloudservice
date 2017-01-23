@@ -6,13 +6,9 @@
 
         </div>
         <div class="panel-heading"><strong>Ionic 1 Kickstart</strong>
-            <h2>Follow these steps to install our Ionic starter project, with Backand inside</h2>
+            <h2>Follow these steps to install our Ionic 1 starter project, with Backand built-in!</h2>
         </div>
         <div class="panel-body docs">
-
-
-
-
             <div class="quickstart-body">
                 <div class="quickstart-connecting-db" ng-show="docs.isNew()">
                     <h3>
@@ -42,35 +38,77 @@
     $ cd myApp
     </code></pre>
                 <br/>
-                <h5>Clone the backand-angular-kickstart or download the
-          <a href="https://github.com/backand/angular-kickstart/archive/master.zip" target="_blank">
-            master release</a>.</h5>
+                <h5>Next, run the app using Ionic serve.</h5>
                 <pre><code class="hljs">
-    $ git clone https://github.com/backand/angular-kickstart.git
-    $ cd angular-kickstart
+    $ ionic serve
     </code></pre>
                 <br/>
-                <h5>Install bower and npm dependencies, and run the application in development mode.</h5>
-                <pre><code class="hljs">
-    $ npm install
-    $ bower install
-    $ gulp serve
-    </code></pre>
+                <h5>This brings up the starter app in a browser window. Log in to the starter app using the default login information:</h5>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Username:</strong> ionic@backand.com</li>
+                    <li class="list-group-item"><strong>Password:</strong> backand</li>
+                </ul>
+                <h5>At this point, you're done! Enjoy exploring the capabilities offered by our Ionic kickstart app. However, if you are interested in developing something more complex, read on for a quick overview of connecting this starter to a custom Back& application.
+                <h2>Changing the app's back end</h2>
+                <h5>Once you've finished exploring the Starter app, you'll want to connect it to a custom application that you control. Below, we'll walk through this process. First, start by creating a  new app in the <a href="https://www.backand.com/apps/#/" target="_blank">Back& Dashboard</a>.</h5>
                 <br/>
-                <h2>Run & Deploy</h2>
-                <h5>You are now ready to go, your application is available at <code>http://127.0.0.1:3000</code>.</h5>
-                <br/>
-                <h5><b>Every file you add, edit or delete into the /client folder will be handled by the build system.</b></h5>
-                <h5>When you are ready to build a production release there is a task for that:</h5>
+                <h5>Once your new app is up, you may want to rebuild the data model. The starter application works well with the default model, so you can skip this step if you choose. Copy and paste the following JSON into your app's data model pane:</h5>
                 <pre><code class="hljs">
-    $ gulp serve:dist
+    [
+      {
+        "name": "items",
+        "fields": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "text"
+          },
+          "user": {
+            "object": "users"
+          }
+        }
+      },
+      {
+        "name": "users",
+        "fields": {
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "items": {
+            "collection": "items",
+            "via": "user"
+          }
+        }
+      }
+    ]
    </code></pre>
                 <br/>
-                <h5>This task will lint your code, optimize css js and images files, run unit tests.
-          After the task has successfully finished, you can find an optimized version of your project inside the <code>/build/dist folder</code>.</h5>
+                <h5>After you've updated your data model, update app.js in the starter application to point at your new Back& app. Change lines 25-27 of <a href="https://github.com/backand/backand-ionic-starter/blob/master/js/app.js#L25" target="_blank">app.js</a> to the following:</h5>
+                <pre><code class="hljs">
+    BackandProvider.setAppName('&lt;Your Back& App name&gt;');
+    BackandProvider.setSignUpToken('&lt;Your app's signup token&gt;');
+    BackandProvider.setAnonymousToken('&lt;Your app's anonymous token&gt;');
+    </code></pre>
                 <br/>
-                <h5>To read more about the features, directory structure, build system and more, visit
-          <a href="https://github.com/backand/angular-kickstart/" target="_blank">github page</a>.</h5>
+                <h5>With that, your application is ready to run against your custom app instance! Review <a href="https://docs.backand.com" target="_blank">our documentation</a> for guidance on adding new features and capabilities.</h5>
+
+          <br />
+          <h2> Samples and Documentation </h2>
+          <h5> Here are some links to sample applications for Ionic, powered by Back&: </h5>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="https://market.ionic.io/starters/ionic-backand-with-social" target="_blank">Ionic Starter with Social login</a> - This starter demonstrates using our social media authentication capabilities</li>
+            <li class="list-group-item"><a href="https://market.ionic.io/starters/ionic-backand-chat" target="_blank">Ionic Chat Starter</a> - This starter app demonstrates building a chat app using sockets through Backand's SDK</li>
+          </ul>
+          <h5>See more on <a href="https://https://www.backand.com/app-examples/" target="_blank">our examples and starters page</a>.  Also, don't forget to review <a href="https://docs.backand.com" target="_blank">our documentation</a>! We cover all of our APIs, as well as several different use cases.</h5>
+          <br />
+
               <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
             </div>
             <br/>
