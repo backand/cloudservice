@@ -1,0 +1,140 @@
+<section class="page-form-ele page ng-scope ba-docs">
+    <div class="panel panel-default">
+        <div class="ui-tab-container ui-tab-horizontal">
+          <tabs data="docs.kickstartTabs" type="tabs" />
+          <div class="tab-content" ui-view></div>
+
+        </div>
+        <div class="panel-heading"><strong>Ionic 1 Kickstart</strong>
+            <h2>Follow these steps to install our Ionic 1 starter project, with Backand built-in!</h2>
+        </div>
+        <div class="panel-body docs">
+            <div class="quickstart-body">
+                <div class="quickstart-connecting-db" ng-show="docs.isNew()">
+                    <h3>
+            We're creating your database and will notify you when it's ready.<br/>
+            In the meantime, you can review below how to setup new app with angular-kickstart...
+          </h3>
+                    <div us-spinner spinner-key="connecting-app-to-db"></div>
+                    <br/>
+                    <br/>
+                </div>
+
+
+                <section class="panel panel-box" ng-if="!docs.currentApp.Name">
+                    <div class="panel-item bg-info">
+                        <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
+              gulpjs based build system that scaffolds the project for you.</h3>
+                    </div>
+                </section>
+
+                <br/>
+                <h2>Installation</h2>
+                <h5><em><strong>Note: </strong> You can also find this kickstart guide on the <a href="https://market.ionic.io/starters/backand-simple" target="_blank">Ionic marketplace</a>.</em></h5>
+                <h5>First, install the <a href="http://ionicframework.com/" target="_blank">Ionic framework</a>. Once the Ionic framework is installed you can get the starter app using the following command:</h5>
+
+                <pre><code class="hljs">
+    $ ionic start myApp https://github.com/backand/backand-ionic-starter
+    $ cd myApp
+    </code></pre>
+                <br/>
+                <h5>Next, run the app using Ionic serve.</h5>
+                <pre><code class="hljs">
+    $ ionic serve
+    </code></pre>
+                <br/>
+                <h5>This brings up the starter app in a browser window. Log in to the starter app using the default login information:</h5>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Username:</strong> ionic@backand.com</li>
+                    <li class="list-group-item"><strong>Password:</strong> backand</li>
+                </ul>
+                <h5>At this point, you're done! Enjoy exploring the capabilities offered by our Ionic kickstart app. However, if you are interested in developing something more complex, read on for a quick overview of connecting this starter to a custom Back& application.
+                <h2>Changing the app's back end</h2>
+                <h5>Once you've finished exploring the Starter app, you'll want to connect it to a custom application that you control. Below, we'll walk through this process. First, start by creating a  new app in the <a href="https://www.backand.com/apps/#/" target="_blank">Back& Dashboard</a>.</h5>
+                <br/>
+                <h5>Once your new app is up, you may want to rebuild the data model. The starter application works well with the default model, so you can skip this step if you choose. Copy and paste the following JSON into your app's data model pane:</h5>
+                <pre><code class="hljs">
+    [
+      {
+        "name": "items",
+        "fields": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "text"
+          },
+          "user": {
+            "object": "users"
+          }
+        }
+      },
+      {
+        "name": "users",
+        "fields": {
+          "email": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "items": {
+            "collection": "items",
+            "via": "user"
+          }
+        }
+      }
+    ]
+   </code></pre>
+                <br/>
+                <h5>After you've updated your data model, update app.js in the starter application to point at your new Back& app. Change lines 25-27 of <a href="https://github.com/backand/backand-ionic-starter/blob/master/js/app.js#L25" target="_blank">app.js</a> to the following:</h5>
+                <pre><code class="hljs">
+    BackandProvider.setAppName('&lt;Your Back& App name&gt;');
+    BackandProvider.setSignUpToken('&lt;Your app's signup token&gt;');
+    BackandProvider.setAnonymousToken('&lt;Your app's anonymous token&gt;');
+    </code></pre>
+                <br/>
+                <h5>With that, your application is ready to run against your custom app instance! Review <a href="https://docs.backand.com" target="_blank">our documentation</a> for guidance on adding new features and capabilities.</h5>
+
+          <br />
+          <h2> Samples and Documentation </h2>
+          <h5> Here are some links to sample applications for Ionic, powered by Back&: </h5>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="https://market.ionic.io/starters/ionic-backand-with-social" target="_blank">Ionic Starter with Social login</a> - This starter demonstrates using our social media authentication capabilities</li>
+            <li class="list-group-item"><a href="https://market.ionic.io/starters/ionic-backand-chat" target="_blank">Ionic Chat Starter</a> - This starter app demonstrates building a chat app using sockets through Backand's SDK</li>
+          </ul>
+          <h5>See more on <a href="https://https://www.backand.com/app-examples/" target="_blank">our examples and starters page</a>.  Also, don't forget to review <a href="https://docs.backand.com" target="_blank">our documentation</a>! We cover all of our APIs, as well as several different use cases.</h5>
+          <br />
+
+              <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
+            </div>
+            <br/>
+            <div class="quickstart-sidebar">
+
+                <div class="quickstart-sidebox" id="kickstart-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                        <div class="quickstart-sidebox-title">Already have an Angular project?</div>
+                        <br/>
+                        <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your project:</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToQuickstart()">Get Started</button>
+                    </div>
+                </div>
+
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-video.png" />
+                        <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
