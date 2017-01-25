@@ -1,0 +1,146 @@
+<section class="page-form-ele page ng-scope ba-docs">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong test-hook="docs.quickstart.title">Quickstart Guide</strong>
+      <h2>Setup Backand for Angular 2</h2>
+
+    </div>
+    <div class="panel-body docs">
+
+
+      <div class="quickstart-body">
+        <br/>
+        <ol>
+
+          <li>
+            <h3>Install Backand</h3>
+            <pre><code>
+  npm install angular2bknd-sdk --save
+            </code></pre>
+            <p>Code and complete readme on <a href="https://github.com/backand/angular2bknd-sdk" target="_blank">github
+            </a>
+            </p>
+            <br />
+          </li>
+
+          <li>
+            <h3>Add Dependencies</h3>
+            <pre><code class="javascript">
+  npm install @types/node --save-dev
+  npm install @types/socket.io-client --save-dev
+            </code></pre>
+            <br />
+          </li>
+
+          <li>
+            <h3>Import BackandService</h3>
+            <p></p>
+            <pre><code>
+  //In `src/app/app.module.ts` file:
+  import { BackandService } from 'angular2bknd-sdk';
+
+  //Add `BackandService` to the `providers` array.
+
+  //In each component where you use Backand, import it:
+  import { BackandService } from 'angular2bknd-sdk';
+
+  //In the constructor use it as `this.backandService`:
+  constructor(private backandService:BackandService){}
+            </code></pre>
+            <br />
+            <p></p>
+          </li>
+
+
+          <li>
+            <h3>Configure secure calls to Backand's REST API</h3>
+            <p>Backand uses OAuth2 authentication, which requires that you include the
+              authentication token in every HTTP call
+            </p>
+            <pre><code>
+  //In `src/app/app.component.ts`:
+
+  this.backandService.setAppName('{{docs.currentApp.Name || 'your app name'}}');
+  this.backandService.setSignUpToken('{{docs.keys.signup || 'your backand signup token'}}');
+  this.backandService.setAnonymousToken('{{docs.keys.anonymous || 'your backand anonymous token'}}');
+            </code></pre>
+            <br />
+          </li>
+          <br/>
+
+          <li>
+            <h3>Do CRUD Operations on Your Database</h3>
+              <p>To fetch, create, and filter rows, from an object, say `items`, the CRUD functions in BackandService, should receive `'items'` as their first argument
+              </p>
+            <pre><code>
+  //1. Read
+  this.backandService.getItems('items')
+      .subscribe(
+          data => {
+          },
+          err => this.backandService.logError(err),
+          () => console.log('OK')
+      );
+
+  //2. Create
+  this.backandService.postItem('items', this.name, this.description)
+      .subscribe(
+          data => {
+          },
+          err => this.backandService.logError(err),
+          () => console.log('OK')
+      );
+
+  //3. Query
+
+  //When `q` is set to your search pattern,
+  this.backandService.filterItems('items', q)
+      .subscribe(
+          data => {
+              console.log('subscribe', data);
+              this.items = data;
+          },
+          err => this.backandService.logError(err),
+          () => console.log('OK')
+      );
+            </code></pre>
+          </li>
+
+
+          <h3>Done. It's that simple</h3>
+
+
+          <p><b>In your Angular application, you are the rock star - Backand is here to help you rise and shine.
+          Have fun!</b></p>
+
+          <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
+      </ol>
+
+      </div>
+      <br/>
+        <div class="quickstart-sidebar">
+
+        <div class="quickstart-sidebox" id="kickstart-sidebox">
+          <div class="quickstart-kickstart">
+            <img src="../assets/images/docs_pages/kickstart-icon.png" />
+            <div class="quickstart-sidebox-title">Don't have an Angular project?</div><br/>
+            <div class="quickstart-sidebox-text">We've got a <b>kickstart project</b> to get you on your way!</div><br/>
+            <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToKickstart()">Get Started</button>
+          </div>
+        </div>
+
+
+        <div class="quickstart-sidebox" id="video-sidebox">
+          <div class="quickstart-kickstart">
+            <img src="../assets/images/docs_pages/icon-video.png" />
+            <div class="quickstart-sidebox-title">Watch our Video Tutorial</div><br/>
+            <button class="btn btn-lg btn-success quickstart-sidebox-button"
+                    video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'"
+                    title="'AngularJS Quickstart'">Play Video</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -19,7 +19,13 @@
       self.oldModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
 
-      getSchema();
+      try {
+        JSON.parse(self.newModel.schema);
+        getSchema(true);
+      } catch (e) {
+        //when Malformed json don't do anything
+      }
+
     }
 
     self.aceDiffOptions = {
@@ -44,7 +50,7 @@
 
     self.reset = function(){
       DbDataModel.removeCustomSchema(self.appName);
-      getSchema();
+      getSchema(true);
       usSpinnerService.spin('loading');
       // Refresh
       $state.go($state.current, {}, {reload: true}).then(function () {
@@ -53,11 +59,13 @@
       $scope.isUnsaved = false;
     };
 
-    function getSchema () {
+    function getSchema (force) {
       usSpinnerService.spin('loading');
-      DbDataModel.get(self.appName)
+      DbDataModel.get(self.appName, force)
         .finally(function () {
-          $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
+          if(self.oldModel && self.newModel) {
+            $scope.isUnsaved = self.oldModel.schema !== self.newModel.schema;
+          }
           usSpinnerService.stop('loading');
         })
     }

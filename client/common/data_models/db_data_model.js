@@ -2,20 +2,30 @@
   'use strict';
 
   angular.module('common.data_models')
-    .service('DbDataModel', ['ModelService', '$localStorage', DbDataModel]);
+    .service('DbDataModel', ['ModelService', '$localStorage','$q', DbDataModel]);
 
-  function DbDataModel(ModelService, $localStorage) {
+  function DbDataModel(ModelService, $localStorage, $q) {
 
     var self = this;
 
-    self.currentModel = {
-      schema: null,
-      json: null
+    function _init() {
+      self.currentModel = {
+        schema: null,
+        json: null,
+        appName: null
+      };
+
+      self.newModel = {
+        schema: null
+      };
+    }
+
+    _init();
+
+    self.init = function(){
+      _init();
     };
 
-    self.newModel = {
-      schema: null
-    };
 
     function getAppLocalStorage(appName) {
       if (!$localStorage.backand) {
@@ -64,12 +74,20 @@
       $localStorage.backand[appName].erdModel = self.newModel.erdModel;
     };
 
-    self.get = function (appName) {
+    self.get = function (appName, force) {
       getAppLocalStorage(appName);
-      return ModelService.get(appName)
-        .then(function (response) {
-          return updateModels(appName, response)
-        })
+
+      if(self.currentModel.json == null || force || false) {
+        return ModelService.get(appName)
+          .then(function (response) {
+            return updateModels(appName, response)
+          })
+      } else {
+        var deferred = $q.defer();
+        var model = {"data": self.currentModel.json};
+        deferred.resolve(updateModels(appName, model));
+        return deferred.promise;
+      }
     };
 
     self.update = function (appName, schema, afterServerUpdate) {
@@ -88,24 +106,31 @@
     };
 
     function updateModels(appName, model, afterServerUpdate) {
+      self.currentModel.appName = appName;
       self.currentModel.schema = angular.toJson(model.data, true);
       self.currentModel.json = model.data;
       self.currentModel.erdModel = self.modelToChartData(appName, model.data);
+
       if (afterServerUpdate) {
         self.newModel.schema = self.currentModel.schema;
       } else {
-      self.newModel.schema =
-        self.getCustomSchema(appName) || self.currentModel.schema;
+        if(self.newModel.schema == null){
+          self.newModel.schema = self.getCustomSchema(appName) || self.currentModel.schema;
+        }
+        else{
+          self.newModel.schema = angular.toJson(JSON.parse(self.newModel.schema), true);
+        }
       }
       var newModelObject;
       // Handle case when JSON is malformed
       try {
         newModelObject = JSON.parse(self.newModel.schema);
+        self.newModel.erdModel = self.modelToChartData(appName, newModelObject);
       }
       catch (e) {
-        newModelObject = JSON.parse(self.currentModel.schema);
+        //newModelObject = JSON.parse(self.currentModel.schema);
       }
-      self.newModel.erdModel = self.modelToChartData(appName, newModelObject);
+
       self.saveErdModel(appName);
       return self.currentModel;
     }

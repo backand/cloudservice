@@ -11,6 +11,7 @@
       self.flags = AuthService.flags;
       self.loading = false;
       self.twitterMissingEmail = false;
+      self.emailFormat = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 
       //for automatic sign up
       if ($state.params.i == 1) {
@@ -55,7 +56,6 @@
           }
         });
     };
-
 
   }
 

@@ -106,12 +106,33 @@
                       </div>
                       <div class="form-group">
                         <label for="{{::socialProvider.name}}-secret-key" class="control-label">{{::socialProvider.secretIdTitle || 'Client Secret'}}</label>
-                        <input type="text"
+
+                        <input ng-if="socialProvider.name !== 'adfs' && socialProvider.name !== 'azureAd'"
+                               type="text"
                                class="form-control"
                                ng-disabled="!socialProvider.useOwnApp"
                                id="{{::socialProvider.name}}-secret-key"
                                ng-model="socialProvider.clientSecret"
                                ng-change="keys.updateSocialSettings(socialProvider)">
+
+                        <input ng-if="socialProvider.name === 'adfs' || socialProvider.name === 'azureAd'"
+                               type="text"
+                               class="form-control"
+                               ng-disabled="!socialProvider.useOwnApp"
+                               id="{{::socialProvider.name}}-secret-key"
+                               ng-model="socialProvider.Oauth2EndPoint"
+                               ng-change="keys.updateSocialSettings(socialProvider)">
+                      </div>
+                      <div class="form-group" ng-if="socialProvider.name === 'facebook'">
+                        <label for="{{::socialProvider.name}}-scope" class="control-label">
+                          Scope (use these <a href="https://developers.facebook.com/docs/facebook-login/permissions" target="_blank">permissions</a> with comma-separated to set the scope) </label>
+                        <input
+                             type="text"
+                             class="form-control"
+                             ng-disabled="!socialProvider.useOwnApp"
+                             id="{{::socialProvider.name}}-scope"
+                             ng-model="socialProvider.Scope"
+                             ng-change="keys.updateSocialSettings(socialProvider)">
                       </div>
                     </div>
                     <div class="col-md-5 col-md-offset-2">

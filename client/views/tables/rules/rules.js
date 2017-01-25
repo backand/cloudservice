@@ -25,10 +25,10 @@
       '$modal',
       'NodejsService',
       'SocketService',
-      '$rootScope',
       'stringifyHttp',
       '$localStorage',
       '$state',
+      'TablesService',
       RulesController]);
 
   function RulesController($scope,
@@ -52,9 +52,10 @@
                            $modal,
                            NodejsService,
                            SocketService,
-                           $rootScope,
                            stringifyHttp,
-                           $localStorage) {
+                           $localStorage,
+                           $state,
+                           TablesService) {
 
     var self = this;
     /**
@@ -64,8 +65,11 @@
      */
     function init() {
       self.isNewAction = false;
+      self.actionChangeInTree = false;
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
+      self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
+
       if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
@@ -85,6 +89,7 @@
       if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
       self.getTokens();
+      getAllActions(); //load all actions names for the test
     }
 
     //Wait for server updates on 'items' object
@@ -114,7 +119,32 @@
         .then(function (response) {
           self.userToken = response.data;
         });
-    }
+    };
+
+    $scope.$watch(function () {
+      if(self.action) {
+        return self.action.workflowAction;
+      }
+    }, function (newVal, oldVal) {
+      if (newVal == 'JavaScript') {
+        $scope.$evalAsync(function () {
+          var editor = ace.edit('code');
+          if ($stateParams.line && $stateParams.col) {
+            editor.resize(true);
+
+
+            var range = new Range($stateParams.line, 0, $stateParams.line, 10000);
+            var searchOptions = {};
+            searchOptions.start = range;
+            editor.findAll($stateParams.q, {}, true);
+            //editor.scrollToLine($stateParams.line, true, true, function () {});
+            //editor.gotoLine($stateParams.line, $stateParams.col, true);
+            //editor.setHighlightActiveLine(true);
+          }
+        });
+      }
+    });
+
 
     self.getActionTemplates = function () {
       return RulesService.getActionTemplates()
@@ -160,6 +190,7 @@
 
       self.action.name = self.action.name || template.ruleName;
       self.action.dataAction = self.action.dataAction || template.action || 'OnDemand';
+      self.showTemplatesForm = false;
 
       _.assign(self.action, {
         workflowAction: template.ruleType,
@@ -200,6 +231,9 @@
     };
 
     self.newAction = function (trigger, templateName) {
+      // Remove action id route param
+      $state.go(".", {actionId: null}, {notify: false});
+
       if (self.action) {
         refreshAction();
         self.clearTest();
@@ -209,6 +243,7 @@
       AnalyticsService.track('Template Selected', {template: templateName || "New Blank"});
 
       self.showJsCodeHelpDialog = false;
+      self.showTemplatesForm = false;
       self.action = {
         whereCondition: 'true',
         code: backandCallbackConstCode.start + '\n' +
@@ -232,12 +267,27 @@
       self.isNewAction = false;
       var action = getRuleByName(actionName);
       refreshAction(action)
-        .then(self.clearTest);
+        .then(function(){
+          self.clearTest();
+        });
+    };
+
+    // Show action with route change
+    self.goToAction = function (name) {
+      var action = _.filter(self.ruleList, function (rule) {
+        return rule.name == name;
+      })[0];
+
+      if (action.viewTable == 4) {
+        $state.go('security.actions', {actionId: action.__metadata.id});
+      } else {
+        $state.go('object_actions', {actionId: action.__metadata.id});
+      }
     };
 
     function refreshAction(action) {
-      self.editMode = false;
-      self.requestTestForm = false;
+      //self.editMode = false;
+      self.requestTestForm = ($stateParams.test === "true");
       self.showJsCodeHelpDialog = false;
       self.isNodeJS = action && action.workflowAction == 'NodeJS';
 
@@ -250,6 +300,8 @@
       }
       else {
         self.action = null;
+        self.showTemplatesForm = true;
+        self.toggleTestForm(false);
       }
 
     }
@@ -288,25 +340,40 @@
     };
 
     function getTestRow() {
-      if (self.getDataActionType() === 'Create')
-        self.getNewRow();
-      else
-        self.getFirstRow();
+
+      if(self.getDataActionType() === 'On Demand'){
+        self.test.rowId = "";
+        self.test.isGuid = false;
+      } else {
+        if (self.getDataActionType() === 'Create')
+          self.getNewRow();
+        else
+          self.getFirstRow();
+      }
     }
 
     self.doneEdit = function () {
+      self.editMode = false;
       refreshAction(self.action);
+      self.clearTest();
+      self.toggleTestForm(false);
     };
 
     self.cancelEdit = function () {
       if (!self.isNodeJS) {
         ConfirmationPopup.confirm('Changes will be lost. Are sure you want to cancel editing?', 'Cancel Editing', 'Continue Editing')
           .then(function (result) {
-            result ? refreshAction(self.action) : false;
+            if(result) {
+              self.editMode = false;
+              refreshAction(self.action);
+              self.clearTest();
+            }
           });
       }
       else{
+        self.editMode = false;
         refreshAction(self.action);
+        self.clearTest();
       }
 
     };
@@ -321,13 +388,18 @@
 
       var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
-        .then(getRules)
+        .then(function(){
+          if(self.isNewAction || self.actionChangeInTree){
+            getRules();
+          }
+        })
         .then(function () {
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
           AnalyticsService.track('AddedRule', {rule: self.action.name});
 
+          self.actionChangeInTree = false;
           self.saving = false;
           self.savingAndTesting = false;
           self.isNewAction = false;
@@ -352,6 +424,7 @@
       ConfirmationPopup.confirm('Are sure you want to delete this rule?')
         .then(function (result) {
           if (result) {
+            self.editMode = false;
             RulesService.remove(self.action)
               .then(getRules)
               .then(refreshAction);
@@ -365,8 +438,15 @@
       return allow;
     };
 
-    self.toggleTestForm = function () {
-      self.requestTestForm = !self.requestTestForm;
+    self.toggleTestForm = function (show) {
+
+      if(angular.isDefined(show)) {
+        self.requestTestForm = show;
+      } else{
+        self.requestTestForm = !self.requestTestForm;
+      }
+
+      $state.go('.', {test: self.requestTestForm}, {notify: false});
     };
 
     self.showTestForm = function () {
@@ -529,6 +609,11 @@
     }
 
     function buildParametersDictionary() {
+
+      if(!self.test){
+        self.clearTest();
+      }
+
       var keys = [];
       if (self.action && self.action.inputParameters) {
         self.test.inputParametersArray = _.compact(self.action.inputParameters.replace(/ /g, '').split(','));
@@ -729,11 +814,45 @@
       }
     };
 
+    self.aceStack = {
+      onLoad: function (_editor) {
+        self.aceStack.editor = _editor;
+        _editor.$blockScrolling = Infinity;
+      }
+    };
+
+    self.aceResponse = {
+      onLoad: function (_editor) {
+        self.aceResponse.editor = _editor;
+        _editor.renderer.setOption('showLineNumbers', false);
+        _editor.$blockScrolling = Infinity;
+      }
+    };
+
+    self.aceBody = {
+      onLoad: function (_editor) {
+        self.aceBody.editor = _editor;
+        _editor.renderer.setOption('showLineNumbers', false);
+        _editor.$blockScrolling = Infinity;
+      }
+    };
+
+    $scope.$watch(function () {
+      if (self.action && self.action.name)
+        return self.action.name;
+    }, function (newVal, oldVal) {
+      if(newVal != oldVal){
+        self.actionChangeInTree = true;
+      }
+    });
+
     $scope.$watch(function () {
       if (self.action)
         return self.getDataActionType();
     }, function (newVal, oldVal) {
-
+      if(newVal != oldVal){
+        self.actionChangeInTree = true;
+      }
       if (self.ace && self.ace.editor) {
         self.clearTest(); //clear the data
         if (newVal === 'On Demand' || newVal === 'Delete') {
@@ -778,18 +897,39 @@
       self.test.testLoading = false;
       if (response != 'Invalid JSON') {
         self.test.resultStatus = {code: response.status, text: response.statusText};
-        self.test.result = JSON.stringify(response.data, null, 2);
-        var guid = response.headers('Action-Guid');
-        self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
+
+        try {
+          if ($.isPlainObject(response.data) || $.isArray(response.data)) { //check if the response is a JSON
+            self.test.result = "\n\n" + JSON.stringify(response.data, null, 2);
+            window.setTimeout(function () {
+              self.aceResponse.editor.getSession().setMode('ace/mode/json');
+            }, 100);
+          } else {
+            self.test.result = "\n\n\n" + response.data.replace(/"/g, "");
+            window.setTimeout(function () {
+              self.aceResponse.editor.getSession().setMode('ace/mode/html');
+            }, 100);
+          }
+        }
+        catch(e){
+          self.test.result = response.data;
+          window.setTimeout(function () {
+            self.aceResponse.editor.getSession().setMode('ace/mode/html');
+          }, 100);
+        }
+
+        var guid = response.headers('Backand-Action-Guid');
+        //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
         self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
-        self.testHttpObject.params = {parameters: self.test.parameters};
+        self.testUrl = self.testHttpObject.url;
+        self.testHttpObject.params = {parameters: self.test.parametersToSend};
         self.testHttp = stringifyHttp(self.testHttpObject);
         self.inputParametersForm.$setPristine();
-        self.testUrlCopied = false;
-        self.testHttpCopied = false;
         if (self.debugMode == 'debug') {
           AppLogService.getActionLog($stateParams.appName, guid)
             .then(showLog, errorHandler);
+          AppLogService.getCallStack($stateParams.appName, guid)
+              .then(showCallStack, errorHandler);
         } else {
           self.test.logMessages = [];
           self.test.logMessages.push({
@@ -804,9 +944,77 @@
     function showLog(response) {
       self.test.logMessages = [];
       response.data.data.forEach(function (log) {
-        self.test.logMessages.push({text: log.FreeText, isError: log.LogType == 501, time: log.Time});
+        if(log.LogType == 500 || log.LogType == 501){
+          var newText = log.FreeText;
+          if(log.LogType == 501){
+            newText = addLinksToActions(log.FreeText);
+          }
+          self.test.logMessages.push({text: newText, isError: log.LogType == 501, time: log.Time});
+        }
       });
       self.test.testLoading = false;
+    }
+
+    function showCallStack(response){
+      var res = (response.data.length === 1) ? response.data[0] : response.data;
+      self.test.callStack = "\n\n" + JSON.stringify(res, null, 2);
+      window.setTimeout(function() { self.aceStack.editor.getSession().foldAll(6,null,2); }, 100);
+      self.aceStack.editor.renderer.setOption('showLineNumbers', false);
+    }
+
+    function getAllActions(){
+      RulesService.all().then(function(response){
+        self.allAcitons = response.data.data;
+      });
+    }
+
+    function addLinksToActions(text){
+
+      //load first all the actions but do it once
+      if(self.allAcitons == null){
+        return;
+      }
+
+      var matches = text.match(/\(.*?\)/g);
+
+      if(matches != null && matches.length > 0) {
+        matches.map(function (str) {
+
+          try {
+            var entities = str.replace('(', '').replace(')', '').split('/');
+            var objectName = entities[0];
+            var actionDetails = entities[1].split(':');
+            var actionName = actionDetails[0];
+            var actionLine = actionDetails[1];
+
+            if (self.action.name === actionName)
+              return;
+
+            var objectId = TablesService.getTableByName(objectName).__metadata.id;
+
+            var actionId = _.findWhere(self.allAcitons, {name: actionName, viewTable: objectId}).iD;
+
+            var uri = "";
+
+            if (objectId == 4) {
+              uri = $state.href('security.actions', {actionId: actionId, line: actionLine}, {absolute: false});
+            } else {
+              uri = $state.href('object_actions', {actionId: actionId,tableId: objectId,line: actionLine}, {absolute: false});
+            }
+
+            var newStr = '<a href="' + uri + '" target="_blank">' + str + '</a>';
+
+            text = text.replace(str, newStr);
+          }
+          catch(e){
+            console.log(e); //ignore errors just log them
+          }
+
+        });
+      }
+
+      return text.replace(/\n/g, "<br/>").replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+
     }
 
     self.treeSign = function (item) {
@@ -933,6 +1141,14 @@
         }
       });
 
+      if ($stateParams.actionId) {
+        var action = _.filter(self.ruleList, function (rule) {
+          return rule.__metadata.id === $stateParams.actionId;
+        })[0];
+        if (action) {
+          self.showAction(action.name);
+        }
+      }
     }
 
     self.getDataActionType = function () {
@@ -995,6 +1211,7 @@
         .then(function (result) {
           if (result) {
             usSpinnerService.spin('loading');
+            self.isNewAction = false;
             refreshAction(self.action);
             init();
           }
@@ -1012,7 +1229,7 @@
     function getTestUrl() {
       // return the test url for display WITHOUT DEBUG PARAM
       // If the parameters object is empty it omits the object from the url
-      return self.testUrl.replace('%22$$debug$$%22:true', '').replace(/&parameters.*%7D/, '');
+      return decodeURIComponent(self.testUrl.replace(',%22$$debug$$%22:true', '').replace('%22$$debug$$%22:true', ''));
     }
 
     function getTestHttp() {

@@ -31,6 +31,7 @@
           <input type="email"
                  class="form-control input-lg"
                  placeholder="Email (Username)"
+                 ng-pattern="signup.emailFormat"
                  name="uEmail"
                  test-hook="signup.email"
                  ng-model="signup.email"
@@ -40,7 +41,7 @@
                  required>
 
         </div>
-        <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false">
+        <div class="text-danger" ng-show="(form.uEmail.$error.email || form.uEmail.$error.pattern) && emailInput.focus === false">
           This is not a valid email
         </div>
       </div>

@@ -73,7 +73,7 @@
       ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");
     }])
     .run(run)
-    .value('version', '1.8.8');
+    .value('version', '1.9.4');
 
 
   angular.element(document).ready(function () {

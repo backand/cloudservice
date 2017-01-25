@@ -12,8 +12,8 @@
       if (analytics)
         analytics.identify(SessionService.currentUser.username, {
           name: SessionService.currentUser.username,
-          email: SessionService.currentUser.username,
-          createdAt: new Date().getTime()
+          email: SessionService.currentUser.username
+          //createdAt: new Date().getTime()
         });
       $analytics.eventTrack(eventName, eventObject);
     };

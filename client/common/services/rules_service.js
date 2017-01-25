@@ -36,6 +36,15 @@
       {id: 4, label: 'Metrics & Analytics'}
     ];
 
+    self.all = function () {
+
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + baseUrl + '?pageSize=200',
+        headers: { AppName: self.appName }
+      });
+    };
+
     self.get = function () {
       return $http({
         method: 'GET',
@@ -96,9 +105,9 @@
       });
     };
 
-    self.getTestUrl = function (rule, test, actionType, tableName, debug, fromGetHttp) {
+    self.getTestUrl =  function(rule, test, actionType, tableName, debug, fromGetHttp) {
       var onDemand = actionType === 'On Demand';
-      var parameters = angular.copy(test.parameters);
+      var parameters = angular.copy(test.parametersToSend);
       if (debug) {
         parameters['$$debug$$'] = true;
       }
@@ -161,21 +170,20 @@
         }
       }
 
-      test.parameters = getFilteredParams(test.parameters);
+      test.parametersToSend = getFilteredParams(test.parameters);
 
       var http = {
         method: method,
         url : self.getTestUrl(rule, test, actionType, tableName, debug, true)
       };
       http.headers = { AppName: self.appName };
-      if(!debug){
+      if(!debug && actionType == 'On Demand'){
         http.params = {
           name: rule.name,
-          parameters: test.parameters
+          parameters: test.parametersToSend
         };
-
-        http.config = {ignoreError: true};
       }
+      http.config = {ignoreError: true};
 
       if (actionType === 'Create' || actionType === 'Update') {
         http.data = angular.fromJson(rowData);
@@ -198,7 +206,12 @@
 
       for (var paramKey in parameters) {
         if (parameters[paramKey] != "") {
-          filteredParams[paramKey] = parameters[paramKey]
+
+            try{
+              filteredParams[paramKey] = JSON.parse(parameters[paramKey]);
+            } catch(e){
+              filteredParams[paramKey] = parameters[paramKey];
+            }
         }
       }
 

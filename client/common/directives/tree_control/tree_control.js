@@ -13,13 +13,16 @@
         controller: TreeController,
         controllerAs: 'tree',
         scope: {
-          refreshTree: '=?'
+          refreshTree: '=?',
+          action: '=?',
+          externalAction: '@?',
+          onSelected: '&?'
         }
       };
     });
 
-  TreeController.$inject = ['$state', 'HostingService', 'FilesService', 'NodejsService', 'AppsService', 'NotificationService', 'usSpinnerService', 'CONSTS', '$window', '$rootScope'];
-  function TreeController($state, HostingService, FilesService, NodejsService, AppsService, NotificationService, usSpinnerService, CONSTS, $window, $rootScope) {
+  TreeController.$inject = ['$state', 'HostingService', 'FilesService', 'NodejsService', 'AppsService', 'NotificationService', 'usSpinnerService', 'CONSTS', '$window', '$scope','$timeout'];
+  function TreeController($state, HostingService, FilesService, NodejsService, AppsService, NotificationService, usSpinnerService, CONSTS, $window, $scope, $timeout) {
     var self = this;
 
     if ($state.current.name == 'object_actions') {
@@ -80,9 +83,46 @@
       }
     };
 
-    self.onClick = function (node, selected) {
-      $window.open(getBaseUrl() + '/' + self.appName + '/' + node.path);
+    $scope.$watch(function () {
+      if(self.action) {
+        return self.action;
+      }
+      }, function (newVal) {
+        if(newVal == "Download"){
+          self.url = getBaseUrl() + '/' + self.appName + '/' + self.displayName(self.node.path);
+          var anchor = angular.element('<a/>');
+          anchor.attr({
+            href: self.url,
+            target: '_blank',
+            download: self.displayName(self.node.path)
+          })[0].click();
+          self.action = null;
+        }
+      if(newVal == "Delete") {
+        FilesService.delete(self.node.path,self.appName).then(function(){
+          self.reset();
+          self.onSelected(null);
+        });
+        self.action = null;
+      }
+
+    });
+
+    self.displayName = function(name){
+      var str = decodeURIComponent(name);
+      return str.replace(/\+/g, ' ');
     };
+
+    self.onSelection = function (node, selected) {
+      self.node = node;
+      if(self.externalAction) {
+        self.onSelected({node: selected ? node: null});
+      }
+      else {
+        $window.open(getBaseUrl() + '/' + self.appName + '/' + self.displayName(node.path));
+      }
+    };
+
 
     self.reset = function () {
       self.data = [];

@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('backand')
-    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', '$stateParams', 'NotificationService', ErdModelController]);
+    .controller('ErdModelController', ['$scope', '$state', '$modal', 'AppsService', 'DbDataModel', 'TablesService', 'usSpinnerService', 'FieldsService', '$q', '$stateParams', ErdModelController]);
 
-  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q, $stateParams, NotificationService) {
+  function ErdModelController($scope, $state, $modal, AppsService, DbDataModel, TablesService, usSpinnerService, FieldsService, $q, $stateParams) {
 
     var self = this;
 
@@ -15,17 +15,22 @@
       self.currentModel = DbDataModel.currentModel;
       self.newModel = DbDataModel.newModel;
       try {
+        self.errorJson = false;
         JSON.parse(self.newModel.schema);
       } catch (e) {
-        NotificationService.add('error', 'Malformed JSON. Please edit the JSON Model.');
+        self.errorJson = true;
+        return;
       }
+
       self.currentObject = $state.params.tableName;
 
       if ($stateParams.isNewObject) {
         self.editObjectDialog();
         $stateParams.isNewObject = false;
       }
-      getSchema();
+
+      getSchema(true);
+
     }
 
     self.saveModel = function () {
@@ -44,15 +49,26 @@
 
     self.reset = function () {
       DbDataModel.removeCustomSchema(self.appName);
-      getSchema();
-      self.updateErd(JSON.parse(self.currentModel.schema));
-      $scope.isUnsaved = false;
+      getSchema(true).then(function(){
+        self.updateErd(JSON.parse(self.currentModel.schema)).then(function(){
+          $scope.isUnsaved = false;
+          AppsService.reset(self.appName);
+        });
+      });
     };
 
-    function getSchema() {
+    function getSchema(force) {
       usSpinnerService.spin('loading');
-      DbDataModel.get(self.appName)
+      return DbDataModel.get(self.appName, force)
         .finally(function () {
+          try {
+            self.errorJson = false;
+            JSON.parse(self.newModel.schema);
+          } catch (e) {
+            self.errorJson = true;
+            usSpinnerService.stop('loading');
+            return;
+          }
           $scope.isUnsaved = self.currentModel.schema !== self.newModel.schema;
           if (!$scope.isChartReady) {
             $scope.isChartReady = true;
@@ -131,6 +147,8 @@
       modalInstance.result.then(function (result) {
         self.updateErd(result.model).then(function () {
           deferred.resolve();
+        }, function(error){
+          console.log(error);
         });
       });
       return deferred.promise;

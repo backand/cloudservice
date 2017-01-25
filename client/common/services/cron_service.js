@@ -61,7 +61,8 @@
       return {
         method: 'GET',
         url: self.getTestUrl(id),
-        headers: {AppName: self.appName}
+        headers: {AppName: self.appName},
+        config: {ignoreError: true}
       };
     };
 

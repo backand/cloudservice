@@ -18,10 +18,22 @@
         controller: 'Docs as docs',
         templateUrl: 'views/docs/get_started_open.html'
       })
+      .state('docs.get-started-ng2', {
+        parent: 'app',
+        url: '/docs/start2',
+        controller: 'Docs as docs',
+        templateUrl: 'views/docs/get_started_ng2.html'
+      })
       .state('docs.getting-started-open', {
         parent: 'apps',
         url: 'start',
         templateUrl: 'views/docs/get_started_open.html',
+        controller: 'Docs as docs'
+      })
+      .state('docs.getting-started-ng2', {
+        parent: 'apps',
+        url: 'start2',
+        templateUrl: 'views/docs/get_started_ng2.html',
         controller: 'Docs as docs'
       })
       .state('docs.kickstart', {

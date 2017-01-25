@@ -1,9 +1,9 @@
 (function () {
 
   angular.module('backand')
-    .controller('KeysController', ['NotificationService', 'AppsService', 'socialProviders', 'ConfirmationPopup', KeysController]);
+    .controller('KeysController', ['CONSTS','NotificationService', 'AppsService', 'socialProviders', 'ConfirmationPopup', KeysController]);
 
-  function KeysController(NotificationService, AppsService, socialProviders, ConfirmationPopup) {
+  function KeysController(CONSTS, NotificationService, AppsService, socialProviders, ConfirmationPopup) {
 
     var self = this;
 
@@ -15,7 +15,7 @@
         .then(setKeysInfo, errorHandler);
     }
 
-    var settings = ['enable', 'clientId', 'clientSecret'];
+    var settings = ['enable', 'clientId', 'clientSecret', 'Oauth2EndPoint', 'Scope'];
 
     self.displayedTokens = [
       {
@@ -127,8 +127,17 @@
         appSettings[getSettingKey(setting, socialProvider)] = socialProvider[setting];
       });
 
+      updateAdditionalSettings(appSettings);
+
       updateSettings(appSettings);
     };
+
+    function updateAdditionalSettings(appSettings){
+
+      //for ADFS save the resource
+      appSettings['adfsResource'] = CONSTS.adfsResourse;
+
+    }
 
     function updateSettings (appSettings) {
       AppsService.update(self.appName, {settings: appSettings})
