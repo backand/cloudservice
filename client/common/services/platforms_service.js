@@ -11,7 +11,8 @@
     self.get = function () {
       return [{
         platform: 'RESTful API',
-        image: 'assets/images/platforms/android.png',
+        image: 'assets/images/platforms/logo-large.png',
+        class: 'platform-sprite rest-api-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'iOS',
