@@ -19,15 +19,18 @@
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'AngularJS',
-        image: 'assets/images/platforms/android.png',
+        image: 'assets/images/platforms/logo-large.png',
+        class: 'platform-sprite angular-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'Ionic',
-        image: 'assets/images/platforms/angular2.png',
+        image: 'assets/images/platforms/logo-large.png',
+        class: 'platform-sprite angular-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'React',
-        image: 'assets/images/platforms/angular2.png',
+        image: 'assets/images/platforms/logo-large.png',
+        class: 'platform-sprite angular-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'Android',

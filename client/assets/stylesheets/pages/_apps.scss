@@ -254,3 +254,35 @@
   -webkit-filter: grayscale(100%) brightness(200%);
   filter: grayscale(100%) brightness(200%);
 }
+
+.platform-sprite {
+  object-fit: none;
+  object-position: 0 0;
+  width: 100px;
+  height: 100px;
+}
+
+.ionic-logo-large {
+  object-position: 50px -425px;
+}
+
+.ionic-logo-small {
+
+}
+
+.angular-logo-large {
+  object-position: 50px -46px;
+
+}
+
+.angular-logo-small {
+
+}
+
+.react-logo-large {
+  object-position: 50px -800px;
+}
+
+.react-logo-small {
+
+}
