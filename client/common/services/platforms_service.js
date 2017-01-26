@@ -25,12 +25,12 @@
       }, {
         platform: 'Ionic',
         image: 'assets/images/platforms/logo-large.png',
-        class: 'platform-sprite angular-logo-large',
+        class: 'platform-sprite ionic-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'React',
         image: 'assets/images/platforms/logo-large.png',
-        class: 'platform-sprite angular-logo-large',
+        class: 'platform-sprite react-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'Android',

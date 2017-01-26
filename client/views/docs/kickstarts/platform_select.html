@@ -8,7 +8,7 @@
     <div class="platform-select-main">
       <div class="flex-row" ng-repeat="platformRow in platform.platforms">
         <div class="backand-platform" ng-repeat="platformOption in platformRow" ng-click="platform.choosePlatform(platformOption.platform)">
-          <img src="{{platformOption.image}}">
+          <img src="{{platformOption.image}}" class="{{platformOption.class}}">
           <span>{{platformOption.platform}}</span>
         </div>
       </div>
