@@ -9,7 +9,7 @@
     var self = this;
     self.hostingUrl = CONSTS.hostingUrl;
     self.kickstartTabs = [
-      {
+      /*{
         heading: 'Angular 1',
         route: 'docs.kickstart_ng1'
       },
@@ -24,6 +24,10 @@
       {
         heading: 'Ionic 2',
         route: 'docs.kickstart_ionic2'
+      }*/
+      {
+        heading: 'Selector',
+        route: 'docs.platform_select'
       }
     ];
 

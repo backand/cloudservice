@@ -47,9 +47,13 @@
       })
       .state('docs.kickstart-open', {
         parent: 'apps',
-        url: 'kickstart',
-        templateUrl: 'views/docs/kickstart.html',
-        controller: 'Docs as docs'
+        //url: 'kickstart',
+        //templateUrl: 'views/docs/kickstart.html',
+        //controller: 'Docs as docs'
+
+          url: '/platform_select',
+          controller: 'PlatformSelectController as platform',
+          templateUrl: 'views/kickstarts/platform_select.html'
       })
       .state('docs.api-desc', {
         parent: 'app',
@@ -93,7 +97,7 @@
         templateUrl: 'views/docs/hosting.html',
         controller: 'Docs as docs'
       })
-      .state('docs.kickstart_ng1',{
+      /*.state('docs.kickstart_ng1',{
         parent: 'app',
         url: '/docs/kickstart?ng1',
         templateUrl: 'views/docs/kickstarts/ng1.html',
@@ -116,6 +120,12 @@
         url: '/docs/kickstart?ionic2',
         templateUrl: 'views/docs/kickstarts/ionic2.html',
         controller: 'Docs as docs'
+      })
+      */
+      .state('docs.platform_select', {
+        url: '/platform_select',
+        controller: 'PlatformSelectController as platform',
+        templateUrl: 'views/docs/kickstarts/platform_select.html'
       })
   }
 
