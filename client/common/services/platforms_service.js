@@ -15,13 +15,14 @@
         class: 'platform-sprite rest-api-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
-        platform: 'iOS',
-        image: 'assets/images/platforms/angular2.png',
-        icon: 'assets/images/platforms/icons/angular_icon.png'
-      }, {
         platform: 'AngularJS',
         image: 'assets/images/platforms/logo-large.png',
         class: 'platform-sprite angular-logo-large',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
+      }, {
+        platform: 'Angular 2',
+        image: 'assets/images/platforms/logo-large.png',
+        class: 'platform-sprite angular-2-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
         platform: 'Ionic',
@@ -29,23 +30,26 @@
         class: 'platform-sprite ionic-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
+        platform: 'Ionic 2',
+        image: 'assets/images/platforms/logo-large.png',
+        class: 'platform-sprite ionic-2-logo-large',
+        icon: 'assets/images/platforms/icons/angular_icon.png'
+      }, {
         platform: 'React',
         image: 'assets/images/platforms/logo-large.png',
         class: 'platform-sprite react-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
       }, {
-        platform: 'Android',
-        image: 'assets/images/platforms/android.png',
+        platform: 'React Native',
+        image: 'assets/images/platforms/logo-large.png',
+        class: 'platform-sprite react-native-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
-      }, {
-        platform: 'Angular 2',
-        image: 'assets/images/platforms/angular2.png',
+      }/*, {
+        platform: 'Redux',
+        image: 'assets/images/platforms/logo-large.png',
+        class: 'platform-sprite react-logo-large',
         icon: 'assets/images/platforms/icons/angular_icon.png'
-      }, {
-        platform: 'Ionic 2',
-        image: 'assets/images/platforms/angular2.png',
-        icon: 'assets/images/platforms/icons/angular_icon.png'
-      }];
+      }*/];
     };
   }
 
