@@ -127,6 +127,15 @@
         controller: 'PlatformSelectController as platform',
         templateUrl: 'views/docs/kickstarts/platform_select.html'
       })
+      .state('docs.starter_app_select', {
+        parent: 'app',
+        url: '/docs/starter_app?platform',
+        controller: 'StarterAppSelectController as starterApp',
+        templateUrl: 'views/docs/kickstarts/starter_app_select.html',
+        params: {
+          platformName: 'RESTful API'
+        }
+      })
   }
 
 })();

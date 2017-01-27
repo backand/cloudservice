@@ -189,7 +189,7 @@
 
 .create-app-starter-app-select {
   border: 1px #E1E1E1 solid;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   border-radius: 5px;
   background: #ffffff;
@@ -280,8 +280,8 @@
 }
 
 .inactive-platform {
-  -webkit-filter: grayscale(100%) brightness(200%);
-  filter: grayscale(100%) brightness(200%);
+  -webkit-filter: grayscale(100%) brightness(150%);
+  filter: grayscale(100%) brightness(150%);
 }
 
 .platform-sprite {
@@ -291,12 +291,19 @@
   height: 100px;
 }
 
+.platform-sprite-icon {
+  object-fit: none;
+  object-position: 0 0;
+  width: 31px;
+  height: 31px;
+}
+
 .ionic-logo-large {
   object-position: -50px -425px;
 }
 
 .ionic-logo-small {
-
+  object-position: -6px -89px;
 }
 
 
@@ -306,6 +313,7 @@
 }
 
 .ionic-2-logo-small {
+  object-position: -6px -131px;
 }
 
 
@@ -315,6 +323,7 @@
 }
 
 .angular-logo-small {
+  object-position: -6px -5px;
 
 }
 
@@ -324,7 +333,7 @@
 }
 
 .angular-2-logo-small {
-
+  object-position: -6px -46px;
 }
 
 .react-logo-large {
@@ -332,7 +341,7 @@
 }
 
 .react-logo-small {
-
+  object-position: -6px -173px;
 }
 
 .react-native-logo-large {
@@ -342,7 +351,9 @@
 }
 
 .react-native-logo-small {
-
+  object-position: -7px -216px;
+  width: 32px;
+  height: 32px;
 }
 
 .rest-api-logo-large {
@@ -351,5 +362,5 @@
 
 
 .rest-api-logo-small {
-  object-position: -54px -1575px
+  object-position: -6px -341px
 }
