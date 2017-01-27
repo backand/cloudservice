@@ -10,8 +10,8 @@
 
     self.platforms = PlatformsService.get();
     self.selectedPlatform = $state.params.platformName;
-    self.starterApps = _.chunk(self.starterApps, 3);
     self.starterApps = StarterAppService.get(self.selectedPlatform);
+    self.starterApps = _.chunk(self.starterApps, 3);
 
     self.chooseStarterApp = function (starterApp) {
       self.selectedStarterApp = starterApp;
@@ -20,6 +20,7 @@
     self.changePlatform = function (platform) {
       self.selectedPlatform = platform;
       self.starterApps = StarterAppService.get(platform);
+      self.starterApps = _.chunk(self.starterApps, 3);
     }
   }
 }());
