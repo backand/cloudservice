@@ -46,12 +46,11 @@
         }
       })
       .state('docs.kickstart-open', {
-        parent: 'apps',
         //url: 'kickstart',
         //templateUrl: 'views/docs/kickstart.html',
         //controller: 'Docs as docs'
 
-          url: '/platform_select',
+          url: '/docs/platform_select',
           controller: 'PlatformSelectController as platform',
           templateUrl: 'views/kickstarts/platform_select.html'
       })
@@ -123,7 +122,8 @@
       })
       */
       .state('docs.platform_select', {
-        url: '/platform_select',
+        parent: 'app',
+        url: '/docs/platform_select',
         controller: 'PlatformSelectController as platform',
         templateUrl: 'views/docs/kickstarts/platform_select.html'
       })
