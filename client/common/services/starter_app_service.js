@@ -59,7 +59,7 @@
       },
       {
         name: "Blank Project",
-        image: "assets/images/app_templates/seed_project.png",,
+        image: "assets/images/app_templates/seed_project.png",
         description: "Start a new Angular 2 web app with Back&"
       },
       {
@@ -81,7 +81,7 @@
         },
         {
           name: "Blank Project",
-          image: "assets/images/app_templates/seed_project.png",,
+          image: "assets/images/app_templates/seed_project.png",
           description: "Start a new Ionic app with Back&"
         },
         {
@@ -103,7 +103,7 @@
       },
       {
         name: "Blank Project",
-        image: "assets/images/app_templates/seed_project.png",,
+        image: "assets/images/app_templates/seed_project.png",
         description: "Start a new Ionic 2 app with Back&"
       },
       {
@@ -120,7 +120,7 @@
         },
         {
           name: "Blank Project",
-          image: "assets/images/app_templates/seed_project.png",,
+          image: "assets/images/app_templates/seed_project.png",
           description: "Start a new React web app with Back&"
         }
       ];
@@ -133,7 +133,7 @@
         },
         {
           name: "Blank Project",
-          image: "assets/images/app_templates/seed_project.png",,
+          image: "assets/images/app_templates/seed_project.png",
           description: "Start a new React Native app with Back&"
         }
       ];
