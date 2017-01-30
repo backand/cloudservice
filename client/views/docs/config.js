@@ -46,13 +46,9 @@
         }
       })
       .state('docs.kickstart-open', {
-        //url: 'kickstart',
-        //templateUrl: 'views/docs/kickstart.html',
-        //controller: 'Docs as docs'
-
-          url: '/docs/platform_select',
-          controller: 'PlatformSelectController as platform',
-          templateUrl: 'views/kickstarts/platform_select.html'
+        url: '/docs/platform_select',
+        controller: 'PlatformSelectController as platform',
+        templateUrl: 'views/kickstarts/platform_select.html'
       })
       .state('docs.api-desc', {
         parent: 'app',
@@ -96,31 +92,6 @@
         templateUrl: 'views/docs/hosting.html',
         controller: 'Docs as docs'
       })
-      /*.state('docs.kickstart_ng1',{
-        parent: 'app',
-        url: '/docs/kickstart?ng1',
-        templateUrl: 'views/docs/kickstarts/ng1.html',
-        controller: 'Docs as docs'
-      })
-      .state('docs.kickstart_ng2',{
-        parent: 'app',
-        url: '/docs/kickstart?ng2',
-        templateUrl: 'views/docs/kickstarts/ng2.html',
-        controller: 'Docs as docs'
-      })
-      .state('docs.kickstart_ionic1',{
-        parent: 'app',
-        url: '/docs/kickstart?ionic1',
-        templateUrl: 'views/docs/kickstarts/ionic1.html',
-        controller: 'Docs as docs'
-      })
-      .state('docs.kickstart_ionic2',{
-        parent: 'app',
-        url: '/docs/kickstart?ionic2',
-        templateUrl: 'views/docs/kickstarts/ionic2.html',
-        controller: 'Docs as docs'
-      })
-      */
       .state('docs.platform_select', {
         parent: 'app',
         url: '/docs/platform_select',
@@ -132,6 +103,15 @@
         url: '/docs/starter_app?platform',
         controller: 'StarterAppSelectController as starterApp',
         templateUrl: 'views/docs/kickstarts/starter_app_select.html',
+        params: {
+          platformName: 'RESTful API'
+        }
+      })
+      .state('docs.kickstart_selected', {
+        parent: 'app',
+        url: '/docs/kickstart?platform',
+        controller: 'KickstartController as kickstart',
+        templateUrl: 'views/docs/kickstarts/kickstart.html',
         params: {
           platformName: 'RESTful API'
         }
