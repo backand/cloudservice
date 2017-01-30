@@ -113,7 +113,7 @@
         controller: 'KickstartController as kickstart',
         templateUrl: 'views/docs/kickstarts/kickstart.html',
         params: {
-          platformName: 'RESTful API'
+          platformName: 'restExisting'
         }
       })
   }

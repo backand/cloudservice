@@ -15,6 +15,8 @@
 
     self.chooseStarterApp = function (starterApp) {
       self.selectedStarterApp = starterApp;
+
+        $state.go('docs.kickstart_selected', {platformName: self.selectedStarterApp});
     };
 
     self.changePlatform = function (platform) {

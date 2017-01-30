@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.docs')
-    .controller('KickstartController', ['KickstartService', '$state', KickstartController]);
+    .controller('KickstartController', ['KickstartService', '$state', '$scope', '$sce', KickstartController]);
 
-  function PlatformSelectController(KickstartService, $state) {
+  function KickstartController(KickstartService, $state, $scope, $sce) {
 
     var self = this;
     self.selectedPlatform = $state.params.platformName;

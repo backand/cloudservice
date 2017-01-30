@@ -8,8 +8,8 @@
 
     var self = this;
 
-    self.get = function (platformName) {
-
+    self.getPlatformContent = function (platformName) {
+      return "Hello!";
     };
   }
 

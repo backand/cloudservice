@@ -18,7 +18,7 @@
         <div class="starter-apps-container">
           <div class="flex-row" ng-repeat="starterAppsRow in starterApp.starterApps">
             <div class="backand-starter-app" ng-repeat="starterAppOption in starterAppsRow"
-                 ng-click="starterApp.chooseStarterApp(starterAppOption.platform)">
+                 ng-click="starterApp.chooseStarterApp(starterAppOption.starterAppId)">
               <img src="{{starterAppOption.image}}">
               <span>{{starterAppOption.name}}</span>
             </div>
