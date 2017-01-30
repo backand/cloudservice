@@ -154,7 +154,7 @@
     <security-matrix security-template="security.sTemplate"
                      override="security.view.permissions.overrideinheritable"
                      on-update="security.templateChanged(template)"
-                     show-add-role="false"
+                     show-add-role="security.showAddRole"
                      on-role-add="security.templateRoleAdd(role)"
                      on-role-rename="security.templateRoleRename(role, newRole)"
                      on-role-remove="security.templateRoleRemove(role)">
@@ -176,9 +176,8 @@
             <security-matrix security-template="field.sTemplate"
                              override="security.view.permissions.overrideinheritable"
                              actions="['read', 'create', 'update']"
-                             show-add-role="false"
-                             on-update="security.templateFieldChanged(field, template)"
-                             >
+                             show-add-role="security.showAddRole"
+                             on-update="security.templateFieldChanged(field, template)">
             </security-matrix>
 
           </form>
