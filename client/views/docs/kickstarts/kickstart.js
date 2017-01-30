@@ -7,12 +7,8 @@
   function PlatformSelectController(KickstartService, $state) {
 
     var self = this;
-
-    self.platforms = PlatformsService.get();
-    self.platforms = _.chunk(self.platforms, 4);
-
-    self.choosePlatform = function (platform) {
-      $state.go('docs.kickstart_selected', {platformName: platform});
-    }
-  }
+    self.selectedPlatform = $state.params.platformName;
+    self.selectedPlatformContent = KickstartService.getPlatformContent(self.selectedPlatform);
+    $scope.kickstartContent= $sce.trustAsHtml(self.selectedPlatformContent);
+  };
 }());
