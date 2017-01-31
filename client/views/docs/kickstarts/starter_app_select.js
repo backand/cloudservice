@@ -2,27 +2,20 @@
   'use strict';
 
   angular.module('backand.apps')
-    .controller('StarterAppSelectController', ['StarterAppService', 'PlatformsService', '$state', StarterAppSelectController]);
+    .controller('StarterAppSelectController', ['KickstartService', 'PlatformsService', '$state', StarterAppSelectController]);
 
-  function StarterAppSelectController(StarterAppService, PlatformsService, $state) {
+  function StarterAppSelectController(KickstartService, PlatformsService, $state) {
 
     var self = this;
 
     self.platforms = PlatformsService.get();
-    self.selectedPlatform = $state.params.platformName;
-    self.starterApps = StarterAppService.get(self.selectedPlatform);
-    self.starterApps = _.chunk(self.starterApps, 3);
+    self.selectedPlatform = $state.params.starterAppId || 'ng1';
+    self.selectedMode = $state.params.mode;
+    self.templateUrl = KickstartService.getPlatformContent(self.selectedPlatform + self.selectedMode);
 
-    self.chooseStarterApp = function (starterApp) {
-      self.selectedStarterApp = starterApp;
-
-        $state.go('docs.kickstart_selected', {platformName: self.selectedStarterApp});
-    };
-
-    self.changePlatform = function (platform) {
-      self.selectedPlatform = platform;
-      self.starterApps = StarterAppService.get(platform);
-      self.starterApps = _.chunk(self.starterApps, 3);
+    self.changePlatform = function (starterAppId) {
+      self.selectedPlatform = starterAppId;
+      self.templateUrl = KickstartService.getPlatformContent(self.selectedPlatform + self.selectedMode);
     }
   }
 }());

@@ -11,8 +11,8 @@
     self.platforms = PlatformsService.get();
     self.platforms = _.chunk(self.platforms, 4);
 
-    self.choosePlatform = function (platform) {
-      $state.go('docs.starter_app_select', {platformName: platform});
+    self.choosePlatform = function (starterAppId) {
+      $state.go('docs.starter_app_select', {starterAppId: starterAppId, mode:$state.params.mode});
     }
   }
 }());

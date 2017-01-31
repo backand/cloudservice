@@ -9,48 +9,57 @@
     var self = this;
 
     self.get = function () {
-      return [{
-        platform: 'RESTful API',
-        image: 'assets/images/platforms/logo-large.png',
-        class: 'platform-sprite rest-api-logo-large',
-        icon: 'assets/images/platforms/logo-small.png',
-        iconClass: 'platform-sprite-icon rest-api-logo-small'
-      }, {
-        platform: 'AngularJS',
+      return [
+      // {
+      //   platform: 'RESTful API',
+      //   image: 'assets/images/platforms/logo-large.png',
+      //   class: 'platform-sprite rest-api-logo-large',
+      //   icon: 'assets/images/platforms/logo-small.png',
+      //   iconClass: 'platform-sprite-icon rest-api-logo-small',
+      //   starterAppId: 'rest'
+      // },
+      {
+        platform: 'Angular 1',
         image: 'assets/images/platforms/logo-large.png',
         class: 'platform-sprite angular-logo-large',
         icon: 'assets/images/platforms/logo-small.png',
-        iconClass: 'platform-sprite-icon angular-logo-small'
+        iconClass: 'platform-sprite-icon angular-logo-small',
+        starterAppId: 'ng1'
       }, {
         platform: 'Angular 2',
         image: 'assets/images/platforms/logo-large.png',
         class: 'platform-sprite angular-2-logo-large',
         icon: 'assets/images/platforms/logo-small.png',
-        iconClass: 'platform-sprite-icon angular-2-logo-small'
+        iconClass: 'platform-sprite-icon angular-2-logo-small',
+        starterAppId: 'ng2'
       }, {
-        platform: 'Ionic',
+        platform: 'Ionic 1',
         image: 'assets/images/platforms/logo-large.png',
         class: 'platform-sprite ionic-logo-large',
         icon: 'assets/images/platforms/logo-small.png',
-        iconClass: 'platform-sprite-icon ionic-logo-small'
+        iconClass: 'platform-sprite-icon ionic-logo-small',
+        starterAppId: 'ionic1'
       }, {
         platform: 'Ionic 2',
         image: 'assets/images/platforms/logo-large.png',
         class: 'platform-sprite ionic-2-logo-large',
         icon: 'assets/images/platforms/logo-small.png',
-        iconClass: 'platform-sprite-icon ionic-2-logo-small'
+        iconClass: 'platform-sprite-icon ionic-2-logo-small',
+        starterAppId: 'ionic2'
       }, {
-        platform: 'React',
+        platform: 'Redux',
         image: 'assets/images/platforms/logo-large.png',
         class: 'platform-sprite react-logo-large',
         icon: 'assets/images/platforms/logo-small.png',
-        iconClass: 'platform-sprite-icon react-logo-small'
+        iconClass: 'platform-sprite-icon react-logo-small',
+        starterAppId: 'redux'
       }, {
         platform: 'React Native',
         image: 'assets/images/platforms/logo-large.png',
         class: 'platform-sprite react-native-logo-large',
         icon: 'assets/images/platforms/logo-small.png',
-        iconClass: 'platform-sprite-icon react-native-logo-small'
+        iconClass: 'platform-sprite-icon react-native-logo-small',
+        starterAppId: 'reduxNative'
       }/*, {
         platform: 'Redux',
         image: 'assets/images/platforms/logo-large.png',

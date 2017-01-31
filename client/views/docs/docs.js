@@ -48,7 +48,7 @@
         $state.go('docs.platform_select');
       //}
       //else {
-        $state.go('docs.kickstart');
+        //$state.go('docs.kickstart');
       //}
     };
 

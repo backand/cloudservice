@@ -1,0 +1,111 @@
+<section class="page-form-ele page ng-scope ba-docs">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong test-hook="docs.quickstart.title">Ionic starter for mobile</strong>
+      <h2>4 easy steps to start mobile ionic project:</h2>
+
+    </div>
+    <div class="panel-body docs">
+
+      <div class="quickstart-body">
+
+        <div class="quickstart-connecting-db" ng-show="docs.isNew()">
+          <h3>
+            We're creating your database and will notify you when it's ready.<br/>
+            In the meantime, you can review below how to integrate your new app with Angular...
+          </h3>
+          <div us-spinner spinner-key="connecting-app-to-db"></div>
+          <br/>
+          <br/>
+        </div>
+        <br/>
+        <ol>
+
+          <li>
+            <h3>Install Ionic framework</h3>
+            <p>First, install <a href="http://nodejs.org/" target="_blank">Node.js</a>. Then, install the latest
+              Cordova and Ionic <a href="https://npmjs.org/package/ionic" target="_blank">command-line
+                tools</a>.Follow the <a
+                      href="http://cordova.apache.org/docs/en/5.1.1/guide/platforms/android/index.html" target="_blank">Android</a>
+              and <a href="http://cordova.apache.org/docs/en/5.1.1/guide/platforms/ios/index.html" target="_blank">iOS</a> platform
+              guides to install required platform dependencies</p>
+            <pre><code class="bash hljs">
+  $ npm install -g cordova ionic
+            </code></pre>
+            <p>Check <a href="http://ionicframework.com/getting-started/" target="_blank">Ionic Getting Started</a> for more information and troubleshooting</p>
+            <br />
+          </li>
+
+          <li>
+            <h3>Start the Project</h3>
+            <p>Create an Ionic project with Backand inside, includes all Backand dependencies and generic controller</p>
+            <pre><code class="bash hljs">
+  ionic start {{docs.currentApp.Name || 'myApp'}} https://github.com/backand/backand-ionic-starter
+  cd {{docs.currentApp.Name || 'myApp'}}
+            </code></pre>
+            <p ng-if="!docs.currentApp.Name">myApp should be your Backand's app name</p>
+            <br />
+          </li>
+
+          <li>
+            <h3>Configure Backand's REST API</h3>
+            <p>Backand requires that you include secure tokens for anonymous and sign-up REST API calls
+            </p>
+            <pre><code>
+  //Update Angular config section in /www/js/app.js
+
+  .config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
+      BackandProvider.setAppName('{{docs.currentApp.Name || 'Your-App-Name'}}');
+      BackandProvider.setSignUpToken('{{docs.keys.signup || 'Your-SignUp-Token'}}');
+      BackandProvider.setAnonymousToken('{{docs.keys.anonymous || 'Your-Anonymous-Token'}}');
+  })
+            </code></pre>
+          </li>
+          <br/>
+
+          <li>
+            <h3>CRUD your data</h3>
+            <p>
+              You can access Backand's REST API endpoints using $http requests from your Ionic Angular
+              project.<br />
+              You can duplicate the generic service 'ItemsModel' to manage any object.
+            </p>
+            <pre><code>
+  //Manage items object in /www/js/services.js
+
+  .service('ItemsModel', function ($http, Backand) {
+      var service = this,
+      baseUrl = '/1/objects/',
+      objectName = 'items/';
+
+      ...
+  })
+    </code></pre>
+          </li>
+          <div style="margin-left: 15px;">
+            <h3>Done. It's that simple</h3>
+            <p>Using the above starter code, you can simply build great mobile app using Ionic and Backand.<br/>
+              Continue now in configuring your model, setup security and add server side code...</p>
+            Have fun!</b></p>
+            <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
+          </div>
+        </ol>
+      </div>
+      <br/>
+      <div class="quickstart-sidebar">
+
+        <div class="quickstart-sidebox" id="kickstart-sidebox">
+          <div class="quickstart-kickstart">
+            <img src="../assets/images/docs_pages/kickstart-icon.png" />
+            <div class="quickstart-sidebox-title">Already have an Ionic project?</div>
+            <br/>
+            <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your project:</div>
+            <br/>
+            <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToQuickstart()">Get Started</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

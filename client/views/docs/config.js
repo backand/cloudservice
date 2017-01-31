@@ -92,19 +92,32 @@
         templateUrl: 'views/docs/hosting.html',
         controller: 'Docs as docs'
       })
-      .state('docs.platform_select', {
+      .state('docs.platform_select_kickstart', {
         parent: 'app',
         url: '/docs/platform_select',
         controller: 'PlatformSelectController as platform',
-        templateUrl: 'views/docs/kickstarts/platform_select.html'
+        templateUrl: 'views/docs/kickstarts/platform_select.html',
+        params: {
+          mode: 'Kickstart'
+        }
+      })
+      .state('docs.platform_select_existing', {
+        parent: 'app',
+        url: '/docs/platform_select',
+        controller: 'PlatformSelectController as platform',
+        templateUrl: 'views/docs/kickstarts/platform_select.html',
+        params: {
+          mode: 'Existing'
+        }
       })
       .state('docs.starter_app_select', {
         parent: 'app',
-        url: '/docs/starter_app?platform',
+        url: '/docs/starter_app',
         controller: 'StarterAppSelectController as starterApp',
         templateUrl: 'views/docs/kickstarts/starter_app_select.html',
         params: {
-          platformName: 'RESTful API'
+          starterAppId: 'ng1',
+          mode: 'Kickstart'
         }
       })
       .state('docs.kickstart_selected', {

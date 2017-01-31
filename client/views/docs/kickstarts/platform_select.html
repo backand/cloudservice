@@ -1,5 +1,3 @@
-
-
 <section class="page-form-ele page ng-scope ba-docs">
 
   <div class="create-app-platform-select">
@@ -10,7 +8,7 @@
     </div>
     <div class="platform-select-main">
       <div class="flex-row" ng-repeat="platformRow in platform.platforms">
-        <div class="backand-platform" ng-repeat="platformOption in platformRow" ng-click="platform.choosePlatform(platformOption.platform)">
+        <div class="backand-platform" ng-repeat="platformOption in platformRow" ng-click="platform.choosePlatform(platformOption.starterAppId)">
           <img src="{{platformOption.image}}" class="{{platformOption.class}}">
           <span>{{platformOption.platform}}</span>
         </div>
