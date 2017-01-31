@@ -10,8 +10,8 @@
 
     self.getPlatformContent = function (platformName) {
       var optionsHash = {};
-      optionsHash[ 'restExisting' ] = "";
-      optionsHash[ 'restKickstart' ] = "";
+      optionsHash[ 'restExisting' ] = "docs/kickstarts/templates/restExisting.html";
+      optionsHash[ 'restKickstart' ] = "docs/kickstarts/templates/rest.html";
       optionsHash[ 'ng1Existing' ] = "docs/kickstarts/templates/ng1Existing.html";
       optionsHash[ 'ng1Kickstart' ] = "docs/kickstarts/templates/ng1.html";
       optionsHash[ 'ng1Todo' ] = "";
