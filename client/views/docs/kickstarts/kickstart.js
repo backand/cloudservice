@@ -10,8 +10,5 @@
     self.selectedPlatform = $state.params.platformName;
     self.templateUrl = KickstartService.getPlatformContent(self.selectedPlatform);
     //$scope.kickstartContent= $sce.trustAsHtml(self.selectedPlatformContent);
-    self.getUrl = function () {
-      return "'" + self.templateUrl + "'";
-    };
   };
 }());
