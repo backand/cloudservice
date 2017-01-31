@@ -8,7 +8,10 @@
 
     var self = this;
     self.selectedPlatform = $state.params.platformName;
-    self.selectedPlatformContent = KickstartService.getPlatformContent(self.selectedPlatform);
-    $scope.kickstartContent= $sce.trustAsHtml(self.selectedPlatformContent);
+    self.templateUrl = KickstartService.getPlatformContent(self.selectedPlatform);
+    //$scope.kickstartContent= $sce.trustAsHtml(self.selectedPlatformContent);
+    self.getUrl = function () {
+      return "'" + self.templateUrl + "'";
+    };
   };
 }());

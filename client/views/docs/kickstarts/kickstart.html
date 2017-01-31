@@ -1,5 +1,5 @@
 <div class="page-form-ele page ng-scope ba-docs">
-  <span><h1>{{kickstart.selectedPlatform}}</h1>
-  <span ng-bind-html="kickstartContent"></span>
-
+  <div>
+    <ng-include src="{{kickstart.getUrl()}}"></ng-include>
+  </div>
 </div>
