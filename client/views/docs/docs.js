@@ -44,12 +44,7 @@
     };
 
     self.goToKickstart = function () {
-      //if (_.isEmpty(AppsService.currentApp)) {
-        $state.go('docs.platform_select');
-      //}
-      //else {
-        //$state.go('docs.kickstart');
-      //}
+      $state.go('docs.platform_select');
     };
 
     self.goToQuickstart = function () {
