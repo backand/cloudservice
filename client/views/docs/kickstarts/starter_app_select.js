@@ -34,5 +34,9 @@
     self.goToExisting = function() {
       $state.go('docs.platform_select_existing');
     };
+    
+    self.goToKickstart = function () {
+      $state.go('docs.platform_select_kickstart');
+    };
   }
 }());

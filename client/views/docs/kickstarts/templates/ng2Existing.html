@@ -24,13 +24,89 @@
                 </section>
 
                 <br/>
-                <h2>Existing Angular 2 App - Not yet available</h2>
-                <h5>We are updating our examples and starters to work with our new SDK. Keep an eye out for this starter page in the near future!</h5>
+                <h2>Overview</h2>
+                <h5>Connecting your application with Back& is as simple as installing our SDK, including it in your project, then configuring the app. Follow the steps below to get your Angular 2 application talking with your back end!</h5>
                 <br/>
+                <h2>Installation</h2>
+                <h5>Our SDK is available on both Yarn and NPM, under the package name <code>@backand/angular2-sdk</code>. To install using NPM, use the following command:</h5>
+                <br />
+                <pre><code class="hljs">
+    $ npm i -S @backand/angular2-sdk
+                </code></pre>
+                <br />
+                <h5>To install using Yarn, use the following command:</h5>
+                <br />
+                <pre><code class="hljs">
+    $ yarn add @backand/angular2-sdk
+                </code></pre>
+                <br />
+                <h2>Including Back& in your application</h2>
+                <h5>To include Back& in your application, add the following import statement:</h5>
+                <br />
+                <pre><code class="hljs">
+    import { BackandService } from '@backand/angular2-sdk'
+                </code></pre>
+                <br />
+                <h2>Configuring your application to use Back&</h2>
+                <h5>First, register <code>BackandService</code> with NgModule. In <code>app.module.ts</code> (or in the correct location for your app), include the following code:</h5>
+                <br />
+                <pre><code class="hljs">
+    @NgModule({
+      imports: [ ... ],
+      declarations: [ ... ],
+      providers: [ BackandService ],
+      bootstrap: [ AppComponent ]
+    })
+    export class AppModule { }
+                </code></pre>
+                <br />
+                <h5>Next, configure your app's connection to Back&. In <code>app.component.ts</code>, or at the appropriate location within your app, add the following code:</h5>
+                <br />
+                <pre><code class="hljs">
+    @Component({
+      selector: 'my-app',
+      template: `&lt;h1&gt;Hello angular2-sdk&lt;/h1&gt;
+        &lt;h3&gt;{{res}}&lt;/h3&gt;`
+    })
+    export class AppComponent implements OnInit {
+      res: string;
+      constructor(private backand: BackandService) { }
+      getList(): void {
+        this.res = 'fetching objects...';
+        this.backand.object.getList('users').then((res: any) => {
+          this.res = `${res.data.length} objects fetched`;
+          console.log(res);
+        })
+      }
+      ngOnInit(): void {
+        this.backand.init({
+          appName: '{{vm.currentApp.Name || 'Your-App-Name'}}',
+          anonymousToken: '{{vm.keys.anonymous || 'Your-Anonymous-Token'}}'
+        });
+        this.getList();
+     }
+    }
+                </code></pre>
+                <br />
+                <h2>All set!</h2>
+                <h5>At this point, your application is all set to work with Back&! Take a look at <a href="https://docs.backand.com">our documentation</a> for details on the functions offered by the SDK.</h5>
+                <br />
               <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
             </div>
             <br/>
             <div class="quickstart-sidebar">
+
+                <div class="quickstart-sidebox" id="kickstart-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                        <div class="quickstart-sidebox-title">Want a kickstart app instead?</div>
+                        <br/>
+                        <div class="quickstart-sidebox-text">Use one of our <b>Backand</b> kickstart apps to get a running start!</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToKickstart()">Get Started</button>
+                    </div>
+                </div>
+
                 <div class="quickstart-sidebox" id="video-sidebox">
                     <div class="quickstart-kickstart">
                         <img src="../assets/images/docs_pages/icon-video.png" />
