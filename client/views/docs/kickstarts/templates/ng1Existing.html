@@ -92,12 +92,12 @@
     var vm = this;
     //get the object name and optional parameters
     vm.getList = function(name, sort, filter) {
-      params = {
+      var params = {
         pageSize: 20,
         pageNumber: 1,
         filter: filter || '',
         sort: sort || ''
-      }
+      };
       return Backand.object.getList(name, params);
     }
   }
