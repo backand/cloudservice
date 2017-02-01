@@ -32,7 +32,7 @@
     $ "./node_modules/.bin/bkndredux" user obj1 obj2 obj3... -m (thunk/saga)
                 </code></pre>
                 <br />
-                <h5><emphasis><strong>Note:</stron></emphasis> <code>user</code> is a unique object. It has different <code>Reducer</code> and <code>Types</code> objects, and it reveals most of the authentication <code>Actions</code> (<code>getUserDetails</code>,<code>signin</code>,<code>signout</code>,etc...)</h5>
+                <h5><emphasis><strong>Note:</strong></emphasis> <code>user</code> is a unique object. It has different <code>Reducer</code> and <code>Types</code> objects, and it reveals most of the authentication <code>Actions</code> (<code>getUserDetails</code>,<code>signin</code>,<code>signout</code>, etc...)</h5>
                 <br />
                 <h5>Next, include the <code>Reducers</code> in <a href="http://redux.js.org/docs/api/combineReducers.html">combineReducers()</a>:</h5>
                 <br />
@@ -66,7 +66,7 @@
                 <h5>Download <a href="https://github.com/redux-saga/redux-saga">redux-saga</a> and include it in <a href="http://redux.js.org/docs/api/createStore.html">createStore()</a></h5>
                 <br />
                 <pre><code class="hljs">
-     import { createStore, applyMiddleware } from 'redux'
+    import { createStore, applyMiddleware } from 'redux'
     import createSagaMiddleware from 'redux-saga'
     import rootSaga from './sagas.js'
 

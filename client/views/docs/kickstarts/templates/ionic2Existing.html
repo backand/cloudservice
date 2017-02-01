@@ -40,9 +40,9 @@
                 <br/>
                 <h5>Once Cordova is installed, update <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/app/app.component.ts#L21" target="_blank">app.component.js</a> lines 21-23 to use your Backand app's  connection details</h5>
                 <pre><code class="hljs">
-    backandService.setAppName('&lt;your app name&gt;');
-    backandService.setSignUpToken('&lt;your signup token&gt;');
-    backandService.setAnonymousToken('&lt;your anonymousToken token&gt;');
+    backandService.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+    backandService.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+    backandService.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
     </code></pre>
                 <br />
                 <h5>At this point, install the JS dependencies for the starter application:</h5>

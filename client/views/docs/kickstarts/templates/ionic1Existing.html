@@ -55,9 +55,9 @@
   //Update Angular config section in /www/js/app.js
 
   .config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-      BackandProvider.setAppName('{{docs.currentApp.Name || 'Your-App-Name'}}');
-      BackandProvider.setSignUpToken('{{docs.keys.signup || 'Your-SignUp-Token'}}');
-      BackandProvider.setAnonymousToken('{{docs.keys.anonymous || 'Your-Anonymous-Token'}}');
+      BackandProvider.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+      BackandProvider.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+      BackandProvider.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
   })
             </code></pre>
           </li>
@@ -74,10 +74,17 @@
   //Manage items object in /www/js/services.js
 
   .service('ItemsModel', function ($http, Backand) {
-      var service = this,
-      baseUrl = '/1/objects/',
-      objectName = 'items/';
-
+      var vm = this;
+      //get the object name and optional parameters
+      vm.getList = function(name, sort, filter) {
+        var params = {
+          pageSize: 20,
+          pageNumber: 1,
+          filter: filter || '',
+          sort: sort || ''
+        };
+        return Backand.object.getList(name, params);
+      }
       ...
   })
     </code></pre>
