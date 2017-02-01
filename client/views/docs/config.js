@@ -36,20 +36,20 @@
         templateUrl: 'views/docs/get_started_ng2.html',
         controller: 'Docs as docs'
       })
-      .state('docs.kickstart', {
-        parent: 'app',
-        url: '/docs/kickstart',
-        templateUrl: 'views/docs/kickstart.html',
-        controller: 'Docs as docs',
-        params: {
-          newApp: false
-        }
-      })
-      .state('docs.kickstart-open', {
-        url: '/docs/platform_select',
-        controller: 'PlatformSelectController as platform',
-        templateUrl: 'views/kickstarts/platform_select.html'
-      })
+      // .state('docs.kickstart', {
+      //   parent: 'app',
+      //   url: '/docs/kickstart',
+      //   templateUrl: 'views/docs/kickstart.html',
+      //   controller: 'Docs as docs',
+      //   params: {
+      //     newApp: false
+      //   }
+      // })
+      // .state('docs.kickstart-open', {
+      //   url: '/docs/platform_select',
+      //   controller: 'PlatformSelectController as platform',
+      //   templateUrl: 'views/kickstarts/platform_select.html'
+      // })
       .state('docs.api-desc', {
         parent: 'app',
         url: '/docs/api',
@@ -95,19 +95,21 @@
       .state('docs.platform_select_kickstart', {
         parent: 'app',
         url: '/docs/kickstart_platform',
-        controller: 'PlatformSelectController as platform',
+        controller: 'PlatformSelectController as vm',
         templateUrl: 'views/docs/kickstarts/platform_select.html',
         params: {
-          mode: 'kickstart'
+          mode: 'kickstart',
+          newApp: false
         }
       })
       .state('docs.platform_select_existing', {
         parent: 'app',
         url: '/docs/existing_platform',
-        controller: 'PlatformSelectController as platform',
+        controller: 'PlatformSelectController as vm',
         templateUrl: 'views/docs/kickstarts/platform_select.html',
         params: {
-          mode: 'existing'
+          mode: 'existing',
+          newApp: false
         }
       })
       .state('docs.starter_app_select', {
@@ -116,7 +118,8 @@
         controller: 'StarterAppSelectController as vm',
         templateUrl: 'views/docs/kickstarts/starter_app_select.html',
         params: {
-          starterAppId: 'ng1'
+          starterAppId: 'ng1',
+          newApp: false
         }
       })
       .state('docs.kickstart_selected', {

@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.docs')
-    .controller('PlatformSelectController', ['AppsService', 'PlatformsService', '$state','usSpinnerService','$modal', PlatformSelectController]);
+    .controller('PlatformSelectController', ['AppsService', 'PlatformsService', '$state','usSpinnerService', PlatformSelectController]);
 
-  function PlatformSelectController(AppsService, PlatformsService, $state, usSpinnerService, $modal) {
+  function PlatformSelectController(AppsService, PlatformsService, $state, usSpinnerService) {
 
     var self = this;
 
@@ -31,16 +31,8 @@
       return isNew;
     };
 
-    self.newApp = function () {
-      var modalInstance = $modal.open({
-        templateUrl: 'views/docs/new_app_modal.html',
-        controller: 'NewAppModalController',
-        controllerAs: 'newAppModal'
-      });
-    };
-
     self.choosePlatform = function (starterAppId) {
-      $state.go('docs.starter_app_select', {starterAppId: starterAppId, mode:$state.params.mode});
+      $state.go('docs.starter_app_select', {starterAppId: starterAppId, mode:$state.params.mode, newApp: $state.params.newApp});
     }
   }
 }());

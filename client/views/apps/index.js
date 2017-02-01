@@ -64,7 +64,7 @@
 
           AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
           AnalyticsService.track('create app', {app: appName});
-          $state.go('docs.kickstart', {appName: appName, newApp: true});
+          $state.go('docs.platform_select_kickstart', {appName: appName, newApp: true});
         })
         .error(function () {
           self.loading = false;
