@@ -1,7 +1,7 @@
 <section class="page-form-ele page ng-scope ba-docs">
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>React Native Kickstart</strong>
-            <h2>Follow these steps to install react-native-kickstart, with Backand built-in!</h2>
+        <div class="panel-heading"><strong>ReactNative Example</strong>
+            <h2>Follow these steps to install our ReactNative example app, with Backand built-in!</h2>
         </div>
         <div class="panel-body docs">
             <div class="quickstart-body">
@@ -24,9 +24,41 @@
                 </section>
 
                 <br/>
-                <h2>ReactNative Kickstart - Not Yet Available</h2>
-                <h5>We are updating our examples and starters to work with our new SDK. Keep an eye out for this starter page in the near future!.</h5>
+                <h2>ReactNative Example</h2>
+                <h5>We offer a simple example appliction that demonstrates how to work with Back& in a ReactNative application. Follow the instructions below, or head over to the project <a href="https://github.com/backand/react-native-example">on github</a> to get started.</h5>
                 <br/>
+                <h2>Grab the project</h2>
+                <h5>Start by cloning the <code>backand-react-native-example</code> project from GitHub:</h5>
+                <br />
+                <pre><code class="hljs">
+    $ git clone https://github.com/backand/react-native-example.git
+    $ cd react-native-example
+                </code></pre>
+                <br />
+                <h2>Install dependencies</h2>
+                <h5>Next, install the project dependencies using NPM:</h5>
+                <br />
+                <pre><code class="hljs">
+    $ npm install
+                </code></pre>
+                <br />
+                <h2>Set up your emulator</h2>
+                <h5>Use the instructions on <a href="https://facebook.github.io">Facebook's Github</a> for the platform you will be working with:</h5>
+                <ul class="list-group">
+                  <li class="list-group-item"><a href="https://facebook.github.io/react-native/docs/getting-started.html#xcode">iOS</a> - XCode must be installed first</li>
+                  <li class="list-group-item"><a href=" https://facebook.github.io/react-native/docs/getting-started.html#4-set-up-your-android-virtual-device">Android</a> - you will need to install AndroidStudio and run <code>avd</code> first</li>
+                </ul>
+                <br />
+                <h2>Run the app</h2>
+                <h5>At this point, all that is left is to start the app for the platform you want:</h5>
+                <br />
+                <pre><code class="hljs">
+    $ react-native run-ios
+    $ react-native run-android
+                </code></pre>
+                <br />
+                <h5>With that, you're all set!</h5>
+                <br />
               <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
             </div>
             <br/>
@@ -35,14 +67,13 @@
                 <div class="quickstart-sidebox" id="kickstart-sidebox">
                     <div class="quickstart-kickstart">
                         <img src="../assets/images/docs_pages/kickstart-icon.png" />
-                        <div class="quickstart-sidebox-title">Already have a ReactNative project?</div>
+                        <div class="quickstart-sidebox-title">Already have a project?</div>
                         <br/>
                         <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your existing project</div>
                         <br/>
-                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="starterApp.goToExisting()">Get Started</button>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToExisting()">Get Started</button>
                     </div>
                 </div>
-
 
                 <div class="quickstart-sidebox" id="video-sidebox">
                     <div class="quickstart-kickstart">
