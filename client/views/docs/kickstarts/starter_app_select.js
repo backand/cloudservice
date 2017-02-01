@@ -17,5 +17,9 @@
       self.selectedPlatform = starterAppId;
       self.templateUrl = KickstartService.getPlatformContent(self.selectedPlatform + self.selectedMode);
     }
+
+    self.goToExisting = function() {
+      $state.go('docs.platform_select_existing');
+    };
   }
 }());
