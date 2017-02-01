@@ -1,25 +1,26 @@
 <section class="page-form-ele page ng-scope ba-docs">
 
-
-  <div class="quickstart-connecting-db" ng-show="vm.isNew()">
-    <h3>
-      We're creating your database and will notify you when it's ready.<br/>
-      In the meantime, you can review below how to integrate your new app with Angular...
-    </h3>
-    <div us-spinner spinner-key="connecting-app-to-db"></div>
-    <br/>
-    <br/>
-  </div>
-
   <div class="create-app-platform-select">
     <div class="platform-select-top">
       <h2>Welcome to Back&amp;</h2>
+      <div us-spinner spinner-key="connecting-app-to-db" style="position: relative; top: 80px;"></div>
 
-      <h1>What platform would you like to connect to Backand?</h1>
+      <h1 ng-if="!vm.isNew()">What platform would you like to connect to Backand?</h1>
+      <div class="quickstart-connecting-db" ng-if="vm.isNew()">
+        <h3>
+          We're creating your database and will notify you when it's ready.<br/>
+          In the meantime, you can select which platform would you like to connect to Backand...
+        </h3>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+      </div>
     </div>
     <div class="platform-select-main">
-      <div class="flex-row" ng-repeat="platformRow in platform.platforms">
-        <div class="backand-platform" ng-repeat="platformOption in platformRow" ng-click="platform.choosePlatform(platformOption.starterAppId)">
+      <div class="flex-row" ng-repeat="platformRow in vm.platforms">
+        <div class="backand-platform" ng-repeat="platformOption in platformRow"
+             ng-click="vm.choosePlatform(platformOption.starterAppId)">
           <img src="{{platformOption.image}}" class="{{platformOption.class}}">
           <span>{{platformOption.platform}}</span>
         </div>

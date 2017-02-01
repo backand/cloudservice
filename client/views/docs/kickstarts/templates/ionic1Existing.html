@@ -1,26 +1,14 @@
 <section class="page-form-ele page ng-scope ba-docs">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <strong test-hook="docs.quickstart.title">Ionic starter for mobile</strong>
+      <strong test-hook="vm.quickstart.title">Ionic starter for mobile</strong>
       <h2>4 easy steps to start mobile ionic project:</h2>
 
     </div>
     <div class="panel-body docs">
 
       <div class="quickstart-body">
-
-        <div class="quickstart-connecting-db" ng-show="docs.isNew()">
-          <h3>
-            We're creating your database and will notify you when it's ready.<br/>
-            In the meantime, you can review below how to integrate your new app with Angular...
-          </h3>
-          <div us-spinner spinner-key="connecting-app-to-db"></div>
-          <br/>
-          <br/>
-        </div>
-        <br/>
         <ol>
-
           <li>
             <h3>Install Ionic framework</h3>
             <p>First, install <a href="http://nodejs.org/" target="_blank">Node.js</a>. Then, install the latest
@@ -40,10 +28,10 @@
             <h3>Start the Project</h3>
             <p>Create an Ionic project with Backand inside, includes all Backand dependencies and generic controller</p>
             <pre><code class="bash hljs">
-  ionic start {{docs.currentApp.Name || 'myApp'}} https://github.com/backand/backand-ionic-starter
-  cd {{docs.currentApp.Name || 'myApp'}}
+  ionic start {{vm.currentApp.Name || 'myApp'}} https://github.com/backand/backand-ionic-starter
+  cd {{vm.currentApp.Name || 'myApp'}}
             </code></pre>
-            <p ng-if="!docs.currentApp.Name">myApp should be your Backand's app name</p>
+            <p ng-if="!vm.currentApp.Name">myApp should be your Backand's app name</p>
             <br />
           </li>
 
@@ -55,9 +43,9 @@
   //Update Angular config section in /www/js/app.js
 
   .config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
-      BackandProvider.setAppName('{{docs.currentApp.Name || 'Your-App-Name'}}');
-      BackandProvider.setSignUpToken('{{docs.keys.signup || 'Your-SignUp-Token'}}');
-      BackandProvider.setAnonymousToken('{{docs.keys.anonymous || 'Your-Anonymous-Token'}}');
+      BackandProvider.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+      BackandProvider.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+      BackandProvider.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
   })
             </code></pre>
           </li>
@@ -87,7 +75,8 @@
             <p>Using the above starter code, you can simply build great mobile app using Ionic and Backand.<br/>
               Continue now in configuring your model, setup security and add server side code...</p>
             Have fun!</b></p>
-            <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
+            <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App
+              and Get Started</button>
           </div>
         </ol>
       </div>

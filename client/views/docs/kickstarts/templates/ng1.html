@@ -5,18 +5,7 @@
         </div>
         <div class="panel-body docs">
             <div class="quickstart-body">
-                <div class="quickstart-connecting-db" ng-show="docs.isNew()">
-                    <h3>
-            We're creating your database, and will notify you when it's ready.<br/>
-            In the meantime, you can review our kickstart guides below.
-                    </h3>
-                    <div us-spinner spinner-key="connecting-app-to-db"></div>
-                    <br/>
-                    <br/>
-                </div>
-
-
-                <section class="panel panel-box" ng-if="!docs.currentApp.Name">
+                <section class="panel panel-box" ng-if="!vm.currentApp.Name">
                     <div class="panel-item bg-info">
                         <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
               gulpjs-based build system that scaffolds the project for you.</h3>
@@ -70,7 +59,8 @@
                   <li class="list-group-item"><a href="https://github.com/backand/stripe-example" target="_blank">Back& Payments</a> - This starter demonstrates connecting Back& application to a payment processor</li>
                 </ul>
                 <h5>See more on <a href="https://https://www.backand.com/app-examples/" target="_blank">our examples and starters page</a>. Also, don't forget to review <a href="https://docs.backand.com" target="_blank">our documentation</a>! We cover all of our APIs, as well as several different use cases.</h5>
-              <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
+              <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App
+                and Get Started</button>
             </div>
             <br/>
             <div class="quickstart-sidebar">
