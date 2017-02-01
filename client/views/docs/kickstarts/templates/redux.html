@@ -1,7 +1,7 @@
 <section class="page-form-ele page ng-scope ba-docs">
     <div class="panel panel-default">
-        <div class="panel-heading"><strong>Redux App Kickstart</strong>
-            <h2>Follow these steps to install redux-kickstart, with Backand built-in!</h2>
+        <div class="panel-heading"><strong>Redux App Examples</strong>
+            <h2>Below are a set of example apps for Redux, powered by Back&!</h2>
         </div>
         <div class="panel-body docs">
             <div class="quickstart-body">
@@ -18,15 +18,34 @@
 
                 <section class="panel panel-box" ng-if="!docs.currentApp.Name">
                     <div class="panel-item bg-info">
-                        <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
+                        <h3 style="text-align:center;">Speed up your Redux development with super simple back-end and a complete and scalable
               gulpjs-based build system that scaffolds the project for you.</h3>
                     </div>
                 </section>
 
                 <br/>
-                <h2>Redux App Kickstart - Not yet available</h2>
-                <h5>We are updating our examples and starters to work with our new SDK. Keep an eye out for this starter page in the near future!.</h5>
+                <h2>Redux App Examples</h2>
+                <h5>We have several intuitive and easy-to-use example applications that can be used to get your Redux app up and running with Back&. Choose the starter that is most appropriate for you, tie it into your application, and get coding!</h5>
                 <br/>
+                <h2>Connecting with Back&</h2>
+                <h5>To connect an example application with Back&, modify  the <code>backand.init</code> to include your app's token and name data as follows:</h5>
+                <br />
+                <pre><code class="hljs">
+    backand.init && backand.init({
+      appName: '{{vm.currentApp.Name || 'Your-App-Name'}}',
+      signUpToken: '{{vm.keys.signup || 'Your-SignUp-Token'}}',
+      anonymousToken: '{{vm.keys.anonymous || 'Your-Anonymous-Token'}}',
+      runSocket: true
+    });
+                </code></pre>
+                <h2>Examples</h2>
+                <h5>Choose the example that matches your desired middleware system below. We have also included a link to our ReactNative example application, for reference:</h5>
+                <br />
+                <ul class='list-group'>
+                  <li class='list-group-item'><a href="http://codepen.io/backand/pen/VmRajE">CodePen example using Thunk</a></li>
+                  <li class='list-group-item'><a href="http://codepen.io/backand/pen/pRgqyx">CodePen example using Saga</a></li>
+                  <li class='list-group-item'><a  href="https://github.com/backand/react-native-example/tree/sdk">Back&'s ReactNative Example App</a></li>
+                </ul>
               <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
             </div>
             <br/>
@@ -39,7 +58,7 @@
                         <br/>
                         <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your existing project</div>
                         <br/>
-                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="starterApp.goToExisting()">Get Started</button>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToExisting()">Get Started</button>
                     </div>
                 </div>
 
