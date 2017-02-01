@@ -94,30 +94,29 @@
       })
       .state('docs.platform_select_kickstart', {
         parent: 'app',
-        url: '/docs/platform_select',
+        url: '/docs/kickstart_platform',
         controller: 'PlatformSelectController as platform',
         templateUrl: 'views/docs/kickstarts/platform_select.html',
         params: {
-          mode: 'Kickstart'
+          mode: 'kickstart'
         }
       })
       .state('docs.platform_select_existing', {
         parent: 'app',
-        url: '/docs/platform_select',
+        url: '/docs/existing_platform',
         controller: 'PlatformSelectController as platform',
         templateUrl: 'views/docs/kickstarts/platform_select.html',
         params: {
-          mode: 'Existing'
+          mode: 'existing'
         }
       })
       .state('docs.starter_app_select', {
         parent: 'app',
-        url: '/docs/starter_app',
-        controller: 'StarterAppSelectController as starterApp',
+        url: '/docs/starter_app/:mode',
+        controller: 'StarterAppSelectController as vm',
         templateUrl: 'views/docs/kickstarts/starter_app_select.html',
         params: {
-          starterAppId: 'ng1',
-          mode: 'Kickstart'
+          starterAppId: 'ng1'
         }
       })
       .state('docs.kickstart_selected', {

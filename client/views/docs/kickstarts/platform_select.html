@@ -1,5 +1,16 @@
 <section class="page-form-ele page ng-scope ba-docs">
 
+
+  <div class="quickstart-connecting-db" ng-show="vm.isNew()">
+    <h3>
+      We're creating your database and will notify you when it's ready.<br/>
+      In the meantime, you can review below how to integrate your new app with Angular...
+    </h3>
+    <div us-spinner spinner-key="connecting-app-to-db"></div>
+    <br/>
+    <br/>
+  </div>
+
   <div class="create-app-platform-select">
     <div class="platform-select-top">
       <h2>Welcome to Back&amp;</h2>

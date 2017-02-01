@@ -1,14 +1,14 @@
 <div class="page ng-scope">
   <div class="create-app-starter-app-select">
     <div class="platform-nav">
-      <div ng-repeat="platform in starterApp.platforms" class="platform-choice-nav"
-           ng-class="{'platform-choice-nav': true, 'active-platform': platform.starterAppId === starterApp.selectedPlatform,
-           'inactive-platform': platform.starterAppId !== starterApp.selectedPlatform}"
-        ng-click="starterApp.changePlatform(platform.starterAppId)">
+      <div ng-repeat="platform in vm.platforms" class="platform-choice-nav"
+           ng-class="{'platform-choice-nav': true, 'active-platform': platform.starterAppId === vm.selectedPlatform,
+           'inactive-platform': platform.starterAppId !== vm.selectedPlatform}"
+        ng-click="vm.changePlatform(platform.starterAppId)">
         <img src="{{platform.icon}}" class="{{platform.iconClass}}">
         <span>{{platform.platform}}</span>
       </div>
     </div>
-    <div class="tab-content" ng-include="starterApp.templateUrl"></div>
+    <div class="tab-content" ng-include="vm.templateUrl"></div>
   </div>
 </div>

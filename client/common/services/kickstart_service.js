@@ -10,18 +10,18 @@
 
     self.getPlatformContent = function (platformName) {
       var optionsHash = {};
-      optionsHash[ 'ng1Kickstart' ] = "views/docs/kickstarts/templates/ng1.html";
-      optionsHash[ 'ng1Existing' ] = "views/docs/kickstarts/templates/ng1Existing.html";
-      optionsHash[ 'ng2Kickstart' ] = "views/docs/kickstarts/templates/ng2.html";
-      optionsHash[ 'ng2Existing' ] = "views/docs/kickstarts/templates/ng2Existing.html";
-      optionsHash[ 'ionic1Kickstart' ] = "views/docs/kickstarts/templates/ionic1.html";
-      optionsHash[ 'ionic1Existing' ] = "views/docs/kickstarts/templates/ionic1Existing.html";
-      optionsHash[ 'ionic2Kickstart' ] = "views/docs/kickstarts/templates/ionic2.html";
-      optionsHash[ 'ionic2Existing' ] = "views/docs/kickstarts/templates/ionic2Existing.html";
-      optionsHash[ 'reduxKickstart' ] = "views/docs/kickstarts/templates/redux.html";
-      optionsHash[ 'reduxExisting' ] = "views/docs/kickstarts/templates/reduxExisting.html";
-      optionsHash[ 'reactNativeKickstart' ] = "views/docs/kickstarts/templates/reactNative.html";
-      optionsHash[ 'reactNativeExisting' ] = "views/docs/kickstarts/templates/reactNativeExisting.html";
+      optionsHash[ 'ng1_kickstart' ] = "views/docs/kickstarts/templates/ng1.html";
+      optionsHash[ 'ng1_existing' ] = "views/docs/kickstarts/templates/ng1Existing.html";
+      optionsHash[ 'ng2_kickstart' ] = "views/docs/kickstarts/templates/ng2.html";
+      optionsHash[ 'ng2_existing' ] = "views/docs/kickstarts/templates/ng2Existing.html";
+      optionsHash[ 'ionic1_kickstart' ] = "views/docs/kickstarts/templates/ionic1.html";
+      optionsHash[ 'ionic1_existing' ] = "views/docs/kickstarts/templates/ionic1Existing.html";
+      optionsHash[ 'ionic2_kickstart' ] = "views/docs/kickstarts/templates/ionic2.html";
+      optionsHash[ 'ionic2_existing' ] = "views/docs/kickstarts/templates/ionic2Existing.html";
+      optionsHash[ 'redux_kickstart' ] = "views/docs/kickstarts/templates/redux.html";
+      optionsHash[ 'redux_existing' ] = "views/docs/kickstarts/templates/reduxExisting.html";
+      optionsHash[ 'reactNative_kickstart' ] = "views/docs/kickstarts/templates/reactNative.html";
+      optionsHash[ 'reactNative_existing' ] = "views/docs/kickstarts/templates/reactNativeExisting.html";
 
       return optionsHash[platformName];
     };
