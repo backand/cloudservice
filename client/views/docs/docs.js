@@ -12,7 +12,7 @@
 
       {
         heading: 'Selector',
-        route: 'docs.platform_select'
+        route: 'docs.platform_select_kickstart'
       }
     ];
 
@@ -44,7 +44,7 @@
     };
 
     self.goToKickstart = function () {
-      $state.go('docs.platform_select');
+      $state.go('docs.platform_select_kickstart');
     };
 
     self.goToQuickstart = function () {
