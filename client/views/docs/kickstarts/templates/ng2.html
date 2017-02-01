@@ -39,9 +39,9 @@
                 <h2>Configuring Back&</h2>
                 <h5>Back& uses OAuth authenticaation, which requires you to include the authentication token with every HTTP call. Luckily, the Back& SDK takes care of this for you. To connect your app to Back&, use the following code:</h5>
                 <pre><code class="hljs">
-    this.backandService.setAppName('your app name');
-    this.backandService.setSignUpToken('your backand signup token');
-    this.backandService.setAnonymousToken('your backand anonymous token');
+    this.backandService.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+    this.backandService.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+    this.backandService.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
                 </code></pre>
                 <br/>
                 <h5>If you are developing a mobile app, you'll also want to set the <code>isMobile</code> flag in the SDK:</h5>

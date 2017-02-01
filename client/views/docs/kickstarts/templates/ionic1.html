@@ -77,10 +77,10 @@
                 <br/>
                 <h5>After you've updated your data model, update app.js in the starter application to point at your new Back& app. Change lines 25-27 of <a href="https://github.com/backand/backand-ionic-starter/blob/master/js/app.js#L25" target="_blank">app.js</a> to the following:</h5>
                 <pre><code class="hljs">
-    BackandProvider.setAppName('&lt;Your Back& App name&gt;');
-    BackandProvider.setSignUpToken('&lt;Your app's signup token&gt;');
-    BackandProvider.setAnonymousToken('&lt;Your app's anonymous token&gt;');
-    </code></pre>
+    BackandProvider.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+    BackandProvider.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+    BackandProvider.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
+                </code></pre>
                 <br/>
                 <h5>With that, your application is ready to run against your custom app instance! Review <a href="https://docs.backand.com" target="_blank">our documentation</a> for guidance on adding new features and capabilities.</h5>
 
