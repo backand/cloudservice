@@ -20,6 +20,8 @@
                 <h5>To connect an example application with Back&, modify  the <code>backand.init</code> to include your app's token and name data as follows:</h5>
                 <br />
                 <pre><code class="hljs">
+    // Note - set runSocket to true if you intend to use our Real-Time
+    //        Communications feature. Otherwise, set it to False.
     backand.init && backand.init({
       appName: '{{vm.currentApp.Name || 'Your-App-Name'}}',
       signUpToken: '{{vm.keys.signup || 'Your-SignUp-Token'}}',
