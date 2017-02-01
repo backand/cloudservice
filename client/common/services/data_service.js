@@ -14,7 +14,10 @@
           requestMethod: http.method,
           requestTitle: log,
           requestParams: http.params,
-          requestData: http.data
+          requestData: http.data,
+          // GENERATOR ADDON
+          httpObject: http
+          // END
         };
 
         self.log.push(logItem);

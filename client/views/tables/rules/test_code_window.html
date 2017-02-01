@@ -171,12 +171,19 @@
 
   <div ng-show="rules.getDataActionType() === 'On Demand'">
     <br/>
+    <bknd-code-generator url="{{rules.copyUrlParams.getUrl()}}"
+                         http-object="{{rules.httpObject}}"></bknd-code-generator>
+  </div>
+
+
+  <!-- <div ng-show="rules.getDataActionType() === 'On Demand'">
+    <br/>
     <label>Request URL:</label>
     <bknd-copy-url copy-url-params="rules.copyUrlParams"></bknd-copy-url>
   </div>
 
-  <br/>
-  <label>Request $http:</label>
-  <bknd-copy-url type="textarea" copy-url-params="rules.copyHttpParams"></bknd-copy-url>
+  <br/> -->
+  <!-- <label>Request $http:</label> -->
+  <!-- <bknd-copy-url type="textarea" copy-url-params="rules.copyHttpParams"></bknd-copy-url> -->
 
 </form>

@@ -4,32 +4,51 @@
   angular.module('common.directives')
     .directive('bkndCodeGenerator', function () {
       return {
+        restrict: 'E',
         templateUrl: 'common/directives/code_generator/code_generator.html',
         bindToController: true,
         controller: CodeGeneratorController,
         controllerAs: 'codeGenerator',
         require: 'relativeUrl',
         scope: {
-          method: '@?',
           url: '@',
-          params: '=?',
-          data: '=?'
+          httpObject: '@'
         }
       }
     });
 
-  CodeGeneratorController.$inject = ['CONSTS', 'LocalStorageService', '$scope', 'AngularGeneratorService'];
+  CodeGeneratorController.$inject = ['CONSTS', 'LocalStorageService', '$scope', 'VanillaGeneratorService'];
 
-  function CodeGeneratorController(CONSTS, LocalStorageService, $scope, AngularGeneratorService){
+  function CodeGeneratorController(CONSTS, LocalStorageService, $scope, VanillaGeneratorService){
     var self = this;
 
     self.languageOptions = [{
       value: 1,
-      label: 'Angular',
-      generator: AngularGeneratorService
+      label: 'Vanilla',
+      generator: VanillaGeneratorService,
+      opts: {
+        type: 'promise',
+        es6: false,
+        prefix: 'backand',
+      }
     }, {
       value: 2,
-      label: 'React (via Fetch)'
+      label: 'Angular1',
+      generator: VanillaGeneratorService,
+      opts: {
+        type: 'return',
+        es6: false,
+        prefix: 'Backand',
+      }
+    }, {
+      value: 3,
+      label: 'Angular2',
+      generator: VanillaGeneratorService,
+      opts: {
+        type: 'promise',
+        es6: true,
+        prefix: 'this.backand',
+      }
     }];
 
     self.storage = LocalStorageService.getLocalStorage();
@@ -39,24 +58,26 @@
       self.chosenLanguage = self.storage.favoriteLanguage;
     }
 
-
+    $scope.$watch(function () {
+      return self.httpObject;
+    }, function(newVal, oldVal) {
+      if (newVal) {
+        self.generateCode(self.httpObject);
+      }
+    });
 
     $scope.$watch(function () {
       return self.chosenLanguage;
     }, function (newVal) {
       if (newVal) {
         self.storage.favoriteLanguage = newVal;
-        if (self.method.toUpperCase() == "POST" || self.method.toUpperCase == "PUT") {
-          self.generateCode({method: self.method, url: self.url, params: self.params, data: self.data});
-        } else {
-          self.generateCode({method: self.method, url: self.url, params: self.params});
-        }
+        self.httpObject && self.generateCode(self.httpObject);
       }
     });
 
-    self.generateCode = function (opts) {
+    self.generateCode = function (httpObject) {
       var chosenLanguageOption = _.where(self.languageOptions, {value: self.chosenLanguage})[0];
-      self.code = chosenLanguageOption.generator.generateCode(opts);
+      self.code = chosenLanguageOption.generator.generateCode(httpObject, chosenLanguageOption.opts);
     };
 
   }

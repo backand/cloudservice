@@ -10,11 +10,13 @@
              required>
     </div>
 
-    <label>HTTP Request URL:</label>
+    <!-- <label>HTTP Request URL:</label>
     <bknd-copy-url copy-url-params="DbQuery.copyUrlParams"></bknd-copy-url>
     <br/>
     <label>Request $http:</label>
-    <bknd-copy-url type="textarea" copy-url-params="DbQuery.copyHttpParams"></bknd-copy-url>
+    <bknd-copy-url type="textarea" copy-url-params="DbQuery.copyHttpParams"></bknd-copy-url> -->
+    <bknd-code-generator url="{{DbQuery.copyUrlParams.getUrl()}}"
+                         http-object="{{DbQuery.httpObject}}"></bknd-code-generator>
     <br/>
 
     <button type="button"
