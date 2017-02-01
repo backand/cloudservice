@@ -23,7 +23,6 @@
       if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
 
-      $state.params.newApp = true;//todo: for test only
       //when creating new app and it is the pool, there is no status 2 so the timer doesn't work and need to trigger
       // this manually
       if($state.params.newApp && self.currentApp.DatabaseStatus == 1){

@@ -44,9 +44,9 @@
       if(self.currentAppName) {
         //clear the model
         DbDataModel.get(self.currentAppName, true);
-
-        updateDefaultModelUse(self.currentAppName, false);
       }
+
+      updateDefaultModelUse(self.currentAppName, false);
     });
 
     $scope.$on('debugModeChange', function (fun, mode) {
