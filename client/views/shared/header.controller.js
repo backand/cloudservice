@@ -28,15 +28,17 @@
         self.openParseMigrationTool();
       }
 
+      self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
+
+      updateDefaultModelUse((AppsService.currentApp ? AppsService.currentApp.Name : undefined), false);
+
       if (AppsService.currentApp === null ||
         AppsService.currentApp === undefined ||
         self.currentAppName === AppsService.currentApp.Name)
         return;
 
       self.currentAppName = AppsService.currentApp.Name;
-
-      self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
-      self.debugMode = AppsService.currentApp.debugMode
+      self.debugMode = AppsService.currentApp.debugMode;
 
       //when app change login to the socket
       SocketService.login(self.currentAppName);
@@ -46,7 +48,6 @@
         DbDataModel.get(self.currentAppName, true);
       }
 
-      updateDefaultModelUse(self.currentAppName, false);
     });
 
     $scope.$on('debugModeChange', function (fun, mode) {

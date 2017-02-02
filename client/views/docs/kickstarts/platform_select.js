@@ -32,7 +32,8 @@
     };
 
     self.choosePlatform = function (starterAppId) {
-      $state.go('docs.starter_app_select', {starterAppId: starterAppId, mode:$state.params.mode, newApp: $state.params.newApp});
+      var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
+      $state.go(state, {starterAppId: starterAppId, mode:$state.params.mode, newApp: $state.params.newApp});
     }
   }
 }());
