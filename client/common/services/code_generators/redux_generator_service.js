@@ -1,22 +1,18 @@
 (function () {
   'use strict';
   angular.module('common.services')
-    .service('VanillaGeneratorService', [VanillaGeneratorService]);
-  function VanillaGeneratorService() {
+    .service('ReduxGeneratorService', [ReduxGeneratorService]);
+  function ReduxGeneratorService() {
     var self = this;
 
     var chosen;
     var dictionary = {
       object: {
-        GET: [{
-          name: 'getList',
+        GET: {
+          name: 'get',
           parameters: ['object', 'params'],
           details: {}
-        }, {
-          name: 'getOne',
-          parameters: ['object', 'id', 'param'],
-          details: {}
-        }],
+        },
         POST: {
           name: 'create',
           parameters: ['object', 'data', 'params'],
@@ -30,30 +26,6 @@
         DELETE: {
           name: 'remove',
           parameters: ['object', 'id'],
-          details: {}
-        }
-      },
-      action: {
-        GET: {
-          name: 'get',
-          parameters: ['object', 'action', 'params'],
-          details: {}
-        },
-        POST: {
-          name: 'post',
-          parameters: ['object', 'action', 'data', 'params'],
-          details: {}
-        }
-      },
-      query: {
-        GET: {
-          name: 'get',
-          parameters: ['name', 'params'],
-          details: {}
-        },
-        POST: {
-          name: 'post',
-          parameters: ['name', 'data', 'params'],
           details: {}
         }
       }
@@ -74,11 +46,8 @@
       httpObject = angular.fromJson(httpObject);
 
       chosen = {};
-      var result = opts.prefix;
+      var result = '';
       result = result.concat(__extractFunction__(httpObject));
-      opts.type === 'promise' ?
-        result = result.concat(__generatePromiseString__(opts.es6)) :
-        result = 'return '.concat(result);
       return result
     }
 
@@ -86,26 +55,17 @@
       var splitUrl = httpObject.url.split('/');
 
       if (splitUrl.indexOf('action') !== -1) {
-        chosen = dictionary['action'][httpObject.method];
-        __extractFunctionDetails__(splitUrl, httpObject);
-        return '.object.action.' + chosen.name + __fixParameters__()
+        return "import backand from '@backand/vanilla-sdk'\n\n" + 'Use Vanilla syntax'
       }
       else if (splitUrl.indexOf('query') !== -1) {
-        chosen = dictionary['query'][httpObject.method];
-        __extractFunctionDetails__(splitUrl, httpObject);
-        return '.query.' + chosen.name + __fixParameters__()
+        return "import backand from '@backand/vanilla-sdk'\n\n" + 'Use Vanilla syntax'
       }
       else {
-        if(httpObject.method === 'GET') {
-          !angular.isNumber(splitUrl[splitUrl.length - 1]) ?
-            chosen = dictionary['object'][httpObject.method][0] :
-            chosen = dictionary['object'][httpObject.method][1];
-        }
-        else {
-          chosen = dictionary['object'][httpObject.method];
-        }
+        chosen = dictionary['object'][httpObject.method];
         __extractFunctionDetails__(splitUrl, httpObject);
-        return '.object.' + chosen.name + __fixParameters__()
+        var camel = chosen.name + chosen.details['object'].charAt(0).toUpperCase() + chosen.details['object'].substr(1).toLowerCase();
+        return 'import { ' + camel + " } from './user/userActions'\n\n" +
+        'store.dispatch(' + camel + __fixParameters__() + ')'
       }
     }
 
@@ -136,7 +96,7 @@
     function __fixParameters__ () {
       var _parameters = '(';
 
-      for (var i = 0; i < chosen.parameters.length; i++) {
+      for (var i = 1; i < chosen.parameters.length; i++) {
         _parameters = _parameters.concat(angular.toJson(chosen.details[chosen.parameters[i]], true) || '');
         if (chosen.details[chosen.parameters[i + 1]]) {
           _parameters = _parameters.concat(', ');
@@ -144,14 +104,6 @@
       }
 
       return _parameters.concat(')');
-    }
-
-    function __generatePromiseString__ (es6) {
-      var _then = es6 ? 'data => { }' : 'function(data) { }';
-      var _catch = es6 ? 'error => { }' : 'function(error) { }';
-
-      return '\n.then(' + _then + ')\n' +
-        '.catch(' + _catch + ')'
     }
   }
 }());

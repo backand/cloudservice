@@ -5,9 +5,11 @@
   function AngularGeneratorService(stringifyHttp) {
     var self = this;
 
-    self.generateCode = function (opts) {
-      var http = opts;
-      return stringifyHttp(http);
+    self.generateCode = function (httpObject, opts) {
+      // console.log(httpObject);
+      httpObject = angular.fromJson(httpObject);
+
+      return stringifyHttp(httpObject);
     }
   }
 }());

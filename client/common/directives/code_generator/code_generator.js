@@ -17,9 +17,9 @@
       }
     });
 
-  CodeGeneratorController.$inject = ['CONSTS', 'LocalStorageService', '$scope', 'VanillaGeneratorService'];
+  CodeGeneratorController.$inject = ['CONSTS', 'LocalStorageService', '$scope', 'VanillaGeneratorService', 'ReduxGeneratorService', 'AngularGeneratorService'];
 
-  function CodeGeneratorController(CONSTS, LocalStorageService, $scope, VanillaGeneratorService){
+  function CodeGeneratorController(CONSTS, LocalStorageService, $scope, VanillaGeneratorService, ReduxGeneratorService, AngularGeneratorService){
     var self = this;
 
     self.languageOptions = [{
@@ -49,6 +49,25 @@
         es6: true,
         prefix: 'this.backand',
       }
+    }, {
+      value: 4,
+      label: 'Redux',
+      generator: ReduxGeneratorService,
+      opts: {}
+    }, {
+      value: 5,
+      label: 'NodeJS',
+      generator: VanillaGeneratorService,
+      opts: {
+        type: 'promise',
+        es6: false,
+        prefix: 'backand',
+      }
+    }, {
+      value: 6,
+      label: 'Angular1 ($http)',
+      generator: AngularGeneratorService,
+      opts: {}
     }];
 
     self.storage = LocalStorageService.getLocalStorage();
