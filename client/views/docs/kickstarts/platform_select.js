@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.docs')
-    .controller('PlatformSelectController', ['AppsService', 'PlatformsService', '$state', '$rootScope', 'usSpinnerService', PlatformSelectController]);
+    .controller('PlatformSelectController', ['AppsService', 'PlatformsService', '$state', '$rootScope', 'usSpinnerService', 'LocalStorageService', PlatformSelectController]);
 
-  function PlatformSelectController(AppsService, PlatformsService, $state, $rootScope, usSpinnerService) {
+  function PlatformSelectController(AppsService, PlatformsService, $state, $rootScope, usSpinnerService, LocalStorageService) {
 
     var self = this;
 
@@ -31,7 +31,29 @@
       return isNew;
     };
 
+    self.storage = LocalStorageService.getLocalStorage();
+
     self.choosePlatform = function (starterAppId) {
+      switch (starterAppId) {
+        case 'ng1':
+          self.storage.favoriteLanguage = 2
+          break;
+        case 'ng2':
+          self.storage.favoriteLanguage = 3
+          break;
+        case 'ionic1':
+          self.storage.favoriteLanguage = 2
+          break;
+        case 'ionic2':
+          self.storage.favoriteLanguage = 3
+          break;
+        case 'redux':
+          self.storage.favoriteLanguage = 4
+          break;
+        case 'reactNative':
+          self.storage.favoriteLanguage = 4
+          break;
+      }
       var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
       $state.go(state, {starterAppId: starterAppId, mode:$state.params.mode, newApp: $state.params.newApp});
     }
