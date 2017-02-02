@@ -1,20 +1,15 @@
 <section class="page-form-ele page ng-scope ba-docs">
     <div class="panel panel-default">
-        <div class="ui-tab-container ui-tab-horizontal">
-          <tabs data="docs.kickstartTabs" type="tabs" />
-          <div class="tab-content" ui-view></div>
-
-        </div>
-        <div class="panel-heading"><strong>Ionic 2 Kickstart</strong>
-            <h2>Follow these steps to install our Ionic 2 starter project, with Backand built-in!</h2>
+        <div class="panel-heading"><strong>Existing Ionic 2 App</strong>
+            <h2>Follow these steps to integrate Back& with an existing Ionic 2 application</h2>
         </div>
         <div class="panel-body docs">
             <div class="quickstart-body">
                 <div class="quickstart-connecting-db" ng-show="docs.isNew()">
                     <h3>
-            We're creating your database and will notify you when it's ready.<br/>
-            In the meantime, you can review below how to setup new app with angular-kickstart...
-          </h3>
+            We're creating your database, and will notify you when it's ready.<br/>
+            In the meantime, you can review our kickstart guides below.
+                    </h3>
                     <div us-spinner spinner-key="connecting-app-to-db"></div>
                     <br/>
                     <br/>
@@ -24,7 +19,7 @@
                 <section class="panel panel-box" ng-if="!docs.currentApp.Name">
                     <div class="panel-item bg-info">
                         <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
-              gulpjs based build system that scaffolds the project for you.</h3>
+              gulpjs-based build system that scaffolds the project for you.</h3>
                     </div>
                 </section>
 
@@ -45,9 +40,9 @@
                 <br/>
                 <h5>Once Cordova is installed, update <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/app/app.component.ts#L21" target="_blank">app.component.js</a> lines 21-23 to use your Backand app's  connection details</h5>
                 <pre><code class="hljs">
-    backandService.setAppName('&lt;your app name&gt;');
-    backandService.setSignUpToken('&lt;your signup token&gt;');
-    backandService.setAnonymousToken('&lt;your anonymousToken token&gt;');
+    backandService.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+    backandService.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+    backandService.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
     </code></pre>
                 <br />
                 <h5>At this point, install the JS dependencies for the starter application:</h5>
@@ -119,24 +114,31 @@
             <br/>
             <div class="quickstart-sidebar">
 
-                <div class="quickstart-sidebox" id="kickstart-sidebox">
-                    <div class="quickstart-kickstart">
-                        <img src="../assets/images/docs_pages/kickstart-icon.png" />
-                        <div class="quickstart-sidebox-title">Already have an Angular project?</div>
-                        <br/>
-                        <div class="quickstart-sidebox-text">Learn how to include <b>Backand</b> in your project:</div>
-                        <br/>
-                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="docs.goToQuickstart()">Get Started</button>
-                    </div>
+              <div class="quickstart-sidebox" id="kickstart-sidebox">
+                <div class="quickstart-kickstart">
+                  <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                  <div class="quickstart-sidebox-title">Don't have an Ionic 2 project?</div><br/>
+                  <div class="quickstart-sidebox-text">We've got a <b>kickstart project</b> to get you on your way!</div><br/>
+                  <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToKickstart()">Get
+                    Started</button>
                 </div>
+              </div>
 
+              <div class="quickstart-sidebox" id="video-sidebox">
+                  <div class="quickstart-kickstart">
+                      <img src="../assets/images/docs_pages/icon-video.png" />
+                      <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                      <br/>
+                      <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+                  </div>
+              </div>
 
                 <div class="quickstart-sidebox" id="video-sidebox">
                     <div class="quickstart-kickstart">
-                        <img src="../assets/images/docs_pages/icon-video.png" />
-                        <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
-                        <br/>
-                        <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+                        <img src="../assets/images/docs_pages/icon-quickstart.png" />
+                        <div class="quickstart-sidebox-title">View our API Documentation</div>
+                        <br />
+                        <a class="btn btn-lg btn-success quickstart-sidebox-button" href="http://docs.backand.com/" target="_blank">View docs</a>
                     </div>
                 </div>
             </div>

@@ -9,21 +9,10 @@
     var self = this;
     self.hostingUrl = CONSTS.hostingUrl;
     self.kickstartTabs = [
+
       {
-        heading: 'Angular 1',
-        route: 'docs.kickstart_ng1'
-      },
-      {
-        heading: 'Angular 2',
-        route: 'docs.kickstart_ng2'
-      },
-      {
-        heading: 'Ionic 1',
-        route: 'docs.kickstart_ionic1'
-      },
-      {
-        heading: 'Ionic 2',
-        route: 'docs.kickstart_ionic2'
+        heading: 'Selector',
+        route: 'docs.platform_select_kickstart'
       }
     ];
 
@@ -55,20 +44,15 @@
     };
 
     self.goToKickstart = function () {
-      if (_.isEmpty(AppsService.currentApp)) {
-        $state.go('docs.kickstart-open');
-      }
-      else {
-        $state.go('docs.kickstart');
-      }
+      $state.go('docs.platform_select_kickstart');
     };
 
     self.goToQuickstart = function () {
       if (_.isEmpty(AppsService.currentApp)) {
-        $state.go('docs.getting-started-open');
+        $state.go('docs.platform_select_kickstart-open');
       }
       else {
-        $state.go('docs.get-started');
+        $state.go('docs.platform_select_kickstart');
       }
     };
 

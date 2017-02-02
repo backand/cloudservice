@@ -260,7 +260,7 @@
     function getApp(appName) {
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + '/admin/myApps/' + appName + '?deep=true'
+        url: CONSTS.appUrl + '/admin/myApps/' + appName //+ '?deep=true'
       });
     }
 

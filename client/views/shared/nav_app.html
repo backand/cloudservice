@@ -24,22 +24,16 @@
           <span>Examples</span>
         </a>
       </li>
-      <li ng-class="{active: nav.state == 'docs.get-started'}">
-        <a ng-click="nav.goToAlways($event, 'docs.get-started')" href="">
-          <i class="ba-icon-angularjs-quickstart"></i>
-          <span>AngularJS Quickstart</span>
-        </a>
-      </li>
-      <li ng-class="{active: nav.state == 'docs.mobile'}">
-        <a ng-click="nav.goToAlways($event, 'docs.mobile')" href="">
-          <i class="ba-icon-angularjs-quickstart"></i>
-          <span>Ionic Mobile Starter</span>
-        </a>
-      </li>
-      <li ng-class="{active: nav.state == 'docs.kickstart'}">
-        <a ng-click="nav.goToAlways($event, 'docs.kickstart')" href="">
+      <li ng-class="{active: nav.state == 'docs.platform_select_kickstart'}">
+        <a ng-click="nav.goToAlways($event, 'docs.platform_select_kickstart')" href="">
           <i class="ba-icon-kickstart-tutorial"></i>
-          <span>Kickstart Tutorial</span>
+          <span>Kickstart Tutorials</span>
+        </a>
+      </li>
+      <li ng-class="{active: nav.state == 'docs.platform_select_existing'}">
+        <a ng-click="nav.goToAlways($event, 'docs.platform_select_existing')" href="">
+          <i class="ba-icon-kickstart-tutorial"></i>
+          <span>Existing App Tutorials</span>
         </a>
       </li>
       <li ng-class="{active: nav.state == 'docs.realtime'}">

@@ -1,0 +1,161 @@
+<section class="page-form-ele page ng-scope ba-docs">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong test-hook="vm.quickstart.title">Angular 1 Quickstart Guide</strong>
+      <h2>4 easy steps to include Backand in your Angular project:</h2>
+
+    </div>
+    <div class="panel-body docs">
+
+
+      <div class="quickstart-body">
+
+        <ol>
+
+          <li>
+            <h3>Add the Backand scripts</h3>
+            <p>Include the above code in your index.html file. Make it above the project's code</p>
+            <pre><code class="html hljs">
+  &lt;!-- Backand SDK for Angular --&gt;
+  &lt;script src=&quot;//cdn.backand.net/backand/dist/1.8.11/backand.min.js&quot;&gt;&lt;/script&gt;
+            </code></pre>
+            <p>You can install the SDK locally using bower: <code>bower install angular1-sdk#1.8.11</code></p>
+            <br />
+          </li>
+
+          <li>
+            <h3>Script Dependencies</h3>
+            <p>Add 'backand' to the module dependencies of your angular app</p>
+            <pre><code class="javascript">
+  //app.js
+  angular.module('YOUR-APP-NAME', ['backand'])
+            </code></pre>
+            <br />
+          </li>
+
+          <li>
+            <h3>Configure secure calls to Backand's REST API</h3>
+            <p>Backand uses OAuth2 authentication, which requires that you include the
+              authentication token in every HTTP call
+            </p>
+            <pre><code>
+  //Update Angular configuration section
+  myApp.config(function (BackandProvider) {
+      BackandProvider.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+      BackandProvider.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+      BackandProvider.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
+  })
+            </code></pre>
+            <!--setAppName - set the app name to be used by the SDK<br/>-->
+            <!--setAnonymousToken - allow anonymous access if needed<br/>-->
+            <!--setSignUpToken - allow any user to register to the app-->
+            <br />
+          </li>
+          <br/>
+
+          <!--<li>-->
+          <!--<h3>Connect your Backand app</h3>-->
+          <!--<p>-->
+          <!--We can inject the Backand service into any controller - simply call Backand.signin(...)-->
+          <!--in your controller to gain access.<br />-->
+          <!--In this example, we sign into Backand in the SignInCtrl controller's signIn method.-->
+          <!--When we are successfully signed in, we save the authentication token into a cookie.-->
+          <!--</p>-->
+          <!--<pre><code>-->
+          <!--// SignInCtrl.js-->
+          <!--function SignInCtrl(Backand, $cookieStore) {-->
+          <!--$scope.signIn = function() {-->
+          <!--Backand.signin($scope.username, $scope.password)-->
+          <!--.then(-->
+          <!--function (response) {-->
+          <!--//Do good for the world-->
+
+          <!--},-->
+          <!--function (data, status, headers, config) {-->
+          <!--//handle error-->
+          <!--}-->
+          <!--);-->
+          <!--}-->
+          <!--}-->
+          <!--</code></pre>-->
+          <!--</li>-->
+
+          <li>
+            <h3>Read data from your database</h3>
+            <p>
+              You can access Backand's API endpoints using $http requests from your Angular project.<br />
+              In the following example, we create a function called getList that uses the DataService API endpoint to fetch data from your database, which is returned in JSON format.
+            </p>
+            <pre><code>
+  //dataService.js
+  function dataService($http, Backand) {
+    var vm = this;
+    //get the object name and optional parameters
+    vm.getList = function(name, sort, filter) {
+      var params = {
+        pageSize: 20,
+        pageNumber: 1,
+        filter: filter || '',
+        sort: sort || ''
+      };
+      return Backand.object.getList(name, params);
+    }
+  }
+    </code></pre>
+            <p>Using $http you can call to any of the CRUD URLs, trigger server side actions, and manage users.
+              All API calls and expected parameters can be reviewed and tested in Backand's API Playground.</p>
+          </li>
+
+          <div style="margin-left: 15px;">
+            <h3>Done. It's that simple</h3>
+            <p>In the above example, we easily used Backand service, and wrote functionality that can
+              retrieve data from your database.<br/>
+              Using the above code, you can simply modify the URL endpoints to hit all of the relevant API functionality
+              available from your application's playground - simply copy the URL, adjust the parameters per step 4, and you are set!</p>
+
+            <p><b>In your Angular application, you are the rock star - Backand is here to help you rise and shine.
+              Have fun!</b></p>
+
+            <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App and
+              Get Started</button>
+          </div>
+        </ol>
+
+      </div>
+      <br/>
+      <div class="quickstart-sidebar">
+
+        <div class="quickstart-sidebox" id="kickstart-sidebox">
+          <div class="quickstart-kickstart">
+            <img src="../assets/images/docs_pages/kickstart-icon.png" />
+            <div class="quickstart-sidebox-title">Don't have an Angular project?</div><br/>
+            <div class="quickstart-sidebox-text">We've got a <b>kickstart project</b> to get you on your way!</div><br/>
+            <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToKickstart()">Get
+              Started</button>
+          </div>
+        </div>
+
+
+        <div class="quickstart-sidebox" id="video-sidebox">
+          <div class="quickstart-kickstart">
+            <img src="../assets/images/docs_pages/icon-video.png" />
+            <div class="quickstart-sidebox-title">Watch our Video Tutorial</div><br/>
+            <button class="btn btn-lg btn-success quickstart-sidebox-button"
+                    video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'"
+                    title="'AngularJS Quickstart'">Play Video</button>
+          </div>
+        </div>
+
+        <div class="quickstart-sidebox" id="video-sidebox">
+            <div class="quickstart-kickstart">
+                <img src="../assets/images/docs_pages/icon-quickstart.png" />
+                <div class="quickstart-sidebox-title">View our API Documentation</div>
+                <br />
+                <a class="btn btn-lg btn-success quickstart-sidebox-button" href="http://docs.backand.com/" target="_blank">View docs</a>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

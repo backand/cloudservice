@@ -40,6 +40,7 @@
       self.getUserObjectFields = getUserObjectFields;
       self.currentObjectName = tableName;
       self.appObjects = TablesService.tables;
+      self.showAddRole = false;
       var userObject = getItemByRegex(self.appObjects, /user/i);
       self.filter = {
         userObjectName: userObject ? userObject.name : null
