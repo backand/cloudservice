@@ -923,6 +923,10 @@
         self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
         self.testUrl = self.testHttpObject.url;
         self.testHttpObject.params = {parameters: self.test.parametersToSend};
+        // GENERATOR ADDON
+        self.httpObject = self.testHttpObject;
+        self.httpObject.url = self.httpObject.url.replace('%22$$debug$$%22:true', '').replace(/&parameters.*%7D/, '');
+        // END
         self.testHttp = stringifyHttp(self.testHttpObject);
         self.inputParametersForm.$setPristine();
         if (self.debugMode == 'debug') {
