@@ -88,9 +88,9 @@
       $state.go('docs.platform_select_kickstart');
     };
 
+    // Force-redirect to the selected documentation from local storage
     self.goToDefault = function()
     {
-
       if(self.storage.docLanguage) {
         var options = {};
         options[1] = 'ng1';
@@ -105,6 +105,7 @@
       }
     };
 
+    // If a user has already selected a platform for documentation, always go to that platform
     self.goToDefault();
   }
 }());
