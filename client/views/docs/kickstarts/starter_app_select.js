@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.apps')
-    .controller('StarterAppSelectController', ['KickstartService', 'PlatformsService', '$state','AppsService','usSpinnerService','$modal', StarterAppSelectController]);
+    .controller('StarterAppSelectController', ['KickstartService', 'PlatformsService', '$state','AppsService','usSpinnerService','$modal', 'LocalStorageService', StarterAppSelectController]);
 
-  function StarterAppSelectController(KickstartService, PlatformsService, $state, AppsService, usSpinnerService, $modal) {
+  function StarterAppSelectController(KickstartService, PlatformsService, $state, AppsService, usSpinnerService, $modal, LocalStorageService) {
 
     var self = this;
 
@@ -27,7 +27,29 @@
       self.masterToken = data.data.general;
     }
 
+    self.storage = LocalStorageService.getLocalStorage();
+
     self.changePlatform = function (starterAppId) {
+      switch (starterAppId) {
+        case 'ng1':
+          self.storage.favoriteLanguage = 2
+          break;
+        case 'ng2':
+          self.storage.favoriteLanguage = 3
+          break;
+        case 'ionic1':
+          self.storage.favoriteLanguage = 2
+          break;
+        case 'ionic2':
+          self.storage.favoriteLanguage = 3
+          break;
+        case 'redux':
+          self.storage.favoriteLanguage = 4
+          break;
+        case 'reactNative':
+          self.storage.favoriteLanguage = 4
+          break;
+      }
       self.selectedPlatform = starterAppId;
       self.templateUrl = KickstartService.getPlatformContent(self.selectedPlatform + "_" + self.selectedMode);
     };

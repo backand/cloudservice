@@ -1,0 +1,18 @@
+<div class="object-data-log-container">
+  <div>
+    <label for="log-item-url">Endpoint</label>
+    <bknd-copy-box id="log-item-url"
+                   content="codeGenerator.url"></bknd-copy-box>
+
+    <form class="form-inline code-generator-header">
+      <label for="log-item-request">Request code</label>
+      <select class="form-control language-dropdown request-url"
+              ng-options="item.value as item.label for item in codeGenerator.languageOptions"
+              ng-model="codeGenerator.chosenLanguage"></select>
+    </form>
+
+    <bknd-copy-box id="log-item-request"
+                   type="textarea"
+                   content="codeGenerator.code"></bknd-copy-box>
+  </div>
+</div>

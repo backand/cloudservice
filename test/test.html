@@ -1,0 +1,576 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.js"></script>
+<script>
+  // external js: isotope.pkgd.js
+  $(document).ready(function () {
+    debugger;
+    var hashval = window.location.href;
+    var hasvalarr= hashval.split('#');
+    if (location.hash !== '') {
+      $('a[href="' + location.hash + '"]').tab('show');
+
+    }
+
+    $("a[data-toggle='tab']").on("click", function (e) {
+      var hash = $(e.target).attr("href");
+      if (hash.substr(0,1) == "#") {
+        debugger;
+        var position = $(window).scrollTop();
+        location.replace("#" + hash.substr(1));
+        $(window).scrollTop(position);
+      }
+    });
+
+    // init Isotope
+    var $container = $('.isotope').isotope({
+      itemSelector: '.element-item',
+      layoutMode: 'fitRows',
+      getSortData: {
+        name: '.name',
+        symbol: '.symbol',
+        number: '.number parseInt',
+        category: '[data-category]',
+        weight: function( itemElem ) {
+          var weight = $( itemElem ).find('.weight').text();
+          return parseFloat( weight.replace( /[\(\)]/g, '') );
+        }
+      }
+    });
+    // filter functions
+    var filterFns = {
+      // show if number is greater than 50
+      numberGreaterThan50: function() {
+        var number = $(this).find('.number').text();
+        return parseInt( number, 10 ) > 50;
+      },
+      // show if name ends with -ium
+      ium: function() {
+        var name = $(this).find('.name').text();
+        return name.match( /ium$/ );
+      }
+    };
+
+    // bind filter button click
+    $('#filters').on( 'click', 'a', function() {
+      var filterValue = $( this ).attr('data-filter');
+      // use filterFn if matches value
+      filterValue = filterFns[ filterValue ] || filterValue;
+      $container.isotope({ filter: filterValue });
+    });
+
+
+    // change is-checked class on buttons
+    $('.button-group').each( function( i, buttonGroup ) {
+      var $buttonGroup = $( buttonGroup );
+      $buttonGroup.on( 'click', 'a', function() {
+        $buttonGroup.find('.is-checked').removeClass('is-checked');
+        $( this ).addClass('is-checked');
+      });
+    });
+    var filterValue1 = $("#"+hasvalarr[1]).attr('data-filter');
+    // use filterFn if matches value
+    filterValue1 = filterFns[ filterValue1 ] || filterValue1;
+    $container.isotope({ filter: filterValue1 });
+  });
+
+</script>
+
+
+
+<style>
+  .content-header{
+    display:none;
+  }
+  #newpage > .row.text-center > h3 {
+    font-size: 20px;
+    line-height: 32px;
+    margin-bottom: 60px !Important;
+  }
+  #newpage .media-heading {
+    color: #fe4e00 !important;
+    font-family: Open Sans !important;
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    margin-bottom: 17px !important;
+  }
+  #newpage .mediasubtitle{
+    font-size: 16px !important;
+    font-weight: normal !important;
+    line-height: 24px !important;
+    font-weight: 400 !important;
+  }
+  #newpage .headtxt{
+    margin-bottom: 38px !important;
+    font-family: Source Sans Pro !important;
+    font-size: 36px !important;
+    font-weight: normal !important;
+  }
+  #newpage .media-left{
+    max-width:95px;
+    width: 74px;
+  }
+  #newpage .col-xs-12{
+    margin-bottom: 0px !important;
+  }
+  #newpage .row{
+    margin-bottom: 20px !important;
+  }
+  #newpage .row.fifth_row{
+    padding-bottom: 60px;
+    margin-bottom: 90px !important;
+  }
+  .nav-tabs {
+    text-align: center;
+  }
+  .nav-tabs > li {
+    float: none;
+    margin-bottom: -1px;
+    display: inline-block;
+    margin: 0 auto;
+  }
+  .nav-tabs > li.active > a {
+    color: black;
+    background-color: none;
+    border: 0;
+    border-bottom: 1px solid black;
+    font-weight:bold;
+  }
+  .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: black;
+    background-color: none !important;
+    font-weight: bold;
+    border: 0;
+    border-bottom: 2px solid black;
+  }
+
+  .nav-tabs > li > a {
+    margin: 0 25px;
+    color:black;
+    border: 0 none;
+  }
+  .nav-tabs > li > a:hover {
+    border-color: transparent;
+  }
+  #newpage {
+    margin-bottom: 70px;
+  }
+  .get_start {
+    display: none;
+  }
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background:transparent !important;
+  }
+  .nav li.active a {
+    border-bottom: 2px solid black !important;
+  }
+  .app-example .media .fa {
+    background: #FE4E00;
+    border-radius: 50%;
+    color: white;
+    font-size: 30px;
+    height: 60px;
+    line-height: 28px;
+    padding: 16px;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;
+  }
+
+  @media (max-width:360px){
+    .nav-tabs > li {
+      display: block;
+    }
+    div.media-body {
+      padding-left: 0 !important;
+    }
+    .headtxt.text-center img {
+      float: left;
+    }
+  }
+  @media (min-width:640px){
+    .nav-tabs {
+      height: 48px;
+    }
+  }
+</style>
+
+
+
+
+<style>
+
+
+  /* ---- isotope ---- */
+
+
+
+  /* clear fix */
+  .isotope:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  /* ---- .element-item ---- */
+
+  .element-item {
+    position: relative;
+    float: left;
+    width: 100%;
+  }
+
+</style>
+
+<div class="banner_text banner_text2">
+  <div class="container text-center">
+    <h1 class="f_weight">Backand Quick-Start Apps</h1>
+    <p> Quick-start apps and code samples that will get you started with Backand quickly </p>
+  </div>
+</div>
+</section>
+<div id="newpage" class="container app-example">
+  <div class="row text-center">
+    <h3 class="">
+      Below we have several quick-start apps and code samples made with Backand. These projects demonstrate the various capabilities of the Backand platform, and explain how to use many of our features. Some are code snippets demonstrating, while others are full Angular applications powered by Back& on the back-end
+    </h3>
+  </div>
+
+  <!-- Nav tabs -->
+  <div id="filters" class="button-group ">
+    <ul class="nav nav-tabs "> <li class="active">  <a id="All" class="is-checked" data-filter="*" data-toggle='tab' href="#all" >ALL</a> </li>
+      <li>  <a id="Angular" data-filter=".angular" data-toggle='tab' href="#angular">ANGULAR</a> </li>
+      <li>  <a id="Angular2" data-filter=".angular2" data-toggle='tab' href="#angular2" >ANGULAR 2</a> </li>
+      <li>  <a id="Ionic" data-filter=".ionic" data-toggle='tab' href="#ionic" >IONIC</a>
+      <li>  <a id="Ionic2" data-filter=".ionic2" data-toggle='tab' href="#ionic2" >IONIC 2</a>
+      <li> <a id="React" data-filter=".react" data-toggle='tab' href="#reactjs" >REACTJS</a> </li>
+    </ul>
+  </div>
+
+
+
+  <div class="isotope">
+    <div class="element-item angular " data-category="transition" >
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <h1 class="headtxt text-center">
+            <img src="/wp-content/uploads/2016/04/angular.png" alt="angular_icon"> AngularJS apps:
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-pencil-square-o"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="https://github.com/backand/todos-with-users" style="color:#fe4e00 !important" target="_blank">Back& Users</a></h4>
+              <p class="mediasubtitle">This To-do app builds upon existing functionality. It adds User and Role-based security, as well as social login functionality</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-trash-o"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="https://github.com/backand/angular-yeoman-todos" style="color:#fe4e00 !important" target="_blank">Back& CRUD</a></h4>
+              <p class="mediasubtitle">A sample app that demonstrates implementing full CRUD functionality with Backand’s REST API</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-shopping-cart"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="https://github.com/backand/stripe-example" style="color:#fe4e00 !important" target="_blank">Back& Payment</a></h4>
+              <p class="mediasubtitle">A simple online store that allows users to order items, and then pay for the items using either PayPal or Stripe</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-comment"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="http://codepen.io/backand/pen/VvoKya" style="color:#fe4e00 !important" target="_blank">Back& Real-Time</a></h4>
+              <p class="mediasubtitle">This code sample provides a quick and easy snippet showing how to best leverage Back&’s real-time communication features</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-file-text-o"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="http://codepen.io/backand/pen/ZQaYEV" style="color:#fe4e00 !important" target="_blank">Back& Storage</a></h4>
+              <p class="mediasubtitle">This set of code snippets demonstrates how to add Back& Storage to your app</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="element-item angular2" data-category="metalloid"  >
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <h1 class="headtxt text-center">
+            <img src="/wp-content/uploads/2016/04/angular2.png" alt="angular_icon"> Angular 2 apps:
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-pencil-square-o"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="https://github.com/backand/ng2-play" style="color:#fe4e00 !important" target="_blank">Hello World (to-do)</a></h4>
+              <p class="mediasubtitle">Easy to-do list application with full support for user management, including role-based security and social login</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-users"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="https://github.com/backand/ng2_backand_login" style="color:#fe4e00 !important" target="_blank">Back& Users</a></h4>
+              <p class="mediasubtitle">A sample app that demonstrates implementing full CRUD functionality with Backand’s REST API</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <!--
+                              <i class="fa fa-shopping-cart"></i>
+                            </div>
+                                          <div class="media-body">
+                                              <h4 class="media-heading">E-commerce mobile app</h4>
+                                              <p class="mediasubtitle">A simple shop application that lets you order items and make payments with PayPal or Stripe integration</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <div class="media">
+                                          <div class="media-left">
+                              <i class="fa fa-comment"></i>
+                            </div>
+                                          <div class="media-body">
+                                              <h4 class="media-heading">Real-time chat</h4>
+                                              <p class="mediasubtitle">Simple one-on-one chat between you and your friend. A great example of the use of real-time</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <div class="media">
+                                          <div class="media-left">
+                            <i class="fa fa-file-text-o"></i>
+                            </div>
+                                          <div class="media-body">
+                                              <h4 class="media-heading"><a href="http://codepen.io/backand/pen/ZQaYEV" style="color:#fe4e00 !important" target="_blank">Noterious</a></h4>
+                                              <p class="mediasubtitle">
+                                                  Help you to organize your notes with friends &amp; colleagues.
+                                                  Offer you various of features as file storage with amazon s3, social login with facebook or google, email notifications based on server side logic.
+                                              </p>
+              -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="element-item  ionic " data-category="post-transition"  >
+
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <h1 class="headtxt text-center"><img src="/wp-content/uploads/2016/04/ionic.png" alt=""> ionic mobile apps</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-dot-circle-o"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="https://market.ionic.io/starters/backand-simple" style="color:#fe4e00 !important" target="_blank">Ionic Starter</a></h4>
+              <p class="mediasubtitle">A simple project using Ionic framework demonstrating CRUD powered by Backand.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-rss"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="https://market.ionic.io/starters/ionic-backand-with-social" style="color:#fe4e00 !important" target="_blank">Easy Starter with Social Login</a></h4>
+              <p class="mediasubtitle">Leveraging Backand, this super-easy Ionic starter provides user management and Facebook or Google</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12 ">
+          <div class="media">
+            <div class="media-left">
+
+              <i class="fa fa-users"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="https://github.com/backand/IonicInAppLogin" style="color:#fe4e00 !important" target="_blank">Ionic app with InApp social login</a></h4>
+              <p class="mediasubtitle">A sample app that leverage Facebook's InApp authentication to obtain the authentication token</p>
+            </div>
+          </div>
+        </div>
+        <!--
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="media">
+                                    <div class="media-left">
+                      <i class="fa fa-user"></i>
+                      </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Nearby friends</h4>
+                                        <p class="mediasubtitle">Use social login to show you what Facebook/Google friends are nearby you by using various GPS and Geo features</p>
+
+                                    </div>
+                                </div>
+                            </div>
+        -->
+      </div>
+
+    </div>
+    <div class="element-item  ionic2 " data-category="post-transition"  >
+      <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <h1 class="headtxt text-center"><img src="http://ionic.io/img/2.png" height="90" width="90"> ionic 2 mobile apps</h1>
+        </div>
+      </div>
+      <div class="row">
+        <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+          <div class="media">
+            <div class="media-left">
+              <i class="fa fa-dot-circle-o"></i>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><a href="http://market.ionic.io/starters/ionic-2-backand-starter" style="color:#fe4e00 !important" target="_blank">Ionic 2 Starter</a></h4>
+              <p class="mediasubtitle">Leveraging Backand, super-easy Ionic 2 starter provides a database API and security</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <!--<div class="media">
+              <div class="media-left">
+<i class="fa fa-dot-circle-o"></i>
+</div>
+              <div class="media-body">
+                  <h4 class="media-heading"><a href="https://github.com/backand/ionic2-crud-example" style="color:#fe4e00 !important" target="_blank">Back& CRUD</a></h4>
+                  <p class="mediasubtitle">A simple project using Ionic 2 demonstrating CRUD powered by Backand.</p>
+              </div>
+          </div>-->
+        </div>
+      </div>
+      <!-- <div class="row">
+           <div class="col-md-6 col-sm-6 col-xs-12">
+               <div class="media">
+                   <div class="media-left">
+     <i class="fa fa-users"></i>
+     </div>
+                   <div class="media-body">
+                       <h4 class="media-heading">Easy Starter with Social Login</h4>
+                       <p class="mediasubtitle">Leveraging Backand, this super-easy Ionic starter provides user management and Facebook or Google </p>
+                   </div>
+               </div>
+           </div>
+           <div class="col-md-6 col-sm-6 col-xs-12">
+               <div class="media">
+                   <div class="media-left">
+     <i class="fa fa-user"></i>
+     </div>
+                   <div class="media-body">
+                       <h4 class="media-heading">Nearby friends</h4>
+                       <p class="mediasubtitle">Use social login to show you what Facebook/Google friends are nearby you by using various GPS and Geo features</p>
+                   </div>
+               </div>
+           </div>
+
+</div>-->
+  </div>
+  <div class="element-item react" data-category="transition">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12 ">
+        <h1 class="headtxt text-center"><img src="/wp-content/uploads/2016/04/React.png" alt="">React & React Redux</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3">
+        <div class="media">
+          <div class="media-left">
+            <i class="fa fa-pencil-square-o"></i>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><a href="https://github.com/backand/react_example" style="color:#fe4e00 !important" target="_blank">Hello World (to-do)</a></h4>
+            <p class="mediasubtitle">A simple to-do app driven by Backand</p>
+          </div>
+        </div>
+      </div>
+      <!--<div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="media">
+                <div class="media-left">
+  <i class="fa fa-rss"></i>
+  </div>
+                <div class="media-body">
+                    <h4 class="media-heading">Push notification</h4>
+                    <p class="mediasubtitle">A blank sample app that allows you to integrate push notifications into your app</p>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="media">
+          <div class="media-left">
+            <!--
+                          <i class="fa fa-users"></i>
+                          </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">Easy Starter with Social Login</h4>
+                                            <p class="mediasubtitle">Leveraging Backand, this super-easy Ionic starter provides user management and Facebook or Google social login</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="media">
+                                        <div class="media-left">
+                          <i class="fa fa-user"></i>
+                          </div>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">Nearby friends</h4>
+                                            <p class="mediasubtitle">Use social login to show you what Facebook/Google friends are nearby you by using various GPS and Geo features</p>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

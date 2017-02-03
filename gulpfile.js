@@ -76,14 +76,19 @@ gulp.task('templates', function() {
 //generate css files from scss sources
 gulp.task('sass', function() {
   return gulp.src(config.mainScss)
-    .pipe($.rubySass({
-      loadPath: [
+    .pipe($.sass({
+      includePaths: [
         process.cwd() + '/client/vendor/bootstrap-sass-official/assets/stylesheets'
       ]
-    }))
-    .on('error', function(err) {
-      console.log(err.message);
-    })
+    }).on('error', $.sass.logError))
+    // .pipe($.rubySass({
+    //   loadPath: [
+    //     process.cwd() + '/client/vendor/bootstrap-sass-official/assets/stylesheets'
+    //   ]
+    // }))
+    // .on('error', function(err) {
+    //   console.log(err.message);
+    // })
     .pipe(gulp.dest(config.tmp))
     .pipe($.size({
       title: 'sass'
