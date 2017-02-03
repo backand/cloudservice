@@ -4,11 +4,11 @@
   angular.module('backand.apps')
     .controller('AppsIndexController', ['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
       'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',
-      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', AppsIndexController]);
+      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', 'LocalStorageService', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
                                usSpinnerService, LayoutService, AnalyticsService, SessionService,
-                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService) {
+                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService, LocalStorageService) {
 
     var self = this;
     self.loading = false;
@@ -40,6 +40,10 @@
         self.appTitle = self.appName;
 
       NotificationService.add('info', 'Creating new app...');
+
+      // Comment these out to retain storage between application creation efforts
+      LocalStorageService.getLocalStorage().docLanguage = null;
+      LocalStorageService.getLocalStorage().favoriteLanguage = null;
 
       AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
