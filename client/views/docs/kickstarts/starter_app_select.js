@@ -32,22 +32,22 @@
     self.changePlatform = function (starterAppId) {
       switch (starterAppId) {
         case 'ng1':
-          self.storage.favoriteLanguage = 2
+          self.storage.docLanguage = 1
           break;
         case 'ng2':
-          self.storage.favoriteLanguage = 3
+          self.storage.docLanguage = 2
           break;
         case 'ionic1':
-          self.storage.favoriteLanguage = 2
+          self.storage.docLanguage = 3
           break;
         case 'ionic2':
-          self.storage.favoriteLanguage = 3
+          self.storage.docLanguage = 4
           break;
         case 'redux':
-          self.storage.favoriteLanguage = 4
+          self.storage.docLanguage = 5
           break;
         case 'reactNative':
-          self.storage.favoriteLanguage = 4
+          self.storage.docLanguage = 6
           break;
       }
       self.selectedPlatform = starterAppId;
@@ -81,5 +81,24 @@
     self.goToKickstart = function () {
       $state.go('docs.platform_select_kickstart');
     };
+
+    self.goToDefault = function()
+    {
+
+      if(self.storage.docLanguage) {
+        var options = {};
+        options[1] = 'ng1';
+        options[2] = 'ng2';
+        options[3] = 'ionic1';
+        options[4] = 'ionic2';
+        options[5] = 'redux';
+        options[6] = 'reactNative';
+        self.selectedPlatform = options[self.storage.docLanguage];
+        var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
+        $state.go(state, {starterAppId: self.selectedPlatform, mode:$state.params.mode, newApp: $state.params.newApp});
+      }
+    };
+
+    self.goToDefault();
   }
 }());

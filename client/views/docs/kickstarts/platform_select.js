@@ -8,6 +8,8 @@
 
     var self = this;
 
+    self.storage = LocalStorageService.getLocalStorage();
+
     (function init() {
       usSpinnerService.spin("connecting-app-to-db");
       self.platforms = PlatformsService.get();
@@ -18,6 +20,7 @@
       if($state.params.newApp && self.currentApp.DatabaseStatus == 1){
         $rootScope.$broadcast('AppDbReady', self.currentApp.Name);
       }
+
     }());
 
     self.isNew = function () {
@@ -31,31 +34,48 @@
       return isNew;
     };
 
-    self.storage = LocalStorageService.getLocalStorage();
 
     self.choosePlatform = function (starterAppId) {
       switch (starterAppId) {
         case 'ng1':
-          self.storage.favoriteLanguage = 2
+          self.storage.docLanguage = 1
           break;
         case 'ng2':
-          self.storage.favoriteLanguage = 3
+          self.storage.docLanguage = 2
           break;
         case 'ionic1':
-          self.storage.favoriteLanguage = 2
+          self.storage.docLanguage = 3
           break;
         case 'ionic2':
-          self.storage.favoriteLanguage = 3
+          self.storage.docLanguage = 4
           break;
         case 'redux':
-          self.storage.favoriteLanguage = 4
+          self.storage.docLanguage = 5
           break;
         case 'reactNative':
-          self.storage.favoriteLanguage = 4
+          self.storage.docLanguage = 6
           break;
       }
       var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
       $state.go(state, {starterAppId: starterAppId, mode:$state.params.mode, newApp: $state.params.newApp});
     }
+
+    self.goToDefault = function()
+    {
+
+      if(self.storage.docLanguage) {
+        var options = {};
+        options[1] = 'ng1';
+        options[2] = 'ng2';
+        options[3] = 'ionic1';
+        options[4] = 'ionic2';
+        options[5] = 'redux';
+        options[6] = 'reactNative';
+        var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
+        $state.go(state, {starterAppId: options[self.storage.docLanguage], mode:$state.params.mode, newApp: $state.params.newApp});
+      }
+    }
+
+    self.goToDefault();
   }
 }());

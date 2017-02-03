@@ -14,18 +14,18 @@
 
           <li>
             <h3>Add the Backand scripts</h3>
-            <p>Include the above code in your index.html file. Make it above the project's code</p>
+            <p>First, include Back& in your app's index.html file. Be sure to include it above all of your app's project code includes:</p>
             <pre><code class="html hljs">
   &lt;!-- Backand SDK for Angular --&gt;
   &lt;script src=&quot;//cdn.backand.net/backand/dist/1.8.11/backand.min.js&quot;&gt;&lt;/script&gt;
             </code></pre>
-            <p>You can install the SDK locally using bower: <code>bower install angular1-sdk#1.8.11</code></p>
+            <p>You can also install the SDK locally using bower: <code>bower install angular1-sdk#1.8.11</code></p>
             <br />
           </li>
 
           <li>
             <h3>Script Dependencies</h3>
-            <p>Add 'backand' to the module dependencies of your angular app</p>
+            <p>Next, add 'backand' to the module dependencies of your angular app</p>
             <pre><code class="javascript">
   //app.js
   angular.module('YOUR-APP-NAME', ['backand'])
@@ -35,8 +35,7 @@
 
           <li>
             <h3>Configure secure calls to Backand's REST API</h3>
-            <p>Backand uses OAuth2 authentication, which requires that you include the
-              authentication token in every HTTP call
+            <p>While Backand uses OAuth2 authentication, we've masked this within the API. Simply use the code below to configure the SDK to speak with your Back& app, and the SDK handles the rest:
             </p>
             <pre><code>
   //Update Angular configuration section
@@ -83,7 +82,7 @@
           <li>
             <h3>Read data from your database</h3>
             <p>
-              You can access Backand's API endpoints using $http requests from your Angular project.<br />
+              Back&'s SDK includes several utility functions that encapsulate the HTTP calls used for your REST API.<br />
               In the following example, we create a function called getList that uses the DataService API endpoint to fetch data from your database, which is returned in JSON format.
             </p>
             <pre><code>
@@ -102,7 +101,7 @@
     }
   }
     </code></pre>
-            <p>Using $http you can call to any of the CRUD URLs, trigger server side actions, and manage users.
+            <p>We also offer <code>getOne</code>, <code>create</code>, <code>update</code>, and <code>delete</code> functions, giving you the full suite of CRUD functionality in the SDK. On top of these functions, you can also use the SDK to trigger server side actions and manage users.
               All API calls and expected parameters can be reviewed and tested in Backand's API Playground.</p>
           </li>
 
@@ -110,16 +109,15 @@
             <h3>Done. It's that simple</h3>
             <p>In the above example, we easily used Backand service, and wrote functionality that can
               retrieve data from your database.<br/>
-              Using the above code, you can simply modify the URL endpoints to hit all of the relevant API functionality
-              available from your application's playground - simply copy the URL, adjust the parameters per step 4, and you are set!</p>
+              Using the above code, you can simply modify the SDK calls to exercise all of the relevant API functionality available from your application's playground - simply check our <a href="http://docs.backand.com" target="_blank">documentation</a> for the function information, adjust the parameters per step 4, and you are set!</p>
 
             <p><b>In your Angular application, you are the rock star - Backand is here to help you rise and shine.
               Have fun!</b></p>
 
             <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App and
               Get Started</button>
-          </div>
         </ol>
+      </div>
 
       </div>
       <br/>
