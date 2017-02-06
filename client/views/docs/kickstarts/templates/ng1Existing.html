@@ -13,13 +13,14 @@
         <ol>
 
           <li>
-            <h3>Add the Back& scripts</h3>
-            <p>First, include Back& in your app's index.html file. Be sure to include it above all of your app's project code includes:</p>
+            <h3>Add the Backand scripts</h3>
+            <p>Include the following code in your index.html file. Make it above the project's code</p>
             <pre><code class="html hljs">
-  &lt;!-- Back& SDK for Angular --&gt;
-  &lt;script src=&quot;//cdn.backand.net/backand/dist/1.8.11/backand.min.js&quot;&gt;&lt;/script&gt;
+  &lt;!-- Backand SDK for Angular --&gt;
+  &lt;script src=&quot;//cdn.backand.net/vanilla-sdk/1.0.9/backand.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;//cdn.backand.net/angular1-sdk/1.9.5/backand.provider.js&quot;&gt;&lt;/script&gt;
             </code></pre>
-            <p>You can also install the SDK locally using bower: <code>bower install angular1-sdk#1.8.11</code></p>
+            <p>You can install the SDK locally using bower: <code>bower install backand-angular1-sdk</code></p>
             <br />
           </li>
 
@@ -52,33 +53,6 @@
           </li>
           <br/>
 
-          <!--<li>-->
-          <!--<h3>Connect your Backand app</h3>-->
-          <!--<p>-->
-          <!--We can inject the Backand service into any controller - simply call Backand.signin(...)-->
-          <!--in your controller to gain access.<br />-->
-          <!--In this example, we sign into Backand in the SignInCtrl controller's signIn method.-->
-          <!--When we are successfully signed in, we save the authentication token into a cookie.-->
-          <!--</p>-->
-          <!--<pre><code>-->
-          <!--// SignInCtrl.js-->
-          <!--function SignInCtrl(Backand, $cookieStore) {-->
-          <!--$scope.signIn = function() {-->
-          <!--Backand.signin($scope.username, $scope.password)-->
-          <!--.then(-->
-          <!--function (response) {-->
-          <!--//Do good for the world-->
-
-          <!--},-->
-          <!--function (data, status, headers, config) {-->
-          <!--//handle error-->
-          <!--}-->
-          <!--);-->
-          <!--}-->
-          <!--}-->
-          <!--</code></pre>-->
-          <!--</li>-->
-
           <li>
             <h3>Read data from your database</h3>
             <p>
@@ -86,14 +60,14 @@
               In the following example, we create a function called getList that uses the DataService API endpoint to fetch data from your database, which is returned in JSON format.
             </p>
             <pre><code>
-  //dataService.js
+  //service.js
   function dataService($http, Backand) {
     var vm = this;
     //get the object name and optional parameters
-    vm.getList = function(name, sort, filter) {
+    vm.getList = function(name, sort, filter, pageSize, pageNumber) {
       var params = {
-        pageSize: 20,
-        pageNumber: 1,
+        pageSize: pageSize || 20,
+        pageNumber: pageNumber|| 1,
         filter: filter || '',
         sort: sort || ''
       };

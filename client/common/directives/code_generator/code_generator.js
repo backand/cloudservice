@@ -22,53 +22,61 @@
   function CodeGeneratorController(CONSTS, LocalStorageService, $scope, VanillaGeneratorService, ReduxGeneratorService, AngularGeneratorService){
     var self = this;
 
-    self.languageOptions = [{
-      value: 1,
-      label: 'Vanilla',
-      generator: VanillaGeneratorService,
-      opts: {
-        type: 'promise',
-        es6: false,
-        prefix: 'backand',
+    self.languageOptions = [
+
+      {
+        value: 2,
+        label: 'Angular 1',
+        generator: VanillaGeneratorService,
+        opts: {
+          type: 'return',
+          es6: false,
+          prefix: 'Backand',
+        }
+      },
+      {
+        value: 3,
+        label: 'Angular 2',
+        generator: VanillaGeneratorService,
+        opts: {
+          type: 'promise',
+          es6: true,
+          prefix: 'this.backand',
+        }
+      },
+      {
+        value: 4,
+        label: 'Redux / React',
+        generator: ReduxGeneratorService,
+        opts: {}
+      },
+      {
+        value: 5,
+        label: 'NodeJS',
+        generator: VanillaGeneratorService,
+        opts: {
+          type: 'promise',
+          es6: false,
+          prefix: 'backand',
+        }
+      },
+      {
+        value: 6,
+        label: 'Angular 1 ($http)',
+        generator: AngularGeneratorService,
+        opts: {}
+      },
+      {
+        value: 1,
+        label: 'Vanilla JavaScript',
+        generator: VanillaGeneratorService,
+        opts: {
+          type: 'promise',
+          es6: false,
+          prefix: 'backand',
+        }
       }
-    }, {
-      value: 2,
-      label: 'Angular1',
-      generator: VanillaGeneratorService,
-      opts: {
-        type: 'return',
-        es6: false,
-        prefix: 'Backand',
-      }
-    }, {
-      value: 3,
-      label: 'Angular2',
-      generator: VanillaGeneratorService,
-      opts: {
-        type: 'promise',
-        es6: true,
-        prefix: 'this.backand',
-      }
-    }, {
-      value: 4,
-      label: 'Redux',
-      generator: ReduxGeneratorService,
-      opts: {}
-    }, {
-      value: 5,
-      label: 'NodeJS',
-      generator: VanillaGeneratorService,
-      opts: {
-        type: 'promise',
-        es6: false,
-        prefix: 'backand',
-      }
-    }, {
-      value: 6,
-      label: 'Angular1 ($http)',
-      generator: AngularGeneratorService,
-      opts: {}
-    }];
+    ];
 
     self.storage = LocalStorageService.getLocalStorage();
     if (!self.storage.favoriteLanguage) {
