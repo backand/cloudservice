@@ -10,19 +10,17 @@
         <br/>
         <ol>
           <li>
-            <h3>Install Backand</h3>
-            <p>First, connect your app to Backand to get started. Follow the
-              <a href="https://www.backand.com/apps/#/start">Backand Quick Start Guide</a>
-              to get your application connected, and ensure you have Backand SDK version 1.8.10, with Realtime
-              Database Communication.</a>
-            </p>
-            <p>Update to Backand SDK 1.8.10 with Realtime Communication:</p>
+            <h3>Add the Backand scripts</h3>
+            <p>Include the following code in your index.html file. Make it above the project's code</p>
             <pre><code class="html hljs">
   &lt;!-- Backand SDK for Angular --&gt;
   &lt;script src=&quot;//cdn.backand.net/vanilla-sdk/1.0.9/backand.js&quot;&gt;&lt;/script&gt;
   &lt;script src=&quot;//cdn.backand.net/angular1-sdk/1.9.5/backand.provider.js&quot;&gt;&lt;/script&gt;
+
+  &lt;!-- Backand Realtime --&gt;
+  &lt;script src=&quot;https://cdn.backand.net/socket.io/1.4.5/socket.io.js&quot;&gt;&lt;/script&gt;
             </code></pre>
-            <p>You can install the SDK locally using bower: <code>bower install angular1-sdk#1.9.5</code></p>
+            <p>You can install the SDK locally using bower: <code>bower install backand-angular1-sdk</code></p>
             <br />
           </li>
 
