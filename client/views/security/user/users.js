@@ -448,19 +448,19 @@
         scope: $scope
       });
 
-      $scope.changeEmail = function (user){
-        if(user.email){
-          SecurityService.userExists(user.email)
-          .then(function (data) {
-            $scope.modal.NewUser = !data.data.exists;
-          }, function(err){
-            console.log(err.data.Message)
-            // do nothing
-          })
-        }
-        else
-          $scope.modal.NewUser = true;
-      };
+      // $scope.changeEmail = function (user){
+      //   if(user.email){
+      //     SecurityService.userExists(user.email)
+      //     .then(function (data) {
+      //       $scope.modal.NewUser = !data.data.exists;
+      //     }, function(err){
+      //       console.log(err.data.Message)
+      //       // do nothing
+      //     })
+      //   }
+      //   else
+      //     $scope.modal.NewUser = true;
+      // };
 
       $scope.closeModal = function (user) {
         user.password = user.password || '';
