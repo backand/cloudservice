@@ -1,0 +1,101 @@
+<section class="page-form-ele page ng-scope ba-docs">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Redux App Examples</strong>
+            <h2>Below are a set of example apps for Redux, powered by Back&!</h2>
+        </div>
+        <div class="panel-body docs">
+            <div class="quickstart-body">
+                <section class="panel panel-box" ng-if="!vm.currentApp.Name">
+                    <div class="panel-item bg-info">
+                        <h3 style="text-align:center;">Speed up your Redux development with super simple back-end and a complete and scalable
+              gulpjs-based build system that scaffolds the project for you.</h3>
+                    </div>
+                </section>
+
+                <br/>
+                <h2>Redux App Examples</h2>
+                <h5>We have several intuitive and easy-to-use example applications that can be used to get your Redux app up and running with Back&. Choose the starter that is most appropriate for you, tie it into your application, and get coding!</h5>
+                <br/>
+                <h2>Connecting with Back&</h2>
+                <h5>To connect an example application with Back&, modify <code>backand.init</code> to include your app's token and name data as follows:</h5>
+                <br />
+                <pre><code class="hljs">
+    // Note - set runSocket to true if you intend to use our Real-Time
+    //        Communications feature. Otherwise, set it to False.
+    backand.init && backand.init({
+      appName: '{{vm.currentApp.Name || 'Your-App-Name'}}',
+      signUpToken: '{{vm.keys.signup || 'Your-SignUp-Token'}}',
+      anonymousToken: '{{vm.keys.anonymous || 'Your-Anonymous-Token'}}',
+      runSocket: true
+    });
+                </code></pre>
+                <h2>Examples</h2>
+                <h5>Choose the example that matches your desired middleware system below. We have also included a link to our ReactNative example application, for reference:</h5>
+                <br />
+                <ul class='list-group'>
+                  <li class='list-group-item'><a href="http://codepen.io/backand/pen/VmRajE">CodePen example using Thunk</a></li>
+                  <li class='list-group-item'><a href="http://codepen.io/backand/pen/pRgqyx">CodePen example using Saga</a></li>
+                  <li class='list-group-item'><a  href="https://github.com/backand/react-native-example/tree/sdk">Back&'s ReactNative Example App</a></li>
+                </ul>
+              <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App
+                and Get Started</button>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+            <br/>
+            <div class="quickstart-sidebar">
+
+                <div class="quickstart-sidebox" id="kickstart-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                        <div class="quickstart-sidebox-title">Already have a Redux project?</div>
+                        <br/>
+                        <div class="quickstart-sidebox-text">Learn how to include <b>Back&</b> in your existing project</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToExisting()">Get Started</button>
+                    </div>
+                </div>
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-video.png" />
+                        <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+                    </div>
+                </div>
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-quickstart.png" />
+                        <div class="quickstart-sidebox-title">View our API Documentation</div>
+                        <br />
+                        <a class="btn btn-lg btn-success quickstart-sidebox-button" href="http://docs.backand.com/" target="_blank">View docs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

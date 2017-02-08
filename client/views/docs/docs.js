@@ -8,6 +8,13 @@
 
     var self = this;
     self.hostingUrl = CONSTS.hostingUrl;
+    self.kickstartTabs = [
+
+      {
+        heading: 'Selector',
+        route: 'docs.platform_select_kickstart'
+      }
+    ];
 
     (function init() {
       usSpinnerService.spin("connecting-app-to-db");
@@ -37,20 +44,15 @@
     };
 
     self.goToKickstart = function () {
-      if (_.isEmpty(AppsService.currentApp)) {
-        $state.go('docs.kickstart-open');
-      }
-      else {
-        $state.go('docs.kickstart');
-      }
+      $state.go('docs.platform_select_kickstart');
     };
 
     self.goToQuickstart = function () {
       if (_.isEmpty(AppsService.currentApp)) {
-        $state.go('docs.getting-started-open');
+        $state.go('docs.platform_select_kickstart-open');
       }
       else {
-        $state.go('docs.get-started');
+        $state.go('docs.platform_select_kickstart');
       }
     };
 

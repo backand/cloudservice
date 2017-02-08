@@ -1,0 +1,100 @@
+<section class="page-form-ele page ng-scope ba-docs">
+  <div class="panel panel-default">
+    <div class="panel-heading"><strong>Back& Angular 1 Kickstart</strong>
+        <h2>Follow these steps to install angular-kickstart, with Back& built-in!</h2>
+    </div>
+    <div class="panel-body docs">
+      <div class="quickstart-body">
+          <section class="panel panel-box" ng-if="!vm.currentApp.Name">
+              <div class="panel-item bg-info">
+                  <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
+        gulpjs-based build system that scaffolds the project for you.</h3>
+              </div>
+          </section>
+
+          <br/>
+          <h2>Installation</h2>
+          <h5>Install <b>node.js</b>. Then <b>sass</b>, <b>gulp</b> and <b>bower,</b> if you haven't yet.</h5>
+          <h6><em>Note: on Windows computers, installing sass requires installing Ruby, as sass is implemented as a ruby gem. Simply visit <a href='https://www.ruby-lang.org/en/'>ruby-lang.org</a> for more info.<br /></em></h6>
+          <pre><code class="hljs">
+$ gem install sass
+$ npm install -g gulp bower
+</code></pre>
+          <br/>
+          <h5>Clone the backand-angular-kickstart project from github, or download the
+    <a href="https://github.com/backand/angular-kickstart/archive/master.zip" target="_blank">
+      master release</a>.</h5>
+          <pre><code class="hljs">
+$ git clone https://github.com/backand/angular-kickstart.git
+$ cd angular-kickstart
+</code></pre>
+          <br/>
+          <h5>Install the bower and npm dependencies, then use gulp to run the application in development mode.</h5>
+          <pre><code class="hljs">
+$ npm install
+$ bower install
+$ gulp serve
+</code></pre>
+          <br/>
+          <h2>Run & Deploy</h2>
+          <h5>Your application is now ready for development! It is available at <code>http://127.0.0.1:3000</code>.</h5>
+          <br/>
+          <h5><b><em>Every file you add, edit or delete in the <code>/client</code> folder will be detected by gulp, and your application will automatically be reloaded.</em></b></h5>
+          <h5>When you are ready to build a production release, you can use our pre-built Gulp task to generate a distribution:</h5>
+          <pre><code class="hljs">
+$ gulp serve:dist
+</code></pre>
+          <br/>
+          <h5>This task will lint your code, optimize your assets (css, js, and image files), and run unit tests.
+    Once the task has finished successfully, you can find an optimized, ready-to-deploy version of your project in the <code>/build/dist folder</code>.</h5>
+          <br/>
+          <h5>To read more about the kickstart app's features, the directory structure, the build system, and more, visit
+    <a href="https://github.com/backand/angular-kickstart/" target="_blank">the project's github page</a>.</h5>
+          <br />
+          <h2> Samples and Documentation </h2>
+          <h5> Here are some links to sample applications for Angular 1, powered by Back&: </h5>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="https://github.com/backand/todos-with-users" target="_blank">Back& Users</a> - This starter demonstrates using our authentication and sign-up systems</li>
+            <li class="list-group-item"><a href="https://github.com/backand/angular-yeoman-todos" target="_blank">Back& CRUD</a> - This starter app demonstrates building a model with Create, Read, Update, and Delete functionality</li>
+            <li class="list-group-item"><a href="https://github.com/backand/stripe-example" target="_blank">Back& Payments</a> - This starter demonstrates connecting Back& application to a payment processor</li>
+          </ul>
+          <h5>See more on <a href="https://https://www.backand.com/app-examples/" target="_blank">our examples and starters page</a>. Also, don't forget to review <a href="https://docs.backand.com" target="_blank">our documentation</a>! We cover all of our APIs, as well as several different use cases.</h5>
+        <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App
+          and Get Started</button>
+      </div>
+      <br/>
+      <div class="quickstart-sidebar">
+
+          <div class="quickstart-sidebox" id="kickstart-sidebox">
+              <div class="quickstart-kickstart">
+                  <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                  <div class="quickstart-sidebox-title">Already have an Angular project?</div>
+                  <br/>
+                  <div class="quickstart-sidebox-text">Learn how to include <b>Back&</b> in your existing project</div>
+                  <br/>
+                  <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToExisting()">Get Started</button>
+              </div>
+          </div>
+
+
+          <div class="quickstart-sidebox" id="video-sidebox">
+              <div class="quickstart-kickstart">
+                  <img src="../assets/images/docs_pages/icon-video.png" />
+                  <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                  <br/>
+                  <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+              </div>
+          </div>
+
+          <div class="quickstart-sidebox" id="video-sidebox">
+              <div class="quickstart-kickstart">
+                  <img src="../assets/images/docs_pages/icon-quickstart.png" />
+                  <div class="quickstart-sidebox-title">View our API Documentation</div>
+                  <br />
+                  <a class="btn btn-lg btn-success quickstart-sidebox-button" href="http://docs.backand.com/" target="_blank">View docs</a>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>

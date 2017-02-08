@@ -12,7 +12,12 @@
           requestJson: stringifyHttp(http),
           requestUrl: http.url,
           requestMethod: http.method,
-          requestTitle: log
+          requestTitle: log,
+          requestParams: http.params,
+          requestData: http.data,
+          // GENERATOR ADDON
+          httpObject: http
+          // END
         };
 
         self.log.push(logItem);

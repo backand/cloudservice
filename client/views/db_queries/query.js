@@ -423,6 +423,9 @@
       self.gridOptions.totalItems = result.length;
 
       self.queryUrl = DbQueriesService.getQueryUrl(self.query.name, self.inputValues, true);
+      // GENERATOR ADDON
+      self.httpObject = DbQueriesService.getQueryHttp(self.query.name, self.inputValues);
+      // END
       self.queryHttp = stringifyHttp(DbQueriesService.getQueryHttp(self.query.name, self.inputValues));
       if (self.inputParametersForm) {
         self.inputParametersForm.$setPristine();

@@ -1,0 +1,23 @@
+<div class="page ng-scope">
+  <div class="create-app-starter-app-select">
+    <div class="platform-nav">
+      <div ng-repeat="platform in vm.platforms" class="platform-choice-nav"
+           ng-class="{'platform-choice-nav': true, 'active-platform': platform.starterAppId === vm.selectedPlatform,
+           'inactive-platform': platform.starterAppId !== vm.selectedPlatform}"
+        ng-click="vm.changePlatform(platform.starterAppId)">
+        <img src="assets/images/platforms/logo-small.png" class="{{platform.iconClass}}">
+        <span>{{platform.platform}}</span>
+      </div>
+    </div>
+    <div class="panel-body docs" ng-show="vm.isNew()">
+      <h3>
+        We're creating your database and will notify you when it's ready.<br/>
+        In the meantime, you can review below how to integrate your new app...
+      </h3>
+      <div us-spinner spinner-key="connecting-app-to-db" style="position: relative; top: 40px;"></div>
+      <br/>
+      <br/>
+    </div>
+    <div class="tab-content" ng-include="vm.templateUrl"></div>
+  </div>
+</div>

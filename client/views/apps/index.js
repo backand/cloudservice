@@ -4,11 +4,11 @@
   angular.module('backand.apps')
     .controller('AppsIndexController', ['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
       'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',
-      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', AppsIndexController]);
+      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', 'LocalStorageService', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
                                usSpinnerService, LayoutService, AnalyticsService, SessionService,
-                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService) {
+                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService, LocalStorageService) {
 
     var self = this;
     self.loading = false;
@@ -41,6 +41,10 @@
 
       NotificationService.add('info', 'Creating new app...');
 
+      // Comment these out to retain storage between application creation efforts
+      LocalStorageService.getLocalStorage().docLanguage = null;
+      LocalStorageService.getLocalStorage().favoriteLanguage = null;
+
       AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
           createDB(self.appName);
@@ -64,7 +68,7 @@
 
           AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
           AnalyticsService.track('create app', {app: appName});
-          $state.go('docs.kickstart', {appName: appName, newApp: true});
+          $state.go('docs.platform_select_kickstart', {appName: appName, newApp: true});
         })
         .error(function () {
           self.loading = false;

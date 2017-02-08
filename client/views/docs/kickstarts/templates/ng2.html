@@ -1,0 +1,100 @@
+<section class="page-form-ele page ng-scope ba-docs">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Back& Angular 2 Kickstart</strong>
+            <h2>Follow these steps to install our Angular 2 Kickstart!</h2>
+        </div>
+        <div class="panel-body docs">
+            <div class="quickstart-body">
+
+                <section class="panel panel-box" ng-if="!vm.currentApp.Name">
+                    <div class="panel-item bg-info">
+                        <h3 style="text-align:center;">Speed up your AngularJS development with a super simple back-end and a complete and scalable
+              gulpjs-based build system that scaffolds the project for you.</h3>
+                    </div>
+                </section>
+
+                <br/>
+                <h2>Installation</h2>
+                <h5>Install Node and NPM, if you have not already done so. To install the Back& SDK, use the following npm command:</h5>
+                <pre><code class="hljs">
+    $ npm install angular2-sdk --save
+                </code></pre>
+                <h5>Once this is done, you'll also need to install the SDK's dependencies. Do so with the following commands:</h5>
+                <pre><code class="hljs">
+    $ npm install @types/node --save-dev
+    $ npm install @types/socket.io-client --save-dev
+                </code></pre>
+                <br/>
+                <h2>Configuring your Angular 2 app for Back&</h2>
+                <h5>Once you've installed the package, you'll need to include it in your application. To do so, start by including Back& in each component in which it will be used:</h5>
+                <pre><code class="hljs">
+    import { BackandService } from 'angular2-sdk';
+                </code></pre>
+                <br/>
+                <h5>Once you've included the library, you just need to add the service to your object's constructor:</h5>
+                <pre><code class="hljs">
+    constructor(private backandService:BackandService){}
+                </code></pre>
+                <br/>
+                <h2>Configuring Back&</h2>
+                <h5>Back& uses OAuth authenticaation, which requires you to include the authentication token with every HTTP call. Luckily, the Back& SDK takes care of this for you. To connect your app to Back&, use the following code:</h5>
+                <pre><code class="hljs">
+    this.backandService.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+    this.backandService.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+    this.backandService.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
+                </code></pre>
+                <br/>
+                <h5>If you are developing a mobile app, you'll also want to set the <code>isMobile</code> flag in the SDK:</h5>
+                <pre><code class="hljs">
+    this.backandService.setIsMobile(true);
+                </code></pre>
+                <br/>
+                <br/>
+                <h5>At this point, you're ready to work with Back&!</h5>
+                <br />
+                <h2> Samples and Documentation </h2>
+                <h5> Here are some links to sample applications built for Angular 2, powered by Back&: </h5>
+                <ul class="list-group">
+                  <li class="list-group-item"><a href="https://github.com/kornatzky/backand-angularjs2" target="_blank">Back& Users and CRUD</a> - This starter app demonstrates building an app using a basic CRUD model and user authentication, on top of Angular 2</li>
+                </ul>
+                <h5>See more on <a href="https://https://www.backand.com/app-examples/" target="_blank">our examples and starters page</a>.  Also, don't forget to review <a href="https://docs.backand.com" target="_blank">our documentation</a>! We cover all of our APIs, as well as several different use cases.</h5>
+                <br />
+              <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App
+                and Get Started</button>
+            </div>
+            <br/>
+            <div class="quickstart-sidebar">
+
+                <div class="quickstart-sidebox" id="kickstart-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                        <div class="quickstart-sidebox-title">Already have an Angular 2 project?</div>
+                        <br/>
+                        <div class="quickstart-sidebox-text">Learn how to include <b>Back&</b> in your existing project</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToExisting()">Get Started</button>
+                    </div>
+                </div>
+
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-video.png" />
+                        <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+                    </div>
+                </div>
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-quickstart.png" />
+                        <div class="quickstart-sidebox-title">View our API Documentation</div>
+                        <br />
+                        <a class="btn btn-lg btn-success quickstart-sidebox-button" href="http://docs.backand.com/" target="_blank">View docs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

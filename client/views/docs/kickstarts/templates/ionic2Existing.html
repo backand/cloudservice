@@ -1,0 +1,147 @@
+<section class="page-form-ele page ng-scope ba-docs">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Existing Ionic 2 App</strong>
+            <h2>Follow these steps to integrate Back& with an existing Ionic 2 application</h2>
+        </div>
+        <div class="panel-body docs">
+            <div class="quickstart-body">
+                <div class="quickstart-connecting-db" ng-show="docs.isNew()">
+                    <h3>
+            We're creating your database, and will notify you when it's ready.<br/>
+            In the meantime, you can review our kickstart guides below.
+                    </h3>
+                    <div us-spinner spinner-key="connecting-app-to-db"></div>
+                    <br/>
+                    <br/>
+                </div>
+
+
+                <section class="panel panel-box" ng-if="!docs.currentApp.Name">
+                    <div class="panel-item bg-info">
+                        <h3 style="text-align:center;">Speed up your AngularJS development with super simple back-end and a complete and scalable
+              gulpjs-based build system that scaffolds the project for you.</h3>
+                    </div>
+                </section>
+
+                <br/>
+                <h2>Installation</h2>
+                <h5><em><strong>Note: </strong> You can also find this kickstart guide on the <a href="http://market.ionic.io/starters/ionic-2-backand-starter" target="_blank">Ionic marketplace</a>.</em></h5>
+                <h5>First, install the <a href="http://ionicframework.com/" target="_blank">Ionic framework</a>. This documentation is built against Ionic Framework version <code>2.0.0-rc.0</code>. Once the Ionic framework is installed you can get the starter app using the following command:</h5>
+
+                <pre><code class="hljs">
+    $ ionic start myApp https://github.com/backand/backand-ionic2-starter --v2
+    $ cd myApp
+    </code></pre>
+                <br/>
+                <h5>Next, install the Cordova plugin for Ionic.</h5>
+                <pre><code class="hljs">
+    $ ionic plugin add cordova-plugin-inappbrowser
+    </code></pre>
+                <br/>
+                <h5>Once Cordova is installed, update <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/app/app.component.ts#L21" target="_blank">app.component.js</a> lines 21-23 to use your Back& app's  connection details</h5>
+                <pre><code class="hljs">
+    backandService.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
+    backandService.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
+    backandService.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
+    </code></pre>
+                <br />
+                <h5>Next, install the JS dependencies for the starter application:</h5>
+
+                <pre><code class="hljs">
+    $ npm install socket.io-client --save
+    $ npm install @types/node --save-dev --save-exact
+    $ npm install @types/socket.io-client --save-dev --save-exact
+    </code></pre>
+                <br/>
+
+                <h5>Finally, start the application:</h5>
+
+                <pre><code class="hljs">
+    $ ionic serve
+    </code></pre>
+                <br/>
+                <h5>This brings up the starter app in a browser window. Log in to the starter app using a user configured in your application. At this point, you're done! Enjoy exploring the capabilities offered by our Ionic kickstart app. However, if you are interested in developing something more complex, read on for a quick overview of the functionality offered by this starter application.
+                <h2>Exploring the starter app</h2>
+                <h5>There is a lot of useful functionality buried in the starter app. Here are some highlights</h5>
+                <br/>
+                <h3>CRUD functionality</h3>
+
+                <h5>This sample app features a demo of a CRUD service for an object called <code>todo</code>. You can see how we work through each of the basic REST methods for a CRUD object in the <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/pages/crud/crud.ts" target="_blank">/src/pages/crud/crud.ts file</a>. Expanding this to work with any object is a snap - simply replace <code>todo</code> with the name of the object in your Back& application that you wish to work with.</h5>
+                <br/>
+                <h3>Authentication and Social Media Integration</h3>
+                <h5>The file <code>/src/pages/signup/signup.ts</code> demonstrates everything you need to create a new user in your application. It covers basic Back& users, as well as social media integration with providers like Google and Facebook. You can see how the signin methods work with social media providers by taking a look at the  <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/pages/signup/signup.ts#L39" target="_blank">signup.ts file</a>, line 39.
+
+                  <h5>We also provide all the code you need to authenticate users with the service. Review the code in <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/pages/login/login.ts" target="_blank">/src/pages/login/login.ts</a> to see how we recommend you work with your user objects. You can use this code as a starter to build out the rest of your app's authentication scheme.</h5>
+                <br/>
+                <h3>Facebook App Connect</h3>
+                <h5>Back& also gives you the capability to work with custom Facebook applications. To connect your Ionic2 Back& application to your Facebook app, you first need to install the Facebook-Cordova plugin for the Ionic framework:</h5>
+                <pre><code class="hljs">
+    $ ionic plugin add cordova-plugin-facebook4 --save --variable APP_ID="<Facebook APP ID>" --variable APP_NAME="<Facebook APP NAME>"
+    </code></pre>
+                <br/>
+                <h5>Once you've connected your application, you can use the <code>inappSocial</code> function of the <code>BackandService</code> module to interact with your app. You can see an example of this <a href="https://github.com/backand/backand-ionic2-starter/blob/fc9b0fd5cb429bc567b505ee4633806e0d2ebee2/src/pages/signup/signup.ts#L51" target="_blank">in file signup.ts</a>.</h5>
+                <br />
+                <h3>Sockets</h3>
+                <h5>The Ionic 2 Starter also offers an example of our real-time communications service implemented with Socket.io. In the file <a href="https://github.com/backand/backand-ionic2-starter/blob/fc9b0fd5cb429bc567b505ee4633806e0d2ebee2/src/pages/crud/crud.ts#L17" target="_blank">crud.ts</a> you can see an example of the application handling the <code>items_updated</code> event sent by the back-end. Here's the code in its entirety,, for reference:</h5>
+                <pre><code class="hljs">
+    this.backandService.on("items_updated")
+    .subscribe(
+        data => {
+            console.log("items_updated", data);
+            let a = data as any[];
+            let newItem = {};
+            a.forEach((kv)=> newItem[kv.Key] = kv.Value);
+            this.items.unshift(newItem);
+        },
+        err => {
+            console.log(err);
+        },
+        () => console.log('received update from socket')
+    );
+                </code></pre>
+                <br/>
+          <br />
+          <h2> Samples and Documentation </h2>
+          <h5> Here are some links to sample applications for Ionic 2, powered by Back&: </h5>
+          <ul class="list-group">
+            <li class="list-group-item"><a href="http://market.ionic.io/starters/ionic-2-backand-starter" target="_blank">Ionic 2 Starter</a> - This starter demonstrates a simple integration with Back& using a lightweight "ToDo" list management app.</li>
+          </ul>
+          <h5>See more on <a href="https://https://www.backand.com/app-examples/" target="_blank">our examples and starters page</a>.  Also, don't forget to review <a href="https://docs.backand.com" target="_blank">our documentation</a>! We cover all of our APIs, as well as several different use cases.</h5>
+          <br />
+
+              <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
+            </div>
+            <br/>
+            <div class="quickstart-sidebar">
+
+              <div class="quickstart-sidebox" id="kickstart-sidebox">
+                <div class="quickstart-kickstart">
+                  <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                  <div class="quickstart-sidebox-title">Don't have an Ionic 2 project?</div><br/>
+                  <div class="quickstart-sidebox-text">We've got a <b>kickstart project</b> to get you on your way!</div><br/>
+                  <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToKickstart()">Get
+                    Started</button>
+                </div>
+              </div>
+
+              <div class="quickstart-sidebox" id="video-sidebox">
+                  <div class="quickstart-kickstart">
+                      <img src="../assets/images/docs_pages/icon-video.png" />
+                      <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                      <br/>
+                      <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+                  </div>
+              </div>
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-quickstart.png" />
+                        <div class="quickstart-sidebox-title">View our API Documentation</div>
+                        <br />
+                        <a class="btn btn-lg btn-success quickstart-sidebox-button" href="http://docs.backand.com/" target="_blank">View docs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,124 @@
+<section class="page-form-ele page ng-scope ba-docs">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Existing Redux App</strong>
+            <h2>Follow these steps to integrate Back& with an existing Redux application</h2>
+        </div>
+        <div class="panel-body docs">
+            <div class="quickstart-body">
+                <section class="panel panel-box" ng-if="!vm.currentApp.Name">
+                    <div class="panel-item bg-info">
+                        <h3 style="text-align:center;">Speed up your Redux development with super simple back-end and a complete and scalable
+              gulpjs-based build system that scaffolds the project for you.</h3>
+                    </div>
+                </section>
+
+                <br/>
+                <h2>Introduction</h2>
+                <h5>Follow these steps to install the Back& SDK for Redux. These are also available on the SDK's <a href="https://github.com/backand/redux-sdk">GitHub page</a>.</h5>
+                <br />
+                <h2>Installation</h2>
+                <h5>You can install our SDK using either NPM or Yarn:</h5>
+                <br/>
+                <pre><code class="hljs">
+    $ npm i -S @backand/redux-sdk
+    $ yarn add @backand/redux-sdk
+                </code></pre>
+                <br />
+                <h2>Quick Start</h2>
+                <h5>Start by using <code>bkndredux</code> to generate the <code>Types</code>, <code>Actions</code>, and <code>Reducers</code> for your Back& objects:</h5>
+                <br />
+                <pre><code class="hljs">
+    $ "./node_modules/.bin/bkndredux" --help
+    $ "./node_modules/.bin/bkndredux" user obj1 obj2 obj3... -m (thunk/saga)
+                </code></pre>
+                <br />
+                <h5><emphasis><strong>Note:</strong></emphasis> <code>user</code> is a unique object. It has different <code>Reducer</code> and <code>Types</code> objects, and it reveals most of the authentication <code>Actions</code> (<code>getUserDetails</code>,<code>signin</code>,<code>signout</code>, etc...)</h5>
+                <br />
+                <h5>Next, include the <code>Reducers</code> in <a href="http://redux.js.org/docs/api/combineReducers.html">combineReducers()</a>:</h5>
+                <br />
+                <pre><code class="hljs">
+    import { combineReducers } from 'redux'
+    import user from './user/userReducer'
+    import obj1 from './obj1/obj1Reducer'
+    import obj2 from './obj2/obj2Reducer'
+
+    combineReducers({
+      user,
+      obj1,
+      obj2
+    })
+                </code></pre>
+                <br />
+                <h2>Middleware</h2>
+                <h5>To use Redux with either Thunk or Saga as middleware, follow the instructions in the appropriate seciton below.</h5>
+                <br />
+                <h4><a href="https://github.com/gaearon/redux-thunk">redux-thunk</a></h4>
+                <h5>Download <a href="https://github.com/gaearon/redux-thunk">redux-thunk</a> and include it in <a href="http://redux.js.org/docs/api/createStore.html">createStore()</a></h5>
+                <br />
+                <pre><code class="hljs">
+    import { createStore, applyMiddleware } from 'redux'
+    import thunk from 'redux-thunk'
+
+    createStore(rootReducer, initialState, applyMiddleware(thunk))
+                </code></pre>
+                <br />
+                <h4><a href="https://github.com/redux-saga/redux-saga">redux-saga</a></h4>
+                <h5>Download <a href="https://github.com/redux-saga/redux-saga">redux-saga</a> and include it in <a href="http://redux.js.org/docs/api/createStore.html">createStore()</a></h5>
+                <br />
+                <pre><code class="hljs">
+    import { createStore, applyMiddleware } from 'redux'
+    import createSagaMiddleware from 'redux-saga'
+    import rootSaga from './sagas.js'
+
+    const sagaMiddleware = createSagaMiddleware()
+    createStore(rootReducer, initialState, applyMiddleware(sagaMiddleware))
+    sagaMiddleware.run(rootSaga)
+                </code></pre>
+                <br />
+                <h2>Importing Actions and Finalizing</h2>
+                <h5>All that's left is to import the <code>Actions</code> and begin dispatching! This is done using the following code:</h5>
+                <br />
+                <pre><code class="hljs">
+    import { getUserDetails, signin, useAnonymousAuth, signout } from './user/userActions'
+
+    store.dispatch(signin(username, password))
+    store.dispatch(getUserDetails())
+                </code></pre>
+              <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App
+                and Get Started</button>
+            </div>
+            <br/>
+            <div class="quickstart-sidebar">
+
+                <div class="quickstart-sidebox" id="kickstart-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                        <div class="quickstart-sidebox-title">Want a kickstart app instead?</div>
+                        <br/>
+                        <div class="quickstart-sidebox-text">Use one of our <b>Back&</b> kickstart apps to get a running start!</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToKickstart()">Get Started</button>
+                    </div>
+                </div>
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-video.png" />
+                        <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'AngularJS Quickstart'">Play Video</button>
+                    </div>
+                </div>
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-quickstart.png" />
+                        <div class="quickstart-sidebox-title">View our API Documentation</div>
+                        <br />
+                        <a class="btn btn-lg btn-success quickstart-sidebox-button" href="http://docs.backand.com/" target="_blank">View docs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
