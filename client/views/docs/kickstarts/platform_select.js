@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.docs')
-    .controller('PlatformSelectController', ['AppsService', 'PlatformsService', '$state', '$rootScope', 'usSpinnerService', 'LocalStorageService', PlatformSelectController]);
+    .controller('PlatformSelectController', ['AppsService', 'PlatformsService', '$state', '$rootScope', 'usSpinnerService', 'LocalStorageService','AnalyticsService', PlatformSelectController]);
 
-  function PlatformSelectController(AppsService, PlatformsService, $state, $rootScope, usSpinnerService, LocalStorageService) {
+  function PlatformSelectController(AppsService, PlatformsService, $state, $rootScope, usSpinnerService, LocalStorageService, AnalyticsService) {
 
     var self = this;
 
@@ -64,7 +64,8 @@
       }
       var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
       $state.go(state, {starterAppId: starterAppId, mode:$state.params.mode, newApp: $state.params.newApp});
-    }
+      AnalyticsService.track('PlatformSelected', {starterApp: starterAppId, mode:$state.params.mode});
+    };
 
     self.goToDefault = function()
     {
@@ -79,6 +80,7 @@
         options[6] = 'reactNative';
         var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
         $state.go(state, {starterAppId: options[self.storage.docLanguage], mode:$state.params.mode, newApp: $state.params.newApp});
+
       }
     }
 

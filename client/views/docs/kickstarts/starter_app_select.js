@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.apps')
-    .controller('StarterAppSelectController', ['KickstartService', 'PlatformsService', '$state','AppsService','usSpinnerService','$modal', 'LocalStorageService', StarterAppSelectController]);
+    .controller('StarterAppSelectController', ['KickstartService', 'PlatformsService', '$state','AppsService','usSpinnerService','$modal', 'LocalStorageService','AnalyticsService', StarterAppSelectController]);
 
-  function StarterAppSelectController(KickstartService, PlatformsService, $state, AppsService, usSpinnerService, $modal, LocalStorageService) {
+  function StarterAppSelectController(KickstartService, PlatformsService, $state, AppsService, usSpinnerService, $modal, LocalStorageService,AnalyticsService) {
 
     var self = this;
 
@@ -58,6 +58,7 @@
       }
       self.selectedPlatform = starterAppId;
       self.templateUrl = KickstartService.getPlatformContent(self.selectedPlatform + "_" + self.selectedMode);
+      AnalyticsService.track('PlatformSelected', {starterApp: starterAppId, mode:$state.params.mode});
     };
 
     self.goToExisting = function() {
