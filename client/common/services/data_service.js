@@ -50,8 +50,8 @@
         params: {
           'pageSize': size,
           'pageNumber': page,
-          'filter' : typeof(filter) === 'undefined' ? '' : filter,
-          'sort' : sort
+          'filter' : filter ? filter : [],
+          'sort' : sort ? sort : []
         }
       };
       return logAndExecute(http, log ? 'Get Data' : null);
