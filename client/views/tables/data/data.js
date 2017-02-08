@@ -105,7 +105,15 @@
         //declare the events
 
         $scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
-          self.sort = sortColumns[0] ? '[{fieldName:"' + sortColumns[0].name + '", order:"' + sortColumns[0].sort.direction + '"}]' : '';
+          if (sortColumns[0]) {
+            self.sort = [{
+              fieldName: sortColumns[0].name,
+              order: sortColumns[0].sort.direction
+            }];
+          }
+          else {
+            self.sort = '';
+          }
           self.filterData();
         });
       }
