@@ -23,7 +23,6 @@
     var self = this;
 
     self.languageOptions = [
-
       {
         value: 2,
         label: 'Angular 1',
@@ -80,7 +79,7 @@
 
     self.storage = LocalStorageService.getLocalStorage();
     if (!self.storage.favoriteLanguage) {
-      self.chosenLanguage = 1;
+      self.chosenLanguage = 2;
     } else {
       self.chosenLanguage = self.storage.favoriteLanguage;
     }
