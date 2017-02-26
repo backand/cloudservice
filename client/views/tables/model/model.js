@@ -24,6 +24,10 @@
         {
           heading: 'Model JSON',
           route: 'json_model'
+        },
+        {
+          heading: 'Database',
+          route: 'external_db_mod'
         }
       ];
 
