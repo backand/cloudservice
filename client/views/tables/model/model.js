@@ -27,7 +27,7 @@
         },
         {
           heading: 'Database',
-          route: 'external_db_mod'
+          route: 'database_model'
         }
       ];
 

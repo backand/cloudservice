@@ -22,11 +22,11 @@
           isNewObject: ''
         }
       })
-      .state('external_db_mod', {
+      .state('database_model', {
         parent: 'tables.model',
-        url: '/external_db_mod',
-        controller: 'ExternalDbModController as externalDbMod',
-        templateUrl: 'views/tables/model/external_db_mod/external_db_mod.html'
+        url: '/database',
+        controller: 'DatabaseController as database',
+        templateUrl: 'views/tables/model/database/database.html'
       })
   }
 })();
