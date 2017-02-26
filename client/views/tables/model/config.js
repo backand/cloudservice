@@ -25,7 +25,7 @@
       .state('database_model', {
         parent: 'tables.model',
         url: '/database',
-        controller: 'DatabaseController as database',
+        controller: 'DatabaseModelController as database',
         templateUrl: 'views/tables/model/database/database.html'
       })
   }

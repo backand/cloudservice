@@ -1,71 +1,37 @@
 <div class="panel-body">
-  <div class="row">
-    <div class="col-md-8 col-lg-9 info-panel-row">
 
-      <h4>Manage your model in the left JSON while compare it to the current version on the right JSON -
-        <a href="" ng-click="jsonModel.showHelp()">Need help?</a></h4>
-    </div>
+  <div class="row">
+    <h2>Bringing your own database</h2>
+    <p>
+      Most back-end-as-a-service providers want you to work within their
+      clearly-defined data roles. They often require you to port your data to
+      their format, or provide only highly static interfaces to interact with
+      and consume existing data. At Backand, we realize that the database is
+      often the core of your business, and you need to be able to work with your
+      data with minimal effort possible. That's why we have built a large suite
+      of functionality around importing – and managing your existing SQL
+      database. Backand can analyze your database structure and build a scaffold
+      around your existing data quickly, allowing your application developers to
+      very rapidly begin working with your existing database structure.
+    </p>
+    <h2>Importing your database </h2>
+    <p>
+      While you can create a new database from scratch using our JSON object modeling interface, the true power of Backand is shown when we integrate seamlessly with your existing database. When you connect your Backand application to an existing database on an external server, Backand quickly analyzes your database structure and constructs a meaningful interface on top of your data. This covers everything from basic table structure all the way up to complex foreign-key relationships and many-to-many mapping tables. Backand then uses this data to construct an API on top of your database, allowing you to interact with your data in a RESTful manner very quickly and easily.
+    </p>
+    <h2>Staying in sync</h2>
+    <p>
+While an import process is beneficial, it quickly loses its ease if it does not accurately track changes. Many vendors expect your database schema to remain static, and want to work only with your data – requiring a re-sync whenever the database structure changes. With Backand, the need to re-synchronize is completely removed from the process. Backand automatically detects changes to your underlying database and updates its representation of your data, removing a needless tertiary step in the process to ensure that your application remains synchronized with your database's structure. Furthermore, data changes are synced back to the database server nearly instantaneously, ensuring that no matter how you fetch your data it will always be up-to-date.
+    </p>
   </div>
 
   <div class="row">
-    <div class="col-md-8 col-lg-9 info-panel-row">
-      <div class=" info-panel">
-        <div class="col-md-6 edit">
-                <span class="tab"><strong>Edit model</strong>
-                  <a href="" title="Discard the current changes" class="btn btn-sm"
-                     ng-click="jsonModel.reset()"><i
-                    class="glyphicon glyphicon-refresh"></i></a>
-                </span>
-          <a href="" ng-click="jsonModel.toggleShowDiff()">{{jsonModel.showDiffs ? 'hide' : 'show'}} diff</a>
+    <div class="ui-bullet">
+        <div class="btn-icon btn-icon-round btn-icon-lg bg-danger">
+          <i class="ti-wand"></i>
         </div>
-        <div class="col-md-6 current" style="margin-top: 6px; padding-left: 50px;">
-          <span class="tab"><strong>Current model (read-only)</strong></span>
+        <div class="ui-bullet-content">
+          <br><h4>Click the <a href="" ng-click="tables.sync()">Sync with Database</a> to add the objects to your app</h4>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-8 col-lg-9 ">
-      <div class="model-diff-container">
-        <ba-ace-diff ace-diff-options="jsonModel.aceDiffOptions"
-                     differ="jsonModel.differ"
-                     left-content="jsonModel.newModel.schema"
-                     right-content="jsonModel.oldModel.schema"
-                     left-editor="jsonModel.schemaEditor"
-                     right-editor="jsonModel.oldSchemaEditor"
-                     control="jsonModel.editorControl"
-                     class="model-edit-ace-diff">
-        </ba-ace-diff>
-      </div>
-      <p><div class="notice">** id is added to all objects automatically, please do not add it yourself</div></p>
-
-    </div>
-
-    <div class="col-md-4 col-lg-3 model-types-container">
-      <div class="db-types-title"><span>Field Types</span>
-        <span><ba-tooltip tooltip-text="Click on a type to insert it in the editor"></ba-tooltip></span></div>
-      <br/>
-
-      <div class="db-types" ng-repeat="fieldType in jsonModel.fieldTypes" ng-click="jsonModel.insertTypeAtChar(fieldType)"
-           ng-mouseover="fieldHover = true">
-        <i class="ti-angle-left"></i>
-        {{fieldType}}
-      </div>
-      <br/>
-
-      <div class="db-note">
-        <p>
-          In <b>one to many relationship</b> between objects users and items:</br>
-          In the many side of the relationship (object items), we specify that each row relates to one row in the
-          other object users.<br/>
-          <b>"user": { "object": "users" }</b></br>
-          In the one side of the relationship (object users), we specify that each row relates to several rows in
-          items:<br/>
-          <b>"items": { "collection": "items", "via": "user" }</b>
-        </p>
-      </div>
-
-    </div>
   </div>
 </div>
