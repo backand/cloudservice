@@ -34,7 +34,14 @@
       } else {
         var objectToAdd = {name: self.selectedObjectName};
         if (!objectToAdd.fields) {
-          objectToAdd['fields'] = {};
+          objectToAdd['fields'] = {
+            "createdAt":{
+              "type": "datetime"
+            },
+            "updatedAt":{
+              "type" : "datetime"
+            }
+          };
         }
         newModelObject.push(objectToAdd);
 
