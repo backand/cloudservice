@@ -279,10 +279,10 @@
   }
 }
 
-.inactive-platform {
+/*.inactive-platform {
   -webkit-filter: grayscale(70%) brightness(150%);
   filter: grayscale(70%) brightness(150%);
-}
+}*/
 
 .platform-sprite {
   object-fit: none;
@@ -356,6 +356,21 @@
   height: 32px;
 }
 
+.jquery-logo-small {
+  object-position: -6px -389px;
+}
+
+.jquery-logo-large{
+object-position: -50px -1764px;
+}
+
+.vuejs-logo-large{
+  object-position: -50px -2331px;
+}
+
+.vuejs-logo-small{
+  object-position: -6px -515px;
+}
 .rest-api-logo-large {
   object-position: -54px -1575px
 }

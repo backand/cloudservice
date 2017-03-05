@@ -22,6 +22,10 @@
       optionsHash[ 'redux_existing' ] = "views/docs/kickstarts/templates/reduxExisting.html";
       optionsHash[ 'reactNative_kickstart' ] = "views/docs/kickstarts/templates/reactNative.html";
       optionsHash[ 'reactNative_existing' ] = "views/docs/kickstarts/templates/reactNativeExisting.html";
+      optionsHash[ 'vuejs_kickstart' ] = "views/docs/kickstarts/templates/vuejs.html";
+      optionsHash[ 'vuejs_existing' ] = "views/docs/kickstarts/templates/vuejsExisting.html";
+      optionsHash[ 'jquery_kickstart' ] = "views/docs/kickstarts/templates/jquery.html";
+      optionsHash[ 'jquery_existing' ] = "views/docs/kickstarts/templates/jqueryExisting.html";
 
       return optionsHash[platformName];
     };

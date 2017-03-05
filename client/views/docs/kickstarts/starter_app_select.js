@@ -55,6 +55,14 @@
           self.storage.docLanguage = 6
           self.storage.favoriteLanguage = 4;
           break;
+        case 'jquery':
+          self.storage.docLanguage = 7
+          self.storage.favoriteLanguage = 1;
+          break;
+        case 'vuejs':
+          self.storage.docLanguage = 8
+          self.storage.favoriteLanguage = 1;
+          break;
       }
       self.selectedPlatform = starterAppId;
       self.templateUrl = KickstartService.getPlatformContent(self.selectedPlatform + "_" + self.selectedMode);
@@ -100,6 +108,8 @@
         options[4] = 'ionic2';
         options[5] = 'redux';
         options[6] = 'reactNative';
+        options[7] = 'jquery';
+        options[8] = 'vuejs';
         self.selectedPlatform = options[self.storage.docLanguage];
         var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
         $state.go(state, {starterAppId: self.selectedPlatform, mode:$state.params.mode, newApp: $state.params.newApp});

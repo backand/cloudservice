@@ -5,7 +5,7 @@
            ng-class="{'platform-choice-nav': true, 'active-platform': platform.starterAppId === vm.selectedPlatform,
            'inactive-platform': platform.starterAppId !== vm.selectedPlatform}"
         ng-click="vm.changePlatform(platform.starterAppId)">
-        <img src="assets/images/platforms/logo-small.png" class="{{platform.iconClass}}">
+        <img src="assets/images/platforms/logo-small{{platform.starterAppId !== vm.selectedPlatform ? +'-grey' : +''}}.png" class="{{platform.iconClass}}">
         <span>{{platform.platform}}</span>
       </div>
     </div>
