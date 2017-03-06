@@ -1,0 +1,328 @@
+<section class="page-form-ele page ng-scope ba-docs">
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>Vue.js App Integration</strong>
+            <h2>Below is a guide for integrating Back& to your Vue.js Apps!</h2>
+        </div>
+        <div class="panel-body docs">
+            <div class="quickstart-body">
+                <section class="panel panel-box" ng-if="!vm.currentApp.Name">
+                    <div class="panel-item bg-info">
+                        <h3 style="text-align:center;">Speed up your Vue.js development with super simple back-end and a complete and scalable
+              gulpjs-based build system that scaffolds the project for you.</h3>
+                    </div>
+                </section>
+<h2>Including and Initializing the SDK</h2>
+<h5>The first step in connecting your Vue.js app to Backand is to import the JavaScript file containing the Backand SDK. You can either do this through a package manager, or via our CDN.</h5>
+
+<br />
+<pre><code class="hljs">&lt;!-- Include the Back&amp; SDK --&gt;
+
+&lt;script type="text/javascript" src="https://cdn.backand.net/vanilla-sdk/1.1.2/backand.min.js"&gt;&lt;/script&gt;</code></pre>
+
+<br />
+<h5>Once you've included the SDK, you'll have access to the functionality via the global object <code>backand</code>. You'll next use this to initialize our connection to Backand in the constructor for your app's <code>Vue</code> instance. We recommend putting the initialization in the <code>beforeMount</code> lifecycle hook, but any location or hook that initializes the SDK before it is used should be sufficient:</h5>
+
+<br />
+
+<pre><code class="hljs">
+var myApp = new Vue({
+    // Other constructor code here
+    beforeMount: () =&gt; {
+        backand.init &amp;&amp; backand.init({
+            appName: 'reactnativetodoexample',
+            signUpToken: '4c128c04-7193-4eb1-8f19-2b742a2a7bba',
+            anonymousToken: '2214c4be-d1b1-4023-bdfd-0d83adab8235'
+        });
+    },
+    // Other constructor code here
+});
+</code></pre>
+<br />
+<h5>With that, the Backand SDK is initialized. This post uses a pre-built demo app, <code>reactnativetodoexample</code>, and its associated keys. If you wish to connect this demo to your own Backand application, simply replace <code>appName</code>, <code>signUpToken</code>, and 
+<code>anonymousToken</code> with the correct values from your Backand application's dashboard. Aside from updating the data model to include the ToDo object, the only thing you will need to do to ensure your app operates in the same way is to add the relevant custom actions when editing a ToDo item (see below).</h5>
+
+<h2>Loading the object data</h2>
+
+<h5>Next, you need to define a global method that knows how to load the object data from your Backand application. To do this, first define an empty data member to store the future results from the API:</h5>
+
+<br />
+<pre><code class="hljs">
+var myApp = new Vue({
+    // Other constructor code here
+    data: {
+        todos: []
+    },
+    beforeMount: () =&gt; {
+        backand.init &amp;&amp; backand.init({
+            appName: 'reactnativetodoexample',
+            signUpToken: '4c128c04-7193-4eb1-8f19-2b742a2a7bba',
+            anonymousToken: '2214c4be-d1b1-4023-bdfd-0d83adab8235',
+            runSocket: true
+        });
+    },
+    // Other constructor code here
+});
+</code></pre>
+<br />
+<h5>This data member will hold the list of ToDo items obtained from the server. Next, we'll define a global method to populate this data member:</h5>
+
+<br />
+<pre><code class="hljs">
+var myApp = new Vue({
+    // Other constructor code here
+    data: {
+        todos: []
+    },
+    beforeMount: () =&gt; {
+        backand.init &amp;&amp; backand.init({
+            appName: 'reactnativetodoexample',
+            signUpToken: '4c128c04-7193-4eb1-8f19-2b742a2a7bba',
+            anonymousToken: '2214c4be-d1b1-4023-bdfd-0d83adab8235'
+        });
+    },
+    methods: {
+        fetchTodos: function() {
+            this.todos = [];
+                let params = {
+                    sort: [backand.helpers.sort.create('creationDate', backand.helpers.sort.orders.desc)],
+                    exclude: backand.helpers.exclude.options.all,
+                    pageSize: 1000000,
+                    pageNumber: 1,
+                }
+            backand.user.getUserDetails().then(res=&gt; {=
+                >if (res.data != null &amp;&amp; res.data.userId) {=
+                >params.filter = [backand.helpers.filter.create('user', backand.helpers.filter.operators.relation.in, user.data.userId)];=
+            >}
+            >return backand.object.getList('todos', params);
+            >}).then(res=&gt; { this.todos = res.data }).catch(error);
+        >}
+    >}
+    >// Other constructor code here
+>});
+</code></pre>
+<br />
+<h5>This function first clears out the <code>todos</code> data member, then defines a set of filter params using helper methods in the SDK (refer to <a href="http://docs.backand.com" >our documentation</a> for more information). Then, it calls <code>backand.user.getUserDetails()</code> to determine if the list should be restricted to the currently logged-in user. Finally, the method calls <code>backand.object.getList()</code> to fetch the list of objects in the SDK, and then updates the <code>todos</code> data container in the promise resolution block.</h5>
+
+<br />
+<h5>Now, you simply need to call <code>fetchTodos()</code> in the appropriate location in the Vue lifecycle. To load the data when mounting is complete, you can add it to the "mounted" handler like so:</h5>
+
+<br />
+<pre><code class="hljs">
+var myApp = new Vue({
+// Other constructor code here
+    data: {
+        todos: []
+    },
+    beforeMount: () =&gt; {
+        backand.init &amp;&amp; backand.init({
+            appName: 'reactnativetodoexample',
+            signUpToken: '4c128c04-7193-4eb1-8f19-2b742a2a7bba',
+            anonymousToken: '2214c4be-d1b1-4023-bdfd-0d83adab8235',
+            runSocket: true
+        });
+    },
+    mounted: function() {
+        this.fetchTodos();
+    },
+    methods: {
+        fetchTodos: function() {
+            this.todos = [];
+            let params = {
+                sort: [backand.helpers.sort.create('creationDate', backand.helpers.sort.orders.desc)],
+                exclude: backand.helpers.exclude.options.all,
+                pageSize: 1000000,
+                pageNumber: 1,
+            }
+            backand.user.getUserDetails().then(res=&gt; {
+                if (res.data != null &amp;&amp; res.data.userId) {
+                    params.filter = [backand.helpers.filter.create('user', backand.helpers.filter.operators.relation.in, user.data.userId)];
+                }
+                return backand.object.getList('todos', params);
+            }).then(res=&gt; { this.todos = res.data }).catch(error);
+        }
+    }
+    // Other constructor code here
+});
+</code></pre>
+<br/>
+<br/>
+<h2>Creating, Editing, and Deleting Objects</h2>
+
+<h5>Once you've got the basic display up and running, you'll want to add methods to create, update, and delete the ToDo items based on user actions. The following code is a handler for an x-template component titled todo-form, which is used to create a new ToDo entry in the application:</h5>
+
+<br />
+<pre><code class="hljs">
+Vue.component('todo-form', {
+    template: '#todo-form',
+    data: () =&gt; {
+        return {
+            input: ''
+        }
+    },
+    methods: {
+        create: function() {
+            // console.log(this.input)
+            if (this.input) {
+                backand.user.getUserDetails().then(res=&gt; {
+                    return backand.object.create(objectName, {
+                        text: this.input,
+                        creationDate: (new Date()).toISOString(),   
+                        completionDate: null,
+                        user: res.data.userId
+                    });
+                }).then(res=&gt; this.input = '').catch(error);
+            }
+        }
+    }
+})
+</code></pre>
+<br />
+<h5>Following a similar pattern to the initial load, this code first checks for a user context. If a user is not logged in, this call will have a value of <code>null</code>. Otherwise, we can use the <code>userId</code> of the active user to assign ownership of the new ToDo item. The code then calls <code>backand.object.create()</code> to create the record in your Backand application. </h5>
+
+<br />
+<h5>You can follow a similar pattern when updating an object:</h5>
+
+<br />
+<pre><code class="hljs">
+const todoItem = {
+    props: {
+        'todo': Object
+    },
+    template: '#todo-item',
+    methods: {
+        update: function() {
+            backand.object.update(objectName, this.todo.id, Object.assign({}, this.todo, {
+                completionDate: this.todo.completionDate ? null : (new Date()).toISOString()
+            })).catch(error);
+        },
+    remove: function() {
+            backand.object.remove(objectName, this.todo.id).catch(error);
+        }
+    }
+};
+</code></pre>
+<br />
+<h5>This function demonstrates how to update a ToDo item's completion date using <code>backand.object.update()</code> - simply provide the object name, the object ID, and the collection of changes to be made. The above method also provides deletion functionality with the 
+<code>remove</code> method. Simply provide the object name and the ID of the ToDo item to delete the entry from your database.</h5>
+
+<h2>Keeping the app up-to-date</h2>
+
+<h5>While you now have a fully-functional CRUD interface for the "todo" object, you have not yet built a way for your application to receive - and respond to - updates. You can accomplish this using Backand's <a href="http://docs.backand.com/en/latest/apidocs/realtime/index.html" >Realtime Communications</a> capability. First, create the appropriate Custom JavaScript actions in your Backand app's dashboard, and have them emit an event titled "update_todos" as follows:</h5>
+
+<br />
+<code>socket.emitAll("update_todos", {});</code>
+
+<br />
+<h5>This will send a socket message to all connected clients. At the moment we do not provide any parameters to this call (just an empty object - {}), but you can replace this with any of the variables available to your custom action, such as the dbRow that was just modified.</h5>
+
+<br />
+<h5>Now that you have a set of actions designed to announce changes to your ToDo database object, we need to configure the client side to receive socket communications. First, include the Socket.io library in the appropriate location in your code:</h5>
+
+<br />
+<code>&lt;script type="text/javascript" src="https://cdn.backand.net/socket.io/1.4.5/socket.io.js"&gt;&lt;/script&gt;</code>
+
+<br />
+<h5>Once that's done, we need to set the SDK to enable socket mode:</h5>
+
+<br />
+<br />
+<pre><code class="hljs">
+var myApp = new Vue({
+    // Other constructor code here
+    beforeMount: () =&gt; {
+        backand.init &amp;&amp; backand.init({
+            appName: 'reactnativetodoexample',
+            signUpToken: '4c128c04-7193-4eb1-8f19-2b742a2a7bba',
+            anonymousToken: '2214c4be-d1b1-4023-bdfd-0d83adab8235',
+            runSocket: true
+        });
+    },
+    // Other constructor code here
+});
+</code></pre>
+<br />
+<h5>Finally, you need to add an event handler. Update your mounted handler to include the event handler function as follows:</h5>
+<br />
+<pre><code class="hljs">
+var myApp = new Vue({
+    // Other constructor code here
+    mounted: function() {
+        this.fetchTodos();
+        backand.on('update_todos', (data) =&gt; {
+            this.fetchTodos();
+        });
+
+    },
+// Other constructor code here
+});
+</code></pre>
+<br />
+<h5>This function handles all <code>update_todos</code> events the same way - by reloading the entire list from the server. You can use a similar technique to write different handlers for each database operation, or to perform other types of logic based on your application's needs.</h5>
+
+<h2>Conclusion</h2>
+
+<h5>With the above code, you now have a simple data service that you can use to update your Vue.js app's user interface with results from a Backand application. You can create, update, and delete records at will in a responsive manner, no server code required. With Backand, you can accelerate your Vue.js development, focusing on what makes your app unique, and leave the server side to us.</h5>
+
+<br />
+              <button class="btn btn-lg btn-success" ng-if="!vm.isAppOpened" ng-click="vm.newApp()">Create Your App
+                and Get Started</button>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+            <br/>
+            <div class="quickstart-sidebar">
+
+                <div class="quickstart-sidebox" id="kickstart-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/kickstart-icon.png" />
+                        <div class="quickstart-sidebox-title">Already have a Vue.js project?</div>
+                        <br/>
+                        <div class="quickstart-sidebox-text">Learn how to include <b>Back&</b> in your existing project</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToExisting()">Get Started</button>
+                    </div>
+                </div>
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-video.png" />
+                        <div class="quickstart-sidebox-title">Watch our Video Tutorial</div>
+                        <br/>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" video-modal url="'https://www.youtube.com/embed/-35LHkNiorc?rel=0&autoplay=1'" title="'Vue.js Quickstart'">Play Video</button>
+                    </div>
+                </div>
+
+                <div class="quickstart-sidebox" id="video-sidebox">
+                    <div class="quickstart-kickstart">
+                        <img src="../assets/images/docs_pages/icon-quickstart.png" />
+                        <div class="quickstart-sidebox-title">View our API Documentation</div>
+                        <br />
+                        <a class="btn btn-lg btn-success quickstart-sidebox-button" href="http://docs.backand.com/" target="_blank">View docs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
