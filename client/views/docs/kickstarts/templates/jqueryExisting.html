@@ -11,8 +11,18 @@
               gulpjs-based build system that scaffolds the project for you.</h3>
                     </div>
                 </section>
-                <h2>Creating the Service</h2>
-                <h5>To integrate Back& with a JQuery-based web app, we'll make use of a global service variable that will wrap the SDK. This service will handle initialization of the sdk, and provide all of the tools necessary to work with a Backand application. We'll start by declaring the service and initializing Backand with the following code:</h5>
+              <h2>Including and Initializing the SDK</h2>
+              <h5>The first step in connecting your jQuery-based app to Backand is to include the JavaScript file containing the Backand SDK. You can either do this through a package manager, or via our CDN.</h5>
+
+              <br />
+              <pre><code class="hljs">&lt;!-- Include the Back&amp; SDK --&gt;
+
+&lt;script type="text/javascript" src="//cdn.backand.net/vanilla-sdk/1.1.2/backand.min.js"&gt;&lt;/script&gt;</code></pre>
+              <p>You can install the SDK locally using bower: <code>bower install backand-vanilla-sdk</code></p>
+
+              <h2>Creating the Service</h2>
+              <h5>Once you've included the SDK, you'll have access to the functionality via the global object
+                <code>backand</code>. To integrate Back& with a JQuery-based web app, we'll make use of a global service variable that will wrap the SDK. This service will handle initialization of the sdk, and provide all of the tools necessary to work with a Backand application. We'll start by declaring the service and initializing Backand with the following code:</h5>
                 <br/>
                 <pre><code class="hljs">
 var dataService = {
@@ -154,7 +164,7 @@ var loadList = function(){
                         <br/>
                         <div class="quickstart-sidebox-text">Learn how to include <b>Back&</b> in your existing project</div>
                         <br/>
-                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToExisting()">Get Started</button>
+                        <button class="btn btn-lg btn-success quickstart-sidebox-button" ng-click="vm.goToKickstart()">Get Started</button>
                     </div>
                 </div>
 
