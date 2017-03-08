@@ -27,10 +27,11 @@
 
 
     self.actionTemplateCategories = [
-      {id: 5, label: 'Real-time Communication'},
+      {id: 5, label: 'Back& Services'},
       {id: 6, label: 'Push Notifications'},
       {id: 1, label: 'Email & SMS'},
       {id: 2, label: 'Payment Processing'},
+      {id: 8, label: 'CRM & ERP'},
       {id: 3, label: 'File Storage'},
       {id: 4, label: 'Metrics & Analytics'},
       {id: 7, label: 'Bot'}
