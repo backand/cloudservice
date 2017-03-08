@@ -12,12 +12,13 @@
                     </div>
                 </section>
 <h2>Including and Initializing the SDK</h2>
-<h5>The first step in connecting your Vue.js app to Backand is to import the JavaScript file containing the Backand SDK. You can either do this through a package manager, or via our CDN.</h5>
+<h5>The first step in connecting your Vue.js app to Backand is to include the JavaScript file containing the Backand SDK. You can either do this through a package manager, or via our CDN.</h5>
 
 <br />
 <pre><code class="hljs">&lt;!-- Include the Back&amp; SDK --&gt;
 
-&lt;script type="text/javascript" src="https://cdn.backand.net/vanilla-sdk/1.1.2/backand.min.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script type="text/javascript" src="//cdn.backand.net/vanilla-sdk/1.1.2/backand.min.js"&gt;&lt;/script&gt;</code></pre>
+<p>You can install the SDK locally using bower: <code>bower install backand-vanilla-sdk</code></p>
 
 <br />
 <h5>Once you've included the SDK, you'll have access to the functionality via the global object <code>backand</code>. You'll next use this to initialize our connection to Backand in the constructor for your app's <code>Vue</code> instance. We recommend putting the initialization in the <code>beforeMount</code> lifecycle hook, but any location or hook that initializes the SDK before it is used should be sufficient:</h5>
