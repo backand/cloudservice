@@ -25,10 +25,17 @@
           heading: 'Model JSON',
           route: 'json_model'
         },
+<<<<<<< HEAD
          {
            heading: 'Model DataBase',
            route: 'db_model'
          }
+=======
+        // {
+        //   heading: 'Model DataBase',
+        //   route: 'db_model'
+        // }
+>>>>>>> 5b0fb30aa27cde0acb861de9ef0145959fa27553
       ];
       
         getSchema();
