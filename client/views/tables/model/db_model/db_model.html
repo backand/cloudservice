@@ -20,9 +20,9 @@
     <div class="panel-body">
 	<h2>Bringing Your Own Database</h2>
 	</br>
-	<h5>The Model diagram is powerful UI but it can limit the changes in some advanced cases. In case you can't make changes using the UI you could make the changes directly in the database and Backand will analyze your database structure and make the corresponding update to the objects.</h5>
+	<h5>The Model diagram serves as a powerful UI for your app's data model, but it can provide a limit to the changes it is possible to make - particularly in some more advanced use cases. In recognition of this, Backand gives you the opportunity to make changes directly in your database using a third-party database modification tool. Once you've made your changes, simply click "Sync with Database" to import your changes - Backand will analyze your database's structure, and will make the corresponding updates to your app's data schema.</h5>
 <h5>In order to make changes you can use any MySQL tools like these:</h5>
-            <div class="right-col" ng-if="!dbshow.isLocal">            
+            <div class="right-col" ng-if="!dbshow.isLocal">
                         <li><a href="//www.mysql.com/products/workbench" target="_blank">Workbench</a></li>
                         <li><a href="//www.phpmyadmin.net/home_page/index.php" target="_blank">phpMyAdmin</a></li>
                         <li><a href="//www.sequelpro.com/" target="_blank">Sequel Pro</a></li>
@@ -34,6 +34,6 @@
                     </p>
           </div>
 
-<h5>To connect your database copy the details from <a href='' ng-click='dbModel.showDatabase()')"> Database</a>.</h5>
-<h5>After finishing the changes, click on <a ng-click="dbModel.sync()">Sync With Database</a></h5>
+<h5>To connect your database, copy the details from the <a href='' ng-click='dbModel.showDatabase()')"> Database</a> section of your app's security settings.</h5>
+<h5>After finalizing the changes, click on <a ng-click="dbModel.sync()">Sync With Database</a> to import the changes into your app.</h5>
 </div>
