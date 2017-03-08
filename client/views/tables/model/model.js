@@ -25,13 +25,21 @@
           heading: 'Model JSON',
           route: 'json_model'
         },
+
+         {
+           heading: 'Model DataBase',
+           route: 'db_model'
+         }
+
         // {
         //   heading: 'Model DataBase',
         //   route: 'db_model'
         // }
-      ];
 
-      getSchema();
+      ];
+      
+        getSchema();
+      
     }
 
     $scope.$watch(function () {
