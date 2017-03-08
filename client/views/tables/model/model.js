@@ -27,7 +27,7 @@
         },
 
          {
-           heading: 'Model DataBase',
+           heading: 'Model Database',
            route: 'db_model'
          }
 
