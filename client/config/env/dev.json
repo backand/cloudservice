@@ -11,5 +11,5 @@
   "nodejsUrl": "http://nodejs.backand.net",
   "socketUrl": "https://socket.backand.co",
   "billingUrl": "http://billqa.backand.com",
-  "adfsResourse": "https://api.backand.co"
+  "adfsResourse": "https://api.backand.com"
 }

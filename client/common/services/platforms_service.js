@@ -43,6 +43,18 @@
           class: 'platform-sprite react-native-logo-large',
           iconClass: 'platform-sprite-icon react-native-logo-small',
           starterAppId: 'reactNative'
+        },
+        {
+          platform: 'JQuery',
+          class: 'platform-sprite jquery-logo-large',
+          iconClass: 'platform-sprite-icon jquery-logo-small',
+          starterAppId: 'jquery'
+        },
+        {
+          platform: 'Vue.js',
+          class: 'platform-sprite vuejs-logo-large',
+          iconClass: 'platform-sprite-icon vuejs-logo-small',
+          starterAppId: 'vuejs'
         }
       ];
     };

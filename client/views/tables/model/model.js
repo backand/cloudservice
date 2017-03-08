@@ -24,10 +24,22 @@
         {
           heading: 'Model JSON',
           route: 'json_model'
-        }
-      ];
+        },
 
-      getSchema();
+         {
+           heading: 'Model Database',
+           route: 'db_model'
+         }
+
+        // {
+        //   heading: 'Model DataBase',
+        //   route: 'db_model'
+        // }
+
+      ];
+      
+        getSchema();
+      
     }
 
     $scope.$watch(function () {

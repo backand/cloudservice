@@ -61,6 +61,14 @@
           self.storage.docLanguage = 6
           self.storage.favoriteLanguage = 4;
           break;
+        case 'jquery':
+          self.storage.docLanguage = 7
+          self.storage.favoriteLanguage = 1;
+          break;
+        case 'vuejs':
+          self.storage.docLanguage = 8
+          self.storage.favoriteLanguage = 1;
+          break;
       }
       var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
       $state.go(state, {starterAppId: starterAppId, mode:$state.params.mode, newApp: $state.params.newApp});
@@ -78,6 +86,8 @@
         options[4] = 'ionic2';
         options[5] = 'redux';
         options[6] = 'reactNative';
+        options[7] = 'jquery';
+        options[8] = 'vuejs';
         var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
         $state.go(state, {starterAppId: options[self.storage.docLanguage], mode:$state.params.mode, newApp: $state.params.newApp});
 
