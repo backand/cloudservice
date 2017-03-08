@@ -30,8 +30,9 @@
           route: 'db_model'
         }
       ];
-
-      getSchema();
+      
+        getSchema();
+      
     }
 
     $scope.$watch(function () {

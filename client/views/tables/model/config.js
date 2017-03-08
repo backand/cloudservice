@@ -25,7 +25,7 @@
       .state('db_model', {
         parent: 'tables.model',
         url: '/db',
-        controller: "DbModelController as dbModel",
+        controller: 'DbModelController as dbModel',
         templateUrl: 'views/tables/model/db_model/db_model.html'
       })
   }

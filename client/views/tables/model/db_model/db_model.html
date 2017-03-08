@@ -1,0 +1,39 @@
+
+ <div class="panel-heading">
+        <button id="sync_button" type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary btn-md" ng-click="dbModel.sync()" ladda="dbModel.syncing" data-style="expand-right">Sync with Database</button>
+
+        <span ng-click="dbModel.showMessages = !dbModel.showMessages" class=" btn btn-gap-v btn-xs dropdown tables-alert" ng-class="dbModel.alertClass" style="margin-left: 10px;">
+          <i class="ti-bell" ></i>
+          <div  ng-show="dbModel.showMessages"  class="dropdown-menu with-arrow hovering-menu panel panel-default">
+                <div class="panel-heading">
+                    Sync Status
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="message in dbModel.messages" style="text-transform: none;">
+                        {{message}}
+                    </li>
+                </ul>
+            </div>
+        </span>
+      <div us-spinner spinner-key="loading" spinner-start-active></div>
+    </div>
+    <div class="panel-body">
+	<h2>Bringing Your Own Database</h2>
+	</br>
+	<h5>The Model diagram is powerful UI but it can limit the changes in some advanced cases. In case you can't make changes using the UI you could make the changes directly in the database and Backand will analyze your database structure and make the corresponding update to the objects.</h5>
+<h5>In order to make changes you can use any MySQL tools like these:</h5>
+            <div class="right-col" ng-if="!dbshow.isLocal">            
+                        <li><a href="//www.mysql.com/products/workbench" target="_blank">Workbench</a></li>
+                        <li><a href="//www.phpmyadmin.net/home_page/index.php" target="_blank">phpMyAdmin</a></li>
+                        <li><a href="//www.sequelpro.com/" target="_blank">Sequel Pro</a></li>
+                        <li><a href="//www.heidisql.com/" target="_blank">HeidiSQL</a></li>
+                    </ul>
+                    <!--<br/><br/>>> To populate data into your database use our <a href="http://{{dbshow.appName}}.backand.net" target="_blank">Back Office</a>-->
+                    <!--<br/>Go to <a ng-click="dbshow.sync(0)" href="">Database Table</a> and click <button type="button" class="btn btn-w-md btn-gap-v btn-round btn-primary" ng-click="dbshow.sync(1)">Sync Tables</button>-->
+                    <!--after you update your schema to sync your changes into Backand.-->
+                    </p>
+          </div>
+
+<h5>To connect your database copy the details from <a href='' ng-click='dbModel.showDatabase()')"> Database</a>.</h5>
+<h5>After finishing the changes, click on <a ng-click="dbModel.sync()">Sync With Database</a></h5>
+</div>

@@ -48,7 +48,7 @@
               id="day-of-month"
               ng-model="myFrequency.dayOfMonthValues"
               multiple="multiple"
-              ng-options="value as (value | cronMonthName) for value in monthValues">
+              ng-options="value as (value | cronNumeral) for value in dayOfMonthValues">
       </select>
     </div>
     <div ng-show="myFrequency.base >= 3 && myFrequency.base < 6" class="form-group">
