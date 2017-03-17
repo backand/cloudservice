@@ -23,9 +23,9 @@
     {{ ObjectData.showLog ? 'HIDE CODE' : 'SHOW CODE' }}
     <i class="ti-angle-right" ng-hide="ObjectData.showLog"></i>
   </a>
-<div class="container">
+<div>
   <div class="row">
-    <div ng-class="ObjectData.showLog == false ? 'col-md-12' : (ObjectData.pinme == true ? 'col-md-6' : 'col-md-7')">
+    <div ng-class="ObjectData.showLog == false ? 'col-md-12' : 'col-md-8'">
 
       <!-- Filter Data-->
       <fieldset class="collapsible-fieldset"
