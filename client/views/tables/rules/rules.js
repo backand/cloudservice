@@ -644,7 +644,7 @@
       })[0])
     }
 
-    var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup','backandAuthOverride'];
+    var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup','backandAuthOverride','accessFilter','socialAuthOverride','ChangePasswordOverride'];
 
     self.isConstName = function (ruleName) {
       return (self.getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);

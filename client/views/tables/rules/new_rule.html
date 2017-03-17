@@ -129,7 +129,7 @@
         </div>
 
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-show="rules.action.workflowAction && !rules.isNodeJS"
+             ng-show="rules.action.workflowAction"
              ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
           <label>Input Parameters</label>
           <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
@@ -141,7 +141,7 @@
                  ng-model="rules.action.inputParameters"
                  ng-pattern="rules.paramsPattern"
                  placeholder="input1,input2,...."
-                 ng-disabled="!rules.editMode">
+                 ng-disabled="!rules.editMode && !rules.isNodeJS">
           <div ng-messages="rules.newRuleForm.inputParameters.$error">
             <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.</div>
           </div>

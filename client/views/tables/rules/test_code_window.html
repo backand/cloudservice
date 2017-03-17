@@ -87,7 +87,7 @@
               style="margin-left: 20px; margin-bottom: 3px"
               class="btn btn-success pull-right"
               data-style="expand-right" ladda="rules.test.testLoading"
-              ng-disabled="!rules.allowTest() || !rules.allowTestEditMode"
+              ng-disabled="(!rules.allowTest() || !rules.allowTestEditMode) && !rules.isNodeJS"
               ng-click="rules.testData()"> {{rules.testActionTitle}}
       </button>
 

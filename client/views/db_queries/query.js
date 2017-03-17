@@ -304,7 +304,7 @@
     };
 
     self.showHelp = function(){
-      $window.open('http://docs.backand.com/en/latest/apidocs/queries/index.html', 'bkhelp');
+      $window.open('http://docs.backand.com/#queries', 'bkhelp');
     }
 
     self.deleteQuery = function () {

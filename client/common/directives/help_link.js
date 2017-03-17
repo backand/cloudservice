@@ -16,131 +16,131 @@
         var locations = {
           "securityGeneral": {
             "page": "security/auth",
-            "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#introduction"
+            "url": "http://docs.backand.com/#the-user-object-and-security"
           },
           "securityAnonymousAccess": {
             "page": "security/auth",
             "section": "Anonymous Access",
-            "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#anonymous-access"
+            "url": "http://docs.backand.com/#anonymous-authentication"
           },
           "securitySignup": {
             "page": "security/auth",
             "section": "Public App",
-            "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#sign-up"
+            "url": "http://http://docs.backand.com/#signup"
           },
           "customPages":{
             "page":"security/auth",
             "section":"Custom Registration Page URL",
-            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#custom-pages"
+            "url":"http://docs.backand.com/#security-configuration"
           },
           "emailVerification":{
             "page":"security/auth",
             "section": "Sign-up Email Verification",
-            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#sign-up-email-verification"
+            "url":"http://docs.backand.com/#email-verification-process"
           },
           "socialAndKeysGeneral": {
             "page": "security/social_and_keys",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#social-configuration"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "socialAndKeysMasterToken": {
             "page": "security/social_and_keys",
             "section": "Master Token",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#master-token"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "socialAndKeysAPISignupToken": {
             "page": "security/social_and_keys",
             "section": "API Sign-up Token",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#api-signup-token"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "socialAndKeysFacebook": {
             "page": "security/social_and_keys",
             "section": "Facebook",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#facebook-app-configuration"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "socialAndKeysTwitter": {
             "page": "security/social_and_keys",
             "section": "Twitter",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/#twitter-app-configuration"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "socialAndKeysAzure": {
             "page": "security/social_and_keys",
             "section": "Azure",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#azure-ad-app-configuration"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "socialAndKeysADFS": {
             "page": "security/social_and_keys",
             "section": "ADFS",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#local-adfs-app-configuration"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "socialAndKeysGoogle": {
             "page": "security/social_and_keys",
             "section": "Google",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#google-app-configuration"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "refreshToken":{
             "page": "security/social_and_keys",
-            "url":"http://docs.backand.com/en/latest/getting_started/sdk/index.html#managerefreshtoken"
+            "url":"http://docs.backand.com/#authentication-with-oauth-2-0"
           },
           "socialAndKeysGithub": {
             "page": "security/social_and_keys",
             "section": "Github",
-            "url": "http://docs.backand.com/en/latest/getting_started/security_auth/index.html#github-app-configuration"
+            "url": "http://docs.backand.com/#social-keys"
           },
           "objectsModel": {
             "page": "objects/model",
-            "url": "http://docs.backand.com/en/latest/apidocs/security/index.html#introduction"
+            "url": "http://docs.backand.com/#objects"
           },
           "preDefinedFilter":{
             "page":"objects/security",
-            "url":"http://docs.backand.com/en/latest/getting_started/objects/index.html#pre-defined-filter"
+            "url":"http://docs.backand.com/#objects"
           },
           "objectSecurityTemplate":{
             "page":"objects/security",
-            "url":"http://docs.backand.com/en/latest/apidocs/security/index.html#roles-security-templates"
+            "url":"http://docs.backand.com/#roles-security-templates"
           },
           "registeredUsers":{
             "page":"security/users",
-            "url":"http://docs.backand.com/en/latest/apidocs/security/index.html#link-your-apps-users-with-backands-registered-users"
+            "url":"http://docs.backand.com/#link-your-apps-users-with-backands-registered-users"
           },
           "adminUsers":{
             "page":"security/team",
-            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#team"
+            "url":"http://docs.backand.com/#team"
           },
           "securityActions":{
             "page":"security/actions",
-            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#security-actions"
+            "url":"http://docs.backand.com/#security-actions"
           },
           "securityTemplates":{
             "page":"security/actions",
-            "url":"http://docs.backand.com/en/latest/getting_started/security_auth/index.html#security-templates"
+            "url":"http://docs.backand.com/#security-templates"
           },
           "logConfiguration":{
             "page":"log/config",
-            "url":"http://docs.backand.com/en/latest/getting_started/log/index.html#configuration"
+            "url":"http://docs.backand.com/#configuration91"
           },
           "dataHistory":{
             "page":"log/config",
-            "url":"http://docs.backand.com/en/latest/getting_started/log/index.html#data-history"
+            "url":"http://docs.backand.com/#data-history"
           },
           "appException":{
             "page":"log/exception",
-            "url":"http://docs.backand.com/en/latest/getting_started/log/index.html#server-side-exceptions"
+            "url":"http://docs.backand.com/#server-side-exceptions"
           },
           "nosqlQuery":{
-            "url":"http://docs.backand.com/en/latest/apidocs/nosql_query_language/index.html",
+            "url":"http://docs.backand.com/#nosql-query-language",
             "page":"queries"
           },
           "realtime":{
-            "url":"http://docs.backand.com/en/latest/apidocs/realtime/index.html",
+            "url":"http://docs.backand.com/#realtime-database-communications",
             "page":"actoinhelp"
           },
           "ContinuousDeployment":{
             "page":"configuration",
-            "url":"http://docs.backand.com/en/latest/what_would_you_like_to_do/continuous_deployment/index.html"
+            "url":"http://docs.backand.com/#continuous-deployment-and-versioning"
           },
           "crons":{
             "page":"cron",
-            "url":"http://docs.backand.com/en/latest/getting_started/crons/index.html"
+            "url":"http://docs.backand.com/#background-jobs"
           }
         }
 
