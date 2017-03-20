@@ -4,6 +4,7 @@
       <strong> {{log.title}} </strong>
       <ba-help-link key="{{log.helpKey}}" with-text="false"></ba-help-link>
       <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
+      <button class="btn btn-default log-history-cons" ng-click="log.gotoConsole()">View Log History</button>
     </div>
     <div class="panel-body">
       <fieldset class="collapsible-fieldset"
@@ -29,10 +30,14 @@
       </fieldset>
 
       <!-- Data Grid -->
-      <div id="logGrid" ui-grid="log.gridOptions" ui-grid-resize-columns class="grid"></div>
-      <div ng-show="log.gridOptions.totalItems == 0">
-        <h3>No {{log.title}}</h3>
+              <div ng-show="log.gridOptions.totalItems == 0">
+        <h3>No {{log.title}} available</h3>
       </div>
+      <br/>
+      <div id="logGrid" ui-grid="log.gridOptions" ui-grid-resize-columns class="grid">
+
+      </div>
+      
       <div ng-show="log.gridOptions.totalItems > 0" class="row">
         <div class="col-md-5">
           <pagination total-items="log.gridOptions.totalItems" ng-model="log.paginationOptions.pageNumber" max-size="5" class="pagination-sm" boundary-links="true" rotate="false" items-per-page="log.paginationOptions.pageSize" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>

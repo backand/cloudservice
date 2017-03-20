@@ -8,7 +8,18 @@
         font-size: $font-size-base;
     }
 }
-
+ .log-history-cons {
+  float: right;
+  margin-top: -25px;
+  border: none;
+  background-color:#f5f5f5;
+  }
+     .log-history {
+  float: right;
+  margin-top: -5px;
+  border: none;
+  background-color:#f5f5f5;
+  }
 .panel-dark {
     @include panel-variant($dark, #fff, $dark, $dark);
 }
