@@ -74,9 +74,31 @@
         if (a !== -1) {
           self.logIndex.last = a;
         }
+        if(self.pinme == false){
         self.showMe();
+      }
     }
+    self.toggleSearch = function () {
 
+            if (self.showme) {
+                $scope.$window.onclick = function (event) {
+                    closeSearchWhenClickingElsewhere(event, $scope.toggleSearch);
+                };
+            } 
+        };
+    
+   function closeSearchWhenClickingElsewhere(event, callbackOnClose) {
+
+            var clickedElement = event.target;
+            if (!clickedElement) return;
+
+            var clickedOnDropDown = (clickedElement.parentElement.classList.contains('http-body'));
+
+            if (!clickedOnDropDown) {
+                self.showme = false;
+            }
+
+        }
    //Function to receive pin status, if no pin default is pinned.
     self.getPinToLocalStorage = function() {
         if (self.backandstorage.pinned !== false && self.backandstorage.pinned !== true) {
