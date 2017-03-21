@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService','RulesService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService) {
+  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, RulesService) {
     var self = this;
     self.isTablesClicked = false;
 
@@ -15,6 +15,7 @@
     function clearTables() {
       self.tables = [];
       self.queries = [];
+      self.functions = [];
     }
 
     self.isExampleApp = function () {
@@ -58,6 +59,7 @@
 
             fetchDbQueries();
             fetchCronJobs();
+            fetchFunctions();
           }
         },
         function (data) {
@@ -80,6 +82,19 @@
         function (data) {
           $log.debug("DbQueriesService failure", data);
         }
+      );
+    }
+
+    function fetchFunctions() {
+      RulesService.AppName = $state.params.appName;
+      RulesService.tableId = TablesService.getRootId();
+      RulesService.get().then(
+          function (data) {
+            self.functions = data.data.data;
+          },
+          function (data) {
+            $log.debug("Can't get functions", data);
+          }
       );
     }
 
@@ -201,6 +216,13 @@
 
     self.newDbQuery = function ($event) {
       goToState($event, 'dbQueries.newQuery');
+    };
+
+    self.showFunction = function ($event, func) {
+      var params = {
+        functionId: func.__metadata.id
+      };
+      goToState($event, 'functions.function', params);
     };
 
     self.showCronJob = function ($event, job) {
