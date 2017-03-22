@@ -87,9 +87,9 @@
     </div>
 
     <!-- HTTP Log -->
-    <div ng-show="ObjectData.showLog" ng-class="ObjectData.pinme === true ? 'col-md-4' : 'col-md-3'" >
+    <div ng-show="ObjectData.showLog" class='col-md-4' >
       
-    <div class="row">
+    <div class="row" ng-class="ObjectData.pinme === false ? 'row-margin': '' ">
       <div class="panel panel-default log-panel" ng-class="ObjectData.pinme === true ? 'col-md-8' : 'col-md-12  http-log'" ng-if="ObjectData.httpRequestsLog.length !== 0">
         <div class="panel-heading">
           <div>
@@ -110,7 +110,7 @@
              <table class="table  animate-show-hide" >
               <thead class="http-body">
                 <tr class="http-drop-table-head">
-                  <td>Action Log</td>
+                  <td><b>Action Log</b></td>
                   <td>
                   <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-right cursorp"></span>
                   </td>
@@ -153,7 +153,7 @@
              <table class="table  animate-show-hide" >
               <thead class="http-body">
                 <tr class="http-table-head">
-                  <td><p>Action Log</p></td>
+                  <td><b>Action Log</b></td>
                   <td>
                   <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-left cursorp"></span>
                   </td>
