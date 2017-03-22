@@ -19,6 +19,7 @@
       '$rootScope',
       'AppsService',
       '$localStorage',
+      '$window',
       ObjectDataController
     ]);
 
@@ -37,7 +38,8 @@
                                 $stateParams,
                                 $rootScope,
                                 AppsService,
-                                $localStorage) {
+                                $localStorage,
+                                $window) {
 
     var self = this;
     self.currentApp = AppsService.currentApp;
@@ -81,24 +83,26 @@
     self.toggleSearch = function () {
 
             if (self.showme) {
-                $scope.$window.onclick = function (event) {
-                    closeSearchWhenClickingElsewhere(event, $scope.toggleSearch);
-                };
+                
             } 
         };
-    
-   function closeSearchWhenClickingElsewhere(event, callbackOnClose) {
+   
+   function closeSearchWhenClickingElsewhere(event) {
 
             var clickedElement = event.target;
             if (!clickedElement) return;
 
-            var clickedOnDropDown = (clickedElement.parentElement.classList.contains('http-body'));
-
-            if (!clickedOnDropDown) {
+            var clickedOnDropDown = (clickedElement.parentElement.classList.contains('table'));
+            var clickedOnButton = (clickedElement.classList.contains('http-dropdownbutn'));
+            if (!clickedOnDropDown && !clickedOnButton) {
                 self.showme = false;
             }
 
         }
+         $window.onclick = function (event) {
+                    closeSearchWhenClickingElsewhere(event);
+                };
+   
    //Function to receive pin status, if no pin default is pinned.
     self.getPinToLocalStorage = function() {
         if (self.backandstorage.pinned !== false && self.backandstorage.pinned !== true) {

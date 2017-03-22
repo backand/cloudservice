@@ -112,17 +112,17 @@
                 <tr class="http-drop-table-head">
                   <td>Action Log</td>
                   <td>
-                  <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-right"></span>
+                  <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-right cursorp"></span>
                   </td>
                 </tr>
               </thead>
               <tbody class="http-body">
-                <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true"
+                <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true" class="cursorp"
                 ng-mouseleave="hovering=false" ng-repeat="option in ObjectData.httpRequestsLog" ng-click="ObjectData.getLogIndex($index)">
-                  <td> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs"></span>{{option.requestTitle}}
+                  <td> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs"></span><span>{{option.requestTitle}}</span>
                   </td>
                   <td class="request-method">
-                    {{option.requestMethod}}
+                    <span>{{option.requestMethod}}</span>
                   </td>
                 </tr>
               </tbody>
@@ -155,17 +155,17 @@
                 <tr class="http-table-head">
                   <td><p>Action Log</p></td>
                   <td>
-                  <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-left"></span>
+                  <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-left cursorp"></span>
                   </td>
                 </tr>
               </thead>
               <tbody class="http-body">
-                <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true"
+                <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true" class="cursorp"
                 ng-mouseleave="hovering=false" ng-repeat="option in ObjectData.httpRequestsLog" ng-click="ObjectData.getLogIndex($index)">
-                  <td> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs"></span>{{option.requestTitle}}
+                  <td> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs"></span><span>{{option.requestTitle}}</span>
                   </td>
-                  <td>
-                    {{option.requestMethod}}
+                  <td class="request-method">
+                    <span>{{option.requestMethod}}<span>
                   </td>
                 </tr>
               </tbody>

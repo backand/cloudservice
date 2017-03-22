@@ -17,9 +17,9 @@
       }
     });
 
-  CodeGeneratorController.$inject = ['CONSTS', 'LocalStorageService', '$scope', 'VanillaGeneratorService', 'ReduxGeneratorService', 'AngularGeneratorService'];
+  CodeGeneratorController.$inject = ['CONSTS', 'LocalStorageService', '$scope', 'VanillaGeneratorService', 'ReduxGeneratorService', 'AngularGeneratorService', '$window'];
 
-  function CodeGeneratorController(CONSTS, LocalStorageService, $scope, VanillaGeneratorService, ReduxGeneratorService, AngularGeneratorService){
+  function CodeGeneratorController(CONSTS, LocalStorageService, $scope, VanillaGeneratorService, ReduxGeneratorService, AngularGeneratorService, $window){
     var self = this;
     self.storage = LocalStorageService.getLocalStorage();
     self.languageOptions = [
@@ -117,7 +117,21 @@
         self.showme = false
       }
     }    
+   function closeSearchWhenClickingElsewhere(event) {
 
+            var clickedElement = event.target;
+            if (!clickedElement) return;
+
+            var clickedOnDropDown = (clickedElement.parentElement.classList.contains('table'));
+            var clickedOnButton = (clickedElement.classList.contains('code-dropdownbutn'));
+            if (!clickedOnDropDown && !clickedOnButton) {
+                self.showme = false;
+            }
+
+        }
+      //   $window.onclick = function (event) {
+      //              closeSearchWhenClickingElsewhere(event);
+      //          };
     if (!self.storage.favoriteLanguage) {
       self.chosenLanguage = 1;
     } else {

@@ -41,12 +41,16 @@
 
     .http-body{
       border: 1px solid #ddd;
+    
+    }
+    .cursorp{
+    cursor:pointer;
     }
     .http-dropdown{
       border:none;
     }
     .request-method{
-
+    padding-top: 10px;
     }
     .glyphicon-chevron-right{
     float:right;
@@ -59,6 +63,7 @@
       background-color: #f5f5f5;
       font-size: 16px;
       padding-left: 0px;
+      width: 150px;
     }
     .http-table-head{
       p{
@@ -81,7 +86,12 @@
     }
     .tr-hovering{
     background-color:#428bca;
-    color: white;
+      p{
+      color: white;
+      }
+      span{
+      color: white;
+      }
     }
   .log-panel {
     margin-top: 19px;
@@ -94,7 +104,7 @@
       p {
         font-size: 16px;
         margin-bottom:0px;
-        padding-top: 3.85%;
+        padding-top: 6px;
         padding-left: 0px;
       }
     }
