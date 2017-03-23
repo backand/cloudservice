@@ -109,10 +109,10 @@
              <div class="http-drop-table" ng-show="ObjectData.showme">
              <table class="table  animate-show-hide" >
               <thead class="http-body">
-                <tr class="http-drop-table-head cursorp">
+                <tr  ng-click="ObjectData.pinMe()" class="http-drop-table-head cursorp">
                   <td><p>Pin to sidebar</p></td>
                   <td>
-                  <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-right"></span>
+                  <span class="glyphicon glyphicon-chevron-right"></span>
                   </td>
                 </tr>
               </thead>
