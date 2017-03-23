@@ -115,28 +115,81 @@ tabs .tab-content {
     cursor: pointer
   }
 }
-@media only screen and (min-width:1356px){
-.lang-table {
-  max-width: none !important;
-  width: 64%;
-  float:right;
-  margin-bottom: 40px;
-  margin-left: 9px;
-}
-  .lang-dropdown {
-        display: flex;
-        width:100%;
-        label{
-          padding-right:11.5px;
-          padding-top:15px;
-          width: 33%;
-          float:left;
+
+  .log-panel {
+    margin-top: 19px;
+    margin-right: 0px !important;
+    padding-right:0px !important;
+    padding-left: 0px !important;
+    .panel-heading {
+      text-transform: none;
+      height: 56px;
+      p {
+        font-size: 16px;
+        margin-bottom:0px;
+        padding-left: 0px; ;
+      }
+    }
+    .display-heading{ 
+       padding-top: 8px
+    }
+    .action-log{
+    padding-left: 0px !important;
+    }
+
+    .log-navigation-buttons {
+      position: absolute;
+      right: 24px;
+      top: 27px;
+
+      button {
+        outline: none;
+
+        &:focus {
+          background-color: #fff;
+          border-color: #ccc;
         }
-  }
+      }
+    }
 }
+
 .object-data-log-container {
   overflow: auto;
+  
+    .cursorp{
+    cursor:pointer;
+    }
+    input, textarea {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 5px;
+    }
 
+    input {
+      height: 30px;
+    }
+
+    textarea {
+      height: 200px;
+      border-color: #ccc;
+    }
+
+    bknd-copy-box [clip-copy] {
+      position: relative;
+      bottom: 64px;
+      float: right;
+    }
+
+    bknd-copy-box[type="textarea"] [clip-copy] {
+      bottom: 235px;
+    }
+
+    .http-body{
+      border: 1px solid #ddd;
+     .option-label{
+      padding-left:15.5px;
+     }
+    }
   .object-data-log-response {
     resize: vertical;
   }
@@ -226,4 +279,19 @@ object-position: -50px -1764px;
 .rest-api-logo-small {
   object-position: -6px -341px
 }
+      .tr-hovering{
+    background-color:#428bca;
+      p{
+      color: white;
+      }
+      span{
+      color: white;
+      }
+      b{
+      color: white;
+      }
+    }
+    .cursorp{
+    cursor:pointer;
+    }
 }
