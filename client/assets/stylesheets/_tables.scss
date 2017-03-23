@@ -115,7 +115,25 @@ tabs .tab-content {
     cursor: pointer
   }
 }
-
+@media only screen and (min-width:1356px){
+.lang-table {
+  max-width: none !important;
+  width: 64%;
+  float:right;
+  margin-bottom: 40px;
+  margin-left: 9px;
+}
+  .lang-dropdown {
+        display: flex;
+        width:100%;
+        label{
+          padding-right:11.5px;
+          padding-top:15px;
+          width: 33%;
+          float:left;
+        }
+  }
+}
 .object-data-log-container {
   overflow: auto;
 
@@ -186,7 +204,7 @@ tabs .tab-content {
 }
 
 .jquery-logo-small {
-  object-position: -6px -382px;
+  object-position: -6px -385px;
 }
 
 .jquery-logo-large{
@@ -198,7 +216,7 @@ object-position: -50px -1764px;
 }
 
 .vuejs-logo-small{
-  object-position: -6px -515px;
+  object-position: -6px -510px;
 }
 .rest-api-logo-large {
   object-position: -54px -1575px

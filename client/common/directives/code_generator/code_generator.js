@@ -47,7 +47,7 @@
       },
       {
         value: 3,
-        label: 'Ionic',
+        label: 'Ionic 1',
         generator: AngularGeneratorService,
         opts: {
          // type: 'promise',
@@ -84,7 +84,7 @@
       },
       {
         value: 7,
-        label: 'Jquery',
+        label: 'JS / jQuery',
         generator: VanillaGeneratorService,
         opts: {
           type: 'return',
@@ -146,6 +146,7 @@
       self.chosenLanguage = (index + 1);
       self.showMe();
       self.storage.favoriteLanguage = (index + 1);
+      self.storage.docLanguage = (index + 1);
       self.chosenClass = _.where(self.languageOptions, {value: self.chosenLanguage})[0].class;
      
 

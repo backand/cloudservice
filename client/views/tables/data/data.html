@@ -95,13 +95,13 @@
           <div>
             <div ng-if="ObjectData.pinme === false">
               <button  class="btn btn-default   http-dropdownbutn" type="button" ng-click="ObjectData.showMe()"      aria-haspopup="true" aria-expanded="false">
-              {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestTitle}},
+              Action Log: {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestTitle}},
               {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestMethod}}
-              <span class="caret"></span>
+              <span class="ti-arrow-circle-down"></span>
               </button>
             </div>
             <div ng-if="ObjectData.pinme === true">
-              <p >{{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestTitle}},
+              <p class="display-heading">{{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestTitle}},
               {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestMethod}}</p>
             </div>
           </div>
@@ -109,20 +109,20 @@
              <div class="http-drop-table" ng-show="ObjectData.showme">
              <table class="table  animate-show-hide" >
               <thead class="http-body">
-                <tr class="http-drop-table-head">
-                  <td><b>Action Log</b></td>
+                <tr class="http-drop-table-head cursorp">
+                  <td><p>Pin to sidebar</p></td>
                   <td>
-                  <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-right cursorp"></span>
+                  <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-right"></span>
                   </td>
                 </tr>
               </thead>
               <tbody class="http-body">
                 <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true" class="cursorp"
                 ng-mouseleave="hovering=false" ng-repeat="option in ObjectData.httpRequestsLog" ng-click="ObjectData.getLogIndex($index)">
-                  <td> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs"></span><span>{{option.requestTitle}}</span>
+                  <td class="request-title"> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs play-butn"></span><span>{{option.requestTitle}}</span>
                   </td>
                   <td class="request-method">
-                    <span>{{option.requestMethod}}</span>
+                    <b>{{option.requestMethod}}</b>
                   </td>
                 </tr>
               </tbody>
@@ -153,7 +153,7 @@
              <table class="table  animate-show-hide" >
               <thead class="http-body">
                 <tr class="http-table-head">
-                  <td><b>Action Log</b></td>
+                  <td><p>Action Log</p></td>
                   <td>
                   <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-left cursorp"></span>
                   </td>
@@ -162,10 +162,10 @@
               <tbody class="http-body">
                 <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true" class="cursorp"
                 ng-mouseleave="hovering=false" ng-repeat="option in ObjectData.httpRequestsLog" ng-click="ObjectData.getLogIndex($index)">
-                  <td> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs"></span><span>{{option.requestTitle}}</span>
+                  <td class="request-titl"> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs play-butn"></span><span>{{option.requestTitle}}</span>
                   </td>
                   <td class="request-method">
-                    <span>{{option.requestMethod}}<span>
+                    <b>{{option.requestMethod}}<b>
                   </td>
                 </tr>
               </tbody>

@@ -71,10 +71,11 @@
       }
     }());
 
-    //Function to show which index is chosen
+    //Function to set and show which index is chosen
     self.getLogIndex = function(a){
         if (a !== -1) {
           self.logIndex.last = a;
+          self.backandstorage.httpLogIndex = a;
         }
         if(self.pinme == false){
         self.showMe();
@@ -99,9 +100,9 @@
             }
 
         }
-         $window.onclick = function (event) {
-                    closeSearchWhenClickingElsewhere(event);
-                };
+//         $window.onclick = function (event) {
+//                    closeSearchWhenClickingElsewhere(event);
+//                };
    
    //Function to receive pin status, if no pin default is pinned.
     self.getPinToLocalStorage = function() {
@@ -110,9 +111,16 @@
            }
           return(self.backandstorage.pinned)
         }
+    self.getHttpLogLocalStorage = function(){
+      if(!self.backandstorage.httpLogIndex)
+      {
+        self.backandstorage.httpLogIndex = 0;
+      }
+      return(self.backandstorage.httpLogIndex)
+    }
     self.showme = false;
     self.pinme = self.getPinToLocalStorage();
-
+    self.logIndex.last = self.getHttpLogLocalStorage();
     //Show drop down http log
     self.showMe = function(){
       if(self.showme == false){

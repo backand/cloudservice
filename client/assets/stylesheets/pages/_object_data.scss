@@ -30,18 +30,30 @@
  
     .http-drop-table{
       position: absolute;
-      width: 150px;
+      width: 220px;
       background-color:white;
+      margin-left: -4px;
     }
     .http-pinned-table{
       position: absolute;
       background-color:white;
       padding-top:19px;
     }
-
+    .request-titl{
+    padding-top:10px;
+    }
     .http-body{
       border: 1px solid #ddd;
-    
+     .option-label{
+      padding-left:15.5px;
+     }
+    }
+    .play-butn{
+    font-size: 8px;
+    top: -1px
+    }
+    .request-title{
+    padding-top: 11px;
     }
     .cursorp{
     cursor:pointer;
@@ -54,6 +66,7 @@
     }
     .glyphicon-chevron-right{
     float:right;
+    padding-top: 4px;
     }
     .glyphicon-chevron-left{
     float:right;
@@ -63,12 +76,16 @@
       background-color: #f5f5f5;
       font-size: 16px;
       padding-left: 0px;
-      width: 150px;
     }
+    .http-dropdownbutn:focus {outline:0;}
     .http-table-head{
       p{
-      font-size: 16px;
+      font-size: 14px;
       margin-bottom:3px;
+      padding-top: 4px;
+      }
+      .glyphicon-chevron-left{
+      padding-top: 5.3px;
       }
        border: 1px solid #ddd;
        background-color: white;
@@ -92,6 +109,9 @@
       span{
       color: white;
       }
+      b{
+      color: white;
+      }
     }
   .log-panel {
     margin-top: 19px;
@@ -104,9 +124,11 @@
       p {
         font-size: 16px;
         margin-bottom:0px;
-        padding-top: 6px;
-        padding-left: 0px;
+        padding-left: 0px; ;
       }
+    }
+    .display-heading{ 
+       padding-top: 8px
     }
     .action-log{
     padding-left: 0px !important;
