@@ -155,7 +155,7 @@ tabs .tab-content {
 
 .object-data-log-container {
   overflow: auto;
-  
+
     .cursorp{
     cursor:pointer;
     }
@@ -183,7 +183,25 @@ tabs .tab-content {
     bknd-copy-box[type="textarea"] [clip-copy] {
       bottom: 235px;
     }
-
+      @media only screen and (min-width:1359px){
+.lang-table {
+  max-width: none !important;
+  width: 64%;
+  float:right;
+  margin-bottom: 40px;
+  margin-left: 9px;
+}
+  .lang-dropdown {
+        display: flex;
+        width:100%;
+        label{
+          padding-right:11.5px;
+          padding-top:15px;
+          width: 33%;
+          float:left;
+        }
+  }
+}
     .http-body{
       border: 1px solid #ddd;
      .option-label{
