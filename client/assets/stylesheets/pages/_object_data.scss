@@ -25,11 +25,118 @@
     }
   }
 
+ 
+
+ 
+    .http-drop-table{
+      position: absolute;
+      width: 220px;
+      background-color:white;
+      margin-left: -4px;
+    }
+    .http-pinned-table{
+      position: absolute;
+      background-color:white;
+      padding-top:19px;
+      width: 100%;
+    }
+    .request-titl{
+    padding-top:10px;
+    }
+    .http-body{
+      border: 1px solid #ddd;
+     .option-label{
+      padding-left:15.5px;
+     }
+    }
+    .play-butn{
+    font-size: 8px;
+    top: -1px
+    }
+    .request-title{
+    padding-top: 11px;
+    float:right;
+    }
+    .request-ti{
+    padding-top: 11px;
+    }
+    .cursorp{
+    cursor:pointer;
+    }
+    .http-dropdown{
+      border:none;
+    }
+    .request-method{
+    padding-top: 10px;
+    }
+    .glyphicon-chevron-right{
+    float:right;
+    padding-top: 4px;
+    }
+    .glyphicon-chevron-left{
+    float:right;
+    }
+    .http-dropdownbutn{
+      border: none;
+      background-color: #f5f5f5;
+      font-size: 16px;
+      padding-left: 0px;
+    }
+    .http-dropdownbutn:focus {outline:0;}
+    .http-table-head{
+      p{
+      font-size: 14px;
+      margin-bottom:3px;
+      padding-top: 4px;
+      }
+      .glyphicon-chevron-left{
+      padding-top: 5.3px;
+      }
+       border: 1px solid #ddd;
+       background-color: white;
+    }
+        .http-drop-table-head{
+      p{
+      font-size: 16px;
+      margin-bottom:3px;
+      }
+       border: 1px solid #ddd;
+       background-color: white;
+    }
+    .htactive{
+    background-color:red;
+    }
+    .tr-hovering{
+    background-color:#428bca;
+      p{
+      color: white;
+      }
+      span{
+      color: white;
+      }
+      b{
+      color: white;
+      }
+    }
   .log-panel {
     margin-top: 19px;
-
+    margin-right: 0px !important;
+    padding-right:0px !important;
+    padding-left: 0px !important;
     .panel-heading {
       text-transform: none;
+      height: 56px;
+      p {
+        font-size: 16px;
+        margin-bottom:0px;
+        padding-left: 0px; ;
+      }
+    }
+    .display-heading{ 
+       padding-top: 8px
+    }
+    .action-log{
+    padding-left: 0px !important;
     }
 
     .log-navigation-buttons {
@@ -88,6 +195,10 @@
     opacity: 0;
     filter: alpha(opacity=0);
   }
+}
+
+.row-margin{
+  margin-right: -5px;  
 }
 
 .upload-json-templates {

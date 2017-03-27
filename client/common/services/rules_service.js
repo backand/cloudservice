@@ -47,11 +47,13 @@
     };
 
     self.get = function () {
+
+      var filter = (self.tableId == null) ? '?' :  '?filter=[{fieldName:"viewTable", operator:"in", value:' + self.tableId + '}]&';
+
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + baseUrl
-          + '?filter=[{fieldName:"viewTable", operator:"in", value:'
-          + self.tableId + '}]&sort=[{fieldName:"name", order:"asc"}]&pageSize=200',
+        url: CONSTS.appUrl + baseUrl + filter
+        + 'sort=[{fieldName:"name", order:"asc"}]&pageSize=200',
         headers: { AppName: self.appName }
       });
     };

@@ -166,13 +166,18 @@
     }
 
     function logSuccsessHandler(data) {
-      self.gridOptions.data = data.data.data;
-      self.gridOptions.totalItems = data.data.totalRows;
-      usSpinnerService.stop("loading");
+
+        self.gridOptions.data = data.data.data;
+        self.gridOptions.totalItems = data.data.totalRows;
+        usSpinnerService.stop("loading");
     }
 
     this.pageMax = function (pageSize, currentPage, max) {
       return Math.min((pageSize * currentPage), max);
+    };
+    
+    self.gotoConsole = function(){
+      $state.go("log.console");
     };
 
     function errorHandler(error, message) {

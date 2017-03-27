@@ -2,6 +2,7 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> {{vm.title}} </strong>
+      <button class="btn btn-default log-history" ng-click="vm.gotoRealtime()">View Realtime Console</button>
       <ba-help-link key="logConfiguration" with-text="false"></ba-help-link>
       <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     </div>
@@ -28,6 +29,7 @@
                    ng-model="vm.filter"
                    style="resize: vertical">
               </div>
+              <br/>
               <span>** Enter filter condition by using 'or' & 'and', e.g. Request like '/1/object%' and
                 Type = 'object'</span>
             </div>
