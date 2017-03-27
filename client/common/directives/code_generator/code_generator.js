@@ -26,44 +26,44 @@
       {
         value: 1,
         label: 'Angular 1',
-        generator: AngularGeneratorService,
+        generator: VanillaGeneratorService,
         opts: {
-        //  type: 'return',
-        //  es6: false,
-        //  prefix: 'Backand',
+         type: 'return',
+         es6: false,
+         prefix: 'Backand',
         },
         class: 'angular-logo-small'
       },
       {
         value: 2,
         label: 'Angular 2',
-        generator: AngularGeneratorService,
+        generator: VanillaGeneratorService,
         opts: {
-         // type: 'promise',
-         // es6: true,
-         // prefix: 'this.backand',
+         type: 'promise',
+         es6: true,
+         prefix: 'this.backand',
         },
         class: 'angular-2-logo-small'
       },
       {
         value: 3,
         label: 'Ionic 1',
-        generator: AngularGeneratorService,
+        generator: VanillaGeneratorService,
         opts: {
-         // type: 'promise',
-         // es6: true,
-         // prefix: 'this.backand',
+         type: 'return',
+         es6: false,
+         prefix: 'Backand',
         },
         class: 'ionic-logo-small'
       },
       {
         value: 4,
         label: 'Ionic 2',
-        generator: AngularGeneratorService,
+        generator: VanillaGeneratorService,
         opts: {
-         // type: 'promise',
-         // es6: true,
-         // prefix: 'this.backand',
+          type: 'promise',
+          es6: true,
+          prefix: 'this.backand',
         },
         class: 'ionic-2-logo-small'
       },
@@ -87,7 +87,7 @@
         label: 'JS / jQuery',
         generator: VanillaGeneratorService,
         opts: {
-          type: 'return',
+          type: 'promise',
           es6: false,
           prefix: 'backand'
         },
