@@ -2,7 +2,7 @@
   <section class="panel panel-default">
     <div class="panel-heading">
       <strong> {{vm.title}} </strong>
-      <button class="btn btn-default log-history" ng-click="vm.gotoRealtime()">View Realtime Console</button>
+      <button ng-show="log.consolebutton" class="btn btn-default log-history" ng-click="vm.gotoRealtime()">View Realtime Console</button>
       <ba-help-link key="logConfiguration" with-text="false"></ba-help-link>
       <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     </div>

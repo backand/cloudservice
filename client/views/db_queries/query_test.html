@@ -22,14 +22,14 @@
     <button type="button"
             class="btn btn-success btn-lg btn-w-lg"
             data-style="expand-right" ladda="DbQuery.testLoading"
-            ng-disabled="!(DbQuery.allowTest() && !DbQuery.inputParametersForm.$invalid)"
+            ng-disabled="(DbQuery.allowTest() && !DbQuery.inputParametersForm.$invalid)"
             ng-click="DbQuery.testData()">Test Query
     </button>
     <button type="button"
             style=""
             class="btn btn-success btn-lg btn-w-lg"
             data-style="expand-right" ladda="DbQuery.loading"
-            ng-disabled="DbQuery.allowTest()"
+            ng-disabled='DbQuery.allowSaveTest() || DbQuery.query.name == ""'
             ng-click="DbQuery.saveQuery(true)">Save & Test
     </button>
     <div ng-if="!DbQuery.allowTest()">** Must save first to enable Test Query</div>

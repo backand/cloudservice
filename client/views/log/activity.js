@@ -12,7 +12,7 @@
     this.sort = '[{fieldName:"Time", order:"desc"},{fieldName:"ID", order:"desc"}]';
     self.showFilter = true;
     self.lastQuery = [];
-
+    
     this.paginationOptions = {
       pageNumber: 1,
       pageSize: 20,
@@ -81,7 +81,16 @@
     this.gridOptions.columnDefs.forEach(function (columnDef) {
       columnDef.cellTemplate = '<div class="ui-grid-cell-contents" style="cursor: pointer;" ng-click="grid.appScope.log.showCellData(COL_FIELD, col.displayName)">{{COL_FIELD}}</div>';
     });
-
+    self.consoleButton = function(){
+      if($state.current.name == 'log.console' || $state.current.name == 'log.consolerealtime'){
+        self.consolebutton = true;
+      }
+      else{
+        self.consolebutton = false;
+      }
+    }
+    self.consolebutton = self.consoleButton();
+    
     self.showCellData = function (COL_FIELD, displayName) {
       ConfirmationPopup.confirm(COL_FIELD, 'OK', '', true, false, displayName, 'lg')
     };

@@ -383,9 +383,24 @@
     };
 
     self.allowTest = function () {
-      return self.query && self.query.__metadata && self.queryForm.$pristine;
+      if(self.query == undefined){
+        return true;
+      }
+      else{
+         return self.query.name == "" && self.queryForm.$pristine;
+      }
     };
-
+self.allowSaveTest = function () {
+      if(self.query == undefined){
+        return true;
+      }
+      if (self.query.name == "" || self.query.name == undefined){
+         return true;
+      }
+      else{
+        return false;
+      }
+    };
     self.testData = function () {
       self.inputValues = _.pick(self.inputValues, self.getParameters());
       self.testError = null;

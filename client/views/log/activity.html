@@ -4,7 +4,7 @@
       <strong> {{log.title}} </strong>
       <ba-help-link key="{{log.helpKey}}" with-text="false"></ba-help-link>
       <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
-      <button class="btn btn-default log-history-cons" ng-click="log.gotoConsole()">View Log History</button>
+      <button ng-show="log.consolebutton" class="btn btn-default log-history-cons" ng-click="log.gotoConsole()">View Log History</button>
     </div>
     <div class="panel-body">
       <fieldset class="collapsible-fieldset"
