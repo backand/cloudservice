@@ -5,12 +5,36 @@
                    content="codeGenerator.url"></bknd-copy-box>
 
     <form class="form-inline code-generator-header">
-      <label for="log-item-request">Request code</label>
-      <select class="form-control language-dropdown request-url"
-              ng-options="item.value as item.label for item in codeGenerator.languageOptions"
-              ng-model="codeGenerator.chosenLanguage"></select>
+
     </form>
 
+            <div class="lang-dropdown">
+             <label>Request code</label>
+             <table class="table lang-table animate-show-hide" >
+            
+              <thead class="http-body">
+              <tr ng-click="codeGenerator.showMe()" class="cursorp">
+              <td>
+              <img ng-src="assets/images/platforms/logo-small.png" ng-class="codeGenerator.chosenClass" class="platform-sprite-icon" src="assets/images/platforms/logo-small.png">
+                <span class="btn btn-default code-dropdownbutn" type="button" >{{codeGenerator.languageOptions[codeGenerator.chosenLanguage - 1].label }} </span>
+                  </td>
+                  <td >
+                    <img class="request-title" src="assets/images/drop-down_318-99574.jpg"> 
+                  </td>
+                </tr>
+              </thead>
+              <tbody class="http-body" ng-show="codeGenerator.showme">
+                <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true" class="cursorp" 
+                ng-mouseleave="hovering=false" ng-repeat="option in codeGenerator.languageOptions" ng-click="codeGenerator.generateSelectedLanguage($index)">
+                <td><img ng-src="assets/images/platforms/logo-small.png" ng-class="option.class" class="platform-sprite-icon" src="assets/images/platforms/logo-small.png"><span class="option-label">{{option.label}}</span>
+                  </td>
+                  <td> </td>
+
+                </tr>
+              </tbody>
+              </table>
+              </div>
+        <br/>
     <bknd-copy-box id="log-item-request"
                    type="textarea"
                    content="codeGenerator.code"></bknd-copy-box>

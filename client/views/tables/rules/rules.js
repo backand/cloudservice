@@ -498,14 +498,14 @@
     function getWorkflowActions(){
       if (self.action && self.action.dataAction == "OnDemand") {
         return [
-          {value: 'JavaScript', label: 'Server side JavaScript code'},
-          {value: 'NodeJS', label: 'Server side node.js code'},
+          {value: 'JavaScript', label: 'Server-side JavaScript function'},
+          {value: 'NodeJS', label: 'AWS Lambda: Node.js'},
           {value: 'Notify', label: 'Send Email'},
           {value: 'Execute', label: 'Transactional sql script'}
         ];
       } else {
         return [
-          {value: 'JavaScript', label: 'Server side JavaScript code'},
+          {value: 'JavaScript', label: 'Server-side JavaScript function'},
           {value: 'Notify', label: 'Send Email'},
           {value: 'Execute', label: 'Transactional sql script'}
         ];

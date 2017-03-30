@@ -1,9 +1,9 @@
 (function () {
 
   angular.module('backand')
-    .controller('KeysController', ['CONSTS','NotificationService', 'AppsService', 'socialProviders', 'ConfirmationPopup', KeysController]);
+    .controller('KeysController', ['$scope', 'CONSTS','NotificationService', 'AppsService', 'socialProviders', 'ConfirmationPopup', KeysController]);
 
-  function KeysController(CONSTS, NotificationService, AppsService, socialProviders, ConfirmationPopup) {
+  function KeysController($scope, CONSTS, NotificationService, AppsService, socialProviders, ConfirmationPopup) {
 
     var self = this;
 
@@ -13,6 +13,7 @@
       getAppSettings();
       AppsService.appKeys(self.appName)
         .then(setKeysInfo, errorHandler);
+      $scope.$watch('keys', updateAppSettings, true);
     }
 
     var settings = ['enable', 'clientId', 'clientSecret', 'Oauth2EndPoint', 'Scope'];
@@ -68,6 +69,7 @@
         setUseOwnApp(socialProvider);
       });
       setTokenExpiration();
+      self.appSettings = AppsService.currentApp.settings;
     }
 
     function getSettingKey (setting, socialProvider) {
@@ -117,6 +119,20 @@
 
       updateSettings(appSettings);
     };
+
+    function updateAppSettings(newVal, oldVal) {
+
+      if(oldVal == null)
+        return;
+
+      if (self.socialForm.$invalid)
+        return;
+
+      if(newVal.appSettings.returnAddressURIs !== oldVal.appSettings.returnAddressURIs){
+        updateSettings(newVal.appSettings);
+      }
+
+    }
 
     self.updateSocialSettings = function (socialProvider) {
       self.errorUpdate = false;

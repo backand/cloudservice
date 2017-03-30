@@ -11,11 +11,15 @@
       'usSpinnerService',
       'tableName',
       'ConfirmationPopup',
+      'LocalStorageService',
       '$filter',
       '$state',
       'TablesService',
       '$stateParams',
       '$rootScope',
+      'AppsService',
+      '$localStorage',
+      '$window',
       ObjectDataController
     ]);
 
@@ -27,14 +31,18 @@
                                 usSpinnerService,
                                 tableName,
                                 ConfirmationPopup,
+                                LocalStorageService,
                                 $filter,
                                 $state,
                                 TablesService,
                                 $stateParams,
-                                $rootScope) {
+                                $rootScope,
+                                AppsService,
+                                $localStorage,
+                                $window) {
 
     var self = this;
-
+    self.currentApp = AppsService.currentApp;
     self.tableName = tableName;
     self.title = '';
     self.sort = '';
@@ -42,6 +50,7 @@
     self.httpRequestsLog = DataService.log = [];
     self.showLog = $state.params.showLog === 'false' ? false : $state.params.showLog;
     self.logIndex = DataService.logIndex;
+    self.backandstorage = $localStorage.backand[self.currentApp.Name];
     $rootScope.$on('SyncSuccess', function () {
       self.filterData();
     });
@@ -62,6 +71,77 @@
       }
     }());
 
+    //Function to set and show which index is chosen
+    self.getLogIndex = function(a){
+        if (a !== -1) {
+          self.logIndex.last = a;
+          self.backandstorage.httpLogIndex = a;
+        }
+        if(self.pinme == false){
+        self.showMe();
+      }
+    }
+    self.toggleSearch = function () {
+
+            if (self.showme) {
+                
+            } 
+        };
+   
+   function closeSearchWhenClickingElsewhere(event) {
+
+            var clickedElement = event.target;
+            if (!clickedElement) return;
+
+            var clickedOnDropDown = (clickedElement.parentElement.classList.contains('table'));
+            var clickedOnButton = (clickedElement.classList.contains('http-dropdownbutn'));
+            if (!clickedOnDropDown && !clickedOnButton) {
+                self.showme = false;
+            }
+
+        }
+//         $window.onclick = function (event) {
+//                    closeSearchWhenClickingElsewhere(event);
+//                };
+   
+   //Function to receive pin status, if no pin default is pinned.
+    self.getPinToLocalStorage = function() {
+        if (self.backandstorage.pinned !== false && self.backandstorage.pinned !== true) {
+            self.backandstorage.pinned = true;
+           }
+          return(self.backandstorage.pinned)
+        }
+    self.getHttpLogLocalStorage = function(){
+      if(!self.backandstorage.httpLogIndex)
+      {
+        self.backandstorage.httpLogIndex = 0;
+      }
+      return(self.backandstorage.httpLogIndex)
+    }
+    self.showme = false;
+    self.pinme = self.getPinToLocalStorage();
+    self.logIndex.last = self.getHttpLogLocalStorage();
+    //Show drop down http log
+    self.showMe = function(){
+      if(self.showme == false){
+        self.showme = true  
+      }
+      else{
+        self.showme = false
+      }
+    }
+    //Pin http log to the right or dropdown.
+    self.pinMe = function(){
+       if(self.pinme == false){
+        self.pinme = true;
+        self.backandstorage.pinned = true;
+        self.showme = false;  
+      }
+      else{
+        self.pinme = false;
+        self.backandstorage.pinned = false;
+      };
+    }
     self.toggleShowLog = function () {
       self.showLog = !self.showLog;
       $state.go('.', {showLog: self.showLog}, {notify: false});
@@ -85,6 +165,10 @@
         self.showFilter = !self.showFilter;
       }
     };
+    //adding if pinned to local storage
+    self.storage = LocalStorageService.getLocalStorage();
+    self.storage = $localStorage.backand[self.currentApp.Name];
+
 
     self.createData = function (data) {
       DataService.post(tableName, data, true);
@@ -118,7 +202,9 @@
         });
       }
     };
-
+    self.selectedOption = {
+      $$hashKey : "object:111"
+    }
     $scope.$watchGroup([
         'ObjectData.paginationOptions.pageNumber',
         'ObjectData.paginationOptions.pageSize']

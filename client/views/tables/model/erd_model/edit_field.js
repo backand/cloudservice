@@ -49,7 +49,7 @@
     self.typeOptions = [
       'string',
       'text',
-      'point',
+      //'point',
       'datetime',
       'float',
       'boolean',
