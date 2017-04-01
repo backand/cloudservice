@@ -91,7 +91,24 @@
       self.getTokens();
       getAllActions(); //load all actions names for the test
     }
-
+    self.showSideBar = function (){
+      if($state.current.name == 'security.actions'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    self.showLambada = function(){
+      if($state.current.name == 'functions.newlambadafunctions'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    self.showsideBar = self.showSideBar();
+    self.showlambada = self.showLambada();
     //Wait for server updates on 'items' object
     SocketService.on('Rule.created', function (data) {
       //Get the 'items' object that have changed

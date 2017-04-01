@@ -135,6 +135,12 @@ angular.module('backand.routes', []).
         abstract: true,
         template: '<div ui-view></div>'
       })
+      .state('functions', {
+        url: '/functions',
+        parent: 'app',
+        abstract: true,
+        template: '<div ui-view></div>'
+      })
       .state('security', {
         url: '/security',
         parent: 'app',

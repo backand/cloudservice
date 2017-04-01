@@ -6,17 +6,16 @@
 
   function config($stateProvider) {
         $stateProvider
-        .state('functions.newFunction', {
-            url: '/new',
-            controller: 'DbQueryController as DbQuery',
-            templateUrl: 'views/db_queries/query.html'
+        .state('functions.newjsfunctions', {
+            url: '/new_javascript',
+            controller: 'FunctionsController as functionsCon',
+            templateUrl: 'views/functions/jsfunctions.html'
         })
-        .state('functions.function', {
-            url: '/functions/:functionId',
-            controller: 'Functions as actions',
-            templateUrl: 'views/functions/functions.html'
-        })
-
+        .state('functions.newlambadafunctions', {
+            url: '/new_lambada',
+            controller: 'FunctionsController as functionsCon',
+            templateUrl: 'views/functions/lambadafunctions.html'
+        });
 
   }
 

@@ -2,8 +2,17 @@
  * Refactored by nirkaufman on 1/4/15.
  */
 (function () {
+  'use strict';
 
-  function Functions($state, AppsService, RulesService) {
+   angular.module('backand.functions')
+    .controller('FunctionsController', [
+      '$state',
+      'AppsService',
+      'RulesService',
+      FunctionsController
+    ]); 
+
+  function FunctionsController($state, AppsService, RulesService) {
 
     var self = this;
     (function init() {
@@ -13,15 +22,8 @@
       RulesService.tableId = 15;
 
     }());
-
   }
 
-  angular.module('backand')
-    .controller('Functions', [
-      '$state',
-      'AppsService',
-      'RulesService',
-      Functions
-    ]);
+ 
 
 }());

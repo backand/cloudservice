@@ -134,9 +134,17 @@
       </a>
       <ul>
         <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newDbQuery($event)" href="">
-            <i class="ba-icon-new-function"></i>
-            <span>New Function</span>
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newJsFunction($event)" href="">
+            <i class="ba-icon-new-query"></i>
+            <span>Add Javascript Function</span>
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newLambadaFunction($event)" href="">
+            <i class="ba-icon-new-query"></i>
+            <span>Add Lambada Function</span>
           </a>
         </li>
       </ul>

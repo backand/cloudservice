@@ -1,7 +1,7 @@
 <div ng-controller="RulesController as rules">
 
   <div id="rules-header" class="page-header clearfix">
-    <div class="title-group">
+    <div ng-show="rules.showsideBar" class="title-group">
       <h2 class="page-name ">Actions</h2>
       <h4 class=" page-description lead pull-left">Manage here all the server side logic and operations</h4>
     </div>
@@ -16,7 +16,7 @@
   </div>
 
   <div class="row">
-    <div ng-show="!rules.editMode && !rules.requestTestForm" class="col-xs-4 col-md-3 rule-column actions-animate-show">
+    <div ng-show="!rules.editMode && !rules.requestTestForm && rules.showsideBar" class="col-xs-4 col-md-3 rule-column actions-animate-show">
 
       <ul  class="list-unstyled rule-tree">
 

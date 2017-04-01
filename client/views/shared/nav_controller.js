@@ -217,6 +217,12 @@
     self.newDbQuery = function ($event) {
       goToState($event, 'dbQueries.newQuery');
     };
+    self.newJsFunction = function($event){
+      goToState($event, 'functions.newjsfunctions');
+    }
+    self.newLambadaFunction = function($event){
+      goToState($event, 'functions.newlambadafunctions');
+    }
 
     self.showFunction = function ($event, func) {
       var params = {
