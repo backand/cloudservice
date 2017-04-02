@@ -89,8 +89,10 @@
       if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
       self.getTokens();
-      getAllActions(); //load all actions names for the test
+      getAllActions();//load all actions names for the test
+      
     }
+    //show side bar tree only for security/actions page
     self.showSideBar = function (){
       if($state.current.name == 'security.actions'){
         return true;
@@ -99,6 +101,7 @@
         return false;
       }
     }
+    //default view for add lambada page is new lambada action
     self.showLambada = function(){
       if($state.current.name == 'functions.newlambadafunctions'){
         return true;
@@ -106,6 +109,12 @@
       else{
         return false;
       }
+    }
+    //for the lambada page to be default Node Js
+    self.changeTemplateToNodeJs = function(res){
+        self.nodeactionTemplate = res[0];
+        self.actionTemplates = self.nodeactionTemplate[0];
+        self.selectTemplate(self.actionTemplates);
     }
     self.showsideBar = self.showSideBar();
     self.showlambada = self.showLambada();
@@ -187,7 +196,13 @@
               }
             });
 
-            self.actionTemplates = res;
+           
+            if($state.current.name == "functions.newlambadafunctions"){
+               self.changeTemplateToNodeJs(res); 
+            } 
+            else{
+               self.actionTemplates = res;
+            }
           });
         });
     };
