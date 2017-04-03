@@ -95,15 +95,24 @@
     self.getMode = function(){
         switch ($state.current.name){
           case 'security.actions':
-          var name = 'action'
+          var name = {
+                name : 'action',
+                title : 'Action'
+              }
             return name;
             break;
           case 'functions.newjsfunctions':
-             var name = 'jsfunction';
+             var name = {
+                name : 'jsfunction',
+                title : 'Javascript Function'
+              };
              return name;
             break;
           case 'functions.newlambdafunctions':
-            var name = 'lambdafunction';
+            var name = {
+              name: 'lambdafunction',
+              title : 'Lambda Function'
+            };
             return name;
             break;
         };
@@ -111,7 +120,7 @@
     self.mode = self.getMode();
     //show side bar tree only for security/actions page
     self.showSideBar = function (){
-      if(self.mode == 'action'){
+      if(self.mode.name == 'action'){
         return true;
       }
       else{
@@ -120,7 +129,7 @@
     }
     //default view for add lambda page is new lambda action
     self.showlambda = function(){
-      if(self.mode == 'lambdafunction'){
+      if(self.mode.name == 'lambdafunction'){
         return true;
       }
       else{
@@ -214,7 +223,7 @@
             });
 
            
-            if(self.mode == "lambdafunction"){
+            if(self.mode.name == 'lambdafunction'){
                self.changeTemplateToNodeJs(res); 
             } 
             else{
@@ -225,7 +234,12 @@
     };
 
     self.getNodeInitCommand = function () {
-      return 'backand action init --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+      if(self.mode.name == 'lambdafunction'){
+        return 'backand function init --app ' + self.currentApp.Name + ' --name ' + self.action.name + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+      }
+      else{
+        return 'backand action init --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+      }
     };
 
     self.getNodeDeployCommand = function () {
@@ -238,7 +252,7 @@
       }
 
       self.action.name = self.action.name || template.ruleName;
-      if(self.mode.includes("function")){
+      if(self.mode.name.includes("function")){
         self.action.dataAction = 'OnDemand';
       }
       else{
@@ -276,12 +290,29 @@
       });
     }
 
-
+    self.getactionType = function(){
+      if(self.mode.name.includes("function")){
+        return "Function";
+      }
+      else{
+        return null;
+      }
+    }
+    self.getCategory = function(){
+      if(self.mode.name.includes("function")){
+        return "general";
+      }
+      else{
+        return null;
+      }
+    }
     var defaultRule = {
       'viewTable': RulesService.tableId,
       'additionalView': "",
       'databaseViewName': "",
-      'useSqlParser': true
+      'useSqlParser': true,
+      'actionType': self.getactionType(),
+      'category': self.getCategory()
     };
 
     self.newAction = function (trigger, templateName) {
@@ -526,7 +557,7 @@
     };
 
     $scope.modal = {
-      title: 'Action',
+      title: self.mode.title,
       dataActions: RulesService.dataActions,
       workflowActions: getWorkflowActions(),
       insertAtChar: insertTokenAtChar,
@@ -536,7 +567,6 @@
       buildParameters: buildParametersDictionary
     };
     self.workflowActions = getWorkflowActions();
-
     self.onDataActionChange = function(){
       self.workflowActions = getWorkflowActions();
       self.onTypeChange();
@@ -551,7 +581,7 @@
 
     function getWorkflowActions(){
       if (self.action && self.action.dataAction == "OnDemand") {
-        if(self.mode.includes("function")){
+        if(self.mode.name.includes("function")){
           return [
             {value: 'JavaScript', label: 'Server-side JavaScript function'},
             {value: 'NodeJS', label: 'AWS Lambda: Node.js'}
@@ -637,7 +667,7 @@
     function getRules() {
       self.dictionaryItems = {parameters: []};
       var crud = ['create', 'update', 'delete'];
-        if(self.mode == 'action'){
+        if(self.mode.name == 'action'){
             crud.forEach(function (crudAction) {
               DictionaryService.get(crudAction)
               .then(function (data) {
@@ -945,7 +975,7 @@
     self.testData = function () {
       //getTestRow();
       self.test.testLoading = true;
-      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug')
+      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug',self.mode.name)
         .then(getLog, getLog);
     };
 
@@ -1221,7 +1251,12 @@
 
     self.getDataActionType = function () {
       if (self.action){
-        return self.dataActionToType[self.action.dataAction];
+        if(self.mode.name.includes("function")){
+          return "On Demand";
+        }
+        else{
+          return self.dataActionToType[self.action.dataAction];
+        }
       }
     };
 

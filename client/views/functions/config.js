@@ -15,6 +15,11 @@
             url: '/new_lambda',
             controller: 'FunctionsController as functionsCon',
             templateUrl: 'views/functions/lambdafunctions.html'
+        })
+        .state('functions.function', {
+            url: '/',
+            controller: 'FunctionsController as functionsCon',
+            templateUrl: 'views/functions/functions.html'
         });
 
   }
