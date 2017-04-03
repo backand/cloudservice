@@ -92,32 +92,49 @@
       getAllActions();//load all actions names for the test
       
     }
+    self.getMode = function(){
+        switch ($state.current.name){
+          case 'security.actions':
+          var name = 'action'
+            return name;
+            break;
+          case 'functions.newjsfunctions':
+             var name = 'jsfunction';
+             return name;
+            break;
+          case 'functions.newlambdafunctions':
+            var name = 'lambdafunction';
+            return name;
+            break;
+        };
+    }
+    self.mode = self.getMode();
     //show side bar tree only for security/actions page
     self.showSideBar = function (){
-      if($state.current.name == 'security.actions'){
+      if(self.mode == 'action'){
         return true;
       }
       else{
         return false;
       }
     }
-    //default view for add lambada page is new lambada action
-    self.showLambada = function(){
-      if($state.current.name == 'functions.newlambadafunctions'){
+    //default view for add lambda page is new lambda action
+    self.showlambda = function(){
+      if(self.mode == 'lambdafunction'){
         return true;
       }
       else{
         return false;
       }
     }
-    //for the lambada page to be default Node Js
+    //for the lambda page to be default Node Js
     self.changeTemplateToNodeJs = function(res){
         self.nodeactionTemplate = res[0];
         self.actionTemplates = self.nodeactionTemplate[0];
         self.selectTemplate(self.actionTemplates);
     }
     self.showsideBar = self.showSideBar();
-    self.showlambada = self.showLambada();
+    self.showlambda = self.showlambda();
     //Wait for server updates on 'items' object
     SocketService.on('Rule.created', function (data) {
       //Get the 'items' object that have changed
@@ -197,7 +214,7 @@
             });
 
            
-            if($state.current.name == "functions.newlambadafunctions"){
+            if(self.mode == "lambdafunction"){
                self.changeTemplateToNodeJs(res); 
             } 
             else{
@@ -221,7 +238,12 @@
       }
 
       self.action.name = self.action.name || template.ruleName;
-      self.action.dataAction = self.action.dataAction || template.action || 'OnDemand';
+      if(self.mode.includes("function")){
+        self.action.dataAction = 'OnDemand';
+      }
+      else{
+        self.action.dataAction = self.action.dataAction || template.action || 'OnDemand';
+      }
       self.showTemplatesForm = false;
 
       _.assign(self.action, {
@@ -529,12 +551,20 @@
 
     function getWorkflowActions(){
       if (self.action && self.action.dataAction == "OnDemand") {
-        return [
-          {value: 'JavaScript', label: 'Server-side JavaScript function'},
-          {value: 'NodeJS', label: 'AWS Lambda: Node.js'},
-          {value: 'Notify', label: 'Send Email'},
-          {value: 'Execute', label: 'Transactional sql script'}
-        ];
+        if(self.mode.includes("function")){
+          return [
+            {value: 'JavaScript', label: 'Server-side JavaScript function'},
+            {value: 'NodeJS', label: 'AWS Lambda: Node.js'}
+          ];
+        }
+        else{
+          return [
+            {value: 'JavaScript', label: 'Server-side JavaScript function'},
+            {value: 'NodeJS', label: 'AWS Lambda: Node.js'},
+            {value: 'Notify', label: 'Send Email'},
+            {value: 'Execute', label: 'Transactional sql script'}
+          ];
+        }
       } else {
         return [
           {value: 'JavaScript', label: 'Server-side JavaScript function'},
@@ -607,13 +637,15 @@
     function getRules() {
       self.dictionaryItems = {parameters: []};
       var crud = ['create', 'update', 'delete'];
-      crud.forEach(function (crudAction) {
-        DictionaryService.get(crudAction)
-          .then(function (data) {
-            usSpinnerService.stop('loading');
-            populateDictionaryItems(crudAction, data.data)
-          });
-      });
+        if(self.mode == 'action'){
+            crud.forEach(function (crudAction) {
+              DictionaryService.get(crudAction)
+              .then(function (data) {
+                usSpinnerService.stop('loading');
+                populateDictionaryItems(crudAction, data.data)
+              });
+            });
+        }
       return RulesService.get().then(buildTree, errorHandler);
     }
 

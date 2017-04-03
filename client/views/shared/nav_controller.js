@@ -220,8 +220,8 @@
     self.newJsFunction = function($event){
       goToState($event, 'functions.newjsfunctions');
     }
-    self.newLambadaFunction = function($event){
-      goToState($event, 'functions.newlambadafunctions');
+    self.newLambdaFunction = function($event){
+      goToState($event, 'functions.newlambdafunctions');
     }
 
     self.showFunction = function ($event, func) {

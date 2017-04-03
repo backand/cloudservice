@@ -93,7 +93,8 @@
       <fieldset>
         <br/>
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}">
+             ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}"
+             ng-if="!rules.mode.includes('function')">
           <label>Event Trigger</label>
           <ba-tooltip
             tooltip-text="Select the event that will trigger the action: on-demand via REST API or by CRUD request"

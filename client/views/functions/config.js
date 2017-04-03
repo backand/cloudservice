@@ -11,10 +11,10 @@
             controller: 'FunctionsController as functionsCon',
             templateUrl: 'views/functions/jsfunctions.html'
         })
-        .state('functions.newlambadafunctions', {
-            url: '/new_lambada',
+        .state('functions.newlambdafunctions', {
+            url: '/new_lambda',
             controller: 'FunctionsController as functionsCon',
-            templateUrl: 'views/functions/lambadafunctions.html'
+            templateUrl: 'views/functions/lambdafunctions.html'
         });
 
   }
