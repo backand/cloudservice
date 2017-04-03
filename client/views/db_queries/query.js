@@ -386,11 +386,14 @@
       if(self.query == undefined){
         return true;
       }
+      if($state.current.name == 'dbQueries.newQuery'){
+        return true;
+      }
       else{
-         return self.query.name == "" && self.queryForm.$pristine;
+         return (self.query.name == "") && self.queryForm.$pristine;
       }
     };
-self.allowSaveTest = function () {
+self.allowSave = function () {
       if(self.query == undefined){
         return true;
       }
