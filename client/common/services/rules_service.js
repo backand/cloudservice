@@ -7,7 +7,9 @@
     self.tableRuleUrlAction = '/1/objects/';
     self.tableRuleUrlFunction = '/1/function/';
     self.addUserUrl = '/1/user';
-    var logUrl = '/1/objects/durados_Log';
+    var viewConfig = '/1/view/config/';
+
+    var _rootObject = '_root';
 
     self.appName = null;
     self.tableId = null;
@@ -58,16 +60,34 @@
         headers: { AppName: self.appName }
       });
     };
-    self.getFunctions = function () {
 
-      var filter = (self.tableId == null) ? '?' :  '?filter=[{fieldName:"viewTable", operator:"in", value:' + self.tableId + '},{fieldName:"actionType", operator:"equals", value:"Function"}]';
+    self.getConfig = function(viewName){
 
       return $http({
         method: 'GET',
-        url: CONSTS.appUrl + baseUrl + filter,
-//        + 'sort=[{fieldName:"name", order:"asc"}]&pageSize=200',
+        url: CONSTS.appUrl + viewConfig + viewName,
         headers: { AppName: self.appName }
       });
+    };
+
+    self.getFunctions = function () {
+
+      //todo: need to fix server side to have "actionType"
+      // var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + _rootId + '},{fieldName:"actionType", operator:"equals", value:"Function"}]&sort=[{fieldName:"name",' +
+      //     ' order:"asc"}]&pageSize=200';
+
+      return self.getConfig(_rootObject).then(function(data){
+        var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + data.data.__metadata.id + '}]&sort=[{fieldName:"name",' +
+            ' order:"asc"}]&pageSize=200';
+
+        return $http({
+          method: 'GET',
+          url: CONSTS.appUrl + baseUrl + params,
+          headers: { AppName: self.appName }
+        });
+      });
+
+
     };
 
     self.getRule = function (id) {

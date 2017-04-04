@@ -87,7 +87,6 @@
 
     function fetchFunctions() {
       RulesService.AppName = $state.params.appName;
-  //    RulesService.tableId = TablesService.getRootId();
       RulesService.getFunctions().then(
           function (data) {
             self.functions = data.data.data;
