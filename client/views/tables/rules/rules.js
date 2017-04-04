@@ -74,7 +74,13 @@
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
       self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
-
+      if($stateParams.functionId > 0){
+        
+        RulesService.getRule($stateParams.functionId).then(function(data){
+        loadAction(data);
+        self.ruleData = data;
+        });
+      }
       if ($localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation === undefined) {
         $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = false;
       }
@@ -113,6 +119,13 @@
               name: 'lambdafunction',
               title : 'Lambda Function'
             };
+            return name;
+            break;
+          case 'functions.function':
+            var name = {
+              name: 'function',
+              title: 'Function'
+            }
             return name;
             break;
         };
@@ -234,8 +247,14 @@
     };
 
     self.getNodeInitCommand = function () {
+      if(self.action.name){
+        var name = ' --name ' + self.action.name;
+      }
+      else{
+        var name = '';
+      }
       if(self.mode.name == 'lambdafunction'){
-        return 'backand function init --app ' + self.currentApp.Name + ' --name ' + self.action.name + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+        return 'backand function init --app ' + self.currentApp.Name + name + ' --master ' + self.masterToken + ' --user ' + self.userToken;
       }
       else{
         return 'backand action init --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
@@ -243,7 +262,19 @@
     };
 
     self.getNodeDeployCommand = function () {
-      return 'backand action deploy --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+      if(self.ruleData.data.name){
+        var name = ' --name ' + self.ruleData.data.name;
+      }
+      else{
+        var name = '';
+      }
+       if(self.mode.name.includes('function')){
+        return 'backand function deploy --app ' + self.currentApp.Name + name +' --master ' + self.masterToken + ' --user ' + self.userToken;
+       }
+       else{
+        return 'backand action deploy --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+       }
+      
     };
 
     self.selectTemplate = function (template) {

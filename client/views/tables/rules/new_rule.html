@@ -20,7 +20,7 @@
           <div class="form-group"
                ng-class="{'has-error': rules.newRuleForm.ruleName.$invalid}">
 
-            <label for="ruleName"><h3 class="title">{{modal.title}} - </h3></label>
+            <label for="ruleName"><h3 class="title">{{rules.mode.title}} - </h3></label>
 
             <input type="text"
                    id="ruleName"
@@ -342,7 +342,7 @@
 </div>
 
 <div ng-if="rules.allowEditAction()"><pre><code>
-  $ {{rules.getNodeDeployCommand()}}
+   {{rules.getNodeDeployCommand()}}
 
 </code></pre>
   <button class="btn btn-default copy-cli-command"

@@ -7,12 +7,13 @@
    angular.module('backand.functions')
     .controller('FunctionsController', [
       '$state',
+      '$stateParams',
       'AppsService',
       'RulesService',
       FunctionsController
     ]); 
 
-  function FunctionsController($state, AppsService, RulesService) {
+  function FunctionsController($state, $stateParams, AppsService, RulesService) {
 
     var self = this;
     (function init() {
@@ -20,7 +21,7 @@
       //enable here the rules tab only for 'backandUsers'
       RulesService.appName = self.appName;
       RulesService.tableId = 15;
-
+      self.id = $stateParams.functionId;
     }());
   }
 

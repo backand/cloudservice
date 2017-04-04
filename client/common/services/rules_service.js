@@ -77,7 +77,7 @@
       //     ' order:"asc"}]&pageSize=200';
 
       return self.getConfig(_rootObject).then(function(data){
-        var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + data.data.__metadata.id + '}]&sort=[{fieldName:"name",' +
+        var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + data.data.__metadata.id + '}]&sort=[{fieldName:"actionType",' +
             ' order:"asc"}]&pageSize=200';
 
         return $http({
@@ -158,7 +158,7 @@
       if(requestMode.includes("function")){
         var uri = CONSTS.appUrl +
         self.tableRuleUrlFunction +
-        tableName + '/' +
+        //tableName + '/' +
         rowId;
       }
       else{
@@ -172,12 +172,21 @@
       if (fromGetHttp && !debug) {
         return encodeURI(uri);
       }
-
-      return encodeURI(uri +
+      if(requestMode.includes("function")){
+        return encodeURI(uri +
+        //((onDemand || debug) ? '?' : '') +
+        ( onDemand ? rule.name : '') +
+        ((onDemand && !_.isEmpty(parameters)) ? '&' : '') +
+        (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
+      }
+      else{
+        return encodeURI(uri +
         ((onDemand || debug) ? '?' : '') +
         ( onDemand ? 'name=' + rule.name : '') +
         ((onDemand && !_.isEmpty(parameters)) ? '&' : '') +
         (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
+      }
+      
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData, debug, requestMode) {
