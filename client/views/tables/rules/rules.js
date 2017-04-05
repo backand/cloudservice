@@ -101,6 +101,7 @@
     self.getMode = function(){
         switch ($state.current.name){
           case 'security.actions':
+          case 'object_actions':
           var name = {
                 name : 'action',
                 title : 'Action'
@@ -129,7 +130,8 @@
             return name;
             break;
         };
-    }
+    };
+
     self.mode = self.getMode();
     //show side bar tree only for security/actions page
     self.showSideBar = function (){
@@ -338,7 +340,6 @@
       }
     }
     var defaultRule = {
-      'viewTable': RulesService.tableId,
       'additionalView': "",
       'databaseViewName': "",
       'useSqlParser': true,
@@ -553,15 +554,12 @@
         self.action.__metadata;
       return allow;
     };
+
     self.toggletestsidebar = function(){
-      if(self.mode.name.includes('function') && self.showTestSideBar == false){
-        var showTestSideBar = true;
+      if(self.mode.name.includes('function')){
+        self.showTestSideBar = !self.showTestSideBar;
       }
-      if(self.mode.name.includes('function') && self.showTestSideBar == true){
-        var showTestSideBar = false;
-      }
-      return show;
-    }
+    };
 
     self.showTestSideBar = false;
     self.toggleTestForm = function (show) {
@@ -782,7 +780,7 @@
     var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup','backandAuthOverride','accessFilter','socialAuthOverride','ChangePasswordOverride'];
 
     self.isConstName = function (ruleName) {
-      return (self.getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);
+      return (getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);
     };
 
     $scope.modal.handleTabKey = function (e) {
@@ -816,6 +814,7 @@
      */
     function postNewRule(rule) {
       var data = angular.extend(defaultRule, rule);
+      defaultRule.viewTable = RulesService.tableId;
       return RulesService.post(data)
         .then(function (response) {
           self.action = response.data;

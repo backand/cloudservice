@@ -19,7 +19,7 @@
         .state('functions.function', {
             url: '/function/:functionId',
             controller: 'FunctionsController as functionsCon',
-            templateUrl: 'views/functions/functions.html',
+            templateUrl: 'views/functions/functions.html'
         });
 
   }

@@ -9,7 +9,7 @@
     self.addUserUrl = '/1/user';
     var viewConfig = '/1/view/config/';
 
-    var _rootObject = '_root';
+    var _rootObject = CONSTS.rootObject;
 
     self.appName = null;
     self.tableId = null;
@@ -70,14 +70,20 @@
       });
     };
 
+    self.getRootObjectId = function(){
+      return self.getConfig(_rootObject).then(function(data){
+        return data.data.__metadata.id;
+      })
+    };
+
     self.getFunctions = function () {
 
       //todo: need to fix server side to have "actionType"
       // var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + _rootId + '},{fieldName:"actionType", operator:"equals", value:"Function"}]&sort=[{fieldName:"name",' +
       //     ' order:"asc"}]&pageSize=200';
 
-      return self.getConfig(_rootObject).then(function(data){
-        var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + data.data.__metadata.id + '}]&sort=[{fieldName:"actionType",' +
+      return self.getRootObjectId().then(function(id){
+        var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + id + '}]&sort=[{fieldName:"actionType",' +
             ' order:"asc"}]&pageSize=200';
 
         return $http({
