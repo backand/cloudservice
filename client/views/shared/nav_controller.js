@@ -86,7 +86,7 @@
     }
 
     function fetchFunctions() {
-      RulesService.AppName = $state.params.appName;
+      RulesService.appName = $state.params.appName;
       RulesService.getFunctions().then(
           function (data) {
             self.functions = data.data.data;

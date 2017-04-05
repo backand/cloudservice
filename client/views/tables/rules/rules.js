@@ -110,14 +110,14 @@
             break;
           case 'functions.newjsfunctions':
              var name = {
-                name : 'jsfunction',
+                name : 'jsfunctions',
                 title : 'Javascript Function'
               };
              return name;
             break;
           case 'functions.newlambdafunctions':
             var name = {
-              name: 'lambdafunction',
+              name: 'lambdafunctions',
               title : 'Lambda Function'
             };
             return name;
@@ -520,6 +520,7 @@
           self.saving = false;
           self.savingAndTesting = false;
           self.isNewAction = false;
+          self.showTestSideBar = true;
           if (withTest)
             self.testData();
           self.requestTestForm = true; //always open test after save on demand action
@@ -548,7 +549,7 @@
           }
         });
     };
-
+    self.showTestSideBar = false;
     self.allowTestForm = function () {
       var allow = self.action &&
         self.action.__metadata;
@@ -556,12 +557,49 @@
     };
 
     self.toggletestsidebar = function(){
-      if(self.mode.name.includes('function')){
         self.showTestSideBar = !self.showTestSideBar;
+      
+    };
+    self.pageLayoutNewRule = function(){
+      if(self.mode.name.includes("functions")){
+        if(!self.editMode){
+          if(self.showTestForm()){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+        else{
+          if(self.showTestForm()){
+            return true;
+          }
+          else{
+            return false;
+          }
+        }
+      }
+      else if(self.mode.name == "function"){
+        if(self.showTestForm()){
+          return true;
+        }
+        else return false;
+      }
+      else{
+        if(self.editMode){
+          if(self.showTestForm()){
+            return false;
+          }
+          else{
+            return false;
+          }
+        }
+        else{
+          return false;
+        }
       }
     };
 
-    self.showTestSideBar = false;
     self.toggleTestForm = function (show) {
       
       if(angular.isDefined(show)) {

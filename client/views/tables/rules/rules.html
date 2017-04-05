@@ -61,7 +61,7 @@
 
     <div ng-if="rules.showTemplatesForm" ng-include="'views/tables/rules/action_templates.html'"></div>
 
-    <div ng-class="(!rules.editMode || !rules.showTestForm()) ? 'col-xs-8 col-md-9' : 'col-xs-12'"
+    <div ng-class="(!rules.mode.name.includes('function') && (rules.showTestForm() || !rules.editMode)) ? 'col-xs-8 col-md-9' : 'col-xs-12'"
          class="actions-display"
          ng-include="'views/tables/rules/new_rule.html'"></div>
     <div ng-if="!rules.mode.name.includes('function')"
