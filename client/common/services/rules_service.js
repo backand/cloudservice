@@ -180,9 +180,7 @@
       }
       if(requestMode.includes("function")){
         return encodeURI(uri +
-        //((onDemand || debug) ? '?' : '') +
-        ( onDemand ? rule.name : '') +
-        ((onDemand && !_.isEmpty(parameters)) ? '&' : '') +
+        rule.category + '/' + rule.name + '?' +
         (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
       }
       else{
