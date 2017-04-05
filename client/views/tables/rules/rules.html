@@ -16,7 +16,7 @@
   </div>
 
   <div class="row">
-    <div ng-show="!rules.editMode && !rules.requestTestForm && rules.showsideBar" class="col-xs-4 col-md-3 rule-column actions-animate-show">
+    <div ng-if="!rules.editMode && !rules.requestTestForm && rules.showsideBar" class="col-xs-4 col-md-3 rule-column actions-animate-show">
 
       <ul  class="list-unstyled rule-tree">
 
@@ -61,10 +61,11 @@
 
     <div ng-if="rules.showTemplatesForm" ng-include="'views/tables/rules/action_templates.html'"></div>
 
-    <div ng-class="(!rules.editMode || rules.showTestForm()) ? 'col-xs-8 col-md-9' : 'col-xs-12'"
+    <div ng-class="(!rules.editMode || !rules.showTestForm()) ? 'col-xs-8 col-md-9' : 'col-xs-12'"
          class="actions-display"
          ng-include="'views/tables/rules/new_rule.html'"></div>
-    <div ng-show="rules.showTestForm()"
+    <div ng-if="!rules.mode.name.includes('function')"
+         ng-show="rules.showTestForm()"
          class="col-xs-4 col-md-3 test-column actions-animate-show"
          ng-include="'views/tables/rules/test_code_window.html'"></div>
   </div>
