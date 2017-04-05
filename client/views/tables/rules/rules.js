@@ -553,15 +553,25 @@
         self.action.__metadata;
       return allow;
     };
+    self.toggletestsidebar = function(){
+      if(self.mode.name.includes('function') && self.showTestSideBar == false){
+        var showTestSideBar = true;
+      }
+      if(self.mode.name.includes('function') && self.showTestSideBar == true){
+        var showTestSideBar = false;
+      }
+      return show;
+    }
 
+    self.showTestSideBar = false;
     self.toggleTestForm = function (show) {
-
+      
       if(angular.isDefined(show)) {
         self.requestTestForm = show;
       } else{
         self.requestTestForm = !self.requestTestForm;
       }
-
+      self.toggletestsidebar();
       $state.go('.', {test: self.requestTestForm}, {notify: false});
     };
 

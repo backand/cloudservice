@@ -1,5 +1,6 @@
 
-<div ng-if="rules.action">
+<div ng-if="rules.action" class="row">
+<div ng-class="rules.showTestSideBar ? col-md-8 : col-md-12">
   <div ng-cloak>
     <angled-window ng-show="rules.showJsCodeHelpDialog"
                    title="Readme - JavaScript Code"
@@ -396,4 +397,11 @@
 
     </div>
   </form>
+  </div>
+  <div ng-show="rules.showTestForm()"
+         class="col-xs-4 col-md-3 test-column actions-animate-show"
+         ng-include="'views/tables/rules/test_code_window.html'">
+         </div>
+  </div>
+  
 </div>
