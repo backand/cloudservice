@@ -264,7 +264,7 @@
     };
 
     self.getNodeDeployCommand = function () {
-      if(self.ruleData.data.name){
+      if(self.ruleData){
         var name = ' --name ' + self.ruleData.data.name;
       }
       else{
@@ -1054,7 +1054,7 @@
 
         var guid = response.headers('Backand-Action-Guid');
         //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
-        self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
+        self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug', self.mode.name);
         self.testUrl = self.testHttpObject.url;
         self.testHttpObject.params = {parameters: self.test.parametersToSend};
         // GENERATOR ADDON
@@ -1136,7 +1136,11 @@
 
             if (objectId == 4) {
               uri = $state.href('security.actions', {actionId: actionId, line: actionLine}, {absolute: false});
-            } else {
+            }
+            else if(self.mode.name == 'function'){
+              uri = $state.href('functions.function', {functionId: actionId})
+            }
+            else {
               uri = $state.href('object_actions', {actionId: actionId,tableId: objectId,line: actionLine}, {absolute: false});
             }
 
