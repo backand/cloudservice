@@ -38,7 +38,7 @@
             <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">In system action the name cannot be
               modified.</span>
 
-            <a ng-if="rules.action && !rules.newRuleForm.$pristine" href="" id="action-refresh" title="Refresh Action" class="btn btn-sm" ng-click="rules.refresh()"><i class="glyphicon glyphicon-refresh"></i></a>
+            <a ng-if="rules.action && !rules.newRuleForm.$pristine" href="" id="action-refresh" title="Refresh {{rules.mode.title}}" class="btn btn-sm" ng-click="rules.refresh()"><i class="glyphicon glyphicon-refresh"></i></a>
 
             <div ng-messages="rules.newRuleForm.ruleName.$error">
               <div ng-message="pattern" class="text-danger">Use only letters, numbers, space or underscore</div>
@@ -52,7 +52,7 @@
         <input type="button" ng-show="rules.allowEditAction() && !rules.isNodeJS"
                 ng-click="rules.editAction()"
                 class="btn btn-primary pull-right with-margin"
-          value="Edit Action">
+          value="Edit {{rules.mode.title}}">
         </input>
 
         <div ng-show="rules.editMode">
@@ -83,7 +83,7 @@
                ng-show="!rules.isNewAction"
                class="pull-right btn btn-success btn-xs with-margin"
                ng-click="rules.toggleTestForm()"
-               value="{{ rules.requestTestForm ? '<< Hide Test' : 'Test Action >>'}}">
+               value="{{ rules.requestTestForm ? '<< Hide Test' : 'Test ' +rules.mode.title + ' >>'}}">
         </input>
       </div>
       </div>
@@ -98,7 +98,7 @@
              ng-if="!rules.mode.name.includes('function')">
           <label>Event Trigger</label>
           <ba-tooltip
-            tooltip-text="Select the event that will trigger the action: on-demand via REST API or by CRUD request"
+            tooltip-text="Select the event that will trigger the {{rules.mode.title}}: on-demand via REST API or by CRUD request"
             tooltip-placement="right" class=""></ba-tooltip>
           <select class="form-control"
                   ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"

@@ -144,7 +144,7 @@
     }
     //default view for add lambda page is new lambda action
     self.showlambda = function(){
-      if(self.mode.name == 'lambdafunction'){
+      if(self.mode.name == 'lambdafunctions'){
         return true;
       }
       else{
@@ -238,7 +238,7 @@
             });
 
            
-            if(self.mode.name == 'lambdafunction'){
+            if(self.mode.name == 'lambdafunctions'){
                self.changeTemplateToNodeJs(res); 
             } 
             else{
@@ -255,7 +255,7 @@
       else{
         var name = '';
       }
-      if(self.mode.name == 'lambdafunction'){
+      if(self.mode.name == 'lambdafunctions'){
         return 'backand function init --app ' + self.currentApp.Name + name + ' --master ' + self.masterToken + ' --user ' + self.userToken;
       }
       else{
