@@ -1,4 +1,5 @@
-<div>
+<div name="tree-div" ng-controller="TreeController as tree">
+<button ng-click="tree.refreshTree()">Refresh Tree</button>
   <div us-spinner class="tree-spinner" spinner-key="loading-tree" spinner-start-active></div>
   <treecontrol class="tree-classic"
                tree-model="tree.data"
@@ -7,5 +8,5 @@
                on-selection="tree.onSelection(node, selected)">
     {{tree.displayName(node.name)}}
   </treecontrol>
-  <p ng-if="tree.noFiles" style="padding-left: 20px;">No Files</p>
+  <p ng-if="tree.noFiles" style="padding-left: 20px;">{{tree.test}}</p>
 </div>

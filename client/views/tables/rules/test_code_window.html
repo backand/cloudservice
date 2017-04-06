@@ -14,6 +14,7 @@
 
   <hr ng-if="rules.test.inputParametersArray" class="narrow-top-margin">
   <div ng-if="rules.getDataActionType() === 'On Demand'">
+  <div ng-init="rules.test.method = 'GET'"/>
     <label>Method:&nbsp;&nbsp;</label>
     <input type="radio"
            ng-model="rules.test.method"

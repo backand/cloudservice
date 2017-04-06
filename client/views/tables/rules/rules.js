@@ -68,6 +68,9 @@
       self.actionChangeInTree = false;
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
+      if(!self.test){
+        self.test = self.setTestMethod();
+      }
       self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
       if($stateParams.test == 'true'){
         self.requestTestForm = true;
@@ -98,8 +101,19 @@
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
       self.getTokens();
       getAllActions();//load all actions names for the test
-      
+
     }
+
+    self.setTestMethod = function(){
+      if(self.test){
+        self.test.method = 'GET';
+      }
+      else{
+        self.test ={};
+        self.setTestMethod();
+      }
+    }
+
     self.getMode = function(){
         switch ($state.current.name){
           case 'security.actions':
@@ -175,7 +189,6 @@
       };
       //console.log(data);
     });
-
     function setKeysInfo(data){
       self.keys = data.data;
       self.masterToken = data.data.general;
@@ -550,9 +563,22 @@
           if (result) {
             self.editMode = false;
             RulesService.remove(self.action)
-              .then(getRules)
-              .then(refreshAction);
-          }
+              .then(function(){
+                if(self.mode.name.includes('function')){
+                  if(self.action.workflowAction == 'NodeJS'){
+                    $state.go('functions.newlambdafunctions');
+                  }
+                  else{
+                    $state.go('functions.newjsfunctions');
+                  }
+                }
+                else{
+                  getRules().then(refreshAction);
+                }
+              })  
+              
+                
+            }
         });
     };
     self.showTestSideBar = false;

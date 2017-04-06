@@ -270,11 +270,12 @@
                   <div class="panel-heading">
                     <strong>Hosted node.js Files</strong>
                     <a href="" title="Refresh tree" class="btn btn-sm"
-                       ng-click="rules.refreshTree()"><i
+                       ng-click="rules.refreshTreeTest()"><i
                       class="glyphicon glyphicon-refresh"></i></a>
                   </div>
                   <div class="panel-body">
-                    <bknd-tree-control refresh-tree="rules.refreshTree"></bknd-tree-control>
+                  <ng-include src="'common/directives/tree_control/tree_control.html'"></ng-include> 
+                    <!--<bknd-tree-control refresh-tree="rules.refreshTree"></bknd-tree-control>-->
                   </div>
                 </section>
               </div>
