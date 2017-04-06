@@ -69,7 +69,7 @@
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
       self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
-      if($stateParams.test == true){
+      if($stateParams.test == 'true'){
         self.requestTestForm = true;
       }
       if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
@@ -165,9 +165,10 @@
     SocketService.on('Rule.created', function (data) {
       //Get the 'items' object that have changed
       if(self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
-        getRules().then(function(){
-          self.showAction(self.action.name);
-        });
+        self.loadNewAction(data.id);
+        //getRules().then(function(){
+          //self.showAction(self.action.name);
+        //});
       };
       if(!self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
         self.refreshTree();
@@ -1061,8 +1062,13 @@
       RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug',self.mode.name)
         .then(getLog, getLog);
     };
-    self.loadNewAction = function(){
-        var Id = self.action.__metadata.id;
+    self.loadNewAction = function(ids){
+        if(ids){
+          var Id = ids;
+        }
+        else{
+          var Id = self.action.__metadata.id;
+        }
         if(self.mode.name.includes('function')){
           var params = {
             functionId : Id,
