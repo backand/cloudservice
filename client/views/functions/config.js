@@ -17,7 +17,7 @@
             templateUrl: 'views/functions/lambdafunctions.html'
         })
         .state('functions.function', {
-            url: '/function/:functionId',
+            url: '/function/:functionId/{test}',
             controller: 'FunctionsController as functionsCon',
             templateUrl: 'views/functions/functions.html'
         });

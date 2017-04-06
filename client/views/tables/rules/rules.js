@@ -69,7 +69,9 @@
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
       self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
-
+      if($stateParams.test == true){
+        self.requestTestForm = true;
+      }
       if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
@@ -519,11 +521,14 @@
           self.actionChangeInTree = false;
           self.saving = false;
           self.savingAndTesting = false;
-          self.isNewAction = false;
+
           self.showTestSideBar = true;
           if (withTest)
             self.testData();
-          self.requestTestForm = true; //always open test after save on demand action
+         // self.requestTestForm = true;
+          if(self.isNewAction){
+            self.loadNewAction();
+          } //always open test after save on demand action
         }, function () {
           self.saving = false;
           self.savingAndTesting = false;
@@ -1056,7 +1061,27 @@
       RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug',self.mode.name)
         .then(getLog, getLog);
     };
-
+    self.loadNewAction = function(){
+        var Id = self.action.__metadata.id;
+        if(self.mode.name.includes('function')){
+          var params = {
+            functionId : Id,
+            test : true
+          }
+          var stateToGoTo = 'functions.function';
+        }
+        else{
+          var params = {
+            actionId : Id,
+            test : true
+          }
+          var stateToGoTo = $state.current.name;
+        }
+        self.isNewAction = false;
+        $state.go(stateToGoTo, params);
+      
+      
+    }
     $scope.$watch(function () {
       if (self.test)
         return self.test.rowId
@@ -1349,6 +1374,9 @@
         var dataActionType = self.getDataActionType();
         text = "Test " + dataActionType;
         text += dataActionType === 'On Demand' ? " Action" : " Trigger";
+      }
+      if (self.mode.name.includes('function')){
+        text = "Test Function"
       }
 
       // Reset test URL & http when changing actions

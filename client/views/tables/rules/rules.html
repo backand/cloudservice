@@ -2,14 +2,14 @@
 
   <div id="rules-header" class="page-header clearfix">
     <div ng-show="rules.showsideBar" class="title-group">
-      <h2 class="page-name ">Actions</h2>
+      <h2 class="page-name ">{{rules.mode.title}}</h2>
       <h4 class=" page-description lead pull-left">Manage here all the server side logic and operations</h4>
     </div>
     <button ng-show="rules.action && !rules.editMode"
             ng-click="rules.newAction()"
             id="new-rule-btn"
             class="btn btn-success pull-right">
-      + New Action
+      + New {{rules.mode.title}}
     </button>
 
 
