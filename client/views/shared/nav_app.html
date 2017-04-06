@@ -134,17 +134,17 @@
       </a>
       <ul>
         <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newJsFunction($event)" href="">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newLambdaFunction($event)" href="">
             <i class="ba-icon-new-query"></i>
-            <span>Add Javascript Function</span>
+            <span>Add Lambda Function</span>
           </a>
         </li>
       </ul>
       <ul>
         <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newLambdaFunction($event)" href="">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newJsFunction($event)" href="">
             <i class="ba-icon-new-query"></i>
-            <span>Add Lambda Function</span>
+            <span>Add Javascript Function</span>
           </a>
         </li>
       </ul>

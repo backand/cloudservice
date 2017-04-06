@@ -32,6 +32,11 @@
 
       updateDefaultModelUse((AppsService.currentApp ? AppsService.currentApp.Name : undefined), false);
 
+      if(AppsService.currentApp !== undefined && AppsService.currentApp !== null) {
+        //when app change login to the socket
+        SocketService.login(AppsService.currentApp.Name);
+      }
+
       if (AppsService.currentApp === null ||
         AppsService.currentApp === undefined ||
         self.currentAppName === AppsService.currentApp.Name)
@@ -40,8 +45,6 @@
       self.currentAppName = AppsService.currentApp.Name;
       self.debugMode = AppsService.currentApp.debugMode;
 
-      //when app change login to the socket
-      SocketService.login(self.currentAppName);
 
       if(self.currentAppName) {
         //clear the model
