@@ -135,8 +135,7 @@
              ng-show="rules.action.workflowAction"
              ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
           <label>Input Parameters</label>
-          <ba-tooltip tooltip-text="Use this to send additional parameters to the {{rules.mode.name.includes('function') ? 'function' : 'action'}}" tooltip-placement="right"
-                      class=""></ba-tooltip>
+          <ba-tooltip tooltip-text="Use this to send additional parameters to the {{rules.mode.name.includes('function') ? 'function' : 'action'}}" tooltip-placement="right" class=""></ba-tooltip>
           <input type="text"
                  ng-change="modal.buildParameters()"
                  name="inputParameters"
@@ -146,7 +145,8 @@
                  placeholder="input1,input2,...."
                  ng-disabled="!rules.editMode && !rules.isNodeJS">
           <div ng-messages="rules.newRuleForm.inputParameters.$error">
-            <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.</div>
+            <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.
+            </div>
           </div>
         </div>
 
@@ -270,12 +270,11 @@
                   <div class="panel-heading">
                     <strong>Hosted node.js Files</strong>
                     <a href="" title="Refresh tree" class="btn btn-sm"
-                       ng-click="rules.refreshTreeTest()"><i
+                       ng-click="rules.refreshTree()"><i
                       class="glyphicon glyphicon-refresh"></i></a>
                   </div>
                   <div class="panel-body">
-                  <ng-include src="'common/directives/tree_control/tree_control.html'"></ng-include> 
-                    <!--<bknd-tree-control refresh-tree="rules.refreshTree"></bknd-tree-control>-->
+                    <bknd-tree-control refresh-tree="rules.refreshTree"></bknd-tree-control>
                   </div>
                 </section>
               </div>

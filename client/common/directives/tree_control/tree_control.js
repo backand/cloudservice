@@ -32,7 +32,7 @@
     } else {
       self.service = 'hosting';
     }
-    self.test = 'this is a test';
+
     var app = AppsService.currentApp;
     self.appName = app.Name;
     self.data = [];

@@ -19,7 +19,13 @@
         .state('functions.function', {
             url: '/function/:functionId/{test}',
             controller: 'FunctionsController as functionsCon',
-            templateUrl: 'views/functions/functions.html'
+            templateUrl: 'views/functions/functions.html',
+            params: {
+              line: null,
+              col: null,
+              q: null,
+              editMode: false
+            }
         });
 
   }

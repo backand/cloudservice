@@ -68,9 +68,9 @@
       self.actionChangeInTree = false;
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
-      if(!self.test){
-        self.test = self.setTestMethod();
-      }
+      self.editMode = $stateParams.editMode || false;
+      //self.test.method = 'GET';
+
       self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
       if($stateParams.test == 'true'){
         self.requestTestForm = true;
@@ -81,10 +81,11 @@
       self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
       if($stateParams.functionId > 0){
         
-        RulesService.getRule($stateParams.functionId).then(function(data){
-        loadAction(data);
-        self.ruleData = data;
-        });
+        RulesService.getRule($stateParams.functionId)
+          .then(function(data){
+            loadFunction(data);
+            self.ruleData = data;
+          });
       }
       if ($localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation === undefined) {
         $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = false;
@@ -104,77 +105,52 @@
 
     }
 
-    self.setTestMethod = function(){
-      if(self.test){
-        self.test.method = 'GET';
-      }
-      else{
-        self.test ={};
-        self.setTestMethod();
-      }
-    }
-
     self.getMode = function(){
-        switch ($state.current.name){
-          case 'security.actions':
-          case 'object_actions':
-          var name = {
-                name : 'action',
-                title : 'Action'
-              }
-            return name;
-            break;
-          case 'functions.newjsfunctions':
-             var name = {
-                name : 'jsfunctions',
-                title : 'Javascript Function'
-              };
-             return name;
-            break;
-          case 'functions.newlambdafunctions':
-            var name = {
-              name: 'lambdafunctions',
-              title : 'Lambda Function'
+
+      var name = {};
+      switch ($state.current.name){
+        case 'security.actions':
+        case 'object_actions':
+          name = {
+              name : 'action',
+              title : 'Action'
             };
-            return name;
-            break;
-          case 'functions.function':
-            var name = {
-              name: 'function',
-              title: 'Function'
-            }
-            return name;
-            break;
-        };
+          break;
+        case 'functions.newjsfunctions':
+           name = {
+              name : 'jsfunctions',
+              title : 'Javascript Function'
+            };
+          break;
+        case 'functions.newlambdafunctions':
+          name = {
+            name: 'lambdafunctions',
+            title : 'Lambda Function'
+          };
+          break;
+        case 'functions.function':
+          name = {
+            name: 'function',
+            title: 'Function'
+          };
+          break;
+      }
+
+      return name;
+
     };
 
     self.mode = self.getMode();
     //show side bar tree only for security/actions page
-    self.showSideBar = function (){
-      if(self.mode.name == 'action'){
-        return true;
-      }
-      else{
-        return false;
-      }
-    }
-    //default view for add lambda page is new lambda action
-    self.showlambda = function(){
-      if(self.mode.name == 'lambdafunctions'){
-        return true;
-      }
-      else{
-        return false;
-      }
-    }
+    self.showsideBar = (self.mode.name == 'action');
+
     //for the lambda page to be default Node Js
     self.changeTemplateToNodeJs = function(res){
         self.nodeactionTemplate = res[0];
         self.actionTemplates = self.nodeactionTemplate[0];
         self.selectTemplate(self.actionTemplates);
-    }
-    self.showsideBar = self.showSideBar();
-    self.showlambda = self.showlambda();
+    };
+
     //Wait for server updates on 'items' object
     SocketService.on('Rule.created', function (data) {
       //Get the 'items' object that have changed
@@ -183,10 +159,10 @@
         //getRules().then(function(){
           //self.showAction(self.action.name);
         //});
-      };
+      }
       if(!self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
         self.refreshTree();
-      };
+      }
       //console.log(data);
     });
     function setKeysInfo(data){
@@ -339,28 +315,30 @@
       });
     }
 
-    self.getactionType = function(){
+    function getActionType(){
       if(self.mode.name.includes("function")){
         return "Function";
       }
       else{
         return null;
       }
-    }
-    self.getCategory = function(){
+    };
+
+    function getCategory(){
       if(self.mode.name.includes("function")){
         return "general";
       }
       else{
         return null;
       }
-    }
+    };
+
     var defaultRule = {
       'additionalView': "",
       'databaseViewName': "",
       'useSqlParser': true,
-      'actionType': self.getactionType(),
-      'category': self.getCategory()
+      'actionType': getActionType(),
+      'category': getCategory()
     };
 
     self.newAction = function (trigger, templateName) {
@@ -387,6 +365,8 @@
 
       if (trigger) {
         self.action.dataAction = trigger;
+      } else if(self.mode.name.includes("function")){
+        self.action.dataAction = 'OnDemand';
       }
 
       self.clearTest();
@@ -439,7 +419,7 @@
 
     }
 
-    function loadAction(data) {
+    function loadFunction(data) {
       self.action = data.data;
       if (self.isNodeJS){
         NodejsService.actionName = self.action.name;
@@ -448,6 +428,7 @@
           self.refreshTree();
         }
       }
+      self.clearTest();
     }
 
     self.allowEditAction = function () {
@@ -475,7 +456,7 @@
     function getTestRow() {
 
       if(self.getDataActionType() === 'On Demand'){
-        self.test.rowId = "";
+        self.test.rowId = null;
         self.test.isGuid = false;
       } else {
         if (self.getDataActionType() === 'Create')
@@ -582,53 +563,20 @@
         });
     };
     self.showTestSideBar = false;
+
     self.allowTestForm = function () {
-      var allow = self.action &&
-        self.action.__metadata;
-      return allow;
+      return self.action && self.action.__metadata;
     };
 
-    self.toggletestsidebar = function(){
-        self.showTestSideBar = !self.showTestSideBar;
-      
-    };
     self.pageLayoutNewRule = function(){
       if(self.mode.name.includes("functions")){
-        if(!self.editMode){
-          if(self.showTestForm()){
-            return true;
-          }
-          else{
-            return false;
-          }
-        }
-        else{
-          if(self.showTestForm()){
-            return true;
-          }
-          else{
-            return false;
-          }
-        }
+        return self.showTestForm();
       }
       else if(self.mode.name == "function"){
-        if(self.showTestForm()){
-          return true;
-        }
-        else return false;
+        return self.showTestForm();
       }
       else{
-        if(self.editMode){
-          if(self.showTestForm()){
-            return false;
-          }
-          else{
-            return false;
-          }
-        }
-        else{
-          return false;
-        }
+        return false;
       }
     };
 
@@ -639,7 +587,7 @@
       } else{
         self.requestTestForm = !self.requestTestForm;
       }
-      self.toggletestsidebar();
+      self.showTestSideBar = !self.showTestSideBar;
       $state.go('.', {test: self.requestTestForm}, {notify: false});
     };
 
@@ -884,7 +832,7 @@
      */
     function postNewRule(rule) {
       var data = angular.extend(defaultRule, rule);
-      defaultRule.viewTable = RulesService.tableId;
+      data.viewTable = RulesService.tableId;
       return RulesService.post(data)
         .then(function (response) {
           self.action = response.data;
@@ -1088,32 +1036,33 @@
       RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug',self.mode.name)
         .then(getLog, getLog);
     };
+
     self.loadNewAction = function(ids){
-        if(ids){
-          var Id = ids;
-        }
-        else{
-          var Id = self.action.__metadata.id;
-        }
-        if(self.mode.name.includes('function')){
-          var params = {
-            functionId : Id,
-            test : true
-          }
-          var stateToGoTo = 'functions.function';
-        }
-        else{
-          var params = {
-            actionId : Id,
-            test : true
-          }
-          var stateToGoTo = $state.current.name;
-        }
-        self.isNewAction = false;
-        $state.go(stateToGoTo, params);
+
+      var id = ids || self.action.__metadata.id;
+
+      var params, stateToGoTo;
+      if(self.mode.name.includes('function')){
+        params = {
+          functionId : id,
+          test : true
+        };
+        stateToGoTo = 'functions.function';
+      }
+      else {
+        params = {
+          actionId : id,
+          test : true
+        };
+        stateToGoTo = $state.current.name;
+      }
+
+      self.isNewAction = false;
+      $state.go(stateToGoTo, params);
       
       
-    }
+    };
+
     $scope.$watch(function () {
       if (self.test)
         return self.test.rowId
