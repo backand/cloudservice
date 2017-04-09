@@ -100,11 +100,11 @@
       parameters: function(splitUrl, httpObject) {
         return httpObject.params && httpObject.params.parameters ? httpObject.params.parameters : undefined;
       }
-    }
+    };
 
 
     self.generateCode = function (httpObject, opts) {
-      console.log(httpObject);
+      //console.log(httpObject);
       // console.log(opts);
       httpObject = angular.fromJson(httpObject);
 
@@ -115,7 +115,7 @@
         result = result.concat(__generatePromiseString__(opts.es6)) :
         result = 'return '.concat(result);
       return result
-    }
+    };
 
     function __extractFunction__ (httpObject) {
       var splitUrl = httpObject.url.split('/');

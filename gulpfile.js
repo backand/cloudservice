@@ -218,7 +218,31 @@ gulp.task('serve:tdd', function(cb) {
 //run the server after having built generated files, and watch for changes
 gulp.task('serve', ['env:dev', 'build'], function() {
   //var proxyOptions = url.parse('http://api.backand.info:8099');
-  var proxyOptions = url.parse('http://www.backand.loc:8080');
+  var proxyOptions = url.parse('https://api.backand.co');
+  proxyOptions.route = '/api';
+  browserSync({
+    browser: ['google chrome'],
+    notify: false,
+    port: 3001,
+    ghostMode: false,
+    logPrefix: pkg.name,
+    server: {
+      baseDir: ['build', 'client'],
+      middleware: [proxy(proxyOptions)]
+    }
+  });
+
+  gulp.watch(config.html, reload);
+  gulp.watch(config.scss, ['sass', reload]);
+  gulp.watch(config.js, ['jshint']);
+  gulp.watch(config.tpl, ['templates', reload]);
+  gulp.watch(config.assets, reload);
+});
+
+//run the server after having built generated files, and watch for changes
+gulp.task('serve:prod', ['env:prod', 'build'], function() {
+  //var proxyOptions = url.parse('http://api.backand.info:8099');
+  var proxyOptions = url.parse('https://api.backand.com');
   proxyOptions.route = '/api';
   browserSync({
     browser: ['google chrome'],

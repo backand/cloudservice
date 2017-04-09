@@ -355,16 +355,15 @@
                 <p>
                   <b>--app</b>: The current app name
                   <div ng-if="!rules.mode.name.includes('function')">
-                  <b>--object</b>: The object that the action belongs to<br/>
-                  <b>--action</b>: The action name<br/>
+                    <b>--object</b>: The object that the action belongs to<br/>
+                    <b>--action</b>: The action name<br/>
                   </div>
                   <div ng-if="rules.mode.name.includes('function')">
-                  <b>--function</b>: The function name
+                    <b>--name</b>: The function name
                   </div>
                   <b>--master</b>: The master token of the app (get it from <a href="" ui-sref="security.keys">Social & Keys</a>)<br/>
                   <b>--user</b>: The token of the current user (get it from <a href="" ui-sref="security.team">Team</a> and click on key icon)<br/>
-                  <span ng-if="rules.allowEditAction()"><b>--folder</b>: Optional, By default the deployment is from the current folder,
-                  specify for other location</span>
+                  <span ng-if="rules.allowEditAction()"><b>--folder</b>: Optional, By default the deployment is from the current folder, specify for other location</span>
                   <br/>
                 </p>
                 <h3 ng-if="rules.allowEditAction()">Add Backand SDK to node.js</h3>

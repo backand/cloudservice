@@ -83,7 +83,7 @@
         
         RulesService.getRule($stateParams.functionId)
           .then(function(data){
-            loadFunction(data);
+            loadAction(data);
             self.ruleData = data;
           });
       }
@@ -419,8 +419,9 @@
 
     }
 
-    function loadFunction(data) {
+    function loadAction(data) {
       self.action = data.data;
+      self.isNodeJS = self.action && self.action.workflowAction == 'NodeJS';
       if (self.isNodeJS){
         NodejsService.actionName = self.action.name;
         NodejsService.objectName = self.getTableName();
@@ -749,7 +750,8 @@
     }
 
     function getTableName() {
-      return $stateParams.tableId ? RulesService.tableName : CONSTS.backandUserObject;
+      return RulesService.tableName;
+      //return $stateParams.tableId ? RulesService.tableName : CONSTS.backandUserObject;
     }
 
     self.getTableName = getTableName;
