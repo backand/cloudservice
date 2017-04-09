@@ -279,24 +279,9 @@
                 </section>
               </div>
               <div>
-                  <h3>How it Works
-                    <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href=""
-                       ng-click="rules.showHowItWorks = !rules.showHowItWorks">{{rules.showHowItWorks ? "Hide": "Show"}}</a>
-                  </h3>
-                  <div ng-if="rules.showHowItWorks">
-                    <br/>
-                    <p>Backand's server-side Node.JS Lambda {{rules.mode.name.includes('function') ? 'function' : 'action'}}s use node.js code that is developed on your local machine, and runs as Lambda funciton. The project is built like any other Node.JS project, and can be fully debugged locally. Once you've finished development, uploading it to Back&'s servers is as easy as just running the "deploy" command.<br/>
-                      Follow these steps to create, develop, and run a server-side Node.js {{rules.mode.name.includes('function') ? 'function' : 'action'}}:</p>
-                    <ul style="padding-left: 20px;">
-                      <li>First name the {{rules.mode.name.includes('function') ? 'function' : 'action'}}, and then use the init command to initialize your project. Do this by copying and pasting the "backand {{rules.mode.name.includes('function') ? 'function' : 'action'}} init..." command into a terminal window, in the appropriate location for your code base. The "{{rules.mode.name.includes('function') ? 'function' : 'action'}} init" command creates two levels of folders in your local file system. The top level folder is the name of the object as provided to the init command (i.e. '--object items') and the second level folder is the name of the {{rules.mode.name.includes('function') ? 'function' : 'action'}} ('{{rules.getCliActionName()}}'). We recommend running the <b>{{rules.mode.name.includes('function') ? 'function' : 'action'}} init</b> command from the root folder of your app's project. This will give you a sub-folder for each object, and a separate folder for each {{rules.mode.name.includes('function') ? 'function' : 'action'}} within the object folder.</li>
-                      <li>Next, build your Node.JS code in the {{rules.mode.name.includes('function') ? 'function' : 'action'}} folder, just as you would any other project. You can use your preferred IDE, and add as many NPM packages as you need.<br/>
-                        Note: Your code <b>must</b> start with the index.js file.</li>
-                      <li>Once you've finished developing, you can debug your code locally using the provided debug.js file (the debug.js file is ignored by the Back& server during deployment).</li>
-                      <li>When you're ready to run your code on Back&'s server, use the "deploy" command. Copy and paste the "backand {{rules.mode.name.includes('function') ? 'function' : 'action'}} deploy …" command below into a terminal.<br/> Note: You will only see this command after you have run the "init" command
-                        from the command line.</li>
-                      <li>You're now free to test the {{rules.mode.name.includes('function') ? 'function' : 'action'}} on Back&'s servers using the "Test" section on this page.</li>
-                    </ul>
-                </div>
+                <h3>Documentation</h3>
+                <br />
+                <p>Documentation on Backand's AWS Lambda Node.JS server-side functions is available <A href="http://docs.backand.com/#server-side-node-js-lambda-actions" target="_blank">here</a>. </p>
                 <br/>
                 <h3>First Time Installation <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href=""
                      ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></h3>
