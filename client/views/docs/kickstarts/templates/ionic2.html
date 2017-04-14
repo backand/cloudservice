@@ -15,32 +15,23 @@
 
                 <br/>
                 <h2>Installation</h2>
-                <h5><em><strong>Note: </strong> You can also find this kickstart guide on the <a href="http://market.ionic.io/starters/ionic-2-backand-starter" target="_blank">Ionic marketplace</a>.</em></h5>
+                <h5><em><strong>Note: </strong> You can also find this kickstart guide on <a href="https://github.com/backand/ionic2-starter1" target="_blank">Github</a>.</em></h5>
                 <h5>First, install the <a href="http://ionicframework.com/" target="_blank">Ionic framework</a>. This documentation is built against Ionic Framework version <code>2.0.0-rc.0</code>. Once the Ionic framework is installed you can get the starter app using the following command:</h5>
 
                 <pre><code class="hljs">
-    $ ionic start myApp https://github.com/backand/backand-ionic2-starter --v2
+    $ ionic start myApp https://github.com/backand/ionic2-starter1 --v2
     $ cd myApp
+    </code></pre>
+                <br/>
+                <h5>Then install dependencies for the project:</h5>
+
+                <pre><code class="hljs">
+    $ npm i -S @backand/angular2-sdk socket.io-client @types/node @types/socket.io-client ionic-native
     </code></pre>
                 <br/>
                 <h5>Next, install the Cordova plugin for Ionic.</h5>
                 <pre><code class="hljs">
     $ ionic plugin add cordova-plugin-inappbrowser
-    </code></pre>
-                <br/>
-                <h5>Once Cordova is installed, update <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/app/app.component.ts#L21" target="_blank">app.component.js</a> lines 21-23 to use your Back& app's  connection details</h5>
-                <pre><code class="hljs">
-    backandService.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
-    backandService.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
-    backandService.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
-    </code></pre>
-                <br />
-                <h5>At this point, install the JS dependencies for the starter application:</h5>
-
-                <pre><code class="hljs">
-    $ npm install socket.io-client --save
-    $ npm install @types/node --save-dev --save-exact
-    $ npm install @types/socket.io-client --save-dev --save-exact
     </code></pre>
                 <br/>
 
@@ -54,43 +45,37 @@
                 <h2>Exploring the starter app</h2>
                 <h5>There is a lot of useful functionality buried in the starter app. Here are some highlights</h5>
                 <br/>
+
+                <h3>Connecting to your own Backand application</h3>
+                <h5>If you want to customize the application's data model, or modify how authentication takes place, you'll need to create your own custom Backand application. To do so, follow these steps:</h5>
+                  <ol>
+                    <li>Create a free application at <a href="https://www.backand.com" target="_blank">Backand.com</a></li>
+                    <li>Change the parameters in the init function, found in <a href="https://github.com/backand/ionic2-starter1/blob/master/src/app/app.component.ts#L25" target="_blank">/src/app/app.component.ts</a>, to connect to your application:
+                      <pre><code class="hljs">
+backand.init({
+    appName: '{{vm.currentApp.Name || 'Your-App-Name'}}',
+    SignUpToken: '{{vm.keys.signup || 'Your-SignUp-Token'}}',
+    anonymousToken: '{{vm.keys.anonymous || 'Your-Anonymous-Token'}}',
+    runSocket: true,
+    mobilePlatform: 'ionic'
+});
+    </code></pre>
+                      </code></pre>
+                    </li>
+                    <li>Delete the starter content, and start writing your app!</li>
+                  </ol>
+                <h5>Review our Angular 2 SDK to get started - <a href="https://github.com/backand/angular2-sdk" target="_blank">angular2-sdk</a></h5>
+                <br />
                 <h3>CRUD functionality</h3>
 
-                <h5>This sample app features a demo of a CRUD service for an object called <code>todo</code>. You can see how we work through each of the basic REST methods for a CRUD object in the <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/pages/crud/crud.ts" target="_blank">/src/pages/crud/crud.ts file</a>. Expanding this to work with any object is a snap - simply replace <code>todo</code> with the name of the object in your Back& application that you wish to work with.</h5>
+                <h5>This sample app features a demo of a CRUD service for an object called <code>todo</code>. You can see how we work through each of the basic REST methods for a CRUD object in the <a href="https://github.com/backand/ionic2-starter1/blob/master/src/pages/crud/crud.ts" target="_blank">/src/pages/crud/crud.ts file</a>. Expanding this to work with any object is a snap - simply replace <code>todo</code> with the name of the object in your Back& application that you wish to work with.</h5>
                 <br/>
                 <h3>Authentication and Social Media Integration</h3>
-                <h5>The file <code>/src/pages/signup/signup.ts</code> demonstrates everything you need to create a new user in your application. It covers basic Back& users, as well as social media integration with providers like Google and Facebook. You can see how the signin methods work with social media providers by taking a look at the  <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/pages/signup/signup.ts#L39" target="_blank">signup.ts file</a>, line 39.
+                <h5>The file <a href="https://github.com/backand/ionic2-starter1/blob/master/src/pages/signup/signup.ts" target="_blank"><code>/src/pages/signup/signup.ts</code></a> demonstrates everything you need to create a new user in your application.
 
-                  <h5>We also provide all the code you need to authenticate users with the service. Review the code in <a href="https://github.com/backand/backand-ionic2-starter/blob/master/src/pages/login/login.ts" target="_blank">/src/pages/login/login.ts</a> to see how we recommend you work with your user objects. You can use this code as a starter to build out the rest of your app's authentication scheme.</h5>
+                <h5>We also provide all the code you need to authenticate users with the service. Review the code in <a href="https://github.com/backand/ionic2-starter1/blob/master/src/pages/login/login.ts" target="_blank">/src/pages/login/login.ts</a> to see how we recommend you work with your user objects. You can use this code as a starter to build out the rest of your app's authentication scheme.</h5>
                 <br/>
-                <h3>Facebook App Connect</h3>
-                <h5>Back& also gives you the capability to work with custom Facebook applications. To connect your Ionic2 Back& application to your Facebook app, you first need to install the Facebook-Cordova plugin for the Ionic framework:</h5>
-                <pre><code class="hljs">
-    $ ionic plugin add cordova-plugin-facebook4 --save --variable APP_ID="<Facebook APP ID>" --variable APP_NAME="<Facebook APP NAME>"
-    </code></pre>
-                <br/>
-                <h5>Once you've connected your application, you can use the <code>inappSocial</code> function of the <code>BackandService</code> module to interact with your app. You can see an example of this <a href="https://github.com/backand/backand-ionic2-starter/blob/fc9b0fd5cb429bc567b505ee4633806e0d2ebee2/src/pages/signup/signup.ts#L51" target="_blank">in file signup.ts</a>.</h5>
-                <br />
-                <h3>Sockets</h3>
-                <h5>The Ionic 2 Starter also offers an example of our real-time communications service implemented with Socket.io. In the file <a href="https://github.com/backand/backand-ionic2-starter/blob/fc9b0fd5cb429bc567b505ee4633806e0d2ebee2/src/pages/crud/crud.ts#L17" target="_blank">crud.ts</a> you can see an example of the application handling the <code>items_updated</code> event sent by the back-end. Here's the code in its entirety,, for reference:</h5>
-                <pre><code class="hljs">
-    this.backandService.on("items_updated")
-    .subscribe(
-        data => {
-            console.log("items_updated", data);
-            let a = data as any[];
-            let newItem = {};
-            a.forEach((kv)=> newItem[kv.Key] = kv.Value);
-            this.items.unshift(newItem);
-        },
-        err => {
-            console.log(err);
-        },
-        () => console.log('received update from socket')
-    );
-                </code></pre>
-                <br/>
-          <br />
+
           <h2> Samples and Documentation </h2>
           <h5> Here are some links to sample applications for Ionic 2, powered by Back&: </h5>
           <ul class="list-group">
