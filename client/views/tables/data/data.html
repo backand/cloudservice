@@ -1,4 +1,5 @@
 <div id="grid-container" class="object-data-page">
+   <div ng-click="ObjectData.toggleSearch()"></div>
   <us-spinner spinner-key="loading-data" spinner-start-active="1"
               style="position: relative; top: 15px; left: calc(100%/2);"></us-spinner>
 
@@ -23,9 +24,9 @@
     {{ ObjectData.showLog ? 'HIDE CODE' : 'SHOW CODE' }}
     <i class="ti-angle-right" ng-hide="ObjectData.showLog"></i>
   </a>
-
+<div>
   <div class="row">
-    <div ng-class="ObjectData.showLog ? 'col-md-8' : 'col-md-12'">
+    <div ng-class="ObjectData.showLog == false ? 'col-md-12' : 'col-md-8'">
 
       <!-- Filter Data-->
       <fieldset class="collapsible-fieldset"
@@ -86,27 +87,48 @@
     </div>
 
     <!-- HTTP Log -->
-    <div ng-show="ObjectData.showLog" class="col-md-4">
-      <div class="panel panel-default log-panel" ng-if="ObjectData.httpRequestsLog.length !== 0">
+    <div ng-show="ObjectData.showLog" class='col-md-4' >
+      
+    <div class="row" ng-class="ObjectData.pinme === false ? 'row-margin': '' ">
+      <div class="panel panel-default log-panel" ng-class="ObjectData.pinme === true ? 'col-md-8' : 'col-md-12  http-log'" ng-if="ObjectData.httpRequestsLog.length !== 0">
         <div class="panel-heading">
-          <h3 class="panel-title">
-            {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestTitle}},
-            {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestMethod}}</h3>
-
-          <div class="log-navigation-buttons">
-
-            <button class="btn btn-xs btn-default"
-                    ng-disabled="!ObjectData.httpRequestsLog[ObjectData.logIndex.last - 1]"
-                    ng-click="ObjectData.gotoPrevLogItem()">
-              <i class="ti-angle-left"></i>
-            </button>
-
-            <button class="btn btn-xs btn-default"
-                    ng-disabled="!ObjectData.httpRequestsLog[ObjectData.logIndex.last + 1]"
-                    ng-click="ObjectData.gotoNextLogItem()">
-              <i class="ti-angle-right"></i>
-            </button>
+          <div>
+            <div ng-if="ObjectData.pinme === false">
+              <button  class="btn btn-default   http-dropdownbutn" type="button" ng-click="ObjectData.showMe()"      aria-haspopup="true" aria-expanded="false">
+              Action Log: {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestTitle}},
+              {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestMethod}}
+              <span class="ti-arrow-circle-down"></span>
+              </button>
+            </div>
+            <div ng-if="ObjectData.pinme === true">
+              <p class="display-heading">{{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestTitle}},
+              {{ObjectData.httpRequestsLog[ObjectData.logIndex.last].requestMethod}}</p>
+            </div>
           </div>
+
+             <div class="http-drop-table" ng-show="ObjectData.showme">
+             <table class="table  animate-show-hide" >
+              <thead class="http-body">
+                <tr  ng-click="ObjectData.pinMe()" class="http-drop-table-head cursorp">
+                  <td><p>Pin to sidebar</p></td>
+                  <td>
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                  </td>
+                </tr>
+              </thead>
+              <tbody class="http-body">
+                <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true" class="cursorp"
+                ng-mouseleave="hovering=false" ng-repeat="option in ObjectData.httpRequestsLog" ng-click="ObjectData.getLogIndex($index)">
+                  <td class="request-ti"> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs play-butn"></span><span>{{option.requestTitle}}</span>
+                  </td>
+                  <td class="request-method">
+                    <b>{{option.requestMethod}}</b>
+                  </td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+
         </div>
 
         <div class="panel-body">
@@ -120,11 +142,38 @@
                              type="textarea"
                              content="ObjectData.httpRequestsLog[ObjectData.logIndex.last].response"></bknd-copy-box>
             </div>
+
           </div>
         </div>
       </div>
 
-    </div>
 
+    <div class="col-md-4 action-log" style="padding-left: 0px;" ng-show="ObjectData.pinme">
+                   <div class="http-pinned-table" >
+             <table class="table  animate-show-hide" >
+              <thead class="http-body">
+                <tr class="http-table-head">
+                  <td><p>Action Log</p></td>
+                  <td>
+                  <span ng-click="ObjectData.pinMe()" class="glyphicon glyphicon-chevron-left cursorp"></span>
+                  </td>
+                </tr>
+              </thead>
+              <tbody class="http-body">
+                <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true" class="cursorp"
+                ng-mouseleave="hovering=false" ng-repeat="option in ObjectData.httpRequestsLog" ng-click="ObjectData.getLogIndex($index)">
+                  <td class="request-titl"> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs play-butn"></span><span>{{option.requestTitle}}</span>
+                  </td>
+                  <td class="request-method">
+                    <b>{{option.requestMethod}}<b>
+                  </td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+    </div>
+    </div>
+</div>
+  </div>
   </div>
 </div>

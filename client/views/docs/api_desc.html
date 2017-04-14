@@ -74,7 +74,7 @@
                 </p>
                     There are 3 kinds of actions that can be created for either action type:
                     <ul>
-                        <li>Server side JavaScript code actions</li>
+                        <li>Server-side JavaScript function</li>
                         <li>Transactional database script actions</li>
                         <li>Send Email actions</li>
                     </ul>
@@ -83,7 +83,7 @@
                         <li>A Where condition - a SQL where clause that determines if the action will be performed.</li>
                         <li>Input Parameters, added to the query string of the request that triggers the action, that will serve as variable values that you can supply to your action's code. These parameters will serve as tokens in the action definition and will be replaced with the actual values when the code executes.</li>
                     </ul>
-                    <h4>Server Side Javascript code</h4>
+                    <h4>Server-side JavaScript function</h4>
                     You can run standard JavaScript on the server. It runs on the <a target="_blank" href="http://en.wikipedia.org/wiki/V8_(JavaScript_engine)">V8 engine</a>. To execute the JavaScript action, put your code into the following function:
                     <pre><code class="html hljs">
 function backandCallback(userInput, dbRow, parameters, userProfile) {

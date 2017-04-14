@@ -151,7 +151,7 @@
         RulesService.tableId = null;
         RulesService.get().then(function (response) {
           self.actions = _.filter(response.data.data, function (action) {
-            var view = TablesService.getTableNameById(TablesService.tables,action.viewTable);
+            var view = TablesService.getTableNameById(TablesService.tables, action.viewTable);
             if(view) {
               action.name = view.name + '.' + action.name;
             }

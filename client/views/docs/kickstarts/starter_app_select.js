@@ -33,35 +33,35 @@
       switch (starterAppId) {
         case 'ng1':
           self.storage.docLanguage = 1;
-          self.storage.favoriteLanguage = 2;
+          self.storage.favoriteLanguage = 1;
           break;
         case 'ng2':
           self.storage.docLanguage = 2
-          self.storage.favoriteLanguage = 3;
+          self.storage.favoriteLanguage = 2;
           break;
         case 'ionic1':
           self.storage.docLanguage = 3
-          self.storage.favoriteLanguage = 2;
+          self.storage.favoriteLanguage = 3;
           break;
         case 'ionic2':
           self.storage.docLanguage = 4
-          self.storage.favoriteLanguage = 3;
+          self.storage.favoriteLanguage = 4;
           break;
         case 'redux':
           self.storage.docLanguage = 5
-          self.storage.favoriteLanguage = 4;
+          self.storage.favoriteLanguage = 5;
           break;
         case 'reactNative':
           self.storage.docLanguage = 6
-          self.storage.favoriteLanguage = 4;
+          self.storage.favoriteLanguage = 6;
           break;
         case 'jquery':
           self.storage.docLanguage = 7
-          self.storage.favoriteLanguage = 1;
+          self.storage.favoriteLanguage = 7;
           break;
         case 'vuejs':
           self.storage.docLanguage = 8
-          self.storage.favoriteLanguage = 1;
+          self.storage.favoriteLanguage = 8;
           break;
       }
       self.selectedPlatform = starterAppId;

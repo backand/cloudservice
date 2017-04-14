@@ -112,6 +112,10 @@
   border-left-color: #DDD;
   border-left-style: solid;
   border-left-width: 1px;
+  .request-title{
+  padding-top: 11px;
+  float:right;
+  }
 }
 
 .rule-tree {
@@ -290,7 +294,10 @@ bknd-copy-url[type="textarea"] .request-url-copy {
     font-weight:bold;
     color:black;
   }
-
+  .request-title{
+  padding-top: 11px;
+  float: right;
+  }
   .action-template-category {
     clear:both;
     padding-top: 10px;
