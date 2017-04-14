@@ -1,6 +1,6 @@
 {
   "mainAppName":"bko",
-  "appUrl":"https://api.backand.co",
+  "appUrl":"https://api.backand.com",
   "playgroundUrl": "//s3-us-west-2.amazonaws.com/demoqa.backand.net/",
   "IntercomAppId":"dvn78u",
   "backandUserObject": "backandUsers",
@@ -9,7 +9,7 @@
   "hostingUrl": "http://hosting.backand.net",
   "storageUrl": "http://files.backand.net",
   "nodejsUrl": "http://nodejs.backand.net",
-  "socketUrl": "https://socket.backand.co",
+  "socketUrl": "https://socket.backand.com",
   "billingUrl": "http://billqa.backand.com",
   "adfsResourse": "https://api.backand.com"
 }
