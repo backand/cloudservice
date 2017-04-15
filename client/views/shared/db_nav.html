@@ -1,0 +1,83 @@
+<div class="nav-wrapper scroller" perfect-scrollbar>
+  <ul class="nav" slim-scroll collapse-nav>
+    <li class="search-box">
+      <div class="input-group">
+        <div class="ui-select" style="font-weight: bold;">
+          <select ng-model="nav.currentAppName"
+                      ng-change="nav.goToApp()"
+                      ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
+                      class="app-select">
+          </select>
+        </div>
+        <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
+                 style="position: relative;left: 150px;top: -18px;"></div>
+      </div>
+    </li>
+  	<li>
+  		<a href=""
+  		   ng-click="nav.goTo($event, 'erd_model')">
+  			<span>Model</span>
+  		</a>
+  	</li>
+  	<li ng-class="{active: nav.isTablesActive(), disabled: nav.DatabaseStatus != 1}">
+    <a ng-class="{disabled: nav.DatabaseStatus != 1}"
+       ng-click="nav.tables.length == 0 && nav.app.connectionSource !== 'local' ? nav.goTo($event, 'tables.notables') : {}"
+       href="">
+      <i class="ba-icon-objects"></i>
+      <span>Objects</span>
+        <ba-tooltip tooltip-text="List of your objects which are the source of information about your data.
+        Generally, each object maps to a single database table.
+        Each object's page contains fields settings, server side actions, security, data-entry and REST API. "
+                    tooltip-placement="right"></ba-tooltip>
+      <i class="ti-angle-double-right pull-right"
+         style="font-size: 10px; margin-top: 7px; padding-left: 20px;"></i>
+    </a>
+    <ul class="ex4" id="ex4" ng-style="{'display': nav.getObjectMenuStyle()}">
+      <li>
+        <a  ng-if="nav.app.connectionSource === 'local'"
+            ng-click="nav.newObject()" href="">
+          <i class="ba-icon-new-query"></i>
+          <span>New Object</span>
+        </a>
+      </li>
+      <li ng-if="nav.app.connectionSource !== 'local'">
+        <a ui-sref="tables.notables">
+          <i class="ba-icon-model"></i>
+          <span>Sync with Database</span>
+        </a>
+      </li>
+
+      <li ng-class="{active: false }" ng-repeat="table in nav.tables">
+        <a ng-class="{disabled: false}"  ng-click="nav.showTable($event, table)" href="">
+          <i class="ba-icon-todo"></i>
+          <span>{{table.name}}</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  	<li>
+  		<a href=""
+  		   ng-click="nav.goTo($event, 'db_model')">
+  			<span>Schema</span>
+  		</a>
+  	</li>
+  	<li>
+  		<a href=""
+  		   ng-click="nav.goTo($event, 'log.requests')">
+  			<span>API Log</span>
+  		</a>
+  	</li>
+    <li>
+      <a href=""
+         ng-click="nav.goTo($event, 'log.console')">
+        <span>Console Log</span>
+      </a>
+    </li>
+    <li>
+      <a href=""
+         ng-click="nav.goTo($event, 'log.history')">
+        <span>Data History Log</span>
+      </a>
+    </li>
+  </ul>
+ </div>
