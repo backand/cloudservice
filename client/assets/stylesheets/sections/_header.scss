@@ -129,7 +129,7 @@
             height: $header_height;
             padding: $header_height 0 0;
             @media (min-width: $screen-sm) {
-                padding: 0 0 0 220px;
+                padding: 0 0 0 0px;
             }
 
             > ul {
@@ -264,7 +264,7 @@
                 font-size: 16px;
                 line-height: $header_line_height;
                 position: absolute;
-                left: 220px;
+                //left: 220px;
 
                 > li {
                   border-right: 1px solid $header-border;

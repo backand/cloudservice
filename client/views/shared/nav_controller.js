@@ -1,26 +1,36 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService) {
+  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage) {
     var self = this;
     self.isTablesClicked = false;
-
+    self.apps = AppsService.apps;
+    self.app = AppsService.currentApp;
+    self.backandstorage = $localStorage.backand[self.app.Name];
+    self.currentAppName = AppsService.currentApp.Name;
     (function init() {
-      self.app = AppsService.currentApp;
       clearTables();
+      if(!self.backandstorage.showSecondaryAppNav){
+        self.backandstorage.showSecondaryAppNav = false;
+      }
     }());
-
+    self.goToApp = function () {
+      usSpinnerService.spin('loading-app');
+      $state.go('app', {appName: self.currentAppName}, {reload: true});
+    };
     function clearTables() {
       self.tables = [];
       self.queries = [];
     }
-
+    self.showSecondarySideBar = function(state){
+      self.backandstorage.showSecondaryAppNav = true;
+      self.backandstorage.secondAppNavChoice = state;
+    }
     self.isExampleApp = function () {
       return AppsService.isExampleApp(self.app);
     };
-
     self.showAppNav = function () {
       if (!$state.params.appName)
         return 'views/shared/nav.html';
@@ -28,10 +38,26 @@
         return null;
       if (self.app.DatabaseStatus == 0 || self.app.DatabaseStatus == 2)
         return 'views/shared/nav_connect_db.html';
-      return 'views/shared/nav_app.html';
+      return 'views/shared/main_nav.html';
     };
-
-
+    self.chooseSecondNav = function(){
+      switch(self.backandstorage.secondAppNavChoice){
+        case 'database':
+          return 'views/shared/db_nav.html';
+        case 'functions':
+          return 'views/shared/fnc_nav.html';
+        case 'security':
+          return 'views/shared/sec_nav.html';
+        case 'admin':
+          return 'views/shared/admin_nav.html';
+        default:
+          return null;
+      }
+    }
+    self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
+    self.toggleSecondaryAppNav = function(){
+      self.showSecondaryAppNav = !self.showSecondaryAppNav;
+    }
     $scope.$on('fetchTables', fetchTables);
     $scope.$on('appname:saved', fetchTables);
     $scope.$on('after:sync', fetchTables);

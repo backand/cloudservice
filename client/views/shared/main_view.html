@@ -1,16 +1,23 @@
 <div class="app" id="app" ng-class="{'nav-collapsed-min' : main.hideNav()}">
-  <div class="app-inner" ng-include=" 'views/shared/header.html' "
-       ng-controller="HeaderController as header" ng-class="header.usingDefaultModel ? 'header-alert' : ''"></div>
+  
 
-  <div class="main-container">
-
-    <aside ng-include="nav.showAppNav()"
-           ng-hide="main.hideNav()"
+  <div class="main-container row">
+    <div class="side-bar" 
+         ng-class="nav.showSecondaryAppNav ? 'col-md-3' : 'col-md-2'"
+         ng-hide="main.hideNav()"
+         ng-controller="NavCtrl as nav">
+      <div ng-include="nav.showAppNav()"
            id="nav-container"
-           class="nav-container nav-fixed nav-vertical bg-dark"
-           ng-controller="NavCtrl as nav">
-    </aside>
+           class="nav-container primary-navbar nav-fixed nav-vertical" 
+           >
+      </div>
+      <div ng-if="nav.showSecondaryAppNav"
+           ng-include="nav.chooseSecondNav()"
+           ></div>
+    </div>
     <div id="content" class="content-container" autoscroll="true">
+    <div class="app-inner" ng-include=" 'views/shared/new_header.html' "
+       ng-controller="HeaderController as header" ng-class="header.usingDefaultModel ? 'header-alert' : ''"></div>
       <section ui-view class="view-container"></section>
 
     </div>
