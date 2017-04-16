@@ -124,6 +124,40 @@
     </ul>
   </li>
 
+  <li ng-class="{active: nav.state == 'functions', disabled: nav.DatabaseStatus != 1}" >
+      <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.loadFunctions()" href="">
+        <i class="ba-icon-quries"></i>
+        <span>Functions</span>
+        <ba-tooltip tooltip-text="Create your own custom function" tooltip-placement="right" class=""></ba-tooltip>
+
+        <i class="ti-angle-double-right pull-right" style="font-size: 10px; margin-top: 7px; padding-left: 20px;" ng-if="nav.DatabaseStatus == 1"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newLambdaFunction($event)" href="">
+            <i class="ba-icon-new-query"></i>
+            <span>Add Lambda Function</span>
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newJsFunction($event)" href="">
+            <i class="ba-icon-new-query"></i>
+            <span>Add Javascript Function</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="scrollbar ex4">
+        <li ng-class="{active: nav.state == 'dbQueries.query'}" ng-repeat="func in nav.functions">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.showFunction($event, func)" href="">
+            <i class="ti-write"></i>
+            <span>{{func.name}}</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
   <li ng-class="{active: nav.state == 'dbQueries', disabled: nav.DatabaseStatus != 1}" >
     <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.loadDbQueries()" href="">
       <i class="ba-icon-quries"></i>

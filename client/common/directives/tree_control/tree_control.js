@@ -25,7 +25,7 @@
   function TreeController($state, HostingService, FilesService, NodejsService, AppsService, NotificationService, usSpinnerService, CONSTS, $window, $scope, $timeout) {
     var self = this;
 
-    if ($state.current.name == 'object_actions') {
+    if ($state.current.name == 'object_actions' || $state.current.name == 'functions.function') {
       self.service = 'nodejs';
     } else if ($state.current.name == 'hosting.files_tree') {
       self.service = 'file';

@@ -68,13 +68,25 @@
       self.actionChangeInTree = false;
       self.showJsCodeHelpDialog = false;
       self.debugMode = 'debug';
-      self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
+      self.editMode = $stateParams.editMode || false;
+      //self.test.method = 'GET';
 
+      self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
+      if($stateParams.test == 'true'){
+        self.requestTestForm = true;
+      }
       if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
       self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
-
+      if($stateParams.functionId > 0){
+        
+        RulesService.getRule($stateParams.functionId)
+          .then(function(data){
+            loadAction(data);
+            self.ruleData = data;
+          });
+      }
       if ($localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation === undefined) {
         $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = false;
       }
@@ -89,23 +101,70 @@
       if(self.currentApp.DatabaseStatus !== 0 && !_.isEmpty(AppsService.currentApp))
         AppsService.appKeys(self.currentApp.Name).then(setKeysInfo);
       self.getTokens();
-      getAllActions(); //load all actions names for the test
+      getAllActions();//load all actions names for the test
+
     }
+
+    self.getMode = function(){
+
+      var name = {};
+      switch ($state.current.name){
+        case 'security.actions':
+        case 'object_actions':
+          name = {
+              name : 'action',
+              title : 'Action'
+            };
+          break;
+        case 'functions.newjsfunctions':
+           name = {
+              name : 'jsfunctions',
+              title : 'Javascript Function'
+            };
+          break;
+        case 'functions.newlambdafunctions':
+          name = {
+            name: 'lambdafunctions',
+            title : 'Lambda Function'
+          };
+          break;
+        case 'functions.function':
+          name = {
+            name: 'function',
+            title: 'Function'
+          };
+          break;
+      }
+
+      return name;
+
+    };
+
+    self.mode = self.getMode();
+    //show side bar tree only for security/actions page
+    self.showsideBar = (self.mode.name == 'action');
+
+    //for the lambda page to be default Node Js
+    self.changeTemplateToNodeJs = function(res){
+        self.nodeactionTemplate = res[0];
+        self.actionTemplates = self.nodeactionTemplate[0];
+        self.selectTemplate(self.actionTemplates);
+    };
 
     //Wait for server updates on 'items' object
     SocketService.on('Rule.created', function (data) {
       //Get the 'items' object that have changed
       if(self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
-        getRules().then(function(){
-          self.showAction(self.action.name);
-        });
-      };
+        self.loadNewAction(data.id);
+        //getRules().then(function(){
+          //self.showAction(self.action.name);
+        //});
+      }
       if(!self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
         self.refreshTree();
-      };
+      }
       //console.log(data);
     });
-
     function setKeysInfo(data){
       self.keys = data.data;
       self.masterToken = data.data.general;
@@ -170,17 +229,46 @@
               }
             });
 
-            self.actionTemplates = res;
+           
+            if(self.mode.name == 'lambdafunctions'){
+               self.changeTemplateToNodeJs(res); 
+            } 
+            else{
+               self.actionTemplates = res;
+            }
           });
         });
     };
 
     self.getNodeInitCommand = function () {
-      return 'backand action init --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+      if(self.action.name){
+        var name = ' --name ' + self.action.name;
+      }
+      else{
+        var name = '';
+      }
+      if(self.mode.name == 'lambdafunctions'){
+        return 'backand function init --app ' + self.currentApp.Name + name + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+      }
+      else{
+        return 'backand action init --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+      }
     };
 
     self.getNodeDeployCommand = function () {
-      return 'backand action deploy --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+      if(self.ruleData){
+        var name = ' --name ' + self.ruleData.data.name;
+      }
+      else{
+        var name = '';
+      }
+       if(self.mode.name.includes('function')){
+        return 'backand function deploy --app ' + self.currentApp.Name + name +' --master ' + self.masterToken + ' --user ' + self.userToken;
+       }
+       else{
+        return 'backand action deploy --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
+       }
+      
     };
 
     self.selectTemplate = function (template) {
@@ -189,7 +277,12 @@
       }
 
       self.action.name = self.action.name || template.ruleName;
-      self.action.dataAction = self.action.dataAction || template.action || 'OnDemand';
+      if(self.mode.name.includes("function")){
+        self.action.dataAction = 'OnDemand';
+      }
+      else{
+        self.action.dataAction = self.action.dataAction || template.action || 'OnDemand';
+      }
       self.showTemplatesForm = false;
 
       _.assign(self.action, {
@@ -222,12 +315,30 @@
       });
     }
 
+    function getActionType(){
+      if(self.mode.name.includes("function")){
+        return "Function";
+      }
+      else{
+        return null;
+      }
+    };
+
+    function getCategory(){
+      if(self.mode.name.includes("function")){
+        return "general";
+      }
+      else{
+        return null;
+      }
+    };
 
     var defaultRule = {
-      'viewTable': RulesService.tableId,
       'additionalView': "",
       'databaseViewName': "",
-      'useSqlParser': true
+      'useSqlParser': true,
+      'actionType': getActionType(),
+      'category': getCategory()
     };
 
     self.newAction = function (trigger, templateName) {
@@ -254,6 +365,8 @@
 
       if (trigger) {
         self.action.dataAction = trigger;
+      } else if(self.mode.name.includes("function")){
+        self.action.dataAction = 'OnDemand';
       }
 
       self.clearTest();
@@ -308,6 +421,7 @@
 
     function loadAction(data) {
       self.action = data.data;
+      self.isNodeJS = self.action && self.action.workflowAction == 'NodeJS';
       if (self.isNodeJS){
         NodejsService.actionName = self.action.name;
         NodejsService.objectName = self.getTableName();
@@ -315,6 +429,7 @@
           self.refreshTree();
         }
       }
+      self.clearTest();
     }
 
     self.allowEditAction = function () {
@@ -342,7 +457,7 @@
     function getTestRow() {
 
       if(self.getDataActionType() === 'On Demand'){
-        self.test.rowId = "";
+        self.test.rowId = null;
         self.test.isGuid = false;
       } else {
         if (self.getDataActionType() === 'Create')
@@ -402,10 +517,14 @@
           self.actionChangeInTree = false;
           self.saving = false;
           self.savingAndTesting = false;
-          self.isNewAction = false;
+
+          self.showTestSideBar = true;
           if (withTest)
             self.testData();
-          self.requestTestForm = true; //always open test after save on demand action
+         // self.requestTestForm = true;
+          if(self.isNewAction){
+            self.loadNewAction();
+          } //always open test after save on demand action
         }, function () {
           self.saving = false;
           self.savingAndTesting = false;
@@ -426,26 +545,50 @@
           if (result) {
             self.editMode = false;
             RulesService.remove(self.action)
-              .then(getRules)
-              .then(refreshAction);
-          }
+              .then(function(){
+                if(self.mode.name.includes('function')){
+                  if(self.action.workflowAction == 'NodeJS'){
+                    $state.go('functions.newlambdafunctions');
+                  }
+                  else{
+                    $state.go('functions.newjsfunctions');
+                  }
+                }
+                else{
+                  getRules().then(refreshAction);
+                }
+              })  
+              
+                
+            }
         });
     };
+    self.showTestSideBar = false;
 
     self.allowTestForm = function () {
-      var allow = self.action &&
-        self.action.__metadata;
-      return allow;
+      return self.action && self.action.__metadata;
+    };
+
+    self.pageLayoutNewRule = function(){
+      if(self.mode.name.includes("functions")){
+        return self.showTestForm();
+      }
+      else if(self.mode.name == "function"){
+        return self.showTestForm();
+      }
+      else{
+        return false;
+      }
     };
 
     self.toggleTestForm = function (show) {
-
+      
       if(angular.isDefined(show)) {
         self.requestTestForm = show;
       } else{
         self.requestTestForm = !self.requestTestForm;
       }
-
+      self.showTestSideBar = !self.showTestSideBar;
       $state.go('.', {test: self.requestTestForm}, {notify: false});
     };
 
@@ -472,7 +615,7 @@
     };
 
     $scope.modal = {
-      title: 'Action',
+      title: self.mode.title,
       dataActions: RulesService.dataActions,
       workflowActions: getWorkflowActions(),
       insertAtChar: insertTokenAtChar,
@@ -482,7 +625,6 @@
       buildParameters: buildParametersDictionary
     };
     self.workflowActions = getWorkflowActions();
-
     self.onDataActionChange = function(){
       self.workflowActions = getWorkflowActions();
       self.onTypeChange();
@@ -497,12 +639,20 @@
 
     function getWorkflowActions(){
       if (self.action && self.action.dataAction == "OnDemand") {
-        return [
-          {value: 'JavaScript', label: 'Server-side JavaScript function'},
-          {value: 'NodeJS', label: 'AWS Lambda: Node.js'},
-          {value: 'Notify', label: 'Send Email'},
-          {value: 'Execute', label: 'Transactional sql script'}
-        ];
+        if(self.mode.name.includes("function")){
+          return [
+            {value: 'JavaScript', label: 'Server-side JavaScript function'},
+            {value: 'NodeJS', label: 'AWS Lambda: Node.js'}
+          ];
+        }
+        else{
+          return [
+            {value: 'JavaScript', label: 'Server-side JavaScript function'},
+            {value: 'NodeJS', label: 'AWS Lambda: Node.js'},
+            {value: 'Notify', label: 'Send Email'},
+            {value: 'Execute', label: 'Transactional sql script'}
+          ];
+        }
       } else {
         return [
           {value: 'JavaScript', label: 'Server-side JavaScript function'},
@@ -575,13 +725,15 @@
     function getRules() {
       self.dictionaryItems = {parameters: []};
       var crud = ['create', 'update', 'delete'];
-      crud.forEach(function (crudAction) {
-        DictionaryService.get(crudAction)
-          .then(function (data) {
-            usSpinnerService.stop('loading');
-            populateDictionaryItems(crudAction, data.data)
-          });
-      });
+        if(self.mode.name == 'action'){
+            crud.forEach(function (crudAction) {
+              DictionaryService.get(crudAction)
+              .then(function (data) {
+                usSpinnerService.stop('loading');
+                populateDictionaryItems(crudAction, data.data)
+              });
+            });
+        }
       return RulesService.get().then(buildTree, errorHandler);
     }
 
@@ -598,7 +750,8 @@
     }
 
     function getTableName() {
-      return $stateParams.tableId ? RulesService.tableName : CONSTS.backandUserObject;
+      return RulesService.tableName;
+      //return $stateParams.tableId ? RulesService.tableName : CONSTS.backandUserObject;
     }
 
     self.getTableName = getTableName;
@@ -647,7 +800,7 @@
     var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup','backandAuthOverride','accessFilter','socialAuthOverride','ChangePasswordOverride'];
 
     self.isConstName = function (ruleName) {
-      return (self.getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);
+      return (getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);
     };
 
     $scope.modal.handleTabKey = function (e) {
@@ -681,6 +834,7 @@
      */
     function postNewRule(rule) {
       var data = angular.extend(defaultRule, rule);
+      data.viewTable = RulesService.tableId;
       return RulesService.post(data)
         .then(function (response) {
           self.action = response.data;
@@ -881,8 +1035,34 @@
     self.testData = function () {
       //getTestRow();
       self.test.testLoading = true;
-      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug')
+      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug',self.mode.name)
         .then(getLog, getLog);
+    };
+
+    self.loadNewAction = function(ids){
+
+      var id = ids || self.action.__metadata.id;
+
+      var params, stateToGoTo;
+      if(self.mode.name.includes('function')){
+        params = {
+          functionId : id,
+          test : true
+        };
+        stateToGoTo = 'functions.function';
+      }
+      else {
+        params = {
+          actionId : id,
+          test : true
+        };
+        stateToGoTo = $state.current.name;
+      }
+
+      self.isNewAction = false;
+      $state.go(stateToGoTo, params);
+      
+      
     };
 
     $scope.$watch(function () {
@@ -920,7 +1100,7 @@
 
         var guid = response.headers('Backand-Action-Guid');
         //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
-        self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug');
+        self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug', self.mode.name);
         self.testUrl = self.testHttpObject.url;
         self.testHttpObject.params = {parameters: self.test.parametersToSend};
         // GENERATOR ADDON
@@ -1002,7 +1182,11 @@
 
             if (objectId == 4) {
               uri = $state.href('security.actions', {actionId: actionId, line: actionLine}, {absolute: false});
-            } else {
+            }
+            else if(self.mode.name == 'function'){
+              uri = $state.href('functions.function', {functionId: actionId})
+            }
+            else {
               uri = $state.href('object_actions', {actionId: actionId,tableId: objectId,line: actionLine}, {absolute: false});
             }
 
@@ -1157,7 +1341,12 @@
 
     self.getDataActionType = function () {
       if (self.action){
-        return self.dataActionToType[self.action.dataAction];
+        if(self.mode.name.includes("function")){
+          return "On Demand";
+        }
+        else{
+          return self.dataActionToType[self.action.dataAction];
+        }
       }
     };
 
@@ -1168,6 +1357,9 @@
         var dataActionType = self.getDataActionType();
         text = "Test " + dataActionType;
         text += dataActionType === 'On Demand' ? " Action" : " Trigger";
+      }
+      if (self.mode.name.includes('function')){
+        text = "Test Function"
       }
 
       // Reset test URL & http when changing actions

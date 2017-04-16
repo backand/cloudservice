@@ -1,11 +1,11 @@
-<div class="col-xs-8 col-md-9 action-template-container">
+<div ng-class="rules.showsideBar ? 'col-xs-8 col-md-9' : 'col-md-12'" class="action-template-container">
   <button ng-click="rules.newAction()"
           id="new-rule-btn with-margin"
           class="btn btn-success  new-action-button">
-    + New Blank Action
+    + New Blank {{rules.mode.title}}
   </button>
   <div class="or">or</div>
-  <h4>Use ready template actions:</h4>
+  <h4>Use ready template {{rules.mode.title}}:</h4>
   <div ng-repeat="(categoryId, templates) in rules.actionTemplates">
     <div class="action-template-category">{{templates.label}}</div>
     <!-- a and img elements must be in the same line, otherwise space is inserted between them-->

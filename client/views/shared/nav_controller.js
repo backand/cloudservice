@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage) {
+  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage,RulesService) {
     var self = this;
     self.isTablesClicked = false;
     self.apps = AppsService.apps;
@@ -24,6 +24,7 @@
     function clearTables() {
       self.tables = [];
       self.queries = [];
+      self.functions = [];
     }
     self.showSecondarySideBar = function(state){
       self.backandstorage.showSecondaryAppNav = true;
@@ -85,6 +86,7 @@
 
             fetchDbQueries();
             fetchCronJobs();
+            fetchFunctions();
           }
         },
         function (data) {
@@ -107,6 +109,18 @@
         function (data) {
           $log.debug("DbQueriesService failure", data);
         }
+      );
+    }
+
+    function fetchFunctions() {
+      RulesService.appName = $state.params.appName;
+      RulesService.getFunctions().then(
+          function (data) {
+            self.functions = data.data.data;
+          },
+          function (data) {
+            $log.debug("Can't get functions", data);
+          }
       );
     }
 
@@ -229,6 +243,19 @@
 
     self.newDbQuery = function ($event) {
       goToState($event, 'dbQueries.newQuery');
+    };
+    self.newJsFunction = function($event){
+      goToState($event, 'functions.newjsfunctions');
+    }
+    self.newLambdaFunction = function($event){
+      goToState($event, 'functions.newlambdafunctions');
+    }
+
+    self.showFunction = function ($event, func) {
+      var params = {
+        functionId: func.__metadata.id
+      };
+      goToState($event, 'functions.function', params);
     };
 
     self.showCronJob = function ($event, job) {

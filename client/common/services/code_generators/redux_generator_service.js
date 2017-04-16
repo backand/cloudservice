@@ -60,6 +60,9 @@
       else if (splitUrl.indexOf('query') !== -1) {
         return "import backand from '@backand/vanilla-sdk'\n\n" + 'Use Vanilla syntax'
       }
+      else if (splitUrl.indexOf('function') !== -1) {
+        return "import backand from '@backand/vanilla-sdk'\n\n" + 'Use Vanilla syntax'
+      }
       else {
         chosen = dictionary['object'][httpObject.method];
         __extractFunctionDetails__(splitUrl, httpObject);

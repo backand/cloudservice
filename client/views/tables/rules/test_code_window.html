@@ -1,4 +1,4 @@
-<h3>Test Action</h3>
+<h3>Test {{rules.mode.title}}</h3>
 <br/>
 <form role="form" name="rules.inputParametersForm" novalidate>
 
@@ -14,6 +14,7 @@
 
   <hr ng-if="rules.test.inputParametersArray" class="narrow-top-margin">
   <div ng-if="rules.getDataActionType() === 'On Demand'">
+  <div/>
     <label>Method:&nbsp;&nbsp;</label>
     <input type="radio"
            ng-model="rules.test.method"
@@ -37,8 +38,10 @@
     </bknd-ace-features>
   </div>
 
-  <hr ng-if="rules.getDataActionType() === 'On Demand'" class="narrow-top-margin">
-  <div class="form-group" ng-if="rules.getDataActionType() !== 'Create' || rules.test.rowId != null">
+  <hr ng-if="rules.getDataActionType() === 'On Demand' && !rules.mode.name.includes('function')"
+      class="narrow-top-margin">
+  <div class="form-group"
+       ng-if="!rules.mode.name.includes('function') && (rules.getDataActionType() !== 'Create' || rules.test.rowId != null)">
     <label><a href="" ng-click="rules.getFirstRow()">Row Id </a><span
             ng-if="rules.getDataActionType() === 'On Demand'">(Optional)
     </span></label>
@@ -64,7 +67,7 @@
 
   </div>
   <div class="form-group"
-       ng-if="(rules.test.rowId != null && rules.rowData != '') || rules.getDataActionType() === 'Create'">
+       ng-if="!rules.mode.name.includes('function') && ((rules.test.rowId != null && rules.rowData != '') || rules.getDataActionType() === 'Create')">
     <label for="rowData">{{ rules.ace.message }}</label>
     <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
     <div

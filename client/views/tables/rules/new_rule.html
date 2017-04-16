@@ -1,4 +1,6 @@
-<div ng-if="rules.action">
+
+<div ng-if="rules.action" class="row">
+<div ng-class="(rules.pageLayoutNewRule()) ? 'col-xs-8 col-md-9' : 'col-xs-12'">
   <div ng-cloak>
     <angled-window ng-show="rules.showJsCodeHelpDialog"
                    title="Readme - JavaScript Code"
@@ -19,7 +21,7 @@
           <div class="form-group"
                ng-class="{'has-error': rules.newRuleForm.ruleName.$invalid}">
 
-            <label for="ruleName"><h3 class="title">{{modal.title}} - </h3></label>
+            <label for="ruleName"><h3 class="title">{{rules.mode.title}} - </h3></label>
 
             <input type="text"
                    id="ruleName"
@@ -28,7 +30,7 @@
                    ng-model="rules.action.name"
                    required
                    ng-pattern="rules.namePattern"
-                   placeholder="Name your action"
+                   placeholder="Name your {{modal.title.toLowerCase()}}"
                    ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
             <ba-tooltip tooltip-text="Use the action name in the request URL query string of the REST API"
                         tooltip-placement="right" class=""></ba-tooltip>
@@ -36,7 +38,7 @@
             <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">In system action the name cannot be
               modified.</span>
 
-            <a ng-if="rules.action && !rules.newRuleForm.$pristine" href="" id="action-refresh" title="Refresh Action" class="btn btn-sm" ng-click="rules.refresh()"><i class="glyphicon glyphicon-refresh"></i></a>
+            <a ng-if="rules.action && !rules.newRuleForm.$pristine" href="" id="action-refresh" title="Refresh {{rules.mode.title}}" class="btn btn-sm" ng-click="rules.refresh()"><i class="glyphicon glyphicon-refresh"></i></a>
 
             <div ng-messages="rules.newRuleForm.ruleName.$error">
               <div ng-message="pattern" class="text-danger">Use only letters, numbers, space or underscore</div>
@@ -50,7 +52,7 @@
         <input type="button" ng-show="rules.allowEditAction() && !rules.isNodeJS"
                 ng-click="rules.editAction()"
                 class="btn btn-primary pull-right with-margin"
-          value="Edit Action">
+          value="Edit {{rules.mode.title}}">
         </input>
 
         <div ng-show="rules.editMode">
@@ -81,7 +83,7 @@
                ng-show="!rules.isNewAction"
                class="pull-right btn btn-success btn-xs with-margin"
                ng-click="rules.toggleTestForm()"
-               value="{{ rules.requestTestForm ? '<< Hide Test' : 'Test Action >>'}}">
+               value="{{ rules.requestTestForm ? '<< Hide Test' : 'Test ' +rules.mode.title + ' >>'}}">
         </input>
       </div>
       </div>
@@ -92,10 +94,11 @@
       <fieldset>
         <br/>
         <div class="form-group col-lg-12 col-md-12 col-sm-12"
-             ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}">
+             ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}"
+             ng-if="!rules.mode.name.includes('function')">
           <label>Event Trigger</label>
           <ba-tooltip
-            tooltip-text="Select the event that will trigger the action: on-demand via REST API or by CRUD request"
+            tooltip-text="Select the event that will trigger the {{rules.mode.title}}: on-demand via REST API or by CRUD request"
             tooltip-placement="right" class=""></ba-tooltip>
           <select class="form-control"
                   ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions"
@@ -132,8 +135,7 @@
              ng-show="rules.action.workflowAction"
              ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
           <label>Input Parameters</label>
-          <ba-tooltip tooltip-text="Use this to send additional parameters to the action" tooltip-placement="right"
-                      class=""></ba-tooltip>
+          <ba-tooltip tooltip-text="Use this to send additional parameters to the {{rules.mode.name.includes('function') ? 'function' : 'action'}}" tooltip-placement="right" class=""></ba-tooltip>
           <input type="text"
                  ng-change="modal.buildParameters()"
                  name="inputParameters"
@@ -143,7 +145,8 @@
                  placeholder="input1,input2,...."
                  ng-disabled="!rules.editMode && !rules.isNodeJS">
           <div ng-messages="rules.newRuleForm.inputParameters.$error">
-            <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.</div>
+            <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.
+            </div>
           </div>
         </div>
 
@@ -239,7 +242,7 @@
           <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction && !rules.isNodeJS"
                ng-class="{'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty}">
             <label for="whereCondition">Where Condition</label>
-            <ba-tooltip tooltip-text="SQL where clause that determines if the action will be performed"
+            <ba-tooltip tooltip-text="SQL where clause that determines if the {{rules.mode.name.includes('function') ? 'function' : 'action'}} will be performed"
                         tooltip-placement="right" class=""></ba-tooltip>
 
             <bknd-anchor anchor-params="rules.anchorParams"
@@ -257,7 +260,7 @@
                  style="resize: vertical"
                  ng-readonly="!rules.editMode">
             </div>
-            <span ng-show="rules.editMode">** Enter 'true' to ensure the action always executes, or use the anchor icon to build a condition governing the execution</span>
+            <span ng-show="rules.editMode">** Enter 'true' to ensure the {{rules.mode.name.includes('function') ? 'function' : 'action'}} always executes, or use the anchor icon to build a condition governing the execution</span>
           </div>
 
           <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.isNodeJS">
@@ -276,24 +279,9 @@
                 </section>
               </div>
               <div>
-                  <h3>How it Works
-                    <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href=""
-                       ng-click="rules.showHowItWorks = !rules.showHowItWorks">{{rules.showHowItWorks ? "Hide": "Show"}}</a>
-                  </h3>
-                  <div ng-if="rules.showHowItWorks">
-                    <br/>
-                    <p>Backand's server-side Node.JS Lambda actions use node.js code that is developed on your local machine, and runs as Lambda funciton. The project is built like any other Node.JS project, and can be fully debugged locally. Once you've finished development, uploading it to Back&'s servers is as easy as just running the "deploy" command.<br/>
-                      Follow these steps to create, develop, and run a server-side Node.js action:</p>
-                    <ul style="padding-left: 20px;">
-                      <li>First name the action, and then use the init command to initialize your project. Do this by copying and pasting the "backand action init..." command into a terminal window, in the appropriate location for your code base. The "action init" command creates two levels of folders in your local file system. The top level folder is the name of the object as provided to the init command (i.e. '--object items') and the second level folder is the name of the action ('{{rules.getCliActionName()}}'). We recommend running the <b>action init</b> command from the root folder of your app's project. This will give you a sub-folder for each object, and a separate folder for each action within the object folder.</li>
-                      <li>Next, build your Node.JS code in the action folder, just as you would any other project. You can use your preferred IDE, and add as many NPM packages as you need.<br/>
-                        Note: Your code <b>must</b> start with the index.js file.</li>
-                      <li>Once you've finished developing, you can debug your code locally using the provided debug.js file (the debug.js file is ignored by the Back& server during deployment).</li>
-                      <li>When you're ready to run your code on Back&'s server, use the "deploy" command. Copy and paste the "backand action deploy …" command below into a terminal.<br/> Note: You will only see this command after you have run the "init" command
-                        from the command line.</li>
-                      <li>You're now free to test the action on Back&'s servers using the "Test" section on this page.</li>
-                    </ul>
-                </div>
+                <h3>Documentation</h3>
+                <br />
+                <p>Documentation on Backand's AWS Lambda Node.JS server-side functions is available <A href="http://docs.backand.com/#server-side-node-js-lambda-actions" target="_blank">here</a>. </p>
                 <br/>
                 <h3>First Time Installation <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href=""
                      ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation ? "Hide": "Show"}}</a></h3>
@@ -327,9 +315,9 @@
                 <br/>
                 <p ng-if="rules.allowEditAction()">To deploy your local node.js code to Back&, use the following
                   command on the command line:</p>
-                <p ng-if="!rules.allowEditAction()">To initiate on your local folder the node.js code for the action, use the following command on the command line:</p>
+                <p ng-if="!rules.allowEditAction()">To initiate on your local folder the node.js code for the {{rules.mode.name.includes('function') ? 'function' : 'action'}}, use the following command on the command line:</p>
 <div ng-show="!rules.allowEditAction()"><pre><code>
-  $ {{rules.getNodeInitCommand()}}
+   {{rules.getNodeInitCommand()}}
 
 </code></pre>
       <button class="btn btn-default copy-cli-command"
@@ -340,7 +328,7 @@
 </div>
 
 <div ng-if="rules.allowEditAction()"><pre><code>
-  $ {{rules.getNodeDeployCommand()}}
+   {{rules.getNodeDeployCommand()}}
 
 </code></pre>
   <button class="btn btn-default copy-cli-command"
@@ -350,13 +338,17 @@
           ng-class="{'btn-success': rules.deployCopied === true}">Copy</button>
   </div>
                 <p>
-                  <b>--app</b>: The current app name<br/>
-                  <b>--object</b>: The object that the action belongs to<br/>
-                  <b>--action</b>: The action name<br/>
+                  <b>--app</b>: The current app name
+                  <div ng-if="!rules.mode.name.includes('function')">
+                    <b>--object</b>: The object that the action belongs to<br/>
+                    <b>--action</b>: The action name<br/>
+                  </div>
+                  <div ng-if="rules.mode.name.includes('function')">
+                    <b>--name</b>: The function name
+                  </div>
                   <b>--master</b>: The master token of the app (get it from <a href="" ui-sref="security.keys">Social & Keys</a>)<br/>
                   <b>--user</b>: The token of the current user (get it from <a href="" ui-sref="security.team">Team</a> and click on key icon)<br/>
-                  <span ng-if="rules.allowEditAction()"><b>--folder</b>: Optional, By default the deployment is from the current folder,
-                  specify for other location</span>
+                  <span ng-if="rules.allowEditAction()"><b>--folder</b>: Optional, By default the deployment is from the current folder, specify for other location</span>
                   <br/>
                 </p>
                 <h3 ng-if="rules.allowEditAction()">Add Backand SDK to node.js</h3>
@@ -394,4 +386,12 @@
 
     </div>
   </form>
+  </div>
+    <div ng-if="rules.mode.name.includes('function')"
+         ng-show="rules.showTestForm()"
+         class="col-xs-4 col-md-3 test-column actions-animate-show"
+         ng-include="'views/tables/rules/test_code_window.html'">
+         </div>
+  </div>
+
 </div>
