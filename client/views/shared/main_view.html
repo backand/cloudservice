@@ -1,18 +1,19 @@
 <div class="app" id="app" ng-class="{'nav-collapsed-min' : main.hideNav()}">
-  
+
 
   <div class="main-container row">
-    <div class="side-bar" 
+    <div class="side-bar"
          ng-class="nav.showSecondaryAppNav ? 'col-md-3' : 'col-md-2'"
          ng-hide="main.hideNav()"
          ng-controller="NavCtrl as nav">
       <div ng-include="nav.showAppNav()"
            id="nav-container"
-           class="nav-container primary-navbar nav-fixed nav-vertical" 
+           class="nav-container primary-navbar nav-fixed nav-vertical"
            >
       </div>
       <div ng-if="nav.showSecondaryAppNav"
            ng-include="nav.chooseSecondNav()"
+           class="second-app-nav"
            ></div>
     </div>
     <div id="content" class="content-container" autoscroll="true">

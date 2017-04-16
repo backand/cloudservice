@@ -1,7 +1,13 @@
 #apps-page.panel-body {
   margin-left: 0;
 }
-
+.second-app-nav{
+  background-color: #1b1b1b;
+  li.active{
+    border-right: solid #f66731;
+    background-color: #0f0f0f;
+  }
+}
 .apps-jumbo {
   background: url("/assets/images/apps_page/background.jpg");
   background-size: cover;
@@ -302,6 +308,14 @@
           width: 100%;
         }
    }
+  li.active{
+    border-right: solid #f66731;
+    background-color: #303030;
+  }
+}
+.app-headers{
+  border:none;
+  background-color: #202020;
 }
 .side-bar{
   display: -webkit-inline-box;

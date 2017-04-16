@@ -2,7 +2,7 @@
   <ul class="nav" slim-scroll collapse-nav>
     <li class="search-box">
       <div class="input-group">
-        <div class="ui-select" style="font-weight: bold;">
+        <div class="ui-select app-headers" style="font-weight: bold;">
           <select ng-model="nav.currentAppName"
                       ng-change="nav.goToApp()"
                       ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"

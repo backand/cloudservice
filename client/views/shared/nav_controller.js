@@ -10,6 +10,7 @@
     self.app = AppsService.currentApp;
     self.backandstorage = $localStorage.backand[self.app.Name];
     self.currentAppName = AppsService.currentApp.Name;
+    self.currentState = $state.current.name;
     (function init() {
       clearTables();
       if(!self.backandstorage.showSecondaryAppNav){
@@ -197,6 +198,7 @@
       if (self.app.DatabaseStatus === 1) {
         goToState($event, state);
       }
+
     };
 
     self.goToAlways = function ($event, state) {
@@ -248,6 +250,7 @@
         window.open(url, '_blank');
       } else {
         $state.go(state, params);
+        self.currentState = $state.current.name;
       }
     }
 

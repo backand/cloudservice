@@ -2,7 +2,7 @@
   <ul class="nav" slim-scroll collapse-nav>
     <li class="search-box">
       <div class="input-group">
-        <div class="ui-select" style="font-weight: bold;">
+        <div class="ui-select app-headers" style="font-weight: bold;">
           <select ng-model="nav.currentAppName"
                       ng-change="nav.goToApp()"
                       ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
@@ -13,29 +13,48 @@
                  style="position: relative;left: 150px;top: -18px;"></div>
       </div>
     </li>
-  	<li>
-  		<a href=""
+  	<li ng-class="{active: $state.current.name == 'functions'}">
+  		<a href="">
   		   <!--ng-click="nav.goTo($event, )"-->>
   			<span>Functions</span>
   		</a>
   	</li>
-  	<li>
-  		<a href=""
+  	<li ng-class="{active: $state.current.name == 'integrations'}">
+  		<a href="">
   		   <!--ng-click="nav.goTo($event, )"-->>
   			<span>Integrations</span>
   		</a>
   	</li>
-  	<li>
+  	<li ng-class="{active: $state.current.name == 'db_model'}">
   		<a href=""
   		   ng-click="nav.goTo($event, 'db_model')">
   			<span>Schema</span>
   		</a>
   	</li>
-    <li>
-      <a href=""
-         ng-click="nav.goTo($event, '')">
+    <li ng-class="{active: nav.state == 'Jobs', disabled: nav.DatabaseStatus != 1}" >
+      <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
         <span>Cron Jobs</span>
+        <ba-tooltip tooltip-text="Schedule a background job to perform an action, query, or external HTTP call"
+                    tooltipcron-placement="right"
+                    class=""></ba-tooltip>
       </a>
+      <ul>
+        <li ng-class="{active: false }">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'cronJobs.new')" href="">
+            <i class="ba-icon-new-query"></i>
+            <span>New Job</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="scrollbar ex4">
+        <li ng-class="{active: nav.state == 'cronJobs'}" ng-repeat="cronJob in nav.cronJobs">
+          <a ng-click="nav.showCronJob($event, cronJob)" ng-class="{disabled: false}" href="">
+            <i class=""></i>
+            <span class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>
+            <span>{{cronJob.name}}</span>
+          </a>
+        </li>
+      </ul>
     </li>
   	<li>
   		<a href=""
