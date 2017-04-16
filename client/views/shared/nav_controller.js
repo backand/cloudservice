@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage) {
+  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage,RulesService) {
     var self = this;
     self.isTablesClicked = false;
     self.apps = AppsService.apps;
