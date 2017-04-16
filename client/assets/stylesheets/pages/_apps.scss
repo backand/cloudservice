@@ -62,6 +62,7 @@
       }
 
     }
+
     @media screen and (max-width: 400px) {
       width: 80%;
       margin: 0 auto;
@@ -290,7 +291,26 @@
   width: 100px;
   height: 100px;
 }
-
+.primary-navbar{
+  width: 112px;
+  height: 100vh;
+  background-color: #373737;
+   li{
+      height: 100px;
+        a{
+          height: 100%;
+          width: 100%;
+        }
+   }
+}
+.side-bar{
+  display: -webkit-inline-box;
+}
+.backand-logo{
+  background-color: #2e2e2e;
+  height: 70px;
+  text-align: center;
+}
 .platform-sprite-icon {
   object-fit: none;
   object-position: 0 0;

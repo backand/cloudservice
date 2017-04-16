@@ -28,7 +28,7 @@ html {
 
     .app-inner >  .header-container {
         &.header-fixed {
-            position: fixed;
+            //position: fixed;
             right: 0;
             left: 0;
             z-index: $zindex-navbar-fixed;
@@ -111,7 +111,7 @@ html {
             margin-left: 0;
             // @include transition(none);
             @media (min-width:$screen-sm) {
-                margin-left: 220px;
+                //margin-left: 220px;
             }
         }
 
