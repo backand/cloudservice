@@ -4,34 +4,55 @@
       <div class="input-group">
         <div class="ui-select app-headers" style="font-weight: bold;">
           <select ng-model="nav.currentAppName"
-                      ng-change="nav.goToApp()"
-                      ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
-                      class="app-select">
+                  ng-change="nav.goToApp()"
+                  ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
+                  class="app-select">
           </select>
         </div>
         <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
-                 style="position: relative;left: 150px;top: -18px;"></div>
+             style="position: relative;left: 150px;top: -18px;"></div>
       </div>
     </li>
-  	<li ng-class="{active: $state.current.name == 'functions'}">
-  		<a href="">
-  		   <!--ng-click="nav.goTo($event, )"-->>
-  			<span>Functions</span>
-  		</a>
-  	</li>
-  	<li ng-class="{active: $state.current.name == 'integrations'}">
-  		<a href="">
-  		   <!--ng-click="nav.goTo($event, )"-->>
-  			<span>Integrations</span>
-  		</a>
-  	</li>
-  	<li ng-class="{active: $state.current.name == 'db_model'}">
-  		<a href=""
-  		   ng-click="nav.goTo($event, 'db_model')">
-  			<span>Schema</span>
-  		</a>
-  	</li>
-    <li ng-class="{active: nav.state == 'Jobs', disabled: nav.DatabaseStatus != 1}" >
+    <li ng-class="{active: nav.currentState.includes('function'), disabled: nav.DatabaseStatus != 1}">
+      <a ng-class="{disabled: nav.DatabaseStatus == 1}" ng-click="nav.loadFunctions()" href="">
+        <span>Functions</span>
+      </a>
+      <ul ng-style="{'display': (nav.currentState.includes('function') ? 'true' : 'none')}">
+        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newLambdaFunction($event)" href="">
+            <i class="ba-icon-new-query"></i>
+            <span>Add Lambda Function</span>
+          </a>
+        </li>
+        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.newJsFunction($event)" href="">
+            <i class="ba-icon-new-query"></i>
+            <span>Add Javascript Function</span>
+          </a>
+        </li>
+        <ul class="scrollbar ex4">
+          <li ng-repeat="func in nav.functions">
+            <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.showFunction($event, func)" href="">
+              <i class="ti-write"></i>
+              <span>{{func.name}}</span>
+            </a>
+          </li>
+        </ul>
+      </ul>
+    </li>
+    <li ng-class="{active: $state.current.name == 'integrations'}">
+      <a href="">
+        <!--ng-click="nav.goTo($event, )"-->>
+        <span>Integrations</span>
+      </a>
+    </li>
+    <li ng-class="{active: $state.current.name == 'db_model'}">
+      <a href=""
+         ng-click="nav.goTo($event, 'db_model')">
+        <span>Schema</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.state == 'Jobs', disabled: nav.DatabaseStatus != 1}">
       <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
         <span>Cron Jobs</span>
         <ba-tooltip tooltip-text="Schedule a background job to perform an action, query, or external HTTP call"
@@ -56,12 +77,12 @@
         </li>
       </ul>
     </li>
-  	<li>
-  		<a href=""
-  		   ng-click="nav.goTo($event, 'log.requests')">
-  			<span>API Log</span>
-  		</a>
-  	</li>
+    <li>
+      <a href=""
+         ng-click="nav.goTo($event, 'log.requests')">
+        <span>API Log</span>
+      </a>
+    </li>
     <li>
       <a href=""
          ng-click="nav.goTo($event, 'log.console')">
@@ -69,4 +90,4 @@
       </a>
     </li>
   </ul>
- </div>
+</div>

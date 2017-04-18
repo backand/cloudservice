@@ -29,7 +29,7 @@
     self.showSecondarySideBar = function(state){
       self.backandstorage.showSecondaryAppNav = true;
       self.backandstorage.secondAppNavChoice = state;
-    }
+    };
     self.isExampleApp = function () {
       return AppsService.isExampleApp(self.app);
     };
@@ -38,7 +38,7 @@
         return 'views/shared/nav.html';
       if (!self.app)
         return null;
-      if (self.app.DatabaseStatus == 0 || self.app.DatabaseStatus == 2)
+      if (self.app.DatabaseStatus === 0 || self.app.DatabaseStatus === 2)
         return 'views/shared/nav_connect_db.html';
       return 'views/shared/main_nav.html';
     };
@@ -55,11 +55,11 @@
         default:
           return null;
       }
-    }
+    };
     self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
     self.toggleSecondaryAppNav = function(){
       self.showSecondaryAppNav = !self.showSecondaryAppNav;
-    }
+    };
     $scope.$on('fetchTables', fetchTables);
     $scope.$on('appname:saved', fetchTables);
     $scope.$on('after:sync', fetchTables);
@@ -276,8 +276,9 @@
         var url = $state.href(state, params, {absolute: true});
         window.open(url, '_blank');
       } else {
-        $state.go(state, params);
-        self.currentState = $state.current.name;
+        $state.go(state, params).then(function(){
+          self.currentState = $state.current.name;
+        });
       }
     }
 

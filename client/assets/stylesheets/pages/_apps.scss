@@ -1,13 +1,42 @@
 #apps-page.panel-body {
   margin-left: 0;
 }
-.second-app-nav{
+
+.second-app-nav {
   background-color: #1b1b1b;
-  li.active{
+  li.active {
     border-right: solid #f66731;
+    a {
+      background-color: #0f0f0f;
+    }
+  }
+  li:hover {
+    a {
+      background-color: #0f0f0f;
+    }
+  }
+  .open{
+    ul{
+      list-style-type: none;
+    }
+    li{
+      background-color: #0f0f0f;
+    }
+    a {
+      background-color: #0f0f0f;
+    }
+    a:hover {
+      background-color: #0f0f0f;
+    }
+  }
+  a:focus {
     background-color: #0f0f0f;
   }
+  span {
+    padding-left: 23px;
+  }
 }
+
 .apps-jumbo {
   background: url("/assets/images/apps_page/background.jpg");
   background-size: cover;
@@ -172,7 +201,6 @@
   }
 }
 
-
 .backand-platform {
   width: 208px;
   height: 193px;
@@ -267,7 +295,6 @@
   }
 }
 
-
 .create-app-platform-select {
   border: 1px #E1E1E1 solid;
   text-align: center;
@@ -297,34 +324,55 @@
   width: 100px;
   height: 100px;
 }
-.primary-navbar{
+
+.primary-navbar {
   width: 112px;
   height: 100vh;
   background-color: #373737;
-   li{
-      height: 100px;
-        a{
-          height: 100%;
-          width: 100%;
-        }
-   }
-  li.active{
+  li {
+    height: 100px;
+    a {
+      height: 100%;
+      width: 100%;
+
+    }
+  }
+  li.active {
     border-right: solid #f66731;
-    background-color: #303030;
+    a {
+      background-color: #303030;
+    }
+  }
+  li:hover {
+    a {
+      background-color: #303030;
+    }
+  }
+
+}
+
+.app-headers {
+  border: none;
+  background-color: #202020;
+  height: 70px;
+  width: 100%;
+  .app-select {
+    width: 100%;
+    padding-top: 13%;
+    padding-left: 17px;
   }
 }
-.app-headers{
-  border:none;
-  background-color: #202020;
-}
-.side-bar{
+
+.side-bar {
   display: -webkit-inline-box;
 }
-.backand-logo{
+
+.backand-logo {
   background-color: #2e2e2e;
   height: 70px;
   text-align: center;
 }
+
 .platform-sprite-icon {
   object-fit: none;
   object-position: 0 0;
@@ -340,8 +388,6 @@
   object-position: -6px -89px;
 }
 
-
-
 .ionic-2-logo-large {
   object-position: -50px -623px;
 }
@@ -349,7 +395,6 @@
 .ionic-2-logo-small {
   object-position: -6px -131px;
 }
-
 
 .angular-logo-large {
   object-position: -50px -46px;
@@ -394,21 +439,21 @@
   object-position: -6px -387px;
 }
 
-.jquery-logo-large{
-object-position: -50px -1764px;
+.jquery-logo-large {
+  object-position: -50px -1764px;
 }
 
-.vuejs-logo-large{
+.vuejs-logo-large {
   object-position: -50px -2331px;
 }
 
-.vuejs-logo-small{
+.vuejs-logo-small {
   object-position: -6px -515px;
 }
+
 .rest-api-logo-large {
   object-position: -54px -1575px
 }
-
 
 .rest-api-logo-small {
   object-position: -6px -341px
