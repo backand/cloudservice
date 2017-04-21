@@ -3,9 +3,10 @@
 
   <div class="main-container row">
     <div class="side-bar"
-         ng-class="nav.showSecondaryAppNav ? 'col-md-3' : 'col-md-2'"
          ng-hide="main.hideNav()"
-         ng-controller="NavCtrl as nav">
+         ng-controller="NavCtrl as nav"
+         ng-class="$window.innerWidth >= 1900 ? 'col-lg-2': (nav.showSecondaryAppNav ? 'col-md-3' : 'col-md-2')">
+
       <div ng-include="nav.showAppNav()"
            id="nav-container"
            class="nav-container primary-navbar nav-fixed nav-vertical"

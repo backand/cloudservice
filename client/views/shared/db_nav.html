@@ -1,6 +1,6 @@
 <div class="nav-wrapper scroller" perfect-scrollbar>
-  <ul class="nav" slim-scroll collapse-nav>
-    <li class="search-box">
+  <ul slim-scroll collapse-nav>
+    <li class="apps-header">
       <div class="input-group">
         <div class="ui-select app-headers" style="font-weight: bold;">
           <select ng-model="nav.currentAppName"
@@ -19,13 +19,14 @@
         <span>Model</span>
       </a>
     </li>
-    <li ng-class="{active: nav.currentState == 'object_fields', disabled: nav.DatabaseStatus != 1}">
+    <li ng-class="{active: nav.currentState == 'object_fields', disabled: nav.DatabaseStatus != 1}"
+        ng-click="showObjects = !showObjects">
       <a ng-class="{disabled: nav.DatabaseStatus != 1}"
          ng-click="nav.tables.length == 0 && nav.app.connectionSource !== 'local' ? nav.goTo($event, 'tables.notables') : {}"
          href="">
         <span>Objects</span>
       </a>
-      <ul class="ex4" id="ex4" ng-style="{'display': (nav.currentState !== 'object_fields' ? 'none' : 'true')}">
+      <ul class="ex4" id="ex4" ng-show="nav.currentState == 'object_fields' || showObjects">
         <li>
           <a ng-if="nav.app.connectionSource === 'local'"
              ng-click="nav.newObject()" href="">

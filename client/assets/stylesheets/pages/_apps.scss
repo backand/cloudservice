@@ -4,41 +4,115 @@
 
 .second-app-nav {
   background-color: #1b1b1b;
+  width: 56%;
+  min-width: 204px;
+  li {
+    height: 60px;
+    cursor: pointer;
+    @include transition( all .2s ease-in-out);
+    ul {
+      list-style-type: none;
+      @include transition( all .2s ease-in-out);
+    }
+    ul.ng-show {
+      height: 100%;
+    }
+  }
   li.active {
     border-right: solid #f66731;
-    a {
-      background-color: #0f0f0f;
-    }
+    background-color: #0f0f0f;
   }
   li:hover {
-    a {
-      background-color: #0f0f0f;
-    }
+    background-color: #0f0f0f;
   }
-  .open{
-    ul{
+  .open {
+    ul {
       list-style-type: none;
+
     }
-    li{
+    li {
       background-color: #0f0f0f;
+      @include transition( all .2s ease-in-out);
     }
-    a {
-      background-color: #0f0f0f;
-    }
-    a:hover {
+    li:hover {
       background-color: #0f0f0f;
     }
   }
-  a:focus {
+  li:focus {
     background-color: #0f0f0f;
   }
   span {
     padding-left: 23px;
   }
 }
-
+.apps-container{
+  width: 80%;
+  height: 100%;
+  left: 10%;
+  top: 49%;
+  border-radius: 5px;
+  background-color: #ffffff;
+  border: solid 1px #e5e5e5;
+  position: absolute;
+  table {
+    width:100%;
+    tbody{
+      tr{
+        border-bottom: solid 1px #e5e5e5;
+      }
+    }
+    thead{
+      td{
+        padding-top: 30px;
+        padding-bottom: 40px;
+      }
+      h3{
+        padding-left:29px;
+        font-family: "Open Sans";
+        font-size: 35px;
+        font-weight: 300;
+        line-height: 0.49;
+        text-align: left;
+        color: #393939;
+      }
+    }
+    span{
+      font-family: "Open Sans";
+      font-size: 17px;
+      font-weight: bold;
+      line-height: 1;
+      color: #f3743e;
+    }
+  }
+}
+.app-buttons{
+  width: 120.3px;
+  height: 35.2px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.upgrade-apps{
+  color: #5cb85c;
+  border: solid 1px #5cb85c;
+}
+.manage-apps{
+  color: #f26724;
+  border: solid 1px #f26724;
+}
+.app-button{
+  display: flex;
+  float: right;
+  padding-left: 25px;
+  div{
+    padding-left: 25px;
+  }
+}
 .apps-jumbo {
-  background: url("/assets/images/apps_page/background.jpg");
+  background-color: #393939;
   background-size: cover;
   color: rgba(255, 255, 255, 0.9);
   padding: 20px 15px 60px 15px;
@@ -152,7 +226,10 @@
 
   }
 }
-
+.apps-header{
+ display: flex;
+  height: 70px;
+}
 .configuration-description {
   padding-bottom: 10px;
 }
@@ -331,22 +408,32 @@
   background-color: #373737;
   li {
     height: 100px;
+    cursor: pointer;
     a {
       height: 100%;
       width: 100%;
 
     }
   }
+  .tabs{
+    height: 129px;
+  }
   li.active {
     border-right: solid #f66731;
-    a {
+
       background-color: #303030;
-    }
+
   }
   li:hover {
-    a {
+
       background-color: #303030;
-    }
+
+  }
+  span{
+    font-family: "Open Sans";
+    font-size: 14px;
+    text-align: left;
+    color: #c1c1c1;
   }
 
 }
@@ -365,6 +452,30 @@
 
 .side-bar {
   display: -webkit-inline-box;
+  @media (min-width: 1320px) {
+    max-width: 24%;
+  }
+  @media (min-width: 1415px) {
+    max-width: 23%;
+  }
+  @media (min-width: 1490px) {
+    max-width: 22%;
+  }
+  @media (min-width: 1560px) {
+    max-width: 21%;
+  }
+  @media (min-width: 1630px) {
+    max-width: 20%;
+  }
+  @media (min-width: 1710px) {
+    max-width: 19%;
+  }
+  @media (min-width: 1790px) {
+    max-width: 18%;
+  }
+  @media (min-width: 1900px) {
+    max-width: 17%;
+  }
 }
 
 .backand-logo {
@@ -458,3 +569,36 @@
 .rest-api-logo-small {
   object-position: -6px -341px
 }
+.icon-db {
+  width: 39px;
+  height: 42px;
+  object-fit: contain;
+}
+.icon-functions {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+.icon-security {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  //background-color: #f26724;
+}
+.icon-admin {
+  width: 36px;
+  height: 42px;
+  object-fit: contain;
+}
+.main-icons{
+  padding-left: 35px;
+}
+.serverless-app {
+  width: 43px;
+  height: 48px;
+  object-fit: contain;
+  background-image: linear-gradient(#f26724, #f26724);
+  background-blend-mode: color;
+  padding-left: 20px;
+}
+

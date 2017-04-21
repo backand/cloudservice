@@ -1,5 +1,5 @@
-<div class="nav-wrapper scroller" perfect-scrollbar>
-  <ul id="nav2" class="nav" slim-scroll collapse-nav>
+<div class="nav-wrapper">
+  <ul id="nav2" collapse-nav>
   	<li >
   		    <!-- Logo -->
 
@@ -15,34 +15,44 @@
     	</div>
   	</li>
   	<li ng-class="{active:
-  	nav.backandstorage.secondAppNavChoice == 'database'}">
-      <a href=""
-  		   ng-click="nav.showSecondarySideBar('database')">
+  	nav.backandstorage.secondAppNavChoice == 'database'}" ng-click="nav.showSecondarySideBar('database')" class="tabs">
+        <img src="assets/images/menu/icon-db/icon-db.png"
+             srcset="assets/images/menu/icon-db/icon-db@2x.png 2x,
+             assets/images/menu/icon-db/icon-db@3x.png 3x"
+             class="main-icons">
   			<span>Database</span>
-  		</a>
   	</li>
   	<li ng-class="{active:
-  	nav.backandstorage.secondAppNavChoice == 'functions'}">
-
+  	nav.backandstorage.secondAppNavChoice == 'functions'}" class="tabs">
   		<a href=""
   		   ng-click="nav.showSecondarySideBar('functions')">
+        <img src="assets/images/menu/icon-functions/icon-functions.png"
+             srcset="assets/images/menu/icon-functions/icon-functions@2x.png 2x,
+             assets/images/menu/icon-functions/icon-functions@3x.png 3x"
+             class="main-icons">
   			<span>Functions and Integrations</span>
   		</a>
   	</li>
-
   	<li ng-class="{active:
-  	nav.backandstorage.secondAppNavChoice == 'security'}">
-
+  	nav.backandstorage.secondAppNavChoice == 'security'}" class="tabs">
   		<a href=""
   		   ng-click="nav.showSecondarySideBar('security')">
+        <img src="assets/images/menu/icon-security/icon-security.png"
+             srcset="assets/images/menu/icon-security/icon-security@2x.png 2x,
+             assets/images/menu/icon-security/icon-security@3x.png 3x"
+             class="main-icons">
   			<span>Security</span>
   		</a>
   	</li>
 
   	<li ng-class="{active:
-  	nav.backandstorage.secondAppNavChoice == 'admin'}">
+  	nav.backandstorage.secondAppNavChoice == 'admin'}" class="tabs">
   		<a href=""
   		   ng-click="nav.showSecondarySideBar('admin')">
+        <img src="assets/images/menu/icon-admin/icon-admin.png"
+             srcset="assets/images/menu/icon-admin/icon-admin@2x.png 2x,
+             assets/images/menu/icon-admin/icon-admin@3x.png 3x"
+             class="main-icons">
   			<span>Administration</span>
   		</a>
   	</li>

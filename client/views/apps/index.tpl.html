@@ -3,7 +3,8 @@
   <div class="row apps-jumbo-title">
     <h1>Welcome to Backand</h1>
     <div class="apps-jumbo-headline">Start by creating your first app below.
-    You can also read our quick start resources</div>
+      You can also read our quick start resources
+    </div>
   </div>
   <div class="row apps-jumbo-sections">
     <div class="col-xs-4 col-sm-4">
@@ -26,7 +27,63 @@
     </div>
   </div>
 </div>
-<div class="page ng-scope">
+<div class="apps-container rounded">
+  <table>
+    <thead>
+    <tr>
+      <td>
+        <h3>My Apps</h3>
+      </td>
+      <td>
+        <div>Search Bar</div>
+      <td>
+      <td>
+        <a>New App</a>
+      </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="app in index.apps track by app.__metadata.id"
+        test-hook="apps.app-panel">
+      <td>
+        <a href="" class="pull-left" ng-if="app.DatabaseStatus === 1"
+           ng-click="index.appSettings(app.Name)" class="pull-in">
+        </a>
+        <img src="assets/images/apps_page/serverless-app/serverless-app.png"
+             srcset="assets/images/apps_page/serverless-app/serverless-app@2x.png 2x,
+             assets/images/apps_page/serverless-app/serverless-app@3x.png 3x"
+             class="serverless-app">
+        <span>{{ ::app.Name }}</span>
+      </td>
+      <td></td>
+      <td class="app-button">
+        <div>
+          <button
+            ng-click="index.appManage(app)"
+            class="btn btn-default app-buttons manage-apps col-sm-6 pull-left"
+            style="margin-left: -5px;"
+            data-spinner-color="#000000"
+            test-hook="apps.app-panel.manage-button"
+            ng-disabled="!index.isExampleApp() && app.DatabaseStatus != 1">
+            {{index.getAppManageTitle(app)}}
+          </button>
+        </div>
+        <div>
+          <button
+            ng-click="index.appBilling(app.Name, (app.PaymentLocked || app.PaymentStatus === 1))"
+            class="btn btn-default app-buttons upgrade-apps col-sm-6 pull-right"
+            data-spinner-color="#000000"
+            style="margin-right: -5px;"
+            test-hook="apps.app-panel.manage-button">
+            Upgrade Plan
+          </button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<!--<div class="page ng-scope">
   <div class="panel-body" id="apps-page">
     <div class="row">
       <div us-spinner spinner-key="loading" spinner-start-active
@@ -65,51 +122,51 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
 
-      <div class="col-lg-4 col-md-4 col-sm-6 app-panel"
-           ng-repeat="app in index.apps track by app.__metadata.id"
-           test-hook="apps.app-panel">
+<!--<div class="col-lg-4 col-md-4 col-sm-6 app-panel"
+     ng-repeat="app in index.apps track by app.__metadata.id"
+     test-hook="apps.app-panel">
 
-        <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
-          <span ng-if="app.DatabaseStatus === 2" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
-          <div class="ui-ribbon-wrapper" test-hook="apps.app-panel.ribbon">
-            <div class="ui-ribbon" ng-if="app.DatabaseStatus === 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index.getRibboninfo(app).text }}</div>
-            <div class="ui-ribbon" ng-if="app.DatabaseStatus !== 2">{{ index.getRibboninfo(app).text }}</div>
-          </div>
-          <div class="panel-heading text-center">
-            <a href="" class="pull-left" ng-if="app.DatabaseStatus === 1"
-               ng-click="index.appSettings(app.Name)" class="pull-in">
-              <i class="ti-settings"></i>
-            </a>{{ ::app.Name }}
-          </div>
-          <div class="panel-body app-panel-body">
-            <div class="body-height">{{ ::app.Title }}</div>
-            <div class="app-panel-body-link">
-              <div>&nbsp;</div>
-            </div>
-            <button
-                ng-click="index.appManage(app)"
-                class="btn btn-default col-sm-6 pull-left"
-                style="margin-left: -5px;"
-                data-spinner-color="#000000"
-                test-hook="apps.app-panel.manage-button"
-                ng-disabled="!index.isExampleApp() && app.DatabaseStatus != 1">
-                {{index.getAppManageTitle(app)}}
-            </button>
-            <button
-                ng-click="index.appBilling(app.Name, (app.PaymentLocked || app.PaymentStatus === 1))"
-                class="btn btn-default col-sm-6 pull-right"
-                data-spinner-color="#000000"
-                style="margin-right: -5px;"
-                test-hook="apps.app-panel.manage-button">
-                Upgrade Plan
-            </button>
-            <div ng-if="index.appSpinner[app.Name]" us-spinner spinner-start-active
-                 us-spinner="{color: 'black', left: '50%%'}"></div>
-          </div>
-        </div>
+  <div class="panel panel-default ui-ribbon-container" ng-class="index.getRibboninfo(app).class">
+    <span ng-if="app.DatabaseStatus === 2" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
+    <div class="ui-ribbon-wrapper" test-hook="apps.app-panel.ribbon">
+      <div class="ui-ribbon" ng-if="app.DatabaseStatus === 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ index.getRibboninfo(app).text }}</div>
+      <div class="ui-ribbon" ng-if="app.DatabaseStatus !== 2">{{ index.getRibboninfo(app).text }}</div>
+    </div>
+    <div class="panel-heading text-center">
+      <a href="" class="pull-left" ng-if="app.DatabaseStatus === 1"
+         ng-click="index.appSettings(app.Name)" class="pull-in">
+        <i class="ti-settings"></i>
+      </a>{{ ::app.Name }}
+    </div>
+    <div class="panel-body app-panel-body">
+      <div class="body-height">{{ ::app.Title }}</div>
+      <div class="app-panel-body-link">
+        <div>&nbsp;</div>
       </div>
+      <button
+          ng-click="index.appManage(app)"
+          class="btn btn-default col-sm-6 pull-left"
+          style="margin-left: -5px;"
+          data-spinner-color="#000000"
+          test-hook="apps.app-panel.manage-button"
+          ng-disabled="!index.isExampleApp() && app.DatabaseStatus != 1">
+          {{index.getAppManageTitle(app)}}
+      </button>
+      <button
+          ng-click="index.appBilling(app.Name, (app.PaymentLocked || app.PaymentStatus === 1))"
+          class="btn btn-default col-sm-6 pull-right"
+          data-spinner-color="#000000"
+          style="margin-right: -5px;"
+          test-hook="apps.app-panel.manage-button">
+          Upgrade Plan
+      </button>
+      <div ng-if="index.appSpinner[app.Name]" us-spinner spinner-start-active
+           us-spinner="{color: 'black', left: '50%%'}"></div>
     </div>
   </div>
+</div>-->
+</div>
+</div>
 </div>
