@@ -153,7 +153,7 @@
         $modal.appName = appName;
       }
     };
-
+    self.showNewApp = false;
     self.goToLink = function (app) {
       $state.go(self.getGoToLink(app).state, {appName: app.Name});
     };
@@ -196,16 +196,16 @@
       var ribbonInfo;
       switch (app.DatabaseStatus) {
         case 0:
-          ribbonInfo = {class: "ui-ribbon-warning", text: 'Pending'};
+          ribbonInfo = {class: "ui-ribbon-warning", text: 'PENDING'};
           break;
         case 1:
-          ribbonInfo = {class: 'ui-ribbon-success', text: 'Connected'};
+          ribbonInfo = {class: 'ui-ribbon-success', text: 'CONNECTED'};
           break;
         case 2:
-          ribbonInfo = {class: "ui-ribbon-info", text: 'Create'};
+          ribbonInfo = {class: "ui-ribbon-info", text: 'CREATE'};
           break;
         default:
-          ribbonInfo = {class: 'ui-ribbon-danger', text: 'Error'};
+          ribbonInfo = {class: 'ui-ribbon-danger', text: 'ERROR'};
           break;
       }
       if (self.exampleApp(app))

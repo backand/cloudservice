@@ -35,14 +35,21 @@
         <h3>My Apps</h3>
       </td>
       <td>
+      </td>
+      <td>
         <div>Search Bar</div>
-      <td>
-      <td>
-        <a>New App</a>
+        <span ng-click="index.showNewApp = !index.showNewApp">New App</span>
       </td>
     </tr>
     </thead>
     <tbody>
+    <tr ng-if="index.showNewApp">
+      <td></td>
+      <td>
+        <div class="newAppContainer"></div>
+      </td>
+      <td></td>
+    </tr>
     <tr ng-repeat="app in index.apps track by app.__metadata.id"
         test-hook="apps.app-panel">
       <td>
@@ -54,6 +61,10 @@
              assets/images/apps_page/serverless-app/serverless-app@3x.png 3x"
              class="serverless-app">
         <span>{{ ::app.Name }}</span>
+        <span ng-if="app.DatabaseStatus === 2" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
+        <div class="app-status" test-hook="apps.app-panel.ribbon">
+          <div ng-class="index.getRibboninfo(app).text">{{ index.getRibboninfo(app).text }}</div>
+        </div>
       </td>
       <td></td>
       <td class="app-button">
