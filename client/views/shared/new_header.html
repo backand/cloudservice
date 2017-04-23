@@ -3,7 +3,7 @@
   <header class="top-header clearfix"
           ng-click="header.hideDropdowns()">
     <div class="top-nav">
-      <ul class="nav-left list-unstyled" ng-hide="header.hideAppList()">
+      <ul class="nav-left list-unstyled" ng-if="!header.hideAppList()">
         <li class="search-box" id="search">
           <div class="input-group search-wrapper">
             <bknd-search results="header.searchResults"></bknd-search>
@@ -12,6 +12,11 @@
         <li ng-if="header.debugMode">
           <p style="color:red;position: relative;left: 220px;top: 13px;"><span
             class="glyphicon glyphicon-wrench"></span> debug mode</p>
+        </li>
+      </ul>
+      <ul class="nav-left list-unstyled" ng-if="header.hideAppList()">
+        <li class="backand-logo">
+          <div class="bcknd-logo"></div>
         </li>
       </ul>
       <ul class="nav-right pull-right list-unstyled">

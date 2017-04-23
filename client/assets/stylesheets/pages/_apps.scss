@@ -54,19 +54,21 @@
   background-color: #ffffff;
   border: solid 1px #e5e5e5;
   position: absolute;
-  table {
-    width: 95%;
-    margin-left: 25px;
-    tbody{
-      tr{
-        border-bottom: solid 1px #e5e5e5;
-      }
+    .body{
+        //border-bottom: solid 1px #e5e5e5;
     }
-    thead{
-      td{
+    #border{
+      width:94.5%;
+      border-bottom: solid 1px #e5e5e5;
+      position:relative;
+      top:55px;
+      left:27px;
+    }
+    .header{
+
         padding-top: 30px;
         padding-bottom: 40px;
-      }
+
       h3{
         padding-left:29px;
         font-family: "Open Sans";
@@ -99,12 +101,46 @@
       line-height: 1;
       color: #f3743e;
     }
+    .app-name{
+      padding-top:10px;
+    }
   }
-}
+
 .newAppContainer{
   width: 90%;
   height:240px;
   border: 1px #E1E1E1 solid;
+  margin-left: 4.5%;
+  .app-path{
+    padding-left:5%;
+    padding-top: 2.5%;
+    input{
+      border-right: none;
+      border-left: none;
+      border-top: none;
+    }
+    span{
+      font-size:14px;
+    }
+    .input-group{
+      width:100%;
+    }
+    button{
+      width:40%;
+      display:inline-block;
+    }
+    .cancel-button{
+      border:none;
+      background-color: white;
+    }
+    submit-button{
+      background-color: #f26724;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
 }
 .app-status{
   display: inline-block;
