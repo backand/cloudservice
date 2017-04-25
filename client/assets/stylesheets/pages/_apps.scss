@@ -49,7 +49,7 @@
   width: 80%;
   height: 100%;
   left: 10%;
-  top: 317px;
+  top: 350px;
   border-radius: 5px;
   background-color: #ffffff;
   border: solid 1px #e5e5e5;
@@ -74,7 +74,7 @@
         font-family: "Open Sans";
         font-size: 35px;
         font-weight: 300;
-        line-height: 0.49;
+        line-height: 0.1;
         text-align: left;
         color: #393939;
       }
@@ -83,7 +83,7 @@
         height: 44px;
         border-radius: 4px;
         background-color: #f26724;
-        float:right;
+        margin-left: 30%;
         font-family: "Open Sans";
         font-size: 16px;
         font-weight: bold;
@@ -92,6 +92,7 @@
         color: #ffffff;
         align-items:center;
         display: grid;
+        cursor: pointer;
       }
     }
     span{
@@ -103,6 +104,16 @@
     }
     .app-name{
       padding-top:10px;
+      position: relative;
+      left: 2%;
+      @media (min-width: 1290px){
+        position: relative;
+        left: 1.8%;
+      }
+      @media (min-width: 1800px){
+        position: relative;
+        left: 1.7%;
+      }
     }
   }
 
@@ -132,6 +143,12 @@
     .cancel-button{
       border:none;
       background-color: white;
+      opacity: 0.65;
+      font-family: "Open Sans";
+      font-size: 16px;
+      line-height: 1.06;
+      text-align: center;
+      color: rgba(57, 57, 57, 0.65);
     }
     submit-button{
       background-color: #f26724;
@@ -139,9 +156,81 @@
       font-size: 16px;
       font-weight: bold;
     }
+    .btn-primary[disabled]{
+      background-color: #FFD0B9;
+      border:none;
+      span{
+        color: white;
+      }
+    }
+    .btn-primary{
+      width: 140px;
+      height: 44px;
+      border-radius: 4px;
+      background-color: #f26724;
+      font-family: "Open Sans";
+      font-size: 16px;
+      cursor: pointer;
+      border:none;
+      span{
+        color: #ffffff;
+      }
+    }
   }
 
 }
+.app-type {
+  padding-left:5%;
+  padding-top: 2.5%;
+  .row{
+    padding-top: 5px;
+  }
+  span{
+    font-size: 14px;
+
+  }
+  .app-type-container {
+    height: 100px;
+    background-color: #ffffff;
+    border: solid 1px #e5e5e5;
+    margin-left: 10px;
+    width: 30%;
+    cursor: pointer;
+    .glyphicon-ok{
+      position: absolute;
+      left: 83%;
+      top: 5%;
+      color: #f26724;
+    }
+    p {
+      font-family: "Open Sans";
+      font-size: 14px;
+      text-align: center;
+      color: #595959;
+      position:relative;
+      top:5%;
+    }
+    img {
+      position:relative;
+      left:36%;
+      margin-top: 20px;
+      @media (min-width: 1320px) {
+        left:38%;
+      }
+      @media (min-width: 1320px) {
+        left:41%;
+      }
+    }
+  }
+  .app-type-container.active{
+    border: solid 1px #f26724;
+    p{
+      color: #f26724;
+    }
+
+  }
+}
+
 .app-status{
   display: inline-block;
   padding-left: 10px;
@@ -198,6 +287,14 @@
   display: flex;
   float: right;
   padding-left: 25px;
+  @media (min-width: 1400px){
+    position: relative;
+    left: 4%;
+  }
+  @media (min-width: 1800px){
+    position: relative;
+    left: 5%;
+  }
   div{
     padding-left: 25px;
   }
@@ -212,7 +309,12 @@
   @media screen and (max-width: $screen-md) {
     padding-bottom: 20px;
   }
-
+  .jumbo-border{
+    width: 1px;
+    height: 76px;
+    opacity: 0.5;
+    background-color: #acacac;
+  }
   .apps-jumbo-close-icon {
     position: relative;
     left: calc(100% - 4px);
@@ -229,7 +331,13 @@
     margin-bottom: 50px;
 
     h1 {
-      font-size: 48px;
+      font-family: "Open Sans", sans-serif;
+      font-size: 46px;
+      font-weight: 300;
+      line-height: 0.37;
+      text-align: center;
+      padding-bottom: 2%;
+      color: #ffffff;
       @media screen and (max-width: $screen-md) {
         font-size: 30px;
 
@@ -239,12 +347,17 @@
 
   .apps-jumbo-headline {
     opacity: .8;
-    font-size: 20px;
     @media screen and (max-width: $screen-md) {
       font-size: 18px;
     }
     padding-left: 2%;
     padding-right: 2%;
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 0.94;
+    text-align: center;
+    color: #acacac;
 
   }
 
@@ -252,6 +365,7 @@
     width: 80%;
     margin: 0 auto;
     font-size: 16px;
+    display: flex;
     @media screen and (max-width: 700px) {
 
       width: 100%;
@@ -290,7 +404,10 @@
   .apps-jumbo-section-wrapper {
     width: 220px;
     margin: 0 auto;
-
+    display: grid;
+    img{
+      margin-left: 39%;
+    }
     @media (max-width: $screen-md) {
       padding-bottom: 20px;
       text-align: center;
@@ -302,6 +419,7 @@
       }
     }
 
+
     &:hover {
       cursor: pointer;
       font-weight: bolder;
@@ -309,11 +427,13 @@
   }
 
   .apps-jumbo-section-title {
-    display: inline-block;
-    text-transform: uppercase;
-    margin-left: 5px;
-    width: 70%;
-    vertical-align: middle;
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 0.94;
+    text-align: center;
+    color: #acacac;
+    padding-top: 10px;
 
   }
 }
@@ -540,9 +660,20 @@
     padding-left: 17px;
   }
 }
-
+.main-search{
+  input {
+    border: none;
+    padding-top: 21px;
+    font-family: "Open Sans";
+    font-size: 14px;
+    font-style: italic;
+    line-height: 5.71;
+    text-align: left;
+    color: #b8b8b8;
+  }
+}
 .side-bar {
-  display: inline-block;
+  display: inline-flex;
   @media (min-width: 1320px) {
     max-width: 24%;
   }
@@ -574,7 +705,19 @@
   height: 70px;
   text-align: center;
 }
-
+.backand-header{
+  background-color: #2e2e2e;
+  text-align: center;
+  margin-left: 15px;
+  height: 50px;
+  width: 110px;
+}
+.bcknd-logo{
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  margin-top: 7px;
+}
 .platform-sprite-icon {
   object-fit: none;
   object-position: 0 0;
@@ -691,4 +834,42 @@
   background-image: linear-gradient(#f26724, #f26724);
   background-blend-mode: color;
 }
-
+.icon-small-security {
+  width: 24px;
+  height: 34px;
+  object-fit: contain;
+  background-image: linear-gradient(#f26724, #f26724);
+  background-blend-mode: color;
+}
+.icon-small-faas {
+  width: 28px;
+  height: 34px;
+  object-fit: contain;
+  background-image: linear-gradient(#f26724, #f26724);
+  background-blend-mode: color;
+}
+.icon-small-serverlesss {
+  width: 30px;
+  height: 34px;
+  object-fit: contain;
+  background-image: linear-gradient(#f26724, #f26724);
+  background-blend-mode: color;
+}
+.icon-docs {
+  width: 56px;
+  height: 50px;
+  background-image: linear-gradient(#dedede, #dedede);
+  background-blend-mode: color;
+}
+.icon-tutorials {
+  width: 60px;
+  height: 56px;
+  background-image: linear-gradient(#dedede, #dedede);
+  background-blend-mode: color;
+}
+.icon-getting-started {
+  width: 55px;
+  height: 56px;
+  background-image: linear-gradient(#dedede, #dedede);
+  background-blend-mode: color;
+}

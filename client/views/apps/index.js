@@ -32,7 +32,10 @@
       }
 
     }());
-
+    self.appType = 'serverless';
+    self.changeAppType = function (type) {
+      self.appType = type;
+    };
     self.addApp = function () {
       self.loading = true;
       self.appName = angular.lowercase(self.appName);
