@@ -1,10 +1,13 @@
 <div class="nav-wrapper">
   <ul id="nav2" collapse-nav>
-  	<li >
+  	<li class="nav-header">
   		    <!-- Logo -->
 
       		<a class="logo backand-logo" ui-sref="apps.index">
-        	  <span>Backand</span>
+            <img src="assets/images/apps_page/backand-logo/backand-logo.png"
+                 srcset="assets/images/apps_page/backand-logo/backand-logo@2x.png 2x,
+             assets/images/apps_page/backand-logo/backand-logo@3x.png 3x"
+                 class="bcknd-logo">
     	   	</a>
 
     	<!-- needs to be put after logo to make it work -->
@@ -15,7 +18,7 @@
     	</div>
   	</li>
   	<li ng-class="{active:
-  	nav.backandstorage.secondAppNavChoice == 'database'}" ng-click="nav.showSecondarySideBar('database')" class="tabs">
+  	nav.backandstorage.secondAppNavChoice == 'database'}"  class="database tabs" ng-click="nav.showSecondarySideBar('database')" >
         <img src="assets/images/menu/icon-db/icon-db.png"
              srcset="assets/images/menu/icon-db/icon-db@2x.png 2x,
              assets/images/menu/icon-db/icon-db@3x.png 3x"
@@ -23,7 +26,7 @@
   			<span>Database</span>
   	</li>
   	<li ng-class="{active:
-  	nav.backandstorage.secondAppNavChoice == 'functions'}" class="tabs">
+  	nav.backandstorage.secondAppNavChoice == 'functions'}" class="functions tabs">
   		<a href=""
   		   ng-click="nav.showSecondarySideBar('functions')">
         <img src="assets/images/menu/icon-functions/icon-functions.png"
@@ -34,7 +37,7 @@
   		</a>
   	</li>
   	<li ng-class="{active:
-  	nav.backandstorage.secondAppNavChoice == 'security'}" class="tabs">
+  	nav.backandstorage.secondAppNavChoice == 'security'}" class="security tabs">
   		<a href=""
   		   ng-click="nav.showSecondarySideBar('security')">
         <img src="assets/images/menu/icon-security/icon-security.png"
@@ -46,7 +49,7 @@
   	</li>
 
   	<li ng-class="{active:
-  	nav.backandstorage.secondAppNavChoice == 'admin'}" class="tabs">
+  	nav.backandstorage.secondAppNavChoice == 'admin'}" class="admin tabs">
   		<a href=""
   		   ng-click="nav.showSecondarySideBar('admin')">
         <img src="assets/images/menu/icon-admin/icon-admin.png"

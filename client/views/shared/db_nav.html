@@ -1,7 +1,6 @@
 <div class="nav-wrapper scroller" perfect-scrollbar>
   <ul slim-scroll collapse-nav>
     <li class="apps-header">
-      <div class="input-group">
         <div class="ui-select app-headers" style="font-weight: bold;">
           <select ng-model="nav.currentAppName"
                   ng-change="nav.goToApp()"
@@ -11,21 +10,21 @@
         </div>
         <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
              style="position: relative;left: 150px;top: -18px;"></div>
-      </div>
     </li>
-    <li ng-class="{active: nav.currentState == 'erd_model'}">
-      <a href=""
-         ng-click="nav.goTo($event, 'erd_model')">
+    <li  ng-click="nav.goTo($event, 'erd_model')" ng-class="{active: nav.currentState == 'erd_model'}">
+      <img src="assets/images/menu/icon-model/icon-model.png"
+           srcset="assets/images/menu/icon-model/icon-model@2x.png 2x,
+             assets/images/menu/icon-model/icon-model@3x.png 3x"
+           class="icon-model">
         <span>Model</span>
-      </a>
     </li>
     <li ng-class="{active: nav.currentState == 'object_fields', disabled: nav.DatabaseStatus != 1}"
         ng-click="showObjects = !showObjects">
-      <a ng-class="{disabled: nav.DatabaseStatus != 1}"
-         ng-click="nav.tables.length == 0 && nav.app.connectionSource !== 'local' ? nav.goTo($event, 'tables.notables') : {}"
-         href="">
+      <img src="assets/images/menu/icon-object/icon-object.png"
+           srcset="assets/images/menu/icon-object/icon-object@2x.png 2x,
+             assets/images/menu/icon-object/icon-object@3x.png 3x"
+           class="icon-object">
         <span>Objects</span>
-      </a>
       <ul class="ex4" id="ex4" ng-show="nav.currentState == 'object_fields' || showObjects">
         <li>
           <a ng-if="nav.app.connectionSource === 'local'"
@@ -49,29 +48,25 @@
         </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.currentState == 'db_model'}">
-      <a href=""
-         ng-click="nav.goTo($event, 'db_model')">
+    <li ng-class="{active: nav.currentState == 'db_model'}"
+        ng-click="nav.goTo($event, 'db_model')">
+      <img src="img/icon-schema.png"
+           srcset="img/icon-schema@2x.png 2x,
+             img/icon-schema@3x.png 3x"
+           class="icon-schema">
         <span>Schema</span>
-      </a>
     </li>
-    <li ng-class="{active: nav.currentState == 'log.requests'}">
-      <a href=""
-         ng-click="nav.goTo($event, 'log.requests')">
+    <li ng-class="{active: nav.currentState == 'log.requests'}"
+        ng-click="nav.goTo($event, 'log.requests')">
         <span>API Log</span>
-      </a>
     </li>
-    <li ng-class="{active: nav.currentState == 'log.console'}">
-      <a href=""
-         ng-click="nav.goTo($event, 'log.console')">
+    <li ng-class="{active: nav.currentState == 'log.console'}"
+        ng-click="nav.goTo($event, 'log.console')">
         <span>Console Log</span>
-      </a>
     </li>
-    <li ng-class="{active: nav.currentState == 'log.history'}">
-      <a href=""
-         ng-click="nav.goTo($event, 'log.history')">
+    <li ng-class="{active: nav.currentState == 'log.history'}"
+        ng-click="nav.goTo($event, 'log.history')">
         <span>Data History Log</span>
-      </a>
     </li>
   </ul>
 </div>

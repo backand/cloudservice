@@ -1,7 +1,6 @@
 <div class="nav-wrapper scroller" perfect-scrollbar>
   <ul class="nav" slim-scroll collapse-nav>
-    <li class="search-box">
-      <div class="input-group">
+    <li class="apps-header">
         <div class="ui-select app-headers" style="font-weight: bold;">
           <select ng-model="nav.currentAppName"
                       ng-change="nav.goToApp()"
@@ -9,51 +8,33 @@
                       class="app-select">
           </select>
         </div>
-        <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
-                 style="position: relative;left: 150px;top: -18px;"></div>
-      </div>
+      <!--<div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
+                 style="position: relative;left: 150px;top: -18px;"></div>-->
     </li>
-  	<li>
-  		<a href=""
-  		   ng-click="nav.goTo($event, 'hosting.hosting_tree')">
+  	<li ng-click="nav.goTo($event, 'hosting.hosting_tree')">
   			<span>Hosting</span>
-  		</a>
   	</li>
-  	<li>
-  		<a href=""
-  		   ng-click="nav.goTo($event, 'hosting.files_tree')">
+  	<li ng-click="nav.goTo($event, 'hosting.files_tree')">
   			<span>Storage</span>
-  		</a>
   	</li>
-  	<li>
-  		<a href=""
-  		   ng-click="nav.goTo($event, 'app.configuration')">
+  	<li ng-click="nav.goTo($event, 'app.configuration')">
   			<span>Configuration</span>
   		</a>
   	</li>
   	<li>
-  		<a href=""
-  		   <!--ng-click="nav.goTo($event, )"-->>
+  		   <!--ng-click="nav.goTo($event, )"-->
   			<span>Enviroment Variables</span>
-  		</a>
   	</li>
     <li>
-      <a href=""
-         <!--ng-click="nav.goTo($event, )"-->>
+         <!--ng-click="nav.goTo($event, )"-->
         <span>General Settings</span>
-      </a>
     </li>
-    <li>
-      <a href=""
-         ng-click="nav.goTo($event, 'analytics.report')">
+    <li ng-click="nav.goTo($event, 'analytics.report')">
         <span>Reports</span>
-      </a>
     </li>
     <li>
-      <a href=""
-         <!--ng-click="nav.goTo($event, )"-->>
+         <!--ng-click="nav.goTo($event, )"-->
         <span>All Logs</span>
-      </a>
     </li>
   </ul>
  </div>

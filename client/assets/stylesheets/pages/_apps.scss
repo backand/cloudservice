@@ -45,6 +45,29 @@
     padding-left: 23px;
   }
 }
+.primary-navbar {
+  .database {
+    span {
+      margin-left: 9px;
+    }
+  }
+  .functions {
+    span {
+      padding-left: 0px !important;
+    }
+  }
+  .security {
+    span{
+      padding-left: 31px;
+    }
+  }
+  .admin{
+    span{
+      padding-left: 6px !important;
+    }
+
+  }
+}
 .apps-container{
   width: 80%;
   height: 100%;
@@ -439,7 +462,7 @@
 }
 .apps-header{
  display: flex;
-  height: 70px;
+  height: 66px !important;
 }
 .configuration-description {
   padding-bottom: 10px;
@@ -632,7 +655,7 @@
   li.active {
     border-right: solid #f66731;
 
-      background-color: #303030;
+      background-color: #2c2c2c;
 
   }
   li:hover {
@@ -643,8 +666,10 @@
   span{
     font-family: "Open Sans";
     font-size: 14px;
-    text-align: left;
+    text-align: center;
+    padding-left: 15px;
     color: #c1c1c1;
+    display: flex;
   }
 
 }
@@ -652,7 +677,7 @@
 .app-headers {
   border: none;
   background-color: #202020;
-  height: 70px;
+  height: 66px;
   width: 100%;
   .app-select {
     width: 100%;
@@ -674,6 +699,9 @@
 }
 .side-bar {
   display: inline-flex;
+  width:27%;
+  padding: 0;
+  margin-left: 15px;
   @media (min-width: 1320px) {
     max-width: 24%;
   }
@@ -699,11 +727,18 @@
     max-width: 17%;
   }
 }
-
+.nav-header{
+  height: 66px !important;
+  background-color: #313131;
+  img{
+    margin-top:16px;
+  }
+}
 .backand-logo {
-  background-color: #2e2e2e;
-  height: 70px;
+  background-color: #313131;
   text-align: center;
+  margin-left: 41px;
+  height: 50px;
 }
 .backand-header{
   background-color: #2e2e2e;
@@ -825,7 +860,10 @@
   object-fit: contain;
 }
 .main-icons{
-  padding-left: 35px;
+  margin-left: 37px;
+  margin-top: 28px;
+  margin-bottom: 10px;
+
 }
 .serverless-app {
   width: 43px;
@@ -872,4 +910,16 @@
   height: 56px;
   background-image: linear-gradient(#dedede, #dedede);
   background-blend-mode: color;
+}
+.icon-model {
+  width: 16px;
+  height: 13.6px;
+  object-fit: contain;
+  background-color: #626262;
+}
+.icon-object {
+  width: 16px;
+  height: 15px;
+  object-fit: contain;
+  background-color: #626262;
 }
