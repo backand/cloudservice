@@ -40,119 +40,136 @@
 </div>
 <div class="apps-container rounded">
 
-    <div class="row header justify-content-between">
-      <div class="col-md-3">
-        <h3>My Apps</h3>
-      </div>
-      <div class="col-md-6">
-      </div>
-      <div class="col-md-3">
+  <div class="row header justify-content-between">
+    <div class="col-md-3">
+      <h3>My Apps</h3>
+    </div>
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+      <div class="search-area">
         <input type="text" name="search" ng-model="index.searchApp"
-                ng-model-options="{debounce: 500}">
-        <div ng-if="index.searchApp !== ''"></div>
-        <span ng-click="index.showNewApp = !index.showNewApp">New App</span>
+               ng-model-options="{debounce: 500}"
+               class="app-searchbox" placeholder="Search...">
+        <div class="search-results-container" ng-if="index.searchApp !== ''">
+          <ul>
+            <li ng-repeat="option in index.searchOptions" class="app-name-option" ng-click="index.appManage(option)">
+              <p>{{option.Name}}</p>
+            </li>
+          </ul>
+        </div>
       </div>
+      <span ng-click="index.showNewApp = !index.showNewApp">New App</span>
     </div>
-   <div ng-if="index.showNewApp" class="newAppContainer" class="row">
-     <form class="form-horizontal" name="form" role="form" ng-submit="index.addApp()">
-       <fieldset>
-         <div class="col-md-6 app-path">
-         <div class="form-group">
-           <div class="input-group">
-             <span>APP TITLE</span>
-             <input type="text" class="form-control" placeholder="app title"
-                    ng-model = "index.appTitle" test-hook="apps.new-app.title" ng-model-options="{debounce: 500}">
+  </div>
+  <div ng-if="index.showNewApp" class="newAppContainer" class="row">
+    <form class="form-horizontal" name="form" role="form" ng-submit="index.addApp()">
+      <fieldset>
+        <div class="col-md-6 app-path">
+          <div class="form-group">
+            <div class="input-group">
+              <span>APP TITLE</span>
+              <input type="text" class="form-control" placeholder="app title"
+                     ng-model="index.appTitle" test-hook="apps.new-app.title" ng-model-options="{debounce: 500}">
 
-           </div>
-           <div ng-show="form.appName.$error.pattern" test-hook="apps.new-app.error" class="input-error">Only alphanumeric characters are allowed</div>
-         </div>
-         <div class="form-group">
-           <span>APP NAME</span>
-           <input type="text" class="form-control" placeholder="hosting.backand.io/" style="text-transform: lowercase;"
-                  ng-model = "index.appName" ng-model-options="{debounce: 500}"
-                  ng-pattern="index.namePattern" test-hook="apps.new-app.name" name="appName" required >
-
-         </div>
-         <div class="form-group" style="padding-top: 5px;">
-           <button type="submit" test-hook="apps.new-app.create" ng-disabled="form.$invalid" class="btn btn-primary btn-w-md btn-block submit-button" ladda="index.loading" data-style="expand-right">Create</button>
-           <button class="cancel-button" type="reset">Cancel</button>
-         </div>
-         </div>
-         <div class="col-md-6 app-type">
-           <span>APP TYPE</span>
-            <div class="row">
-              <div ng-click="index.changeAppType('serverless')" ng-class="index.appType == 'serverless' ? 'active' : ''" class="app-type-container col-md-4">
-                <div ng-if="index.appType == 'serverless'" class="glyphicon glyphicon-ok"></div>
-                <img src="assets/images/apps_page/icon-small-serverless/icon-small-serverlesss.png"
-                     srcset="assets/images/apps_page/icon-small-serverless/icon-small-serverlesss@2x.png 2x,
-             assets/images/apps_page/icon-small-serverless/icon-small-serverlesss@3x.png 3x"
-                     class="icon-small-serverlesss">
-                <p>Full Serverless</p>
-              </div>
-              <div ng-click="index.changeAppType('function')" ng-class="index.appType == 'function' ? 'active' : '' "
-                   class="app-type-container col-md-4">
-                <div ng-if="index.appType == 'function'" class="glyphicon glyphicon-ok"></div>
-                <img src="assets/images/apps_page/icon-small-faas/icon-small-faas.png"
-                     srcset="assets/images/apps_page/icon-small-faas//icon-small-faas@2x.png 2x,
-             assets/images/apps_page/icon-small-faas//icon-small-faas@3x.png 3x"
-                     class="icon-small-faas">
-                <p>Function-As-A-Service</p>
-              </div>
-              <div ng-click="index.changeAppType('security')" ng-class="index.appType == 'security' ? 'active' : '' " class="app-type-container col-md-4">
-                <div ng-if="index.appType== 'security'" class="glyphicon glyphicon-ok"></div>
-                <img src="assets/images/apps_page/icon-small-security/icon-small-security.png"
-                     srcset="assets/images/apps_page/icon-small-security/icon-small-security@2x.png 2x,
-             assets/images/apps_page/icon-small-security/icon-small-security@3x.png 3x"
-                     class="icon-small-security">
-                <p>Security App</p>
-              </div>
             </div>
-         </div>
-       </fieldset>
-     </form>
-   </div>
-    <div class="row body justify-content-between" ng-repeat="app in index.apps track by app.__metadata.id"
-        test-hook="apps.app-panel">
-      <div class="col-md-4 app-name">
-        <a href="" class="pull-left pull-in" ng-if="app.DatabaseStatus === 1"
-           ng-click="index.appSettings(app.Name)" >
-        </a>
-        <img src="assets/images/apps_page/serverless-app/serverless-app.png"
-             srcset="assets/images/apps_page/serverless-app/serverless-app@2x.png 2x,
-             assets/images/apps_page/serverless-app/serverless-app@3x.png 3x"
-             class="serverless-app">
-        <span>{{ ::app.Name }}</span>
-        <span ng-if="app.DatabaseStatus === 2" us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
-        <div class="app-status" test-hook="apps.app-panel.ribbon">
-          <div ng-class="index.getRibboninfo(app).text">{{ index.getRibboninfo(app).text }}</div>
-        </div>
-      </div>
+            <div ng-show="form.appName.$error.pattern" test-hook="apps.new-app.error" class="input-error">Only
+              alphanumeric characters are allowed
+            </div>
+          </div>
+          <div class="form-group">
+            <span>APP NAME</span>
+            <input type="text" class="form-control" placeholder="hosting.backand.io/" style="text-transform: lowercase;"
+                   ng-model="index.appName" ng-model-options="{debounce: 500}"
+                   ng-pattern="index.namePattern" test-hook="apps.new-app.name" name="appName" required>
 
-      <div class="app-button col-md-4">
-        <div>
-          <button
-            ng-click="index.appManage(app)"
-            class="btn btn-default app-buttons manage-apps col-sm-6 pull-left"
-            style="margin-left: -5px;"
-            data-spinner-color="#000000"
-            test-hook="apps.app-panel.manage-button"
-            ng-disabled="!index.isExampleApp() && app.DatabaseStatus != 1">
-            {{index.getAppManageTitle(app)}}
-          </button>
+          </div>
+          <div class="form-group" style="padding-top: 5px;">
+            <button type="submit" test-hook="apps.new-app.create" ng-disabled="form.$invalid"
+                    class="btn btn-primary btn-w-md btn-block submit-button" ladda="index.loading"
+                    data-style="expand-right">Create
+            </button>
+            <button class="cancel-button" type="reset">Cancel</button>
+          </div>
         </div>
-        <div>
-          <button
-            ng-click="index.appBilling(app.Name, (app.PaymentLocked || app.PaymentStatus === 1))"
-            class="btn btn-default app-buttons upgrade-apps col-sm-6 pull-right"
-            data-spinner-color="#000000"
-            style="margin-right: -5px;"
-            test-hook="apps.app-panel.manage-button">
-            Upgrade Plan
-          </button>
+        <div class="col-md-6 app-type">
+          <span>APP TYPE</span>
+          <div class="row">
+            <div ng-click="index.changeAppType('serverless')" ng-class="index.appType == 'serverless' ? 'active' : ''"
+                 class="app-type-container col-md-4">
+              <div ng-if="index.appType == 'serverless'" class="glyphicon glyphicon-ok"></div>
+              <img src="assets/images/apps_page/icon-small-serverless/icon-small-serverlesss.png"
+                   srcset="assets/images/apps_page/icon-small-serverless/icon-small-serverlesss@2x.png 2x,
+             assets/images/apps_page/icon-small-serverless/icon-small-serverlesss@3x.png 3x"
+                   class="icon-small-serverlesss">
+              <p>Full Serverless</p>
+            </div>
+            <div ng-click="index.changeAppType('function')" ng-class="index.appType == 'function' ? 'active' : '' "
+                 class="app-type-container col-md-4">
+              <div ng-if="index.appType == 'function'" class="glyphicon glyphicon-ok"></div>
+              <img src="assets/images/apps_page/icon-small-faas/icon-small-faas.png"
+                   srcset="assets/images/apps_page/icon-small-faas//icon-small-faas@2x.png 2x,
+             assets/images/apps_page/icon-small-faas//icon-small-faas@3x.png 3x"
+                   class="icon-small-faas">
+              <p>Function-As-A-Service</p>
+            </div>
+            <div ng-click="index.changeAppType('security')" ng-class="index.appType == 'security' ? 'active' : '' "
+                 class="app-type-container col-md-4">
+              <div ng-if="index.appType== 'security'" class="glyphicon glyphicon-ok"></div>
+              <img src="assets/images/apps_page/icon-small-security/icon-small-security.png"
+                   srcset="assets/images/apps_page/icon-small-security/icon-small-security@2x.png 2x,
+             assets/images/apps_page/icon-small-security/icon-small-security@3x.png 3x"
+                   class="icon-small-security">
+              <p>Security App</p>
+            </div>
+          </div>
         </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="row body justify-content-between" ng-repeat="app in index.apps track by app.__metadata.id"
+       test-hook="apps.app-panel">
+    <div class="col-md-4 app-name">
+      <a href="" class="pull-left pull-in" ng-if="app.DatabaseStatus === 1"
+         ng-click="index.appSettings(app.Name)">
+      </a>
+      <img src="assets/images/apps_page/serverless-app/serverless-app.png"
+           srcset="assets/images/apps_page/serverless-app/serverless-app@2x.png 2x,
+             assets/images/apps_page/serverless-app/serverless-app@3x.png 3x"
+           class="serverless-app">
+      <span>{{ ::app.Name }}</span>
+      <span ng-if="app.DatabaseStatus === 2"
+            us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
+      <div class="app-status" test-hook="apps.app-panel.ribbon">
+        <div ng-class="index.getRibboninfo(app).text">{{ index.getRibboninfo(app).text }}</div>
       </div>
-      <div id="border"></div>
     </div>
+
+    <div class="app-button col-md-4">
+      <div>
+        <button
+          ng-click="index.appManage(app)"
+          class="btn btn-default app-buttons manage-apps col-sm-6 pull-left"
+          style="margin-left: -5px;"
+          data-spinner-color="#000000"
+          test-hook="apps.app-panel.manage-button"
+          ng-disabled="!index.isExampleApp() && app.DatabaseStatus != 1">
+          {{index.getAppManageTitle(app)}}
+        </button>
+      </div>
+      <div>
+        <button
+          ng-click="index.appBilling(app.Name, (app.PaymentLocked || app.PaymentStatus === 1))"
+          class="btn btn-default app-buttons upgrade-apps col-sm-6 pull-right"
+          data-spinner-color="#000000"
+          style="margin-right: -5px;"
+          test-hook="apps.app-panel.manage-button">
+          Upgrade Plan
+        </button>
+      </div>
+    </div>
+    <div id="border"></div>
+  </div>
 
 </div>
 <!--<div class="page ng-scope">

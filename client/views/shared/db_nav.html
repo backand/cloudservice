@@ -39,11 +39,9 @@
           </a>
         </li>
 
-        <li ng-class="{active: false }" ng-repeat="table in nav.tables">
-          <a ng-class="{disabled: false}" ng-click="nav.showTable($event, table)" href="">
+        <li ng-class="{active: false }" ng-repeat="table in nav.tables" ng-click="nav.showTable($event, table)">
             <i class="ba-icon-todo objects"></i>
             <span>{{table.name}}</span>
-          </a>
         </li>
       </ul>
     </li>

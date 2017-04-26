@@ -78,8 +78,12 @@
         });
     }
     self.searchApp = '';
-    $scope.$watch(self.searchApp, function (){
-        
+    $scope.$watch('index.searchApp', function (){
+        self.searchOptions =  _.filter(self.apps, function(optionOfApp) {
+           if(optionOfApp.Name.includes(self.searchApp)){
+            return optionOfApp.Name;
+          }
+        });
     }
 
     )
