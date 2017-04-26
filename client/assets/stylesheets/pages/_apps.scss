@@ -18,31 +18,40 @@
       height: 100%;
     }
   }
+  li.open{
+    display: inline-block;
+    i{
+      padding-left: 35px;
+    }
+  }
   li.active {
     border-right: solid #f66731;
     background-color: #0f0f0f;
+    span{
+      color:#ffffff
+    }
   }
   li:hover {
     background-color: #0f0f0f;
+    width: 100%;
   }
-  .open {
-    ul {
-      list-style-type: none;
 
-    }
-    li {
-      background-color: #0f0f0f;
-      @include transition( all .2s ease-in-out);
-    }
-    li:hover {
-      background-color: #0f0f0f;
-    }
-  }
   li:focus {
     background-color: #0f0f0f;
+    width: 100%;
   }
   span {
-    padding-left: 23px;
+    padding-left: 15px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 3.93;
+    text-align: left;
+    color: #c4c4c4;
+  }
+  img{
+    margin-left:19px;
+    margin-bottom:4px;
   }
 }
 .primary-navbar {
@@ -681,8 +690,12 @@
   width: 100%;
   .app-select {
     width: 100%;
-    padding-top: 13%;
+    padding-top: 12%;
     padding-left: 17px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    color: #8f8f8f;
   }
 }
 .main-search{
@@ -915,11 +928,79 @@
   width: 16px;
   height: 13.6px;
   object-fit: contain;
-  background-color: #626262;
 }
 .icon-object {
   width: 16px;
   height: 15px;
   object-fit: contain;
-  background-color: #626262;
+}
+.icon-schema {
+  width: 13px;
+  height: 16px;
+  object-fit: contain;
+}
+.icon-api-log {
+  width: 16px;
+  height: 19.2px;
+  object-fit: contain;
+}
+.icon-console-log {
+  width: 18.6px;
+  height: 16px;
+  object-fit: contain;
+}
+.icon-data-history-log {
+  width: 17px;
+  height: 15px;
+  object-fit: contain;
+}
+.icon-functions {
+  width: 15.5px;
+  height: 16px;
+  object-fit: contain;
+}
+.icon-integrations {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+.icon-cron {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+.icon-configuration {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+.icons-social-keys {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+.icon-registreed-users {
+  width: 18px;
+  height: 14.4px;
+  object-fit: contain;
+}
+.icon-security-actions {
+  width: 16.8px;
+  height: 16px;
+  object-fit: contain;
+}
+.icon-hosting {
+  width: 16px;
+  height: 10.9px;
+  object-fit: contain;
+}
+.icon-storage {
+  width: 16px;
+  height: 13.6px;
+  object-fit: contain;
+}
+.icon-constants {
+  width: 14px;
+  height: 16px;
+  object-fit: contain;
 }

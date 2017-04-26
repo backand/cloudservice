@@ -14,6 +14,10 @@
     <li ng-class="{active: nav.currentState.includes('function'), disabled: nav.DatabaseStatus != 1}"
         ng-click="showFunctions = !showFunctions">
       <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
+        <img src="assets/images/menu/icon-functions/icon-functions.png"
+             srcset="assets/images/menu/icon-functions/icon-functions@2x.png 2x,
+             assets/images/menu/icon-functions/icon-functions@3x.png 3x"
+             class="icon-functions">
         <span>Functions</span>
       </a>
       <ul ng-show="showFunctions || nav.currentState.includes('function')">
@@ -42,16 +46,20 @@
     <li ng-class="{active: nav.currentState == 'integrations'}">
       <a href="">
         <!--ng-click="nav.goTo($event, )"-->
+        <img src="assets/images/menu/icon-integrations/icon-integrations.png"
+             srcset="assets/images/menu/icon-integrations/icon-integrations@2x.png 2x,
+             assets/images/menu/icon-integrations/icon-integrations@3x.png 3x"
+             class="icon-integrations">
         <span>Integrations</span>
       </a>
-    </li>
-    <li ng-class="{active: nav.currentState == 'db_model'}"
-        ng-click="nav.goTo($event, 'db_model')">
-        <span>Schema</span>
     </li>
     <li ng-class="{active: nav.currentState.includes('Jobs'), disabled: nav.DatabaseStatus != 1}"
         ng-click="showCronJobs = !showCronJobs">
       <a ng-class="{disabled: nav.DatabaseStatus == 1}" href="">
+        <img src="assets/images/menu/icon-cron/icon-cron.png"
+             srcset="assets/images/menu/icon-cron/icon-cron@2x.png 2x,
+             assets/images/menu/icon-cron/icon-cron@3x.png 3x"
+             class="icon-cron">
         <span>Cron Jobs</span>
       </a>
       <ul ng-show="nav.currentState.includes('Jobs') || showCronJobs">
@@ -72,10 +80,18 @@
     </li>
     <li ng-class="{active: nav.currentState == 'log.requests'}"
         ng-click="nav.goTo($event, 'log.requests')">
+      <img src="assets/images/menu/icon-api-log/icon-api-log.png"
+           srcset="assets/images/menu/icon-api-log/icon-api-log@2x.png 2x,
+             assets/images/menu/icon-api-log/icon-api-log@3x.png 3x"
+           class="icon-api-log">
         <span>API Log</span>
     </li>
     <li ng-class="{active: nav.currentState == 'log.console'}"
         ng-click="nav.goTo($event, 'log.console')">
+      <img src="assets/images/menu/icon-console-log/icon-console-log.png"
+           srcset="assets/images/menu/icon-console-log/icon-console-log@2x.png 2x,
+             assets/images/menu/icon-console-log/icon-console-log@3x.png 3x"
+           class="icon-console-log">
         <span>Console Log</span>
     </li>
   </ul>
