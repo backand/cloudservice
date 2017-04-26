@@ -18,10 +18,19 @@
       height: 100%;
     }
   }
+  .sub-functions-icons{
+    i {
+      padding-left: 20px;
+    }
+    span{
+      padding-left: 7px;
+    }
+  }
   li.open{
     display: inline-block;
-    i{
-      padding-left: 35px;
+    width:100%;
+    i.objects{
+        padding-left: 35px;
     }
   }
   li.active {
@@ -1003,4 +1012,8 @@
   width: 14px;
   height: 16px;
   object-fit: contain;
+}
+.ba-icon-general{
+  color: #5f5f5f;
+  padding-left:19px;
 }

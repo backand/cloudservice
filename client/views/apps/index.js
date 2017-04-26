@@ -77,7 +77,12 @@
           self.loading = false;
         });
     }
+    self.searchApp = '';
+    $scope.$watch(self.searchApp, function (){
+        
+    }
 
+    )
     /**
      *
      * @param appName
