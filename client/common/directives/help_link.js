@@ -26,7 +26,7 @@
           "securitySignup": {
             "page": "security/auth",
             "section": "Public App",
-            "url": "http://http://docs.backand.com/#signup"
+            "url": "http://docs.backand.com/#security-configuration"
           },
           "customPages":{
             "page":"security/auth",
