@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state','$window', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage,RulesService) {
+  function NavCtrl($scope, $state,$window, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage,RulesService) {
     var self = this;
     self.isTablesClicked = false;
     self.apps = AppsService.apps;
@@ -246,11 +246,10 @@
     };
     self.newJsFunction = function($event){
       goToState($event, 'functions.newjsfunctions');
-    }
+    };
     self.newLambdaFunction = function($event){
       goToState($event, 'functions.newlambdafunctions');
-    }
-
+    };
     self.showFunction = function ($event, func) {
       var params = {
         functionId: func.__metadata.id

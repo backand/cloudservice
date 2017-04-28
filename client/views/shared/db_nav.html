@@ -39,7 +39,7 @@
           </a>
         </li>
 
-        <li ng-class="{active: false }" ng-repeat="table in nav.tables" ng-click="nav.showTable($event, table)">
+        <li ng-class="{active: false }" ng-repeat="table in nav.tables track by table.name" ng-click="nav.showTable($event, table)">
             <i class="ba-icon-todo objects"></i>
             <span>{{table.name}}</span>
         </li>

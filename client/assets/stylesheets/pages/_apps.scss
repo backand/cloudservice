@@ -29,6 +29,7 @@
   li.open {
     display: inline-block;
     width: 100%;
+    height: auto;
     i.objects {
       padding-left: 35px;
     }
@@ -97,11 +98,16 @@
   background-color: #ffffff;
   border: solid 1px #e5e5e5;
   position: absolute;
+  @media (min-width: 1600px) {
+    width:66%;
+    left: 17%;
+  }
   ul {
     list-style-type: none;
   }
   .body {
     //border-bottom: solid 1px #e5e5e5;
+    padding-top: 15px;
   }
   #border {
     width: 94.5%;
@@ -109,6 +115,7 @@
     position: relative;
     top: 55px;
     left: 27px;
+    padding-top: 15px;
   }
   .header {
 
@@ -150,10 +157,11 @@
     line-height: 1;
     color: #f3743e;
   }
-  .app-name {
+  .app-details {
     padding-top: 10px;
     position: relative;
     left: 2%;
+    display: inline-flex;
     @media (min-width: 1290px) {
       position: relative;
       left: 1.8%;
@@ -161,6 +169,10 @@
     @media (min-width: 1800px) {
       position: relative;
       left: 1.7%;
+    }
+    .app-name{
+      padding-left: 20px;
+      padding-top: 6px;
     }
   }
 }
@@ -964,15 +976,28 @@
 
 .serverless-app {
   width: 43px;
-  height: 33px;
+  height: 48px;
   object-fit: contain;
   background-image: linear-gradient(#f26724, #f26724);
   background-blend-mode: color;
 }
-
+.faas-app {
+  width: 41px;
+  height: 38px;
+  object-fit: contain;
+  background-image: linear-gradient(#f26724, #f26724);
+  background-blend-mode: color;
+}
+.security-app {
+  width: 35px;
+  height: 45px;
+  object-fit: contain;
+  background-image: linear-gradient(#f26724, #f26724);
+  background-blend-mode: color;
+}
 .icon-small-security {
   width: 24px;
-  height: 34px;
+  height: 48px;
   object-fit: contain;
   background-image: linear-gradient(#f26724, #f26724);
   background-blend-mode: color;

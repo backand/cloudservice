@@ -19,7 +19,8 @@
              assets/images/menu/icon-lambda-functions/icon-functions@3x.png 3x"
              class="icon-functions">
         <span>Functions</span>
-      <ul ng-show="showFunctions || nav.currentState.includes('function')">
+      <ul ng-show="showFunctions || nav.currentState.includes('function')"
+          ng-blur="showFunctions = false ">
         <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1" ng-click="nav.newLambdaFunction($event)"
         class="sub-functions-icons">
             <i class="ba-icon-new-query"></i>
@@ -31,7 +32,7 @@
             <span>Add Javascript Function</span>
         </li>
         <ul>
-          <li ng-repeat="func in nav.functions" ng-click="nav.showFunction($event, func)"
+          <li ng-repeat="func in nav.functions track by func.name" ng-click="nav.showFunction($event, func)"
               class="sub-functions-icons">
               <i class="ti-write"></i>
               <span>{{func.name}}</span>
@@ -62,7 +63,7 @@
             <i class="ba-icon-new-query"></i>
             <span>New Job</span>
         </li>
-        <li ng-class="{active: nav.state == 'cronJobs'}" ng-repeat="cronJob in nav.cronJobs"
+        <li ng-class="{active: nav.state == 'cronJobs'}" ng-repeat="cronJob in nav.cronJobs track by cronJob.name"
             ng-click="nav.showCronJob($event, cronJob)"
             class="sub-functions-icons">
             <span  class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>

@@ -129,19 +129,23 @@
   </div>
   <div class="row body justify-content-between" ng-repeat="app in index.apps track by app.__metadata.id"
        test-hook="apps.app-panel">
-    <div class="col-md-4 app-name">
-      <a href="" class="pull-left pull-in" ng-if="app.DatabaseStatus === 1"
-         ng-click="index.appSettings(app.Name)">
-      </a>
+    <div class="col-md-4 app-details">
       <img src="assets/images/apps_page/serverless-app/serverless-app.png"
            srcset="assets/images/apps_page/serverless-app/serverless-app@2x.png 2x,
              assets/images/apps_page/serverless-app/serverless-app@3x.png 3x"
            class="serverless-app">
-      <span>{{ ::app.Name }}</span>
-      <span ng-if="app.DatabaseStatus === 2"
-            us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
-      <div class="app-status" test-hook="apps.app-panel.ribbon">
-        <div ng-class="index.getRibboninfo(app).text">{{ index.getRibboninfo(app).text }}</div>
+      <div class="app-name">
+        <div>
+          <span>{{ ::app.Name }}</span>
+          <span ng-if="app.DatabaseStatus === 2"
+                us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
+          <div class="app-status" test-hook="apps.app-panel.ribbon">
+            <div ng-class="index.getRibboninfo(app).text">{{ index.getRibboninfo(app).text }}</div>
+          </div>
+        </div>
+        <div>
+          <p>{{ ::app.Title}}</p>
+        </div>
       </div>
     </div>
 
