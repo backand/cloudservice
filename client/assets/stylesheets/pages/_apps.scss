@@ -94,7 +94,7 @@
 
 .apps-container {
   width: 80%;
-  height: 100vh;
+  height: auto;
   left: 10%;
   top: 350px;
   border-radius: 5px;
@@ -1027,21 +1027,21 @@
 
 }
 
-.serverless-app {
+.app-1 {
   width: 43px;
   height: 48px;
   object-fit: contain;
   background-image: linear-gradient(#f26724, #f26724);
   background-blend-mode: color;
 }
-.faas-app {
+.app-2 {
   width: 41px;
   height: 38px;
   object-fit: contain;
   background-image: linear-gradient(#f26724, #f26724);
   background-blend-mode: color;
 }
-.security-app {
+.app-3 {
   width: 35px;
   height: 45px;
   object-fit: contain;
@@ -1212,11 +1212,16 @@
   color: #626262;
   margin-left: 26%;
 }
+.glyphicon-docs{
+  color: #626262;
+  margin-left: 23%;
+}
 .ti-star{
   margin-left: 15px;
   font-size: 22px;
   vertical-align: middle;
   color: #626262;
+  line-height: 0.7;
 }
 .getting-started{
   vertical-align: middle;
@@ -1226,5 +1231,28 @@
   padding: 0px;
   .nav-container{
     width:100%;
+   .getting-started-items{
+     display: inline-flex;
+   }
+    i{
+      padding-top:20px;
+    }
+    span{
+      padding-top: 23px;
+    }
+    .backand-logo{
+      margin: 0px;
+      .bcknd-logo{
+        margin: 0px;
+      }
+    }
   }
+
+
+}
+.ba-icon-docs-and-api {
+  padding-left: 19px;
+  font-size: larger;
+  vertical-align: middle;
+  color: #626262;
 }

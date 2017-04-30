@@ -2,24 +2,38 @@
   <ul id="nav1" class="nav"
       data-slim-scroll
       data-collapse-nav>
-    <li ui-sref-active="active">
-      <a ui-sref="apps.index"> <i class="ti-layers-alt"></i><span>My Apps</span> </a>
+    <li class="nav-header">
+      <!-- Logo -->
+
+      <a class="logo backand-logo" ui-sref="apps.index">
+        <img src="assets/images/apps_page/backand-logo/backand-logo.png"
+             srcset="assets/images/apps_page/backand-logo/backand-logo@2x.png 2x,
+             assets/images/apps_page/backand-logo/backand-logo@3x.png 3x"
+             class="bcknd-logo">
+      </a>
+
+      <!-- needs to be put after logo to make it work -->
+      <div class="menu-button" toggle-off-canvas>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </div>
     </li>
 
     <li ui-sref-active="active">
-      <a ui-sref="docs.platform_select_existing-open"> <i class="ti-star"></i><span>Getting Started</span></a>
+      <a ui-sref="docs.platform_select_existing-open" class="getting-started-items"> <i class="ti-star"></i><span>Getting Started</span></a>
     </li>
 
     <li ui-sref-active="active">
-      <a ui-sref="docs.platform_select_kickstart-open"> <i class="ti-star"></i><span>Kickstart Tutorial</span></a>
+      <a ui-sref="docs.platform_select_kickstart-open" class="getting-started-items"> <i class="ti-star"></i><span>Kickstart Tutorial</span></a>
     </li>
 
     <li ui-sref-active="active">
-      <a ui-sref="docs.realtime-open"> <i class="ti-star"></i><span>Realtime Database</span></a>
+      <a ui-sref="docs.realtime-open" class="getting-started-items"> <i class="ti-star"></i><span>Realtime Database</span></a>
     </li>
 
     <li ui-sref-active="active">
-      <a href="http://docs.backand.com" target="_blank"> <i class="ti-star"></i><span>Documentation</span></a>
+      <a href="http://docs.backand.com" target="_blank" class="getting-started-items"> <i class="ti-star"></i><span>Documentation</span></a>
     </li>
 
     <!--<li>-->

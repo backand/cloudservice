@@ -1,8 +1,10 @@
 <div class="app" id="app" ng-class="{'nav-collapsed-min' : main.hideNav()}">
 
 
-  <div class="main-container row">
-    <div ng-class="{'side-bar': $state.params.appName, 'side-bar-modified': !$state.params.appName,'col-lg-2': $window.innerWidth >= 1900, 'col-md-3' : nav.showSecondaryAppNav, 'col-md-2' : !nav.showSecondaryAppNav}"
+  <div class="main-container row {{nav.columnsLayout}}">
+    <div ng-class="{'side-bar': nav.backandstorage.showSecondaryAppNav == true, 'side-bar-modified': nav.backandstorage.showSecondaryAppNav == false,
+     'col-lg-2': $window.innerWidth >= 1900}"
+         class="{{nav.columnsLayout}}"
          ng-hide="main.hideNav()"
          ng-controller="NavCtrl as nav">
 
@@ -11,7 +13,7 @@
            class="nav-container primary-navbar nav-fixed nav-vertical"
            >
       </div>
-      <div ng-if="nav.showSecondaryAppNav || $state.params.appName"
+      <div ng-if="nav.backandstorage.showSecondaryAppNav == true"
            ng-include="nav.chooseSecondNav()"
            class="second-app-nav"
            ></div>

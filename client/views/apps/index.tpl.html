@@ -8,7 +8,8 @@
   </div>
   <div class="row apps-jumbo-sections">
     <div class="col-xs-4 col-sm-4">
-      <div class="apps-jumbo-section-wrapper" ui-sref="docs.platform_select_existing-open">
+      <div class="apps-jumbo-section-wrapper"
+            ng-click="index.goToGettingStarted('docs.platform_select_existing-open')">
         <img src="assets/images/apps_page/icon-getting-started/icon-getting-started.png"
              srcset="assets/images/apps_page/icon-getting-started/icon-getting-started@2x.png 2x,
              assets/images/apps_page/icon-getting-started/icon-getting-started@3x.png 3x"
@@ -18,7 +19,8 @@
     </div>
     <div class="jumbo-border"></div>
     <div class="col-xs-4 col-sm-4">
-      <div class="apps-jumbo-section-wrapper" ui-sref="docs.platform_select_kickstart-open">
+      <div class="apps-jumbo-section-wrapper"
+           ng-click="index.goToGettingStarted('docs.platform_select_kickstart-open')">
         <img src="assets/images/apps_page/icon-tutorials/icon-tutorials.png"
              srcset="assets/images/apps_page/icon-tutorials/icon-tutorials@2x.png 2x,
              assets/images/apps_page/icon-tutorials/icon-tutorials@3x.png 3x"
@@ -121,27 +123,27 @@
         <div class="col-md-6 app-type">
           <span>APP TYPE</span>
           <div class="row">
-            <div ng-click="index.changeAppType('serverless')" ng-class="index.appType == 'serverless' ? 'active' : ''"
+            <div ng-click="index.changeAppType('serverless')" ng-class="index.appType == 1 ? 'active' : ''"
                  class="app-type-container col-md-4">
-              <div ng-if="index.appType == 'serverless'" class="glyphicon glyphicon-ok"></div>
+              <div ng-if="index.appType == 1" class="glyphicon glyphicon-ok"></div>
               <img src="assets/images/apps_page/icon-small-serverless/icon-small-serverlesss.png"
                    srcset="assets/images/apps_page/icon-small-serverless/icon-small-serverlesss@2x.png 2x,
              assets/images/apps_page/icon-small-serverless/icon-small-serverlesss@3x.png 3x"
                    class="icon-small-serverlesss">
               <p>Full Serverless</p>
             </div>
-            <div ng-click="index.changeAppType('function')" ng-class="index.appType == 'function' ? 'active' : '' "
+            <div ng-click="index.changeAppType('function')" ng-class="index.appType == 2 ? 'active' : '' "
                  class="app-type-container col-md-4">
-              <div ng-if="index.appType == 'function'" class="glyphicon glyphicon-ok"></div>
+              <div ng-if="index.appType == 2" class="glyphicon glyphicon-ok"></div>
               <img src="assets/images/apps_page/icon-small-faas/icon-small-faas.png"
                    srcset="assets/images/apps_page/icon-small-faas//icon-small-faas@2x.png 2x,
              assets/images/apps_page/icon-small-faas//icon-small-faas@3x.png 3x"
                    class="icon-small-faas">
               <p>Function-As-A-Service</p>
             </div>
-            <div ng-click="index.changeAppType('security')" ng-class="index.appType == 'security' ? 'active' : '' "
+            <div ng-click="index.changeAppType('security')" ng-class="index.appType == 3 ? 'active' : '' "
                  class="app-type-container col-md-4">
-              <div ng-if="index.appType== 'security'" class="glyphicon glyphicon-ok"></div>
+              <div ng-if="index.appType== 3" class="glyphicon glyphicon-ok"></div>
               <img src="assets/images/apps_page/icon-small-security/icon-small-security.png"
                    srcset="assets/images/apps_page/icon-small-security/icon-small-security@2x.png 2x,
              assets/images/apps_page/icon-small-security/icon-small-security@3x.png 3x"
@@ -156,10 +158,10 @@
   <div class="row body justify-content-between" ng-repeat="app in index.apps track by app.__metadata.id"
        test-hook="apps.app-panel">
     <div class="col-md-4 app-details">
-      <img src="assets/images/apps_page/serverless-app/serverless-app.png"
-           srcset="assets/images/apps_page/serverless-app/serverless-app@2x.png 2x,
-             assets/images/apps_page/serverless-app/serverless-app@3x.png 3x"
-           class="serverless-app">
+      <img src="assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}.png"
+           srcset="assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}@2x.png 2x,
+             assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}@3x.png 3x"
+           class="app-{{::app.ProductType}}">
       <div class="app-name">
         <div>
           <span>{{ ::app.Name }}</span>
@@ -188,7 +190,7 @@
       </div>
       <div>
         <button
-          ng-click="index.appBilling(app.Name, (app.PaymentLocked || app.PaymentStatus === 1))"
+          ng-click="index.appBilling(app.Name, (app.PaymentLocked || app.PaymentStatus === 1), app.productType)"
           class="btn btn-default app-buttons upgrade-apps col-sm-6 pull-right"
           data-spinner-color="#000000"
           test-hook="apps.app-panel.manage-button">

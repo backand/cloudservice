@@ -34,19 +34,19 @@
         });
     };
 
-    this.createDB = function(appName, product, sampleApp, schema) {
+    this.createDB = function(appName, product, sampleApp, schema, appType) {
       if(schema==null){
         return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
-          data: {"product": product, "sampleApp": sampleApp}
+          data: {"product": product, "sampleApp": sampleApp, "productType": appType}
         });
       }
       else {
         return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/admin/myAppConnection/' + appName,
-          data: {"product": product, "sampleApp": "", "schema": schema}
+          data: {"product": product, "sampleApp": "", "schema": schema, "productType": appType}
         });
       }
     };

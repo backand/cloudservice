@@ -11,20 +11,25 @@
     self.backandstorage = $localStorage.backand[self.app.Name];
     self.currentAppName = AppsService.currentApp.Name;
     self.currentState = $state.current.name;
-    self.showSecondaryAppNav = false;
     self.secondAppNavChoice = '';
     if(self.backandstorage){
       self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
+      self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
     }
     else{
       self.isDatabase = false;
     }
+    self.columnsLayout = 'col-md-2';
+    self.gettingStartedNav = 'side-bar';
     (function init() {
       clearTables();
       if(self.backandstorage !== undefined) {
         if (self.backandstorage.showSecondaryAppNav) {
           self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
         }
+      }
+      if(!$state.params.appName){
+        self.gettingStartedNav = 'side-bar-modified';
       }
     }());
     self.goToApp = function () {
@@ -42,6 +47,7 @@
         self.showSecondaryAppNav = true;
         self.backandstorage.secondAppNavChoice = state;
         self.secondAppNavChoice = state;
+        self.columnsLayout = 'col-md-3'
       }
 
     };
@@ -68,7 +74,7 @@
         case 'admin':
           return 'views/shared/admin_nav.html';
         default:
-          return null;
+          return 'views/shared/db_nav.html';
       }
     };
 
@@ -291,7 +297,7 @@
         window.open(url, '_blank');
       } else {
         $state.go(state, params).then(function(){
-          self.currentState = $state.current.name;
+          self.backandstorage.currentState = $state.current.name;
         });
       }
     }

@@ -13,11 +13,11 @@
     var self = this;
     self.loading = false;
     var stop;
-
+    self.app = AppsService.currentApp;
     (function () {
       self.apps = appsList.data;
       self.showJumbo = LayoutService.showJumbo();
-
+      self.backandstorage = $localStorage.backand[self.app.Name];
       if ($stateParams.deletedApp) {
         self.apps = _.reject(self.apps, {Name: $stateParams.deletedApp});
       }
@@ -33,9 +33,19 @@
 
     }());
     self.currentState = $state.current.name;
-    self.appType = 'serverless';
+    self.appType = 1;
     self.changeAppType = function (type) {
-      self.appType = type;
+      switch (type){
+        case 'serverless':
+          self.appType = 1;
+          break;
+        case 'function':
+          self.appType = 2;
+          break;
+        case 'security':
+          self.appType = 3;
+          break;
+      }
     };
     self.addApp = function () {
       self.loading = true;
@@ -49,9 +59,9 @@
       LocalStorageService.getLocalStorage().docLanguage = null;
       LocalStorageService.getLocalStorage().favoriteLanguage = null;
 
-      AppsService.add(self.appName, self.appTitle)
+      AppsService.add(self.appName)
         .then(function (data) {
-          createDB(self.appName);
+          createDB(self.appName, self.appType);
         },
         function (err) {
           self.loading = false;
@@ -59,19 +69,24 @@
           //NotificationService.add('error', err);
         });
     };
-
-    function createDB(appName) {
+    self.goToGettingStarted = function(state){
+      self.backandstorage.showSecondaryAppNav = false;
+      $state.go(state);
+    };
+    function createDB(appName, appType) {
 
       AnalyticsService.track('CreatedApp', {appName: appName});
 
       //create app with default schema
       var product = 10; //New MySQL
 
-      DatabaseService.createDB(appName, product, '', ModelService.defaultSchema())
+      DatabaseService.createDB(appName, product, '', ModelService.defaultSchema(), appType)
         .success(function (data) {
 
           AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
           AnalyticsService.track('create app', {app: appName});
+          self.backandstorage.showSecondaryAppNav = true;
+          self.setAppType(appType);
           $state.go('docs.platform_select_kickstart', {appName: appName, newApp: true});
         })
         .error(function () {
@@ -85,9 +100,21 @@
             return optionOfApp.Name;
           }
         });
-    }
+    });
+    self.setAppType = function (type) {
+      switch (type){
+        case 1:
+          self.backandstorage.secondAppNavChoice = 'database';
+          break;
+        case 2:
+          self.backandstorage.secondAppNavChoice  = 'functions';
+          break;
+        case 3:
+          self.backandstorage.secondAppNavChoice  = 'security';
+          break;
+      }
+    };
 
-    )
     /**
      *
      * @param appName
@@ -134,6 +161,8 @@
           $modal.appName = app.Name;
           self.appSpinner[app.Name] = false;
         } else {
+          self.backandstorage.showSecondaryAppNav = true;
+          self.setAppType(app.ProductType);
           $state.go('app', {appName: app.Name});
         }
       }
@@ -152,11 +181,13 @@
       $state.go('app.edit', {appName: appName});
     };
 
-    self.appBilling = function (appName, payment) {
+    self.appBilling = function (appName, payment, appType) {
       AnalyticsService.track('BillingUpgradePlanInAppsPage', {appName: appName});
 
       //Check if the app is locked or suspended
       if(!payment) {
+        self.backandstorage.showSecondaryAppNav = true;
+        self.setAppType(appType);
         $state.go('app.billingupgrade', {appName: appName});
       } else {
         $modal.open({
