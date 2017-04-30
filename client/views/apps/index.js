@@ -32,6 +32,7 @@
       }
 
     }());
+    self.currentState = $state.current.name;
     self.appType = 'serverless';
     self.changeAppType = function (type) {
       self.appType = type;

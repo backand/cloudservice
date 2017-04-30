@@ -11,10 +11,20 @@
     self.backandstorage = $localStorage.backand[self.app.Name];
     self.currentAppName = AppsService.currentApp.Name;
     self.currentState = $state.current.name;
+    self.showSecondaryAppNav = false;
+    self.secondAppNavChoice = '';
+    if(self.backandstorage){
+      self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
+    }
+    else{
+      self.isDatabase = false;
+    }
     (function init() {
       clearTables();
-      if(!self.backandstorage.showSecondaryAppNav){
-        self.backandstorage.showSecondaryAppNav = false;
+      if(self.backandstorage !== undefined) {
+        if (self.backandstorage.showSecondaryAppNav) {
+          self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
+        }
       }
     }());
     self.goToApp = function () {
@@ -27,8 +37,13 @@
       self.functions = [];
     }
     self.showSecondarySideBar = function(state){
-      self.backandstorage.showSecondaryAppNav = true;
-      self.backandstorage.secondAppNavChoice = state;
+      if(self.backandstorage){
+        self.backandstorage.showSecondaryAppNav = true;
+        self.showSecondaryAppNav = true;
+        self.backandstorage.secondAppNavChoice = state;
+        self.secondAppNavChoice = state;
+      }
+
     };
     self.isExampleApp = function () {
       return AppsService.isExampleApp(self.app);
@@ -56,7 +71,7 @@
           return null;
       }
     };
-    self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
+
     self.toggleSecondaryAppNav = function(){
       self.showSecondaryAppNav = !self.showSecondaryAppNav;
     };

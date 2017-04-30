@@ -2,6 +2,13 @@
          id="header">
   <header class="top-header clearfix"
           ng-click="header.hideDropdowns()">
+    <div ng-if="header.usingDefaultModel && header.isDatabase"
+         class="alert db-alert alert-info">
+      You’re Currently using the <strong> Default Data Model </strong>
+      <span class="button-wrapper"><a ui-sref="erd_model" class="btn btn-ghost">Setup Data Model</a>
+      <span class="or">or</span>
+      <a ui-sref="database.show" class="btn btn-ghost">Connect Your Database</a></span>
+    </div>
     <div class="top-nav">
       <ul class="nav-left list-unstyled" ng-if="!header.hideAppList()">
         <li class="search-box" id="search">

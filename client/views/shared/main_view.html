@@ -2,21 +2,28 @@
 
 
   <div class="main-container row">
-    <div class="side-bar"
+    <div ng-class="{'side-bar': $state.params.appName, 'side-bar-modified': !$state.params.appName,'col-lg-2': $window.innerWidth >= 1900, 'col-md-3' : nav.showSecondaryAppNav, 'col-md-2' : !nav.showSecondaryAppNav}"
          ng-hide="main.hideNav()"
-         ng-controller="NavCtrl as nav"
-         ng-class="$window.innerWidth >= 1900 ? 'col-lg-2': (nav.showSecondaryAppNav ? 'col-md-3' : 'col-md-2')">
+         ng-controller="NavCtrl as nav">
 
       <div ng-include="nav.showAppNav()"
            id="nav-container"
            class="nav-container primary-navbar nav-fixed nav-vertical"
            >
       </div>
-      <div ng-if="nav.showSecondaryAppNav"
+      <div ng-if="nav.showSecondaryAppNav || $state.params.appName"
            ng-include="nav.chooseSecondNav()"
            class="second-app-nav"
            ></div>
     </div>
+    <div ng-if="nav.usingDefaultModel && nav.isDatabase"
+         ng-controller="NavCtrl as nav"
+    class="alert db-alert alert-info">
+    You’re Currently using the <strong> Default Data Model </strong>
+    <span class="button-wrapper"><a ui-sref="erd_model" class="btn btn-ghost">Setup Data Model</a>
+      <span class="or">or</span>
+      <a ui-sref="database.show" class="btn btn-ghost">Connect Your Database</a></span>
+  </div>
     <div id="content" class="content-container" autoscroll="true">
     <div class="app-inner" ng-include=" 'views/shared/new_header.html' "
        ng-controller="HeaderController as header" ng-class="header.usingDefaultModel ? 'header-alert' : ''"></div>

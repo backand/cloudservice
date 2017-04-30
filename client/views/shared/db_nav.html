@@ -1,22 +1,22 @@
 <div class="nav-wrapper scroller" perfect-scrollbar>
   <ul slim-scroll collapse-nav>
     <li class="apps-header">
-        <div class="ui-select app-headers" style="font-weight: bold;">
-          <select ng-model="nav.currentAppName"
-                  ng-change="nav.goToApp()"
-                  ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
-                  class="app-select">
-          </select>
-        </div>
-        <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
-             style="position: relative;left: 150px;top: -18px;"></div>
+      <div class="ui-select app-headers" style="font-weight: bold;">
+        <select ng-model="nav.currentAppName"
+                ng-change="nav.goToApp()"
+                ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
+                class="app-select">
+        </select>
+      </div>
+      <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
+           style="position: relative;left: 150px;top: -18px;"></div>
     </li>
-    <li  ng-click="nav.goTo($event, 'erd_model')" ng-class="{active: nav.currentState == 'erd_model'}">
+    <li ng-click="nav.goTo($event, 'erd_model')" ng-class="{active: nav.currentState == 'erd_model'}">
       <img src="assets/images/menu/icon-model/icon-model.png"
            srcset="assets/images/menu/icon-model/icon-model@2x.png 2x,
              assets/images/menu/icon-model/icon-model@3x.png 3x"
            class="icon-model">
-        <span>Model</span>
+      <span>Model</span>
     </li>
     <li ng-click="showObjects = !showObjects"
         class="open"
@@ -25,12 +25,14 @@
            srcset="assets/images/menu/icon-object/icon-object@2x.png 2x,
              assets/images/menu/icon-object/icon-object@3x.png 3x"
            class="icon-object">
-        <span>Objects</span>
+      <span>Objects</span>
+      <i class="glyphicon"
+          ng-class="showObjects == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
       <ul class="ex4" id="ex4" ng-show="nav.currentState == 'object_fields' || showObjects">
         <li ng-if="nav.app.connectionSource === 'local'"
             ng-click="nav.newObject()" href="">
-            <i class="ba-icon-new-query objects"></i>
-            <span>New Object</span>
+          <i class="ba-icon-new-query objects"></i>
+          <span>New Object</span>
         </li>
         <li ng-if="nav.app.connectionSource !== 'local'">
           <a ui-sref="tables.notables">
@@ -39,27 +41,28 @@
           </a>
         </li>
 
-        <li ng-class="{active: false }" ng-repeat="table in nav.tables track by table.name" ng-click="nav.showTable($event, table)">
-            <i class="ba-icon-todo objects"></i>
-            <span>{{table.name}}</span>
+        <li ng-class="{active: false }" ng-repeat="table in nav.tables track by table.name"
+            ng-click="nav.showTable($event, table)">
+          <i class="ba-icon-todo objects"></i>
+          <span>{{table.name}}</span>
         </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.currentState == 'db_model'}"
+    <!--<li ng-class="{active: nav.currentState == 'db_model'}"
         ng-click="nav.goTo($event, 'db_model')">
       <img src="assets/images/menu/icon-schema/icon-schema.png"
            srcset="assets/images/menu/icon-schema/icon-schema@2x.png 2x,
              assets/images/menu/icon-schema/icon-schema@3x.png 3x"
            class="icon-schema">
-        <span>Schema</span>
-    </li>
+      <span>Schema</span>
+    </li> -->
     <li ng-class="{active: nav.currentState == 'log.requests'}"
         ng-click="nav.goTo($event, 'log.requests')">
       <img src="assets/images/menu/icon-api-log/icon-api-log.png"
            srcset="assets/images/menu/icon-api-log/icon-api-log@2x.png 2x,
              assets/images/menu/icon-api-log/icon-api-log@3x.png 3x"
            class="icon-api-log">
-        <span>API Log</span>
+      <span>API Log</span>
     </li>
     <li ng-class="{active: nav.currentState == 'log.console'}"
         ng-click="nav.goTo($event, 'log.console')">
@@ -67,7 +70,7 @@
            srcset="assets/images/menu/icon-console-log/icon-console-log@2x.png 2x,
              assets/images/menu/icon-console-log/icon-console-log@3x.png 3x"
            class="icon-console-log">
-        <span>Console Log</span>
+      <span>Console Log</span>
     </li>
     <li ng-class="{active: nav.currentState == 'log.history'}"
         ng-click="nav.goTo($event, 'log.history')">
@@ -75,7 +78,7 @@
            srcset="assets/images/menu/icon-data-history-log/icon-data-history-log@2x.png 2x,
              assets/images/menu/icon-data-history-log/icon-data-history-log@3x.png 3x"
            class="icon-data-history-log">
-        <span>Data History Log</span>
+      <span>Data History Log</span>
     </li>
   </ul>
 </div>

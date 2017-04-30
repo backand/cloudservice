@@ -3,12 +3,18 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ['$scope', '$http', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService','DbDataModel', HeaderController]);
+    ['$scope', '$http', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService','DbDataModel','$localStorage', HeaderController]);
 
-  function HeaderController($scope, $http, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService, DbDataModel) {
+  function HeaderController($scope, $http, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService, DbDataModel, $localStorage) {
     var self = this;
     self.usingDefaultModel = false;
     self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
+    self.apps = AppsService.apps;
+    self.currentState = $state.current.name;
+    self.app = AppsService.currentApp;
+    self.currentAppName = AppsService.currentApp.Name;
+    self.debugMode = AppsService.currentApp.debugMode;
+    self.backandstorage = $localStorage.backand[self.app.Name];
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
@@ -16,11 +22,13 @@
       displayStatus();
     }());
 
-    self.apps = AppsService.apps;
-    self.currentAppName = AppsService.currentApp.Name;
-    self.debugMode = AppsService.currentApp.debugMode;
+
 
     updateDefaultModelUse(self.currentAppName, false);
+    $scope.$on('nav.secondAppNavChoice', function(){
+      self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
+    });
+
 
     $scope.$on('$stateChangeSuccess', function () {
 
@@ -85,10 +93,11 @@
 
     function updateDefaultModelUse(appName, force) {
 
-      if (appName != undefined) {
+      if (appName !== undefined) {
         ModelService.usingDefaultSchema(appName, force)
           .then(function (result) {
-            self.usingDefaultModel = result;
+            if(result)
+            self.usingDefaultModel = result ;
           });
       } else {
         self.usingDefaultModel = false;
@@ -101,7 +110,7 @@
     };
 
     self.hideAppList = function () {
-      return $state.current.name === 'apps.index' && self.showJumbo;
+      return $state.current.name === 'apps.index';
     };
 
     self.getCurrentUser = function () {
