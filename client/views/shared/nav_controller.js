@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state','$window', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state','$window', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', 'usSpinnerService', NavCtrl]);
 
-  function NavCtrl($scope, $state,$window, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage,RulesService) {
+  function NavCtrl($scope, $state,$window, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage, RulesService, usSpinnerService) {
     var self = this;
     self.isTablesClicked = false;
     self.apps = AppsService.apps;
@@ -34,6 +34,7 @@
     }());
     self.goToApp = function () {
       usSpinnerService.spin('loading-app');
+      self.backandstorage.showSecondaryAppNav = true;
       $state.go('app', {appName: self.currentAppName}, {reload: true});
     };
     function clearTables() {

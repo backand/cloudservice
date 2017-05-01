@@ -13,7 +13,7 @@
            class="nav-container primary-navbar nav-fixed nav-vertical"
            >
       </div>
-      <div ng-if="nav.backandstorage.showSecondaryAppNav == true"
+      <div ng-if="nav.backandstorage.showSecondaryAppNav !== false"
            ng-include="nav.chooseSecondNav()"
            class="second-app-nav"
            ></div>
