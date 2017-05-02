@@ -1,9 +1,9 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state','$window', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', 'usSpinnerService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state','$rootScope', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', 'usSpinnerService', NavCtrl]);
 
-  function NavCtrl($scope, $state,$window, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage, RulesService, usSpinnerService) {
+  function NavCtrl($scope, $state,$rootScope, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage, RulesService, usSpinnerService) {
     var self = this;
     self.isTablesClicked = false;
     self.apps = AppsService.apps;
@@ -15,6 +15,9 @@
     if(self.backandstorage){
       self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
       self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
+      if(self.backandstorage.secondAppNavChoice === undefined){
+        self.backandstorage.secondAppNavChoice = 'database';
+      }
     }
     else{
       self.isDatabase = false;
@@ -34,7 +37,7 @@
     }());
     self.goToApp = function () {
       usSpinnerService.spin('loading-app');
-      self.backandstorage.showSecondaryAppNav = true;
+      $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;
       $state.go('app', {appName: self.currentAppName}, {reload: true});
     };
     function clearTables() {
@@ -48,7 +51,13 @@
         self.showSecondaryAppNav = true;
         self.backandstorage.secondAppNavChoice = state;
         self.secondAppNavChoice = state;
-        self.columnsLayout = 'col-md-3'
+        self.columnsLayout = 'col-md-3';
+        if(state === "database"){
+          $rootScope.$broadcast('database-change');
+        }
+        else{
+          $rootScope.$broadcast('database-undo');
+        }
       }
 
     };

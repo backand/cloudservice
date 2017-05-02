@@ -59,7 +59,7 @@
       LocalStorageService.getLocalStorage().docLanguage = null;
       LocalStorageService.getLocalStorage().favoriteLanguage = null;
 
-      AppsService.add(self.appName)
+      AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
           createDB(self.appName, self.appType);
         },
@@ -163,7 +163,7 @@
         } else {
           self.backandstorage.showSecondaryAppNav = true;
           self.setAppType(app.ProductType);
-          $state.go('app', {appName: app.Name});
+          $state.go('app', {appName: app.Name}, {reload: true});
         }
       }
       else if (AppsService.isExampleApp(app)) {

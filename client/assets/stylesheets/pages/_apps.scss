@@ -795,7 +795,11 @@
     color: #8f8f8f;
   }
 }
-
+.main-container{
+  .col-md-2{
+    padding-left: 0px;
+  }
+}
 .main-search {
   input {
     border: none;

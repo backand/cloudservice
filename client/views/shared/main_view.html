@@ -18,14 +18,6 @@
            class="second-app-nav"
            ></div>
     </div>
-    <div ng-if="nav.usingDefaultModel && nav.isDatabase"
-         ng-controller="NavCtrl as nav"
-    class="alert db-alert alert-info">
-    You’re Currently using the <strong> Default Data Model </strong>
-    <span class="button-wrapper"><a ui-sref="erd_model" class="btn btn-ghost">Setup Data Model</a>
-      <span class="or">or</span>
-      <a ui-sref="database.show" class="btn btn-ghost">Connect Your Database</a></span>
-  </div>
     <div id="content" class="content-container" autoscroll="true">
     <div class="app-inner" ng-include=" 'views/shared/new_header.html' "
        ng-controller="HeaderController as header" ng-class="header.usingDefaultModel ? 'header-alert' : ''"></div>

@@ -76,7 +76,12 @@
         DbDataModel.get(self.currentAppName, true);
       }
     });
-
+    $scope.$on('database-change', function(){
+      self.usingDefaultModel = true;
+    });
+    $scope.$on('database-undo', function(){
+      self.usingDefaultModel = false;
+    });
     $scope.$on('appname:saved', function () {
       updateDefaultModelUse(self.currentAppName, true);
     });
@@ -96,8 +101,8 @@
       if (appName !== undefined) {
         ModelService.usingDefaultSchema(appName, force)
           .then(function (result) {
-            if(result)
-            self.usingDefaultModel = result ;
+            if(result) {
+            }
           });
       } else {
         self.usingDefaultModel = false;
