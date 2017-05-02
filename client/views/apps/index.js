@@ -4,11 +4,11 @@
   angular.module('backand.apps')
     .controller('AppsIndexController', ['$scope', 'AppsService', 'appsList', '$state', 'NotificationService', '$interval',
       'usSpinnerService', 'LayoutService', 'AnalyticsService', 'SessionService',
-      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', 'LocalStorageService', AppsIndexController]);
+      'DatabaseService', 'ModelService', '$stateParams', '$modal', '$localStorage', 'ParseService', 'LocalStorageService','$rootScope', AppsIndexController]);
 
   function AppsIndexController($scope, AppsService, appsList, $state, NotificationService, $interval,
                                usSpinnerService, LayoutService, AnalyticsService, SessionService,
-                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService, LocalStorageService) {
+                               DatabaseService, ModelService, $stateParams, $modal, $localStorage, ParseService, LocalStorageService, $rootScope) {
 
     var self = this;
     self.loading = false;
@@ -87,6 +87,7 @@
           AnalyticsService.track('create app', {app: appName});
           self.backandstorage.showSecondaryAppNav = true;
           self.setAppType(appType);
+          $rootScope.$broadcast('app-update', {app: appName});
           $state.go('docs.platform_select_kickstart', {appName: appName, newApp: true});
         })
         .error(function () {

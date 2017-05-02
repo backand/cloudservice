@@ -61,6 +61,9 @@
       }
 
     };
+    $scope.$on('app-update', function(event, args){
+        self.currentAppName = args.app;
+    });
     self.isExampleApp = function () {
       return AppsService.isExampleApp(self.app);
     };
