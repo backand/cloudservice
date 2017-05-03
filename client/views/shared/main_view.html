@@ -2,7 +2,7 @@
 
 
   <div class="main-container row {{nav.columnsLayout}}">
-    <div ng-class="{'side-bar': nav.backandstorage.showSecondaryAppNav == true, 'side-bar-modified': nav.backandstorage.showSecondaryAppNav == false,
+    <div ng-class="{'side-bar': nav.backandstorage.showSecondaryAppNav == true || nav.backandstorage.showSecondaryAppNav === undefined, 'side-bar-modified': nav.backandstorage.showSecondaryAppNav == false,
      'col-lg-2': $window.innerWidth >= 1900}"
          class="{{nav.columnsLayout}}"
          ng-hide="main.hideNav()"
@@ -13,7 +13,7 @@
            class="nav-container primary-navbar nav-fixed nav-vertical"
            >
       </div>
-      <div ng-if="nav.backandstorage.showSecondaryAppNav !== false"
+      <div ng-if="nav.backandstorage.showSecondaryAppNav !== false || nav.backandstorage.showSecondaryAppNav === undefined"
            ng-include="nav.chooseSecondNav()"
            class="second-app-nav"
            ></div>
