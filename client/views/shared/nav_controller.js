@@ -37,7 +37,8 @@
     }());
     self.goToApp = function () {
       usSpinnerService.spin('loading-app');
-      $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;
+      if($localStorage.backand[self.currentAppName])
+        $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;
       $state.go('app', {appName: self.currentAppName}, {reload: true});
     };
     function clearTables() {
@@ -77,17 +78,22 @@
       return 'views/shared/main_nav.html';
     };
     self.chooseSecondNav = function(){
-      switch(self.backandstorage.secondAppNavChoice){
-        case 'database':
-          return 'views/shared/db_nav.html';
-        case 'functions':
-          return 'views/shared/fnc_nav.html';
-        case 'security':
-          return 'views/shared/sec_nav.html';
-        case 'admin':
-          return 'views/shared/admin_nav.html';
-        default:
-          return 'views/shared/db_nav.html';
+      if(self.backandstorage) {
+        switch (self.backandstorage.secondAppNavChoice) {
+          case 'database':
+            return 'views/shared/db_nav.html';
+          case 'functions':
+            return 'views/shared/fnc_nav.html';
+          case 'security':
+            return 'views/shared/sec_nav.html';
+          case 'admin':
+            return 'views/shared/admin_nav.html';
+          default:
+            return 'views/shared/db_nav.html';
+        }
+      }
+      else{
+        return 'views/shared/db_nav.html';
       }
     };
 

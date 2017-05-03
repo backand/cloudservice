@@ -91,7 +91,11 @@
 
   }
 }
-
+.white-spinner{
+  div > div{
+    color: white;
+  }
+}
 .apps-container {
   width: 80%;
   height: auto;

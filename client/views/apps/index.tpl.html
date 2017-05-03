@@ -153,10 +153,10 @@
       </fieldset>
     </form>
   </div>
-  <div us-spinner spinner-key="loading" spinner-start-active></div>
+
   <div class="row body justify-content-between" ng-repeat="app in index.apps track by app.__metadata.id"
        test-hook="apps.app-panel">
-    <div class="col-md-4 app-details">
+    <div class="col-md-5 app-details">
       <img src="assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}.png"
            srcset="assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}@2x.png 2x,
              assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}@3x.png 3x"
@@ -165,7 +165,8 @@
         <div>
           <span>{{ ::app.Name }}</span>
           <span ng-if="app.DatabaseStatus === 2"
-                us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"></span>
+                us-spinner="{radius:3, width:3, length: 3, top: '9px', left: '92%', color: 'white'}"
+                style="position: relative; left: 30%;"></span>
           <div class="app-status" test-hook="apps.app-panel.ribbon">
             <div ng-class="index.getRibboninfo(app).text">{{ index.getRibboninfo(app).text }}</div>
           </div>
@@ -174,6 +175,7 @@
           <p>{{ ::app.Title}}</p>
         </div>
       </div>
+      <div us-spinner="{color: 'black'}" spinner-key="loading-manage-{{ ::app.Name}}" spinner-start-active style="position:relative; left:50px;" ></div>
     </div>
 
     <div class="app-button col-md-5">

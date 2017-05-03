@@ -124,6 +124,8 @@
 
       self.appSpinner = [];
       self.appSpinner[app.Name] = true;
+      var spinnerName = 'loading-manage-'+ app.Name+'';
+      usSpinnerService.spin(spinnerName);
 
       if (!$localStorage.backand[app.Name]) {
         $localStorage.backand[app.Name] = {}
