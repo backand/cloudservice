@@ -96,21 +96,19 @@
         <div class="col-md-6 app-path">
           <div class="form-group">
             <div class="input-group">
-              <span>APP TITLE</span>
-              <input type="text" class="form-control" placeholder="app title"
-                     ng-model="index.appTitle" test-hook="apps.new-app.title" ng-model-options="{debounce: 500}">
-
+              <span>APP NAME</span>
+              <input type="text" class="form-control" placeholder="myapp1" style="text-transform: lowercase;"
+                     ng-model="index.appName" ng-model-options="{debounce: 500}"
+                     ng-pattern="index.namePattern" test-hook="apps.new-app.name" name="appName" required>
             </div>
             <div ng-show="form.appName.$error.pattern" test-hook="apps.new-app.error" class="input-error">Only
               alphanumeric characters are allowed
             </div>
           </div>
           <div class="form-group">
-            <span>APP NAME</span>
-            <input type="text" class="form-control" placeholder="hosting.backand.io/" style="text-transform: lowercase;"
-                   ng-model="index.appName" ng-model-options="{debounce: 500}"
-                   ng-pattern="index.namePattern" test-hook="apps.new-app.name" name="appName" required>
-
+            <span>APP TITLE</span>
+            <input type="text" class="form-control" placeholder="app title"
+                   ng-model="index.appTitle" test-hook="apps.new-app.title" ng-model-options="{debounce: 500}">
           </div>
           <div class="form-group" style="padding-top: 5px;">
             <button type="submit" test-hook="apps.new-app.create" ng-disabled="form.$invalid"
