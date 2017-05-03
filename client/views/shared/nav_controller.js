@@ -46,6 +46,19 @@
       self.queries = [];
       self.functions = [];
     }
+    self.goToModel = function(){
+      if(self.app) {
+        if (self.app.connectionSource === 'external') {
+          $state.go('db_model');
+        }
+        else{
+          $state.go('erd_model');
+        }
+      }
+      else{
+        $state.go('erd_model');
+      }
+    };
     self.showSecondarySideBar = function(state){
       if(self.backandstorage){
         self.backandstorage.showSecondaryAppNav = true;
