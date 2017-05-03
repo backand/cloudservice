@@ -69,6 +69,7 @@
 }
 
 .primary-navbar {
+  height: 100vw;
   .database {
     span {
       margin-left: 9px;
@@ -748,7 +749,7 @@
 
 .primary-navbar {
   width: 112px;
-  height: 100vh;
+  height: 100vw;
   background-color: #373737;
   li {
     height: 100px;
@@ -1284,4 +1285,7 @@ color: #626262;
 }
 .ba-icon-admins{
   font-size: 17px;
+}
+.ba-icon-server-side-exceptions{
+  font-size: 18px;
 }

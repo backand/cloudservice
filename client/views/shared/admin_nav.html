@@ -64,20 +64,30 @@
         <i class="ba-icon-database front-icons"></i>
         <span>Database</span>
     </li>
-    <li ng-class="{active: nav.state == 'app.billing'}"
-        ng-click="nav.goTo($event, 'app.billing')">
-        <i class="ti-money front-icons"></i>
-        <span>Billing Portal</span>
+    <li class="open"
+    ng-click="showBilling = !showBilling">
+      <i class="ti-money front-icons"></i>
+      <span>Billing</span>
+      <i class="glyphicon"
+         ng-class="showBilling == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+      <ul ng-show="showBilling">
+        <li ng-class="{active: nav.state == 'app.billing'}"
+            ng-click="nav.goTo($event, 'app.billing')">
+          <i class="ti-money front-icons"></i>
+          <span>Billing Portal</span>
+        </li>
+        <li ng-class="{active: nav.state == 'app.billingupgrade'}"
+            ng-click="nav.goTo($event, 'app.billingupgrade')">
+          <i class="ti-money front-icons"></i>
+          <span>Upgrade Plan</span>
+        </li>
+        <li ng-class="{active: nav.state == 'app.billingpayment'}" ng-click="nav.goTo($event, 'app.billingpayment')">
+          <i class="ti-money front-icons"></i>
+          <span>Payment Method</span>
+        </li>
+      </ul>
     </li>
-    <li ng-class="{active: nav.state == 'app.billingupgrade'}"
-        ng-click="nav.goTo($event, 'app.billingupgrade')">
-        <i class="ti-money front-icons"></i>
-        <span>Upgrade Plan</span>
-    </li>
-    <li ng-class="{active: nav.state == 'app.billingpayment'}" ng-click="nav.goTo($event, 'app.billingpayment')">
-        <i class="ti-money front-icons"></i>
-        <span>Payment Method</span>
-    </li>
+
     <li ng-click="nav.goTo($event, 'analytics.report')"
         ng-class="{active: nav.backandstorage.currentState === 'analytics.report'}">
       <img src="assets/images/menu/icon-api-log/icon-api-log.png"
@@ -120,6 +130,15 @@
              assets/images/menu/icon-data-history-log/icon-data-history-log@3x.png 3x"
                class="icon-data-history-log">
           <span>Data History Log</span>
+        </li>
+        <li ng-class="{active: nav.state == 'log.exception', disabled: nav.DatabaseStatus != 1}"
+            ng-click="nav.goTo($event, 'log.exception')">
+            <i class="ba-icon-server-side-exceptions front-icons"></i>
+            <span>Server Exceptions</span>
+        </li>
+        <li ng-class="{active: nav.state == 'log.config', disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'log.config')" >
+            <i class="ba-icon-configuration"></i>
+            <span>Configuration</span>
         </li>
       </ul>
     </li>
