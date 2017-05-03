@@ -17,7 +17,7 @@
       <span style="padding-left: 12px">Docs & API</span>
       <i class="glyphicon glyphicon-docs"
          ng-class="showDocs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
-      <ul ng-show="showDocs || nav.backandstorage.currentState.includes('playground')">
+      <ul ng-show="showDocs">
         <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
             ng-click="nav.goToLocation('https://www.backand.com/app-examples')"
             class="sub-functions-icons">
@@ -79,7 +79,7 @@
       <span>Objects</span>
       <i class="glyphicon"
           ng-class="showObjects == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
-      <ul class="ex4" id="ex4" ng-show="nav.backandstorage.currentState == 'object_fields' || showObjects">
+      <ul class="ex4" id="ex4" ng-show="showObjects">
         <li ng-if="nav.app.connectionSource === 'local'"
             ng-click="nav.newObject()" href="">
           <i class="ba-icon-new-query objects"></i>
