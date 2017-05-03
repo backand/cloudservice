@@ -13,42 +13,53 @@
              style="position: relative;"></div>
       </div>
     </li>
-  	<li ng-click="nav.goTo($event, 'security.auth')">
+  	<li ng-class="{active: nav.backandstorage.currentState == 'security.auth'}"
+        ng-click="nav.goTo($event, 'security.auth')">
         <img src="assets/images/menu/icon-configuration/icon-configuration.png"
              srcset="assets/images/menu/icon-configuration/icon-configuration@2x.png 2x,
              assets/images/menu/icon-configuration/icon-configuration@3x.png 3x"
              class="icon-configuration">
   			<span>Configuration</span>
   	</li>
-  	<li ng-click="nav.goTo($event, 'security.keys')">
+  	<li ng-click="nav.goTo($event, 'security.keys')"
+        ng-class="{active: nav.backandstorage.currentState == 'security.keys'}">
         <img src="assets/images/menu/icon-social-keys/icons-social-keys.png"
              srcset="assets/images/menu/icon-social-keys/icons-social-keys@2x.png 2x,
              assets/images/menu/icon-social-keys/icons-social-keys@3x.png 3x"
              class="icons-social-keys">
   			<span>Social and Keys</span>
   	</li>
-  	<li ng-click="nav.goTo($event, 'security.users')">
+  	<li ng-click="nav.goTo($event, 'security.users')"
+        ng-class="{active: nav.backandstorage.currentState == 'security.users'}">
         <img src="assets/images/menu/icon-registreed-users/icon-registreed-users.png"
              srcset="assets/images/menu/icon-registreed-users/icon-registreed-users@2x.png 2x,
              assets/images/menu/icon-registreed-users/icon-registreed-users@3x.png 3x"
              class="icon-registreed-users">
   			<span>Registered Users</span>
   	</li>
-  	<li ng-click="nav.goTo($event, 'security.actions')">
+  	<li ng-click="nav.goTo($event, 'security.actions')"
+        ng-class="{active: nav.backandstorage.currentState == 'security.actions'}">
         <img src="assets/images/menu/icon-security-actions/icon-security-actions.png"
              srcset="assets/images/menu/icon-security-actions/icon-security-actions@2x.png 2x,
              assets/images/menu/icon-security-actions/icon-security-actions@3x.png 3x"
              class="icon-security-actions">
   			<span>Security Actions</span>
   	</li>
-    <li ng-click="nav.goTo($event, 'security.templates')">
+    <li ng-class="{active: nav.backandstorage.currentState == 'security.team', disabled: nav.DatabaseStatus != 1}"
+        ng-click="nav.goTo($event, 'security.team')">
+        <i class="ba-icon-admins front-icons"></i>
+        <span>Team</span>
+    </li>
+    <li ng-click="nav.goTo($event, 'security.templates')"
+        ng-class="{active: nav.backandstorage.currentState == 'security.templates'}">
         <img src="assets/images/menu/icon-console-log/icon-console-log.png"
              srcset="assets/images/menu/icon-console-log/icon-console-log@2x.png 2x,
              assets/images/menu/icon-console-log/icon-console-log@3x.png 3x"
              class="icon-console-log">
         <span>Security Templates</span>
     </li>
-    <li ng-click="nav.goTo($event, 'log.requests')">
+    <li ng-click="nav.goTo($event, 'log.requests')"
+        ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
         <img src="assets/images/menu/icon-api-log/icon-api-log.png"
              srcset="assets/images/icon-api-log/menu/icon-api-log@2x.png 2x,
              assets/images/menu/icon-api-log/icon-api-log@3x.png 3x"

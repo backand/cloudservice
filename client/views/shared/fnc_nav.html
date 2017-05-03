@@ -101,6 +101,30 @@
              class="icon-integrations">
         <span>Integrations</span>
     </li> -->
+    <li ng-class="{active: nav.backandstorage.currentState.includes('dbQueries'), disabled: nav.DatabaseStatus != 1}"
+        ng-click="showQueries = !showQueries"
+    class="open">
+        <i class="ba-icon-quries"></i>
+        <span>Queries</span>
+        <i class="glyphicon glyphicon-query"
+           ng-class="showQueries == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+      <ul ng-show="showQueries">
+        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1"
+            ng-click="nav.newDbQuery($event)"
+        class="sub-functions-icons">
+            <i class="ba-icon-new-query"></i>
+            <span>New Query</span>
+        </li>
+      </ul>
+      <ul class="scrollbar ex4">
+        <li ng-class="{active: nav.state == 'dbQueries.query'}" ng-repeat="query in nav.queries"
+            ng-click="nav.showDbQuery($event, query)"
+            class="sub-functions-icons">
+            <i class="ti-write"></i>
+            <span>{{query.name}}</span>
+        </li>
+      </ul>
+    </li>
     <li ng-class="{active: nav.backandstorage.currentState.includes('Jobs'), disabled: nav.DatabaseStatus != 1}"
         ng-click="showCronJobs = !showCronJobs"
         class="open">

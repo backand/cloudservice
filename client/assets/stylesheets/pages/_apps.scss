@@ -1029,7 +1029,7 @@
 }
 
 .main-icons {
-  margin-left: 37px;
+  margin-left: 34%;
   margin-top: 28px;
   margin-bottom: 10px;
 
@@ -1220,6 +1220,10 @@
   color: #626262;
   margin-left: 26%;
 }
+.glyphicon-query{
+  color: #626262;
+  margin-left: 31%;
+}
 .glyphicon-docs{
   color: #626262;
   margin-left: 23%;
@@ -1255,12 +1259,29 @@
       }
     }
   }
-
-
+}
+.front-icons{
+  color: #626262;
+  margin-left: 19px;
+}
+.ba-icon-quries{
+margin-left: 17px;
+font-size: 20px;
+color: #626262;
 }
 .ba-icon-docs-and-api {
   padding-left: 19px;
   font-size: larger;
   vertical-align: middle;
   color: #626262;
+}
+.ba-icon-configuration{
+  margin-left: 20px;
+}
+.ti-money{
+  font-size:18px;
+  margin-left: 17px;
+}
+.ba-icon-admins{
+  font-size: 17px;
 }

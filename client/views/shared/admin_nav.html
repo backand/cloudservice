@@ -11,13 +11,23 @@
       <div spinner-key="loading-app" us-spinner="{length:10, radius: 10, color: white}"
                  style="position: relative; "></div>
     </li>
-  	<li ng-click="nav.goTo($event, 'hosting.hosting_tree')"
-        ng-class="{active: nav.backandstorage.currentState == 'hosting.hosting_tree'}">
+  	<li ng-click="showHosting = !showHosting"
+        ng-class="{active: nav.backandstorage.currentState == 'hosting.hosting_tree'}"
+    class="open">
       <img src="assets/images/menu/icon-hosting/icon-hosting.png"
            srcset="assets/images/menu/icon-hosting/icon-hosting@2x.png 2x,
              assets/images/menu/icon-hosting/icon-hosting@3x.png 3x"
            class="icon-hosting">
   			<span>Hosting</span>
+      <i class="glyphicon"
+         ng-class="showHosting == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+      <ul ng-show="showHosting">
+        <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}"
+            ng-click="nav.goTo($event, 'docs.hosting')">
+            <i class="ba-icon-configuration"></i>
+            <span>Configuration</span>
+        </li>
+      </ul>
   	</li>
   	<li ng-click="nav.goTo($event, 'hosting.files_tree')"
         ng-class="{active: nav.backandstorage.currentState == 'hosting.files_tree'}">
@@ -27,13 +37,18 @@
            class="icon-storage">
   			<span>Storage</span>
   	</li>
+    <li ng-class="{active: nav.state == 'app.edit', disabled: nav.DatabaseStatus != 1}"
+        ng-click="nav.goTo($event, 'app.edit')">
+        <i class="ba-icon-general"></i>
+        <span>General</span>
+    </li>
   	<li ng-click="nav.goTo($event, 'app.configuration')"
         ng-class="{active: nav.backandstorage.currentState == 'app.configuration'}">
       <img src="assets/images/menu/icon-configuration/icon-configuration.png"
            srcset="assets/images/menu/icon-configuration/icon-configuration@2x.png 2x,
              assets/images/menu/icon-configuration/icon-configuration@3x.png 3x"
            class="icon-configuration">
-  			<span>Configuration</span>
+  			<span>App Configuration</span>
   		</a>
   	</li>
   <!--	TODO <li>
@@ -44,26 +59,69 @@
            class="icon-constants">
   			<span>Enviroment Variables</span>
   	</li>-->
-   <!-- TODO <li>
-         ng-click="nav.goTo($event, )"
-      <i class="ba-icon-general"></i>
-        <span>General Settings</span>
-    </li>-->
+    <li ng-if="nav.DatabaseStatus == 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}"
+        ng-click="nav.goTo($event, 'database.show')">
+        <i class="ba-icon-database front-icons"></i>
+        <span>Database</span>
+    </li>
+    <li ng-class="{active: nav.state == 'app.billing'}"
+        ng-click="nav.goTo($event, 'app.billing')">
+        <i class="ti-money front-icons"></i>
+        <span>Billing Portal</span>
+    </li>
+    <li ng-class="{active: nav.state == 'app.billingupgrade'}"
+        ng-click="nav.goTo($event, 'app.billingupgrade')">
+        <i class="ti-money front-icons"></i>
+        <span>Upgrade Plan</span>
+    </li>
+    <li ng-class="{active: nav.state == 'app.billingpayment'}" ng-click="nav.goTo($event, 'app.billingpayment')">
+        <i class="ti-money front-icons"></i>
+        <span>Payment Method</span>
+    </li>
     <li ng-click="nav.goTo($event, 'analytics.report')"
-        ng-class="{active: nav.backandstorage.currentState == 'analytics.report'}">
+        ng-class="{active: nav.backandstorage.currentState === 'analytics.report'}">
       <img src="assets/images/menu/icon-api-log/icon-api-log.png"
            srcset="assets/images/menu/icon-api-log/icon-api-log@2x.png 2x,
              assets/images/menu/icon-api-log/icon-api-log@3x.png 3x"
            class="icon-api-log">
         <span>Reports</span>
     </li>
-    <!--<li> TODO
-         ng-click="nav.goTo($event, )"
+    <li ng-click="showLogs = !showLogs"
+    ng-class="{active: nav.backandstorage.currentState.includes('log')}"
+    class="open">
       <img src="assets/images/menu/icon-data-history-log/icon-data-history-log.png"
            srcset="assets/images/menu/icon-data-history-log/icon-data-history-log@2x.png 2x,
              assets/images/menu/icon-data-history-log/icon-data-history-log@3x.png 3x"
            class="icon-data-history-log">
         <span>All Logs</span>
-    </li> -->
+      <i class="glyphicon"
+         ng-class="showLogs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+      <ul ng-show="showLogs">
+        <li ng-click="nav.goTo($event, 'log.requests')"
+            ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
+          <img src="assets/images/menu/icon-api-log/icon-api-log.png"
+               srcset="assets/images/icon-api-log/menu/icon-api-log@2x.png 2x,
+             assets/images/menu/icon-api-log/icon-api-log@3x.png 3x"
+               class="icon-api-log">
+          <span>API Log</span>
+        </li>
+        <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}"
+            ng-click="nav.goTo($event, 'log.console')">
+          <img src="assets/images/menu/icon-console-log/icon-console-log.png"
+               srcset="assets/images/menu/icon-console-log/icon-console-log@2x.png 2x,
+             assets/images/menu/icon-console-log/icon-console-log@3x.png 3x"
+               class="icon-console-log">
+          <span>Console Log</span>
+        </li>
+        <li ng-class="{active: nav.backandstorage.currentState == 'log.history'}"
+            ng-click="nav.goTo($event, 'log.history')">
+          <img src="assets/images/menu/icon-data-history-log/icon-data-history-log.png"
+               srcset="assets/images/menu/icon-data-history-log/icon-data-history-log@2x.png 2x,
+             assets/images/menu/icon-data-history-log/icon-data-history-log@3x.png 3x"
+               class="icon-data-history-log">
+          <span>Data History Log</span>
+        </li>
+      </ul>
+    </li>
   </ul>
  </div>
