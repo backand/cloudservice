@@ -32,6 +32,16 @@
 .ui-tab-container {
     .nav-tabs {
         margin-bottom: 0;
+      a{
+        color: #000000;
+        font-family: "Open Sans", sans-serif;
+      }
+      li.active{
+        a {
+          color: #f26724 !important;
+          font-family: "Open Sans", sans-serif;
+        }
+      }
         &.nav-justified {
             > li {
                 &:last-child {

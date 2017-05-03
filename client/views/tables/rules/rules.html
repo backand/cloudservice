@@ -46,7 +46,7 @@
 
               <ol class="rules-names-list" ng-show="subitem.visible">
 
-                <li ng-repeat="rule in subitem.items" >
+                <li ng-repeat="rule in subitem.items" ng-class="{'active' : active}">
 
                   <a href="" ng-click="rules.goToAction(rule.name)" class="rule-name">
                   {{ ::rule.name}}</a>

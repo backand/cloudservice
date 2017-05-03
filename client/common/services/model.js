@@ -57,7 +57,7 @@
         }
       ];
       return schema;
-    }
+    };
 
     self.usingDefaultSchema = function(appName, force){
 

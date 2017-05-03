@@ -77,7 +77,7 @@
       }
     });
     $scope.$on('database-change', function(){
-      self.usingDefaultModel = true;
+      updateDefaultModelUse(self.currentAppName, true);
     });
     $scope.$on('database-undo', function(){
       self.usingDefaultModel = false;
@@ -102,6 +102,10 @@
         ModelService.usingDefaultSchema(appName, force)
           .then(function (result) {
             if(result) {
+              self.usingDefaultModel = result;
+            }
+            if(result === false){
+              self.usingDefaultModel = false;
             }
           });
       } else {

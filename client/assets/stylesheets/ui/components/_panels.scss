@@ -14,6 +14,18 @@
 .panel-default{
   border: none;
 }
+.http-panel{
+  .panel-default{
+    border: 1px solid #ddd !important;
+
+  }
+}
+.tab-content{
+  //.btn-success{
+  //  background-color: #f26724;
+  //  border: none;
+  //}
+}
  .log-history-cons {
   float: right;
   margin-top: -25px;
