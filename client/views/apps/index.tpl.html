@@ -10,10 +10,7 @@
     <div class="col-xs-4 col-sm-4">
       <div class="apps-jumbo-section-wrapper"
             ng-click="index.goToGettingStarted('docs.platform_select_existing-open')">
-        <img src="assets/images/apps_page/icon-getting-started/icon-getting-started.png"
-             srcset="assets/images/apps_page/icon-getting-started/icon-getting-started@2x.png 2x,
-             assets/images/apps_page/icon-getting-started/icon-getting-started@3x.png 3x"
-             class="icon-getting-started">
+        <i class="sprite-main-page sprite-icon-getting-started"></i>
         <div class="apps-jumbo-section-title" analytics-wrapper target="gettingStarted">Getting started guide</div>
       </div>
     </div>
@@ -21,20 +18,14 @@
     <div class="col-xs-4 col-sm-4">
       <div class="apps-jumbo-section-wrapper"
            ng-click="index.goToGettingStarted('docs.platform_select_kickstart-open')">
-        <img src="assets/images/apps_page/icon-tutorials/icon-tutorials.png"
-             srcset="assets/images/apps_page/icon-tutorials/icon-tutorials@2x.png 2x,
-             assets/images/apps_page/icon-tutorials/icon-tutorials@3x.png 3x"
-             class="icon-tutorials">
+        <i class="sprite-main-page sprite-icon-tutorials"></i>
         <div class="apps-jumbo-section-title" analytics-wrapper target="ionicDocs">Existing App Tutorials</div>
       </div>
     </div>
     <div class="jumbo-border"></div>
     <div class="col-xs-4 col-sm-4">
       <div class="apps-jumbo-section-wrapper" ng-click="index.goToLocation('http://docs.backand.com')">
-        <img src="assets/images/apps_page/icon-docs/icon-docs.png"
-             srcset="assets/images/apps_page/icon-docs/icon-docs@2x.png 2x,
-             assets/images/apps_page/icon-docs/icon-docs@3x.png 3x"
-             class="icon-docs">
+        <i class="sprite-main-page sprite-icon-docs"></i>
         <div class="apps-jumbo-section-title" analytics-wrapper target="docs">Documentation</div>
       </div>
     </div>
@@ -124,28 +115,19 @@
             <div ng-click="index.changeAppType('serverless')" ng-class="index.appType == 1 ? 'active' : ''"
                  class="app-type-container col-md-4">
               <div ng-if="index.appType == 1" class="glyphicon glyphicon-ok"></div>
-              <img src="assets/images/apps_page/icon-small-serverless/icon-small-serverlesss.png"
-                   srcset="assets/images/apps_page/icon-small-serverless/icon-small-serverlesss@2x.png 2x,
-             assets/images/apps_page/icon-small-serverless/icon-small-serverlesss@3x.png 3x"
-                   class="icon-small-serverlesss">
+              <i class="sprite-main-page sprite-icon-small-serverlesss"></i>
               <p>Full Serverless</p>
             </div>
             <div ng-click="index.changeAppType('function')" ng-class="index.appType == 2 ? 'active' : '' "
                  class="app-type-container col-md-4">
               <div ng-if="index.appType == 2" class="glyphicon glyphicon-ok"></div>
-              <img src="assets/images/apps_page/icon-small-faas/icon-small-faas.png"
-                   srcset="assets/images/apps_page/icon-small-faas//icon-small-faas@2x.png 2x,
-             assets/images/apps_page/icon-small-faas//icon-small-faas@3x.png 3x"
-                   class="icon-small-faas">
+              <i class="sprite-main-page sprite-icon-small-faas"></i>
               <p>Function-As-A-Service</p>
             </div>
             <div ng-click="index.changeAppType('security')" ng-class="index.appType == 3 ? 'active' : '' "
                  class="app-type-container col-md-4">
               <div ng-if="index.appType== 3" class="glyphicon glyphicon-ok"></div>
-              <img src="assets/images/apps_page/icon-small-security/icon-small-security.png"
-                   srcset="assets/images/apps_page/icon-small-security/icon-small-security@2x.png 2x,
-             assets/images/apps_page/icon-small-security/icon-small-security@3x.png 3x"
-                   class="icon-small-security">
+              <i class="sprite-main-page sprite-icon-small-security"></i>
               <p>Security App</p>
             </div>
           </div>
@@ -157,10 +139,7 @@
   <div class="row body justify-content-between" ng-repeat="app in index.apps track by app.__metadata.id"
        test-hook="apps.app-panel">
     <div class="col-md-5 app-details">
-      <img src="assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}.png"
-           srcset="assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}@2x.png 2x,
-             assets/images/apps_page/{{::app.ProductType}}/{{::app.ProductType}}@3x.png 3x"
-           class="app-{{::app.ProductType}}">
+      <i class="sprite-main-page sprite-{{::app.ProductType}}"></i>
       <div class="app-name">
         <div>
           <span>{{ ::app.Name }}</span>
@@ -198,10 +177,7 @@
           Upgrade Plan
         </button>
       </div>
-      <img src="assets/images/apps_page/chevron-right/chevron-right.png"
-           srcset="assets/images/apps_page/chevron-right/chevron-right@2x.png 2x,
-             assets/images/apps_page/chevron-right/chevron-right@3x.png 3x"
-           class="chevron-right">
+      <i class="sprite-main-page sprite-chevron-right"></i>
     </div>
     <div id="border"></div>
   </div>

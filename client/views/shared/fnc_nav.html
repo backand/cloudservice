@@ -13,51 +13,51 @@
     </li>
     <li ng-class="{active: nav.state == 'playground.orm'}" class="open"
         ng-click="showDocs = !showDocs">
-        <i class="ba-icon-docs-and-api"></i>
-        <span style="padding-left: 12px">Docs & API</span>
+        <i class="ba-icon-docs-and-api front-icons"></i>
+        <span>Docs & API</span>
       <i class="glyphicon glyphicon-docs"
          ng-class="showDocs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
       <ul ng-show="showDocs">
         <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
             ng-click="nav.goToLocation('https://www.backand.com/app-examples')"
             class="sub-functions-icons">
-            <i class="ba-icon-documentation"></i>
+            <i class="ba-icon-documentation front-icons"></i>
             <span>Examples</span>
         </li>
         <li ng-class="{active: nav.state == 'docs.platform_select_kickstart'}"
             ng-click="nav.goTo($event, 'docs.platform_select_kickstart')"
             class="sub-functions-icons">
-            <i class="ba-icon-kickstart-tutorial"></i>
+            <i class="ba-icon-kickstart-tutorial front-icons"></i>
             <span>Kickstart Tutorials</span>
         </li>
         <li ng-class="{active: nav.state == 'docs.platform_select_existing'}"
             ng-click="nav.goTo($event, 'docs.platform_select_existing')"
             class="sub-functions-icons">
-            <i class="ba-icon-kickstart-tutorial"></i>
+            <i class="ba-icon-kickstart-tutorial front-icons"></i>
             <span>Existing App Tutorials</span>
         </li>
         <li ng-class="{active: nav.state == 'docs.realtime'}"
             ng-click="nav.goTo($event, 'docs.realtime')"
             class="sub-functions-icons">
-            <i class="ba-icon-documentation"></i>
+            <i class="ba-icon-documentation front-icons"></i>
             <span>Realtime Database</span>
         </li>
         <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
             ng-click="nav.goToLocation('http://docs.backand.com')"
             class="sub-functions-icons">
-            <i class="ba-icon-documentation"></i>
+            <i class="ba-icon-documentation front-icons"></i>
             <span>Documentation</span>
         </li>
         <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}"
             ng-click="nav.goTo($event, 'playground.show')"
             class="sub-functions-icons">
-            <i class="ba-icon-rest-api-playground"></i>
+            <i class="ba-icon-rest-api-playground front-icons"></i>
             <span>REST API Playground</span>
         </li>
         <li ng-class="{active: nav.state == 'playground.todo'}" ng-show="nav.isExampleApp()"
             ng-click="nav.goToAlways($event, 'playground.todo')"
             class="sub-functions-icons">
-            <i class="ba-icon-todo-example"></i>
+            <i class="ba-icon-todo-example front-icons"></i>
             <span>Todo Example</span>
         </li>
       </ul>
@@ -101,7 +101,7 @@
     <li ng-class="{active: nav.backandstorage.currentState.includes('dbQueries'), disabled: nav.DatabaseStatus != 1}"
         ng-click="showQueries = !showQueries"
     class="open">
-        <i class="ba-icon-quries"></i>
+        <i class="ba-icon-quries front-icons"></i>
         <span>Queries</span>
         <i class="glyphicon glyphicon-query"
            ng-class="showQueries == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>

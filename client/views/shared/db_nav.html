@@ -13,7 +13,7 @@
     </li>
     <li ng-class="{active: nav.state == 'playground.orm'}" class="open"
         ng-click="showDocs = !showDocs">
-      <i class="ba-icon-docs-and-api"></i>
+      <i class="ba-icon-docs-and-api front-icons"></i>
       <span style="padding-left: 12px">Docs & API</span>
       <i class="glyphicon glyphicon-docs"
          ng-class="showDocs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
@@ -71,7 +71,7 @@
         ng-class="{active: nav.backandstorage.currentState == 'object_fields', disabled: nav.DatabaseStatus != 1 }">
       <i class="fontello-icon-object front-icons"></i>
       <span>Objects</span>
-      <i class="glyphicon"
+      <i class="glyphicon glyphicon-objects"
           ng-class="showObjects == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
       <ul class="ex4" id="ex4" ng-show="showObjects">
         <li ng-if="nav.app.connectionSource === 'local'"

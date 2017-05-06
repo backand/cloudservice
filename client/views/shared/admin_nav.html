@@ -16,7 +16,7 @@
     class="open">
       <i class="fontello-icon-hosting front-icons"></i>
   			<span>Hosting</span>
-      <i class="glyphicon"
+      <i class="glyphicon glyphicon-hosting"
          ng-class="showHosting == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
       <ul ng-show="showHosting">
         <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}"
@@ -33,7 +33,7 @@
   	</li>
     <li ng-class="{active: nav.state == 'app.edit', disabled: nav.DatabaseStatus != 1}"
         ng-click="nav.goTo($event, 'app.edit')">
-        <i class="ba-icon-general"></i>
+        <i class="ba-icon-general front-icons"></i>
         <span>General</span>
     </li>
   	<li ng-click="nav.goTo($event, 'app.configuration')"
@@ -59,7 +59,7 @@
     ng-click="showBilling = !showBilling">
       <i class="ti-money front-icons"></i>
       <span>Billing</span>
-      <i class="glyphicon"
+      <i class="glyphicon glyphicon-billing"
          ng-class="showBilling == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
       <ul ng-show="showBilling">
         <li ng-class="{active: nav.state == 'app.billing'}"
@@ -89,7 +89,7 @@
     class="open">
       <i class="fontello-icon-data-history-log front-icons"></i>
         <span>All Logs</span>
-      <i class="glyphicon"
+      <i class="glyphicon glyphicon-logs"
          ng-class="showLogs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
       <ul ng-show="showLogs">
         <li ng-click="nav.goTo($event, 'log.requests')"
