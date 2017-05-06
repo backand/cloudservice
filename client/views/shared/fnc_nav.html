@@ -65,10 +65,7 @@
     <li ng-class="{active: nav.backandstorage.currentState.includes('function'), disabled: nav.DatabaseStatus != 1}"
         ng-click="showFunctions = !showFunctions"
         class="open">
-        <img src="assets/images/menu/icon-lambda-functions/icon-functions.png"
-             srcset="assets/images/menu/icon-lambda-functions/icon-functions@2x.png 2x,
-             assets/images/menu/icon-lambda-functions/icon-functions@3x.png 3x"
-             class="icon-functions">
+      <i class="fontello-icon-functions front-icons"></i>
         <span>Functions</span>
       <i class="glyphicon glyphicon-cron"
          ng-class="showFunctions == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
@@ -128,10 +125,7 @@
     <li ng-class="{active: nav.backandstorage.currentState.includes('Jobs'), disabled: nav.DatabaseStatus != 1}"
         ng-click="showCronJobs = !showCronJobs"
         class="open">
-        <img src="assets/images/menu/icon-cron/icon-cron.png"
-             srcset="assets/images/menu/icon-cron/icon-cron@2x.png 2x,
-             assets/images/menu/icon-cron/icon-cron@3x.png 3x"
-             class="icon-cron">
+      <i class="fontello-icon-cron front-icons"></i>
         <span>Cron Jobs</span>
         <i class="glyphicon glyphicon-cron"
          ng-class="showCronJobs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
@@ -152,18 +146,12 @@
     </li>
     <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}"
         ng-click="nav.goTo($event, 'log.requests')">
-      <img src="assets/images/menu/icon-api-log/icon-api-log.png"
-           srcset="assets/images/menu/icon-api-log/icon-api-log@2x.png 2x,
-             assets/images/menu/icon-api-log/icon-api-log@3x.png 3x"
-           class="icon-api-log">
+      <i class="fontello-icon-api-log_2 front-icons"></i>
         <span>API Log</span>
     </li>
     <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}"
         ng-click="nav.goTo($event, 'log.console')">
-      <img src="assets/images/menu/icon-console-log/icon-console-log.png"
-           srcset="assets/images/menu/icon-console-log/icon-console-log@2x.png 2x,
-             assets/images/menu/icon-console-log/icon-console-log@3x.png 3x"
-           class="icon-console-log">
+      <i class="fontello-icon-console-log front-icons"></i>
         <span>Console Log</span>
     </li>
   </ul>

@@ -1289,3 +1289,38 @@ color: #626262;
 .ba-icon-server-side-exceptions{
   font-size: 18px;
 }
+.sprite-menu {
+  background-image: url(assets/images/menu/spritesheet.png);
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.sprite-backand-logo {
+  width: 32px;
+  height: 32px;
+  background-position: -5px -5px;
+}
+
+.sprite-icon-admin {
+  width: 36px;
+  height: 42px;
+  background-position: -47px -5px;
+}
+
+.sprite-icon-db {
+  width: 39px;
+  height: 42px;
+  background-position: -5px -57px;
+}
+
+.sprite-icon-functions {
+  width: 42px;
+  height: 42px;
+  background-position: -54px -57px;
+}
+
+.sprite-icon-security {
+  width: 42px;
+  height: 42px;
+  background-position: -93px -5px;
+}

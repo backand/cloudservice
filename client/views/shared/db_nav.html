@@ -63,19 +63,13 @@
       </ul>
     </li>
     <li ng-click="nav.goToModel()" ng-class="{active: nav.backandstorage.currentState == 'erd_model'}">
-      <img src="assets/images/menu/icon-model/icon-model.png"
-           srcset="assets/images/menu/icon-model/icon-model@2x.png 2x,
-             assets/images/menu/icon-model/icon-model@3x.png 3x"
-           class="icon-model">
+      <i class="fontello-icon-model front-icons"></i>
       <span>Model</span>
     </li>
     <li ng-click="showObjects = !showObjects"
         class="open"
         ng-class="{active: nav.backandstorage.currentState == 'object_fields', disabled: nav.DatabaseStatus != 1 }">
-      <img src="assets/images/menu/icon-object/icon-object.png"
-           srcset="assets/images/menu/icon-object/icon-object@2x.png 2x,
-             assets/images/menu/icon-object/icon-object@3x.png 3x"
-           class="icon-object">
+      <i class="fontello-icon-object front-icons"></i>
       <span>Objects</span>
       <i class="glyphicon"
           ng-class="showObjects == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
@@ -109,26 +103,17 @@
     </li> -->
     <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}"
         ng-click="nav.goTo($event, 'log.requests')">
-      <img src="assets/images/menu/icon-api-log/icon-api-log.png"
-           srcset="assets/images/menu/icon-api-log/icon-api-log@2x.png 2x,
-             assets/images/menu/icon-api-log/icon-api-log@3x.png 3x"
-           class="icon-api-log">
+      <i class="fontello-icon-api-log_2 front-icons"></i>
       <span>API Log</span>
     </li>
     <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}"
         ng-click="nav.goTo($event, 'log.console')">
-      <img src="assets/images/menu/icon-console-log/icon-console-log.png"
-           srcset="assets/images/menu/icon-console-log/icon-console-log@2x.png 2x,
-             assets/images/menu/icon-console-log/icon-console-log@3x.png 3x"
-           class="icon-console-log">
+      <i class="fontello-icon-console-log front-icons"></i>
       <span>Console Log</span>
     </li>
     <li ng-class="{active: nav.backandstorage.currentState == 'log.history'}"
         ng-click="nav.goTo($event, 'log.history')">
-      <img src="assets/images/menu/icon-data-history-log/icon-data-history-log.png"
-           srcset="assets/images/menu/icon-data-history-log/icon-data-history-log@2x.png 2x,
-             assets/images/menu/icon-data-history-log/icon-data-history-log@3x.png 3x"
-           class="icon-data-history-log">
+      <i class="fontello-icon-data-history-log front-icons"></i>
       <span>Data History Log</span>
     </li>
   </ul>

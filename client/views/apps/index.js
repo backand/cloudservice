@@ -166,7 +166,15 @@
         } else {
           self.backandstorage.showSecondaryAppNav = true;
           self.setAppType(app.ProductType);
-          $state.go('app', {appName: app.Name}, {reload: true});
+        //  if($localStorage.backand[app.Name].currentState) {
+        //    var currentstate = $localStorage.backand[app.Name].currentState;
+        //    $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
+        //      $state.go(currentstate);
+        //    });
+        //  }
+        //  else {
+            $state.go('app', {appName: app.Name}, {reload: true});
+        //  }
         }
       }
       else if (AppsService.isExampleApp(app)) {
