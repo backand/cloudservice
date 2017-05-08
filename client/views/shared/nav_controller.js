@@ -216,7 +216,9 @@
     self.isTablesActive = function () {
       return $state.includes('tables.columns') || $state.current.name == 'erd_model' || $state.current.name == 'json_model';
     };
+    self.closeTabs = function(tab){
 
+    };
     self.getObjectMenuStyle = function () {
       if ($stateParams.newApp || self.isTablesActive()) {
         return "block";

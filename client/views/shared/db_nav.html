@@ -12,9 +12,9 @@
            style="position: relative; color: white; left:-100px; top:30px;"></div>
     </li>
     <li ng-class="{active: nav.state == 'playground.orm'}" class="open"
-        ng-click="showDocs = !showDocs">
+        >
       <i class="ba-icon-docs-and-api front-icons"></i>
-      <span style="padding-left: 12px">Docs & API</span>
+      <span style="padding-left: 12px" ng-click="showDocs = !showDocs" >Docs & API</span>
       <i class="glyphicon glyphicon-docs"
          ng-class="showDocs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
       <ul ng-show="showDocs">
