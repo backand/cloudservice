@@ -7,31 +7,88 @@
   width: 56%;
   min-width: 204px;
   li {
-    height: 60px;
+    a{
+      //The importants are there to override the nav classes in place, this is for the new UI
+      padding: 0 !important;
+      i{
+        font-size: 16px !important;
+        margin-right: 0px !important;
+        width: auto !important;
+        color: #626262;
+      }
+      .status{
+        top:22px !important;
+        left:18px !important;
+      }
+    }
+    a:hover{
+      background-color: #0f0f0f;
+      border-color: transparent;
+    }
+    a:focus{
+      background-color: #0f0f0f;
+      border-color: transparent;
+    }
+
+    //height: 60px !important;
     cursor: pointer;
-    @include transition(all .2s ease-in-out);
     ul {
       list-style-type: none;
-      @include transition(all .2s ease-in-out);
+      li{
+        padding:0 !important;
+      }
     }
     ul.ng-show {
       height: 100%;
     }
   }
   .sub-functions-icons {
-    i {
-      padding-left: 20px;
-    }
-    span {
-      padding-left: 7px;
+    a {
+      i {
+        padding-left:10px;
+      }
+      span {
+        padding-left: 7px;
+      }
     }
   }
-  li.open {
+  .sub-objects-icons {
+    a {
+      i {
+        padding-left:20px;
+      }
+      span {
+        padding-left: 7px;
+      }
+    }
+  }
+  li.open-structure {
     display: inline-block;
     width: 100%;
     height: auto;
     i.objects {
-      padding-left: 35px;
+      padding-left: 23.5px;
+    }
+  }
+  li.open{
+    a{
+      background-color: #0f0f0f;
+      border-color: transparent;
+    }
+    a:hover{
+      background-color: #0f0f0f !important;
+      border-color: transparent;
+    }
+    a:focus{
+      background-color: #0f0f0f;
+      border-color: transparent;
+    }
+
+  }
+  li:hover{
+    a{
+      background-color: #0f0f0f;
+      border-color: transparent;
     }
   }
   li.open:after{
@@ -40,11 +97,18 @@
   li.active {
     border-right: solid #f66731;
     background-color: #0f0f0f;
-    span {
-      color: #ffffff
+    a {
+      background-color: #0f0f0f;
+      span {
+        color: #ffffff
+      }
     }
   }
   li:hover {
+    a{
+      background-color: #0f0f0f;
+      width: 100%;
+    }
     background-color: #0f0f0f;
     width: 100%;
   }
@@ -52,6 +116,10 @@
   li:focus {
     background-color: #0f0f0f;
     width: 100%;
+    a{
+      background-color: #0f0f0f;
+      width: 100%;
+    }
   }
   span {
     padding-left: 15px;
@@ -71,24 +139,80 @@
 .primary-navbar {
   height: 100vw;
   .database {
-    span {
-      margin-left: 9px;
+    @media (min-width: 1700px) {
+      span {
+        margin-left: 5px;
+      }
+      i {
+        margin-left: 32%;
+      }
     }
+    @media (max-width: 1620px) {
+      span {
+        margin-left: 8px;
+      }
+      i {
+        margin-left: 33%;
+      }
+    }
+
   }
   .functions {
-    span {
-      padding-left: 0px !important;
+    @media (min-width: 1700px) {
+      span {
+        padding-left: 0px !important;
+      }
+      i {
+        margin-left: 28%;
+      }
     }
+    @media (max-width: 1620px) {
+      span {
+        padding-left: 0px !important;
+      }
+      i {
+        margin-left: 32%;
+      }
+    }
+
   }
   .security {
-    span {
-      padding-left: 31px;
+    @media (min-width: 1700px) {
+      span {
+        padding-left: 24px;
+      }
+      i {
+        margin-left: 28%;
+      }
     }
+    @media (max-width: 1620px) {
+      span {
+        padding-left: 28px;
+      }
+      i {
+        margin-left: 32%;
+      }
+    }
+
   }
   .admin {
-    span {
-      padding-left: 5px !important;
+    @media (min-width: 1620px) {
+      span {
+        padding-left: 0 !important;
+      }
+      i{
+        margin-left: 31%;
+      }
     }
+    @media (max-width: 1620px) {
+      span {
+        padding-left: 7px !important;
+      }
+      i{
+        margin-left: 35%;
+      }
+    }
+
 
   }
 }
@@ -903,6 +1027,9 @@
   text-align: center;
   margin-left: 41px;
   height: 50px;
+  @media (min-width: 1700px) {
+    margin-left: 37px;
+  }
 }
 
 .backand-header {
@@ -1272,6 +1399,7 @@ color: #626262;
 .ba-icon-docs-and-api {
   vertical-align: middle;
   color: #626262;
+  margin-left: 22px;
   font-size: initial;
 }
 .ba-icon-configuration{
@@ -1279,9 +1407,11 @@ color: #626262;
 }
 .ti-money{
   font-size:18px;
+  margin-left: 25px;
 }
 .ba-icon-admins{
   font-size: 17px;
+  margin-left: 23px;
 }
 .ba-icon-server-side-exceptions{
   font-size: 18px;
@@ -1301,7 +1431,7 @@ color: #626262;
   width: 32px;
   height: 32px;
   background-position: -5px -5px;
-  margin-left: 41px;
+  margin-left: 38px;
 }
 
 .sprite-icon-admin {
@@ -1330,8 +1460,17 @@ color: #626262;
 .fontello-icon-storage{
   margin-left: 20px;
 }
+.fontello-icon-functions{
+  font-size: 12px !important;
+}
+.fontello-icon-configuration_2{
+  margin-left: 22px;
+}
+.fontello-icon-cron{
+  margin-left:18px;
+}
 .ba-icon-database{
-  margin-left:22px;
+  margin-left:25px;
 }
 .sprite-main-page {
   background-image: url(../assets/images/apps_page/spritesheet.png);

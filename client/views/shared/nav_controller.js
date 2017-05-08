@@ -8,6 +8,7 @@
     self.isTablesClicked = false;
     self.apps = AppsService.apps;
     self.app = AppsService.currentApp;
+    self.stateparam = $state.params;
     self.backandstorage = $localStorage.backand[self.app.Name];
     self.currentAppName = AppsService.currentApp.Name;
     self.currentState = $state.current.name;
@@ -46,17 +47,17 @@
       self.queries = [];
       self.functions = [];
     }
-    self.goToModel = function(){
+    self.goToModel = function($event){
       if(self.app) {
         if (self.app.connectionSource === 'external') {
-          $state.go('db_model');
+          goToState($event, 'db_model');
         }
         else{
-          $state.go('erd_model');
+          goToState($event, 'erd_model');
         }
       }
       else{
-        $state.go('erd_model');
+        goToState($event, 'erd_model');
       }
     };
     self.showSecondarySideBar = function(state){
@@ -319,9 +320,9 @@
       goToState($event, 'cronJobs.job', params);
     };
 
-    self.newObject = function () {
+    self.newObject = function ($event) {
       var params = {isNewObject: true};
-      $state.go('erd_model', params);
+      goToState($event,'erd_model', params);
     };
 
     // Used to support opening links in new tab
@@ -332,6 +333,7 @@
       } else {
         $state.go(state, params).then(function(){
           self.backandstorage.currentState = $state.current.name;
+          self.stateparam = $state.params;
         });
       }
     }
