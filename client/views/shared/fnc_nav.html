@@ -1,170 +1,182 @@
 <div class="nav-wrapper scroller" perfect-scrollbar>
-  <ul slim-scroll collapse-nav>
+  <ul slim-scroll collapse-nav id="nav2" class="nav">
     <li class="apps-header">
-        <div class="ui-select app-headers" style="font-weight: bold;">
-          <select ng-model="nav.currentAppName"
-                  ng-change="nav.goToApp()"
-                  ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
-                  class="app-select">
-          </select>
-        </div>
-      <div  spinner-key="loading-app" us-spinner="{length:10, radius: 10, color:white}"
+      <div class="ui-select app-headers" style="font-weight: bold;">
+        <select ng-model="nav.currentAppName"
+                ng-change="nav.goToApp()"
+                ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
+                class="app-select">
+        </select>
+      </div>
+      <div spinner-key="loading-app" us-spinner="{length:10, radius: 10, color:white}"
            style="position: relative; color: white !important; left:-100px; top:30px;"></div>
     </li>
-    <li ng-class="{active: nav.state == 'playground.orm'}" class="open"
-        ng-click="showDocs = !showDocs">
-        <i class="ba-icon-docs-and-api"></i>
+    <li ng-class="{active: nav.state == 'playground.orm'}" class="open-structure">
+      <a href="">
+        <i class="ba-icon-docs-and-api front-icons"></i>
         <span style="padding-left: 12px">Docs & API</span>
-      <i class="glyphicon glyphicon-docs"
-         ng-class="showDocs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
-      <ul ng-show="showDocs">
+        <i class="glyphicon glyphicon-docs"
+           ng-class="showDocs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+      </a>
+      <ul>
         <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
-            ng-click="nav.goToLocation('https://www.backand.com/app-examples')"
-            class="sub-functions-icons">
+            class="sub-objects-icons">
+          <a ng-click="nav.goToLocation('https://www.backand.com/app-examples')">
             <i class="ba-icon-documentation"></i>
             <span>Examples</span>
+          </a>
         </li>
-        <li ng-class="{active: nav.state == 'docs.platform_select_kickstart'}"
-            ng-click="nav.goTo($event, 'docs.platform_select_kickstart')"
-            class="sub-functions-icons">
+        <li ng-class="{active: nav.backandstorage.currentState == 'docs.platform_select_kickstart'}"
+            class="sub-objects-icons">
+          <a ng-click="nav.goTo($event, 'docs.platform_select_kickstart')">
             <i class="ba-icon-kickstart-tutorial"></i>
             <span>Kickstart Tutorials</span>
+          </a>
         </li>
-        <li ng-class="{active: nav.state == 'docs.platform_select_existing'}"
-            ng-click="nav.goTo($event, 'docs.platform_select_existing')"
-            class="sub-functions-icons">
+        <li ng-class="{active: nav.backandstorage.currentState == 'docs.platform_select_existing'}"
+            class="sub-objects-icons">
+          <a ng-click="nav.goTo($event, 'docs.platform_select_existing')">
             <i class="ba-icon-kickstart-tutorial"></i>
             <span>Existing App Tutorials</span>
+          </a>
         </li>
         <li ng-class="{active: nav.state == 'docs.realtime'}"
-            ng-click="nav.goTo($event, 'docs.realtime')"
-            class="sub-functions-icons">
+            class="sub-objects-icons">
+          <a ng-click="nav.goTo($event, 'docs.realtime')">
             <i class="ba-icon-documentation"></i>
             <span>Realtime Database</span>
+          </a>
         </li>
         <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
-            ng-click="nav.goToLocation('http://docs.backand.com')"
-            class="sub-functions-icons">
+            class="sub-objects-icons">
+          <a ng-click="nav.goToLocation('http://docs.backand.com')">
             <i class="ba-icon-documentation"></i>
             <span>Documentation</span>
+          </a>
         </li>
         <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}"
-            ng-click="nav.goTo($event, 'playground.show')"
-            class="sub-functions-icons">
+            class="sub-objects-icons">
+          <a ng-click="nav.goTo($event, 'playground.show')">
             <i class="ba-icon-rest-api-playground"></i>
             <span>REST API Playground</span>
+          </a>
         </li>
         <li ng-class="{active: nav.state == 'playground.todo'}" ng-show="nav.isExampleApp()"
-            ng-click="nav.goToAlways($event, 'playground.todo')"
-            class="sub-functions-icons">
+            class="sub-objects-icons">
+          <a ng-click="nav.goToAlways($event, 'playground.todo')">
             <i class="ba-icon-todo-example"></i>
             <span>Todo Example</span>
+          </a>
         </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState.includes('function'), disabled: nav.DatabaseStatus != 1}"
-        ng-click="showFunctions = !showFunctions"
-        class="open">
-        <img src="assets/images/menu/icon-lambda-functions/icon-functions.png"
-             srcset="assets/images/menu/icon-lambda-functions/icon-functions@2x.png 2x,
-             assets/images/menu/icon-lambda-functions/icon-functions@3x.png 3x"
-             class="icon-functions">
-        <span>Functions</span>
-      <i class="glyphicon glyphicon-cron"
-         ng-class="showFunctions == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
-      <ul ng-show="showFunctions"
-          ng-blur="showFunctions = false ">
-        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1" ng-click="nav.newLambdaFunction($event)"
-        class="sub-functions-icons">
+    <li ng-class="{disabled: nav.DatabaseStatus != 1}"
+        class="open-structure">
+      <a href="">
+        <i class="fontello-icon-functions front-icons"></i>
+        <span style="padding-left: 11px">Functions</span>
+        <i class="glyphicon glyphicon-cron"
+           ng-class="showFunctions == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.currentState == 'functions.newlambdafunctions' }" ng-if="nav.DatabaseStatus == 1"
+            class="sub-functions-icons">
+          <a ng-click="nav.newLambdaFunction($event)">
             <i class="ba-icon-new-query"></i>
             <span>Add Lambda Function</span>
+          </a>
         </li>
-        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1" ng-click="nav.newJsFunction($event)"
+        <li ng-class="{active:  nav.currentState == 'functions.newjsfunctions' }" ng-if="nav.DatabaseStatus == 1"
             class="sub-functions-icons">
+          <a ng-click="nav.newJsFunction($event)">
             <i class="ba-icon-new-query"></i>
             <span>Add Javascript Function</span>
+          </a>
         </li>
         <ul>
-          <li ng-repeat="func in nav.functions track by func.name" ng-click="nav.showFunction($event, func)"
+          <li ng-repeat="func in nav.functions track by func.name"
+              ng-class="{active: func.iD == nav.stateparam.functionId}"
               class="sub-functions-icons">
+            <a ng-click="nav.showFunction($event, func)">
               <i class="ti-write"></i>
               <span>{{func.name}}</span>
+            </a>
           </li>
         </ul>
       </ul>
     </li>
-   <!-- <li ng-class="{active: nav.backandstorage.currentState == 'integrations'}">
-        ng-click="nav.goTo($event, )"
-        <img src="assets/images/menu/icon-integrations/icon-integrations.png"
-             srcset="assets/images/menu/icon-integrations/icon-integrations@2x.png 2x,
-             assets/images/menu/icon-integrations/icon-integrations@3x.png 3x"
-             class="icon-integrations">
-        <span>Integrations</span>
-    </li> -->
-    <li ng-class="{active: nav.backandstorage.currentState.includes('dbQueries'), disabled: nav.DatabaseStatus != 1}"
-        ng-click="showQueries = !showQueries"
-    class="open">
-        <i class="ba-icon-quries"></i>
+    <!-- <li ng-class="{active: nav.backandstorage.currentState == 'integrations'}">
+         ng-click="nav.goTo($event, )"
+         <img src="assets/images/menu/icon-integrations/icon-integrations.png"
+              srcset="assets/images/menu/icon-integrations/icon-integrations@2x.png 2x,
+              assets/images/menu/icon-integrations/icon-integrations@3x.png 3x"
+              class="icon-integrations">
+         <span>Integrations</span>
+     </li> -->
+    <li ng-class="{disabled: nav.DatabaseStatus != 1}"
+        class="open-structure">
+      <a href="">
+        <i class="ba-icon-quries front-icons"></i>
         <span>Queries</span>
         <i class="glyphicon glyphicon-query"
            ng-class="showQueries == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
-      <ul ng-show="showQueries">
-        <li ng-class="{active: false }" ng-if="nav.DatabaseStatus == 1"
-            ng-click="nav.newDbQuery($event)"
-        class="sub-functions-icons">
+      </a>
+      <ul>
+        <li ng-class="{active: nav.backandstorage.currentState == 'dbQueries.newQuery' }" ng-if="nav.DatabaseStatus == 1"
+            class="sub-objects-icons">
+          <a ng-click="nav.newDbQuery($event)">
             <i class="ba-icon-new-query"></i>
             <span>New Query</span>
+          </a>
         </li>
-      </ul>
-      <ul class="scrollbar ex4">
-        <li ng-class="{active: nav.state == 'dbQueries.query'}" ng-repeat="query in nav.queries"
-            ng-click="nav.showDbQuery($event, query)"
-            class="sub-functions-icons">
-            <i class="ti-write"></i>
-            <span>{{query.name}}</span>
-        </li>
+
+        <ul>
+          <li ng-class="{active: query.iD == nav.stateparam.queryId}" ng-repeat="query in nav.queries"
+              class="sub-objects-icons">
+            <a ng-click="nav.showDbQuery($event, query)">
+              <i class="ti-write"></i>
+              <span>{{query.name}}</span>
+            </a>
+          </li>
+        </ul>
       </ul>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState.includes('Jobs'), disabled: nav.DatabaseStatus != 1}"
-        ng-click="showCronJobs = !showCronJobs"
-        class="open">
-        <img src="assets/images/menu/icon-cron/icon-cron.png"
-             srcset="assets/images/menu/icon-cron/icon-cron@2x.png 2x,
-             assets/images/menu/icon-cron/icon-cron@3x.png 3x"
-             class="icon-cron">
-        <span>Cron Jobs</span>
+    <li ng-class="{disabled: nav.DatabaseStatus != 1}"
+        class="open-structure">
+      <a href="">
+        <i class="fontello-icon-cron front-icons"></i>
+        <span style="padding-left:12px;">Cron Jobs</span>
         <i class="glyphicon glyphicon-cron"
-         ng-class="showCronJobs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
-      <ul ng-show="showCronJobs">
-        <li ng-class="{active: false }"
-            class="sub-functions-icons"
-            ng-click="nav.goTo($event, 'cronJobs.new')">
+           ng-class="showCronJobs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.backandstorage.currentState == 'cronJobs.new' }"
+            class="sub-objects-icons">
+          <a ng-click="nav.goTo($event, 'cronJobs.new')">
             <i class="ba-icon-new-query"></i>
             <span>New Job</span>
+          </a>
         </li>
-        <li ng-class="{active: nav.state == 'cronJobs'}" ng-repeat="cronJob in nav.cronJobs track by cronJob.name"
-            ng-click="nav.showCronJob($event, cronJob)"
-            class="sub-functions-icons">
-            <span  class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>
-            <span>{{cronJob.name}}</span>
+        <li ng-class="{active: cronJob.iD == nav.stateparam.jobId}" ng-repeat="cronJob in nav.cronJobs track by cronJob.name"
+            class="sub-objects-icons">
+          <a ng-click="nav.showCronJob($event, cronJob)">
+            <span class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>
+            <span style="margin-left: 14px;">{{cronJob.name}}</span>
+          </a>
         </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}"
-        ng-click="nav.goTo($event, 'log.requests')">
-      <img src="assets/images/menu/icon-api-log/icon-api-log.png"
-           srcset="assets/images/menu/icon-api-log/icon-api-log@2x.png 2x,
-             assets/images/menu/icon-api-log/icon-api-log@3x.png 3x"
-           class="icon-api-log">
+    <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
+      <a ng-click="nav.goTo($event, 'log.requests')">
+        <i class="fontello-icon-api-log_2 front-icons"></i>
         <span>API Log</span>
+      </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}"
-        ng-click="nav.goTo($event, 'log.console')">
-      <img src="assets/images/menu/icon-console-log/icon-console-log.png"
-           srcset="assets/images/menu/icon-console-log/icon-console-log@2x.png 2x,
-             assets/images/menu/icon-console-log/icon-console-log@3x.png 3x"
-           class="icon-console-log">
+    <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}">
+      <a ng-click="nav.goTo($event, 'log.console')">
+        <i class="fontello-icon-console-log front-icons"></i>
         <span>Console Log</span>
+      </a>
     </li>
   </ul>
 </div>

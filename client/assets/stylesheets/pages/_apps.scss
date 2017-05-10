@@ -7,31 +7,88 @@
   width: 56%;
   min-width: 204px;
   li {
-    height: 60px;
+    a{
+      //The importants are there to override the nav classes in place, this is for the new UI
+      padding: 0 !important;
+      i{
+        font-size: 16px !important;
+        margin-right: 0px !important;
+        width: auto !important;
+        color: #626262;
+      }
+      .status{
+        top:22px !important;
+        left:18px !important;
+      }
+    }
+    a:hover{
+      background-color: #0f0f0f;
+      border-color: transparent;
+    }
+    a:focus{
+      background-color: #0f0f0f;
+      border-color: transparent;
+    }
+
+    //height: 60px !important;
     cursor: pointer;
-    @include transition(all .2s ease-in-out);
     ul {
       list-style-type: none;
-      @include transition(all .2s ease-in-out);
+      li{
+        padding:0 !important;
+      }
     }
     ul.ng-show {
       height: 100%;
     }
   }
   .sub-functions-icons {
-    i {
-      padding-left: 20px;
-    }
-    span {
-      padding-left: 7px;
+    a {
+      i {
+        padding-left:10px;
+      }
+      span {
+        padding-left: 7px;
+      }
     }
   }
-  li.open {
+  .sub-objects-icons {
+    a {
+      i {
+        padding-left:20px;
+      }
+      span {
+        padding-left: 7px;
+      }
+    }
+  }
+  li.open-structure {
     display: inline-block;
     width: 100%;
     height: auto;
     i.objects {
-      padding-left: 35px;
+      padding-left: 23.5px;
+    }
+  }
+  li.open{
+    a{
+      background-color: #0f0f0f;
+      border-color: transparent;
+    }
+    a:hover{
+      background-color: #0f0f0f !important;
+      border-color: transparent;
+    }
+    a:focus{
+      background-color: #0f0f0f;
+      border-color: transparent;
+    }
+
+  }
+  li:hover{
+    a{
+      background-color: #0f0f0f;
+      border-color: transparent;
     }
   }
   li.open:after{
@@ -40,11 +97,18 @@
   li.active {
     border-right: solid #f66731;
     background-color: #0f0f0f;
-    span {
-      color: #ffffff
+    a {
+      background-color: #0f0f0f;
+      span {
+        color: #ffffff
+      }
     }
   }
   li:hover {
+    a{
+      background-color: #0f0f0f;
+      width: 100%;
+    }
     background-color: #0f0f0f;
     width: 100%;
   }
@@ -52,6 +116,10 @@
   li:focus {
     background-color: #0f0f0f;
     width: 100%;
+    a{
+      background-color: #0f0f0f;
+      width: 100%;
+    }
   }
   span {
     padding-left: 15px;
@@ -71,24 +139,80 @@
 .primary-navbar {
   height: 100vw;
   .database {
-    span {
-      margin-left: 9px;
+    @media (min-width: 1700px) {
+      span {
+        margin-left: 5px;
+      }
+      i {
+        margin-left: 32%;
+      }
     }
+    @media (max-width: 1620px) {
+      span {
+        margin-left: 8px;
+      }
+      i {
+        margin-left: 33%;
+      }
+    }
+
   }
   .functions {
-    span {
-      padding-left: 0px !important;
+    @media (min-width: 1700px) {
+      span {
+        padding-left: 0px !important;
+      }
+      i {
+        margin-left: 28%;
+      }
     }
+    @media (max-width: 1620px) {
+      span {
+        padding-left: 0px !important;
+      }
+      i {
+        margin-left: 32%;
+      }
+    }
+
   }
   .security {
-    span {
-      padding-left: 31px;
+    @media (min-width: 1700px) {
+      span {
+        padding-left: 24px;
+      }
+      i {
+        margin-left: 28%;
+      }
     }
+    @media (max-width: 1620px) {
+      span {
+        padding-left: 28px;
+      }
+      i {
+        margin-left: 32%;
+      }
+    }
+
   }
   .admin {
-    span {
-      padding-left: 5px !important;
+    @media (min-width: 1620px) {
+      span {
+        padding-left: 0 !important;
+      }
+      i{
+        margin-left: 31%;
+      }
     }
+    @media (max-width: 1620px) {
+      span {
+        padding-left: 7px !important;
+      }
+      i{
+        margin-left: 35%;
+      }
+    }
+
 
   }
 }
@@ -329,10 +453,10 @@
       position: relative;
       top: 5%;
     }
-    img {
+    i {
       position: relative;
       left: 36%;
-      margin-top: 20px;
+      margin-top: 15px;
       @media (min-width: 1320px) {
         left: 38%;
       }
@@ -511,7 +635,7 @@
       & > div {
         margin-bottom: 15px;
         width: 100%;
-        img {
+        i{
           float: left;
           max-width: 30px;
           margin-right: 10px;
@@ -533,14 +657,14 @@
     width: 220px;
     margin: 0 auto;
     display: grid;
-    img {
+    i {
       margin-left: 39%;
     }
     @media (max-width: $screen-md) {
       padding-bottom: 20px;
       text-align: center;
       width: 100%;
-      img {
+      i {
         display: block;
         margin: 0 auto;
         margin-bottom: 10px;
@@ -762,6 +886,7 @@
   }
   .tabs {
     height: 129px;
+    padding-top: 25%;
   }
   li.active {
     border-right: solid #f66731;
@@ -902,6 +1027,9 @@
   text-align: center;
   margin-left: 41px;
   height: 50px;
+  @media (min-width: 1700px) {
+    margin-left: 37px;
+  }
 }
 
 .backand-header {
@@ -909,14 +1037,9 @@
   text-align: center;
   height: 50px;
   width: 110px;
+  padding-top: 7px;
 }
 
-.bcknd-logo {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  margin-top: 7px;
-}
 
 .platform-sprite-icon {
   object-fit: none;
@@ -1031,7 +1154,6 @@
 
 .main-icons {
   margin-left: 34%;
-  margin-top: 28px;
   margin-bottom: 10px;
 
 }
@@ -1198,10 +1320,6 @@
   object-fit: contain;
 }
 
-.ba-icon-general {
-  color: #5f5f5f;
-  padding-left: 19px;
-}
 .chevron-right {
   width: 10px;
   height: 16px;
@@ -1211,23 +1329,31 @@
 }
 .glyphicon-chevron-down{
   color: #626262;
-  margin-left: 32%;
+  right: -46px;
 }
 .glyphicon-chevron-left{
   color: #626262;
-  margin-left: 32%;
+  left: 24%;
 }
 .glyphicon-cron{
   color: #626262;
-  margin-left: 26%;
+  right: -50px;
+}
+.glyphicon-hosting{
+  right: -63px;
 }
 .glyphicon-query{
   color: #626262;
-  margin-left: 31%;
+  right: -63px;
 }
 .glyphicon-docs{
   color: #626262;
-  margin-left: 23%;
+}
+.glyphicon-logs{
+  right: -61px;
+}
+.glyphicon-billing{
+  right: -75px;
 }
 .ti-star{
   margin-left: 15px;
@@ -1266,26 +1392,151 @@
   margin-left: 19px;
 }
 .ba-icon-quries{
-margin-left: 17px;
-font-size: 20px;
+margin-left: 21px;
+font-size: 17px;
 color: #626262;
 }
 .ba-icon-docs-and-api {
-  padding-left: 19px;
-  font-size: larger;
   vertical-align: middle;
   color: #626262;
+  margin-left: 22px;
+  font-size: initial;
 }
 .ba-icon-configuration{
   margin-left: 20px;
 }
 .ti-money{
   font-size:18px;
-  margin-left: 17px;
+  margin-left: 25px;
 }
 .ba-icon-admins{
   font-size: 17px;
+  margin-left: 23px;
 }
 .ba-icon-server-side-exceptions{
   font-size: 18px;
+}
+.glyphicon-objects{
+  right: -62px;
+}
+.sprite-menu {
+  background-image: url(../assets/images/menu/spritesheet.png);
+  background-repeat: no-repeat;
+  display: block;
+}
+.ba-icon-general{
+  margin-left: 24px;
+}
+.sprite-backand-logo {
+  width: 32px;
+  height: 32px;
+  background-position: -5px -5px;
+  margin-left: 38px;
+}
+
+.sprite-icon-admin {
+  width: 36px;
+  height: 42px;
+  background-position: -47px -5px;
+}
+
+.sprite-icon-db {
+  width: 39px;
+  height: 42px;
+  background-position: -5px -57px;
+}
+
+.sprite-icon-functions {
+  width: 42px;
+  height: 42px;
+  background-position: -54px -57px;
+}
+
+.sprite-icon-security {
+  width: 42px;
+  height: 42px;
+  background-position: -93px -5px;
+}
+.fontello-icon-storage{
+  margin-left: 20px;
+}
+.fontello-icon-functions{
+  font-size: 12px !important;
+}
+.fontello-icon-configuration_2{
+  margin-left: 22px;
+}
+.fontello-icon-cron{
+  margin-left:18px;
+}
+.ba-icon-database{
+  margin-left:25px;
+}
+.sprite-main-page {
+  background-image: url(../assets/images/apps_page/spritesheet.png);
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.sprite-1 {
+  width: 43px;
+  height: 48px;
+  background-position: -5px -5px;
+}
+
+.sprite-2 {
+  width: 41px;
+  height: 38px;
+  background-position: -58px -5px;
+}
+
+.sprite-3 {
+  width: 35px;
+  height: 45px;
+  background-position: -109px -5px;
+}
+
+
+.sprite-chevron-right {
+  width: 10px;
+  height: 16px;
+  background-position: -100px -60px;
+  margin-left: 40px;
+  margin-top: 18px;
+}
+
+.sprite-icon-docs {
+  width: 56px;
+  height: 50px;
+  background-position: -100px -86px;
+}
+
+.sprite-icon-getting-started {
+  width: 55px;
+  height: 56px;
+  background-position: -154px -5px;
+}
+
+.sprite-icon-small-faas {
+  width: 28px;
+  height: 26px;
+  background-position: -5px -71px;
+}
+
+.sprite-icon-small-security {
+  width: 24px;
+  height: 32px;
+  background-position: -166px -71px;
+}
+
+.sprite-icon-small-serverlesss {
+  width: 30px;
+  height: 34px;
+  background-position: -5px -113px;
+}
+
+.sprite-icon-tutorials {
+  width: 60px;
+  height: 56px;
+  background-position: -166px -113px;
 }
