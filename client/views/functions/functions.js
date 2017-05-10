@@ -21,7 +21,6 @@
       self.appName = AppsService.appName = $state.params.appName;
       //enable here the rules tab only for 'backandUsers'
       RulesService.appName = self.appName;
-      RulesService.tableId = 15;
       RulesService.tableName = CONSTS.rootObject;
       self.id = $stateParams.functionId;
       RulesService.getRootObjectId().then(function(id){
