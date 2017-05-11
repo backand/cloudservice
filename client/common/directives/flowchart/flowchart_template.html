@@ -75,11 +75,12 @@
 
     <image ng-click="onEditFieldClick(node.name())"
            class="add-field-icon"
-           xlink:href="../../assets/images/flowchart/add_icon.png"
+           xlink:href="../../assets/images/flowchart/plus.jpg"
            ng-attr-x="{{node.width() - 33}}"
            y="7"
            height="24"
            width="24"/>
+
     <g ng-repeat="field in node.fields">
       <g ng-switch on="field.type" class="node-field">
         <rect

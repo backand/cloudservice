@@ -33,7 +33,7 @@
 
     }());
     self.currentState = $state.current.name;
-    self.appType = 1;
+    self.appType = 2;
     self.changeAppType = function (type) {
       switch (type){
         case 'serverless':
@@ -159,22 +159,22 @@
         if(app.PaymentLocked || app.PaymentStatus === 1){
           $modal.open({
             templateUrl: 'views/apps/billing_portal.html',
-            controller: 'BillingPortalController as vm',
+            controller: 'BillingPortalController as vm'
           });
           $modal.appName = app.Name;
           self.appSpinner[app.Name] = false;
         } else {
           self.backandstorage.showSecondaryAppNav = true;
           self.setAppType(app.ProductType);
-        //  if($localStorage.backand[app.Name].currentState) {
-        //    var currentstate = $localStorage.backand[app.Name].currentState;
-        //    $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
-        //      $state.go(currentstate);
-        //    });
-        //  }
-        //  else {
+          if($localStorage.backand[app.Name].currentState !== 'apps.index') {
+            var currentstate = $localStorage.backand[app.Name].currentState;
+            $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
+              $state.go(currentstate);
+            });
+          }
+          else {
             $state.go('app', {appName: app.Name}, {reload: true});
-        //  }
+          }
         }
       }
       else if (AppsService.isExampleApp(app)) {

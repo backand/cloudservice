@@ -6,6 +6,7 @@
   background-color: #1b1b1b;
   width: 56%;
   min-width: 204px;
+  z-index: 41;
   li {
     a{
       //The importants are there to override the nav classes in place, this is for the new UI
@@ -390,6 +391,7 @@
     font-style: italic;
     text-align: left;
     color: #aaaaaa;
+    text-indent: 10px;
   }
   .app-searchbox:focus{
    outline: none;
@@ -403,18 +405,6 @@
     font-size: 14px;
     z-index: 10;
     background-color: white;
-  }
-  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    padding-left: 7px;
-  }
-  ::-moz-placeholder { /* Firefox 19+ */
-    padding-left: 7px;
-  }
-  :-ms-input-placeholder { /* IE 10+ */
-    padding-left: 7px;
-  }
-  :-moz-placeholder { /* Firefox 18- */
-    padding-left: 7px;
   }
   .app-name-option:hover {
     background-color: #e3e3e3;
@@ -430,15 +420,18 @@
   }
   span {
     font-size: 14px;
-
+    margin-left: 2%;
   }
   .app-type-container {
-    height: 100px;
+    height: 110px;
     background-color: #ffffff;
     border: solid 1px #e5e5e5;
     margin-left: 10px;
     width: 30%;
     cursor: pointer;
+    @media (min-width: 1326px){
+      height: 100px;
+    }
     .glyphicon-ok {
       position: absolute;
       left: 83%;
@@ -458,10 +451,7 @@
       left: 36%;
       margin-top: 15px;
       @media (min-width: 1320px) {
-        left: 38%;
-      }
-      @media (min-width: 1320px) {
-        left: 41%;
+        left: 39%;
       }
     }
   }
@@ -1020,6 +1010,9 @@
   img {
     margin-top: 16px;
   }
+  .sprite-backand-logo{
+    margin-left: 35px;
+  }
 }
 
 .backand-logo {
@@ -1348,6 +1341,14 @@
 }
 .glyphicon-docs{
   color: #626262;
+  right:-42px;
+}
+.btn-validate{
+  background-color: #656565;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  color: #ffffff;
 }
 .glyphicon-logs{
   right: -61px;
@@ -1370,6 +1371,7 @@
   padding: 0px;
   .nav-container{
     width:100%;
+
    .getting-started-items{
      display: inline-flex;
    }
@@ -1399,8 +1401,11 @@ color: #626262;
 .ba-icon-docs-and-api {
   vertical-align: middle;
   color: #626262;
-  margin-left: 22px;
+  margin-left: 23px;
   font-size: initial;
+}
+.ba-icon-documentation{
+  margin-left: 23px;
 }
 .ba-icon-configuration{
   margin-left: 20px;
@@ -1471,6 +1476,9 @@ color: #626262;
 }
 .ba-icon-database{
   margin-left:25px;
+}
+.ba-icon-kickstart-tutorial{
+  margin-left:22.5px;
 }
 .sprite-main-page {
   background-image: url(../assets/images/apps_page/spritesheet.png);
