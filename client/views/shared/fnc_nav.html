@@ -11,64 +11,18 @@
       <div spinner-key="loading-app" us-spinner="{length:10, radius: 10, color:white}"
            style="position: relative; color: white !important; left:-100px; top:30px;"></div>
     </li>
-    <li ng-class="{active: nav.state == 'playground.orm'}" class="open-structure">
-      <a href="">
-        <i class="ba-icon-docs-and-api front-icons"></i>
-        <span style="padding-left: 12px">Docs & API</span>
-        <i class="glyphicon glyphicon-docs"
-           ng-class="showDocs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+
+    <li ng-class="{active: nav.backandstorage.currentState == 'docs.platform_select_kickstart'}">
+      <a ng-click="nav.goTo($event, 'docs.platform_select_kickstart')">
+        <i class="ba-icon-kickstart-tutorial front-icons"></i>
+        <span style="padding-left: 13px;">Getting Started</span>
       </a>
-      <ul>
-        <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
-            class="sub-objects-icons">
-          <a ng-click="nav.goToLocation('https://www.backand.com/app-examples')">
-            <i class="ba-icon-documentation"></i>
-            <span>Examples</span>
-          </a>
-        </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'docs.platform_select_kickstart'}"
-            class="sub-objects-icons">
-          <a ng-click="nav.goTo($event, 'docs.platform_select_kickstart')">
-            <i class="ba-icon-kickstart-tutorial"></i>
-            <span>Kickstart Tutorials</span>
-          </a>
-        </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'docs.platform_select_existing'}"
-            class="sub-objects-icons">
-          <a ng-click="nav.goTo($event, 'docs.platform_select_existing')">
-            <i class="ba-icon-kickstart-tutorial"></i>
-            <span>Existing App Tutorials</span>
-          </a>
-        </li>
-        <li ng-class="{active: nav.state == 'docs.realtime'}"
-            class="sub-objects-icons">
-          <a ng-click="nav.goTo($event, 'docs.realtime')">
-            <i class="ba-icon-documentation"></i>
-            <span>Realtime Database</span>
-          </a>
-        </li>
-        <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
-            class="sub-objects-icons">
-          <a ng-click="nav.goToLocation('http://docs.backand.com')">
-            <i class="ba-icon-documentation"></i>
-            <span>Documentation</span>
-          </a>
-        </li>
-        <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}"
-            class="sub-objects-icons">
-          <a ng-click="nav.goTo($event, 'playground.show')">
-            <i class="ba-icon-rest-api-playground"></i>
-            <span>REST API Playground</span>
-          </a>
-        </li>
-        <li ng-class="{active: nav.state == 'playground.todo'}" ng-show="nav.isExampleApp()"
-            class="sub-objects-icons">
-          <a ng-click="nav.goToAlways($event, 'playground.todo')">
-            <i class="ba-icon-todo-example"></i>
-            <span>Todo Example</span>
-          </a>
-        </li>
-      </ul>
+    </li>
+    <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}">
+      <a ng-click="nav.goToLocation('http://docs.backand.com')">
+        <i class="ba-icon-documentation front-icons"></i>
+        <span>Docs</span>
+      </a>
     </li>
     <li ng-class="{disabled: nav.DatabaseStatus != 1}"
         class="open-structure">
@@ -122,7 +76,8 @@
            ng-class="showQueries == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.backandstorage.currentState == 'dbQueries.newQuery' }" ng-if="nav.DatabaseStatus == 1"
+        <li ng-class="{active: nav.backandstorage.currentState == 'dbQueries.newQuery' }"
+            ng-if="nav.DatabaseStatus == 1"
             class="sub-objects-icons">
           <a ng-click="nav.newDbQuery($event)">
             <i class="ba-icon-new-query"></i>
@@ -157,7 +112,8 @@
             <span>New Job</span>
           </a>
         </li>
-        <li ng-class="{active: cronJob.iD == nav.stateparam.jobId}" ng-repeat="cronJob in nav.cronJobs track by cronJob.name"
+        <li ng-class="{active: cronJob.iD == nav.stateparam.jobId}"
+            ng-repeat="cronJob in nav.cronJobs track by cronJob.name"
             class="sub-objects-icons">
           <a ng-click="nav.showCronJob($event, cronJob)">
             <span class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>

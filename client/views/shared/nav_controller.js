@@ -40,7 +40,15 @@
       usSpinnerService.spin('loading-app');
       if($localStorage.backand[self.currentAppName])
         $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;
-      $state.go('app', {appName: self.currentAppName}, {reload: true});
+      if($localStorage.backand[self.currentAppName].currentState !== 'apps.index') {
+        var currentState = $localStorage.backand[self.currentAppName].currentState;
+        $state.go('app', {appName: self.currentAppName}, {reload: true}).then(function(){
+          $state.go(currentState);
+        });
+      }
+      else {
+        $state.go('app', {appName: self.currentAppName}, {reload: true});
+      }
     };
     function clearTables() {
       self.tables = [];

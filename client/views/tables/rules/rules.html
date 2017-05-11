@@ -46,10 +46,14 @@
 
               <ol class="rules-names-list" ng-show="subitem.visible">
 
-                <li ng-repeat="rule in subitem.items" ng-class="{'active' : active}">
-
-                  <a href="" ng-click="rules.goToAction(rule.name)" class="rule-name">
-                  {{ ::rule.name}}</a>
+                <li ng-repeat="rule in subitem.items" class="li-actions" ng-class="{'active' : active}">
+                  <div class="rule-container">
+                    <span class="rule-index">{{$index}}</span>
+                    <div class="rule-border"></div>
+                  <span  ng-click="rules.goToAction(rule.name)" class="rule-name">
+                  {{ ::rule.name}}</span>
+                  </div>
+                  <div class="side-triangle"></div>
                 </li>
 
               </ol>

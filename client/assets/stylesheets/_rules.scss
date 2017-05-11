@@ -173,7 +173,7 @@
     line-height: 18px;
     width: 24px;
     height: 24px;
-    padding-bottom: 0px;
+    padding-bottom: 22px;
     right:10px;
     position: absolute;
     top:7px;
@@ -245,6 +245,38 @@
   vertical-align: middle;
 }
 
+.li-actions {
+  display: flex;
+  .rule-container {
+    display: inline-flex;
+    width: 276px;
+    height: 37px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    background-color: #f26724;
+    border: solid 1px #e1e1e1;
+    color: white;
+    font-family: "Open Sans", sans-serif;
+
+    .rule-index {
+      padding-left: 8px;
+      padding-right: 8px;
+      padding-top: 6px;
+    }
+    .rule-border {
+      width: 1px;
+      background-color: white;
+      mix-blend-mode: soft-light;
+    }
+  }
+
+  .side-triangle {
+    border-left: 10px solid #f26724;
+    border-top: 18.5px solid transparent;
+    border-bottom: 18.5px solid transparent;
+    margin-left: -2px;
+  }
+}
 .request-url-copy {
   margin: 2px;
   vertical-align: middle;
