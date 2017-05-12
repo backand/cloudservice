@@ -67,10 +67,18 @@
         </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'erd_model'}" href="">
+    <li ng-if="nav.app.connectionSource === 'local'"
+        ng-class="{active: nav.backandstorage.currentState == 'erd_model'}" href="">
       <a href="" ng-click="nav.goToModel($event)">
         <i class="fontello-icon-model front-icons"></i>
         <span>Model</span>
+      </a>
+    </li>
+    <li ng-if="nav.app.connectionSource !== 'local'"
+        ng-class="{active: nav.backandstorage.currentState == 'tables.notables'}"  href="">
+      <a ui-sref="tables.notables">
+        <i class="ba-icon-model front-icons"></i>
+        <span>Sync with Database</span>
       </a>
     </li>
     <li class="open-structure"
@@ -88,13 +96,6 @@
             <span>New Object</span>
           </a>
         </li>
-        <li ng-if="nav.app.connectionSource !== 'local'" href="">
-          <a ui-sref="tables.notables">
-            <i class="ba-icon-model objects"></i>
-            <span>Sync with Database</span>
-          </a>
-        </li>
-
         <li  ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"">
           <a ng-click="nav.showTable($event, table)">
             <i class="ba-icon-todo objects"></i>
