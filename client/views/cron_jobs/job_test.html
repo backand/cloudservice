@@ -1,19 +1,21 @@
 <h3>Test Cron</h3>
 <br/>
 <form>
+  <div class="save-buttons">
   <button type="button"
-          class="btn btn-success btn-lg btn-w-lg"
+          class="btn btn-success btn-lg"
           data-style="expand-right" ladda="cronJobs.loadingTest"
           ng-disabled="!cronJobs.allowTest()"
           ng-click="cronJobs.test()">Test
   </button>
   <button type="button"
-          style=""
-          class="btn btn-success btn-lg btn-w-lg"
+          style="margin-left: 10px"
+          class="btn btn-success btn-lg"
           data-style="expand-right" ladda="cronJobs.loading || cronJobs.loadingTest"
           ng-disabled="cronJobs.jobForm.$invalid"
           ng-click="cronJobs.saveJob(true)">Save & Test
   </button>
+  </div>
   <div ng-if="!cronJobs.allowTest()">** Must save first to enable Test cron job</div>
 </form>
 

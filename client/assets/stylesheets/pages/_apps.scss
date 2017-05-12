@@ -8,25 +8,25 @@
   min-width: 204px;
   z-index: 41;
   li {
-    a{
+    a {
       //The importants are there to override the nav classes in place, this is for the new UI
       padding: 0 !important;
-      i{
+      i {
         font-size: 16px !important;
         margin-right: 0px !important;
         width: auto !important;
         color: #626262;
       }
-      .status{
-        top:22px !important;
-        left:18px !important;
+      .status {
+        top: 22px !important;
+        left: 18px !important;
       }
     }
-    a:hover{
+    a:hover {
       background-color: #0f0f0f;
       border-color: transparent;
     }
-    a:focus{
+    a:focus {
       background-color: #0f0f0f;
       border-color: transparent;
     }
@@ -35,8 +35,8 @@
     cursor: pointer;
     ul {
       list-style-type: none;
-      li{
-        padding:0 !important;
+      li {
+        padding: 0 !important;
       }
     }
     ul.ng-show {
@@ -46,7 +46,7 @@
   .sub-functions-icons {
     a {
       i {
-        padding-left:10px;
+        padding-left: 10px;
       }
       span {
         padding-left: 7px;
@@ -56,7 +56,7 @@
   .sub-objects-icons {
     a {
       i {
-        padding-left:20px;
+        padding-left: 20px;
       }
       span {
         padding-left: 7px;
@@ -71,29 +71,29 @@
       padding-left: 23.5px;
     }
   }
-  li.open{
-    a{
+  li.open {
+    a {
       background-color: #0f0f0f;
       border-color: transparent;
     }
-    a:hover{
+    a:hover {
       background-color: #0f0f0f !important;
       border-color: transparent;
     }
-    a:focus{
+    a:focus {
       background-color: #0f0f0f;
       border-color: transparent;
     }
 
   }
-  li:hover{
-    a{
+  li:hover {
+    a {
       background-color: #0f0f0f;
       border-color: transparent;
     }
   }
-  li.open:after{
-    top:11%;
+  li.open:after {
+    top: 11%;
   }
   li.active {
     border-right: solid #f66731;
@@ -106,7 +106,7 @@
     }
   }
   li:hover {
-    a{
+    a {
       background-color: #0f0f0f;
       width: 100%;
     }
@@ -117,7 +117,7 @@
   li:focus {
     background-color: #0f0f0f;
     width: 100%;
-    a{
+    a {
       background-color: #0f0f0f;
       width: 100%;
     }
@@ -201,7 +201,7 @@
       span {
         padding-left: 0 !important;
       }
-      i{
+      i {
         margin-left: 31%;
       }
     }
@@ -209,19 +209,20 @@
       span {
         padding-left: 7px !important;
       }
-      i{
+      i {
         margin-left: 35%;
       }
     }
 
-
   }
 }
-.white-spinner{
-  div > div{
+
+.white-spinner {
+  div > div {
     color: white;
   }
 }
+
 .apps-container {
   width: 80%;
   height: auto;
@@ -232,7 +233,7 @@
   border: solid 1px #e5e5e5;
   position: absolute;
   @media (min-width: 1600px) {
-    width:66%;
+    width: 66%;
     left: 17%;
   }
   ul {
@@ -303,15 +304,17 @@
       position: relative;
       left: 1.7%;
     }
-    .app-name{
+    .app-name {
       padding-left: 20px;
       padding-top: 6px;
     }
   }
 }
-.apps-container.without{
-  top:155px;
+
+.apps-container.without {
+  top: 155px;
 }
+
 .newAppContainer {
   width: 90%;
   height: 240px;
@@ -377,7 +380,7 @@
 
 .search-area {
   display: grid;
-  margin-left:14%;
+  margin-left: 14%;
   .app-name-option {
     cursor: pointer;
   }
@@ -393,12 +396,12 @@
     color: #aaaaaa;
     text-indent: 10px;
   }
-  .app-searchbox:focus{
-   outline: none;
+  .app-searchbox:focus {
+    outline: none;
   }
   .search-results-container {
     position: absolute;
-    top:98%;
+    top: 98%;
     width: 248px;
     border: solid 1px #cbcbcb;
     font-family: "Open Sans", sans-serif;
@@ -429,7 +432,7 @@
     margin-left: 10px;
     width: 30%;
     cursor: pointer;
-    @media (min-width: 1326px){
+    @media (min-width: 1326px) {
       height: 100px;
     }
     .glyphicon-ok {
@@ -563,7 +566,7 @@
       font-weight: bolder;
     }
   }
-  .row{
+  .row {
     margin: 0px;
   }
 
@@ -625,7 +628,7 @@
       & > div {
         margin-bottom: 15px;
         width: 100%;
-        i{
+        i {
           float: left;
           max-width: 30px;
           margin-right: 10px;
@@ -778,12 +781,14 @@
 .starter-apps-container {
   display: inline-block;
 }
-.app{
-  .row{
-    margin-left:0px;
-    margin-right:0px;
+
+.app {
+  .row {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
+
 .backand-starter-app {
   width: 170px;
   height: 150px;
@@ -915,11 +920,13 @@
     color: #8f8f8f;
   }
 }
-.main-container{
-  .col-md-2{
+
+.main-container {
+  .col-md-2 {
     padding-left: 0px;
   }
 }
+
 .main-search {
   input {
     border: none;
@@ -932,12 +939,13 @@
     color: #b8b8b8;
   }
 }
-.without-jumbo{
+
+.without-jumbo {
   height: 277px;
   width: 100vw;
   background-color: #393939;
   .header {
-    position:relative;
+    position: relative;
     width: 80%;
     left: 10%;
     padding-top: 30px;
@@ -977,6 +985,7 @@
   }
 
 }
+
 .side-bar {
   display: inline-flex;
   width: 24.7%;
@@ -1010,7 +1019,7 @@
   img {
     margin-top: 16px;
   }
-  .sprite-backand-logo{
+  .sprite-backand-logo {
     margin-left: 35px;
   }
 }
@@ -1032,7 +1041,6 @@
   width: 110px;
   padding-top: 7px;
 }
-
 
 .platform-sprite-icon {
   object-fit: none;
@@ -1158,6 +1166,7 @@
   background-image: linear-gradient(#f26724, #f26724);
   background-blend-mode: color;
 }
+
 .app-2 {
   width: 41px;
   height: 38px;
@@ -1165,6 +1174,7 @@
   background-image: linear-gradient(#f26724, #f26724);
   background-blend-mode: color;
 }
+
 .app-3 {
   width: 35px;
   height: 45px;
@@ -1172,6 +1182,7 @@
   background-image: linear-gradient(#f26724, #f26724);
   background-blend-mode: color;
 }
+
 .icon-small-security {
   width: 24px;
   height: 48px;
@@ -1320,118 +1331,142 @@
   margin-left: 40px;
   margin-top: 18px;
 }
-.glyphicon-chevron-down{
+
+.glyphicon-chevron-down {
   color: #626262;
   right: -46px;
 }
-.glyphicon-chevron-left{
+
+.glyphicon-chevron-left {
   color: #626262;
   left: 24%;
 }
-.glyphicon-cron{
+
+.glyphicon-cron {
   color: #626262;
   right: -50px;
 }
-.glyphicon-hosting{
+
+.glyphicon-hosting {
   right: -63px;
 }
-.glyphicon-query{
+
+.glyphicon-query {
   color: #626262;
   right: -63px;
 }
-.glyphicon-docs{
+
+.glyphicon-docs {
   color: #626262;
-  right:-42px;
+  right: -42px;
 }
-.btn-validate{
+
+.btn-validate {
   background-color: #656565;
   font-family: "Open Sans", sans-serif;
   font-size: 15px;
   font-weight: bold;
   color: #ffffff;
 }
-.glyphicon-logs{
+
+.glyphicon-logs {
   right: -61px;
 }
-.glyphicon-billing{
+
+.glyphicon-billing {
   right: -75px;
 }
-.ti-star{
+
+.ti-star {
   margin-left: 15px;
   font-size: 22px;
   vertical-align: middle;
   color: #626262;
   line-height: 0.7;
 }
-.getting-started{
+
+.getting-started {
   vertical-align: middle;
   margin-left: -5px;
 }
-.side-bar-modified{
-  padding: 0px;
-  .nav-container{
-    width:100%;
 
-   .getting-started-items{
-     display: inline-flex;
-   }
-    i{
-      padding-top:20px;
+.side-bar-modified {
+  padding: 0px;
+  .nav-container {
+    width: 100%;
+
+    .getting-started-items {
+      display: inline-flex;
     }
-    span{
+    i {
+      padding-top: 20px;
+    }
+    span {
       padding-top: 23px;
     }
-    .backand-logo{
+    .backand-logo {
       margin: 0px;
-      .bcknd-logo{
+      .bcknd-logo {
         margin: 0px;
       }
     }
   }
 }
-.front-icons{
+
+.front-icons {
   color: #626262;
   margin-left: 19px;
 }
-.ba-icon-quries{
-margin-left: 21px;
-font-size: 17px;
-color: #626262;
+
+.ba-icon-quries {
+  margin-left: 21px;
+  font-size: 17px;
+  color: #626262;
 }
+
 .ba-icon-docs-and-api {
   vertical-align: middle;
   color: #626262;
   margin-left: 23px;
   font-size: initial;
 }
-.ba-icon-documentation{
+
+.ba-icon-documentation {
   margin-left: 23px;
 }
-.ba-icon-configuration{
+
+.ba-icon-configuration {
   margin-left: 20px;
 }
-.ti-money{
-  font-size:18px;
+
+.ti-money {
+  font-size: 18px;
   margin-left: 25px;
 }
-.ba-icon-admins{
+
+.ba-icon-admins {
   font-size: 17px;
   margin-left: 23px;
 }
-.ba-icon-server-side-exceptions{
+
+.ba-icon-server-side-exceptions {
   font-size: 18px;
 }
-.glyphicon-objects{
+
+.glyphicon-objects {
   right: -62px;
 }
+
 .sprite-menu {
   background-image: url(../assets/images/menu/spritesheet.png);
   background-repeat: no-repeat;
   display: block;
 }
-.ba-icon-general{
+
+.ba-icon-general {
   margin-left: 24px;
 }
+
 .sprite-backand-logo {
   width: 32px;
   height: 32px;
@@ -1462,24 +1497,31 @@ color: #626262;
   height: 42px;
   background-position: -93px -5px;
 }
-.fontello-icon-storage{
+
+.fontello-icon-storage {
   margin-left: 20px;
 }
-.fontello-icon-functions{
+
+.fontello-icon-functions {
   font-size: 12px !important;
 }
-.fontello-icon-configuration_2{
+
+.fontello-icon-configuration_2 {
   margin-left: 22px;
 }
-.fontello-icon-cron{
-  margin-left:18px;
+
+.fontello-icon-cron {
+  margin-left: 18px;
 }
-.ba-icon-database{
-  margin-left:25px;
+
+.ba-icon-database {
+  margin-left: 25px;
 }
-.ba-icon-kickstart-tutorial{
-  margin-left:22.5px;
+
+.ba-icon-kickstart-tutorial {
+  margin-left: 22.5px;
 }
+
 .sprite-main-page {
   background-image: url(../assets/images/apps_page/spritesheet.png);
   background-repeat: no-repeat;
@@ -1503,7 +1545,6 @@ color: #626262;
   height: 45px;
   background-position: -109px -5px;
 }
-
 
 .sprite-chevron-right {
   width: 10px;

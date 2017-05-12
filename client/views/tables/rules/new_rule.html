@@ -1,6 +1,6 @@
 
 <div ng-if="rules.action" class="row">
-<div ng-class="(rules.pageLayoutNewRule()) ? 'col-xs-8 col-md-9' : 'col-xs-12'">
+<div class="new-js-container" ng-class="(rules.pageLayoutNewRule()) ? 'col-xs-8 col-md-9 rule-container' : 'col-xs-12'">
   <div ng-cloak>
     <angled-window ng-show="rules.showJsCodeHelpDialog"
                    title="Readme - JavaScript Code"
@@ -16,7 +16,7 @@
         ng-model-options="{updateOn: 'default blur', debounce: {'default': 300, blur: 0}}">
     <div class="header row">
       <div class="col-lg-12 col-md-12 col-sm-12">
-      <div class="col-lg-9 col-md-9 col-sm-8">
+      <div class="col-lg-8 col-md-8 col-sm-7 rule-title">
         <div class="form-inline" name="rules.newRuleForm">
           <div class="form-group"
                ng-class="{'has-error': rules.newRuleForm.ruleName.$invalid}">
@@ -47,23 +47,26 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-3 col-sm-4">
-
+      <div class="col-lg-4 col-md-4 col-sm-5">
+        <input type="button" name="testCode"
+               ng-show="!rules.isNewAction && !rules.requestTestForm"
+               class="pull-right btn btn-edit btn-xs with-margin"
+               ng-click="rules.toggleTestForm()"
+               value="{{'Test ' + rules.mode.title}}">
         <input type="button" ng-show="rules.allowEditAction() && !rules.isNodeJS"
                 ng-click="rules.editAction()"
-                class="btn btn-primary pull-right with-margin"
+                class="btn btn-primary btn-validate pull-right with-margin"
           value="Edit {{rules.mode.title}}">
-        </input>
+
 
         <div ng-show="rules.editMode">
           <input type="button"
                  ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
-                 class="btn btn-default pull-right with-margin"
+                 class="btn btn-edit btn-default pull-right with-margin"
                  value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel' }}">
-          </input>
 
           <button ng-disabled="rules.newRuleForm.$invalid"
-                  class="btn btn-primary pull-right with-margin"
+                  class="btn btn-validate pull-right with-margin"
                   ladda="rules.saving" data-style="expand-right"
                   ng-show="!rules.isNodeJS">Save
           </button>
@@ -73,19 +76,11 @@
                  class="btn btn-primary pull-right with-margin"
                  data-style="expand-right"
                  value="Save Template">
-          </input>
+
         </div>
       </div>
       <br/>
 
-      <div class="col-xs-12">
-        <input type="button" name="testCode"
-               ng-show="!rules.isNewAction"
-               class="pull-right btn btn-success btn-xs with-margin"
-               ng-click="rules.toggleTestForm()"
-               value="{{ rules.requestTestForm ? '<< Hide Test' : 'Test ' +rules.mode.title + ' >>'}}">
-        </input>
-      </div>
       </div>
     </div>
 
@@ -362,9 +357,10 @@
           </div>
 
           <div class="modal-footer" ng-show="rules.action && (rules.editMode || rules.isNodeJS) ">
-            <button class="btn btn-primary"
+            <button class="btn btn-validate"
                     ng-disabled="rules.newRuleForm.$invalid"
                     ladda="rules.saving"
+                    style="margin-top: 0;"
                     data-style="expand-right"
                     ng-show="!rules.isNodeJS">Save
             </button>
@@ -376,7 +372,7 @@
             </input>
             <input type="button"
                    ng-hide="rules.isNodeJS"
-                   class="btn btn-default"
+                   class="btn btn-edit"
                    ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
                    value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">
             </input>

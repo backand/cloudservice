@@ -86,7 +86,7 @@
           AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
           AnalyticsService.track('create app', {app: appName});
           self.backandstorage.showSecondaryAppNav = true;
-          self.setAppType(appType);
+          self.setAppType(appType, appName);
           $rootScope.$broadcast('app-update', {app: appName});
           $state.go('docs.platform_select_kickstart', {appName: appName, newApp: true});
         })
@@ -102,16 +102,16 @@
           }
         });
     });
-    self.setAppType = function (type) {
+    self.setAppType = function (type, appName) {
       switch (type){
         case 1:
-          self.backandstorage.secondAppNavChoice = 'database';
+          $localStorage.backand[appName].secondAppNavChoice = 'database';
           break;
         case 2:
-          self.backandstorage.secondAppNavChoice  = 'functions';
+          $localStorage.backand[appName].secondAppNavChoice  = 'functions';
           break;
         case 3:
-          self.backandstorage.secondAppNavChoice  = 'security';
+          $localStorage.backand[appName].secondAppNavChoice  = 'security';
           break;
       }
     };
@@ -165,7 +165,7 @@
           self.appSpinner[app.Name] = false;
         } else {
           self.backandstorage.showSecondaryAppNav = true;
-          self.setAppType(app.ProductType);
+          self.setAppType(app.ProductType, app.name);
           if($localStorage.backand[app.Name].currentState !== 'apps.index') {
             var currentstate = $localStorage.backand[app.Name].currentState;
             $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
@@ -198,7 +198,7 @@
       //Check if the app is locked or suspended
       if(!payment) {
         self.backandstorage.showSecondaryAppNav = true;
-        self.setAppType(appType);
+        self.setAppType(appType, appName);
         $state.go('app.billingupgrade', {appName: appName});
       } else {
         $modal.open({
