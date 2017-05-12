@@ -127,8 +127,13 @@
       var spinnerName = 'loading-manage-'+ app.Name+'';
       usSpinnerService.spin(spinnerName);
 
+      if(!$localStorage.backand){
+        $localStorage.backand = {};
+      }
+
       if (!$localStorage.backand[app.Name]) {
-        $localStorage.backand[app.Name] = {}
+        $localStorage.backand[app.Name] = {};
+        self.backandstorage = $localStorage.backand[app.Name];
       }
 
       if (!$localStorage.backand[app.Name].isParseMigrationReady) {
@@ -164,12 +169,19 @@
           $modal.appName = app.Name;
           self.appSpinner[app.Name] = false;
         } else {
+          if(!self.backandstorage){
+            self.backandstorage = $localStorage.backand[app.Name]
+          }
+
           self.backandstorage.showSecondaryAppNav = true;
+
           self.setAppType(app.ProductType);
           if($localStorage.backand[app.Name].currentState !== 'apps.index') {
             var currentstate = $localStorage.backand[app.Name].currentState;
             $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
-              $state.go(currentstate);
+              if(currentstate){
+                $state.go(currentstate);
+              }
             });
           }
           else {

@@ -37,13 +37,18 @@
       }
     }());
     self.goToApp = function () {
-      usSpinnerService.spin('loading-app');
-      if($localStorage.backand[self.currentAppName])
+      //usSpinnerService.spin('loading-app');
+      $rootScope.$broadcast('app-load');
+      if($localStorage.backand[self.currentAppName]){
         $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;
-      if($localStorage.backand[self.currentAppName].currentState !== 'apps.index') {
+      }
+
+      if($localStorage.backand[self.currentAppName] && $localStorage.backand[self.currentAppName].currentState !== 'apps.index') {
         var currentState = $localStorage.backand[self.currentAppName].currentState;
         $state.go('app', {appName: self.currentAppName}, {reload: true}).then(function(){
-          $state.go(currentState);
+          if(currentState){
+            $state.go(currentState);
+          }
         });
       }
       else {

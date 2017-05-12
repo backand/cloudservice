@@ -87,6 +87,10 @@
       updateDefaultModelUse(self.currentAppName, true);
     });
 
+    $scope.$on('app-load', function(){
+      usSpinnerService.spin('loading-app');
+    });
+
     $scope.$watch(function () {
       return self.showIntercom;
     }, function (newVal, oldVal) {
