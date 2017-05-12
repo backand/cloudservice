@@ -95,7 +95,7 @@
 
     function updateDefaultModelUse(appName, force) {
 
-      if (self.backandstorage.secondAppNavChoice === 'database' && appName !== undefined) {
+      if (self.backandstorage && self.backandstorage.secondAppNavChoice === 'database' && appName !== undefined) {
         ModelService.usingDefaultSchema(appName, force)
           .then(function (result) {
             if(result) {

@@ -75,10 +75,14 @@
       if($stateParams.test == 'true'){
         self.requestTestForm = true;
       }
-      if ($localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
+      if ($localStorage.backand[self.appName] && $localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
         $localStorage.backand[self.appName].nodeJsShowHowItWorks = true;
       }
-      self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
+      self.showHowItWorks = false;
+      if($localStorage.backand[self.appName]){
+        self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
+      }
+
       if($stateParams.functionId > 0){
         
         RulesService.getRule($stateParams.functionId)
@@ -87,10 +91,14 @@
             self.ruleData = data;
           });
       }
-      if ($localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation === undefined) {
+      if ($localStorage.backand[self.appName] && $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation === undefined) {
         $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = false;
       }
-      self.showFirstTimeInstallation = $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation;
+
+      if($localStorage.backand[self.appName]){
+        self.showFirstTimeInstallation = $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation;
+      }
+
       setTestActionTitle();
       getRules();
       self.getActionTemplates();
@@ -1023,13 +1031,18 @@
     $scope.$watch(function() {
       return self.showHowItWorks;
     }, function (newVal, oldVal) {
-      $localStorage.backand[self.appName].nodeJsShowHowItWorks = newVal;
+      if($localStorage.backand[self.appName]){
+        $localStorage.backand[self.appName].nodeJsShowHowItWorks = newVal;
+      }
     });
 
     $scope.$watch(function() {
       return self.showFirstTimeInstallation;
     }, function (newVal, oldVal) {
-      $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = newVal;
+      if($localStorage.backand[self.appName]){
+        $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = newVal;
+      }
+
     });
 
     self.testData = function () {
