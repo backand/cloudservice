@@ -20,15 +20,12 @@
       self.showJumbo = LayoutService.showJumbo();
       self.showIntercom = LayoutService.loadShowIntercomConfig();
       displayStatus();
+      updateDefaultModelUse(self.currentAppName, false);
     }());
 
-
-
-    updateDefaultModelUse(self.currentAppName, false);
     $scope.$on('nav.secondAppNavChoice', function(){
       self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
     });
-
 
     $scope.$on('$stateChangeSuccess', function () {
 
@@ -90,6 +87,10 @@
       updateDefaultModelUse(self.currentAppName, true);
     });
 
+    $scope.$on('app-load', function(){
+      usSpinnerService.spin('loading-app');
+    });
+
     $scope.$watch(function () {
       return self.showIntercom;
     }, function (newVal, oldVal) {
@@ -98,7 +99,7 @@
 
     function updateDefaultModelUse(appName, force) {
 
-      if (appName !== undefined) {
+      if (self.backandstorage && self.backandstorage.secondAppNavChoice === 'database' && appName !== undefined) {
         ModelService.usingDefaultSchema(appName, force)
           .then(function (result) {
             if(result) {

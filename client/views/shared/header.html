@@ -43,9 +43,9 @@
                       ng-options="app.Name as app.Name for app in header.apps.list | orderBy:'Name'"
                       class="app-select">
               </select>
+              <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
+                   style="position: relative;left: 150px;top: -18px;"></div>
             </div>
-            <div us-spinner spinner-key="loading-app" us-spinner="{length:10, radius: 10}"
-                 style="position: relative;left: 150px;top: -18px;"></div>
           </div>
         </li>
 

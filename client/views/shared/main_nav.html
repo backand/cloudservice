@@ -1,10 +1,11 @@
 <div class="nav-wrapper">
   <ul id="nav2" collapse-nav>
-  	<li class="nav-header">
+  	<li class="nav-header" ng-click="nav.goTo($event, 'apps.index')">
   		    <!-- Logo -->
 
-      		<a ui-sref="apps.index" class="logo backand-logo">
-            <i class="sprite-menu sprite-backand-logo bcknd-logo"></i>
+      		<a class="logo backand-logo">
+            <img src="assets/images/apps_page/backand-logo/backand-logo.png"
+                 class="bcknd-logo">
     	   	</a>
 
     	<!-- needs to be put after logo to make it work -->
@@ -14,17 +15,17 @@
       		<span class="icon-bar"></span>
     	</div>
   	</li>
-  	<li ng-class="{active:
+    <li ng-class="{active:
   	nav.backandstorage.secondAppNavChoice == 'functions'}" class="functions tabs"
         ng-click="nav.showSecondarySideBar('functions')">
       <i class="sprite-menu sprite-icon-functions main-icons"></i>
-  			<span>Functions and Integrations</span>
-  	</li>
-    <li ng-class="{active:
+      <span>Functions & Integrations</span>
+    </li>
+  	<li ng-class="{active:
   	nav.backandstorage.secondAppNavChoice == 'database'}"  class="database tabs" ng-click="nav.showSecondarySideBar('database')" >
       <i class="sprite-menu sprite-icon-db main-icons"></i>
-      <span>Database</span>
-    </li>
+  			<span>Database</span>
+  	</li>
   	<li ng-class="{active:
   	nav.backandstorage.secondAppNavChoice == 'security'}" class="security tabs"
         ng-click="nav.showSecondarySideBar('security')">
@@ -35,8 +36,8 @@
   	<li ng-class="{active:
   	nav.backandstorage.secondAppNavChoice == 'admin'}" class="admin tabs"
         ng-click="nav.showSecondarySideBar('admin')">
-      <i class="main-icons sprite-menu sprite-icon-admin"></i>
-  			<span>Administration</span>
+      <i class="sprite-menu sprite-icon-admin main-icons"></i>
+  			<span>Admin</span>
   	</li>
   </ul>
  </div>

@@ -8,8 +8,18 @@
                 class="app-select">
         </select>
       </div>
-      <div spinner-key="loading-app" us-spinner="{length:10, radius: 10, color: white}"
-           style="position: relative; "></div>
+    </li>
+    <li ng-class="{active: nav.state == 'app.edit', disabled: nav.DatabaseStatus != 1}">
+      <a ng-click="nav.goTo($event, 'app.edit')">
+        <i class="ba-icon-general front-icons"></i>
+        <span>General</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'security.team', disabled: nav.DatabaseStatus != 1}">
+      <a ng-click="nav.goTo($event, 'security.team')">
+        <i class="ba-icon-admins front-icons"></i>
+        <span style="padding-left: 18px;">Team</span>
+      </a>
     </li>
     <li ng-class="{active: nav.backandstorage.currentState == 'hosting.hosting_tree'}"
         class="open-structure">
@@ -17,7 +27,7 @@
         <i class="fontello-icon-hosting front-icons"></i>
         <span>Hosting</span>
         <i class="glyphicon glyphicon-hosting"
-           ng-class="showHosting == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+           ng-class="showHosting == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
         <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}">
@@ -26,19 +36,13 @@
             <span>Configuration</span>
           </a>
         </li>
+        <li ng-class="{active: nav.backandstorage.currentState == 'hosting.files_tree'}">
+          <a ng-click="nav.goTo($event, 'hosting.files_tree')">
+            <i class="fontello-icon-storage front-icons"></i>
+            <span>Storage</span>
+          </a>
+        </li>
       </ul>
-    </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'hosting.files_tree'}">
-      <a ng-click="nav.goTo($event, 'hosting.files_tree')">
-        <i class="fontello-icon-storage front-icons"></i>
-        <span>Storage</span>
-      </a>
-    </li>
-    <li ng-class="{active: nav.state == 'app.edit', disabled: nav.DatabaseStatus != 1}">
-      <a ng-click="nav.goTo($event, 'app.edit')">
-        <i class="ba-icon-general front-icons"></i>
-        <span>General</span>
-      </a>
     </li>
     <li ng-class="{active: nav.backandstorage.currentState == 'app.configuration'}">
       <a ng-click="nav.goTo($event, 'app.configuration')">
@@ -54,19 +58,12 @@
              class="icon-constants">
                 <span>Enviroment Variables</span>
         </li>-->
-    <li ng-if="nav.DatabaseStatus == 1"
-        ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
-      <a ng-click="nav.goTo($event, 'database.show')">
-        <i class="ba-icon-database front-icons"></i>
-        <span>Database</span>
-      </a>
-    </li>
     <li class="open-structure">
       <a href="">
         <i class="ti-money front-icons"></i>
         <span>Billing</span>
         <i class="glyphicon glyphicon-billing"
-           ng-class="showBilling == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+           ng-class="showBilling == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
         <li ng-class="{active: nav.state == 'app.billing'}">
@@ -101,7 +98,7 @@
         <i class="fontello-icon-data-history-log front-icons"></i>
         <span>All Logs</span>
         <i class="glyphicon glyphicon-logs"
-           ng-class="showLogs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+           ng-class="showLogs == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
         <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">

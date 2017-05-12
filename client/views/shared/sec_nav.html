@@ -9,8 +9,6 @@
                   class="app-select">
           </select>
         </div>
-        <div us-spinner="{length:10, radius: 10, color: white}" spinner-key="loading-app"
-             style="position: relative;"></div>
       </div>
     </li>
     <li ng-class="{active: nav.backandstorage.currentState == 'security.auth'}">
@@ -31,12 +29,6 @@
         <span>Registered Users</span>
       </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'security.team', disabled: nav.DatabaseStatus != 1}">
-      <a ng-click="nav.goTo($event, 'security.team')">
-        <i class="ba-icon-admins front-icons"></i>
-        <span style="padding-left: 18px;">Team</span>
-      </a>
-    </li>
     <li ng-class="{active: nav.backandstorage.currentState == 'security.actions'}">
       <a ng-click="nav.goTo($event, 'security.actions')">
         <i class="fontello-icon-security-actions front-icons"></i>
@@ -47,12 +39,6 @@
       <a ng-click="nav.goTo($event, 'security.templates')">
         <i class="fontello-icon-console-log front-icons"></i>
         <span>Security Templates</span>
-      </a>
-    </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
-      <a ng-click="nav.goTo($event, 'log.requests')">
-        <i class="fontello-icon-api-log_2 front-icons"></i>
-        <span>API Log</span>
       </a>
     </li>
   </ul>

@@ -72,7 +72,12 @@
 
     self.getRootObjectId = function(){
       return self.getConfig(_rootObject).then(function(data){
-        return data.data.__metadata.id;
+        if(data.data){
+          return data.data.__metadata.id;
+        } else {
+          return null;
+        }
+
       })
     };
 
@@ -83,8 +88,11 @@
       //     ' order:"asc"}]&pageSize=200';
 
       return self.getRootObjectId().then(function(id){
-        var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + id + '}]&sort=[{fieldName:"actionType",' +
-            ' order:"asc"}]&pageSize=200';
+        if(!id){
+          id = -1;//this is a bug and need to check why
+          console.error('getRootObjectId is null');
+        }
+        var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + id + '}]&pageSize=200';
 
         return $http({
           method: 'GET',

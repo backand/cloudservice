@@ -127,8 +127,13 @@
       var spinnerName = 'loading-manage-'+ app.Name+'';
       usSpinnerService.spin(spinnerName);
 
+      if(!$localStorage.backand){
+        $localStorage.backand = {};
+      }
+
       if (!$localStorage.backand[app.Name]) {
-        $localStorage.backand[app.Name] = {}
+        $localStorage.backand[app.Name] = {};
+        self.backandstorage = $localStorage.backand[app.Name];
       }
 
       if (!$localStorage.backand[app.Name].isParseMigrationReady) {
@@ -164,12 +169,23 @@
           $modal.appName = app.Name;
           self.appSpinner[app.Name] = false;
         } else {
+          if(!self.backandstorage){
+            self.backandstorage = $localStorage.backand[app.Name]
+          }
+
           self.backandstorage.showSecondaryAppNav = true;
+<<<<<<< HEAD
           self.setAppType(app.ProductType, app.name);
+=======
+
+          self.setAppType(app.ProductType);
+>>>>>>> 54e5dfd3910cb12c8c30c72b6604dc24a7f03b16
           if($localStorage.backand[app.Name].currentState !== 'apps.index') {
             var currentstate = $localStorage.backand[app.Name].currentState;
             $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
-              $state.go(currentstate);
+              if(currentstate){
+                $state.go(currentstate);
+              }
             });
           }
           else {

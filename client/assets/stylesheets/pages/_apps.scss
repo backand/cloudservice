@@ -199,18 +199,27 @@
   .admin {
     @media (min-width: 1620px) {
       span {
-        padding-left: 0 !important;
+        padding-left: 24px !important;
       }
+
       i {
         margin-left: 31%;
+      }
+      i{
+        margin-left: 28%;
+
       }
     }
     @media (max-width: 1620px) {
       span {
-        padding-left: 7px !important;
+        padding-left: 28px !important;
       }
+
       i {
         margin-left: 35%;
+      }
+      i{
+        margin-left: 32%;
       }
     }
 

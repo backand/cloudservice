@@ -8,15 +8,19 @@
                 class="app-select">
         </select>
       </div>
-      <div spinner-key="loading-app" class="white-spinner" us-spinner="{length:10, radius: 10, color:white}"
-           style="position: relative; color: white; left:10px; top:0px;"></div>
+    </li>
+    <li ng-class="{active: nav.state == 'app.show'}">
+      <a ng-click="nav.goTo($event, 'app.show')">
+        <i class="fontello-icon-schema front-icons"></i>
+        <span>Dashboard</span>
+      </a>
     </li>
     <li ng-class="{active: nav.state == 'playground.orm'}" class="open-structure">
       <a href="">
         <i class="ba-icon-docs-and-api front-icons"></i>
         <span style="padding-left: 15px">Docs & API</span>
         <i class="glyphicon glyphicon-docs"
-           ng-class="showDocs == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+           ng-class="showDocs == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
         <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
@@ -37,7 +41,7 @@
             class="sub-objects-icons">
           <a ng-click="nav.goTo($event, 'docs.platform_select_existing')">
             <i class="ba-icon-kickstart-tutorial"></i>
-            <span>Existing App Tutorials</span>
+            <span>Existing App</span>
           </a>
         </li>
         <li ng-class="{active: nav.state == 'docs.realtime'}"
@@ -61,19 +65,20 @@
             <span>REST API Playground</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'playground.todo'}" ng-show="nav.isExampleApp()"
-            class="sub-objects-icons">
-          <a ng-click="nav.goToAlways($event, 'playground.todo')">
-            <i class="ba-icon-todo-example"></i>
-            <span>Todo Example</span>
-          </a>
-        </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'erd_model'}" href="">
+    <li ng-if="nav.app.connectionSource === 'local'"
+        ng-class="{active: nav.backandstorage.currentState == 'erd_model'}" href="">
       <a href="" ng-click="nav.goToModel($event)">
         <i class="fontello-icon-model front-icons"></i>
         <span>Model</span>
+      </a>
+    </li>
+    <li ng-if="nav.app.connectionSource !== 'local'"
+        ng-class="{active: nav.backandstorage.currentState == 'tables.notables'}"  href="">
+      <a ui-sref="tables.notables">
+        <i class="ba-icon-model front-icons"></i>
+        <span>Sync with Database</span>
       </a>
     </li>
     <li class="open-structure"
@@ -82,7 +87,7 @@
         <i class="fontello-icon-object front-icons"></i>
         <span>Objects</span>
         <i class="glyphicon glyphicon-objects"
-           ng-class="showObjects == true ? 'glyphicon-chevron-left' : 'glyphicon-chevron-down'"></i>
+           ng-class="showObjects == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul class="ex4" id="ex4" href="">
         <li ng-if="nav.app.connectionSource === 'local'" href="">
@@ -91,19 +96,41 @@
             <span>New Object</span>
           </a>
         </li>
-        <li ng-if="nav.app.connectionSource !== 'local'" href="">
-          <a ui-sref="tables.notables">
-            <i class="ba-icon-model objects"></i>
-            <span>Sync with Database</span>
-          </a>
-        </li>
-
         <li  ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"">
           <a ng-click="nav.showTable($event, table)">
             <i class="ba-icon-todo objects"></i>
             <span>{{table.name}}</span>
           </a>
         </li>
+      </ul>
+    </li>
+    <li ng-class="{disabled: nav.DatabaseStatus != 1}"
+        class="open-structure">
+      <a href="">
+        <i class="ba-icon-quries front-icons"></i>
+        <span>Queries</span>
+        <i class="glyphicon glyphicon-query"
+           ng-class="showQueries == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.backandstorage.currentState == 'dbQueries.newQuery' }"
+            ng-if="nav.DatabaseStatus == 1"
+            class="sub-objects-icons">
+          <a ng-click="nav.newDbQuery($event)">
+            <i class="ba-icon-new-query"></i>
+            <span>New Query</span>
+          </a>
+        </li>
+
+        <ul>
+          <li ng-class="{active: query.iD == nav.stateparam.queryId}" ng-repeat="query in nav.queries"
+              class="sub-objects-icons">
+            <a ng-click="nav.showDbQuery($event, query)">
+              <i class="ti-write"></i>
+              <span>{{query.name}}</span>
+            </a>
+          </li>
+        </ul>
       </ul>
     </li>
     <!--<li ng-class="{active: nav.backandstorage.currentState == 'db_model'}"
@@ -114,22 +141,51 @@
            class="icon-schema">
       <span>Schema</span>
     </li> -->
-    <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
-      <a ng-click="nav.goTo($event, 'log.requests')">
-        <i class="fontello-icon-api-log_2 front-icons"></i>
-        <span>API Log</span>
-      </a>
-    </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}">
-      <a ng-click="nav.goTo($event, 'log.console')">
-        <i class="fontello-icon-console-log front-icons"></i>
-        <span>Console Log</span>
-      </a>
-    </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'log.history'}">
-      <a ng-click="nav.goTo($event, 'log.history')">
+    <li class="open-structure">
+      <a href="">
         <i class="fontello-icon-data-history-log front-icons"></i>
-        <span>Data History Log</span>
+        <span>All Logs</span>
+        <i class="glyphicon glyphicon-logs"
+           ng-class="showLogs == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
+          <a ng-click="nav.goTo($event, 'log.requests')">
+            <i class="fontello-icon-api-log_2 front-icons"></i>
+            <span>API Log</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}">
+          <a ng-click="nav.goTo($event, 'log.console')">
+            <i class="fontello-icon-console-log front-icons"></i>
+            <span>Console Log</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.backandstorage.currentState == 'log.history'}">
+          <a ng-click="nav.goTo($event, 'log.history')">
+            <i class="fontello-icon-data-history-log front-icons"></i>
+            <span>Data History Log</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.state == 'log.exception', disabled: nav.DatabaseStatus != 1}">
+          <a ng-click="nav.goTo($event, 'log.exception')">
+            <i class="ba-icon-server-side-exceptions front-icons"></i>
+            <span>Server Exceptions</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.state == 'log.config', disabled: nav.DatabaseStatus != 1}">
+          <a ng-click="nav.goTo($event, 'log.config')">
+            <i class="ba-icon-configuration"></i>
+            <span>Configuration</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li ng-if="nav.DatabaseStatus == 1"
+        ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+      <a ng-click="nav.goTo($event, 'database.show')">
+        <i class="ba-icon-database front-icons"></i>
+        <span>Database Settings</span>
       </a>
     </li>
   </ul>
