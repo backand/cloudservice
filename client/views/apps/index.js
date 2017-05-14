@@ -174,12 +174,8 @@
           }
 
           self.backandstorage.showSecondaryAppNav = true;
-<<<<<<< HEAD
           self.setAppType(app.ProductType, app.name);
-=======
 
-          self.setAppType(app.ProductType);
->>>>>>> 54e5dfd3910cb12c8c30c72b6604dc24a7f03b16
           if($localStorage.backand[app.Name].currentState !== 'apps.index') {
             var currentstate = $localStorage.backand[app.Name].currentState;
             $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
