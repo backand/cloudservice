@@ -23,7 +23,7 @@
       padding-top: 8px;
     }
     input.btn-edit{
-      padding-left: 34px;
+      padding-left: 15px;
     }
   }
 }
@@ -254,6 +254,9 @@
   input.btn-edit{
     padding-left: 15px !important;
   }
+}
+.rule-no-right-padding{
+  padding-right: 0;
 }
 .actions-animate-show.ng-hide-add.ng-hide-add-active,
 .actions-animate-show.ng-hide-remove.ng-hide-remove-active {
