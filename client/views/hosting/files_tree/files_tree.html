@@ -9,10 +9,12 @@
     <div us-spinner spinner-key="loading" spinner-start-active="true"></div>
     <div class="panel-body">
       <form class="form-inline">
-        <button class="btn btn-primary"
+        <button class="btn btn-validate"
+                style="margin-top: 0;"
                 ng-click="filesTree.upload()"
                 >Upload Files</button>
         <select class="form-group form-control"
+                style="height: 46px;"
                 ng-options="action for action in filesTree.actions"
                 ng-disabled="filesTree.node == null"
                 ng-change="filesTree.runAction()"
