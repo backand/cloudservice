@@ -83,24 +83,13 @@
 
     self.getFunctions = function () {
 
-      //todo: need to fix server side to have "actionType"
-      // var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + _rootId + '},{fieldName:"actionType", operator:"equals", value:"Function"}]&sort=[{fieldName:"name",' +
-      //     ' order:"asc"}]&pageSize=200';
+      var params = '?filter=[{fieldName:"actionType", operator:"equals", value:"Function"}]&pageSize=200';
 
-      return self.getRootObjectId().then(function(id){
-        if(!id){
-          id = -1;//this is a bug and need to check why
-          console.error('getRootObjectId is null');
-        }
-        var params = '?filter=[{fieldName:"viewTable", operator:"in", value:' + id + '}]&pageSize=200';
-
-        return $http({
-          method: 'GET',
-          url: CONSTS.appUrl + baseUrl + params,
-          headers: { AppName: self.appName }
-        });
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/action/config' + params,
+        headers: { AppName: self.appName }
       });
-
 
     };
 

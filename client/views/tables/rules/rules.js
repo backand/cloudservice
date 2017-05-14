@@ -328,9 +328,9 @@
         return "Function";
       }
       else{
-        return null;
+        return "Action";
       }
-    };
+    }
 
     function getCategory(){
       if(self.mode.name.includes("function")){
@@ -339,7 +339,7 @@
       else{
         return null;
       }
-    };
+    }
 
     var defaultRule = {
       'additionalView': "",
