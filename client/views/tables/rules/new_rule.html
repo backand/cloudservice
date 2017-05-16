@@ -32,11 +32,10 @@
                          ng-pattern="rules.namePattern"
                          placeholder="Name your {{modal.title.toLowerCase()}}"
                          ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
-                  <ba-tooltip tooltip-text="Use the action name in the request URL query string of the REST API"
+                  <ba-tooltip tooltip-text="Use the name in the request URL query string of the REST API"
                               tooltip-placement="right" class=""></ba-tooltip>
-
-                  <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">In system action the name cannot be
-              modified.</span>
+                  <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">In system action the name
+                    cannot be modified.</span>
 
                   <a ng-if="rules.action && !rules.newRuleForm.$pristine" href="" id="action-refresh"
                      title="Refresh {{rules.mode.title}}" class="btn btn-sm" ng-click="rules.refresh()"><i
@@ -63,6 +62,7 @@
 
               <div ng-show="rules.editMode">
                 <input type="button"
+                       ng-if="!rules.mode.name.includes('function')"
                        ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
                        class="btn btn-edit btn-default pull-right with-margin"
                        value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel' }}">
@@ -329,7 +329,7 @@
                       command line:</p>
                     <div ng-show="!rules.allowEditAction()">
                       <pre><code>
-                        {{rules.getNodeInitCommand()}}
+  {{rules.getNodeInitCommand()}}
                       </code></pre>
                       <button class="btn btn-default copy-cli-command"
                               type="button"
@@ -340,7 +340,7 @@
                     </div>
 
                     <div ng-if="rules.allowEditAction()"><pre><code>
-   {{rules.getNodeDeployCommand()}}
+  {{rules.getNodeDeployCommand()}}
 
 </code></pre>
                       <button class="btn btn-default copy-cli-command"
