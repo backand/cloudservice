@@ -18,7 +18,9 @@
       self.apps = appsList.data;
       self.showNewApp = self.apps.length == 0;
       self.showJumbo = LayoutService.showJumbo();
-      self.backandstorage = $localStorage.backand[self.app.Name];
+      if(self.app){
+        self.backandstorage = $localStorage.backand[self.app.Name];
+      }
       if ($stateParams.deletedApp) {
         self.apps = _.reject(self.apps, {Name: $stateParams.deletedApp});
       }
@@ -71,7 +73,7 @@
         });
     };
     self.goToGettingStarted = function(state){
-      self.backandstorage.showSecondaryAppNav = false;
+      $rootScope.$broadcast('getting-started');
       $state.go(state);
     };
     function createDB(appName, appType) {
@@ -95,7 +97,7 @@
             $localStorage.backand[appName] = {};
             self.backandstorage = $localStorage.backand[appName];
           }
-          self.backandstorage.showSecondaryAppNav = true;
+          $localStorage.backand[appName].showSecondaryAppNav = true;
           self.setAppType(appType,appName);
           $rootScope.$broadcast('app-update', {app: appName});
 
@@ -202,7 +204,7 @@
             self.backandstorage = $localStorage.backand[app.Name]
           }
 
-          self.backandstorage.showSecondaryAppNav = true;
+          $localStorage.backand[app.Name].showSecondaryAppNav = true;
           self.setAppType(app.ProductType, app.Name);
 
           if($localStorage.backand[app.Name].currentState !== 'apps.index') {
@@ -238,7 +240,7 @@
 
       //Check if the app is locked or suspended
       if(!payment) {
-        self.backandstorage.showSecondaryAppNav = true;
+        $localStorage.backand[app.Name].showSecondaryAppNav = true;
         self.setAppType(appType, appName);
         $state.go('app.billingupgrade', {appName: appName});
       } else {

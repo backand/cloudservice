@@ -9,7 +9,9 @@
     self.apps = AppsService.apps;
     self.app = AppsService.currentApp;
     self.stateparam = $state.params;
-    self.backandstorage = $localStorage.backand[self.app.Name];
+    if(self.app){
+      self.backandstorage = $localStorage.backand[self.app.Name];
+    }
     self.currentAppName = AppsService.currentApp.Name;
     self.currentState = $state.current.name;
     self.secondAppNavChoice = '';
@@ -91,6 +93,7 @@
     };
     $scope.$on('app-update', function(event, args){
         self.currentAppName = args.app;
+        $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;
     });
     self.isExampleApp = function () {
       return AppsService.isExampleApp(self.app);
@@ -130,7 +133,12 @@
     $scope.$on('fetchTables', fetchTables);
     $scope.$on('appname:saved', fetchTables);
     $scope.$on('after:sync', fetchTables);
-
+    $scope.$on('getting-started', function(){
+      if(!self.backandstorage){
+        self.backandstorage = {}
+      }
+      self.backandstorage.showSecondaryAppNav = false;
+    });
     function fetchTables() {
       clearTables();
       loadTables();
