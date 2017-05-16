@@ -16,6 +16,7 @@
     self.app = AppsService.currentApp;
     (function () {
       self.apps = appsList.data;
+      self.showNewApp = self.apps.length == 0;
       self.showJumbo = LayoutService.showJumbo();
       self.backandstorage = $localStorage.backand[self.app.Name];
       if ($stateParams.deletedApp) {
@@ -244,7 +245,6 @@
         $modal.appName = appName;
       }
     };
-    self.showNewApp = false;
     self.goToLink = function (app) {
       $state.go(self.getGoToLink(app).state, {appName: app.Name});
     };
