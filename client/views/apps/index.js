@@ -103,6 +103,9 @@
         });
     });
     self.setAppType = function (type, appName) {
+      if(!$localStorage.backand[appName]){
+        $localStorage.backand[appName] = {};
+      }
       switch (type){
         case 1:
           $localStorage.backand[appName].secondAppNavChoice = 'database';

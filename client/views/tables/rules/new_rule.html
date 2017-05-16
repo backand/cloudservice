@@ -64,6 +64,7 @@
               <div ng-show="rules.editMode">
                 <input type="button"
                        ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
+                       style="padding-left: 35px;"
                        class="btn btn-edit btn-default pull-right with-margin"
                        value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel' }}">
 
@@ -395,6 +396,7 @@
                 </input>
                 <input type="button"
                        ng-hide="rules.isNodeJS"
+                       style="padding-left: 35px;"
                        class="btn btn-edit"
                        ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
                        value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">
