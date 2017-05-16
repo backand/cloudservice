@@ -16,6 +16,7 @@
     self.app = AppsService.currentApp;
     (function () {
       self.apps = appsList.data;
+      self.showNewApp = self.apps.length == 0;
       self.showJumbo = LayoutService.showJumbo();
       self.backandstorage = $localStorage.backand[self.app.Name];
       if ($stateParams.deletedApp) {
@@ -24,7 +25,7 @@
 
       //create todos sample app
       var userId = SessionService.getUserId();
-      if (userId != 0) {
+      if (userId !== 0) {
         var exampleAppName = 'todo' + userId;
         if (!_.find(self.apps, {Name: exampleAppName})) {
           AppsService.add(exampleAppName, 'My First App - Todo list example');
@@ -85,10 +86,34 @@
 
           AnalyticsService.track('CreatedNewDB', {schema: ModelService.defaultSchema()});
           AnalyticsService.track('create app', {app: appName});
+
+          if(!$localStorage.backand){
+            $localStorage.backand = {};
+          }
+
+          if (!$localStorage.backand[appName]) {
+            $localStorage.backand[appName] = {};
+            self.backandstorage = $localStorage.backand[appName];
+          }
           self.backandstorage.showSecondaryAppNav = true;
-          self.setAppType(appType, appName);
+          self.setAppType(appType,appName);
           $rootScope.$broadcast('app-update', {app: appName});
-          $state.go('docs.platform_select_kickstart', {appName: appName, newApp: true});
+
+          switch (appType){
+            case 1:
+              $state.go('docs.platform_select_kickstart', {appName: appName, newApp: true});
+              break;
+            case 2:
+              $state.go('functions.newlambdafunctions', {appName: appName}, {reload: true}).then(function(){
+                self.backandstorage.currentState = $state.current.name;
+                self.stateparam = $state.params;
+              });
+              break;
+            case 3:
+              $state.go('app', {appName: appName, newApp: true}, {reload: true});
+              break;
+          }
+
         })
         .error(function () {
           self.loading = false;
@@ -102,6 +127,7 @@
           }
         });
     });
+
     self.setAppType = function (type, appName) {
       if(!$localStorage.backand[appName]){
         $localStorage.backand[appName] = {};
@@ -177,7 +203,7 @@
           }
 
           self.backandstorage.showSecondaryAppNav = true;
-          self.setAppType(app.ProductType, app.name);
+          self.setAppType(app.ProductType, app.Name);
 
           if($localStorage.backand[app.Name].currentState !== 'apps.index') {
             var currentstate = $localStorage.backand[app.Name].currentState;
@@ -218,12 +244,11 @@
       } else {
         $modal.open({
           templateUrl: 'views/apps/billing_portal.html',
-          controller: 'BillingPortalController as vm',
+          controller: 'BillingPortalController as vm'
         });
         $modal.appName = appName;
       }
     };
-    self.showNewApp = false;
     self.goToLink = function (app) {
       $state.go(self.getGoToLink(app).state, {appName: app.Name});
     };
@@ -247,9 +272,9 @@
     };
 
     self.getAppManageTitle = function (app) {
-      if (app.DatabaseStatus == 2)
+      if (app.DatabaseStatus === 2)
         return 'Creating App ...';
-      if (app.DatabaseStatus == 1)
+      if (app.DatabaseStatus === 1)
         return 'Manage App';
       if (AppsService.isExampleApp(app))
         return 'Create Example App';
