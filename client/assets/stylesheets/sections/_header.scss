@@ -237,10 +237,13 @@
                 .search-input {
                   height: 34px;
                   width: 202px;
+                  border:none;
+                  font-style: italic;
+                  padding-left: 35px;
                   transition: width 1s;
                   border-radius: 4px;
                   background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-32.png);
-                  background-position: 170px center;
+                  background-position: 0px center;
                   background-repeat: no-repeat;
                 }
 
@@ -249,6 +252,8 @@
                   width: 400px;
                   transition: width 1s;
                   border-radius: 4px;
+                  border:none;
+                  font-style: italic;
                 }
 
 
