@@ -1,8 +1,8 @@
 <section class="page-form-ele page ng-scope ba-docs">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <strong test-hook="docs.quickstart.title">Ionic starter for mobile</strong>
-      <h2>4 easy steps to start mobile ionic project:</h2>
+      <strong test-hook="docs.quickstart.title">Ionic Quickstart Guide</strong>
+      <h2>4 easy steps to include Backand in your Ionic project:</h2>
 
     </div>
     <div class="panel-body docs">
@@ -22,77 +22,63 @@
         <ol>
 
           <li>
-            <h3>Install Ionic framework</h3>
-            <p>First, install <a href="http://nodejs.org/" target="_blank">Node.js</a>. Then, install the latest
-              Cordova and Ionic <a href="https://npmjs.org/package/ionic" target="_blank">command-line
-                tools</a>.Follow the <a
-                      href="http://cordova.apache.org/docs/en/5.1.1/guide/platforms/android/index.html" target="_blank">Android</a>
-              and <a href="http://cordova.apache.org/docs/en/5.1.1/guide/platforms/ios/index.html" target="_blank">iOS</a> platform
-              guides to install required platform dependencies</p>
-            <pre><code class="bash hljs">
-  $ npm install -g cordova ionic
+            <h3>Add the Backand scripts</h3><br />
+            <p>Include the following code in your index.html file. Make it above the project's code</p>
+            <pre><code class="html hljs">
+  &lt;!-- Backand SDK for Angular --&gt;
+  &lt;script src=&quot;//cdn.backand.net/vanilla-sdk/1.0.9/backand.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;//cdn.backand.net/angular1-sdk/1.9.5/backand.provider.js&quot;&gt;&lt;/script&gt;
             </code></pre>
-            <p>Check <a href="http://ionicframework.com/getting-started/" target="_blank">Ionic Getting Started</a> for more information and troubleshooting</p>
+            <p>You can install the SDK locally using bower: <code>bower install backand-angular1-sdk</code></p>
             <br />
           </li>
 
           <li>
-            <h3>Start the Project</h3>
-            <p>Create an Ionic project with Back& inside, includes all Back& dependencies and generic controller</p>
-            <pre><code class="bash hljs">
-  ionic start {{docs.currentApp.Name || 'myApp'}} https://github.com/backand/backand-ionic-starter
-  cd {{docs.currentApp.Name || 'myApp'}}
-            </code></pre>
-            <p ng-if="!docs.currentApp.Name">myApp should be your Back&'s app name</p>
-            <br />
-          </li>
-
-          <li>
-            <h3>Configure Back&'s REST API</h3>
-            <p>Back& requires that you include secure tokens for anonymous and sign-up REST API calls
+            <h3>Configure secure calls to Back&'s REST API</h3><br />
+            <p>While Back& uses OAuth2 authentication, we've masked this within the API. Simply use the code below to configure the SDK to speak with your Back& app, and the SDK handles the rest:
             </p>
             <pre><code>
-  //Update Angular config section in /www/js/app.js
-
-  .config(function (BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
+  //Update Angular configuration section
+  myApp.config(function (BackandProvider) {
       BackandProvider.setAppName('{{vm.currentApp.Name || 'Your-App-Name'}}');
       BackandProvider.setSignUpToken('{{vm.keys.signup || 'Your-SignUp-Token'}}');
       BackandProvider.setAnonymousToken('{{vm.keys.anonymous || 'Your-Anonymous-Token'}}');
   })
             </code></pre>
+            <!--setAppName - set the app name to be used by the SDK<br/>-->
+            <!--setAnonymousToken - allow anonymous access if needed<br/>-->
+            <!--setSignUpToken - allow any user to register to the app-->
+            <br />
           </li>
           <br/>
 
           <li>
-            <h3>CRUD your data</h3>
+            <h3>Read data from your database</h3><br />
             <p>
-              You can access Back&'s REST API endpoints using $http requests from your Ionic Angular
-              project.<br />
-              You can duplicate the generic service 'ItemsModel' to manage any object.
+              Back&'s SDK includes several utility functions that encapsulate the HTTP calls used for your REST API. In the following example, we create a function called getList that uses the DataService API endpoint to fetch data from your database, which is returned in JSON format.
             </p>
             <pre><code>
-  //Manage items object in /www/js/services.js
-
-  .service('ItemsModel', function ($http, Backand) {
-      var vm = this;
-      //get the object name and optional parameters
-      vm.getList = function(name, sort, filter) {
-        var params = {
-          pageSize: 20,
-          pageNumber: 1,
-          filter: filter || '',
-          sort: sort || ''
-        };
-        return Backand.object.getList(name, params);
-      }
-      ...
-  })
+  //service.js
+  function dataService($http, Backand) {
+    var vm = this;
+    //get the object name and optional parameters
+    vm.getList = function(name, sort, filter, pageSize, pageNumber) {
+      var params = {
+        pageSize: pageSize || 20,
+        pageNumber: pageNumber|| 1,
+        filter: filter || '',
+        sort: sort || ''
+      };
+      return Backand.object.getList(name, params);
+    }
+  }
     </code></pre>
+            <p>We also offer <code>getOne</code>, <code>create</code>, <code>update</code>, and <code>delete</code> functions, giving you the full suite of CRUD functionality in the SDK. On top of these functions, you can also use the SDK to trigger server side actions and manage users.
+              All API calls and expected parameters can be reviewed and tested in Back&'s API Playground.</p>
           </li>
           <div style="margin-left: 15px;">
-            <h3>Done. It's that simple</h3>
-            <p>Using the above starter code, you can simply build great mobile app using Ionic and Back&.<br/>
-              Continue now in configuring your model, setup security and add server side code...</p>
+            <h3>Done. It's that simple</h3><br />
+            <p>Using the four steps above, you can easily integrate Backand with your existing Ionic application, allowing you to build great mobile apps with a full-featured back end. From here, you can configure your data model, user security policies, and more from the Backand App Dashboard.</p>
             Have fun!</b></p>
             <button class="btn btn-lg btn-success" ng-if="!docs.isAppOpened" ng-click="docs.newApp()">Create Your App and Get Started</button>
           </div>
