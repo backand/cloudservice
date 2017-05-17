@@ -520,8 +520,6 @@
           self.newRuleForm.$setPristine();
           NotificationService.add('success', 'The action was saved');
 
-          AnalyticsService.track('AddedRule', {rule: self.action.name});
-
           self.actionChangeInTree = false;
           self.saving = false;
           self.savingAndTesting = false;
@@ -531,6 +529,11 @@
             self.testData();
          // self.requestTestForm = true;
           if(self.isNewAction){
+            if(!self.mode.name.includes("function")) {
+              AnalyticsService.track('AddedRule', {rule: self.action.name});
+            } else {
+              AnalyticsService.track('AddedFunction', {rule: self.action.name});
+            }
             self.loadNewAction();
           } //always open test after save on demand action
         }, function () {
