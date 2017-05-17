@@ -129,7 +129,7 @@
             height: $header_height;
             padding: $header_height 0 0;
             @media (min-width: $screen-sm) {
-                padding: 0 0 0 220px;
+                padding: 0 0 0 0px;
             }
 
             > ul {
@@ -237,10 +237,13 @@
                 .search-input {
                   height: 34px;
                   width: 202px;
+                  border:none;
+                  font-style: italic;
+                  padding-left: 35px;
                   transition: width 1s;
                   border-radius: 4px;
                   background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-32.png);
-                  background-position: 170px center;
+                  background-position: 0px center;
                   background-repeat: no-repeat;
                 }
 
@@ -249,22 +252,21 @@
                   width: 400px;
                   transition: width 1s;
                   border-radius: 4px;
+                  border:none;
+                  font-style: italic;
                 }
 
-                .app-select {
-                  width: 100%;
-                }
+
             }
 
             //
             .nav-left {
                 padding: 0;
-                width:100%;
                 float:none;
                 font-size: 16px;
                 line-height: $header_line_height;
                 position: absolute;
-                left: 220px;
+                //left: 220px;
 
                 > li {
                   border-right: 1px solid $header-border;
@@ -482,7 +484,7 @@
     max-height: 800px;
     max-width: 800px;
     width: auto;
-
+    z-index: 10;
     div.popover-wrapper {
       margin: 0 15px;
     }

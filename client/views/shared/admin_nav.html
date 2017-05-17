@@ -1,0 +1,137 @@
+<div class="nav-wrapper scroller" perfect-scrollbar>
+  <ul id="nav2" class="nav" slim-scroll collapse-nav>
+    <li class="apps-header">
+      <div class="ui-select app-headers" style="font-weight: bold;">
+        <select ng-model="nav.currentAppName"
+                ng-change="nav.goToApp()"
+                ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
+                class="app-select">
+        </select>
+      </div>
+    </li>
+    <li ng-class="{active: nav.state == 'app.edit', disabled: nav.DatabaseStatus != 1}">
+      <a ng-click="nav.goTo($event, 'app.edit')">
+        <i class="ba-icon-general front-icons"></i>
+        <span>General</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'security.team', disabled: nav.DatabaseStatus != 1}">
+      <a ng-click="nav.goTo($event, 'security.team')">
+        <i class="ba-icon-admins front-icons"></i>
+        <span style="padding-left: 18px;">Team</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'hosting.hosting_tree'}"
+        class="open-structure">
+      <a href="">
+        <i class="fontello-icon-hosting front-icons"></i>
+        <span>Hosting</span>
+        <i class="glyphicon glyphicon-hosting"
+           ng-class="showHosting == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.state == 'docs.hosting', disabled: nav.DatabaseStatus != 1}">
+          <a ng-click="nav.goTo($event, 'docs.hosting')">
+            <i class="ba-icon-configuration"></i>
+            <span>Configuration</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.backandstorage.currentState == 'hosting.files_tree'}">
+          <a ng-click="nav.goTo($event, 'hosting.files_tree')">
+            <i class="fontello-icon-storage front-icons"></i>
+            <span>Storage</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'app.configuration'}">
+      <a ng-click="nav.goTo($event, 'app.configuration')">
+        <i class="fontello-icon-configuration_2 front-icons"></i>
+        <span style="padding-left: 11px;">App Configuration</span>
+      </a>
+    </li>
+    <!--	TODO <li>
+               ng-click="nav.goTo($event, )"
+        <img src="assets/images/menu/icon-constants/icon-constants.png"
+             srcset="assets/images/menu/icon-constants/icon-constants@2x.png 2x,
+               assets/images/menu/icon-constants/icon-constants@3x.png 3x"
+             class="icon-constants">
+                <span>Enviroment Variables</span>
+        </li>-->
+    <li class="open-structure">
+      <a href="">
+        <i class="ti-money front-icons"></i>
+        <span>Billing</span>
+        <i class="glyphicon glyphicon-billing"
+           ng-class="showBilling == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.state == 'app.billing'}">
+          <a ng-click="nav.goTo($event, 'app.billing')">
+            <i class="ti-money front-icons"></i>
+            <span>Billing Portal</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.state == 'app.billingupgrade'}">
+          <a ng-click="nav.goTo($event, 'app.billingupgrade')">
+            <i class="ti-money front-icons"></i>
+            <span>Upgrade Plan</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.state == 'app.billingpayment'}">
+          <a ng-click="nav.goTo($event, 'app.billingpayment')">
+            <i class="ti-money front-icons"></i>
+            <span>Payment Method</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li ng-class="{active: nav.backandstorage.currentState === 'analytics.report'}">
+      <a ng-click="nav.goTo($event, 'analytics.report')">
+        <i class="fontello-icon-api-log_2 front-icons"></i>
+        <span>Reports</span>
+      </a>
+    </li>
+    <li class="open-structure">
+      <a href="">
+        <i class="fontello-icon-data-history-log front-icons"></i>
+        <span>All Logs</span>
+        <i class="glyphicon glyphicon-logs"
+           ng-class="showLogs == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
+      </a>
+      <ul>
+        <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
+          <a ng-click="nav.goTo($event, 'log.requests')">
+            <i class="fontello-icon-api-log_2 front-icons"></i>
+            <span>API Log</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}">
+          <a ng-click="nav.goTo($event, 'log.console')">
+            <i class="fontello-icon-console-log front-icons"></i>
+            <span>Console Log</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.backandstorage.currentState == 'log.history'}">
+          <a ng-click="nav.goTo($event, 'log.history')">
+            <i class="fontello-icon-data-history-log front-icons"></i>
+            <span>Data History Log</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.state == 'log.exception', disabled: nav.DatabaseStatus != 1}">
+          <a ng-click="nav.goTo($event, 'log.exception')">
+            <i class="ba-icon-server-side-exceptions front-icons"></i>
+            <span>Server Exceptions</span>
+          </a>
+        </li>
+        <li ng-class="{active: nav.state == 'log.config', disabled: nav.DatabaseStatus != 1}">
+          <a ng-click="nav.goTo($event, 'log.config')">
+            <i class="ba-icon-configuration"></i>
+            <span>Configuration</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

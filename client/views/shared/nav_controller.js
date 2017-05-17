@@ -1,41 +1,144 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state','$rootScope', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage','RulesService', 'usSpinnerService', NavCtrl]);
 
-  function NavCtrl($scope, $state, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService) {
+  function NavCtrl($scope, $state,$rootScope, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage, RulesService, usSpinnerService) {
     var self = this;
     self.isTablesClicked = false;
-
+    self.apps = AppsService.apps;
+    self.app = AppsService.currentApp;
+    self.stateparam = $state.params;
+    if(self.app){
+      self.backandstorage = $localStorage.backand[self.app.Name];
+    }
+    self.currentAppName = AppsService.currentApp.Name;
+    self.currentState = $state.current.name;
+    self.secondAppNavChoice = '';
+    if(self.backandstorage){
+      self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
+      self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
+      if(self.backandstorage.secondAppNavChoice === undefined){
+        self.backandstorage.secondAppNavChoice = 'database';
+      }
+    }
+    else{
+      self.isDatabase = false;
+    }
+    self.columnsLayout = 'col-md-2';
+    self.gettingStartedNav = 'side-bar';
     (function init() {
-      self.app = AppsService.currentApp;
       clearTables();
+      if(self.backandstorage !== undefined) {
+        if (self.backandstorage.showSecondaryAppNav) {
+          self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
+        }
+      }
+      if(!$state.params.appName){
+        self.gettingStartedNav = 'side-bar-modified';
+      }
     }());
+    self.goToApp = function () {
+      //usSpinnerService.spin('loading-app');
+      $rootScope.$broadcast('app-load');
+      if($localStorage.backand[self.currentAppName]){
+        $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;
+      }
 
+      if($localStorage.backand[self.currentAppName] && $localStorage.backand[self.currentAppName].currentState !== 'apps.index') {
+        var currentState = $localStorage.backand[self.currentAppName].currentState;
+        $state.go('app', {appName: self.currentAppName}, {reload: true}).then(function(){
+          if(currentState){
+            $state.go(currentState);
+          }
+        });
+      }
+      else {
+        $state.go('app', {appName: self.currentAppName}, {reload: true});
+      }
+    };
     function clearTables() {
       self.tables = [];
       self.queries = [];
+      self.functions = [];
     }
+    self.goToModel = function($event){
+      if(self.app) {
+        if (self.app.connectionSource === 'external') {
+          goToState($event, 'db_model');
+        }
+        else{
+          goToState($event, 'erd_model');
+        }
+      }
+      else{
+        goToState($event, 'erd_model');
+      }
+    };
+    self.showSecondarySideBar = function(state){
+      if(self.backandstorage){
+        self.backandstorage.showSecondaryAppNav = true;
+        self.showSecondaryAppNav = true;
+        self.backandstorage.secondAppNavChoice = state;
+        self.secondAppNavChoice = state;
+        self.columnsLayout = 'col-md-3';
+        if(state === "database"){
+          $rootScope.$broadcast('database-change');
+        }
+        else{
+          $rootScope.$broadcast('database-undo');
+        }
+      }
 
+    };
+    $scope.$on('app-update', function(event, args){
+        self.currentAppName = args.app;
+        $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;
+    });
     self.isExampleApp = function () {
       return AppsService.isExampleApp(self.app);
     };
-
     self.showAppNav = function () {
       if (!$state.params.appName)
         return 'views/shared/nav.html';
       if (!self.app)
         return null;
-      if (self.app.DatabaseStatus == 0 || self.app.DatabaseStatus == 2)
+      if (self.app.DatabaseStatus === 0 || self.app.DatabaseStatus === 2)
         return 'views/shared/nav_connect_db.html';
-      return 'views/shared/nav_app.html';
+      return 'views/shared/main_nav.html';
+    };
+    self.chooseSecondNav = function(){
+      if(self.backandstorage) {
+        switch (self.backandstorage.secondAppNavChoice) {
+          case 'database':
+            return 'views/shared/db_nav.html';
+          case 'functions':
+            return 'views/shared/fnc_nav.html';
+          case 'security':
+            return 'views/shared/sec_nav.html';
+          case 'admin':
+            return 'views/shared/admin_nav.html';
+          default:
+            return 'views/shared/db_nav.html';
+        }
+      }
+      else{
+        return 'views/shared/db_nav.html';
+      }
     };
 
-
+    self.toggleSecondaryAppNav = function(){
+      self.showSecondaryAppNav = !self.showSecondaryAppNav;
+    };
     $scope.$on('fetchTables', fetchTables);
     $scope.$on('appname:saved', fetchTables);
     $scope.$on('after:sync', fetchTables);
-
+    $scope.$on('getting-started', function(){
+      if(!self.backandstorage){
+        self.backandstorage = {}
+      }
+      self.backandstorage.showSecondaryAppNav = false;
+    });
     function fetchTables() {
       clearTables();
       loadTables();
@@ -58,6 +161,7 @@
 
             fetchDbQueries();
             fetchCronJobs();
+            fetchFunctions();
           }
         },
         function (data) {
@@ -80,6 +184,18 @@
         function (data) {
           $log.debug("DbQueriesService failure", data);
         }
+      );
+    }
+
+    function fetchFunctions() {
+      RulesService.appName = $state.params.appName;
+      RulesService.getFunctions().then(
+          function (data) {
+            self.functions = data.data.data;
+          },
+          function (data) {
+            $log.debug("Can't get functions", data);
+          }
       );
     }
 
@@ -122,7 +238,9 @@
     self.isTablesActive = function () {
       return $state.includes('tables.columns') || $state.current.name == 'erd_model' || $state.current.name == 'json_model';
     };
+    self.closeTabs = function(tab){
 
+    };
     self.getObjectMenuStyle = function () {
       if ($stateParams.newApp || self.isTablesActive()) {
         return "block";
@@ -171,6 +289,7 @@
       if (self.app.DatabaseStatus === 1) {
         goToState($event, state);
       }
+
     };
 
     self.goToAlways = function ($event, state) {
@@ -202,6 +321,18 @@
     self.newDbQuery = function ($event) {
       goToState($event, 'dbQueries.newQuery');
     };
+    self.newJsFunction = function($event){
+      goToState($event, 'functions.newjsfunctions');
+    };
+    self.newLambdaFunction = function($event){
+      goToState($event, 'functions.newlambdafunctions');
+    };
+    self.showFunction = function ($event, func) {
+      var params = {
+        functionId: func.__metadata.id
+      };
+      goToState($event, 'functions.function', params);
+    };
 
     self.showCronJob = function ($event, job) {
       var params = {
@@ -210,9 +341,9 @@
       goToState($event, 'cronJobs.job', params);
     };
 
-    self.newObject = function () {
+    self.newObject = function ($event) {
       var params = {isNewObject: true};
-      $state.go('erd_model', params);
+      goToState($event,'erd_model', params);
     };
 
     // Used to support opening links in new tab
@@ -221,7 +352,10 @@
         var url = $state.href(state, params, {absolute: true});
         window.open(url, '_blank');
       } else {
-        $state.go(state, params);
+        $state.go(state, params).then(function(){
+          self.backandstorage.currentState = $state.current.name;
+          self.stateparam = $state.params;
+        });
       }
     }
 

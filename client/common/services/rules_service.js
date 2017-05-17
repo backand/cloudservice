@@ -4,9 +4,12 @@
 
     var self = this;
     var baseUrl = '/1/businessRule';
-    self.tableRuleUrl = '/1/objects/';
+    self.tableRuleUrlAction = '/1/objects/';
+    self.tableRuleUrlFunction = '/1/function/';
     self.addUserUrl = '/1/user';
-    var logUrl = '/1/objects/durados_Log';
+    var viewConfig = '/1/view/config/';
+
+    var _rootObject = CONSTS.rootObject;
 
     self.appName = null;
     self.tableId = null;
@@ -56,6 +59,38 @@
         + 'sort=[{fieldName:"name", order:"asc"}]&pageSize=200',
         headers: { AppName: self.appName }
       });
+    };
+
+    self.getConfig = function(viewName){
+
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + viewConfig + viewName,
+        headers: { AppName: self.appName }
+      });
+    };
+
+    self.getRootObjectId = function(){
+      return self.getConfig(_rootObject).then(function(data){
+        if(data.data){
+          return data.data.__metadata.id;
+        } else {
+          return null;
+        }
+
+      })
+    };
+
+    self.getFunctions = function () {
+
+      var params = '?filter=[{fieldName:"actionType", operator:"equals", value:"Function"}]&pageSize=200';
+
+      return $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/1/action/config' + params,
+        headers: { AppName: self.appName }
+      });
+
     };
 
     self.getRule = function (id) {
@@ -108,7 +143,7 @@
       });
     };
 
-    self.getTestUrl =  function(rule, test, actionType, tableName, debug, fromGetHttp) {
+    self.getTestUrl =  function(rule, test, actionType, tableName, debug, fromGetHttp, requestMode) {
       var onDemand = actionType === 'On Demand';
       var parameters = angular.copy(test.parametersToSend);
       if (debug) {
@@ -123,26 +158,40 @@
       }
 
       var rowId = test.rowId || '';
-
-      var uri = CONSTS.appUrl +
-        self.tableRuleUrl +
+      if(requestMode.includes("function")){
+        var uri = CONSTS.appUrl +
+        self.tableRuleUrlFunction +
+        //tableName + '/' +
+        rowId;
+      }
+      else{
+        var uri = CONSTS.appUrl +
+        self.tableRuleUrlAction +
         (onDemand ? 'action/' : '') +
         tableName + '/' +
         rowId;
+      }
 
       if (fromGetHttp && !debug) {
         return encodeURI(uri);
       }
-
-      return encodeURI(uri +
+      if(requestMode.includes("function")){
+        return encodeURI(uri +
+        rule.category + '/' + rule.name + '?' +
+        (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
+      }
+      else{
+        return encodeURI(uri +
         ((onDemand || debug) ? '?' : '') +
         ( onDemand ? 'name=' + rule.name : '') +
         ((onDemand && !_.isEmpty(parameters)) ? '&' : '') +
         (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
+      }
+      
     };
 
-    self.testRule = function (rule, test, actionType, tableName, rowData, debug) {
-      var httpRequest = self.getTestHttp(rule, test, actionType, tableName, rowData, debug);
+    self.testRule = function (rule, test, actionType, tableName, rowData, debug, requestMode) {
+      var httpRequest = self.getTestHttp(rule, test, actionType, tableName, rowData, debug,requestMode);
       if (httpRequest) {
         return $http(httpRequest);
       } else {
@@ -151,7 +200,7 @@
     };
 
 
-    self.getTestHttp = function (rule, test, actionType, tableName, rowData, debug) {
+    self.getTestHttp = function (rule, test, actionType, tableName, rowData, debug,requestMode) {
       var method;
       if (actionType == 'On Demand' && test.method) {
         method = test.method;
@@ -177,7 +226,7 @@
 
       var http = {
         method: method,
-        url : self.getTestUrl(rule, test, actionType, tableName, debug, true)
+        url : self.getTestUrl(rule, test, actionType, tableName, debug, true, requestMode)
       };
       http.headers = { AppName: self.appName };
       if(!debug && actionType == 'On Demand'){

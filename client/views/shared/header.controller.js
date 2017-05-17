@@ -3,24 +3,29 @@
 
   angular.module('controllers')
     .controller('HeaderController',
-    ['$scope', '$http', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService','DbDataModel', HeaderController]);
+    ['$scope', '$http', 'AppsService', '$state', 'usSpinnerService', 'LayoutService', 'SessionService', '$location', '$modal', 'ModelService','SocketService','DbDataModel','$localStorage', HeaderController]);
 
-  function HeaderController($scope, $http, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService, DbDataModel) {
+  function HeaderController($scope, $http, AppsService, $state, usSpinnerService, LayoutService, SessionService, $location, $modal, ModelService, SocketService, DbDataModel, $localStorage) {
     var self = this;
     self.usingDefaultModel = false;
     self.showParseMigrationTool = $state.current.name == 'apps.index' || $state.current.name == 'apps.parse';
+    self.apps = AppsService.apps;
+    self.currentState = $state.current.name;
+    self.app = AppsService.currentApp;
+    self.currentAppName = AppsService.currentApp.Name;
+    self.debugMode = AppsService.currentApp.debugMode;
+    self.backandstorage = $localStorage.backand[self.app.Name];
 
     (function () {
       self.showJumbo = LayoutService.showJumbo();
       self.showIntercom = LayoutService.loadShowIntercomConfig();
       displayStatus();
+      updateDefaultModelUse(self.currentAppName, false);
     }());
 
-    self.apps = AppsService.apps;
-    self.currentAppName = AppsService.currentApp.Name;
-    self.debugMode = AppsService.currentApp.debugMode;
-
-    updateDefaultModelUse(self.currentAppName, false);
+    $scope.$on('nav.secondAppNavChoice', function(){
+      self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
+    });
 
     $scope.$on('$stateChangeSuccess', function () {
 
@@ -32,6 +37,11 @@
 
       updateDefaultModelUse((AppsService.currentApp ? AppsService.currentApp.Name : undefined), false);
 
+      if(AppsService.currentApp !== undefined && AppsService.currentApp !== null) {
+        //when app change login to the socket
+        SocketService.login(AppsService.currentApp.Name);
+      }
+
       if (AppsService.currentApp === null ||
         AppsService.currentApp === undefined ||
         self.currentAppName === AppsService.currentApp.Name)
@@ -40,8 +50,6 @@
       self.currentAppName = AppsService.currentApp.Name;
       self.debugMode = AppsService.currentApp.debugMode;
 
-      //when app change login to the socket
-      SocketService.login(self.currentAppName);
 
       if(self.currentAppName) {
         //clear the model
@@ -65,13 +73,22 @@
         DbDataModel.get(self.currentAppName, true);
       }
     });
-
+    $scope.$on('database-change', function(){
+      updateDefaultModelUse(self.currentAppName, true);
+    });
+    $scope.$on('database-undo', function(){
+      self.usingDefaultModel = false;
+    });
     $scope.$on('appname:saved', function () {
       updateDefaultModelUse(self.currentAppName, true);
     });
 
     $scope.$on('AppDbReady', function () {
       updateDefaultModelUse(self.currentAppName, true);
+    });
+
+    $scope.$on('app-load', function(){
+      usSpinnerService.spin('loading-app');
     });
 
     $scope.$watch(function () {
@@ -82,10 +99,15 @@
 
     function updateDefaultModelUse(appName, force) {
 
-      if (appName != undefined) {
+      if (self.backandstorage && self.backandstorage.secondAppNavChoice === 'database' && appName !== undefined) {
         ModelService.usingDefaultSchema(appName, force)
           .then(function (result) {
-            self.usingDefaultModel = result;
+            if(result) {
+              self.usingDefaultModel = result;
+            }
+            if(result === false){
+              self.usingDefaultModel = false;
+            }
           });
       } else {
         self.usingDefaultModel = false;
@@ -98,7 +120,7 @@
     };
 
     self.hideAppList = function () {
-      return $state.current.name === 'apps.index' && self.showJumbo;
+      return $state.current.name === 'apps.index';
     };
 
     self.getCurrentUser = function () {

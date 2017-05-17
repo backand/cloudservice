@@ -19,7 +19,7 @@
   <button clip-copy="copy.contentToCopy"
           clip-click="copy.setContentCopied()"
           no-propogate
-          class="btn btn-xs bknd-copy-button"
+          class="btn btn-xs btn-success bknd-copy-button"
           ng-class="{ 'btn-success' : copy.isContentCopied(), 'btn-primary' : copy.contentToCopy && !copy.deny()}"
           ng-disabled="!copy.contentToCopy || copy.deny()"
           tooltip="copy to clipboard">

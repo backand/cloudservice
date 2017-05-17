@@ -17,6 +17,7 @@
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/themify-icons.min.css" />
   <link rel="stylesheet" type='text/css' href="assets/stylesheets/font-awesome.min.css">
   <link rel="stylesheet" type='text/css' href="assets/stylesheets/menu-fonts.css">
+  <link rel="stylesheet" type="text/css" href="assets/stylesheets/fontello.css">
   <link rel="stylesheet" type="text/css" href="tmp/main.css" />
   <link rel="stylesheet" type="text/css" href="vendor/AngularJS-Toaster/toaster.css" />
   <link rel="stylesheet" type="text/css" href="vendor/angular-xeditable/dist/css/xeditable.css" >
@@ -57,8 +58,6 @@
 <toaster-container></toaster-container>
 <ui-view></ui-view>
 
-  <!-- Backand Realtime -->
-  <script src="https://cdn.backand.net/socket.io/1.4.5/socket.io.js"></script>
 <!---->
   <!-- build:js assets/js/vendor.js -->
   <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
@@ -100,6 +99,7 @@
   <script type="text/javascript" src="vendor/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
   <script type="text/javascript" src="vendor/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
   <script type="text/javascript" src="vendor/ng-file-upload/ng-file-upload-all.js"></script>
+  <script type="text/javascript" src="vendor/socket.io-client/dist/socket.io.js"></script>
   <!-- endbuild -->
 
   <!-- build:js assets/js/main.js -->
@@ -229,6 +229,9 @@
   <script type="text/javascript" src="views/log/log.js"></script>
   <script type="text/javascript" src="views/log/activity.js"></script>
   <script type="text/javascript" src="views/log/requests.js"></script>
+
+  <script type="text/javascript" src="views/functions/config.js"></script>
+  <script type="text/javascript" src="views/functions/functions.js"></script>
 
   <script type="text/javascript" src="views/security/config.js"></script>
   <script type="text/javascript" src="views/security/user/users.js"></script>

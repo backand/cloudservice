@@ -5,6 +5,7 @@
   "IntercomAppId":"ufkkj816",
   "backandUserObject": "backandUsers",
   "backandRoleObject": "backandRoles",
+  "rootObject": "_root",
   "env": "PROD",
   "hostingUrl": "https://hosting.backand.io",
   "storageUrl": "https://files.backand.io",

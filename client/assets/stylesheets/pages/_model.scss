@@ -47,3 +47,25 @@ $ace-height: 550px;
   top: 50%;
   left: 50%;
 }
+.tab-model-container{
+  border: none;
+  .nav-tabs{
+    border-top:1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    a{
+      color: #000000;
+      font-family: "Open Sans", sans-serif;
+    }
+    li.active{
+      a {
+        color: #f26724;
+        font-family: "Open Sans", sans-serif;
+      }
+    }
+  }
+}
+#sync_button{
+  background-color:#f26724 ;
+  border:none;
+}

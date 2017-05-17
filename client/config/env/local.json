@@ -5,6 +5,7 @@
   "IntercomAppId":"dvn78u",
   "backandUserObject": "backandUsers",
   "backandRoleObject": "backandRoles",
+  "rootObject": "_root",
   "env": "LOCAL",
   "hostingUrl": "http://hosting.backand.net",
   "storageUrl": "http://files.backand.net",

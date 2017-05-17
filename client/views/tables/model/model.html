@@ -1,6 +1,6 @@
 <div class="db-footer">
   <unsaved-changes is-unsaved="isUnsaved"></unsaved-changes>
-  <button type="submit" class="btn btn-success btn-lg btn-w-lg"
+  <button type="submit" class="btn btn-validate btn-lg btn-w-lg"
           ladda="Model.loading" data-style="expand-right"
           ng-click="Model.saveSchema()">Validate & Update</button>
 </div>
@@ -20,7 +20,7 @@
 <section class="page-form-ele page ng-scope">
   <section class="panel panel-default">
     <div class="panel-heading">
-     <button type="submit" class="btn btn-success pull-right btn-md btn-w-md" style="margin-top: -6px;"
+     <button type="submit" class="btn btn-validate pull-right btn-md btn-w-md" style="margin-top: -6px; width: auto;"
           ladda="Model.loading" data-style="expand-right"
           ng-click="Model.saveSchema()">Validate & Update</button>
 
@@ -34,7 +34,7 @@
     <div class="panel-body">
       <div>
 
-        <div class="ui-tab-container ui-tab-horizontal">
+        <div class="ui-tab-container tab-model-container ui-tab-horizontal">
           <tabs data="Model.tabs" type="tabs" />
           <div class="tab-content" ui-view></div>
 

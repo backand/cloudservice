@@ -57,22 +57,23 @@
         }
       ];
       return schema;
-    }
+    };
 
     self.usingDefaultSchema = function(appName, force){
-
+      var theAnswer = false;
       //if force read check otherwise get from local storage
       if (!$localStorage.backand[appName]) {
         $localStorage.backand[appName] = {}
       }
-
-      if(force || $localStorage.backand[appName].useDefaultSchema === undefined) {
+      //force or local storage only if the user is in the database tab in the 4tabs configuration
+      if((force || $localStorage.backand[appName].useDefaultSchema === undefined)
+        && $localStorage.backand[appName].secondAppNavChoice == 'database') {
         //get the model and compare to default schema
         return self.get(appName).then(
-            function(data){
-              $localStorage.backand[appName].useDefaultSchema = angular.equals(data.data, self.defaultSchema());
-              return $localStorage.backand[appName].useDefaultSchema;
-            }
+          function(data){
+            $localStorage.backand[appName].useDefaultSchema = angular.equals(data.data, self.defaultSchema());
+            return $localStorage.backand[appName].useDefaultSchema;
+          }
         );
       } else {
         var deferred = $q.defer();

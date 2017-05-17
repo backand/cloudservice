@@ -1,0 +1,45 @@
+<div class="nav-wrapper scroller" perfect-scrollbar>
+  <ul id="nav2" class="nav" slim-scroll collapse-nav>
+    <li class="search-box">
+      <div class="input-group">
+        <div class="ui-select app-headers" style="font-weight: bold;">
+          <select ng-model="nav.currentAppName"
+                  ng-change="nav.goToApp()"
+                  ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
+                  class="app-select">
+          </select>
+        </div>
+      </div>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'security.auth'}">
+      <a ng-click="nav.goTo($event, 'security.auth')">
+        <i class="fontello-icon-configuration_2 front-icons"></i>
+        <span>Configuration</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'security.keys'}">
+      <a ng-click="nav.goTo($event, 'security.keys')">
+        <i class="fontello-icon-social-keys front-icons"></i>
+        <span>Social and Keys</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'security.users'}">
+      <a ng-click="nav.goTo($event, 'security.users')">
+        <i class="fontello-icon-registreed-users front-icons"></i>
+        <span>Registered Users</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'security.actions'}">
+      <a ng-click="nav.goTo($event, 'security.actions')">
+        <i class="fontello-icon-security-actions front-icons"></i>
+        <span>Security Actions</span>
+      </a>
+    </li>
+    <li ng-class="{active: nav.backandstorage.currentState == 'security.templates'}">
+      <a ng-click="nav.goTo($event, 'security.templates')">
+        <i class="fontello-icon-console-log front-icons"></i>
+        <span>Security Templates</span>
+      </a>
+    </li>
+  </ul>
+</div>

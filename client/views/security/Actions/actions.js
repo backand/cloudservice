@@ -11,9 +11,8 @@
       //enable here the rules tab only for 'backandUsers'
       RulesService.appName = DictionaryService.appName = self.appName;
       RulesService.tableId = 4;
+      RulesService.tableName = CONSTS.backandUserObject
       DictionaryService.tableName = CONSTS.backandUserObject;
-
-
     }());
 
   }

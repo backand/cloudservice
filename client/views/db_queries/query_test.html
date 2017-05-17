@@ -1,38 +1,39 @@
-  <h3>Test query parameters</h3>
+<h3>Test query parameters</h3>
+<br/>
+<form role="form" name="DbQuery.inputParametersForm" novalidate>
+  <div class="form-group" ng-repeat="inputParam in DbQuery.getParameters()">
+    <label for="inputParam">{{inputParam}}</label>
+    <input type="text"
+           id="inputParam"
+           class="form-control"
+           ng-model="DbQuery.inputValues[inputParam]"
+           required>
+  </div>
   <br/>
-  <form role="form" name="DbQuery.inputParametersForm" novalidate>
-    <div class="form-group" ng-repeat="inputParam in DbQuery.getParameters()">
-      <label for="inputParam">{{inputParam}}</label>
-      <input type="text"
-             id="inputParam"
-             class="form-control"
-             ng-model="DbQuery.inputValues[inputParam]"
-             required>
-    </div>
-    <br/>
-    <!-- <label>HTTP Request URL:</label>
-    <bknd-copy-url copy-url-params="DbQuery.copyUrlParams"></bknd-copy-url>
-    <br/>
-    <label>Request $http:</label>
-    <bknd-copy-url type="textarea" copy-url-params="DbQuery.copyHttpParams"></bknd-copy-url> -->
-    <bknd-code-generator url="{{DbQuery.copyUrlParams.getUrl()}}"
-                         http-object="{{DbQuery.httpObject}}"></bknd-code-generator>
-    <br/>
-
+  <!-- <label>HTTP Request URL:</label>
+  <bknd-copy-url copy-url-params="DbQuery.copyUrlParams"></bknd-copy-url>
+  <br/>
+  <label>Request $http:</label>
+  <bknd-copy-url type="textarea" copy-url-params="DbQuery.copyHttpParams"></bknd-copy-url> -->
+  <bknd-code-generator url="{{DbQuery.copyUrlParams.getUrl()}}"
+                       http-object="{{DbQuery.httpObject}}"></bknd-code-generator>
+  <br/>
+  <div class="save-buttons">
     <button type="button"
-            class="btn btn-success btn-lg btn-w-lg"
+            class="btn btn-success btn-lg "
             data-style="expand-right" ladda="DbQuery.testLoading"
             ng-disabled="!(DbQuery.allowTest() && !DbQuery.inputParametersForm.$invalid)"
             ng-click="DbQuery.testData()">Test Query
     </button>
     <button type="button"
-            style=""
-            class="btn btn-success btn-lg btn-w-lg"
+            style="margin-left: 10px"
+            class="btn btn-success btn-lg "
             data-style="expand-right" ladda="DbQuery.loading"
             ng-disabled="DbQuery.allowTest()"
             ng-click="DbQuery.saveQuery(true)">Save & Test
     </button>
-    <div ng-if="!DbQuery.allowTest()">** Must save first to enable Test Query</div>
-  </form>
+  </div>
+  <div ng-if="!DbQuery.allowTest()">** Must save first to enable Test Query</div>
+</form>
 
-  <ng-include src="'views/db_queries/query_result.html'"></ng-include>
+<ng-include src="'views/db_queries/query_result.html'"></ng-include>

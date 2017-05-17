@@ -1,4 +1,11 @@
-<h3>Test Action</h3>
+<div class="test-title">
+  <h3>Test {{rules.mode.title}}</h3>
+  <input type="button" name="testCode"
+         ng-show="rules.requestTestForm"
+         class="pull-right btn btn-close-test btn-xs with-margin"
+         ng-click="rules.toggleTestForm()"
+         value="{{'>>'}}">
+</div>
 <br/>
 <form role="form" name="rules.inputParametersForm" novalidate>
 
@@ -14,6 +21,7 @@
 
   <hr ng-if="rules.test.inputParametersArray" class="narrow-top-margin">
   <div ng-if="rules.getDataActionType() === 'On Demand'">
+    <div/>
     <label>Method:&nbsp;&nbsp;</label>
     <input type="radio"
            ng-model="rules.test.method"
@@ -37,10 +45,12 @@
     </bknd-ace-features>
   </div>
 
-  <hr ng-if="rules.getDataActionType() === 'On Demand'" class="narrow-top-margin">
-  <div class="form-group" ng-if="rules.getDataActionType() !== 'Create' || rules.test.rowId != null">
+  <hr ng-if="rules.getDataActionType() === 'On Demand' && !rules.mode.name.includes('function')"
+      class="narrow-top-margin">
+  <div class="form-group"
+       ng-if="!rules.mode.name.includes('function') && (rules.getDataActionType() !== 'Create' || rules.test.rowId != null)">
     <label><a href="" ng-click="rules.getFirstRow()">Row Id </a><span
-            ng-if="rules.getDataActionType() === 'On Demand'">(Optional)
+      ng-if="rules.getDataActionType() === 'On Demand'">(Optional)
     </span></label>
     <div ng-switch="rules.test.isGuid">
 
@@ -51,7 +61,8 @@
              class="form-control"
              max="{{rules.lastRowId}}"
              ng-model-options="{debounce: 400}"
-             ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
+             ng-model="rules.test.rowId"
+             ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
 
       <input type="text"
              ng-switch-when="true"
@@ -59,14 +70,16 @@
              id="rowId"
              class="form-control"
              ng-model-options="{debounce: 400}"
-             ng-model="rules.test.rowId" ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
+             ng-model="rules.test.rowId"
+             ng-required="rules.getDataActionType() === 'Update' || rules.getDataActionType() === 'Delete'">
     </div>
 
   </div>
   <div class="form-group"
-       ng-if="(rules.test.rowId != null && rules.rowData != '') || rules.getDataActionType() === 'Create'">
+       ng-if="!rules.mode.name.includes('function') && ((rules.test.rowId != null && rules.rowData != '') || rules.getDataActionType() === 'Create')">
     <label for="rowData">{{ rules.ace.message }}</label>
-    <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}" style="position: relative; top: 100px;"></div>
+    <div us-spinner spinner-key="loading-row" us-spinner="{length:10, radius: 10}"
+         style="position: relative; top: 100px;"></div>
     <div
       ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'json',rendererOptions: { fontSize: 15 } }"
       class="form-control ace-db-template"
@@ -82,10 +95,10 @@
 
   <hr ng-if="rules.test.rowId != null" class="narrow-top-margin">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 save-test-row">
       <button type="submit"
-              style="margin-left: 20px; margin-bottom: 3px"
-              class="btn btn-success pull-right"
+              style="margin-top: 15px"
+              class="btn btn-test btn-success pull-right"
               data-style="expand-right" ladda="rules.test.testLoading"
               ng-disabled="(!rules.allowTest() || !rules.allowTestEditMode) && !rules.isNodeJS"
               ng-click="rules.testData()"> {{rules.testActionTitle}}
@@ -93,7 +106,7 @@
 
       <button type="button"
               style=""
-              class="btn btn-primary pull-right"
+              class="btn btn-validate pull-right"
               ng-show="rules.action.workflowAction != 'NodeJS'"
               data-style="expand-right" ladda="rules.savingAndTesting"
               ng-disabled="rules.allowTest()"
@@ -105,7 +118,7 @@
   </div>
   <br/>
   <div class="row">
-    <div class="col-md-12">
+    <div style="display: flex">
       <label>Test Mode:&nbsp;&nbsp;</label>
       <input type="radio"
              ng-model="rules.debugMode"

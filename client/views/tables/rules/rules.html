@@ -1,22 +1,21 @@
 <div ng-controller="RulesController as rules">
 
-  <div id="rules-header" class="page-header clearfix">
+  <div id="rules-header" class="page-header clearfix" ng-if="rules.showsideBar">
     <div class="title-group">
-      <h2 class="page-name ">Actions</h2>
+      <h2 class="page-name ">{{rules.mode.title}}</h2>
       <h4 class=" page-description lead pull-left">Manage here all the server side logic and operations</h4>
     </div>
     <button ng-show="rules.action && !rules.editMode"
             ng-click="rules.newAction()"
             id="new-rule-btn"
             class="btn btn-success pull-right">
-      + New Action
+      + New {{rules.mode.title}}
     </button>
-
-
   </div>
 
   <div class="row">
-    <div ng-show="!rules.editMode && !rules.requestTestForm" class="col-xs-4 col-md-3 rule-column actions-animate-show">
+    <div ng-if="!rules.editMode && !rules.requestTestForm && rules.showsideBar"
+         class="col-xs-5 col-md-4 col-lg-3 rule-column actions-animate-show">
 
       <ul  class="list-unstyled rule-tree">
 
@@ -46,10 +45,9 @@
 
               <ol class="rules-names-list" ng-show="subitem.visible">
 
-                <li ng-repeat="rule in subitem.items" >
-
-                  <a href="" ng-click="rules.goToAction(rule.name)" class="rule-name">
-                  {{ ::rule.name}}</a>
+                <li ng-repeat="rule in subitem.items" class="li-actions" ng-class="{'active' : active}">
+                  <span  ng-click="rules.goToAction(rule.name)" class="rule-name">
+                  {{ ::rule.name}}</span>
                 </li>
 
               </ol>
@@ -61,11 +59,13 @@
 
     <div ng-if="rules.showTemplatesForm" ng-include="'views/tables/rules/action_templates.html'"></div>
 
-    <div ng-class="(!rules.editMode || rules.showTestForm()) ? 'col-xs-8 col-md-9' : 'col-xs-12'"
+    <div
+            ng-class="(!rules.mode.name.includes('function') && (rules.showTestForm() || !rules.editMode)) ? 'col-xs-7 col-md-8' : 'col-xs-12'"
          class="actions-display"
          ng-include="'views/tables/rules/new_rule.html'"></div>
-    <div ng-show="rules.showTestForm()"
-         class="col-xs-4 col-md-3 test-column actions-animate-show"
+    <div ng-if="!rules.mode.name.includes('function')"
+         ng-show="rules.showTestForm()"
+         class="col-xs-5 col-md-4 test-column actions-animate-show"
          ng-include="'views/tables/rules/test_code_window.html'"></div>
   </div>
 </div>

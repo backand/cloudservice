@@ -28,7 +28,7 @@ html {
 
     .app-inner >  .header-container {
         &.header-fixed {
-            position: fixed;
+            //position: fixed;
             right: 0;
             left: 0;
             z-index: $zindex-navbar-fixed;
@@ -47,19 +47,18 @@ html {
 
     > .main-container {
         position: static;   // important! make sure &:before position based on html
-        &:before { // content container background for boxed layout
-            content: " ";
-            line-height: 0;
-            z-index: -2; // so that it is beneath sidebar
-            position: absolute;
-            display: block;
-            width: 100%;
-            max-width: inherit; //
-            top: 0;
-            bottom: 0;
-            background-color: $main_container_bg;
-            box-shadow: 0 0 2px rgba(0,0,0,.2);
-        }
+    // &:before { // content container background for boxed layout
+   // content:" ";
+   // line-height:0;
+   // z-index:- 2; // so that it is beneath sidebar
+   // position:absolute;
+   // display:block;
+   // width:100 %;
+   // max-width:inherit; //
+   // top:0;
+   // bottom:0;
+   // box-shadow:0 0 2 px rgba(0, 0, 0, .2);
+    //}
 
         > .nav-container {
             display: none;
@@ -111,7 +110,7 @@ html {
             margin-left: 0;
             // @include transition(none);
             @media (min-width:$screen-sm) {
-                margin-left: 220px;
+                //margin-left: 220px;
             }
         }
 

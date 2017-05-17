@@ -4,6 +4,7 @@
   function TablesService($http, $q, CONSTS) {
 
     var self = this;
+    var rootObjectName = '_root';
     self.tables = [];
 
     /**
@@ -27,6 +28,13 @@
       return _.findWhere(self.tables, {name: tableName});
     };
 
+    self.getRootId = function () {
+      var rootObject = _.findWhere(self.tables, {name: rootObjectName});
+      if(rootObject)
+        return rootObject.__metadata.id;
+      else
+        return -1;
+    };
 
     function _get(appName) {
       return $http({

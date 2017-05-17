@@ -58,6 +58,7 @@
     'backand.playground',
     'backand.docs',
     'backand.dbQueries',
+    'backand.functions',
     'backand.cronJobs',
     'ngMessages',
     'pascalprecht.translate',

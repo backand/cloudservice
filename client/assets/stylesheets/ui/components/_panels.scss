@@ -1,12 +1,30 @@
 // overrides Bootstrap
 .panel {
-    box-shadow: 0 0 3px rgba(0,0,0,.1);
+
+
     .panel-heading {
         text-transform: uppercase;
+        border: none;
+        background: none;
     }
     .panel-title {
         font-size: $font-size-base;
     }
+}
+.panel-default{
+  border: none;
+}
+.http-panel{
+  .panel-default{
+    border: 1px solid #ddd !important;
+
+  }
+}
+.tab-content{
+  //.btn-success{
+  //  background-color: #f26724;
+  //  border: none;
+  //}
 }
  .log-history-cons {
   float: right;
@@ -146,7 +164,7 @@
     .btn-icon-lined {
         // float: left;
         margin: 0 15px 0 0;
-        font-size: 32px;        
+        font-size: 32px;
     }
 
     .box-info {
@@ -158,7 +176,7 @@
     }
 }
 
-// 
+//
 .panel-profile {
     border: none;
 
