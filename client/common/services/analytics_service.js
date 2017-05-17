@@ -26,8 +26,7 @@
         email: email,
         signed_up_at: new Date().getTime()
       });
-      $analytics.eventTrack('SignedUp', {name: fullName});
-      $analytics.eventTrack('SocialSignedUp', {provider: socialName});
+      $analytics.eventTrack('ClientSocialSignedUp', {name: fullName, provider: socialName});
     };
 
     self.identify = function (fullName, email) {

@@ -43,8 +43,8 @@
             return self.signIn({username: email, password: password})
           })
           .then(function (response) {
-            //AnalyticsService.identify(fullName, email);
-            //AnalyticsService.trackSignupEvent(fullName, email);
+            AnalyticsService.identify(fullName, email);
+            AnalyticsService.trackSignupEvent(fullName, email);
             deferred.resolve(response);
           })
       } else {
