@@ -30,14 +30,14 @@
             <span>Examples</span>
           </a>
         </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'docs.platform_select_kickstart'}"
+        <li ng-class="{active: nav.state == 'docs.platform_select_kickstart'}"
             class="sub-objects-icons">
           <a ng-click="nav.goTo($event, 'docs.platform_select_kickstart')">
             <i class="ba-icon-kickstart-tutorial"></i>
             <span>Kickstart Tutorials</span>
           </a>
         </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'docs.platform_select_existing'}"
+        <li ng-class="{active: nav.state == 'docs.platform_select_existing'}"
             class="sub-objects-icons">
           <a ng-click="nav.goTo($event, 'docs.platform_select_existing')">
             <i class="ba-icon-kickstart-tutorial"></i>
@@ -68,14 +68,14 @@
       </ul>
     </li>
     <li ng-if="nav.app.connectionSource === 'local'"
-        ng-class="{active: nav.backandstorage.currentState == 'erd_model'}" href="">
+        ng-class="{active: nav.state == 'erd_model'}" href="">
       <a href="" ng-click="nav.goToModel($event)">
         <i class="fontello-icon-model front-icons"></i>
         <span>Model</span>
       </a>
     </li>
     <li ng-if="nav.app.connectionSource !== 'local'"
-        ng-class="{active: nav.backandstorage.currentState == 'tables.notables'}"  href="">
+        ng-class="{active: nav.state == 'tables.notables'}"  href="">
       <a ui-sref="tables.notables">
         <i class="ba-icon-model front-icons"></i>
         <span>Sync with Database</span>
@@ -113,7 +113,7 @@
            ng-class="showQueries == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.backandstorage.currentState == 'dbQueries.newQuery' }"
+        <li ng-class="{active: nav.state == 'dbQueries.newQuery' }"
             ng-if="nav.DatabaseStatus == 1"
             class="sub-objects-icons">
           <a ng-click="nav.newDbQuery($event)">
@@ -149,19 +149,19 @@
            ng-class="showLogs == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
+        <li ng-class="{active: nav.state == 'log.requests'}">
           <a ng-click="nav.goTo($event, 'log.requests')">
             <i class="fontello-icon-api-log_2 front-icons"></i>
             <span>API Log</span>
           </a>
         </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}">
+        <li ng-class="{active: nav.state == 'log.console'}">
           <a ng-click="nav.goTo($event, 'log.console')">
             <i class="fontello-icon-console-log front-icons"></i>
             <span>Console Log</span>
           </a>
         </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'log.history'}">
+        <li ng-class="{active: nav.state == 'log.history'}">
           <a ng-click="nav.goTo($event, 'log.history')">
             <i class="fontello-icon-data-history-log front-icons"></i>
             <span>Data History Log</span>

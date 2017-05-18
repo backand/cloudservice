@@ -15,13 +15,13 @@
         <span>General</span>
       </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'security.team', disabled: nav.DatabaseStatus != 1}">
+    <li ng-class="{active: nav.state == 'security.team', disabled: nav.DatabaseStatus != 1}">
       <a ng-click="nav.goTo($event, 'security.team')">
         <i class="ba-icon-admins front-icons"></i>
         <span style="padding-left: 18px;">Team</span>
       </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'hosting.hosting_tree'}"
+    <li ng-class="{active: nav.state == 'hosting.hosting_tree'}"
         class="open-structure">
       <a href="">
         <i class="fontello-icon-hosting front-icons"></i>
@@ -36,7 +36,7 @@
             <span>Configuration</span>
           </a>
         </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'hosting.files_tree'}">
+        <li ng-class="{active: nav.state == 'hosting.files_tree'}">
           <a ng-click="nav.goTo($event, 'hosting.files_tree')">
             <i class="fontello-icon-storage front-icons"></i>
             <span>Storage</span>
@@ -44,7 +44,7 @@
         </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'app.configuration'}">
+    <li ng-class="{active: nav.state == 'app.configuration'}">
       <a ng-click="nav.goTo($event, 'app.configuration')">
         <i class="fontello-icon-configuration_2 front-icons"></i>
         <span style="padding-left: 11px;">App Configuration</span>
@@ -87,7 +87,7 @@
       </ul>
     </li>
 
-    <li ng-class="{active: nav.backandstorage.currentState === 'analytics.report'}">
+    <li ng-class="{active: nav.state === 'analytics.report'}">
       <a ng-click="nav.goTo($event, 'analytics.report')">
         <i class="fontello-icon-api-log_2 front-icons"></i>
         <span>Reports</span>
@@ -101,19 +101,19 @@
            ng-class="showLogs == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
+        <li ng-class="{active: nav.state == 'log.requests'}">
           <a ng-click="nav.goTo($event, 'log.requests')">
             <i class="fontello-icon-api-log_2 front-icons"></i>
             <span>API Log</span>
           </a>
         </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}">
+        <li ng-class="{active: nav.state == 'log.console'}">
           <a ng-click="nav.goTo($event, 'log.console')">
             <i class="fontello-icon-console-log front-icons"></i>
             <span>Console Log</span>
           </a>
         </li>
-        <li ng-class="{active: nav.backandstorage.currentState == 'log.history'}">
+        <li ng-class="{active: nav.state == 'log.history'}">
           <a ng-click="nav.goTo($event, 'log.history')">
             <i class="fontello-icon-data-history-log front-icons"></i>
             <span>Data History Log</span>
