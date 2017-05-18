@@ -320,8 +320,8 @@
                       <br/>
                     </div>
 
-                    <h3 ng-if="!rules.allowEditAction()">Initialize your Node.js action</h3>
-                    <h3 ng-if="rules.allowEditAction()">Deploy your node.js action</h3>
+                    <h3 ng-if="!rules.allowEditAction()">Initialize your {{modal.title.toLowerCase()}}</h3>
+                    <h3 ng-if="rules.allowEditAction()">Deploy your {{modal.title.toLowerCase()}}</h3>
                     <br/>
                     <p ng-if="rules.allowEditAction()">To deploy your local node.js code to Back&, use the following
                       command on the command line:</p>
