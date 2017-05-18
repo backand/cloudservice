@@ -23,10 +23,6 @@
       updateDefaultModelUse(self.currentAppName, false);
     }());
 
-    $scope.$on('nav.secondAppNavChoice', function(){
-      self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
-    });
-
     $scope.$on('$stateChangeSuccess', function () {
 
       if ($state.current.name == 'apps.parse') {
