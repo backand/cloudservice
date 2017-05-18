@@ -4,52 +4,56 @@
     .controller('NavCtrl', ['$scope', '$state', '$rootScope', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage', 'RulesService', 'usSpinnerService', NavCtrl]);
 
   function NavCtrl($scope, $state, $rootScope, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage, RulesService, usSpinnerService) {
+
     var self = this;
-    self.isTablesClicked = false;
-    self.apps = AppsService.apps;
-    self.app = AppsService.currentApp;
-    self.stateparam = $state.params;
-    if (!self.backandstorage) {
-      self.backandstorage = {};
-    }
-    if (self.app) {
-      self.backandstorage = $localStorage.backand[self.app.Name];
-    }
-    self.currentAppName = AppsService.currentApp.Name;
-    self.currentState = $state.current.name;
-    self.secondAppNavChoice = '';
-    if (self.backandstorage) {
-      self.isDatabase = (self.backandstorage.secondAppNavChoice === 'database');
-      self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
-      if (self.backandstorage.secondAppNavChoice === undefined) {
-        self.backandstorage.secondAppNavChoice = 'database';
-      }
-    }
-    else {
-      self.isDatabase = false;
-    }
-    self.columnsLayout = 'col-md-2';
-    self.gettingStartedNav = 'side-bar';
+
     (function init() {
-      clearTables();
-      if (self.backandstorage !== undefined) {
-        checkState();
-        if (self.backandstorage.showSecondaryAppNav) {
-          self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
+      self.isTablesClicked = false;
+      self.apps = AppsService.apps;
+      self.app = AppsService.currentApp;
+      self.stateparam = $state.params;
+      if (!self.backandstorage) {
+        self.backandstorage = {};
+      }
+      if (self.app) {
+        $localStorage.backand[self.app.Name] = {};
+        self.backandstorage = $localStorage.backand[self.app.Name];
+      }
+      self.currentAppName = AppsService.currentApp.Name;
+      self.currentState = $state.current.name;
+
+      self.secondAppNavChoice = '';
+      if (self.backandstorage) {
+        self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
+        if (self.backandstorage.secondAppNavChoice === undefined) {
+          checkState();
         }
       }
+
+      self.columnsLayout = 'col-md-2';
+      self.gettingStartedNav = 'side-bar';
+      clearTables();
+
       if (!$state.params.appName) {
         self.gettingStartedNav = 'side-bar-modified';
       }
     }());
     function checkState() {
-      if(self.currentState.includes('function') || self.currentState.includes('cronJobs') ||
-          self.currentState.includes('log.requests') || self.currentState.includes('log.console') || self.currentState.includes('undefined')){
-        self.backandstorage.secondAppNavChoice = 'functions';
+      if(self.currentState.includes('function') ||
+          self.currentState.includes('cronJobs') ||
+          self.currentState.includes('log.requests') ||
+          self.currentState.includes('log.console') ||
+          self.currentState.includes('app.show')){
+            self.backandstorage.secondAppNavChoice = 'functions';
       }
-      else if(self.currentState.includes('docs') || self.currentState.includes('model') || self.currentState.includes('object') ||
-              self.currentState.includes('dbQueries') || self.currentState.includes('log.history') ||
-              self.currentState.includes('log.exception') || self.currentState.includes('log.config') || self.currentState.includes('database.show')){
+      else if(self.currentState.includes('docs') ||
+          self.currentState.includes('model') ||
+          self.currentState.includes('object') ||
+          self.currentState.includes('dbQueries') ||
+          self.currentState.includes('log.history') ||
+          self.currentState.includes('log.exception') ||
+          self.currentState.includes('log.config') ||
+          self.currentState.includes('database.show')){
         self.backandstorage.secondAppNavChoice = 'database';
       }
       else if(self.currentState.includes('security')){

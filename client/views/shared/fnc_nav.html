@@ -55,14 +55,14 @@
            ng-class="showFunctions == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.currentState == 'functions.newlambdafunctions' }" ng-if="nav.DatabaseStatus == 1"
+        <li ng-class="{active: nav.state == 'functions.newlambdafunctions' }" ng-if="nav.DatabaseStatus == 1"
             class="sub-functions-icons">
           <a ng-click="nav.newLambdaFunction($event)">
             <i class="ba-icon-new-query"></i>
             <span>Add Lambda Function</span>
           </a>
         </li>
-        <li ng-class="{active:  nav.currentState == 'functions.newjsfunctions' }" ng-if="nav.DatabaseStatus == 1"
+        <li ng-class="{active:  nav.state == 'functions.newjsfunctions' }" ng-if="nav.DatabaseStatus == 1"
             class="sub-functions-icons">
           <a ng-click="nav.newJsFunction($event)">
             <i class="ba-icon-new-query"></i>
@@ -98,7 +98,7 @@
            ng-class="showCronJobs == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.backandstorage.currentState == 'cronJobs.new' }"
+        <li ng-class="{active: nav.state == 'cronJobs.new' }"
             class="sub-objects-icons">
           <a ng-click="nav.goTo($event, 'cronJobs.new')">
             <i class="ba-icon-new-query"></i>
@@ -115,13 +115,13 @@
         </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'log.requests'}">
+    <li ng-class="{active: nav.state == 'log.requests'}">
       <a ng-click="nav.goTo($event, 'log.requests')">
         <i class="fontello-icon-api-log_2 front-icons"></i>
         <span>API Log</span>
       </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'log.console'}">
+    <li ng-class="{active: nav.state == 'log.console'}">
       <a ng-click="nav.goTo($event, 'log.console')">
         <i class="fontello-icon-console-log front-icons"></i>
         <span>Console Log</span>
