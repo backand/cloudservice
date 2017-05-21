@@ -1,5 +1,5 @@
-<div class="nav-wrapper scroller" perfect-scrollbar>
-  <ul slim-scroll collapse-nav id="nav2" class="nav">
+<div class="nav-wrapper" >
+  <ul collapse-nav id="nav2" class="nav">
     <li class="apps-header">
       <div class="ui-select app-headers" style="font-weight: bold;">
         <select ng-model="nav.currentAppName"
@@ -72,8 +72,8 @@
         <ul>
           <li ng-repeat="func in nav.functions track by func.name"
               ng-class="{active: func.iD == nav.stateparam.functionId}"
-              class="sub-functions-icons">
-            <a ng-click="nav.showFunction($event, func)">
+              class="sub-functions-icons crop">
+            <a ng-click="nav.showFunction($event, func)" >
               <i class="ti-write"></i>
               <span>{{func.name}}</span>
             </a>
