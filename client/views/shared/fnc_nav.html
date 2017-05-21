@@ -107,7 +107,7 @@
         </li>
         <li ng-class="{active: cronJob.iD == nav.stateparam.jobId}"
             ng-repeat="cronJob in nav.cronJobs track by cronJob.name"
-            class="sub-objects-icons">
+            class="sub-objects-icons crop">
           <a ng-click="nav.showCronJob($event, cronJob)">
             <span class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>
             <span style="margin-left: 14px;">{{cronJob.name}}</span>

@@ -96,7 +96,8 @@
             <span>New Object</span>
           </a>
         </li>
-        <li  ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"">
+        <li  ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"
+            class="crop">
           <a ng-click="nav.showTable($event, table)">
             <i class="ba-icon-todo objects"></i>
             <span>{{table.name}}</span>
@@ -124,7 +125,7 @@
 
         <ul>
           <li ng-class="{active: query.iD == nav.stateparam.queryId}" ng-repeat="query in nav.queries"
-              class="sub-objects-icons">
+              class="sub-objects-icons crop">
             <a ng-click="nav.showDbQuery($event, query)">
               <i class="ti-write"></i>
               <span>{{query.name}}</span>
