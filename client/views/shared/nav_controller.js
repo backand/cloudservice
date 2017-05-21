@@ -16,7 +16,9 @@
         self.backandstorage = {};
       }
       if (self.app) {
-        $localStorage.backand[self.app.Name] = {};
+        if(!$localStorage.backand[self.app.Name]){
+          $localStorage.backand[self.app.Name] = {};
+        }
         self.backandstorage = $localStorage.backand[self.app.Name];
       }
       self.currentAppName = AppsService.currentApp.Name;

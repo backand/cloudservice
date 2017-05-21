@@ -111,7 +111,7 @@
         FieldsService.addField(self.tableName, self.selectedFieldName, self.fieldType, self.relatedObject, self.viaField);
         self.updateErd().then(function (data) {
           resetAddFieldValues();
-          modalInstance.close({model: FieldsService.newModelObject});
+          //modalInstance.close({model: FieldsService.newModelObject});
         });
       }
     }
