@@ -1,8 +1,14 @@
 <div class="nav-wrapper">
   <ul collapse-nav id="nav2" class="nav">
-    <li class="search-box">
-      <div class="input-group">
-    <div class="apps-header ui-select">
+    <li class="apps-header">
+      <div class="ui-select app-headers" style="font-weight: bold;">
+        <select ng-model="nav.currentAppName"
+                ng-change="nav.goToApp()"
+                ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
+                class="app-select">
+        </select>
+      </div>
+    </li>
   <!--    <a>
       <span>{{nav.currentAppName}}</span>
     </a>
@@ -13,14 +19,7 @@
         <span>{{app.Name}}</span>
       </li>
     </ul> -->
-      <select ng-model="nav.currentAppName"
-              ng-change="nav.goToApp()"
-              ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
-              class="app-select">
-      </select>
-    </div>
-    </div>
-    </li>
+
 
 <li ng-class="{active: nav.state == 'app.show'}">
   <a ng-click="nav.goTo($event, 'app.show')">
