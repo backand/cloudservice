@@ -1,0 +1,25 @@
+.page-external-functions {
+    .nav {
+        &.nav-tabs {
+            >li {
+                &.active {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    .tab-content {
+        .list-group {
+            &.list-group-with-tabs {
+                >.list-group-item {
+                    border: 1px solid #dddddd;
+                    &:first-child {
+                        border-top-right-radius: 0;
+                        border-top-left-radius: 0;
+                        border-top: 0 none;
+                    }
+                }
+            }
+        }
+    }
+}

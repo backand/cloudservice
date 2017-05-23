@@ -1,0 +1,137 @@
+<section class="page-form-ele page page-external-functions">
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <strong> External Functions </strong>
+    </div>
+    <div class="panel-body">
+      <div us-spinner="" spinner-key="loading" spinner-start-active></div>
+      <tabset active="active">
+        <!-- /External Functions -->
+        <tab index="0">
+          <tab-heading>
+            External Functions
+          </tab-heading>
+
+          <div class="list-group list-group-with-tabs">
+            <!-- /guideline -->
+            <div class="list-group-item">
+              <div class="list-group-item-header">
+                <div class="list-group-item-heading">How it works</div>
+                <div class="list-group-item-toolbar">
+                  <label class="ui-switch ui-switch-success ui-switch-sm">
+                <input id="guideline" type="checkbox" ng-model="$ctrl.sections.guideline"><i></i>
+              </label>
+                </div>
+
+              </div>
+              <div class="list-group-item-body" data-ng-show="$ctrl.sections.guideline">
+                Lorem ipsum is a placeholder text (filler text) in publishing and graphic design. It is used to demonstrate the graphics
+                elements of a document, such as font, typography, and layout. ... Lorem ipsum dolor sit amet, consectetur
+                adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </div>
+            </div>
+            <!-- ./guideline -->
+            <!-- /aws connection -->
+            <div class="list-group-item">
+              <div class="list-group-item-header">
+                <div class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Connection Details</div>
+                <div class="list-group-item-toolbar">
+                  <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                <input id="awsConnection" type="checkbox" ng-model="$ctrl.sections.awsConnection"><i></i>
+              </label>
+                </div>
+              </div>
+              <div class="list-group-item-body" data-ng-show="$ctrl.sections.awsConnection">
+                <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>
+                          Use your aws credentials to get Lambda functions.
+                            <ba-tooltip tooltip-text="Lorem ipsum is a placeholder text (filler text) in publishing and graphic design. It is used to demonstrate the graphics elements of a document, such as font, typography, and layout." tooltip-placement="right" ><i class="ti-info-alt"></i></ba-tooltip>
+                        </label>
+                      </div>
+                      <div class="form-group">
+                        <label for="aws-access-key" class="control-label">AWS access Key</label>
+                        <input type="text" class="form-control" id="aws-access-key" ng-model="$ctrl.aws.AccessKeyId" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="aws-secret-key" class="control-label">AWS secret Key</label>
+                        <input type="password" class="form-control" id="aws-secret-key" ng-model="$ctrl.aws.EncryptedSecretAccessKey" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="aws-region" class="control-label">Aws Region</label>
+                        <input type="text" class="form-control" id="aws-region" ng-model="$ctrl.aws.AwsRegion" required>
+                      </div>
+
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-success" data-ng-disabled="$ctrl.awsForm.$invalid">Link</button>
+                      </div>
+                    </div>
+                    <div class="col-md-5 col-md-offset-2">
+                      <div class="social-provider-container">
+                        <div class="social-provider-help">
+                          <div class="social-provider-help-title ng-binding">Configuring Your AWS App</div>
+                          To get started with AWS authentication, you need to first create a new AWS app
+                          <ba-help-link key="socialAndKeysFacebook" class="ng-isolate-scope"><a href="http://docs.backand.com/#social-keys" target="bkhelp" style="text-decoration: none;" class="ng-binding">- read more&nbsp;<i class="ba-icon-external-link"></i></a></ba-help-link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- ./aws connection -->
+
+            <!-- /lambda functions -->
+            <div class="list-group-item">
+              <div class="list-group-item-header">
+                <div class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions</div>
+                <div class="list-group-item-toolbar">
+                  <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
+                <input id="lambdaFunctions" type="checkbox" ng-model="$ctrl.sections.lambdaFunctions"><i></i>
+              </label>
+                </div>
+              </div>
+              <div class="list-group-item-body" data-ng-show="$ctrl.sections.lambdaFunctions">
+                <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <ul class="list-group">
+                        <li class="list-group-item" data-ng-repeat="function in $ctrl.lambdaFunctions track by $index">
+                          <div data-ng-bind="function.FunctionName" style="display: inline-block"></div>
+                          <div class="pull-right"><button type="button" class="btn btn-xs btn-default">Linked</button>
+                            <button type="button" class="btn btn-xs btn-primary btn-success">Unlinked</button></div>
+                        </li>
+                        <li class="list-group-item" data-ng-repeat="function in $ctrl.lambdaFunctions track by $index">
+                          <div data-ng-bind="function.FunctionName" style="display: inline-block"></div>
+                          <div class="pull-right"><button type="button" class="btn btn-xs btn-default">Linked</button>
+                            <button type="button" class="btn btn-xs btn-primary btn-success">Unlinked</button></div>
+                        </li>
+                        <li class="list-group-item" data-ng-repeat="function in $ctrl.lambdaFunctions track by $index">
+                          <div data-ng-bind="function.FunctionName" style="display: inline-block"></div>
+                          <div class="pull-right"><button type="button" class="btn btn-xs btn-default">Linked</button>
+                            <button type="button" class="btn btn-xs btn-primary btn-success">Unlinked</button></div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- ./lambda functions -->
+          </div>
+        </tab>
+        <!-- ./External Functions -->
+        <!-- /Lambda Launcher -->
+        <tab index="1">
+          <tab-heading>
+            Lambda Launcher
+          </tab-heading>
+          I've got an HTML heading, and a select callback. Pretty cool!
+        </tab>
+        <!-- ./Lambda Launcher -->
+      </tabset>
+    </div>
+  </section>
+</section>

@@ -24,7 +24,8 @@ $icon-font-path:          "/assets/fonts/bootstrap/" !default;
 ,   "plugins/morris"
 ,   "plugins/jquery-jvectormap"
 ,   "plugins/ng-tags-input"
-
+// utils
+,    "spacing.util" 
 // Pages
 ,   "global/var-pages"
 ,   "pages/dashboard"
@@ -48,6 +49,7 @@ $icon-font-path:          "/assets/fonts/bootstrap/" !default;
 ,   "pages/object_security"
 ,   "pages/db_query"
 ,   "pages/erd_model"
+,   "pages/external-functions"
 
 // sections
 ,   "sections/layouts"

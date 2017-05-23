@@ -68,7 +68,8 @@
     'angulartics.segment.io',
     'flowChart',
     'ngFileUpload',
-    'angular-cron-jobs'
+    'angular-cron-jobs',
+    'backand.externalFunctions'
   ])
     .config(['ngClipProvider', function (ngClipProvider) {
       ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");

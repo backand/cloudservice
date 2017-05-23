@@ -69,6 +69,12 @@
             <span>Add Javascript Function</span>
           </a>
         </li>
+        <li class="sub-functions-icons">
+          <a data-ui-sref="functions.externalFunctions" title="External Functions">
+            <i class="glyphicon glyphicon-file"></i>
+            <span>External Functions</span>
+          </a>
+        </li>
         <ul>
           <li ng-repeat="func in nav.functions track by func.name"
               ng-class="{active: func.iD == nav.stateparam.functionId}"
