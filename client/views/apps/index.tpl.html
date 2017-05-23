@@ -6,28 +6,22 @@
       You can also read our quick start resources
     </div>
   </div>
-  <div class="row apps-jumbo-sections">
-    <div class="col-xs-4 col-sm-4">
-      <div class="apps-jumbo-section-wrapper"
-            ng-click="index.goToGettingStarted('docs.platform_select_existing-open')">
-        <i class="sprite-main-page sprite-icon-getting-started"></i>
-        <div class="apps-jumbo-section-title" analytics-wrapper target="gettingStarted">Getting started guide</div>
-      </div>
+    <div class="apps-jumbo-sections">
+    <div class="apps-jumbo-section-wrapper"
+         ng-click="index.goToGettingStarted('docs.platform_select_existing-open')">
+      <i class="sprite-main-page sprite-icon-getting-started"></i>
+      <div class="apps-jumbo-section-title" analytics-wrapper target="gettingStarted">Getting started guide</div>
     </div>
     <div class="jumbo-border"></div>
-    <div class="col-xs-4 col-sm-4">
-      <div class="apps-jumbo-section-wrapper"
-           ng-click="index.goToGettingStarted('docs.platform_select_kickstart-open')">
-        <i class="sprite-main-page sprite-icon-tutorials"></i>
-        <div class="apps-jumbo-section-title" analytics-wrapper target="ionicDocs">Existing App Tutorials</div>
-      </div>
+    <div class="apps-jumbo-section-wrapper"
+         ng-click="index.goToGettingStarted('docs.platform_select_kickstart-open')">
+      <i class="sprite-main-page sprite-icon-tutorials"></i>
+      <div class="apps-jumbo-section-title" analytics-wrapper target="ionicDocs">Existing App Tutorials</div>
     </div>
     <div class="jumbo-border"></div>
-    <div class="col-xs-4 col-sm-4">
-      <div class="apps-jumbo-section-wrapper" ng-click="index.goToLocation('http://docs.backand.com')">
-        <i class="sprite-main-page sprite-icon-docs"></i>
-        <div class="apps-jumbo-section-title" analytics-wrapper target="docs">Documentation</div>
-      </div>
+    <div class="apps-jumbo-section-wrapper" ng-click="index.goToLocation('http://docs.backand.com')">
+      <i class="sprite-main-page sprite-icon-docs"></i>
+      <div class="apps-jumbo-section-title" analytics-wrapper target="docs">Documentation</div>
     </div>
   </div>
 </div>
@@ -56,7 +50,7 @@
   </div>
 </div>
 <div class="apps-container rounded"
- ng-class="index.showJumbo == false ? 'without' : ''">
+     ng-class="index.showJumbo == false ? 'without' : ''">
 
   <div class="row header justify-content-between"
        ng-if="index.showJumbo">
@@ -154,7 +148,8 @@
           <p>{{ ::app.Title}}</p>
         </div>
       </div>
-      <div us-spinner="{color: 'black'}" spinner-key="loading-manage-{{ ::app.Name}}" spinner-start-active style="position:relative; left:50px;" ></div>
+      <div us-spinner="{color: 'black'}" spinner-key="loading-manage-{{ ::app.Name}}" spinner-start-active
+           style="position:relative; left:50px;"></div>
     </div>
 
     <div class="app-button col-md-5">

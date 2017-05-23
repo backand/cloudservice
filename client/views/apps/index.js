@@ -67,6 +67,7 @@
 
       AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
+          stopRefresh();
           createDB(self.appName, self.appType);
         },
         function (err) {

@@ -154,9 +154,6 @@
         return 'views/shared/db_nav.html';
       }
     };
-    $rootScope.$on('$stateChangeStart', function (){
-
-    });
     self.toggleSecondaryAppNav = function () {
       self.showSecondaryAppNav = !self.showSecondaryAppNav;
     };
@@ -241,6 +238,7 @@
     }
 
     $scope.$on('$stateChangeSuccess', function () {
+      $scope.$broadcast('toggle-active');
       self.state = $state.current.name;
       self.appName = $state.params.appName;
       loadApp();
