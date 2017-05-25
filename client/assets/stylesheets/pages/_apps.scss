@@ -5,7 +5,7 @@
 .second-app-nav {
   background-color: #1b1b1b;
   width: 56%;
-  min-width: 204px;
+  min-width: 208px;
   z-index: 41;
   li {
     a {
@@ -43,6 +43,15 @@
       height: 100%;
     }
   }
+  .crop {
+    overflow: hidden;
+    a {
+      display: inline-table !important;
+      span {
+        word-break: normal !important;
+      }
+    }
+  }
   .sub-functions-icons {
     a {
       i {
@@ -72,6 +81,9 @@
     }
   }
   li.open {
+    li{
+      background-color: #0f0f0f;
+    }
     a {
       background-color: #0f0f0f;
       border-color: transparent;
@@ -205,7 +217,7 @@
       i {
         margin-left: 31%;
       }
-      i{
+      i {
         margin-left: 28%;
 
       }
@@ -218,7 +230,7 @@
       i {
         margin-left: 35%;
       }
-      i{
+      i {
         margin-left: 32%;
       }
     }
@@ -269,7 +281,7 @@
     }
     h3 {
       padding-left: 29px;
-      font-family: "Open Sans";
+      font-family: "Open Sans", sans-serif;
       font-size: 35px;
       font-weight: 300;
       line-height: 0.1;
@@ -282,7 +294,7 @@
       border-radius: 4px;
       background-color: #f26724;
       margin-left: 3%;
-      font-family: "Open Sans";
+      font-family: "Open Sans", sans-serif;
       font-size: 16px;
       font-weight: bold;
       line-height: 1.06;
@@ -292,11 +304,14 @@
       display: grid;
       cursor: pointer;
     }
+    span:hover{
+      background-color: #393939;
+      color: #f26724;
+    }
   }
   span {
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-size: 17px;
-    font-weight: bold;
     line-height: 1;
     color: #f3743e;
   }
@@ -329,13 +344,16 @@
   height: 240px;
   border: 1px #E1E1E1 solid;
   margin-left: 4.5%;
+  margin-bottom: 10px;
   .app-path {
     padding-left: 5%;
     padding-top: 2.5%;
+
     input {
       border-right: none;
       border-left: none;
       border-top: none;
+      padding: 0;
     }
     span {
       font-size: 14px;
@@ -344,24 +362,28 @@
       width: 100%;
     }
     button {
-      width: 40%;
+      width: 35%;
       display: inline-block;
     }
     .cancel-button {
       border: none;
       background-color: white;
       opacity: 0.65;
-      font-family: "Open Sans";
+      font-family: "Open Sans", sans-serif;
       font-size: 16px;
       line-height: 1.06;
       text-align: center;
       color: rgba(57, 57, 57, 0.65);
     }
-    submit-button {
+    .submit-button {
       background-color: #f26724;
       color: #ffffff;
       font-size: 16px;
       font-weight: bold;
+    }
+    .submit-button:hover{
+      background-color: #393939;
+      color: #f26724;
     }
     .btn-primary[disabled] {
       background-color: #FFD0B9;
@@ -375,7 +397,7 @@
       height: 44px;
       border-radius: 4px;
       background-color: #f26724;
-      font-family: "Open Sans";
+      font-family: "Open Sans", sans-serif;
       font-size: 16px;
       cursor: pointer;
       border: none;
@@ -451,7 +473,7 @@
       color: #f26724;
     }
     p {
-      font-family: "Open Sans";
+      font-family: "Open Sans",sans-serif;
       font-size: 14px;
       text-align: center;
       color: #595959;
@@ -467,6 +489,9 @@
       }
     }
   }
+  .app-type-container:hover{
+    border-color: #f26724;
+  }
   .app-type-container.active {
     border: solid 1px #f26724;
     p {
@@ -480,7 +505,7 @@
   display: inline-block;
   padding-left: 10px;
   vertical-align: middle;
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-size: 10px;
   font-weight: bold;
   text-align: center;
@@ -615,9 +640,8 @@
   }
 
   .apps-jumbo-sections {
-    width: 80%;
+    width: 945px;
     margin: 0 auto;
-    margin-left: 10% !important;
     font-size: 16px;
     display: flex;
     @media screen and (max-width: 700px) {
@@ -694,6 +718,14 @@
 .apps-header {
   display: flex;
   height: 66px !important;
+  z-index: 20;
+  .apps-list{
+    height: 225px;
+    overflow: hidden;
+    li{
+      height: 45px;
+    }
+  }
 }
 
 .configuration-description {
@@ -904,7 +936,7 @@
 
   }
   span {
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     text-align: center;
     padding-left: 15px;
@@ -928,6 +960,7 @@
     font-weight: bold;
     color: #8f8f8f;
   }
+
 }
 
 .main-container {
@@ -940,7 +973,7 @@
   input {
     border: none;
     padding-top: 21px;
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
     font-size: 14px;
     font-style: italic;
     line-height: 5.71;
@@ -964,7 +997,7 @@
     }
     h3 {
       padding-left: 29px;
-      font-family: "Open Sans";
+      font-family: "Open Sans", sans-serif;
       font-size: 35px;
       font-weight: 300;
       line-height: 0.1;
@@ -977,7 +1010,7 @@
       border-radius: 4px;
       background-color: #f26724;
       margin-left: 3%;
-      font-family: "Open Sans";
+      font-family: "Open Sans", sans-serif;
       font-size: 16px;
       font-weight: bold;
       line-height: 1.06;

@@ -11,31 +11,31 @@
         </div>
       </div>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'security.auth'}">
+    <li ng-class="{active: nav.state == 'security.auth'}">
       <a ng-click="nav.goTo($event, 'security.auth')">
         <i class="fontello-icon-configuration_2 front-icons"></i>
         <span>Configuration</span>
       </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'security.keys'}">
+    <li ng-class="{active: nav.state == 'security.keys'}">
       <a ng-click="nav.goTo($event, 'security.keys')">
         <i class="fontello-icon-social-keys front-icons"></i>
         <span>Social and Keys</span>
       </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'security.users'}">
+    <li ng-class="{active: nav.state == 'security.users'}">
       <a ng-click="nav.goTo($event, 'security.users')">
         <i class="fontello-icon-registreed-users front-icons"></i>
         <span>Registered Users</span>
       </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'security.actions'}">
+    <li ng-class="{active: nav.state == 'security.actions'}">
       <a ng-click="nav.goTo($event, 'security.actions')">
         <i class="fontello-icon-security-actions front-icons"></i>
         <span>Security Actions</span>
       </a>
     </li>
-    <li ng-class="{active: nav.backandstorage.currentState == 'security.templates'}">
+    <li ng-class="{active: nav.state == 'security.templates'}">
       <a ng-click="nav.goTo($event, 'security.templates')">
         <i class="fontello-icon-console-log front-icons"></i>
         <span>Security Templates</span>
