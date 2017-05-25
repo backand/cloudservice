@@ -719,15 +719,36 @@
   display: flex;
   height: 66px !important;
   z-index: 20;
+  a{
+    height: 100%;
+    line-height: 5;
+  }
   .apps-list{
-    height: 225px;
-    overflow: hidden;
+    max-height: 225px !important;
+    background-color: white;
+    width: 284px;
+    border: solid 1px #dbdbdb;
+    font-family: "Open Sans", sans-serif;
     li{
       height: 45px;
+      span{
+        line-height: 3;
+      }
     }
   }
-}
 
+}
+.app-list-open{
+  background-color: #1b1b1b !important;
+  ul>li{
+    span{ color: #333333 !important;}
+    background-color: white !important;
+  }
+  ul>li:hover{
+    background-color: #f26724 !important;
+    span{ color: white !important;}
+  }
+}
 .configuration-description {
   padding-bottom: 10px;
 }
