@@ -17,9 +17,26 @@
         }
 
         .dropdown-menu {
+          padding: 0;
+          li{
+            height: 40px;
+          }
+
             a {
-                color: $text-color;
+              color: $text-color;
+              height: 100%;
+              line-height: 2.6;
+
             }
+          a:hover{
+            background-color: #f26724 !important;
+            span{
+              color: white;
+            }
+            span:hover{
+              color: white !important;
+            }
+          }
             .bknd-username {
               display: none;
             }
@@ -303,7 +320,11 @@
                     }
                 }
               .help-dropdown {
-                background-color: #e3e3e3;
+                background-color: white;
+                border-left: solid 1px #e6e6e6;
+                border-right: solid 1px #e6e6e6;
+                width: 70px;
+                position: relative;
               }
             }
         }

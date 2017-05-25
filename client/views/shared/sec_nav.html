@@ -1,15 +1,16 @@
-<div class="nav-wrapper scroller" perfect-scrollbar>
-  <ul id="nav2" class="nav" slim-scroll collapse-nav>
-    <li class="search-box">
-      <div class="input-group">
-        <div class="ui-select app-headers" style="font-weight: bold;">
-          <select ng-model="nav.currentAppName"
-                  ng-change="nav.goToApp()"
-                  ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
-                  class="app-select">
-          </select>
-        </div>
-      </div>
+<div class="nav-wrapper">
+  <ul id="nav2" class="nav" collapse-nav>
+    <li class="apps-header" ng-click="showAppList = !showAppList" ng-class="{'app-list-open': showAppList}">
+      <a >
+        <span>{{nav.currentAppName}}</span>
+      </a>
+      <ul class="apps-list pre-scrollable">
+        <li ng-repeat="app in nav.apps.list"
+            ng-click="nav.goToApp()"
+            ng-model="nav.currentAppName">
+          <span>{{app.Name}}</span>
+        </li>
+      </ul>
     </li>
     <li ng-class="{active: nav.state == 'security.auth'}">
       <a ng-click="nav.goTo($event, 'security.auth')">
