@@ -22,18 +22,12 @@
           '$log',
           'usSpinnerService',
           'CloudService',
-          'NotificationService',
-          function ($log, usSpinnerService, CloudService, NotificationService) {
+          '$modal',
+          '$state',
+          'modalService',
+          function ($log, usSpinnerService, CloudService, $modal, $state, modalService) {
             $log.info('Component externalFunctions has initialized');
-            var $ctrl = this,
-              connectionModel = {
-                AccessKeyId: '',
-                AwsRegion: 'us-west-2',
-                accountId: '',
-                Name: 'Main',
-                CloudVendor: 'AWS',
-                EncryptedSecretAccessKey: ''
-              };
+            var $ctrl = this;
             /**
             * call initialization to initialize controllers properties 
             */
@@ -43,11 +37,10 @@
              *
              * public methods
              */
-            $ctrl.saveConnection = saveConnection;
+            $ctrl.onSaveConnection = onSaveConnection;
             /**
              * public properties
              */
-            $ctrl.aws = angular.copy(connectionModel);
             /**
              * @name initialization
              * @description
@@ -59,24 +52,15 @@
                 awsConnection: true,
                 lambdaFunctions: false
               };
+              //opens modal for AWS credentials
+              if (isNew()) {
+                awsConnectionModal();
+              } else {
+                getLambdaFunctions();
+              }
               usSpinnerService.stop('loading');
-              getAwsConnection();
-              getLambdaFunctions();
             }
 
-            function getAwsConnection() {
-              usSpinnerService.spin('loading');
-              CloudService
-                .getAwsConnection()
-                .then(function (response) {
-                  $ctrl.aws = response.data.data[0] || angular.copy(connectionModel);
-                  $log.info('Connections credentials loaded', response);
-                  usSpinnerService.stop('loading');
-                }).catch(function (error) {
-                  $log.error('Error while fetching connection details', error);
-                  usSpinnerService.stop('loading');
-                });
-            }
             /**
              * @name getLambdaFunctions
              * @description  function to get lambda function by app
@@ -100,40 +84,56 @@
                 });
             }
             /**
-             * @name saveConnection
-             * @description  function to save connection details
-             * validate credentials on client side before send to API
+            * @name onSaveConnection
+            * @description  function is called when AWS connection is saved/updated
+            * Fetch new lambda functions 
+            * 
+            * @param {object} connection An object of connection details
+            * @returns void
+            */
+            function onSaveConnection(connection) {
+              $log.info('AWS connection is updated with -', connection);
+              getLambdaFunctions();
+            }
+
+            /**
+             * @name awsConnectionModal
+             * @description opens modal/popup to configure AWS credentials
              * 
              * @returns void
              */
-            function saveConnection() {
-              usSpinnerService.spin('loading');
-              $log.info('saveConnection is called with :', $ctrl.aws);
-              var request = angular.copy($ctrl.aws);
-              if (request.__metadata) {
-                request.id = request.__metadata.id;
-              }
-              request = _.chain(request)
-                .pick(['AccessKeyId', 'AwsRegion', 'CloudVendor', 'EncryptedSecretAccessKey', 'id', 'Name'])
-                .pick(function (v, k) {
-                  return v ? true : false;
-                })
-                .value();
-              $log.warn('Connection request', request);
-              CloudService
-                .saveAwsConnection(request)
-                .then(function (response) {
-                  $log.info('Connection details are saved', response);
-                  //get lambda functions when connection is saved first time
-                  if (!request.id) {
-                    getLambdaFunctions();
-                  }
-                  usSpinnerService.stop('loading');
-                  NotificationService.add('success', 'Connection details are saved successfully.');
-                }).catch(function (error) {
-                  $log.error('Error while saving conncetions detail', error);
-                  usSpinnerService.stop('loading');
+            function awsConnectionModal() {
+              modalService
+                .awsCredentials()
+                .then(function (data) {
+                  $log.info('connection with - ', data);
+                  $state.transitionTo($state.current.name, {
+                    new: undefined
+                  }, {
+                      reload: true
+                    });
+                }, function () {
+                  $log.info('Cancelled AWS credentials to enter.');
+                  modalService.demoApp().then(function () {
+                  }, function () {
+                    $state.transitionTo($state.current.name, angular.extend({}, $state.params, {
+                      new: undefined
+                    }), {
+                        notify: false
+                      });
+                  });
                 });
+            }
+
+            /**
+             * @name isLauncher
+             * @description check if current state has `new` param with valid value [1]
+             * 
+             * @returns boolean
+             */
+            function isNew() {
+              var newApp = $state.params.new;
+              return (typeof newApp !== 'undefined') && (newApp == 1);
             }
 
             //end of controller

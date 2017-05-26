@@ -42,43 +42,21 @@
                 </div>
               </div>
               <div class="list-group-item-body" data-ng-show="$ctrl.sections.awsConnection">
-                <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
-                  <div class="row">
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label>
-                          Use your aws credentials to get Lambda functions.
-                            <ba-tooltip tooltip-text="Lorem ipsum is a placeholder text (filler text) in publishing and graphic design. It is used to demonstrate the graphics elements of a document, such as font, typography, and layout." tooltip-placement="right" ><i class="ti-info-alt"></i></ba-tooltip>
-                        </label>
-                      </div>
-                      <div class="form-group">
-                        <label for="aws-access-key" class="control-label">AWS access Key</label>
-                        <input type="text" class="form-control" id="aws-access-key" ng-model="$ctrl.aws.AccessKeyId" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="aws-secret-key" class="control-label">AWS secret Key</label>
-                        <input type="password" class="form-control" id="aws-secret-key" ng-model="$ctrl.aws.EncryptedSecretAccessKey" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="aws-region" class="control-label">Aws Region</label>
-                        <input type="text" class="form-control" id="aws-region" ng-model="$ctrl.aws.AwsRegion" required>
-                      </div>
-
-                      <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-success" data-ng-disabled="$ctrl.awsForm.$invalid">Link</button>
-                      </div>
-                    </div>
-                    <div class="col-md-5 col-md-offset-2">
-                      <div class="social-provider-container">
-                        <div class="social-provider-help">
-                          <div class="social-provider-help-title ng-binding">Configuring Your AWS App</div>
-                          To get started with AWS authentication, you need to first create a new AWS app
-                          <ba-help-link key="socialAndKeysFacebook" class="ng-isolate-scope"><a href="http://docs.backand.com/#social-keys" target="bkhelp" style="text-decoration: none;" class="ng-binding">- read more&nbsp;<i class="ba-icon-external-link"></i></a></ba-help-link>
-                        </div>
+                <div class="row">
+                  <div class="col-md-5">
+                    <aws-connection data-on-save="$ctrl.onSaveConnection(connection)"></aws-connection>
+                  </div>
+                  <div class="col-md-5 col-md-offset-2">
+                    <div class="social-provider-container">
+                      <div class="social-provider-help">
+                        <div class="social-provider-help-title ng-binding">Configuring Your AWS App</div>
+                        To get started with AWS authentication, you need to first create a new AWS app
+                        <ba-help-link key="socialAndKeysFacebook" class="ng-isolate-scope"><a data-ng-href="" target="bkhelp" style="text-decoration: none;">- read more&nbsp;<i class="ba-icon-external-link"></i></a></ba-help-link>
                       </div>
                     </div>
                   </div>
-                </form>
+                </div>
+
               </div>
             </div>
             <!-- ./aws connection -->

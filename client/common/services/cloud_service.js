@@ -15,14 +15,28 @@
   angular
     .module('common.services')
     .service('CloudService', ['$http', 'CONSTS', 'AppsService', function ($http, CONSTS, AppsService) {
-      var self = this, app;
-      app = AppsService.currentApp;
-      self.appName = app.Name;
+      var self = this;
 
+      /**
+       * Exposed bindable methods
+       */
       self.saveAwsConnection = saveAwsConnection;
       self.getAwsConnection = getAwsConnection;
       self.getLambdaFunctions = getLambdaFunctions;
+      self.loadAwsRegion = loadAwsRegion;
 
+      /**
+       * Exposed bindable properties
+       */
+      self.appName = AppsService.currentApp.Name;
+
+
+      function loadAwsRegion() {
+        return $http({
+          method: 'GET',
+          url: 'common/aws_regions.json'
+        });
+      }
       /**
        * @name getAwsConnection
        * @description get connection details by user
@@ -36,7 +50,7 @@
           method: 'GET',
           url: CONSTS.appUrl + '/1/objects/cloudServiceProvider',
           params: params,
-          headers : setHeaders()
+          headers: setHeaders()
         });
       }
 
@@ -53,10 +67,10 @@
         id = data.id || '';
         return $http({
           method: id ? 'PUT' : 'POST',
-          url: CONSTS.appUrl + '/1/objects/cloudServiceProvider'+(id ? '/'+id : ''),
+          url: CONSTS.appUrl + '/1/objects/cloudServiceProvider' + (id ? '/' + id : ''),
           data: data,
           params: params,
-          headers : setHeaders()
+          headers: setHeaders()
         });
       }
 
@@ -73,7 +87,7 @@
           method: 'GET',
           url: CONSTS.appUrl + '/1/lambda',
           params: params,
-          headers : setHeaders()
+          headers: setHeaders()
         });
       }
 

@@ -1,9 +1,9 @@
 (function () {
 
   angular.module('backand')
-    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', 'NotificationService','$rootScope', SignUpController]);
+    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', 'NotificationService', '$rootScope', 'AppsService', 'ModelService', 'AnalyticsService', 'DatabaseService', SignUpController]);
 
-  function SignUpController(AuthService, $state, SessionService, $timeout, NotificationService, $rootScope) {
+  function SignUpController(AuthService, $state, SessionService, $timeout, NotificationService, $rootScope, AppsService, ModelService, AnalyticsService, DatabaseService) {
 
     var self = this;
 
@@ -26,10 +26,10 @@
         }, 100);
       }
     }());
-    
-    self.emailChanged = function (email){
+
+    self.emailChanged = function (email) {
       self.twitterMissingEmail = false;
-      if(email.$valid){
+      if (email.$valid) {
         $rootScope.$emit('email:changed', email.$viewValue);
       }
     };
@@ -41,9 +41,13 @@
     self.signUp = function () {
       self.flags.authenticating = true;
       self.loading = true;
-
       AuthService.signUp(self.fullName, self.email, self.password)
         .then(function (response) {
+          if (isLauncher()) {
+            createNewApp(self.email);
+            // $state.go('functions.externalFunctions', { new: 1 });
+            return;
+          }
           var requestedState = SessionService.getRequestedState();
           $state.go(requestedState.state || 'apps.index', requestedState.params);
         })
@@ -58,6 +62,37 @@
           }
         });
     };
+
+    function createNewApp(email) {
+      NotificationService.add('info', 'Creating new app...');
+      AppsService.add()
+        .then(function (data) {
+          var emailSegments,
+            appName;
+          emailSegments = email.split('@');
+          appName = emailSegments[0] + 'app1';
+
+          //track event that app is created
+          AnalyticsService.track('CreatedApp', { appName: appName });
+          //create App database with defaultSchema
+          DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema())
+            .success(function (data) {
+              AnalyticsService.track('CreatedNewDB', { schema: ModelService.defaultSchema() });
+              AnalyticsService.track('create app', { app: appName });
+              AppsService.resetCurrentApp();
+              AppsService
+                .getApp(appName)
+                .then(function () {
+                  $state.go('functions.externalFunctions', { new: 1, appName : appName }, {reload: true});
+                });
+            });
+        });
+    }
+
+    function isLauncher() {
+      var launcher = $state.params.launcher;
+      return (typeof launcher !== 'undefined') && (launcher == 1);
+    }
 
   }
 

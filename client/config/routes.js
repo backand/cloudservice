@@ -18,7 +18,7 @@ angular.module('backand.routes', []).
       })
       .state('sign_up', {
         parent: 'auth',
-        url: '/sign_up?username&name&i&token',
+        url: '/sign_up?username&name&i&token&launcher',
         templateUrl: 'views/auth/sign_up.html',
         controller : 'SignUpController as signup'
       })

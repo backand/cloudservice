@@ -60,6 +60,7 @@
     'backand.dbQueries',
     'backand.functions',
     'backand.cronJobs',
+    'backand.externalFunctions',
     'ngMessages',
     'pascalprecht.translate',
     'angled-windows.directives',
@@ -69,7 +70,7 @@
     'flowChart',
     'ngFileUpload',
     'angular-cron-jobs',
-    'backand.externalFunctions'
+    'ui.select',
   ])
     .config(['ngClipProvider', function (ngClipProvider) {
       ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");
