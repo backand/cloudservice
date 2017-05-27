@@ -256,10 +256,10 @@
                   width: 202px;
                   border:none;
                   font-style: italic;
-                  padding-left: 35px;
+                  padding-left: 25px;
                   transition: width 1s;
                   border-radius: 4px;
-                  background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-32.png);
+                  background-image: url(../assets/images/apps_page/icon-search/icon-search.png);
                   background-position: 0px center;
                   background-repeat: no-repeat;
                 }
@@ -493,13 +493,14 @@
 
 .search-directive-wrapper {
   .search-results {
+    margin-top: -4px;
+    margin-left: -11px;
     position: absolute;
     top: $header_height - 10;
-    min-height: 100px;
-    min-width: 400px;
-    background: #ebeff1;
-    box-shadow: 0 0 3px 0 rgba(128, 126, 128, 1);
-    border-radius: 3px 3px 3px 3px;
+    min-height: 60px;
+    min-width: 800px;
+    background: white;
+    box-shadow: 2px 5px 5px #ccc;
     font-size: 12px;
     overflow-y: auto;
     max-height: 800px;
@@ -508,33 +509,56 @@
     z-index: 10;
     div.popover-wrapper {
       margin: 0 15px;
-    }
 
+    }
+    .results{
+      padding-top: 10px;
+      span{
+        font-family: $default_font ;
+        font-size: 16px;
+      }
+      .specific-result{
+        height: 100%;
+      }
+      .specific-result:hover{
+        background-color: #f26724;
+        color: white;
+      }
+      .white-div{
+        background-color: white;
+        height: 100%;
+      }
+      .darker-div{
+        background-color: #e5e3e3;
+        height: 100%;
+      }
+    }
     div.result-category {
       margin-left: 10px;
+      display: grid;
       h3 {
         font-size: 14px;
       }
       .result {
         margin-left: 10px;
-        overflow: auto;
         padding: 5px;
 
         .result-box {
           width: 150px;
+          padding-top: 12px;
           max-height: 100px;
           min-height: 45px;
-          background: #FAFAFA;
-          border-bottom: 1px solid #ccc;
           border-radius: 2px 2px 2px 2px;
-          padding: 2px 5px;
+          padding-right: 5px;
           display: inline-block;
           float: left;
           cursor: pointer;
+          font-weight: bold;
           font-size: 14px;
         }
         .result-label {
           margin-left: 20px;
+          padding-top: 12px;
           display: inline-block;
           word-wrap: break-word;
           max-width: 550px;
@@ -555,7 +579,14 @@
 
     .search-results-footer {
       a {
-        text-decoration: underline;
+        color: #f26724;
+      }
+      p{
+        padding-top:16px;
+        font-family: "Open Sans", sans-serif;
+        font-size: 16px;
+        text-align: left;
+        color: #000000;
       }
     }
   }

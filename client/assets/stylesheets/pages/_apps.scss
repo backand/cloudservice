@@ -7,7 +7,13 @@
   width: 56%;
   min-width: 208px;
   z-index: 41;
+  ul > li > ul > li{
+    span {
+      font-weight: normal;
+    }
+  }
   li {
+    height: 56px;
     a {
       //The importants are there to override the nav classes in place, this is for the new UI
       padding: 0 !important;
@@ -15,10 +21,10 @@
         font-size: 16px !important;
         margin-right: 0px !important;
         width: auto !important;
-        color: #626262;
+        color: $icon_color;
       }
       .status {
-        top: 22px !important;
+        top: 13px !important;
         left: 18px !important;
       }
     }
@@ -30,8 +36,12 @@
       background-color: #0f0f0f;
       border-color: transparent;
     }
-
-    //height: 60px !important;
+    .menu-border{
+      width: 100%;
+      height: 1px;
+      background-color: $icon_color;
+      opacity:0.4;
+    }
     cursor: pointer;
     ul {
       list-style-type: none;
@@ -45,10 +55,14 @@
   }
   .crop {
     overflow: hidden;
+    height: 45px;
     a {
       display: inline-table !important;
       span {
         word-break: normal !important;
+        padding-left: 20px !important;
+        font-size: 13px;
+        line-height: 3;
       }
     }
   }
@@ -297,7 +311,7 @@
       font-family: "Open Sans", sans-serif;
       font-size: 16px;
       font-weight: bold;
-      line-height: 1.06;
+      padding-top: 12px;
       text-align: center;
       color: #ffffff;
       align-items: center;
@@ -334,7 +348,17 @@
     }
   }
 }
-
+.new-function-selection{
+  height: 45px;
+  span{
+    font-weight: normal;
+  }
+}
+.new-function-selection:hover{
+  span{
+    color: white;
+  }
+}
 .apps-container.without {
   top: 155px;
 }
@@ -1074,6 +1098,10 @@
   @media (min-width: 1790px) {
     max-width: 16%;
   }
+  .nav-container{
+    border-width: 0 !important;
+
+  }
 }
 
 .nav-header {
@@ -1100,9 +1128,9 @@
 .backand-header {
   background-color: #2e2e2e;
   text-align: center;
-  height: 50px;
+  height: 65px;
   width: 110px;
-  padding-top: 7px;
+  padding-top: 15px;
 }
 
 .platform-sprite-icon {
@@ -1409,7 +1437,9 @@
   color: #626262;
   right: -50px;
 }
-
+.ti-plus{
+  vertical-align: inherit !important;
+}
 .glyphicon-hosting {
   right: -63px;
 }
@@ -1486,7 +1516,20 @@
   font-size: 17px;
   color: #626262;
 }
-
+.down-triangle{
+  z-index: 0;
+  content: "";
+  position: absolute;
+  right: 8%;
+  top: 50%;
+  color: $input-border;
+  width: 0;
+  margin-top: -3px;
+  height: 0;
+  border-top: 6px solid;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+}
 .ba-icon-docs-and-api {
   vertical-align: middle;
   color: #626262;
