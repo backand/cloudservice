@@ -287,8 +287,6 @@
       //  data.Role = role;
     }
 
-    <!-- Filter -->
-
     self.disableValue = function (operator) {
       return ['empty', 'notEmpty'].indexOf(operator) > -1;
     };
