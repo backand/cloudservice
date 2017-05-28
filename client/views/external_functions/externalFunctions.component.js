@@ -15,6 +15,7 @@
     .directive('externalFunctions', [function () {
       return {
         restrict: 'E',
+        scope: true,
         templateUrl: 'views/external_functions/externalFunctions.html',
         controllerAs: '$ctrl',
         bindToController: true,
@@ -47,6 +48,13 @@
              * function to initialize properties and call function at very first.
              */
             function initialization() {
+              // options to <users> Component
+              $ctrl.options = {
+                view: 'lambdaLauncher'
+              };
+              //set first tab as activeTab
+              $ctrl.activeTab = 0;
+              //set collapsible panels
               $ctrl.sections = {
                 guideline: true,
                 awsConnection: true,

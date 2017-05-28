@@ -1,134 +1,119 @@
-<section class="page-form-ele page ng-scope">
-  <section class="panel panel-default">
-    <div class="panel-heading">
-      <strong> {{users.title}} </strong>
+<!-- /admin mode -->
+<div class="row" ng-if="$ctrl.adminMode">
+  <div class=" form-group col-sm-7">
+    <label for="inviteAdminEmails">Invite team members to access the application with administrative role
+    <ba-help-link key="adminUsers"></ba-help-link></label>
+  </div>
+  <div class="form-group col-sm-7">
+    <input type="text" class="form-control col-sm-7" id="inviteAdminEmails" ng-model="$ctrl.invitedAdmins" placeholder="Admin Email Address -  Use comma for multiple users"
+    /></div>
+  <div class="col-sm-3">
+    <button type="button" ng-disabled="!$ctrl.invitedAdmins" id="addAdminInvites" class="btn btn-default btn-success " ng-click="$ctrl.inviteAdmins()">Invite Admin User(s)
+          </button>
+  </div>
+</div>
+<!-- ./admin mode -->
 
-      <div us-spinner spinner-key="loading" spinner-start-active></div>
+<!-- /user mode -->
+<div class="row" ng-if="!$ctrl.adminMode">
+  <div class=" form-group col-sm-7">
+    <label for="inviteUsersEmails">Invite users to access the application with role '{{$ctrl.defaultUserRole}}'.
+    If "Public App" is Off then this is the only way to add users to the app
+    <ba-help-link key="registeredUsers"></ba-help-link></label>
+
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-7">
+      <tags-input data-ng-model="$ctrl.invitedUsers" data-type="email"  class="theme-brand" placeholder="Email Address"  replace-spaces-with-dashes="false" ng-disabled="$ctrl.registrationRedirectUrl == ''" allowed-tags-pattern="{{$ctrl.regex}}"></tags-input>
+      <span class="help-text small">Email Address -  Use comma for multiple users</span>
     </div>
-    <div class="panel-body">
-      <br>
-
-      <div class="row" ng-if="users.adminMode">
-        <div class=" form-group col-sm-7">
-          <label for="inviteAdminEmails"></label>Invite team members to access the application with administrative role
-          <ba-help-link key="adminUsers"></ba-help-link></h4>
-          </lable>
-        </div>
-        <div class="form-group col-sm-7">
-          <input type="text" class="form-control col-sm-7" id="inviteAdminEmails" ng-model="users.invitedAdmins"
-                 placeholder="Admin Email Address -  Use comma for multiple users"/></div>
-        <div class="col-sm-3">
-          <button type="button" ng-disabled="!users.invitedAdmins" id="addAdminInvites"
-                  class="btn btn-default btn-success "
-                  ng-click="users.inviteAdmins()">Invite Admin User(s)
+    <div class="col-sm-3">
+      <button type="button" ng-disabled="$ctrl.invitedUsers.length ===0 || $ctrl.registrationRedirectUrl == ''" id="addUserInvites" class="btn btn-success"
+        ng-click="$ctrl.inviteUsers()">Invite User(s)
           </button>
-        </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" data-ng-model="$ctrl.AnonymousToken" data-ng-disabled="$ctrl.invitedUsers.length ===0  || $ctrl.registrationRedirectUrl == ''"> Send invite to users for anonymous access.
+        </label>
       </div>
-      <div class="row" ng-if="!users.adminMode">
-        <div class=" form-group col-sm-7">
-          <label for="inviteUsersEmails"></label>Invite users to access the application with role
-          '{{users.defaultUserRole}}'. If "Public App"
-          is Off then this is the only way to add users to the app
-          <ba-help-link key="registeredUsers"></ba-help-link></h4>
-          </lable>
+    </div>
+  </div>
 
-        </div>
 
-        <div class=" form-group col-sm-7">
-          <input type="text" class="form-control  col-sm-7" id="inviteUsersEmails" ng-model="users.invitedUsers"
-                 ng-disabled="users.registrationRedirectUrl == ''"
-                 placeholder="Email Address -  Use comma for multiple users"/>
-        </div>
-        <div class="col-sm-3">
-          <button type="button" ng-disabled="!users.invitedUsers || users.registrationRedirectUrl == ''"
-                  id="addUserInvites" class="btn btn-success"
-                  ng-click="users.inviteUsers()">Invite User(s)
-          </button>
-        </div>
-
-        <div class="form-group col-sm-7">
-          <div class="field-description" ng-if="users.registrationRedirectUrl == ''">Note: Invite users is enabled only
-            when the registration page is ready. To update the custom registration page URL go to <a href="" ng-click="users.goTo('security.auth')">Security
+  <div class="form-group col-sm-7">
+    <div class="field-description" ng-if="$ctrl.registrationRedirectUrl == ''">Note: Invite users is enabled only when the registration page is ready. To update the custom registration page URL go
+      to <a href="" ng-click="$ctrl.goTo('security.auth')">Security
               Configuration</a></div>
-        </div>
-        <br/>
-      </div>
+  </div>
+</div>
+<!-- ./user mode -->
 
-      <div class="actions-bar row">
-        <div class="col-md-8">
-          <h3 class="page-name">{{users.title}}</h3>
-          <h4 class="page-description">Manage your {{users.title}} here. To update user's details double click in the
-            cell</h4>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <button ng-hide="users.adminMode" class="btn btn-success" ng-click="users.open()">+ New User</button>
-          <div class="pull-right form-inline">
-            <div class="input-group ">
-              <select class="form-control"
-                      ng-options="action for action in users.actions"
-                      ng-model="users.action"
-                      ng-model-options="{debounce:{default:400}}">
+<div class="actions-bar row">
+  <div class="col-md-8">
+    <h3 class="page-name">{{$ctrl.title}}</h3>
+    <h4 class="page-description">Manage your {{$ctrl.title}} here. To update user's details double click in the cell
+    </h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <button ng-hide="$ctrl.adminMode" class="btn btn-success" ng-click="$ctrl.open()">+ New User</button>
+    <div class="pull-right form-inline">
+      <div class="input-group ">
+        <select class="form-control" ng-options="action for action in $ctrl.actions" ng-model="$ctrl.action" ng-model-options="{debounce:{default:400}}">
                 <option value="">Select Action...</option>
               </select>
-              <span class="input-group-btn">
-                 <button class="btn btn-success" type="button" ng-click="users.delete()" ng-disabled="users.action==''"
+        <span class="input-group-btn">
+                 <button class="btn btn-success" type="button" ng-click="$ctrl.delete()" ng-disabled="$ctrl.action==''"
                          style="padding-bottom: 7px;">
                    Go
                  </button>
               </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div us-spinner spinner-key="loading"></div>
-      <fieldset class="collapsible-fieldset"
-                ng-class="{'fieldset-open': users.showFilter, 'fieldset-closed': !users.showFilter}">
-
-        <legend ng-click="users.toggleShowFilter()">
-          <a href="">
-            Filter Users</a>
-        </legend>
-
-        <div ng-show="users.showFilter">
-
-          <bknd-filter-form query="users.filterQuery"
-                            fields="users.filterOptions.fields"
-                            operators="users.filterOptions.operators"
-                            no-repeat="true"
-                            show-refresh="true"
-                            disable-value="users.disableValue"
-                            on-submit="users.filterData()">
-          </bknd-filter-form>
-
-        </div>
-      </fieldset>
-
-      <!-- Data Grid -->
-      <div id="usersGrid" ui-grid="users.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-resize-columns ui-grid-selection external-scopes="users.gridExternalScope"
-           class="grid"></div>
-      <!--pagination-->
-      <div ng-show="users.gridOptions.totalItems == 0">
-        <h3>No {{users.title}}</h3>
-      </div>
-      <div ng-show="users.gridOptions.totalItems > 0" class="row">
-        <div class="col-md-5">
-          <pagination total-items="users.gridOptions.totalItems" ng-model="users.paginationOptions.pageNumber"
-                      max-size="5" class="pagination-sm" boundary-links="true" rotate="false"
-                      items-per-page="users.paginationOptions.pageSize" previous-text="&lsaquo;"
-                      next-text="&rsaquo;"></pagination>
-        </div>
-        <div class="col-md-2" style="margin-top:20px;">
-          Page size:
-          <select class="ui-select" ng-model="users.paginationOptions.pageSize">
-            <option ng-repeat="size in users.paginationOptions.pageSizes">{{size}}</option>
-          </select>
-        </div>
-        <div class="col-md-5" style="margin-top:20px;">
-          <span class="pull-right">Showing {{users.paginationOptions.pageSize * (users.paginationOptions.pageNumber-1) +1}} to {{users.pageMax(users.paginationOptions.pageSize, users.paginationOptions.pageNumber, users.gridOptions.totalItems)}} of {{users.gridOptions.totalItems}} rows</span>
-        </div>
       </div>
     </div>
-  </section>
-</section>
+  </div>
+</div>
+<div us-spinner spinner-key="loading"></div>
+<fieldset class="collapsible-fieldset" ng-class="{'fieldset-open': $ctrl.showFilter, 'fieldset-closed': !$ctrl.showFilter}">
+
+  <legend ng-click="$ctrl.toggleShowFilter()">
+    <a href="">
+            Filter Users</a>
+  </legend>
+
+  <div ng-show="$ctrl.showFilter">
+
+    <bknd-filter-form query="$ctrl.filterQuery" fields="$ctrl.filterOptions.fields" operators="$ctrl.filterOptions.operators"
+      no-repeat="true" show-refresh="true" disable-value="$ctrl.disableValue" on-submit="$ctrl.filterData()">
+    </bknd-filter-form>
+
+  </div>
+</fieldset>
+
+<!-- Data Grid -->
+<div id="usersGrid" ui-grid="$ctrl.gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-resize-columns ui-grid-selection
+  external-scopes="$ctrl.gridExternalScope" class="grid"></div>
+<!--pagination-->
+<div ng-show="$ctrl.gridOptions.totalItems == 0">
+  <h3>No {{$ctrl.title}}</h3>
+</div>
+<div ng-show="$ctrl.gridOptions.totalItems > 0" class="row">
+  <div class="col-md-5">
+    <pagination total-items="$ctrl.gridOptions.totalItems" ng-model="$ctrl.paginationOptions.pageNumber" max-size="5" class="pagination-sm"
+      boundary-links="true" rotate="false" items-per-page="$ctrl.paginationOptions.pageSize" previous-text="&lsaquo;" next-text="&rsaquo;"></pagination>
+  </div>
+  <div class="col-md-2" style="margin-top:20px;">
+    Page size:
+    <select class="ui-select" ng-model="$ctrl.paginationOptions.pageSize">
+            <option ng-repeat="size in $ctrl.paginationOptions.pageSizes">{{size}}</option>
+          </select>
+  </div>
+  <div class="col-md-5" style="margin-top:20px;">
+    <span class="pull-right">Showing {{$ctrl.paginationOptions.pageSize * ($ctrl.paginationOptions.pageNumber-1) +1}} to {{$ctrl.pageMax($ctrl.paginationOptions.pageSize, $ctrl.paginationOptions.pageNumber, $ctrl.gridOptions.totalItems)}} of {{$ctrl.gridOptions.totalItems}} rows</span>
+  </div>
+</div>

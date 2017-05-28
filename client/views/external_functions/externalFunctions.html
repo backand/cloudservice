@@ -1,18 +1,18 @@
-<section class="page-form-ele page page-external-functions">
+<section class="page-form-ele page page-external-functions p-x-0">
   <section class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading p-l-0">
       <strong> External Functions </strong>
     </div>
-    <div class="panel-body">
+    <div class="panel-body p-a-0">
       <div us-spinner="" spinner-key="loading" spinner-start-active></div>
-      <tabset active="active">
+      <tabset active="$ctrl.activeTab">
         <!-- /External Functions -->
-        <tab index="0">
+        <tab index="0" data-select="$ctrl.activeTab = 0">
           <tab-heading>
             External Functions
           </tab-heading>
 
-          <div class="list-group list-group-with-tabs">
+          <div class="list-group list-group-with-tabs m-b-0">
             <!-- /guideline -->
             <div class="list-group-item">
               <div class="list-group-item-header">
@@ -102,11 +102,17 @@
         </tab>
         <!-- ./External Functions -->
         <!-- /Lambda Launcher -->
-        <tab index="1">
+        <tab index="1" data-select="$ctrl.activeTab = 1">
           <tab-heading>
             Lambda Launcher
           </tab-heading>
-          I've got an HTML heading, and a select callback. Pretty cool!
+          <div class="list-group list-group-with-tabs m-b-0">
+            <div class="list-group-item">
+              <div class="list-group-item-body">
+                <users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users>
+              </div>
+            </div>
+          </div>
         </tab>
         <!-- ./Lambda Launcher -->
       </tabset>
