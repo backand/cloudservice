@@ -355,9 +355,7 @@
         {name: "IsApproved",type:"Boolean"}
       ];
     }
-
-    <!-- End Filter -->
-
+    
     /**
      * extend the default user object and
      * delegate to SecurityService post method
