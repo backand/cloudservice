@@ -37,7 +37,8 @@
         .success(function (data) {
           self.all()
             .then(function () {
-              deferred.resolve(data.data);
+              var resultSet = data.data || data;
+              deferred.resolve(resultSet);
             })
         })
         .error(function (error) {

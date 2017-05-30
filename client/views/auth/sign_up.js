@@ -55,8 +55,9 @@
       self.loading = true;
       AuthService.signUp(self.fullName, self.email, self.password)
         .then(function (response) {
+          //if signUp URl carries `launcher=1` query param then create a app
           if (isLauncher()) {
-            createNewApp(self.email);
+            createNewApp();
             return;
           }
           var requestedState = SessionService.getRequestedState();
@@ -76,41 +77,17 @@
 
     /**
      * @ngdoc function
-     * @name emailToAppName
-     * @description A Helper function which takes an emailId and returns appName
-     * 
-     * @param {string} email 
-     * 
-     * @todo This should be removed, once API starts sending appName in response
-     * @returns {string} A appName
-     */
-    function emailToAppName(email) {
-      var emailSegments,
-        appName;
-      emailSegments = email.split('@');
-      appName = emailSegments[0] + 'app1';
-
-      return appName;
-    }
-
-    /**
-     * @ngdoc function
      * @name createNewApp
      * @description Creates default app for current user
      * 
-     * @todo remove email param when create APP API starts sending appName in response
-     * @param {any} email 
+     * @returns void
      */
-    function createNewApp(email) {
+    function createNewApp() {
       NotificationService.add('info', 'Creating new app...');
       AppsService.add()
         .then(function (data) {
-          /**
-           * @todo use appName from API response
-           * for now - API does not return appName so creating it mannually
-           * var appName = emailToAppName(email); would be replaced with var appName = response.data.appName;
-           */
-          var appName = emailToAppName(email);
+          //get appName from response
+          var appName = data.__metadata.appName;
           //track event that app is created
           AnalyticsService.track('CreatedApp', { appName: appName });
           //create App database with defaultSchema

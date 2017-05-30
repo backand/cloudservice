@@ -33,7 +33,7 @@
             var $ctrl = this,
               connectionModel = {
                 AccessKeyId: '',
-                AwsRegion: ['us-west-2'],
+                AwsRegion: [],
                 accountId: '',
                 Name: 'Main',
                 CloudVendor: 'AWS',
@@ -134,7 +134,7 @@
               $log.warn('Connection request', request);
               CloudService
                 .saveAwsConnection(request)
-                .then(function(respone){
+                .then(function (respone) {
                   successHandler(respone, $ctrl.aws);
                 })
                 .catch(function (error) {
@@ -149,14 +149,14 @@
               if ($ctrl.view === 'modal') {
                 if (typeof $ctrl.modalInstance.close === 'function') {
                   $ctrl.modalInstance.close({ connection: model });
-                } else {
-                  if (typeof $ctrl.onSave === 'function') {
-                    $ctrl.onSave({ connection: request });
-                  }
                 }
-                usSpinnerService.stop('connectionView');
                 NotificationService.add('success', 'Connection details are saved successfully.');
               }
+
+              if (typeof $ctrl.onSave === 'function') {
+                $ctrl.onSave({ connection: request });
+              }
+               usSpinnerService.stop('connectionView');
             }
 
             //end of controller
