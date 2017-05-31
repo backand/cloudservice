@@ -79,8 +79,10 @@
                         <li class="list-group-item active brand" data-ng-bind="key"></li>
                         <li class="list-group-item" data-ng-repeat="function in zone track by $index">
                           <div data-ng-bind="function.FunctionName" style="display: inline-block"></div>
-                          <div class="pull-right"><button type="button" class="btn btn-xs btn-default">Linked</button>
-                            <button type="button" class="btn btn-xs btn-primary btn-success">Unlinked</button></div>
+                          <div class="pull-right">
+                            <button type="button" class="btn btn-xs btn-default" data-ng-class="{'btn-success' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
+                            <button type="button" class="btn btn-xs btn-primary btn-success">Excecute</button>
+                          </div>
                         </li>
                       </ul>
                     </div>

@@ -24,6 +24,7 @@
       self.getAwsConnection = getAwsConnection;
       self.getLambdaFunctions = getLambdaFunctions;
       self.loadAwsRegion = loadAwsRegion;
+      self.updateFunction = updateFunction;
 
       /**
        * Exposed bindable properties
@@ -93,6 +94,36 @@
 
       function setHeaders() {
         return { 'AppName': self.appName };
+      }
+
+
+      /**
+       * @name updateFunction
+       * @public
+       * @description link/unlink function
+       * 1. link/select function
+       * Request body {
+       *    select : true
+       * }
+       * 
+       * 2. unlink/unselect function
+       * Request body {
+       *    select : false
+       * }
+       * 
+       * @param {object} data A request body to be posted to API
+       * @param {obejct} params Addtional parameters to be send in Query params
+       * @returns 
+       */
+      function updateFunction(data, params) {
+        params = params || {};
+        return $http({
+          method: 'POST',
+          url: CONSTS.appUrl + '/1/lambda/select',
+          data: [data],
+          params: params,
+          headers: setHeaders()
+        });
       }
 
       //end of service  

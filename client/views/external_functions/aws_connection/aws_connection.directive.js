@@ -135,7 +135,7 @@
               CloudService
                 .saveAwsConnection(request)
                 .then(function (respone) {
-                  successHandler(respone, $ctrl.aws);
+                  successHandler(respone, request, $ctrl.aws);
                 })
                 .catch(function (error) {
                   $log.error('Error while saving conncetions detail', error);
@@ -143,7 +143,7 @@
                 });
             }
 
-            function successHandler(response, model) {
+            function successHandler(response, request, model) {
               $log.info('Connection details are saved', response);
               //get lambda functions when connection is saved
               if ($ctrl.view === 'modal') {
@@ -156,7 +156,7 @@
               if (typeof $ctrl.onSave === 'function') {
                 $ctrl.onSave({ connection: request });
               }
-               usSpinnerService.stop('connectionView');
+              usSpinnerService.stop('connectionView');
             }
 
             //end of controller
