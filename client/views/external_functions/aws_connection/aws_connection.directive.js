@@ -18,7 +18,8 @@
         scope: {
           onSave: '&', // optional
           view: '@', //optional,
-          modalInstance: '=?' //required if view is modal -in other words - required if this component is opened up in modal
+          modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
+          onLoadConnection: '&?' //optional
         },
         templateUrl: 'views/external_functions/aws_connection/aws_connection.html',
         controllerAs: '$ctrl',
@@ -103,6 +104,12 @@
                   var awsConnection = response.data.data[0] || angular.copy(connectionModel);
                   awsConnection.AwsRegion = _.words(awsConnection.AwsRegion, /[^,]+/g);
                   $ctrl.aws = awsConnection;
+                  //trigger bindings
+                  if (typeof $ctrl.onLoadConnection === 'function') {
+                    $ctrl.onLoadConnection({
+                      connection: awsConnection
+                    });
+                  }
                   $log.info('Connections credentials loaded', response);
                   usSpinnerService.stop('connectionView');
                 }).catch(function (error) {

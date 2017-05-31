@@ -41,9 +41,11 @@
              */
             $ctrl.onSaveConnection = onSaveConnection;
             $ctrl.updateFunction = updateFunction;
+            $ctrl.onLoadConnection = onLoadConnection;
             /**
              * public properties
              */
+            $ctrl.activeConnection = {};
             /**
              * @name initialization
              * @description
@@ -146,7 +148,7 @@
               var newApp = $state.params.new;
               return (typeof newApp !== 'undefined') && (newApp == 1);
             }
-            
+
             /**
              * @name updateFunction
              * @description updates function with selected:true|false
@@ -165,11 +167,11 @@
              * @returns void
              */
             function updateFunction(func, flag) {
-              $log.info('Selected function - ', func);
+              $log.info('Selected function - ', func, $ctrl.activeConnection);
               usSpinnerService.spin('loading');
               var requestBody = {
                 name: func.FunctionName,
-                cloudId: 1,
+                cloudId: $ctrl.activeConnection.__metadata.id,
                 select: flag
               };
               CloudService
@@ -183,6 +185,19 @@
                   usSpinnerService.spin('loading');
                   $log.error('Error while updating function\'s status', error);
                 });
+            }
+
+            /**
+             * @name onLoadConnection
+             * @description A handler which is called when connects are loaded from API
+             * 
+             * @see awsConnection
+             * @file aws_connection.directive.js
+             * 
+             * @param {object} activeConnection 
+             */
+            function onLoadConnection(activeConnection){
+              angular.extend($ctrl.activeConnection, activeConnection);
             }
 
             //end of controller
