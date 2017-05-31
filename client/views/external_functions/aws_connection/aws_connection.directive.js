@@ -29,7 +29,8 @@
           'usSpinnerService',
           'CloudService',
           'NotificationService',
-          function ($log, usSpinnerService, CloudService, NotificationService) {
+          '$q',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               connectionModel = {
@@ -50,6 +51,7 @@
              * public methods
              */
             $ctrl.saveConnection = saveConnection;
+            $ctrl.loadAwsRegion = loadAwsRegion;
             /**
              * public properties
              */
@@ -70,7 +72,7 @@
                 lambdaFunctions: false
               };
               usSpinnerService.stop('connectionView');
-              loadAwsRegion();
+              //loadAwsRegion();
               getAwsConnection();
             }
 
@@ -82,11 +84,14 @@
              * @returns void
              */
             function loadAwsRegion() {
+              var deferred = $q.defer();
               CloudService
                 .loadAwsRegion()
                 .then(function (response) {
-                  $ctrl.regions = response.data.data || [];
+                  $log.info('All regions', response.data.data);
+                  deferred.resolve(response.data.data);
                 });
+              return deferred.promise;
             }
 
             /**
@@ -138,6 +143,7 @@
                   return v ? true : false;
                 })
                 .value();
+              request.AwsRegion = _.map(request.AwsRegion, 'Code');  
               $log.warn('Connection request', request);
               CloudService
                 .saveAwsConnection(request)

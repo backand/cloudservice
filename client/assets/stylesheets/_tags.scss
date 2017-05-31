@@ -1,3 +1,6 @@
+$theme-green: #449d44;
+$theme-brand: #f66731;
+$theme-red :  red;
 tags-input {
     .autocomplete {
         padding: 0;
@@ -12,9 +15,9 @@ tags-input {
                 font: inherit !important;
                 color: #414042;
                 &.selected {
-                    background-color: #f66731;
+                    background-color: #fff;
                     font-weight: bold !important;
-                    color: #fff;
+                    color: #333;
                 }
             }
         }
@@ -43,36 +46,87 @@ tags-input {
         border: 1px solid rgba(120, 130, 140, 0.2);
         box-shadow: none;
         &.focused {
-            border: 1px solid #559700;
+            border: 1px solid #414042;
             box-shadow: 0 0;
         }
-        .input {
-          
-        }
+        .input {}
         .tag-item {
-            background: #f66731;
-            border:0 none;
-            color: #fff;
+            background: #ccc;
+            border: 0 none;
+            color: #333;
             .remove-button {
-                color: #fff;
+                color: #333;
             }
         }
     }
 
-    &.theme-green{
-      .tags{
-        .tag-item{
-          background: #76b63f;
+    &.theme-green {
+        .tags {
+            .tag-item {
+                background: $theme-green;
+                color: #fff !important;
+                .remove-button {
+                    color: #fff;
+                }
+            }
+            &.focused {
+                border: 1px solid $theme-green;
+            }
         }
-      }
+        .suggestion-list {
+            .suggestion-item {
+                &.selected {
+                    background-color: $theme-green;
+                    color: #fff;
+                }
+            }
+        }
     }
 
-    &.theme-brand{
-      .tags{
-        .tags-item{
-          background : #f66731;
+    &.theme-red {
+        .tags {
+            .tag-item {
+                background: $theme-red;
+                color: #fff !important;
+                .remove-button {
+                    color: #fff;
+                }
+            }
+            &.focused {
+                border: 1px solid $theme-red;
+            }
         }
-      }
+        .suggestion-list {
+            .suggestion-item {
+                &.selected {
+                    background-color: $theme-red;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    &.theme-brand {
+        .tags {
+            .tag-item {
+                background: $theme-brand;
+                color: #fff !important;
+                .remove-button {
+                    color: #fff;
+                }
+            }
+            &.focused {
+                border: 1px solid $theme-brand;
+            }
+        }
+        .suggestion-list {
+            .suggestion-item {
+                &.selected {
+                    background-color: $theme-brand;
+                    color: #fff;
+                }
+            }
+        }
     }
 }
 

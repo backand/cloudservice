@@ -71,7 +71,6 @@
     'flowChart',
     'ngFileUpload',
     'angular-cron-jobs',
-    'ui.select',
     'ngTagsInput'
   ])
     .config(['ngClipProvider', function (ngClipProvider) {
