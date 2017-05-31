@@ -60,8 +60,8 @@
               $ctrl.activeTab = 0;
               //set collapsible panels
               $ctrl.sections = {
-                guideline: true,
-                awsConnection: true,
+                guideline: false,
+                awsConnection: false,
                 lambdaFunctions: false
               };
               //opens modal for AWS credentials

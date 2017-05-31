@@ -1,4 +1,4 @@
-<section class="page-form-ele page page-external-functions p-x-0">
+<section class="page-form-ele page page-external-functions p-l-0">
   <section class="panel panel-default">
     <div class="panel-heading p-l-0">
       <strong> External Functions </strong>
@@ -18,13 +18,15 @@
               <div class="list-group-item-header">
                 <div class="list-group-item-heading">How it works</div>
                 <div class="list-group-item-toolbar">
-                  <label class="ui-switch ui-switch-success ui-switch-sm">
-                <input id="guideline" type="checkbox" ng-model="$ctrl.sections.guideline"><i></i>
-              </label>
+                  <span data-ng-click="$ctrl.sections.guideline = !$ctrl.sections.guideline" tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}"
+          tooltip-placement="top"
+          tooltip-trigger="mouseenter">
+                    <i  ng-class="{'fa fa-minus': !$ctrl.sections.guideline, 'fa fa-plus': $ctrl.sections.guideline}"></i>
+                  </span>
                 </div>
 
               </div>
-              <div class="list-group-item-body" data-ng-show="$ctrl.sections.guideline">
+              <div class="list-group-item-body" collapse="$ctrl.sections.guideline">
                 Lorem ipsum is a placeholder text (filler text) in publishing and graphic design. It is used to demonstrate the graphics
                 elements of a document, such as font, typography, and layout. ... Lorem ipsum dolor sit amet, consectetur
                 adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -36,12 +38,14 @@
               <div class="list-group-item-header">
                 <div class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Connection Details</div>
                 <div class="list-group-item-toolbar">
-                  <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-                <input id="awsConnection" type="checkbox" ng-model="$ctrl.sections.awsConnection"><i></i>
-              </label>
+                  <span data-ng-click="$ctrl.sections.awsConnection = !$ctrl.sections.awsConnection" tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}"
+          tooltip-placement="top"
+          tooltip-trigger="mouseenter">
+                    <i  ng-class="{'fa fa-minus': !$ctrl.sections.awsConnection, 'fa fa-plus': $ctrl.sections.awsConnection}"></i>
+                  </span>
                 </div>
               </div>
-              <div class="list-group-item-body" data-ng-show="$ctrl.sections.awsConnection">
+              <div class="list-group-item-body" collapse="$ctrl.sections.awsConnection">
                 <div class="row">
                   <div class="col-md-5">
                     <aws-connection data-on-save="$ctrl.onSaveConnection(connection)" data-on-load-connection="$ctrl.onLoadConnection(connection)"></aws-connection>
@@ -66,12 +70,14 @@
               <div class="list-group-item-header">
                 <div class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions</div>
                 <div class="list-group-item-toolbar">
-                  <label class="pull-right ui-switch ui-switch-success ui-switch-sm">
-                <input id="lambdaFunctions" type="checkbox" ng-model="$ctrl.sections.lambdaFunctions"><i></i>
-              </label>
+                  <span data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions" tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}"
+          tooltip-placement="top"
+          tooltip-trigger="mouseenter">
+                    <i  ng-class="{'fa fa-minus': !$ctrl.sections.lambdaFunctions, 'fa fa-plus': $ctrl.sections.lambdaFunctions}"></i>
+                  </span>
                 </div>
               </div>
-              <div class="list-group-item-body" data-ng-show="$ctrl.sections.lambdaFunctions">
+              <div class="list-group-item-body" collapse="$ctrl.sections.lambdaFunctions">
                 <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
                   <div class="row">
                     <div class="col-md-5">
