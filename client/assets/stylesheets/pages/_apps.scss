@@ -7,10 +7,8 @@
   width: 56%;
   min-width: 208px;
   z-index: 41;
-  ul > li > ul > li{
-    span {
+  ul > li > ul > li > span{
       font-weight: normal;
-    }
   }
   li {
     height: 56px;
@@ -19,7 +17,7 @@
       padding: 0 !important;
       i {
         font-size: 16px !important;
-        margin-right: 0px !important;
+        margin-right: 0 !important;
         width: auto !important;
         color: $icon_color;
       }
@@ -311,7 +309,6 @@
       font-family: "Open Sans", sans-serif;
       font-size: 16px;
       font-weight: bold;
-      padding-top: 12px;
       text-align: center;
       color: #ffffff;
       align-items: center;
@@ -755,22 +752,32 @@
     font-family: "Open Sans", sans-serif;
     li{
       height: 45px;
-      span{
-        line-height: 3;
-      }
+
+        span{
+          line-height: 3;
+        }
     }
   }
-
 }
-.app-list-open{
-  background-color: #1b1b1b !important;
-  ul>li{
-    span{ color: #333333 !important;}
+.apps-header.open {
+  li {
     background-color: white !important;
   }
+  li:hover {
+    background-color: $backand_orange;
+  }
+}
+.app-list-open{
+  ul>li{
+
+      span{ color: #333333 !important;}
+      background-color: white !important;
+
+
+  }
   ul>li:hover{
-    background-color: #f26724 !important;
-    span{ color: white !important;}
+      background-color: #f26724 !important;
+      span{ color: white !important;}
   }
 }
 .configuration-description {

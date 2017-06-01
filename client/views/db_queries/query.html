@@ -96,6 +96,7 @@
                     <select class="form-control"
                             ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in DbQuery.workspaces"
                             ng-model="DbQuery.currentST"
+                            ng-change="DbQuery.changePermissions()"
                             required
                             ng-disabled="DbQuery.precedent">
                     </select>
