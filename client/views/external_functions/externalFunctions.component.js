@@ -15,6 +15,7 @@
     .directive('externalFunctions', [function () {
       return {
         restrict: 'E',
+        scope: true,
         templateUrl: 'views/external_functions/externalFunctions.html',
         controllerAs: '$ctrl',
         bindToController: true,
@@ -25,7 +26,8 @@
           '$modal',
           '$state',
           'modalService',
-          function ($log, usSpinnerService, CloudService, $modal, $state, modalService) {
+          'NotificationService',
+          function ($log, usSpinnerService, CloudService, $modal, $state, modalService, NotificationService) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
             /**
@@ -38,18 +40,28 @@
              * public methods
              */
             $ctrl.onSaveConnection = onSaveConnection;
+            $ctrl.updateFunction = updateFunction;
+            $ctrl.onLoadConnection = onLoadConnection;
             /**
              * public properties
              */
+            $ctrl.activeConnection = {};
             /**
              * @name initialization
              * @description
              * function to initialize properties and call function at very first.
              */
             function initialization() {
+              // options to <users> Component
+              $ctrl.options = {
+                view: 'lambdaLauncher'
+              };
+              //set first tab as activeTab
+              $ctrl.activeTab = 0;
+              //set collapsible panels
               $ctrl.sections = {
-                guideline: true,
-                awsConnection: true,
+                guideline: false,
+                awsConnection: false,
                 lambdaFunctions: false
               };
               //opens modal for AWS credentials
@@ -72,6 +84,7 @@
               CloudService
                 .getLambdaFunctions()
                 .then(function (response) {
+                  $log.info(response.data);
                   $ctrl.lambdaFunctions = response.data.data[0] ? response.data.data[0].functions : [];
                   if ($ctrl.lambdaFunctions.length > 0) {
                     $ctrl.sections.lambdaFunctions = true;
@@ -134,6 +147,57 @@
             function isNew() {
               var newApp = $state.params.new;
               return (typeof newApp !== 'undefined') && (newApp == 1);
+            }
+
+            /**
+             * @name updateFunction
+             * @description updates function with selected:true|false
+             * Link/unkink function 
+             * link - {
+             *  selected : true
+             * }
+             * 
+             * unlink - {
+             *  selected : false
+             * }
+             * 
+             * @param {string} func A function to be updated
+             * @param {boolean} flag A flag true|false 
+             * 
+             * @returns void
+             */
+            function updateFunction(func, flag) {
+              $log.info('Selected function - ', func, $ctrl.activeConnection);
+              usSpinnerService.spin('loading');
+              var requestBody = {
+                name: func.FunctionName,
+                cloudId: $ctrl.activeConnection.__metadata.id,
+                select: flag
+              };
+              CloudService
+                .updateFunction(requestBody)
+                .then(function (response) {
+                  func.selected = flag;
+                  $log.info('Lambda function is selected with -', response);
+                  usSpinnerService.stop('loading');
+                   NotificationService.add('success', 'Function is '+ (flag ? 'linked' : 'Unlinked') +' successfully');
+                }).catch(function (error) {
+                  usSpinnerService.spin('loading');
+                  $log.error('Error while updating function\'s status', error);
+                });
+            }
+
+            /**
+             * @name onLoadConnection
+             * @description A handler which is called when connects are loaded from API
+             * 
+             * @see awsConnection
+             * @file aws_connection.directive.js
+             * 
+             * @param {object} activeConnection 
+             */
+            function onLoadConnection(activeConnection){
+              angular.extend($ctrl.activeConnection, activeConnection);
             }
 
             //end of controller

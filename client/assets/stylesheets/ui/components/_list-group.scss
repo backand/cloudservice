@@ -21,6 +21,20 @@
 }
 
 .list-group {
+    >.list-group-item {
+        &.active {
+            color: #333;
+            font-weight: 600;
+            &.gray {
+                background-color: #f7f7f7;
+                border-color: #efefef;
+            }
+            &.brand {
+                background-color: #f9e0d7;
+                border-color: #f7ccbc;
+            }
+        }
+    }
     &.list-group-with-tabs {
         >.list-group-item {
             .list-group-item-header,

@@ -49,6 +49,7 @@
     'common.filters.uppercase',
     'common.filters.newTerminology',
     'common.interceptors.http',
+    'common.constants',
     'controllers',
     'templates',
     'services',
@@ -70,7 +71,7 @@
     'flowChart',
     'ngFileUpload',
     'angular-cron-jobs',
-    'ui.select',
+    'ngTagsInput'
   ])
     .config(['ngClipProvider', function (ngClipProvider) {
       ngClipProvider.setPath("vendor/zeroclipboard/dist/ZeroClipboard.swf");

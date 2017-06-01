@@ -18,7 +18,8 @@
         scope: {
           onSave: '&', // optional
           view: '@', //optional,
-          modalInstance: '=?' //required if view is modal -in other words - required if this component is opened up in modal
+          modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
+          onLoadConnection: '&?' //optional
         },
         templateUrl: 'views/external_functions/aws_connection/aws_connection.html',
         controllerAs: '$ctrl',
@@ -28,12 +29,13 @@
           'usSpinnerService',
           'CloudService',
           'NotificationService',
-          function ($log, usSpinnerService, CloudService, NotificationService) {
+          '$q',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               connectionModel = {
                 AccessKeyId: '',
-                AwsRegion: ['us-west-2'],
+                AwsRegion: [],
                 accountId: '',
                 Name: 'Main',
                 CloudVendor: 'AWS',
@@ -49,6 +51,7 @@
              * public methods
              */
             $ctrl.saveConnection = saveConnection;
+            $ctrl.loadAwsRegion = loadAwsRegion;
             /**
              * public properties
              */
@@ -69,7 +72,7 @@
                 lambdaFunctions: false
               };
               usSpinnerService.stop('connectionView');
-              loadAwsRegion();
+              //loadAwsRegion();
               getAwsConnection();
             }
 
@@ -81,11 +84,14 @@
              * @returns void
              */
             function loadAwsRegion() {
+              var deferred = $q.defer();
               CloudService
                 .loadAwsRegion()
                 .then(function (response) {
-                  $ctrl.regions = response.data.data || [];
+                  $log.info('All regions', response.data.data);
+                  deferred.resolve(response.data.data);
                 });
+              return deferred.promise;
             }
 
             /**
@@ -103,6 +109,12 @@
                   var awsConnection = response.data.data[0] || angular.copy(connectionModel);
                   awsConnection.AwsRegion = _.words(awsConnection.AwsRegion, /[^,]+/g);
                   $ctrl.aws = awsConnection;
+                  //trigger bindings
+                  if (typeof $ctrl.onLoadConnection === 'function') {
+                    $ctrl.onLoadConnection({
+                      connection: awsConnection
+                    });
+                  }
                   $log.info('Connections credentials loaded', response);
                   usSpinnerService.stop('connectionView');
                 }).catch(function (error) {
@@ -131,11 +143,12 @@
                   return v ? true : false;
                 })
                 .value();
+              request.AwsRegion = _.map(request.AwsRegion, 'Code');  
               $log.warn('Connection request', request);
               CloudService
                 .saveAwsConnection(request)
-                .then(function(respone){
-                  successHandler(respone, $ctrl.aws);
+                .then(function (respone) {
+                  successHandler(respone, request, $ctrl.aws);
                 })
                 .catch(function (error) {
                   $log.error('Error while saving conncetions detail', error);
@@ -143,20 +156,20 @@
                 });
             }
 
-            function successHandler(response, model) {
+            function successHandler(response, request, model) {
               $log.info('Connection details are saved', response);
               //get lambda functions when connection is saved
               if ($ctrl.view === 'modal') {
                 if (typeof $ctrl.modalInstance.close === 'function') {
                   $ctrl.modalInstance.close({ connection: model });
-                } else {
-                  if (typeof $ctrl.onSave === 'function') {
-                    $ctrl.onSave({ connection: request });
-                  }
                 }
-                usSpinnerService.stop('connectionView');
                 NotificationService.add('success', 'Connection details are saved successfully.');
               }
+
+              if (typeof $ctrl.onSave === 'function') {
+                $ctrl.onSave({ connection: request });
+              }
+              usSpinnerService.stop('connectionView');
             }
 
             //end of controller
