@@ -112,10 +112,9 @@
             populateTestResults($stateParams.testData);
           }
         }
-        if(self.query.workspaceID === null)
-          self.precedent = true;
-        else
-          self.currentST = String(self.query.workspaceID);
+
+        self.precedent = self.query.precedent;
+        self.currentST = String(self.query.workspaceID);
         SecurityService.appName = self.appName;
         loadRoles();
         getWorkspaces();
@@ -174,6 +173,7 @@
     self.saveQuery = function (withTest) {
       self.loading = true;
       self.savingAndTesting = true;
+
       if (self.mode === 'sql') {
         return saveQuery(withTest).then(function () {
           if (withTest) {
@@ -194,10 +194,13 @@
       self.queryUrl = '';
       self.queryHttp = '';
       self.openParamsModal = false;
-      if(self.precedent)
-        self.query.workspaceID = null;
-      else
+
+      self.query.precedent = self.precedent;
+      if(!self.query.precedent){
         self.query.workspaceID = Number(self.currentST);
+      } else {
+        self.query.workspaceID = null;
+      }
 
       rolesToString();
       var queryToSend = EscapeSpecialChars(self.query);

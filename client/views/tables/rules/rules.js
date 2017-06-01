@@ -435,6 +435,8 @@
     function loadAction(data) {
       self.action = data.data;
       self.currentST = String(self.action.workspaceID);
+      self.precedent = self.action.precedent || false;
+
       getWorkspaces();
       loadRoles();
       self.isNodeJS = self.action && self.action.workflowAction === 'NodeJS';
@@ -517,10 +519,14 @@
       buildParametersDictionary();
       self.action.inputParameters = _.trimRight(self.action.inputParameters, ',');
       rolesToString();
-      if(self.precedent)
+
+      self.action.precedent = self.precedent;
+      if(!self.action.precedent){
+        self.action.workspaceID = Number(self.currentST);
+      } else {
         self.action.workspaceID = null;
-      else
-        self.action.workspaceID = self.currentST;
+      }
+
       var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(function(){
