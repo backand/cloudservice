@@ -18,7 +18,7 @@
     };
 
     $scope.$on('AppDbReady', function (event, appName) {
-      ConfirmationPopup.confirm('You can start by changing the Data Model of your app in the object page.' +
+      ConfirmationPopup.confirm('You can start by changing the Data Model of your app by choosing on option in the blue bar in the header or in the object tab.' +
       ' Otherwise you can find how to connect Backand to your app under "Docs & API" in the navigation bar.', 'Ok', '', true, false, 'Your app ' + appName + ' is ready!');
     });
   }

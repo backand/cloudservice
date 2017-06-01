@@ -38,7 +38,7 @@
           /**
            * Populate of tem template with permissions
            */
-          loadPermission(permissions)
+          loadPermission(permissions);
           return _tempTemplate;
         });
     };
@@ -81,7 +81,7 @@
           role.permissions.read = true;
         }
       });
-    };
+    }
 
     self.getPermission = function (template) {
 

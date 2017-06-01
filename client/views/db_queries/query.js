@@ -35,7 +35,7 @@
     self.mode = 'nosql';
     self.dbType = 'sql';
 
-      self.ace = {
+    self.ace = {
       editors: {},
       onLoad: function (_editor) {
         self.ace.editors[_editor.container.id] = _editor;
@@ -55,19 +55,19 @@
       getTestForm: getQueryForm
     };
 
-    function getInputParametersForm () {
+    function getInputParametersForm() {
       return self.inputParametersForm;
     }
 
-    function getQueryForm () {
+    function getQueryForm() {
       return self.queryForm;
     }
 
-    function getQueryUrl () {
+    function getQueryUrl() {
       return self.queryUrl;
     }
 
-    function getQueryHttp () {
+    function getQueryHttp() {
       return self.queryHttp;
     }
 
@@ -75,7 +75,7 @@
 
     function init() {
       self.appName = $stateParams.appName;
-      if($stateParams.inputValues) {
+      if ($stateParams.inputValues) {
         self.inputValues = $stateParams.inputValues;
       } else {
         self.inputValues = {};
@@ -88,7 +88,7 @@
 
     function loadDbType() {
       var app = AppsService.currentApp;
-        self.dbType = (app.databaseName == 'mysql' && 'mysql' || 'pgsql');
+      self.dbType = (app.databaseName === 'mysql' && 'mysql' || 'pgsql');
     }
 
     function loadQueries() {
@@ -101,7 +101,7 @@
           self.query = DbQueriesService.getNewQuery();
         } else {
           self.query = DbQueriesService.getQueryForEdit($stateParams.queryId);
-          if (typeof self.query == 'undefined') {
+          if (typeof self.query === 'undefined') {
             $state.go('dbQueries.newQuery');
             return;
           }
@@ -112,7 +112,10 @@
             populateTestResults($stateParams.testData);
           }
         }
-        self.currentST = String(self.query.workspaceID);
+        if(self.query.workspaceID === null)
+          self.precedent = true;
+        else
+          self.currentST = String(self.query.workspaceID);
         SecurityService.appName = self.appName;
         loadRoles();
         getWorkspaces();
@@ -172,30 +175,33 @@
       self.loading = true;
       self.savingAndTesting = true;
       if (self.mode === 'sql') {
-        return saveQuery(withTest).then(function(){
-          if(withTest){
+        return saveQuery(withTest).then(function () {
+          if (withTest) {
             self.testData();
           }
         });
 
       } else if (self.mode === 'nosql') {
-        return saveNoSql().then(function(){
-          if(withTest){
+        return saveNoSql().then(function () {
+          if (withTest) {
             self.testData();
           }
         });
       }
     };
 
-    function saveQuery (isTest) {
+    function saveQuery(isTest) {
       self.queryUrl = '';
       self.queryHttp = '';
       self.openParamsModal = false;
-      self.query.workspaceID = Number(self.currentST);
+      if(self.precedent)
+        self.query.workspaceID = null;
+      else
+        self.query.workspaceID = Number(self.currentST);
 
       rolesToString();
       var queryToSend = EscapeSpecialChars(self.query);
-      if(!isTest) {
+      if (!isTest) {
         return DbQueriesService.saveQuery(queryToSend)
           .then(reload);
       } else {
@@ -206,7 +212,7 @@
       }
     }
 
-    function saveNoSql () {
+    function saveNoSql() {
 
       try {
         var json = _.isEmpty(self.query.noSQL) ?
@@ -218,7 +224,7 @@
       }
 
       //if noSQL is empty change mode and save as SQL
-      if(json === ''){
+      if (json === '') {
         self.mode = 'sql';
         return saveQuery();
       }
@@ -233,17 +239,17 @@
             self.loading = false;
             self.transformedSql = response.data.sql;
             return openValidationModal(response)
-            .then(function (result) {
-              if (result) {
-                self.query.sQL = self.transformedSql;
-                return saveQuery();
-              }
-            })
+              .then(function (result) {
+                if (result) {
+                  self.query.sQL = self.transformedSql;
+                  return saveQuery();
+                }
+              })
           }
         })
     }
 
-    function openValidationModal (response) {
+    function openValidationModal(response) {
 
       var modalInstance = $modal.open({
         templateUrl: 'common/modals/confirm_update/confirm_update.html',
@@ -279,7 +285,7 @@
           self.inputValues = {};
 
         self.queryForm.$setPristine();
-        if(self.new || $state.current.name === "dbQueries.newSavedQuery"){
+        if (self.new || $state.current.name === "dbQueries.newSavedQuery") {
           $state.go('dbQueries.newSavedQuery', params);
         } else {
           $state.go('dbQueries.query', params);
@@ -303,9 +309,9 @@
       }
     };
 
-    self.showHelp = function(){
+    self.showHelp = function () {
       $window.open('http://docs.backand.com/#queries', 'bkhelp');
-    }
+    };
 
     self.deleteQuery = function () {
       ConfirmationPopup.confirm('Are you sure you want to delete the query?')
@@ -326,7 +332,7 @@
      * Read the list of workspaces
      */
     function getWorkspaces() {
-      if (self.workspaces == null) {
+      if (!self.workspaces) {
         SecurityService.getWorkspace().then(workspaceSuccessHandler, errorHandler)
       }
     }
@@ -340,9 +346,26 @@
       if (self.new && self.workspaces.length > 0) {
         self.currentST = self.workspaces[0].__metadata.id;
       }
+      self.changePermissions();
     }
+    //The model currentST only gives the id of the security template, we request all the templates
+    //and then filter based on currentST that changes also based on the select drop down
+    function getCurrentWorkspace(element) {
+      if (self.currentST === element.__metadata.id)
+        return element
+    }
+    //A function that changes the role permissions based on the security template
+    //the function is also invoked by the select change hence the public function
+    self.changePermissions = function(){
+      if(self.workspaces){
+        self.currentWorkspace = self.workspaces.find(getCurrentWorkspace);
+        if(self.currentWorkspace) {
+          self.query.allowSelectRoles = self.currentWorkspace.allowRead;
+          rolesToObj();
+        }
+      }
 
-
+    };
     function populateDictionaryItems() {
       DictionaryService.appName = self.appName;
       DictionaryService.tableName = CONSTS.backandUserObject; //used just any table - we just need the system tokens
@@ -368,8 +391,8 @@
     };
 
     self.insertParamAtChar = function (elementId, param) {
-      setTimeout(function() { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
-        if(self.mode == 'nosql')
+      setTimeout(function () { // DO NOT USE $timeout - all changes to ui-ace must be done outside digest loop, see onChange method in ui-ace
+        if (self.mode == 'nosql')
           self.ace.editors[self.mode].insert("\"\'{{" + param + "}}\'\"");
         else
           self.ace.editors[self.mode].insert("\'{{" + param + "}}\'");
@@ -378,12 +401,12 @@
 
     self.getParameters = function () {
       if (self.query) {
-        return _.without(_.unique(self.query.parameters.replace(/ /g, '').split(',')),'');
+        return _.without(_.unique(self.query.parameters.replace(/ /g, '').split(',')), '');
       }
     };
 
     self.allowTest = function () {
-      return self.query && self.query.__metadata && self.queryForm.$pristine;
+      return self.query && self.query.__metadata && self.queryForm.$pristine && !self.inputParametersForm.$invalid;
     };
 
     self.testData = function () {
@@ -403,7 +426,7 @@
       };
 
       self.queryForm.$setPristine();
-      if(self.new){
+      if (self.new) {
         $state.go('dbQueries.newSavedQuery', params);
       }
     }
@@ -436,7 +459,7 @@
       self.savingAndTesting = false;
     }
 
-    function stringifyHttp (http) {
+    function stringifyHttp(http) {
       var stringifiedHttp = 'return $http (' + angular.toJson(http, true) + ');';
       stringifiedHttp = stringifiedHttp.replace(/"([\d\w\s]+)"\s*:/g, '$1:');
       stringifiedHttp = stringifiedHttp.replace(/"/g, "'");

@@ -65,8 +65,9 @@
         self.backandstorage.secondAppNavChoice = 'admin';
       }
     }
-    self.goToApp = function () {
-      //usSpinnerService.spin('loading-app');
+    self.goToApp = function (appName) {
+      usSpinnerService.spin('loading-' + appName);
+      self.currentAppName = appName;
       $rootScope.$broadcast('app-load');
       if ($localStorage.backand[self.currentAppName]) {
         $localStorage.backand[self.currentAppName].showSecondaryAppNav = true;

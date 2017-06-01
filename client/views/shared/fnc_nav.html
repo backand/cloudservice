@@ -7,9 +7,10 @@
     </a>
     <ul class="apps-list pre-scrollable">
       <li ng-repeat="app in nav.apps.list"
-          ng-click="nav.goToApp()"
-          ng-model="nav.currentAppName">
+          ng-click="nav.goToApp(app.Name)">
         <span>{{app.Name}}</span>
+        <div us-spinner="{color: 'black'}" spinner-key="loading-{{ ::app.Name}}" spinner-start-active
+             style="position:relative; left:50px;"></div>
       </li>
     </ul>
     </li>

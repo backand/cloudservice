@@ -67,12 +67,13 @@
       self.isNewAction = false;
       self.actionChangeInTree = false;
       self.showJsCodeHelpDialog = false;
+      self.stateparam = $state.params;
       self.debugMode = 'debug';
       self.editMode = $stateParams.editMode || false;
       //self.test.method = 'GET';
 
       self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
-      if($stateParams.test == 'true'){
+      if($stateParams.test === 'true'){
         self.requestTestForm = true;
       }
       if ($localStorage.backand[self.appName] && $localStorage.backand[self.appName].nodeJsShowHowItWorks === undefined) {
@@ -84,7 +85,7 @@
       }
 
       if($stateParams.functionId > 0){
-        
+
         RulesService.getRule($stateParams.functionId)
           .then(function(data){
             loadAction(data);
@@ -98,6 +99,7 @@
       if($localStorage.backand[self.appName]){
         self.showFirstTimeInstallation = $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation;
       }
+
 
       setTestActionTitle();
       getRules();
@@ -150,7 +152,7 @@
 
     self.mode = self.getMode();
     //show side bar tree only for security/actions page
-    self.showsideBar = (self.mode.name == 'action');
+    self.showsideBar = (self.mode.name === 'action');
 
     //for the lambda page to be default Node Js
     self.changeTemplateToNodeJs = function(res){
@@ -162,13 +164,13 @@
     //Wait for server updates on 'items' object
     SocketService.on('Rule.created', function (data) {
       //Get the 'items' object that have changed
-      if(self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
+      if(self.isNewAction && self.action && self.action.workflowAction === 'NodeJS' ){
         self.loadNewAction(data.id);
         //getRules().then(function(){
           //self.showAction(self.action.name);
         //});
       }
-      if(!self.isNewAction && self.action && self.action.workflowAction == 'NodeJS' ){
+      if(!self.isNewAction && self.action && self.action.workflowAction === 'NodeJS' ){
         self.refreshTree();
       }
       //console.log(data);
@@ -193,7 +195,7 @@
         return self.action.workflowAction;
       }
     }, function (newVal, oldVal) {
-      if (newVal == 'JavaScript') {
+      if (newVal === 'JavaScript') {
         $scope.$evalAsync(function () {
           var editor = ace.edit('code');
           if ($stateParams.line && $stateParams.col) {
@@ -228,7 +230,7 @@
             var res = [];
             _.each(RulesService.actionTemplateCategories, function(rule){
               var fromService = _.find(groupedNotOrdered, function(g){
-                return rule.id ==  g[0].category;
+                return rule.id ===  g[0].category;
               });
 
               if(fromService) {
@@ -237,10 +239,10 @@
               }
             });
 
-           
-            if(self.mode.name == 'lambdafunctions'){
-               self.changeTemplateToNodeJs(res); 
-            } 
+
+            if(self.mode.name === 'lambdafunctions'){
+               self.changeTemplateToNodeJs(res);
+            }
             else{
                self.actionTemplates = res;
             }
@@ -255,7 +257,7 @@
       else{
         var name = '';
       }
-      if(self.mode.name == 'lambdafunctions'){
+      if(self.mode.name === 'lambdafunctions'){
         return 'backand function init --app ' + self.currentApp.Name + name + ' --master ' + self.masterToken + ' --user ' + self.userToken;
       }
       else{
@@ -276,7 +278,7 @@
        else{
         return 'backand action deploy --app ' + self.currentApp.Name + ' --object ' + self.getTableName() + ' ' + self.getCliActionName() + ' --master ' + self.masterToken + ' --user ' + self.userToken;
        }
-      
+
     };
 
     self.selectTemplate = function (template) {
@@ -359,10 +361,6 @@
         self.isNewAction = false;
         return;
       }
-      AnalyticsService.track('Template Selected', {template: templateName || "New Blank"});
-
-      self.showJsCodeHelpDialog = false;
-      self.showTemplatesForm = false;
       self.action = {
         whereCondition: 'true',
         code: backandCallbackConstCode.start + '\n' +
@@ -370,6 +368,12 @@
         '\treturn {};\n' +
         backandCallbackConstCode.end
       };
+      self.isNewAction = true;
+      loadRoles();
+      getWorkspaces();
+      AnalyticsService.track('Template Selected', {template: templateName || "New Blank"});
+      self.showJsCodeHelpDialog = false;
+      self.showTemplatesForm = false;
 
       if (trigger) {
         self.action.dataAction = trigger;
@@ -379,8 +383,9 @@
 
       self.clearTest();
       self.editAction();
-      self.isNewAction = true;
-      self.isNodeJS = self.action && self.action.workflowAction == 'NodeJS';
+
+      self.isNodeJS = self.action && self.action.workflowAction === 'NodeJS';
+
     };
 
     self.showAction = function (actionName) {
@@ -396,10 +401,10 @@
     // Show action with route change
     self.goToAction = function (name) {
       var action = _.filter(self.ruleList, function (rule) {
-        return rule.name == name;
+        return rule.name === name;
       })[0];
 
-      if (action.viewTable == 4) {
+      if (action.viewTable === "4") {
         $state.go('security.actions', {actionId: action.__metadata.id});
       } else {
         $state.go('object_actions', {actionId: action.__metadata.id});
@@ -410,7 +415,7 @@
       //self.editMode = false;
       self.requestTestForm = ($stateParams.test === "true");
       self.showJsCodeHelpDialog = false;
-      self.isNodeJS = action && action.workflowAction == 'NodeJS';
+      self.isNodeJS = action && action.workflowAction === 'NodeJS';
 
       $scope.modal.toggleGroup();
       if (self.newRuleForm){
@@ -429,7 +434,10 @@
 
     function loadAction(data) {
       self.action = data.data;
-      self.isNodeJS = self.action && self.action.workflowAction == 'NodeJS';
+      self.currentST = String(self.action.workspaceID);
+      getWorkspaces();
+      loadRoles();
+      self.isNodeJS = self.action && self.action.workflowAction === 'NodeJS';
       if (self.isNodeJS){
         NodejsService.actionName = self.action.name;
         NodejsService.objectName = self.getTableName();
@@ -508,7 +516,11 @@
       self.testHttp = '';
       buildParametersDictionary();
       self.action.inputParameters = _.trimRight(self.action.inputParameters, ',');
-
+      rolesToString();
+      if(self.precedent)
+        self.action.workspaceID = null;
+      else
+        self.action.workspaceID = self.currentST;
       var ruleToSend = EscapeSpecialChars(self.action);
       updateOrPostNew(ruleToSend, self.action.__metadata)
         .then(function(){
@@ -558,7 +570,7 @@
             RulesService.remove(self.action)
               .then(function(){
                 if(self.mode.name.includes('function')){
-                  if(self.action.workflowAction == 'NodeJS'){
+                  if(self.action.workflowAction === 'NodeJS'){
                     $state.go('functions.newlambdafunctions');
                   }
                   else{
@@ -568,9 +580,9 @@
                 else{
                   getRules().then(refreshAction);
                 }
-              })  
-              
-                
+              })
+
+
             }
         });
     };
@@ -579,21 +591,80 @@
     self.allowTestForm = function () {
       return self.action && self.action.__metadata;
     };
+    /**
+     * Read the list of workspaces
+     */
+    function getWorkspaces() {
+      if (!self.workspaces) {
+        SecurityService.getWorkspace().then(workspaceSuccessHandler, errorHandler)
+      }
+    }
+    /**
+     * @param data
+     * @constructor
+     */
+    function workspaceSuccessHandler(data) {
+      self.workspaces = data.data.data;
+      if (self.isNewAction && self.workspaces.length > 0) {
+        self.currentST = self.workspaces[0].__metadata.id;
+      }
+      self.changePermissions();
+    }
+    //The model currentST only gives the id of the security template, we request all the templates
+    //and then filter based on currentST that changes also based on the select drop down
+    function getCurrentWorkspace(element) {
+      if (self.currentST === element.__metadata.id)
+        return element
+    }
+    //A function that changes the role permissions based on the security template
+    //the function is also invoked by the select change hence the public function
+    self.changePermissions = function(){
+      if(self.workspaces){
+        self.currentWorkspace = self.workspaces.find(getCurrentWorkspace);
+        if(self.currentWorkspace) {
+          self.action.allowSelectRoles = self.currentWorkspace.allowRead;
+          rolesToObj();
+        }
+      }
 
+    };
     self.pageLayoutNewRule = function(){
       if(self.mode.name.includes("functions")){
         return self.showTestForm();
       }
-      else if(self.mode.name == "function"){
+      else if(self.mode.name === "function"){
         return self.showTestForm();
       }
       else{
         return false;
       }
     };
+    function loadRoles() {
+      SecurityService.getRoles()
+        .then(function (data) {
+          self.roles = data.data.data;
+          if (self.action.allowSelectRoles)
+            rolesToObj();
+        })
+    }
 
+    function rolesToObj() {
+      self.allowSelectRolesObject = {};
+      var allowSelectRolesArray = self.action.allowSelectRoles.split(',');
+      allowSelectRolesArray.forEach(function (role) {
+        self.allowSelectRolesObject[role] = true;
+      });
+    }
+
+    function rolesToString() {
+      var allowSelectRolesArray = [];
+      _.forOwn(self.allowSelectRolesObject, function (permission, role) {
+        if (permission) allowSelectRolesArray.push(role);
+      });
+      self.action.allowSelectRoles = allowSelectRolesArray.join(',');
+    }
     self.toggleTestForm = function (show) {
-      
+
       if(angular.isDefined(show)) {
         self.requestTestForm = show;
       } else{
@@ -610,14 +681,14 @@
     self.allowTest = function () {
 
       if(self.test)
-        self.allowTestEditMode = self.test.rowId != null || (self.test.rowId == null && self.getDataActionType() != 'Delete' && self.getDataActionType() != 'Update');
+        self.allowTestEditMode = self.test.rowId !== null || (self.test.rowId === null && self.getDataActionType() !== 'Delete' && self.getDataActionType() !== 'Update');
 
       return self.newRuleForm && self.newRuleForm.$pristine;
 
     };
 
     $scope.ace = {
-      dbType: AppsService.currentApp.databaseName == 'mysql' && 'mysql' || 'pgsql',
+      dbType: AppsService.currentApp.databaseName === 'mysql' && 'mysql' || 'pgsql',
       editors: {},
       onLoad: function (_editor) {
         $scope.ace.editors[_editor.container.id] = _editor;
@@ -642,14 +713,14 @@
     };
 
     self.onTypeChange = function(){
-      if(self.action.workflowAction == "NodeJS" && self.action.dataAction != "OnDemand")
+      if(self.action.workflowAction === "NodeJS" && self.action.dataAction !== "OnDemand")
         self.action.workflowAction = "";
 
-      self.isNodeJS = self.action && self.action.workflowAction == 'NodeJS';
+      self.isNodeJS = self.action && self.action.workflowAction === 'NodeJS';
     };
 
     function getWorkflowActions(){
-      if (self.action && self.action.dataAction == "OnDemand") {
+      if (self.action && self.action.dataAction === "OnDemand") {
         if(self.mode.name.includes("function")){
           return [
             {value: 'JavaScript', label: 'Server-side JavaScript function'},
@@ -693,7 +764,7 @@
     }
 
     function isCurGroup(groupName) {
-      return $scope.modal.curGroup == groupName;
+      return $scope.modal.curGroup === groupName;
     }
 
     function toggleGroup(groupName) {
@@ -736,7 +807,7 @@
     function getRules() {
       self.dictionaryItems = {parameters: []};
       var crud = ['create', 'update', 'delete'];
-        if(self.mode.name == 'action'){
+        if(self.mode.name === 'action'){
             crud.forEach(function (crudAction) {
               DictionaryService.get(crudAction)
               .then(function (data) {
@@ -1051,7 +1122,7 @@
     self.testData = function () {
       //getTestRow();
       self.test.testLoading = true;
-      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug',self.mode.name)
+      RulesService.testRule(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode === 'debug',self.mode.name)
         .then(getLog, getLog);
     };
 
@@ -1077,8 +1148,8 @@
 
       self.isNewAction = false;
       $state.go(stateToGoTo, params);
-      
-      
+
+
     };
 
     $scope.$watch(function () {
@@ -1116,7 +1187,7 @@
 
         var guid = response.headers('Backand-Action-Guid');
         //self.testUrl = RulesService.getTestUrl(self.action, self.test, self.getDataActionType(), getTableName(), self.debugMode == 'debug');
-        self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode == 'debug', self.mode.name);
+        self.testHttpObject = RulesService.getTestHttp(self.action, self.test, self.getDataActionType(), getTableName(), self.rowData, self.debugMode === 'debug', self.mode.name);
         self.testUrl = self.testHttpObject.url;
         self.testHttpObject.params = {parameters: self.test.parametersToSend};
         // GENERATOR ADDON
@@ -1196,10 +1267,10 @@
 
             var uri = "";
 
-            if (objectId == 4) {
+            if (objectId === 4) {
               uri = $state.href('security.actions', {actionId: actionId, line: actionLine}, {absolute: false});
             }
-            else if(self.mode.name == 'function'){
+            else if(self.mode.name === 'function'){
               uri = $state.href('functions.function', {functionId: actionId})
             }
             else {
@@ -1335,7 +1406,8 @@
 
       //build the tree
       angular.forEach(self.ruleList, function (value, key) {
-        var obj = {name: value.name};
+        var obj = {name: value.name,
+                   Id: value.iD};
         var da = $filter('filter')($scope.modal.dataActions, function (f) {
           return f.value === value.dataAction;
         })[0];

@@ -64,7 +64,7 @@
                 <input type="button"
                        ng-if="!rules.mode.name.includes('function')"
                        ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
-                       style="padding-left: 35px;"
+                       style="padding-left: 35px !important;"
                        class="btn btn-edit btn-default pull-right with-margin"
                        value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel' }}">
 
@@ -150,7 +150,42 @@
                 </div>
               </div>
             </div>
-
+            <div class="form-group" ng-if="rules.editMode && rules.mode.name.includes('function')">
+              <div class="row security-header">
+                <div class="col-lg-4">
+                  <label class="strong">Security Template</label>
+                  <select class="form-control"
+                          ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in rules.workspaces"
+                          ng-model="rules.currentST"
+                          required
+                          ng-change="rules.changePermissions()"
+                          ng-disabled="rules.precedent">
+                  </select>
+                </div>
+                <div class="col-lg-4">
+                  <div class="override-template"><label> override</label>
+                    <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
+                      <input id="override-checkbox" type="checkbox" ng-model="rules.precedent"/><i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="rules.precedent" style="padding-left: 15px;">
+                <label>Read Permissions</label>
+                <ul class="list-style-none">
+                  <li ng-repeat="role in rules.roles">
+                    <input type="checkbox"
+                           ng-model="rules.allowSelectRolesObject[role.Name]"
+                           id="permissions-checkbox-{{role.Name}}"
+                           ng-disabled="!rules.precedent">
+                    </input>
+                    <label for="permissions-checkbox-{{role.Name}}">
+                      {{ role.Name }}
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div ng-switch="rules.action.workflowAction">
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"

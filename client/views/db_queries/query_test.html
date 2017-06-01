@@ -29,7 +29,7 @@
             style="margin-left: 10px"
             class="btn btn-success btn-lg "
             data-style="expand-right" ladda="DbQuery.loading"
-            ng-disabled="DbQuery.allowTest()"
+            ng-disabled="DbQuery.allowTest() || (DbQuery.query.noSQL === '' && DbQuery.query.sQL === '')"
             ng-click="DbQuery.saveQuery(true)">Save & Test
     </button>
   </div>
