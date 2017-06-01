@@ -1,25 +1,18 @@
-<div class="nav-wrapper scroller" perfect-scrollbar>
-  <ul slim-scroll collapse-nav id="nav2" class="nav">
-    <li class="apps-header">
-      <div class="ui-select app-headers" style="font-weight: bold;">
-        <select ng-model="nav.currentAppName"
-                ng-change="nav.goToApp()"
-                ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
-                class="app-select">
-        </select>
-      </div>
-    </li>
-  <!--    <a>
+<div class="nav-wrapper">
+  <ul collapse-nav id="nav2" class="nav">
+    <li class="apps-header" ng-click="showAppList = !showAppList" ng-class="{'app-list-open': showAppList}">
+     <a >
       <span>{{nav.currentAppName}}</span>
+       <div class="down-triangle"></div>
     </a>
-    <ul class="apps-list">
+    <ul class="apps-list pre-scrollable">
       <li ng-repeat="app in nav.apps.list"
           ng-click="nav.goToApp()"
           ng-model="nav.currentAppName">
         <span>{{app.Name}}</span>
       </li>
-    </ul> -->
-
+    </ul>
+    </li>
 
 <li ng-class="{active: nav.state == 'app.show'}">
   <a ng-click="nav.goTo($event, 'app.show')">
@@ -68,17 +61,18 @@
   </a>
   <ul>
     <li ng-class="{active: nav.state == 'functions.newlambdafunctions' }" ng-if="nav.DatabaseStatus == 1"
-        class="sub-functions-icons">
+        class="sub-functions-icons new-function-selection">
       <a ng-click="nav.newLambdaFunction($event)">
-        <i class="ba-icon-new-query"></i>
+        <i class="ti-plus"></i>
         <span>Add Lambda Function</span>
       </a>
     </li>
     <li ng-class="{active:  nav.state == 'functions.newjsfunctions' }" ng-if="nav.DatabaseStatus == 1"
-        class="sub-functions-icons">
+        class="sub-functions-icons new-function-selection">
       <a ng-click="nav.newJsFunction($event)">
-        <i class="ba-icon-new-query"></i>
+        <i class="ti-plus"></i>
         <span>Add Javascript Function</span>
+
       </a>
     </li>
     <li class="sub-functions-icons">
@@ -86,13 +80,13 @@
         <i class="glyphicon glyphicon-file"></i>
         <span>External Functions</span>
       </a>
+      <div class="menu-border"></div>
     </li>
     <ul>
       <li ng-repeat="func in nav.functions track by func.name"
           ng-class="{active: func.iD == nav.stateparam.functionId}"
           class="sub-functions-icons crop">
         <a ng-click="nav.showFunction($event, func)">
-          <i class="ti-write"></i>
           <span>{{func.name}}</span>
         </a>
       </li>
@@ -117,11 +111,12 @@
   </a>
   <ul>
     <li ng-class="{active: nav.state == 'cronJobs.new' }"
-        class="sub-objects-icons">
+        class="sub-objects-icons new-function-selection">
       <a ng-click="nav.goTo($event, 'cronJobs.new')">
-        <i class="ba-icon-new-query"></i>
+        <i class="ti-plus"></i>
         <span>New Job</span>
       </a>
+      <div class="menu-border"></div>
     </li>
     <li ng-class="{active: cronJob.iD == nav.stateparam.jobId}"
         ng-repeat="cronJob in nav.cronJobs track by cronJob.name"

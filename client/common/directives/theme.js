@@ -64,12 +64,10 @@
 
           $aRest.on('click', function(event) {
             $lists.removeClass('open').find('ul').slideUp();
-            $parent.find('.glyphicon-chevron-down').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
           });
 
           $scope.$on('nav:reset', function(event) {
             $lists.removeClass('open').find('ul').slideUp();
-            $parent.find('.glyphicon-chevron-down').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
           });
           $scope.$on('toggle-active', function(){
             $lists.removeClass('active');
