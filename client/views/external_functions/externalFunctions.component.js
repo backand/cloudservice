@@ -54,7 +54,8 @@
             function initialization() {
               // options to <users> Component
               $ctrl.options = {
-                view: 'lambdaLauncher'
+                view: 'lambdaLauncher',
+                source : $state.params.source
               };
               //set first tab as activeTab
               $ctrl.activeTab = 0;

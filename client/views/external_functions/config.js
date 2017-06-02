@@ -27,7 +27,7 @@
     .config(['$stateProvider', function ($stateProvider) {
       $stateProvider
         .state('functions.externalFunctions', {
-          url: '/external-functions?new',
+          url: '/external-functions?new&source',
           template: '<external-functions></external-functions>'
         });
     }])

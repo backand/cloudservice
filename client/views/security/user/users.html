@@ -25,20 +25,20 @@
 
   <div class="form-group">
     <div class="col-sm-7">
-      <tags-input data-ng-model="$ctrl.invitedUsers" data-type="email"  class="theme-brand" placeholder="Email Address"  replace-spaces-with-dashes="false" ng-disabled="$ctrl.registrationRedirectUrl == ''" allowed-tags-pattern="{{$ctrl.regex}}"></tags-input>
+      <tags-input data-ng-model="$ctrl.invitedUsers" data-type="email"  class="theme-brand" placeholder="Email Address"  replace-spaces-with-dashes="false" ng-disabled="$ctrl.registrationRedirectUrl == '' && $ctrl.options.source !== 'launcher'" allowed-tags-pattern="{{$ctrl.regex}}"></tags-input>
       <span class="help-text small">Email Address -  Use comma for multiple users</span>
     </div>
     <div class="col-sm-3">
-      <button type="button" ng-disabled="$ctrl.invitedUsers.length ===0 || $ctrl.registrationRedirectUrl == ''" id="addUserInvites" class="btn btn-success"
+      <button type="button" ng-disabled="$ctrl.invitedUsers.length ===0" id="addUserInvites" class="btn btn-success"
         ng-click="$ctrl.inviteUsers()">Invite User(s)
           </button>
     </div>
   </div>
-  <div class="form-group" data-ng-if="$ctrl.view === 'lambdaLauncher' ">
+  <div class="form-group" data-ng-if="$ctrl.view === 'launcher' ||  $ctrl.options.source === 'launcher'">
     <div class="col-sm-12">
       <div class="checkbox">
         <label>
-          <input type="checkbox" data-ng-model="$ctrl.AnonymousToken" data-ng-disabled="$ctrl.invitedUsers.length ===0  || $ctrl.registrationRedirectUrl == ''"> Send invite to users for anonymous access.
+          <input type="checkbox" data-ng-model="$ctrl.AnonymousToken" data-ng-disabled="$ctrl.invitedUsers.length ===0 "> Send invite to users for anonymous access.
         </label>
       </div>
     </div>

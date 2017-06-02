@@ -99,7 +99,11 @@
               AppsService
                 .getApp(appName)
                 .then(function () {
-                  $state.go('functions.externalFunctions', { new: 1, appName: appName }, { reload: true });
+                  var stateParams = { new: 1, appName: appName };
+                  if (isLauncher()) {
+                    stateParams['source'] = 'launcher';
+                  }
+                  $state.go('functions.externalFunctions', stateParams, { reload: true });
                 });
             });
         });

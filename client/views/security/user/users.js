@@ -19,7 +19,7 @@
     var self = this,
       //constants for view
       DEFAULT = 'default',
-      LAMBDA_LAUNCHER = 'lambdaLauncher';
+      LAUNCHER = 'launcher';
 
     /**
      * Expose bindable methods
@@ -115,8 +115,8 @@
             enableCellEdit: false
           });
         }
-      } else if (self.view === LAMBDA_LAUNCHER) {
-        //button to send an invite for lambdaLauncher Application's URL
+      } else if (self.view === LAUNCHER) {
+        //button to send an invite for Launcher Application's URL
         self.gridOptions.columnDefs.unshift({
           name: 'sendAppInvite',
           cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.$ctrl.sendAppInvite($event, row)"><i class="ti-email"/></div>',
@@ -144,7 +144,7 @@
 
     /**
      * @name sendAppInvite
-     * @description Send lambdaLauncher application link to user
+     * @description Send Launcher application link to user
      * 
      * @param {event} event A click Event 
      * @param {object} obj A selected row from grid
