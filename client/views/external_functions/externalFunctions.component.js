@@ -55,7 +55,8 @@
               // options to <users> Component
               $ctrl.options = {
                 view: 'lambdaLauncher',
-                source : $state.params.source
+                source : $state.params.source,
+                title : 'Registered Users'
               };
               //set first tab as activeTab
               $ctrl.activeTab = 0;

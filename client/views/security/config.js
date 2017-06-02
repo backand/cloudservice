@@ -9,16 +9,12 @@
       .state('security.users', {
         url: '/users',
         templateUrl: 'views/security/user/default_tpl.html',
-        data:{
-          title : 'Registered Users'
-        }
+        controller : 'RegisteredUserController as userCtrl',
       })
       .state('security.team', {
         url: '/team',
         templateUrl: 'views/security/user/default_tpl.html',
-        data:{
-          title : 'Team'
-        }
+        controller : 'TeamController as userCtrl',
       })
       .state('security.templates', {
         url: '/templates',

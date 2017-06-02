@@ -179,9 +179,6 @@ function run($rootScope, $state, SessionService, AuthService, CONSTS, $window) {
   }
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-    if(toState.data){
-      $rootScope.title = toState.data.title;
-    }
     if (toParams.data || toParams.error) {
       event.preventDefault();
 

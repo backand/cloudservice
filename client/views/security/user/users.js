@@ -50,8 +50,9 @@
       self.guestUsers = [];
       self.sort = '[{fieldName:"Username", order:"desc"}]';
 
-      self.adminMode = ($state.$current.url.source.indexOf('/team') > -1);;
-      self.title = self.adminMode ? 'Team' : 'Registered Users';
+      self.adminMode = self.options.adminMode ? true :  false;
+
+      console.info('self.adminMode', self.adminMode);
 
       self.gridOptions.rowEditWaitInterval = 200;
       self.paginationOptions = {
