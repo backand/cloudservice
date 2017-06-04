@@ -143,7 +143,7 @@
                   return v ? true : false;
                 })
                 .value();
-              request.AwsRegion = _.map(request.AwsRegion, 'Code');  
+              request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
               $log.warn('Connection request', request);
               CloudService
                 .saveAwsConnection(request)
