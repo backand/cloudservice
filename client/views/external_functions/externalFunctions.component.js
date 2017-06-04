@@ -174,7 +174,8 @@
               var requestBody = {
                 name: func.FunctionName,
                 cloudId: $ctrl.activeConnection.__metadata.id,
-                select: flag
+                select: flag,
+                arn: func.FunctionArn
               };
               CloudService
                 .updateFunction(requestBody)
