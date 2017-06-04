@@ -88,8 +88,8 @@
               CloudService
                 .loadAwsRegion()
                 .then(function (response) {
-                  $log.info('All regions', response.data.data);
-                  deferred.resolve(response.data.data);
+                  $log.info('All regions', response.data);
+                  deferred.resolve(response.data);
                 });
               return deferred.promise;
             }
