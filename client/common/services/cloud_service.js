@@ -14,7 +14,7 @@
 
   angular
     .module('common.services')
-    .service('CloudService', ['$http', 'CONSTS', 'AppsService', function ($http, CONSTS, AppsService) {
+    .service('CloudService', ['$http', 'CONSTS', 'AppsService','$q', function ($http, CONSTS, AppsService, $q) {
       var self = this;
 
       /**
@@ -33,10 +33,70 @@
 
 
       function loadAwsRegion() {
-        return $http({
-          method: 'GET',
-          url: 'common/aws_regions.json'
-        });
+        var awsRegions = {
+          "data": [
+            {
+              "Code": "us-east-1",
+              "Name": "US East (N. Virginia)"
+            },
+            {
+              "Code": "us-east-2",
+              "Name": "US East (Ohio)"
+            },
+            {
+              "Code": "us-west-1",
+              "Name": "US West (N. California)"
+            },
+            {
+              "Code": "us-west-2",
+              "Name": "US West (Oregon)"
+            },
+            {
+              "Code": "ca-central-1",
+              "Name": "Canada (Central)"
+            },
+            {
+              "Code": "eu-west-1",
+              "Name": "EU (Ireland)"
+            },
+            {
+              "Code": "eu-central-1",
+              "Name": "EU (Frankfurt)"
+            },
+            {
+              "Code": "eu-west-2",
+              "Name": "EU (London)"
+            },
+            {
+              "Code": "ap-northeast-1",
+              "Name": "Asia Pacific (Tokyo)"
+            },
+            {
+              "Code": "ap-northeast-2",
+              "Name": "Asia Pacific (Seoul)"
+            },
+            {
+              "Code": "ap-southeast-1",
+              "Name": "Asia Pacific (Singapore)"
+            },
+            {
+              "Code": "ap-southeast-2",
+              "Name": "Asia Pacific (Sydney)"
+            },
+            {
+              "Code": "ap-south-1",
+              "Name": "Asia Pacific (Mumbai)"
+            },
+            {
+              "Code": "sa-east-1",
+              "Name": "South America (São Paulo)"
+            }
+          ]
+        };
+
+        var defer = $q.defer();
+        defer.resolve(awsRegions);
+        return defer.promise;
       }
       /**
        * @name getAwsConnection

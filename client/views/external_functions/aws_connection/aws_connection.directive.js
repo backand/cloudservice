@@ -88,8 +88,8 @@
               CloudService
                 .loadAwsRegion()
                 .then(function (response) {
-                  $log.info('All regions', response.data.data);
-                  deferred.resolve(response.data.data);
+                  $log.info('All regions', response.data);
+                  deferred.resolve(response.data);
                 });
               return deferred.promise;
             }
@@ -143,7 +143,7 @@
                   return v ? true : false;
                 })
                 .value();
-              request.AwsRegion = _.map(request.AwsRegion, 'Code');  
+              request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
               $log.warn('Connection request', request);
               CloudService
                 .saveAwsConnection(request)
