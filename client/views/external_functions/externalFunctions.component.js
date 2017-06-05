@@ -55,8 +55,8 @@
               // options to <users> Component
               $ctrl.options = {
                 view: 'lambdaLauncher',
-                source : $state.params.source,
-                title : 'Registered Users'
+                source: $state.params.source,
+                title: 'Registered Users'
               };
               //set first tab as activeTab
               $ctrl.activeTab = 0;
@@ -182,7 +182,7 @@
                   func.selected = flag;
                   $log.info('Lambda function is selected with -', response);
                   usSpinnerService.stop('loading');
-                   NotificationService.add('success', 'Function is '+ (flag ? 'linked' : 'Unlinked') +' successfully');
+                  NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
                 }).catch(function (error) {
                   usSpinnerService.spin('loading');
                   $log.error('Error while updating function\'s status', error);
@@ -198,7 +198,7 @@
              * 
              * @param {object} activeConnection 
              */
-            function onLoadConnection(activeConnection){
+            function onLoadConnection(activeConnection) {
               angular.extend($ctrl.activeConnection, activeConnection);
             }
 
