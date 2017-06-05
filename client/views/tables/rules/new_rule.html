@@ -54,7 +54,7 @@
                      class="pull-right btn btn-edit btn-xs with-margin"
                      ng-click="rules.toggleTestForm()"
                      value="{{'Test ' + rules.mode.title}}">
-              <input type="button" ng-show="rules.allowEditAction() && !rules.isNodeJS"
+              <input type="button" ng-show="rules.allowEditAction()"
                      ng-click="rules.editAction()"
                      class="btn btn-primary btn-validate pull-right with-margin"
                      value="Edit {{rules.mode.title}}">
@@ -70,8 +70,8 @@
 
                 <button ng-disabled="rules.newRuleForm.$invalid"
                         class="btn btn-validate pull-right with-margin"
-                        ladda="rules.saving" data-style="expand-right"
-                        ng-show="!rules.isNodeJS">Save
+                        ladda="rules.saving" data-style="expand-right">
+                  Save
                 </button>
                 <input type="button" ng-if="false"
                        ng-click="rules.saveActionTemplate()"
@@ -150,7 +150,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group" ng-if="rules.editMode && rules.mode.name.includes('function')">
+            <div class="form-group" ng-if="rules.editMode && (rules.mode.name.includes('function') && rules.currentState !== 'functions.newlambdafunctions')">
               <div class="row security-header">
                 <div class="col-lg-4">
                   <label class="strong">Security Template</label>

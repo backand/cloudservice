@@ -67,6 +67,7 @@
       self.isNewAction = false;
       self.actionChangeInTree = false;
       self.showJsCodeHelpDialog = false;
+      self.currentState = $state.current.name;
       self.stateparam = $state.params;
       self.debugMode = 'debug';
       self.editMode = $stateParams.editMode || false;
