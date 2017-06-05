@@ -61,6 +61,7 @@
     "test": "gulp travis"
   },
   "dependencies": {
+    "backandsdk": "^0.1.7",
     "gulp-filelog": "^0.4.1",
     "gulp-gzip": "0.0.8",
     "gulp-install": "^0.2.0",
