@@ -77,7 +77,7 @@
               <div class="list-group-item-body" collapse="$ctrl.sections.lambdaFunctions">
                 <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
                   <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-sm-12">
                       <ul class="list-group" data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index">
                         <li class="list-group-item active brand" data-ng-bind="key"></li>
                         <li class="list-group-item" data-ng-repeat="function in zone track by $index">
