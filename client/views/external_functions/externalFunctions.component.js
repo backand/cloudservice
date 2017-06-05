@@ -46,6 +46,7 @@
              * public properties
              */
             $ctrl.activeConnection = {};
+            $ctrl.hasFunctions = false;
             /**
              * @name initialization
              * @description
@@ -64,7 +65,7 @@
               $ctrl.sections = {
                 guideline: false,
                 awsConnection: true,
-                lambdaFunctions: false
+                lambdaFunctions: true
               };
               //opens modal for AWS credentials
               if (isNew()) {
@@ -88,8 +89,10 @@
                 .then(function (response) {
                   $log.info(response.data);
                   $ctrl.lambdaFunctions = response.data.data[0] ? response.data.data[0].functions : [];
-                  if ($ctrl.lambdaFunctions.length > 0) {
-                    $ctrl.sections.lambdaFunctions = true;
+                  //Expand collapsible if lambdaFunctions > 0
+                  if (_.keys($ctrl.lambdaFunctions).length > 0) {
+                    $ctrl.sections.lambdaFunctions = false;
+                    $ctrl.hasFunctions = true;
                   }
                   $log.info('Lambda functions loaded', response);
                   usSpinnerService.stop('loading');
