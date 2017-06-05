@@ -5,19 +5,19 @@
   </div>
   <div class="form-group">
     <label for="aws-access-key" class="control-label">Access Key</label>
-    <input type="text" class="form-control" id="aws-access-key" ng-model="$ctrl.aws.AccessKeyId" required>
+    <input type="text" class="form-control" id="aws-access-key" placeholder="Access Key" ng-model="$ctrl.aws.AccessKeyId" required>
   </div>
   <div class="form-group">
     <label for="aws-secret-key" class="control-label">Secret Key</label>
-    <input type="password" class="form-control" id="aws-secret-key" ng-model="$ctrl.aws.EncryptedSecretAccessKey" data-ng-required="!$ctrl.aws.Id">
+    <input type="password" class="form-control" placeholder="Secret Key" id="aws-secret-key" ng-model="$ctrl.aws.EncryptedSecretAccessKey"
+      data-ng-required="!$ctrl.aws.Id">
   </div>
   <div class="form-group">
     <label for="aws-region" class="control-label">Region</label>
-
-    <tags-input class="theme-green" placeholder="Region Name" add-from-autocomplete-only="true" ng-model="$ctrl.aws.AwsRegion" display-property="Name" min-length="0" >
-      <auto-complete source="$ctrl.loadAwsRegion($query)"  load-on-focus="true" load-on-empty="true" min-length="0" load-on-down-arrow="true"></auto-complete>
+    <tags-input class="theme-green" placeholder="Region Name" add-from-autocomplete-only="true" ng-model="$ctrl.aws.AwsRegion"
+      display-property="Name" min-length="0">
+      <auto-complete source="$ctrl.loadAwsRegion($query)" load-on-focus="true" load-on-empty="true" min-length="0" load-on-down-arrow="true"></auto-complete>
     </tags-input>
-
   </div>
 
   <div class="form-group">

@@ -63,7 +63,7 @@
               //set collapsible panels
               $ctrl.sections = {
                 guideline: false,
-                awsConnection: false,
+                awsConnection: true,
                 lambdaFunctions: false
               };
               //opens modal for AWS credentials
@@ -201,6 +201,10 @@
              */
             function onLoadConnection(activeConnection) {
               angular.extend($ctrl.activeConnection, activeConnection);
+              //Expand AWS connection panel if there is no active connection
+              if(!$ctrl.activeConnection.Id){
+                $ctrl.sections.awsConnection = false;
+              }
             }
 
             //end of controller
