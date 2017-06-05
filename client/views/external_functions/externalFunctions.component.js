@@ -27,7 +27,8 @@
           '$state',
           'modalService',
           'NotificationService',
-          function ($log, usSpinnerService, CloudService, $modal, $state, modalService, NotificationService) {
+          '$rootScope',
+          function ($log, usSpinnerService, CloudService, $modal, $state, modalService, NotificationService, $rootScope) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
             /**
@@ -187,6 +188,7 @@
                   $log.info('Lambda function is selected with -', response);
                   usSpinnerService.stop('loading');
                   NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
+                  $rootScope.$broadcast('fetchTables');
                 }).catch(function (error) {
                   usSpinnerService.spin('loading');
                   $log.error('Error while updating function\'s status', error);
