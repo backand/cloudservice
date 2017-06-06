@@ -124,22 +124,25 @@
              * @returns void
              */
             function awsConnectionModal() {
+              var stateParams = $state.params;
+                  angular.extend(stateParams, {
+                    new: undefined
+                  });
+
               modalService
                 .awsCredentials()
                 .then(function (data) {
                   $log.info('connection with - ', data);
-                  $state.transitionTo($state.current.name, {
-                    new: undefined
-                  }, {
+                  
+
+                  $state.transitionTo($state.current.name, stateParams, {
                       reload: true
                     });
                 }, function () {
                   $log.info('Cancelled AWS credentials to enter.');
                   modalService.demoApp().then(function () {
                   }, function () {
-                    $state.transitionTo($state.current.name, angular.extend({}, $state.params, {
-                      new: undefined
-                    }), {
+                    $state.transitionTo($state.current.name, stateParams, {
                         notify: false
                       });
                   });

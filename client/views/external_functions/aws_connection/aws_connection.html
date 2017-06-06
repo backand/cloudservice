@@ -15,7 +15,7 @@
   <div class="form-group">
     <label for="aws-region" class="control-label">Region</label>
     <tags-input class="theme-green" placeholder="Region Name" add-from-autocomplete-only="true" ng-model="$ctrl.aws.AwsRegion"
-      display-property="Name" min-length="0" required>
+      display-property="Name" min-length="0">
       <auto-complete source="$ctrl.loadAwsRegion($query)" load-on-focus="true" load-on-empty="true" min-length="0" load-on-down-arrow="true"></auto-complete>
     </tags-input>
   </div>
