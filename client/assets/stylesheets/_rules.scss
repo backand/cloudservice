@@ -253,6 +253,7 @@
     }
   }
 }
+
 .group-inner-actions{
   input.btn-edit{
     padding-left: 15px !important;
@@ -336,15 +337,15 @@ bknd-copy-url[type="textarea"] .request-url-copy {
   .group-inner {
     padding: 0;
     border: none;
-    .rule-title {
-      padding-left: 0;
-    }
+
     .rule-container {
       padding: 0;
     }
   }
 }
-
+.rule-title {
+  padding-left: 0;
+}
 .js-code-help.angled-window {
   left: calc(50% - 200px);
   .angled-window-body-content {

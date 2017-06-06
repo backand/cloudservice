@@ -732,7 +732,8 @@
         if(self.mode.name.includes("function")){
           return [
             {value: 'JavaScript', label: 'Server-side JavaScript function'},
-            {value: 'NodeJS', label: 'AWS Lambda: Node.js'}
+            {value: 'NodeJS', label: 'AWS Lambda: Node.js'},
+            {value: 'Lambda', label: 'External AWS Lambda'}
           ];
         }
         else{
