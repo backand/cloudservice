@@ -56,7 +56,7 @@
             function initialization() {
               // options to <users> Component
               $ctrl.options = {
-                view: 'lambdaLauncher',
+                view: 'launcher',
                 source: $state.params.source,
                 title: 'Registered Users'
               };
@@ -189,6 +189,7 @@
                   usSpinnerService.stop('loading');
                   NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
                   $rootScope.$broadcast('fetchTables');
+                  getLambdaFunctions();
                 }).catch(function (error) {
                   usSpinnerService.spin('loading');
                   $log.error('Error while updating function\'s status', error);
