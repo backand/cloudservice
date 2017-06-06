@@ -16,7 +16,7 @@
         self.backandstorage = {};
       }
       if (self.app) {
-        if(!$localStorage.backand[self.app.Name]){
+        if (!$localStorage.backand[self.app.Name]) {
           $localStorage.backand[self.app.Name] = {};
         }
         self.backandstorage = $localStorage.backand[self.app.Name];
@@ -41,30 +41,31 @@
       }
     }());
     function checkState() {
-      if(self.currentState.includes('function') ||
-          self.currentState.includes('cronJobs') ||
-          self.currentState.includes('log.requests') ||
-          self.currentState.includes('log.console') ||
-          self.currentState.includes('app.show')){
-            self.backandstorage.secondAppNavChoice = 'functions';
+      if (self.currentState.includes('function') ||
+        self.currentState.includes('cronJobs') ||
+        self.currentState.includes('log.requests') ||
+        self.currentState.includes('log.console') ||
+        self.currentState.includes('app.show')) {
+        self.backandstorage.secondAppNavChoice = 'functions';
       }
-      else if(self.currentState.includes('docs') ||
-          self.currentState.includes('model') ||
-          self.currentState.includes('object') ||
-          self.currentState.includes('dbQueries') ||
-          self.currentState.includes('log.history') ||
-          self.currentState.includes('log.exception') ||
-          self.currentState.includes('log.config') ||
-          self.currentState.includes('database.show')){
+      else if (self.currentState.includes('docs') ||
+        self.currentState.includes('model') ||
+        self.currentState.includes('object') ||
+        self.currentState.includes('dbQueries') ||
+        self.currentState.includes('log.history') ||
+        self.currentState.includes('log.exception') ||
+        self.currentState.includes('log.config') ||
+        self.currentState.includes('database.show')) {
         self.backandstorage.secondAppNavChoice = 'database';
       }
-      else if(self.currentState.includes('security')){
+      else if (self.currentState.includes('security')) {
         self.backandstorage.secondAppNavChoice = 'security';
       }
-      else{
+      else {
         self.backandstorage.secondAppNavChoice = 'admin';
       }
     }
+
     self.goToApp = function (appName) {
       usSpinnerService.spin('loading-' + appName);
       self.currentAppName = appName;
@@ -315,6 +316,7 @@
         AnalyticsService.track('BillingLeftMenuBillingPayment', {appName: $state.params.appName});
       }
 
+
       if (self.app.DatabaseStatus === 1) {
         goToState($event, state);
       }
@@ -380,7 +382,13 @@
       if ($event.which === 2 || ($event.which === 1 && ($event.metaKey || $event.ctrlKey))) {
         var url = $state.href(state, params, {absolute: true});
         window.open(url, '_blank');
-      } else {
+      }
+      // for the state to be saved when pressing the logo homepage button then any redirect will not be saved by
+      // the function goToState.
+      if (state === "apps.index") {
+        $state.go('apps.index');
+      }
+      else {
         $state.go(state, params).then(function () {
           self.backandstorage.currentState = $state.current.name;
           self.stateparam = $state.params;

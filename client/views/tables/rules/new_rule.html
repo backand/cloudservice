@@ -70,7 +70,8 @@
 
                 <button ng-disabled="rules.newRuleForm.$invalid"
                         class="btn btn-validate pull-right with-margin"
-                        ladda="rules.saving" data-style="expand-right">
+                        ladda="rules.saving" data-style="expand-right"
+                        ng-if="rules.currentState !== 'functions.newlambdafunctions'">
                   Save
                 </button>
                 <input type="button" ng-if="false"

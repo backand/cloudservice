@@ -515,6 +515,7 @@
     self.saveAction = function (withTest) {
       self.saving = true;
       withTest ? self.savingAndTesting = true : null;
+
       self.testUrl = '';
       self.testHttp = '';
       buildParametersDictionary();
@@ -1487,7 +1488,7 @@
         return '--action ' + self.action.name;
       }
       return '';
-    }
+    };
 
     self.appName = AppsService.currentApp.Name;
     self.getStorageUrl = function () {
