@@ -98,6 +98,8 @@
                   $log.info('Lambda functions loaded', response);
                   usSpinnerService.stop('loading');
                 }).catch(function (error) {
+                  $ctrl.lambdaFunctions = {};
+                  $ctrl.hasFunctions = false;
                   $log.error('Error while fetching Lambda functions', error);
                   usSpinnerService.stop('loading');
                 });
