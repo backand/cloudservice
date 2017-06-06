@@ -86,11 +86,11 @@
     <ul>
       <li ng-repeat="func in nav.functions track by func.name"
           ng-class="{active: func.iD == nav.stateparam.functionId}"
-          class="sub-functions-icons crop">
+          class="sub-functions-icons function-list crop">
         <a ng-click="nav.showFunction($event, func)">
           <span>{{func.name}}</span>
-          <!--<i ng-class="{'fontello-icon-functions': func.fileName}"></i> TODO-->
         </a>
+           <i ng-class="{'fontello-icon-functions': (func.fileName || func.workflowAction == 'Lambda')}"></i>
       </li>
     </ul>
   </ul>
