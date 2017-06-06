@@ -30,7 +30,9 @@
           'CloudService',
           'NotificationService',
           '$q',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q) {
+          'ConfirmationPopup',
+          '$state',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup,$state) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               connectionModel = {
@@ -52,6 +54,8 @@
              */
             $ctrl.saveConnection = saveConnection;
             $ctrl.loadAwsRegion = loadAwsRegion;
+            $ctrl.deleteConnection = deleteConnection;
+
             /**
              * public properties
              */
@@ -72,7 +76,7 @@
                 lambdaFunctions: false
               };
               usSpinnerService.stop('connectionView');
-              //loadAwsRegion();
+              loadAwsRegion();
               getAwsConnection();
             }
 
@@ -89,6 +93,7 @@
                 .loadAwsRegion()
                 .then(function (response) {
                   $log.info('All regions', response.data);
+                  $ctrl.regions = response.data;
                   deferred.resolve(response.data);
                 });
               return deferred.promise;
@@ -106,8 +111,13 @@
               CloudService
                 .getAwsConnection()
                 .then(function (response) {
-                  var awsConnection = response.data.data[0] || angular.copy(connectionModel);
-                  awsConnection.AwsRegion = _.words(awsConnection.AwsRegion, /[^,]+/g);
+                  var awsConnection = response.data.data[0] || angular.copy(connectionModel),
+                  regionsCode = _.words(awsConnection.AwsRegion, /[^,]+/g);
+
+                  awsConnection.AwsRegion = _.filter($ctrl.regions, function(r){
+                    return _.indexOf(regionsCode, r.Code) >= 0;
+                  });
+                 
                   $ctrl.aws = awsConnection;
                   //trigger bindings
                   if (typeof $ctrl.onLoadConnection === 'function') {
@@ -120,6 +130,26 @@
                 }).catch(function (error) {
                   $log.error('Error while fetching connection details', error);
                   usSpinnerService.stop('connectionView');
+                });
+            }
+
+            function deleteConnection(id){
+                ConfirmationPopup.confirm('Are sure you want to delete AWS connection?')
+                .then(function (result) {
+                  if (result) {
+                    usSpinnerService.spin('connectionView');
+                      CloudService
+                        .deleteAwsConnection(id)
+                        .then(function (response) {
+                          NotificationService.add('success', 'Connection has been deleted successfully.');
+                          $log.info('Connection has been deleted', response);
+                          $state.reload();
+                          usSpinnerService.stop('connectionView');
+                        }).catch(function (error) {
+                          $log.error('Error while deleting a connection', error);
+                          usSpinnerService.stop('connectionView');
+                        });
+                    }
                 });
             }
 
@@ -147,23 +177,24 @@
               $log.warn('Connection request', request);
               CloudService
                 .saveAwsConnection(request)
-                .then(function (respone) {
-                  successHandler(respone, request, $ctrl.aws);
+                .then(function (response) {
+                  $log.info('Connection details are saved', response);
+                  NotificationService.add('success', 'Connection details are saved successfully.');
+                  handler(response, request, $ctrl.aws);
                 })
                 .catch(function (error) {
                   $log.error('Error while saving conncetions detail', error);
-                  usSpinnerService.stop('connectionView');
+                  handler({}, request, $ctrl.aws);
                 });
             }
 
-            function successHandler(response, request, model) {
-              $log.info('Connection details are saved', response);
+            function handler(response, request, model) {
+              getAwsConnection();
               //get lambda functions when connection is saved
               if ($ctrl.view === 'modal') {
                 if (typeof $ctrl.modalInstance.close === 'function') {
                   $ctrl.modalInstance.close({ connection: model });
                 }
-                NotificationService.add('success', 'Connection details are saved successfully.');
               }
 
               if (typeof $ctrl.onSave === 'function') {

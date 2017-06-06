@@ -84,7 +84,7 @@
                         <li class="list-group-item" data-ng-repeat="function in zone track by $index">
                           <div  style="display: inline-block">
                             <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
-                            <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.__metadata.id})" data-ng-bind="function.FunctionName"></a>
+                            <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
                           </div>
                           <div class="pull-right">
                             <button type="button" class="btn btn-xs btn-default" data-ng-class="{'btn-success' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>

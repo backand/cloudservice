@@ -56,7 +56,7 @@
             function initialization() {
               // options to <users> Component
               $ctrl.options = {
-                view: 'lambdaLauncher',
+                view: 'launcher',
                 source: $state.params.source,
                 title: 'Registered Users'
               };
@@ -98,6 +98,8 @@
                   $log.info('Lambda functions loaded', response);
                   usSpinnerService.stop('loading');
                 }).catch(function (error) {
+                  $ctrl.lambdaFunctions = {};
+                  $ctrl.hasFunctions = false;
                   $log.error('Error while fetching Lambda functions', error);
                   usSpinnerService.stop('loading');
                 });
@@ -189,6 +191,7 @@
                   usSpinnerService.stop('loading');
                   NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
                   $rootScope.$broadcast('fetchTables');
+                  getLambdaFunctions();
                 }).catch(function (error) {
                   usSpinnerService.spin('loading');
                   $log.error('Error while updating function\'s status', error);

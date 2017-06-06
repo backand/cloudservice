@@ -25,12 +25,7 @@
       self.getLambdaFunctions = getLambdaFunctions;
       self.loadAwsRegion = loadAwsRegion;
       self.updateFunction = updateFunction;
-
-      /**
-       * Exposed bindable properties
-       */
-      self.appName = AppsService.currentApp.Name;
-
+      self.deleteAwsConnection = deleteAwsConnection;
 
       function loadAwsRegion() {
         var awsRegions = {
@@ -135,6 +130,21 @@
         });
       }
 
+       /**
+       * @name deleteAwsConnection
+       * @description delete aws connect
+       * 
+       * @param {object} id connection ID
+       * @returns promise
+       */
+      function deleteAwsConnection(id) {
+        return $http({
+          method: 'DELETE',
+          url: CONSTS.appUrl + '/1/objects/cloudServiceProvider/' + id,
+          headers: setHeaders()
+        });
+      }
+
       /**
        * @name getLambdaFunctions
        * @description get all available lambda functions of current user
@@ -153,7 +163,7 @@
       }
 
       function setHeaders() {
-        return { 'AppName': self.appName };
+        return { 'AppName': AppsService.currentApp.Name };
       }
 
 
