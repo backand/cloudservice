@@ -76,8 +76,8 @@
 
       </a>
     </li>
-    <li class="sub-functions-icons">
-      <a data-ui-sref="functions.externalFunctions" title="External Functions">
+    <li ng-class="{active: nav.state == 'functions.externalFunctions'}" class="sub-functions-icons">
+      <a ng-click="nav.showExternalFunction($event)" title="External Functions">
         <i class="glyphicon glyphicon-file"></i>
         <span>External Functions</span>
       </a>

@@ -34,13 +34,13 @@
                          ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
                   <ba-tooltip tooltip-text="Use the name in the request URL query string of the REST API"
                               tooltip-placement="right" class=""></ba-tooltip>
-                  <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">In system action the name
-                    cannot be modified.</span>
 
-                  <a ng-if="rules.action && !rules.newRuleForm.$pristine" href="" id="action-refresh"
+
+                  <a ng-if="rules.action" href="" id="action-refresh"
                      title="Refresh {{rules.mode.title}}" class="btn btn-sm" ng-click="rules.refresh()"><i
                     class="glyphicon glyphicon-refresh"></i></a>
-
+                  <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">The name
+                    cannot be modified.</span>
                   <div ng-messages="rules.newRuleForm.ruleName.$error">
                     <div ng-message="pattern" class="text-danger">Use only letters, numbers, space or underscore</div>
                   </div>

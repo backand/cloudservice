@@ -358,6 +358,10 @@
     self.newLambdaFunction = function ($event) {
       goToState($event, 'functions.newlambdafunctions');
     };
+    // goes to the external functions state from the sub-menu functions
+    self.showExternalFunction = function($event){
+      goToState($event, 'functions.externalFunctions');
+    };
     self.showFunction = function ($event, func) {
       var params = {
         functionId: func.__metadata.id

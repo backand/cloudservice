@@ -435,6 +435,9 @@
 
     function loadAction(data) {
       self.action = data.data;
+      if(self.action.workspaceID === null || !self.action.workspaceID){
+        self.action.workspaceID = 0;
+      }
       self.currentST = String(self.action.workspaceID);
       self.precedent = self.action.precedent || false;
 
@@ -448,6 +451,9 @@
           self.refreshTree();
         }
       }
+      // Patch, if the server doesn't return with a security template (workspace ID)
+      // give it the default security template (Public).
+
       self.clearTest();
     }
 
@@ -891,7 +897,7 @@
     var constRuleNames = ['newUserVerification', 'requestResetPassword', 'userApproval', 'beforeSocialSignup','backandAuthOverride','accessFilter','socialAuthOverride','ChangePasswordOverride'];
 
     self.isConstName = function (ruleName) {
-      return (getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1);
+      return ((getTableName() === 'backandUsers' && constRuleNames.indexOf(ruleName) > -1) || self.action.fileName);
     };
 
     $scope.modal.handleTabKey = function (e) {
@@ -1500,15 +1506,23 @@
     };
 
     self.refresh = function () {
-      ConfirmationPopup.confirm('Are you sure you want to reload? Unsaved changes will be discarded.')
-        .then(function (result) {
-          if (result) {
-            usSpinnerService.spin('loading');
-            self.isNewAction = false;
-            refreshAction(self.action);
-            init();
-          }
-        });
+      if(!self.newRuleForm.$pristine) {
+        ConfirmationPopup.confirm('Are you sure you want to reload? Unsaved changes will be discarded.')
+          .then(function (result) {
+            if (result) {
+              usSpinnerService.spin('loading');
+              self.isNewAction = false;
+              refreshAction(self.action);
+              init();
+            }
+          });
+      }
+      else {
+        usSpinnerService.spin('loading');
+        self.isNewAction = false;
+        refreshAction(self.action);
+        init();
+      }
     };
 
     function getInputParametersForm() {
@@ -1535,7 +1549,7 @@
       return self.test.result;
     }
 
-    self.namePattern = /^\w+[\w -]*$/;
+    self.namePattern = /^\w+[\w-]*$/;
     // list of parameters:
     // each parameter starts with letter or '_' and may contain also numbers
     // the list should start and end with parameters, delimited by ',', allowing spaces (not within a parameter)
