@@ -47,7 +47,7 @@
 
                 <li ng-repeat="rule in subitem.items" class="li-actions" >
                   <span  ng-click="rules.goToAction(rule.name)"
-                         ng-class="{active: rule.Id === rules.stateparam.actionId}"
+                         ng-class="{active: rule.Id == rules.stateparam.actionId}"
                          class="rule-name">
                   {{ ::rule.name}}</span>
                 </li>
