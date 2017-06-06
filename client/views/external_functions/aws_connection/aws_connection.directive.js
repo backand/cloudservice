@@ -72,7 +72,7 @@
                 lambdaFunctions: false
               };
               usSpinnerService.stop('connectionView');
-              //loadAwsRegion();
+              loadAwsRegion();
               getAwsConnection();
             }
 
@@ -89,6 +89,7 @@
                 .loadAwsRegion()
                 .then(function (response) {
                   $log.info('All regions', response.data);
+                  $ctrl.regions = response.data;
                   deferred.resolve(response.data);
                 });
               return deferred.promise;
@@ -106,8 +107,13 @@
               CloudService
                 .getAwsConnection()
                 .then(function (response) {
-                  var awsConnection = response.data.data[0] || angular.copy(connectionModel);
-                  awsConnection.AwsRegion = _.words(awsConnection.AwsRegion, /[^,]+/g);
+                  var awsConnection = response.data.data[0] || angular.copy(connectionModel),
+                  regionsCode = _.words(awsConnection.AwsRegion, /[^,]+/g);
+
+                  awsConnection.AwsRegion = _.filter($ctrl.regions, function(r){
+                    return _.indexOf(regionsCode, r.Code) >= 0;
+                  });
+                 
                   $ctrl.aws = awsConnection;
                   //trigger bindings
                   if (typeof $ctrl.onLoadConnection === 'function') {
@@ -157,6 +163,7 @@
             }
 
             function successHandler(response, request, model) {
+              getAwsConnection();
               $log.info('Connection details are saved', response);
               //get lambda functions when connection is saved
               if ($ctrl.view === 'modal') {
