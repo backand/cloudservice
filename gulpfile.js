@@ -292,10 +292,6 @@ gulp.task('local:dist', ['env:local', 'build:dist'], function() {
 });
 
 gulp.task('local', [], function() {
-  browserSync({
-    notify: false,
-    server: [config.dist]
-  });
 
   return backandSync.dist(config.dist, 'bklocal');
 
