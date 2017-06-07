@@ -190,6 +190,7 @@
                 .updateFunction(requestBody)
                 .then(function (response) {
                   func.selected = flag;
+                  func.functionId = response.data[0]['functionId'];
                   $log.info('Lambda function is selected with -', response);
                   usSpinnerService.stop('loading');
                   NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
