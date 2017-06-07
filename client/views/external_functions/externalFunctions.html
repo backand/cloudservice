@@ -26,9 +26,7 @@
 
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.guideline">
-                Lorem ipsum is a placeholder text (filler text) in publishing and graphic design. It is used to demonstrate the graphics
-                elements of a document, such as font, typography, and layout. ... Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Backand integrates with your AWS Lambda account using an IAM user with read and execute permissions for your Lambda functions. Once you provide the credentials, we will retrieve a list of Lambda functions from your AWS account, and allow you to import your AWS Lambda functions into Backand. These functions then work like any other custom function in Backand, allowing you to fully integrate your AWS Lambda functionality suite with your application's business logic. Consult the <a href="http://docs.backand.com/#the-backand-lambda-launcher" target="_blank">documentation</a> for more info
               </div>
             </div>
             <!-- ./guideline -->
@@ -53,7 +51,7 @@
                       <div class="social-provider-help">
                         <div class="social-provider-help-title ng-binding">Configuring Your AWS App</div>
                         To get started with AWS authentication, you need to first create a new AWS app
-                        <ba-help-link key="socialAndKeysFacebook" class="ng-isolate-scope"><a data-ng-href="" target="bkhelp" style="text-decoration: none;">- read more&nbsp;<i class="ba-icon-external-link"></i></a></ba-help-link>
+                        <ba-help-link key="socialAndKeysFacebook" class="ng-isolate-scope"><a data-ng-href="http://docs.backand.com/#the-backand-lambda-launcher" target="bkhelp" style="text-decoration: none;">- read more&nbsp;<i class="ba-icon-external-link"></i></a></ba-help-link>
                       </div>
                     </div>
                   </div>
@@ -75,6 +73,7 @@
                 </div>
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.lambdaFunctions">
+                <p data-ng-if="$ctrl.hasFunctions">Below are the Lambda functions available in your AWS account. You can execute these functions by pressing "Execute", or import them into your Backand application using the "Link" button. Imported functions can be called using the same functions endpoint in the Backand API as your other custom functions, and are subject to Backand Security.</p>
                 <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
                   <div class="row">
                     <div class="col-sm-12">
