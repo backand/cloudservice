@@ -1,3 +1,12 @@
+<div class="actions-bar row" data-ng-if="$ctrl.view === 'launcher'">
+  <div class="col-md-8">
+    <h3 class="page-name">Lambda Launcher Configuration</h3>
+  </div>
+  <div class="col-md-4 text-right">
+    <a data-ng-href="{{$ctrl.appConst.LAUNCHER_APP_URL}}/#/dash/app?appName={{$ctrl.appName}}&anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}" target="_blank" class="btn btn-primary">Open Launcher</a>
+  </div>
+</div>
+
 <!-- /admin mode -->
 <div class="row" ng-if="$ctrl.adminMode">
   <div class=" form-group col-sm-7">
