@@ -23,6 +23,13 @@
 
   </div>
 
+  <div class="form-group" data-ng-if="$ctrl.AnonymousToken">
+    <div class="col-sm-12">
+      <blockquote>
+        <a data-ng-href="{{$ctrl.appConst.LAUNCHER_APP_URL}}/#/dash/app?anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}" target="_blank"> {{$ctrl.appConst.LAUNCHER_APP_URL}}?anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}</a>
+      </blockquote>
+    </div>
+  </div>
   <div class="form-group">
     <div class="col-sm-7">
       <tags-input data-ng-model="$ctrl.invitedUsers" data-type="email"  class="theme-brand" placeholder="Email Address"  replace-spaces-with-dashes="false" ng-disabled="$ctrl.registrationRedirectUrl == '' && $ctrl.options.source !== 'launcher'" allowed-tags-pattern="{{$ctrl.regex}}"></tags-input>

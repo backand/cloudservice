@@ -25,6 +25,13 @@
      * Expose bindable methods
      */
     self.sendAppInvite = sendAppInvite;
+    self.decodeToken = decodeToken;
+
+    /**
+     * Expose bindable properties
+     */
+    self.appConst = APP_CONSTS;
+    
     /**
      * Init the users page
      */
@@ -53,7 +60,7 @@
       self.adminMode = self.options.adminMode ? true :  false;
 
       console.info('self.adminMode', self.adminMode);
-
+      setCurrentAppTokens();
       self.gridOptions.rowEditWaitInterval = 200;
       self.paginationOptions = {
         pageNumber: 1,
@@ -155,6 +162,14 @@
       self.inviteUsers(user.Email, 'user');
     }
 
+    function setCurrentAppTokens(){
+      AppsService.appKeys(self.appName).then(function(response){
+        self.tokens = response.data;
+        $log.info('Current App', response.data);
+      },function(err){
+        $log.error('Error while setting up current APP', err);
+      });
+    }
 
     self.changePassword = function (event, row) {
       //stop default action of an element
@@ -538,6 +553,14 @@
       $scope.cancel = function () {
         self.modalInstance.dismiss();
       };
+    }
+
+    function decodeToken(token){
+      if(!token){
+        return;
+      }
+
+      return $base64.encode(token);
     }
 
   }
