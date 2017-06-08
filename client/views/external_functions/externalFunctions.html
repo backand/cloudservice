@@ -85,14 +85,12 @@
                   "Execute", or import them into your Backand application using the "Link" button. Imported functions can
                   be called using the same functions endpoint in the Backand API as your other custom functions, and are
                   subject to Backand Security.</p>
-                <div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There are no lambda
-                  functions </div>
+                <div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There is no lambda function. </div>
                 <div class="slimScrollDiv panel-body panel-body-custom ui-tab-container ui-tab-vertical" data-ng-show="$ctrl.hasFunctions">
                   <tabset class="ui-tab">
                     <tab data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index" heading="{{key}}">
                       <div style="min-height: 250px" class="clearfix">
-                        <div class="alert alert-info" role="alert" data-ng-show="zone.length ===0"> There are no lambda
-                          functions </div>
+                        <div class="alert alert-info" role="alert" data-ng-show="zone.length ===0"> There is no lambda function. </div>
                         <ul class="list-group">
                           <li class="list-group-item" data-ng-repeat="function in zone track by $index">
                             <div class="meta-text" >
@@ -122,37 +120,10 @@
           </tab-heading>
           <div class="list-group list-group-with-tabs m-b-0">
             <div class="list-group-item">
-              <div class="list-group-item-header">
-                <div class="list-group-item-heading">Lambda Launcher Configuration</div>
-              </div>
-              <div class="list-group-item">
-                <div class="list-group-item-body">
-                  <div class="row col-sm-12">
-                    <a data-ng-href="{{$ctrl.launcherAppUrl}}" target="_blank" class="btn btn-primary">Open Lambda
-                      Launcher Application</a>
-                  </div>
-                </div>
-                <br/><br/>
-                <div class="list-group-item-body">
-                  <div>To invite users to the app just email the link below:</div>
-                  <div class="row col-sm-12">
-                    <div class="input-group">
-                      <input type="text" class="form-control" id="launcherapp"
-                             ng-readonly="true"
-                             ng-model="$ctrl.launcherAppUrl">
-                      <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" clip-copy="$ctrl.launcherAppUrl">Copy</button>
-                    </span>
-                    </div>
-                  </div>
-                </div>
+              <div class="list-group-item-body p-t-0">
+                <users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users>
               </div>
             </div>
-            <!--<div class="list-group-item">-->
-              <!--<div class="list-group-item-body">-->
-                <!--<users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users>-->
-              <!--</div>-->
-            <!--</div>-->
           </div>
         </tab>
         <!-- ./Lambda Launcher -->

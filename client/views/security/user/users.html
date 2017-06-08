@@ -1,4 +1,16 @@
-
+<div data-ng-if="$ctrl.view === 'launcher'">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>How it Works</h4>
+      <p>The Lambda Launcher gives you an easy-to-use interface for executing AWS Lambda functions that have been linked to
+        your application. Invite users to register for the Launcher below, then adjust the security settings in <a href="link-to-security-templates"> your application's security settings.</a>        When a user logs in, they will be able to execute the Lambda functions to which they have access by pressing the
+        "Execute" button.</p>
+      <p>
+        <a data-ng-href="{{$ctrl.appConst.LAUNCHER_APP_URL}}/#/dash/app?appName={{$ctrl.appName}}&anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}"
+          target="_blank" class="btn btn-success m-b-md">Open</a></p>
+    </div>
+  </div>
+</div>
 
 <!-- /admin mode -->
 <div class="row" ng-if="$ctrl.adminMode">
@@ -19,10 +31,20 @@
 <!-- /user mode -->
 <div class="row" ng-if="!$ctrl.adminMode">
   <div class=" form-group col-sm-7">
-    <label for="inviteUsersEmails">Invite users to access the application with role '{{$ctrl.defaultUserRole}}'.
-    If "Public App" is Off then this is the only way to add users to the app
-    <ba-help-link key="registeredUsers"></ba-help-link></label>
+    <p for="inviteUsersEmails">Invite users to access the application with role '{{$ctrl.defaultUserRole}}'. If "Public App" is Off then this is the
+      only way to add users to the app
+      <ba-help-link key="registeredUsers"></ba-help-link>
+    </p>
+  </div>
 
+  <!-- /app url -->
+  <div class="form-group" data-ng-if="$ctrl.view === 'launcher'">
+    <div class="col-sm-8">
+      <blockquote class="lead">
+        <a data-ng-href="{{$ctrl.appConst.LAUNCHER_APP_URL}}/#/dash/app?anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}"
+          target="_blank"> {{$ctrl.appConst.LAUNCHER_APP_URL}}?anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}</a>
+      </blockquote>
+    </div>
   </div>
   <!-- ./app url -->
   <div class="form-group">
