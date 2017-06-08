@@ -2,9 +2,9 @@
 (function  () {
 
   angular.module('backand')
-    .controller('AuthController', ['AuthService', 'SessionService', 'HttpBufferService', 'NotificationService', '$state', 'usSpinnerService', 'AuthLayoutService','$rootScope', AuthController]);
+    .controller('AuthController', ['AuthService', 'SessionService', 'HttpBufferService', 'NotificationService', '$state', 'usSpinnerService', 'AuthLayoutService','$rootScope','AppsService','DatabaseService','AnalyticsService','ModelService', AuthController]);
 
-  function AuthController(AuthService, SessionService, HttpBufferService, NotificationService, $state, usSpinnerService, AuthLayoutService, $rootScope) {
+  function AuthController(AuthService, SessionService, HttpBufferService, NotificationService, $state, usSpinnerService, AuthLayoutService, $rootScope, AppsService, DatabaseService, AnalyticsService, ModelService) {
     var self = this;
 
     self.flags = AuthService.flags;
@@ -44,7 +44,11 @@
       AuthService.socialLogin(social, isSignup, self.email, isSignup)
         .then(function (response) {
           var requestedState = SessionService.getRequestedState();
-          $state.go(requestedState.state || 'apps.index', requestedState.params);
+          if(isSignup && isLauncher()){
+            createNewApp();
+          } else {
+            $state.go(requestedState.state || 'apps.index', requestedState.params);
+          }
         })
         .catch(function (error) {
           self.flags.authenticating = false;
@@ -53,6 +57,52 @@
             NotificationService.add('error', error.data.error_description || error.data);
           }
         });
+    }
+
+    /**
+     * @ngdoc function
+     * @name createNewApp
+     * @description Creates default app for current user
+     *
+     * @returns void
+     */
+    function createNewApp() {
+      NotificationService.add('info', 'Creating new app...');
+      AppsService.add()
+          .then(function (data) {
+            //get appName from response
+            var appName = data.__metadata.appName;
+            //track event that app is created
+            AnalyticsService.track('CreatedApp', { appName: appName });
+            //create App database with defaultSchema
+            DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema(),2)
+                .success(function (data) {
+                  AnalyticsService.track('CreatedNewDB', { schema: ModelService.defaultSchema() });
+                  AnalyticsService.track('create app', { app: appName });
+                  AppsService.resetCurrentApp();
+                  AppsService
+                      .getApp(appName)
+                      .then(function () {
+                        var stateParams = { new: 1, appName: appName };
+                        if (isLauncher()) {
+                          stateParams['source'] = 'launcher';
+                        }
+                        $state.go('functions.externalFunctions', stateParams, { reload: true });
+                      });
+                });
+          });
+    }
+
+    /**
+     * @ngdoc function
+     * @name isLauncher
+     * @description checks if launcher = 1 param exists in URL
+     *
+     * @returns {boolean}
+     */
+    function isLauncher() {
+      var launcher = $state.params.launcher;
+      return (typeof launcher !== 'undefined') && (launcher == 1);
     }
 
   }

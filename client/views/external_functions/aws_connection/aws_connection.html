@@ -13,7 +13,7 @@
       data-ng-required="!$ctrl.aws.Id">
   </div>
   <div class="form-group">
-    <label for="aws-region" class="control-label">AWS Region</label>
+    <label for="aws-region" class="control-label">AWS Regions</label>
     <tags-input class="theme-green" placeholder="AWS Region" add-from-autocomplete-only="true" ng-model="$ctrl.aws.AwsRegion"
       display-property="Name" min-length="0" template="regions-template.html">
       <auto-complete source="$ctrl.loadAwsRegion($query)" load-on-focus="true" load-on-empty="true" min-length="0" load-on-down-arrow="true" template="regions-autocomplete-template.html"></auto-complete>
@@ -21,10 +21,11 @@
   </div>
 
   <div class="form-group">
-    <button type="submit" class="btn btn-primary btn-success" data-ng-disabled="$ctrl.awsForm.$invalid || $ctrl.aws.AwsRegion.length ==0">Link</button>
+    <button type="submit" class="btn btn-primary btn-success"
+            data-ng-disabled="$ctrl.awsForm.$invalid || $ctrl.aws.AwsRegion.length ==0">Connect</button>
     <button type="button" class="btn btn-link" data-ng-click="$ctrl.modalInstance.dismiss('cancel')" data-ng-if="$ctrl.view === 'modal'">Complete later</button>
 
-    <button type="button" class="btn btn-default" data-ng-if="$ctrl.view !== 'modal' && $ctrl.aws.Id" data-ng-click="$ctrl.deleteConnection($ctrl.aws.Id)"><i class="glyphicon glyphicon-trash"></i> Remove</button>
+    <button type="button" class="btn btn-default pull-right" data-ng-if="$ctrl.view !== 'modal' && $ctrl.aws.Id" data-ng-click="$ctrl.deleteConnection($ctrl.aws.Id)"><i class="glyphicon glyphicon-trash"></i> Remove</button>
   </div>
 </form>
 

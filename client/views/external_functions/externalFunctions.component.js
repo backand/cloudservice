@@ -30,7 +30,8 @@
           '$rootScope',
           'APP_CONSTS',
           'AppsService',
-          function ($log, usSpinnerService, CloudService, $modal, $state, modalService, NotificationService, $rootScope, APP_CONSTS, AppsService) {
+          'AnalyticsService',
+          function ($log, usSpinnerService, CloudService, $modal, $state, modalService, NotificationService, $rootScope, APP_CONSTS, AppsService, AnalyticsService) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
             /**
@@ -199,6 +200,10 @@
                   $log.info('Lambda function is selected with -', response);
                   usSpinnerService.stop('loading');
                   NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
+
+                  if(flag){
+                    AnalyticsService.track('LambdaFunctionSelected',{function: func.FunctionName});
+                  }
                   $rootScope.$broadcast('fetchTables');
                   getLambdaFunctions();
                 }).catch(function (error) {

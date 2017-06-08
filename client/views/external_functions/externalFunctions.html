@@ -52,9 +52,9 @@
                   <div class="col-md-5 col-md-offset-2">
                     <div class="social-provider-container">
                       <div class="social-provider-help">
-                        <div class="social-provider-help-title ng-binding">Configuring Your AWS App</div>
-                        To get started with AWS authentication, you need to first create a new AWS app
-                        <ba-help-link key="socialAndKeysFacebook" class="ng-isolate-scope"><a data-ng-href="http://docs.backand.com/#the-backand-lambda-launcher" target="bkhelp" style="text-decoration: none;">- read more&nbsp;<i class="ba-icon-external-link"></i></a></ba-help-link>
+                        <div class="social-provider-help-title ng-binding">Configuring AWS Lambda Security</div>
+                        To get started, you'll need to create an IAM Policy and User that Backand can use to connect with your AWS account
+                        <ba-help-link key="LambdaLauncher"></ba-help-link>
                       </div>
                     </div>
                   </div>
@@ -124,7 +124,7 @@
                     <h4>How it Works</h4>
                     <p>The Lambda Launcher gives you an easy-to-use interface for executing AWS Lambda functions that have been
                       linked to your application. Invite users to register for the Launcher below, then adjust the security
-                      settings in <a href="link-to-security-templates"> your application's security settings.</a> When a
+                      settings in <a ui-sref="security.auth"> your application's security settings.</a> When a
                       user logs in, they will be able to execute the Lambda functions to which they have access by pressing
                       the "Execute" button.</p>
                     <p>
