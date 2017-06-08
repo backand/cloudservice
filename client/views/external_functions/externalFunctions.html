@@ -16,7 +16,7 @@
             <!-- /guideline -->
             <div class="list-group-item">
               <div class="list-group-item-header">
-                <div class="list-group-item-heading">How it works</div>
+                <h4 class="list-group-item-heading">How it works</h4>
                 <div class="list-group-item-toolbar">
                   <span data-ng-click="$ctrl.sections.guideline = !$ctrl.sections.guideline" tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}"
                     tooltip-placement="top" tooltip-trigger="mouseenter">
@@ -33,7 +33,7 @@
             <!-- /aws connection -->
             <div class="list-group-item">
               <div class="list-group-item-header">
-                <div class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Connection Details</div>
+                <h4 class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Connection Details</h4>
                 <div class="list-group-item-toolbar">
                   <span data-ng-click="$ctrl.sections.awsConnection = !$ctrl.sections.awsConnection" tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}"
                     tooltip-placement="top" tooltip-trigger="mouseenter">
@@ -64,7 +64,7 @@
             <!-- /lambda functions -->
             <div class="list-group-item">
               <div class="list-group-item-header">
-                <div class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions <ba-tooltip tooltip-text="Refer to http://docs.backand.com for more information on this feature." tooltip-placement="top" ><i class="ti-info-alt"></i></ba-tooltip></div>
+                <h4 class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions <ba-tooltip tooltip-text="Refer to http://docs.backand.com for more information on this feature." tooltip-placement="top" ><i class="ti-info-alt"></i></ba-tooltip></h4>
                 <div class="list-group-item-toolbar">
                   <span data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions" tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}"
                     tooltip-placement="top" tooltip-trigger="mouseenter">
@@ -107,7 +107,7 @@
           </tab-heading>
           <div class="list-group list-group-with-tabs m-b-0">
             <div class="list-group-item">
-              <div class="list-group-item-body">
+              <div class="list-group-item-body p-t-0">
                 <users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users>
               </div>
             </div>
