@@ -15,10 +15,10 @@
           <div class="list-group list-group-with-tabs m-b-0">
             <!-- /guideline -->
             <div class="list-group-item">
-              <div class="list-group-item-header">
+              <div class="list-group-item-header" data-ng-click="$ctrl.sections.guideline = !$ctrl.sections.guideline">
                 <h4 class="list-group-item-heading">How it works</h4>
                 <div class="list-group-item-toolbar">
-                  <span data-ng-click="$ctrl.sections.guideline = !$ctrl.sections.guideline" tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}"
+                  <span  tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}"
                     tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.guideline, 'fa fa-plus': $ctrl.sections.guideline}"></i>
                   </span>
@@ -37,10 +37,10 @@
             <!-- ./guideline -->
             <!-- /aws connection -->
             <div class="list-group-item">
-              <div class="list-group-item-header">
+              <div class="list-group-item-header" data-ng-click="$ctrl.sections.awsConnection = !$ctrl.sections.awsConnection">
                 <h4 class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Connection Details</h4>
                 <div class="list-group-item-toolbar">
-                  <span data-ng-click="$ctrl.sections.awsConnection = !$ctrl.sections.awsConnection" tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}"
+                  <span  tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}"
                     tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.awsConnection, 'fa fa-plus': $ctrl.sections.awsConnection}"></i>
                   </span>
@@ -68,13 +68,13 @@
 
             <!-- /lambda functions -->
             <div class="list-group-item">
-              <div class="list-group-item-header">
+              <div class="list-group-item-header" data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions">
                 <h4 class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions
                   <ba-tooltip tooltip-text="Refer to http://docs.backand.com for more information on this feature."
                     tooltip-placement="top"><i class="ti-info-alt"></i></ba-tooltip>
                 </h4>
                 <div class="list-group-item-toolbar">
-                  <span data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions" tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}"
+                  <span d tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}"
                     tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.lambdaFunctions, 'fa fa-plus': $ctrl.sections.lambdaFunctions}"></i>
                   </span>
@@ -100,7 +100,7 @@
                               <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
                             </div>
                             <div class="meta-actions">
-                              <button type="button" class="btn btn-default" data-ng-class="{'btn-success' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
+                              <button type="button" class="btn" data-ng-class="{'btn-warning' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
                               <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success" data-ng-if="function.selected" target="_blank">Test</a>
                             </div>
                           </li>
