@@ -26,7 +26,12 @@
 
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.guideline">
-                Backand integrates with your AWS Lambda account using an IAM user with read and execute permissions for your Lambda functions. Once you provide the credentials, we will retrieve a list of Lambda functions from your AWS account, and allow you to import your AWS Lambda functions into Backand. These functions then work like any other custom function in Backand, allowing you to fully integrate your AWS Lambda functionality suite with your application's business logic. Consult the <a href="http://docs.backand.com/#the-backand-lambda-launcher" target="_blank">documentation</a> for more info
+                Backand integrates with your AWS Lambda account using an IAM user with read and execute permissions for your Lambda functions.
+                Once you provide the credentials, we will retrieve a list of Lambda functions from your AWS account, and
+                allow you to import your AWS Lambda functions into Backand. These functions then work like any other custom
+                function in Backand, allowing you to fully integrate your AWS Lambda functionality suite with your application's
+                business logic. Consult the <a href="http://docs.backand.com/#the-backand-lambda-launcher"
+                  target="_blank">documentation</a> for more info
               </div>
             </div>
             <!-- ./guideline -->
@@ -64,7 +69,10 @@
             <!-- /lambda functions -->
             <div class="list-group-item">
               <div class="list-group-item-header">
-                <h4 class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions <ba-tooltip tooltip-text="Refer to http://docs.backand.com for more information on this feature." tooltip-placement="top" ><i class="ti-info-alt"></i></ba-tooltip></h4>
+                <h4 class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions
+                  <ba-tooltip tooltip-text="Refer to http://docs.backand.com for more information on this feature."
+                    tooltip-placement="top"><i class="ti-info-alt"></i></ba-tooltip>
+                </h4>
                 <div class="list-group-item-toolbar">
                   <span data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions" tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}"
                     tooltip-placement="top" tooltip-trigger="mouseenter">
@@ -73,27 +81,32 @@
                 </div>
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.lambdaFunctions">
-                <p data-ng-if="$ctrl.hasFunctions">Below are the Lambda functions available in your AWS account. You can execute these functions by pressing "Execute", or import them into your Backand application using the "Link" button. Imported functions can be called using the same functions endpoint in the Backand API as your other custom functions, and are subject to Backand Security.</p>
-                <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There is no lambda function. </div>
-                      <ul class="list-group" data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index">
-                        <li class="list-group-item active brand" data-ng-bind="key"></li>
-                        <li class="list-group-item" data-ng-repeat="function in zone track by $index">
-                          <div  style="display: inline-block">
-                            <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
-                            <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
-                          </div>
-                          <div class="pull-right">
-                            <button type="button" class="btn btn-xs btn-default" data-ng-class="{'btn-success' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
-                            <button type="button" class="btn btn-xs btn-primary btn-success">Excecute</button>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </form>
+                <p data-ng-if="$ctrl.hasFunctions">Below are the Lambda functions available in your AWS account. You can execute these functions by pressing
+                  "Execute", or import them into your Backand application using the "Link" button. Imported functions can
+                  be called using the same functions endpoint in the Backand API as your other custom functions, and are
+                  subject to Backand Security.</p>
+                <div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There is no lambda function. </div>
+                <div class="slimScrollDiv panel-body panel-body-custom ui-tab-container ui-tab-vertical" data-ng-show="$ctrl.hasFunctions">
+                  <tabset class="ui-tab">
+                    <tab data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index" heading="{{key}}">
+                      <div style="min-height: 250px" class="clearfix">
+                        <div class="alert alert-info" role="alert" data-ng-show="zone.length ===0"> There is no lambda function. </div>
+                        <ul class="list-group">
+                          <li class="list-group-item" data-ng-repeat="function in zone track by $index">
+                            <div class="meta-text" >
+                              <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
+                              <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
+                            </div>
+                            <div class="meta-actions">
+                              <button type="button" class="btn btn-default" data-ng-class="{'btn-success' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
+                              <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success">Excecute</a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </tab>
+                  </tabset>
+                </div>
               </div>
             </div>
             <!-- ./lambda functions -->
