@@ -3,7 +3,7 @@
     <div class="panel-heading p-l-0">
       <strong> External Functions </strong>
     </div>
-    <div class="panel-body p-a-0">
+    <div class="panel-body p-a-0 ui-tab-container ui-tab-horizontal">
       <div us-spinner="" spinner-key="loading" spinner-start-active></div>
       <tabset active="$ctrl.activeTab">
         <!-- /External Functions -->
@@ -12,14 +12,13 @@
             External Functions
           </tab-heading>
 
-          <div class="list-group list-group-with-tabs m-b-0">
+          <div class="list-group list-group-with-tabs m-b-0  p-a-0" style="border:0 none;">
             <!-- /guideline -->
             <div class="list-group-item">
               <div class="list-group-item-header" data-ng-click="$ctrl.sections.guideline = !$ctrl.sections.guideline">
                 <h4 class="list-group-item-heading">How it works</h4>
                 <div class="list-group-item-toolbar">
-                  <span  tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}"
-                    tooltip-placement="top" tooltip-trigger="mouseenter">
+                  <span tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.guideline, 'fa fa-plus': $ctrl.sections.guideline}"></i>
                   </span>
                 </div>
@@ -40,8 +39,7 @@
               <div class="list-group-item-header" data-ng-click="$ctrl.sections.awsConnection = !$ctrl.sections.awsConnection">
                 <h4 class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Connection Details</h4>
                 <div class="list-group-item-toolbar">
-                  <span  tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}"
-                    tooltip-placement="top" tooltip-trigger="mouseenter">
+                  <span tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.awsConnection, 'fa fa-plus': $ctrl.sections.awsConnection}"></i>
                   </span>
                 </div>
@@ -70,12 +68,10 @@
             <div class="list-group-item">
               <div class="list-group-item-header" data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions">
                 <h4 class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions
-                  <ba-tooltip tooltip-text="Refer to http://docs.backand.com for more information on this feature."
-                    tooltip-placement="top"><i class="ti-info-alt"></i></ba-tooltip>
+                  <ba-tooltip tooltip-text="Refer to http://docs.backand.com for more information on this feature." tooltip-placement="top"><i class="ti-info-alt"></i></ba-tooltip>
                 </h4>
                 <div class="list-group-item-toolbar">
-                  <span d tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}"
-                    tooltip-placement="top" tooltip-trigger="mouseenter">
+                  <span d tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.lambdaFunctions, 'fa fa-plus': $ctrl.sections.lambdaFunctions}"></i>
                   </span>
                 </div>
@@ -93,13 +89,14 @@
                         <div class="alert alert-info" role="alert" data-ng-show="zone.length ===0"> There is no lambda function. </div>
                         <ul class="list-group">
                           <li class="list-group-item" data-ng-repeat="function in zone track by $index">
-                            <div class="meta-text" >
+                            <div class="meta-text">
                               <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
                               <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
                             </div>
                             <div class="meta-actions">
                               <button type="button" class="btn" data-ng-class="{'btn-warning' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
-                              <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success" data-ng-if="function.selected" target="_blank">Test</a>
+                              <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success"
+                                data-ng-if="function.selected" target="_blank">Test</a>
                             </div>
                           </li>
                         </ul>
@@ -119,9 +116,34 @@
             Lambda Launcher
           </tab-heading>
           <div class="list-group list-group-with-tabs m-b-0">
-            <div class="list-group-item">
+            <div class="list-group-item" style="border:0 none;">
               <div class="list-group-item-body p-t-0">
-                <users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users>
+                <!-- /static content, @todo will be removed when invite is ready -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>How it Works</h4>
+                    <p>The Lambda Launcher gives you an easy-to-use interface for executing AWS Lambda functions that have been
+                      linked to your application. Invite users to register for the Launcher below, then adjust the security
+                      settings in <a href="link-to-security-templates"> your application's security settings.</a> When a
+                      user logs in, they will be able to execute the Lambda functions to which they have access by pressing
+                      the "Execute" button.</p>
+                    <p>
+                      <a data-ng-href="{{$ctrl.launcherAppUrl}}" target="_blank" class="btn btn-success m-b-md">Open</a></p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12 col-sm-8 col-lg-8">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="launcherapp" ng-readonly="true" ng-model="$ctrl.launcherAppUrl">
+                      <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" clip-copy="$ctrl.launcherAppUrl">Copy</button>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- ./static content, @todo will be removed when invite is ready -->
+                <!-- users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users -->
               </div>
             </div>
           </div>

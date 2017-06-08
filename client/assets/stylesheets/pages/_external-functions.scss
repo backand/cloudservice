@@ -1,18 +1,12 @@
 .page-external-functions {
-    .nav {
-        &.nav-tabs {
-            >li {
-                &.active {
-                    border-bottom: none;
-                }
-            }
-        }
-    }
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    border: 0 none !important;
+  }
     .tab-content {
+      padding: 0;
         .list-group {
             &.list-group-with-tabs {
                 >.list-group-item {
-                    border: 1px solid #dddddd;
                     &:first-child {
                         border-top-right-radius: 0;
                         border-top-left-radius: 0;
