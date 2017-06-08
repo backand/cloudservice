@@ -24,18 +24,19 @@
     <ba-help-link key="registeredUsers"></ba-help-link></label>
 
   </div>
+  <!-- ./app url -->
   <div class="form-group">
     <div class="col-sm-7">
-      <tags-input data-ng-model="$ctrl.invitedUsers" data-type="email"  class="theme-brand" placeholder="Email Address"  replace-spaces-with-dashes="false" ng-disabled="$ctrl.registrationRedirectUrl == '' && $ctrl.options.source !== 'launcher'" allowed-tags-pattern="{{$ctrl.regex}}"></tags-input>
-      <span class="help-text small">Email Address -  Use comma for multiple users</span>
+      <tags-input data-ng-model="$ctrl.invitedUsers" data-type="email" class="theme-brand" placeholder="Email Address" replace-spaces-with-dashes="false"
+        ng-disabled="$ctrl.registrationRedirectUrl == '' && $ctrl.options.source !== 'launcher'" allowed-tags-pattern="{{$ctrl.regex}}"></tags-input>
+      <span class="help-text">Email Address -  Use comma for multiple users</span>
     </div>
     <div class="col-sm-3">
-      <button type="button" ng-disabled="$ctrl.invitedUsers.length ===0" id="addUserInvites" class="btn btn-success"
-        ng-click="$ctrl.inviteUsers()">Invite User(s)
+      <button type="button" ng-disabled="$ctrl.invitedUsers.length ===0" id="addUserInvites" class="btn btn-success" ng-click="$ctrl.inviteUsers()">Invite User(s)
           </button>
     </div>
   </div>
-  <div class="form-group" data-ng-if="$ctrl.view === 'launcher' ||  $ctrl.options.source === 'launcher'">
+  <div class="form-group ng-hide" data-ng-if="$ctrl.view === 'launcher' ||  $ctrl.options.source === 'launcher'">
     <div class="col-sm-12">
       <div class="checkbox">
         <label>
@@ -56,9 +57,10 @@
 
 <div class="actions-bar row">
   <div class="col-md-8">
-    <h3 class="page-name">{{$ctrl.options.title}}</h3>
-    <h4 class="page-description">Manage your {{$ctrl.options.title}} here. To update user's details double click in the cell
-    </h4>
+    <h4 class="page-name">{{$ctrl.options.title}}</h4>
+    <p class="page-description" data-ng-if="$ctrl.view !== 'launcher'">Manage your {{$ctrl.options.title}} here. To update user's details double click in the cell</p>
+    <p data-ng-if="$ctrl.view === 'launcher'">Use the interface below to manage user access to the Lambda Launcher tool. Users with access will be required to log
+      in prior to using the Lambda Launcher.</p>
   </div>
 </div>
 <div class="row">

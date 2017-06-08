@@ -22,4 +22,22 @@
             }
         }
     }
+    .row {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+}
+
+.list-group-item {
+    .meta-text {
+        display: inline-block;
+    }
+    .meta-actions {
+        margin-bottom: 15px;
+        clear: right;
+        float: none !important;
+        position: absolute;
+        right: 15px;
+        top: 8px;
+    }
 }
