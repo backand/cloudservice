@@ -99,7 +99,7 @@
                             </div>
                             <div class="meta-actions">
                               <button type="button" class="btn btn-default" data-ng-class="{'btn-success' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
-                              <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success">Excecute</a>
+                              <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success" data-ng-if="function.selected" target="_blank">Test</a>
                             </div>
                           </li>
                         </ul>
