@@ -45,6 +45,7 @@
         .then(function (response) {
           var requestedState = SessionService.getRequestedState();
           if(isSignup && isLauncher()){
+            AnalyticsService.track('SignupLauncher');
             createNewApp();
           } else {
             $state.go(requestedState.state || 'apps.index', requestedState.params);
