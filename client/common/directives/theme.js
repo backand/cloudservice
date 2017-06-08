@@ -25,7 +25,7 @@
     function() {
       return {
         restrict: 'A',
-        link: function(scope, ele, attrs) {
+        link: function($scope, ele, attrs, $state) {
           var $a, $aRest, $app, $lists, $listsRest, $nav, $window, Timer, prevWidth, updateClass;
           $window = $(window);
           $lists = ele.find('ul').parent('li');
@@ -42,8 +42,23 @@
             }
             $this = $(this);
             $parent = $this.parent('li');
+            var $chevronRight =  $parent.find('.glyphicon-chevron-right');
             $lists.not($parent).removeClass('open').find('ul').slideUp();
             $parent.toggleClass('open').find('ul').stop().slideToggle();
+
+            if(!$parent.hasClass('open') && $parent.find('.active').length !== 0){
+              $parent.addClass('active');
+            }
+            else{
+              $parent.removeClass('active');
+            }
+
+            if($chevronRight.length !==0){
+              $chevronRight.removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
+            }
+            else{
+              $parent.find('.glyphicon-chevron-down').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
+            }
             event.preventDefault();
           });
 
@@ -51,10 +66,12 @@
             $lists.removeClass('open').find('ul').slideUp();
           });
 
-          scope.$on('nav:reset', function(event) {
+          $scope.$on('nav:reset', function(event) {
             $lists.removeClass('open').find('ul').slideUp();
           });
-
+          $scope.$on('toggle-active', function(){
+            $lists.removeClass('active');
+          });
           Timer = void 0;
           prevWidth = $window.width();
 

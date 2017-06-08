@@ -50,6 +50,9 @@
           break;
       }
     };
+    $scope.$on('new-app-redirect', function(){
+      self.showNewApp = true;
+    });
     self.addApp = function () {
       self.loading = true;
       self.appName = angular.lowercase(self.appName);
@@ -64,6 +67,7 @@
 
       AppsService.add(self.appName, self.appTitle)
         .then(function (data) {
+          stopRefresh();
           createDB(self.appName, self.appType);
         },
         function (err) {

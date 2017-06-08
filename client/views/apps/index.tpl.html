@@ -6,28 +6,22 @@
       You can also read our quick start resources
     </div>
   </div>
-  <div class="row apps-jumbo-sections">
-    <div class="col-xs-4 col-sm-4">
-      <div class="apps-jumbo-section-wrapper"
-            ng-click="index.goToGettingStarted('docs.platform_select_existing-open')">
-        <i class="sprite-main-page sprite-icon-getting-started"></i>
-        <div class="apps-jumbo-section-title" analytics-wrapper target="gettingStarted">Getting started guide</div>
-      </div>
+    <div class="apps-jumbo-sections">
+    <div class="apps-jumbo-section-wrapper"
+         ng-click="index.goToGettingStarted('docs.platform_select_existing-open')">
+      <i class="sprite-main-page sprite-icon-getting-started"></i>
+      <div class="apps-jumbo-section-title" analytics-wrapper target="gettingStarted">Getting started guide</div>
     </div>
     <div class="jumbo-border"></div>
-    <div class="col-xs-4 col-sm-4">
-      <div class="apps-jumbo-section-wrapper"
-           ng-click="index.goToGettingStarted('docs.platform_select_kickstart-open')">
-        <i class="sprite-main-page sprite-icon-tutorials"></i>
-        <div class="apps-jumbo-section-title" analytics-wrapper target="ionicDocs">Existing App Tutorials</div>
-      </div>
+    <div class="apps-jumbo-section-wrapper"
+         ng-click="index.goToGettingStarted('docs.platform_select_kickstart-open')">
+      <i class="sprite-main-page sprite-icon-tutorials"></i>
+      <div class="apps-jumbo-section-title" analytics-wrapper target="ionicDocs">Existing App Tutorials</div>
     </div>
     <div class="jumbo-border"></div>
-    <div class="col-xs-4 col-sm-4">
-      <div class="apps-jumbo-section-wrapper" ng-click="index.goToLocation('http://docs.backand.com')">
-        <i class="sprite-main-page sprite-icon-docs"></i>
-        <div class="apps-jumbo-section-title" analytics-wrapper target="docs">Documentation</div>
-      </div>
+    <div class="apps-jumbo-section-wrapper" ng-click="index.goToLocation('http://docs.backand.com')">
+      <i class="sprite-main-page sprite-icon-docs"></i>
+      <div class="apps-jumbo-section-title" analytics-wrapper target="docs">Documentation</div>
     </div>
   </div>
 </div>
@@ -56,7 +50,7 @@
   </div>
 </div>
 <div class="apps-container rounded"
- ng-class="index.showJumbo == false ? 'without' : ''">
+     ng-class="index.showJumbo == false ? 'without' : ''">
 
   <div class="row header justify-content-between"
        ng-if="index.showJumbo">
@@ -113,19 +107,22 @@
           <span>CHOOSE YOUR FOCUS</span>
           <div class="row">
             <div ng-click="index.changeAppType('serverless')" ng-class="index.appType == 1 ? 'active' : ''"
-                 class="app-type-container col-md-4">
+                 class="app-type-container col-md-4"
+            tooltip="Choose the focus of your application. This will set your application dashboard's default landing page.">
               <div ng-if="index.appType == 1" class="glyphicon glyphicon-ok"></div>
               <i class="sprite-main-page sprite-icon-small-serverlesss"></i>
               <p>Database</p>
             </div>
             <div ng-click="index.changeAppType('function')" ng-class="index.appType == 2 ? 'active' : '' "
-                 class="app-type-container col-md-4">
+                 class="app-type-container col-md-4"
+                 tooltip="Choose the focus of your application. This will set your application dashboard's default landing page.">
               <div ng-if="index.appType == 2" class="glyphicon glyphicon-ok"></div>
               <i class="sprite-main-page sprite-icon-small-faas"></i>
               <p>Functions and Integrations</p>
             </div>
             <div ng-click="index.changeAppType('security')" ng-class="index.appType == 3 ? 'active' : '' "
-                 class="app-type-container col-md-4">
+                 class="app-type-container col-md-4"
+                 tooltip="Choose the focus of your application. This will set your application dashboard's default landing page.">
               <div ng-if="index.appType== 3" class="glyphicon glyphicon-ok"></div>
               <i class="sprite-main-page sprite-icon-small-security"></i>
               <p>Security</p>
@@ -154,7 +151,8 @@
           <p>{{ ::app.Title}}</p>
         </div>
       </div>
-      <div us-spinner="{color: 'black'}" spinner-key="loading-manage-{{ ::app.Name}}" spinner-start-active style="position:relative; left:50px;" ></div>
+      <div us-spinner="{color: 'black'}" spinner-key="loading-manage-{{ ::app.Name}}" spinner-start-active
+           style="position:relative; left:50px;"></div>
     </div>
 
     <div class="app-button col-md-5">

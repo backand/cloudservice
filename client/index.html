@@ -18,7 +18,6 @@
   <link rel="stylesheet" type='text/css' href="assets/stylesheets/font-awesome.min.css">
   <link rel="stylesheet" type='text/css' href="assets/stylesheets/menu-fonts.css">
   <link rel="stylesheet" type="text/css" href="assets/stylesheets/fontello.css">
-  <link rel="stylesheet" type="text/css" href="tmp/main.css" />
   <link rel="stylesheet" type="text/css" href="vendor/AngularJS-Toaster/toaster.css" />
   <link rel="stylesheet" type="text/css" href="vendor/angular-xeditable/dist/css/xeditable.css" >
   <link rel="stylesheet" type="text/css" href="vendor/ladda/dist/ladda-themeless.min.css">
@@ -26,7 +25,10 @@
   <link rel="stylesheet" type="text/css" href="vendor/angular-ui-tree/dist/angular-ui-tree.min.css"/>
   <link rel="stylesheet" type="text/css" href="vendor/angular-tree-control/css/tree-control.css">
   <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/min/perfect-scrollbar.min.css" />
+  <link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.min.css" />
   <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans'>
+  <link rel="stylesheet" type="text/css" href="tmp/main.css" />
   <!-- endbuild -->
 
   <!--<script type="text/javascript">-->
@@ -100,9 +102,11 @@
   <script type="text/javascript" src="vendor/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
   <script type="text/javascript" src="vendor/ng-file-upload/ng-file-upload-all.js"></script>
   <script type="text/javascript" src="vendor/socket.io-client/dist/socket.io.js"></script>
+  <script type="text/javascript" src="vendor/ng-tags-input/ng-tags-input.js"></script>
   <!-- endbuild -->
 
   <!-- build:js assets/js/main.js -->
+  <script type="text/javascript" src="common/plugins/base64.js"></script>
   <script type="text/javascript" src="app.js"></script>
   <script type="text/javascript" src="common/services/config.js"></script>
   <script type="text/javascript" src="common/services/auth_layout_service.js"></script>
@@ -148,6 +152,7 @@
   <script type="text/javascript" src="common/services/platforms_service.js"></script>
   <script type="text/javascript" src="common/services/starter_app_service.js"></script>
   <script type="text/javascript" src="common/services/kickstart_service.js"></script>
+  <script type="text/javascript" src="common/services/cloud_service.js"></script>
 
   <script type="text/javascript" src="common/data_models/config.js"></script>
   <script type="text/javascript" src="common/data_models/db_data_model.js"></script>
@@ -156,7 +161,13 @@
   <script type="text/javascript" src="common/functions/stringify_http.js"></script>
 
   <script type="text/javascript" src="common/modals/config.js"></script>
+  <script type="text/javascript" src="common/modals/modal.service.js"></script>
   <script type="text/javascript" src="common/modals/confirm_update/confirm_update.js"></script>
+  <script type="text/javascript" src="common/modals/demo_app/demo_app.js"></script>
+  <script type="text/javascript" src="common/modals/aws_modal/aws_modal.js"></script>
+  
+  <script type="text/javascript" src="common/constants/config.js"></script>
+  <script type="text/javascript" src="common/constants/constants.js"></script>
 
   <script type="text/javascript" src="config/routes.js"></script>
   <script type="text/javascript" src="config/consts.js"></script>
@@ -237,6 +248,8 @@
   <script type="text/javascript" src="views/security/user/users.js"></script>
   <script type="text/javascript" src="views/security/user/change_user_password.js"></script>
   <script type="text/javascript" src="views/security/user/get_user_token.js"></script>
+  <script type="text/javascript" src="views/security/user/registered-users.controller.js"></script>
+  <script type="text/javascript" src="views/security/user/team.controller.js"></script>
   <script type="text/javascript" src="views/security/workspace/workspace.js"></script>
   <script type="text/javascript" src="views/security/auth/auth.js"></script>
   <script type="text/javascript" src="views/security/actions/actions.js"></script>
@@ -257,6 +270,10 @@
 
   <script type="text/javascript" src="views/cron_jobs/config.js"></script>
   <script type="text/javascript" src="views/cron_jobs/job.js"></script>
+
+  <script type="text/javascript" src="views/external_functions/config.js"></script>
+  <script type="text/javascript" src="views/external_functions/externalFunctions.component.js"></script>
+  <script type="text/javascript" src="views/external_functions/aws_connection/aws_connection.directive.js"></script>
 
   <script type="text/javascript" src="common/directives/config.js"></script>
   <script type="text/javascript" src="common/directives/auth_landing.js"></script>

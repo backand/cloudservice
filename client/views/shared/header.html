@@ -68,6 +68,34 @@
             </span>
           </a>
         </li>
+        <li class="help-dropdown">
+          <a ng-click="header.toggleHelpDropdown($event)"
+             href="" class="dropdown-toggle header-item" data-toggle="dropdown">
+                <span>
+                    <i class="ti-help"></i>
+                </span>
+          </a>
+          <ul ng-show="header.showHelpDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
+            <li>
+              <a target="_blank" href="http://docs.backand.com">
+                <i class="ti-agenda"></i>
+                <span>Backand Documentation</span>
+              </a>
+            </li>
+            <li>
+              <a href="" ng-click="header.openVideoModal()">
+                <i class="ti-video-clapper"></i>
+                <span>Video Tutorials</span>
+              </a>
+            </li>
+            <li>
+              <a href="" ng-click="header.toggleIntercom()">
+                <i class="ti-comment-alt"></i>
+                <span>{{header.showIntercomLabel}}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="dropdown text-normal nav-profile">
           <a ng-click="header.toggleUserDropdown($event)"
              href="" class="dropdown-toggle header-item" data-toggle="dropdown">
@@ -103,34 +131,7 @@
             </li>
           </ul>
         </li>
-        <li class="help-dropdown">
-          <a ng-click="header.toggleHelpDropdown($event)"
-             href="" class="dropdown-toggle header-item" data-toggle="dropdown">
-                <span>
-                    <i class="ti-help"></i>
-                </span>
-          </a>
-          <ul ng-show="header.showHelpDropdown" class="dropdown-menu with-arrow hovering-menu pull-right">
-            <li>
-              <a target="_blank" href="http://docs.backand.com">
-                <i class="ti-agenda"></i>
-                <span>Backand Documentation</span>
-              </a>
-            </li>
-            <li>
-              <a href="" ng-click="header.openVideoModal()">
-                <i class="ti-video-clapper"></i>
-                <span>Video Tutorials</span>
-              </a>
-            </li>
-            <li>
-              <a href="" ng-click="header.toggleIntercom()">
-                <i class="ti-comment-alt"></i>
-                <span>{{header.showIntercomLabel}}</span>
-              </a>
-            </li>
-          </ul>
-        </li>
+
       </ul>
     </div>
 

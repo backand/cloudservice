@@ -19,7 +19,7 @@ var minifyCSS = require('gulp-minify-css');
 var rsync  = require('gulp-rsync');
 var confirm = require('gulp-confirm');
 var _ = require('lodash');
-var backandSync = require('backand-hosting-s3');
+var backandSync = require('./node_modules/backand/lib/api/backand-sync-s3');
 
 
 /* jshint camelcase:false*/
@@ -281,10 +281,17 @@ gulp.task('dev:dist', ['env:dev', 'build:dist'], function() {
 
 //run the local in the dist folder
 gulp.task('local:dist', ['env:local', 'build:dist'], function() {
-  browserSync({
-    notify: false,
-    server: [config.dist]
-  });
+  // browserSync({
+  //   notify: false,
+  //   server: [config.dist]
+  // });
+
+  return backandSync.dist(config.dist, 'bklocal');
+
+  //backand sync --app bklocal --master 2021e4b3-50e1-4e24-8ff0-f512e13b6e51 --user ff46366b-840f-11e6-8eff-0e00ae4d21e3 --folder /Users/itay/dev/cloudservice-baas/build/dist
+});
+
+gulp.task('local', [], function() {
 
   return backandSync.dist(config.dist, 'bklocal');
 

@@ -145,6 +145,7 @@
 
     self.getTestUrl =  function(rule, test, actionType, tableName, debug, fromGetHttp, requestMode) {
       var onDemand = actionType === 'On Demand';
+      var properties;
       var parameters = angular.copy(test.parametersToSend);
       if (debug) {
         parameters['$$debug$$'] = true;
@@ -163,6 +164,13 @@
         self.tableRuleUrlFunction +
         //tableName + '/' +
         rowId;
+        if(debug === true) {
+          properties = rule.category + '/' + rule.name + '?' +
+            (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : '')
+        }
+        else{
+          properties = 'general/' + rule.name;
+        }
       }
       else{
         var uri = CONSTS.appUrl +
@@ -172,13 +180,11 @@
         rowId;
       }
 
-      if (fromGetHttp && !debug) {
+      if (fromGetHttp && !debug && !requestMode.includes('function')) {
         return encodeURI(uri);
       }
       if(requestMode.includes("function")){
-        return encodeURI(uri +
-        rule.category + '/' + rule.name + '?' +
-        (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
+        return encodeURI(uri + properties);
       }
       else{
         return encodeURI(uri +
@@ -187,7 +193,7 @@
         ((onDemand && !_.isEmpty(parameters)) ? '&' : '') +
         (!_.isEmpty(parameters) ? 'parameters=' + JSON.stringify(parameters) : ''));
       }
-      
+
     };
 
     self.testRule = function (rule, test, actionType, tableName, rowData, debug, requestMode) {
@@ -229,7 +235,7 @@
         url : self.getTestUrl(rule, test, actionType, tableName, debug, true, requestMode)
       };
       http.headers = { AppName: self.appName };
-      if(!debug && actionType == 'On Demand'){
+      if(!debug && actionType == 'On Demand' && !requestMode.includes('function')){
         http.params = {
           name: rule.name,
           parameters: test.parametersToSend

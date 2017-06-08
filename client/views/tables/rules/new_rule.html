@@ -34,13 +34,13 @@
                          ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
                   <ba-tooltip tooltip-text="Use the name in the request URL query string of the REST API"
                               tooltip-placement="right" class=""></ba-tooltip>
-                  <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">In system action the name
-                    cannot be modified.</span>
 
-                  <a ng-if="rules.action && !rules.newRuleForm.$pristine" href="" id="action-refresh"
+
+                  <a ng-if="rules.action" href="" id="action-refresh"
                      title="Refresh {{rules.mode.title}}" class="btn btn-sm" ng-click="rules.refresh()"><i
                     class="glyphicon glyphicon-refresh"></i></a>
-
+                  <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">The name
+                    cannot be modified.</span>
                   <div ng-messages="rules.newRuleForm.ruleName.$error">
                     <div ng-message="pattern" class="text-danger">Use only letters, numbers, space or underscore</div>
                   </div>
@@ -54,7 +54,7 @@
                      class="pull-right btn btn-edit btn-xs with-margin"
                      ng-click="rules.toggleTestForm()"
                      value="{{'Test ' + rules.mode.title}}">
-              <input type="button" ng-show="rules.allowEditAction() && !rules.isNodeJS"
+              <input type="button" ng-show="rules.allowEditAction()"
                      ng-click="rules.editAction()"
                      class="btn btn-primary btn-validate pull-right with-margin"
                      value="Edit {{rules.mode.title}}">
@@ -64,14 +64,15 @@
                 <input type="button"
                        ng-if="!rules.mode.name.includes('function')"
                        ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
-                       style="padding-left: 35px;"
+                       style="padding-left: 35px !important;"
                        class="btn btn-edit btn-default pull-right with-margin"
                        value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel' }}">
 
                 <button ng-disabled="rules.newRuleForm.$invalid"
                         class="btn btn-validate pull-right with-margin"
                         ladda="rules.saving" data-style="expand-right"
-                        ng-show="!rules.isNodeJS">Save
+                        ng-if="rules.currentState !== 'functions.newlambdafunctions'">
+                  Save
                 </button>
                 <input type="button" ng-if="false"
                        ng-click="rules.saveActionTemplate()"
@@ -150,7 +151,42 @@
                 </div>
               </div>
             </div>
-
+            <div class="form-group" ng-if="rules.editMode && (rules.mode.name.includes('function') && rules.currentState !== 'functions.newlambdafunctions')">
+              <div class="row security-header">
+                <div class="col-lg-4">
+                  <label class="strong">Security Template</label>
+                  <select class="form-control"
+                          ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in rules.workspaces"
+                          ng-model="rules.currentST"
+                          required
+                          ng-change="rules.changePermissions()"
+                          ng-disabled="rules.precedent">
+                  </select>
+                </div>
+                <div class="col-lg-4">
+                  <div class="override-template"><label> override</label>
+                    <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
+                      <input id="override-checkbox" type="checkbox" ng-model="rules.precedent"/><i></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="rules.precedent" style="padding-left: 15px;">
+                <label>Read Permissions</label>
+                <ul class="list-style-none">
+                  <li ng-repeat="role in rules.roles">
+                    <input type="checkbox"
+                           ng-model="rules.allowSelectRolesObject[role.Name]"
+                           id="permissions-checkbox-{{role.Name}}"
+                           ng-disabled="!rules.precedent">
+                    </input>
+                    <label for="permissions-checkbox-{{role.Name}}">
+                      {{ role.Name }}
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div ng-switch="rules.action.workflowAction">
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12"

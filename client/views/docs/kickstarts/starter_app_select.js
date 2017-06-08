@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('backand.apps')
-    .controller('StarterAppSelectController', ['KickstartService', 'PlatformsService', '$state','AppsService','usSpinnerService','$modal', 'LocalStorageService','AnalyticsService', StarterAppSelectController]);
+    .controller('StarterAppSelectController', ['KickstartService', 'PlatformsService','$rootScope', '$state','AppsService','usSpinnerService','$modal', 'LocalStorageService','AnalyticsService', StarterAppSelectController]);
 
-  function StarterAppSelectController(KickstartService, PlatformsService, $state, AppsService, usSpinnerService, $modal, LocalStorageService,AnalyticsService) {
+  function StarterAppSelectController(KickstartService, PlatformsService,$rootScope, $state, AppsService, usSpinnerService, $modal, LocalStorageService,AnalyticsService) {
 
     var self = this;
 
@@ -85,11 +85,9 @@
     };
 
     self.newApp = function () {
-      var modalInstance = $modal.open({
-        templateUrl: 'views/docs/new_app_modal.html',
-        controller: 'NewAppModalController',
-        controllerAs: 'newAppModal'
-      });
+      $rootScope.$broadcast('new-app-redirect');
+      $rootScope.$broadcast('getting-started');
+      $state.go('apps.index');
     };
 
 

@@ -1,16 +1,46 @@
 /**
+ * @ngdoc directive
+ * @name backand.externalFunctions.directive.externalFunctions
+ * @module backand.externalFunctions
+ *
+ * @description
+ * a main Component
+ *
+  * @author Mohan Singh ( gmail::mslogicmaster@gmail.com, skype :: mohan.singh42 )
+ */
+
+/**
  * Refactored by nirkaufman on 1/4/15.
  */
 (function () {
 
-  function SecurityUsers(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, AnalyticsService, AuthService) {
+  function SecurityUsersController(ConfirmationPopup, $modal, $state, $log, usSpinnerService, NotificationService, SecurityService, $scope, SessionService, AppsService, AnalyticsService, AuthService, APP_CONSTS) {
 
-    var self = this;
+    var self = this,
+      //constants for view
+      DEFAULT = 'default',
+      LAUNCHER = 'launcher';
 
+    /**
+     * Expose bindable methods
+     */
+    self.sendAppInvite = sendAppInvite;
+    self.decodeToken = decodeToken;
+
+    /**
+     * Expose bindable properties
+     */
+    self.appConst = APP_CONSTS;
+    
     /**
      * Init the users page
      */
     (function init() {
+      self.options = self.options || {};
+
+      self.view = self.options.view || DEFAULT;
+      //Regex to validate email
+      self.emailRegex = APP_CONSTS.EMAIL_REGEX;
 
       self.roleFieldName = 'Role';
       self.open = newUser;
@@ -24,11 +54,13 @@
 
       self.invitedUsers = '';
       self.invitedAdmins = '';
+      self.guestUsers = [];
       self.sort = '[{fieldName:"Username", order:"desc"}]';
 
-      self.adminMode = ($state.$current.url.source.indexOf('/team') > -1);;
-      self.title = self.adminMode ? 'Team' : 'Registered Users';
+      self.adminMode = self.options.adminMode ? true :  false;
 
+      console.info('self.adminMode', self.adminMode);
+      setCurrentAppTokens();
       self.gridOptions.rowEditWaitInterval = 200;
       self.paginationOptions = {
         pageNumber: 1,
@@ -42,9 +74,9 @@
         multiSelect: true,
         enableSelectAll: false,
         columnDefs: [
-          {name: 'Username', enableCellEdit: false, sort: {direction: 'asc', priority: 0}},
-          {name: 'FirstName'},
-          {name: 'LastName'},
+          { name: 'Username', enableCellEdit: false, sort: { direction: 'asc', priority: 0 } },
+          { name: 'FirstName' },
+          { name: 'LastName' },
           {
             name: self.roleFieldName,
             displayName: 'Role',
@@ -52,7 +84,7 @@
             editDropdownOptionsArray: [],
             editDropdownIdLabel: 'Name',
             editDropdownValueLabel: 'Name',
-            cellEditableCondition: function($scope){
+            cellEditableCondition: function ($scope) {
               return !($scope.row.entity.Role === "Admin");
             },
             enableSorting: false
@@ -61,28 +93,41 @@
             name: 'IsApproved',
             displayName: 'Is Approved',
             type: 'boolean',
-            cellEditableCondition: function($scope){
+            cellEditableCondition: function ($scope) {
               return !($scope.row.entity.Username === SessionService.currentUser.username);
             }
           },
-          {field: 'readyToSignin', displayName: 'Ready to sign-in', enableCellEdit: false}
+          { field: 'readyToSignin', displayName: 'Ready to sign-in', enableCellEdit: false }
         ]
       };
 
-      self.gridOptions.columnDefs.unshift({
-        name: 'getUserToken',
-        cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.users.getUserToken($event, row)"><i class="ti-key"/></div>',
-        width: 30,
-        displayName: '',
-        enableSorting: false,
-        enableColumnMenu: false,
-        enableCellEdit: false
-      });
-
-      if (!self.adminMode) {
+      if (self.view === DEFAULT) {
         self.gridOptions.columnDefs.unshift({
-          name: 'changePassword',
-          cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.users.changePassword($event, row)"><i class="ti-lock"/></div>',
+          name: 'getUserToken',
+          cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.$ctrl.getUserToken($event, row)"><i class="ti-key"/></div>',
+          width: 30,
+          displayName: '',
+          enableSorting: false,
+          enableColumnMenu: false,
+          enableCellEdit: false
+        });
+
+        if (!self.adminMode) {
+          self.gridOptions.columnDefs.unshift({
+            name: 'changePassword',
+            cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.$ctrl.changePassword($event, row)"><i class="ti-lock"/></div>',
+            width: 30,
+            displayName: '',
+            enableSorting: false,
+            enableColumnMenu: false,
+            enableCellEdit: false
+          });
+        }
+      } else if (self.view === LAUNCHER) {
+        //button to send an invite for Launcher Application's URL
+        self.gridOptions.columnDefs.unshift({
+          name: 'sendAppInvite',
+          cellTemplate: '<div class="grid-icon" ng-click="grid.appScope.$ctrl.sendAppInvite($event, row)"><i class="ti-email"/></div>',
           width: 30,
           displayName: '',
           enableSorting: false,
@@ -105,10 +150,32 @@
 
     }());
 
-    self.changePassword = function (event, row) {
+    /**
+     * @name sendAppInvite
+     * @description Send Launcher application link to user
+     * 
+     * @param {event} event A click Event 
+     * @param {object} obj A selected row from grid
+     */
+    function sendAppInvite(event, obj) {
+      var user = obj.entity;
+      self.inviteUsers(user.Email, 'user');
+    }
 
-      if(!row.entity.readyToSignin){
-        ConfirmationPopup.confirm('Change password is only for users that ready for sign in','OK', '', true, false, 'Change Password');
+    function setCurrentAppTokens(){
+      AppsService.appKeys(self.appName).then(function(response){
+        self.tokens = response.data;
+        $log.info('Current App', response.data);
+      },function(err){
+        $log.error('Error while setting up current APP', err);
+      });
+    }
+
+    self.changePassword = function (event, row) {
+      //stop default action of an element
+      event.preventDefault();
+      if (!row.entity.readyToSignin) {
+        ConfirmationPopup.confirm('Change password is only for users that ready for sign in', 'OK', '', true, false, 'Change Password');
       }
       else {
         var modalInstance = $modal.open({
@@ -123,7 +190,9 @@
       }
     };
 
-    self.getUserToken  = function (event, row) {
+    self.getUserToken = function (event, row) {
+      //stop default action of an element
+      event.preventDefault();
       var modalInstance = $modal.open({
         templateUrl: 'views/security/user/get_user_token.html',
         controller: 'GetUserTokenController as GetUserToken',
@@ -135,7 +204,7 @@
       });
     };
 
-    function getRoles(){
+    function getRoles() {
 
       usSpinnerService.spin('loading');
       if (self.roles == null) {
@@ -149,11 +218,11 @@
 
     function rolesSuccessHandler(data) {
       // Remove admin role
-      self.roles = _.reject(data.data.data, {Name: 'Admin'});
+      self.roles = _.reject(data.data.data, { Name: 'Admin' });
       self.gridOptions.columnDefs[self.adminMode ? 4 : 5].editDropdownOptionsArray = self.roles;
 
       $scope.modal.roles = self.roles.map(function (role) {
-          return role.Name;
+        return role.Name;
       });
 
       getUsers();
@@ -162,7 +231,7 @@
     function getUsers() {
       //var roleFilter = self.adminMode ? 'Admin' : '%';//_.without(_.map(self.roles, 'Name'),'Admin').join(',');
 
-      if(self.adminMode){
+      if (self.adminMode) {
 
         SecurityService.getUsers(
           self.paginationOptions.pageSize,
@@ -180,7 +249,7 @@
           self.lastQuery)
           .then(usersSuccessHandler, errorHandler);
       }
-        //The , before the filter is a bug
+      //The , before the filter is a bug
       //'[{fieldName:"Email", operator:"notEquals", value:"guest@durados.com"},' +
       //'{fieldName:"Role", operator:"in", value:",' + roleFilter + '"}]')
     }
@@ -200,12 +269,12 @@
       getRoles();
     }
 
-    function successApp(data){
+    function successApp(data) {
       self.defaultUserRole = data.settings.newUserDefaultRole || 'User';
       self.registrationRedirectUrl = data.settings.registrationRedirectUrl || '';
     }
 
-    self.goTo = function(state) {
+    self.goTo = function (state) {
       $state.go(state);
     };
 
@@ -230,13 +299,11 @@
         .then(function (result) {
           if (!result)
             return;
-          angular.forEach(items, function(item) {
-            if(username==item.Username)
-            {
+          angular.forEach(items, function (item) {
+            if (username == item.Username) {
               NotificationService.add('error', 'Can\'t delete the creator of the app');
             }
-            else
-            {
+            else {
               SecurityService.deleteUser(item.ID).then(usersDeleteSuccessHandler, errorHandler);
             }
           })
@@ -271,6 +338,7 @@
     function errorHandler(error, message) {
       NotificationService.add('error', message);
       $log.debug(error);
+       usSpinnerService.stop('loading');
     }
 
     self.pageMax = function (pageSize, currentPage, max) {
@@ -287,16 +355,14 @@
       //  data.Role = role;
     }
 
-    <!-- Filter -->
-
     self.disableValue = function (operator) {
       return ['empty', 'notEmpty'].indexOf(operator) > -1;
     };
 
-    function filterValid (item) {
+    function filterValid(item) {
       return item.field
-          && item.operator
-          && (item.value || self.disableValue(item.operator));
+        && item.operator
+        && (item.value || self.disableValue(item.operator));
     }
 
     self.filterData = function () {
@@ -321,44 +387,42 @@
       }
       self.lastQuery = query;
 
-      if(self.adminMode) {
-        self.lastQuery.push({fieldName: "Email", operator: "notEquals", value: "guest@durados.com"});
-        self.lastQuery.push({fieldName: "Role", operator: "in", value: ",Admin"});
+      if (self.adminMode) {
+        self.lastQuery.push({ fieldName: "Email", operator: "notEquals", value: "guest@durados.com" });
+        self.lastQuery.push({ fieldName: "Role", operator: "in", value: ",Admin" });
       }
-      else{
-        self.lastQuery.push({fieldName:"Email", operator:"notEquals", value:"guest@durados.com"});
+      else {
+        self.lastQuery.push({ fieldName: "Email", operator: "notEquals", value: "guest@durados.com" });
       }
 
       getUsers();
 
     };
 
-    function getFilterOptions () {
+    function getFilterOptions() {
       self.filterOptions = {
         fields: getFieldsForFilter(),
         operators: null
       };
       self.filterReady = true;
       self.lastQuery = [];
-      if(self.adminMode) {
-        self.lastQuery.push({fieldName: "Email", operator: "notEquals", value: "guest@durados.com"});
-        self.lastQuery.push({fieldName: "Role", operator: "in", value: ",Admin"});
+      if (self.adminMode) {
+        self.lastQuery.push({ fieldName: "Email", operator: "notEquals", value: "guest@durados.com" });
+        self.lastQuery.push({ fieldName: "Role", operator: "in", value: ",Admin" });
       }
-      else{
-        self.lastQuery.push({fieldName:"Email", operator:"notEquals", value:"guest@durados.com"});
+      else {
+        self.lastQuery.push({ fieldName: "Email", operator: "notEquals", value: "guest@durados.com" });
       }
     }
 
-    function getFieldsForFilter () {
+    function getFieldsForFilter() {
       return [
-        {name: "Username", "type":"text"},
-        {name: "FirstName",type:"text"},
-        {name: "LastName",type:"text"},
-        {name: "IsApproved",type:"Boolean"}
+        { name: "Username", "type": "text" },
+        { name: "FirstName", type: "text" },
+        { name: "LastName", type: "text" },
+        { name: "IsApproved", type: "Boolean" }
       ];
     }
-
-    <!-- End Filter -->
 
     /**
      * extend the default user object and
@@ -374,7 +438,7 @@
 
     self.inviteAdmins = function () {
 
-      AnalyticsService.track('AddedAdmin', {admins: self.invitedAdmins});
+      AnalyticsService.track('AddedAdmin', { admins: self.invitedAdmins });
       self.inviteUsers(self.invitedAdmins, 'Admin');
     };
 
@@ -402,10 +466,16 @@
      * @param role
      */
     self.inviteUsers = function (emails_string, role) {
-
-      var userRole = role ? role : self.defaultUserRole;
-      var emails = emails_string ? emails_string : self.invitedUsers;
-      var email_array = emails.split(',');
+      var email_array,userRole,emails,invitedUsers;
+      
+      invitedUsers = _.map(self.invitedUsers,'text');
+      userRole = role ? role : self.defaultUserRole;
+     
+      if(emails_string){
+        email_array = emails_string.split(',');
+      }else if(_.isArray(invitedUsers)){
+        email_array = invitedUsers;
+      }
 
       if (!self.validateEmail(email_array)) {
         NotificationService.add('error', 'please fix the erroneous emails and try again');
@@ -425,6 +495,10 @@
           FirstName: name[0],
           LastName: name[1]
         };
+        if(self.AnonymousToken){
+          user['AnonymousToken'] = self.AnonymousToken;
+        }
+         usSpinnerService.spin('loading');
         SetDataUserRole(user, userRole);
         SecurityService.postUser(user).then(getRoles, errorHandler);
       }
@@ -432,7 +506,7 @@
       if (emails_string)
         self.invitedAdmins = '';
       else
-        self.invitedUsers = '';
+        self.invitedUsers.length = 0;
 
     };
 
@@ -481,23 +555,43 @@
       };
     }
 
-  }
+    function decodeToken(token){
+      if(!token){
+        return;
+      }
 
-  angular.module('backand')
-    .controller('SecurityUsers', [
-      'ConfirmationPopup',
-      '$modal',
-      '$state',
-      '$log',
-      'usSpinnerService',
-      'NotificationService',
-      'SecurityService',
-      '$scope',
-      'SessionService',
-      'AppsService',
-      'AnalyticsService',
-      'AuthService',
-      SecurityUsers
-    ]);
+      return $base64.encode(token);
+    }
+
+  }
+  angular
+    .module('backand')
+    .directive('users', [function () {
+      return {
+        restrict: 'E',
+        scope: {
+          options: '=?'
+        },
+        templateUrl: 'views/security/user/users.html',
+        controllerAs: '$ctrl',
+        bindToController: true,
+        controller: [
+          'ConfirmationPopup',
+          '$modal',
+          '$state',
+          '$log',
+          'usSpinnerService',
+          'NotificationService',
+          'SecurityService',
+          '$scope',
+          'SessionService',
+          'AppsService',
+          'AnalyticsService',
+          'AuthService',
+          'APP_CONSTS',
+          SecurityUsersController
+        ]
+      };
+    }]);
 
 }());

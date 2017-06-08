@@ -8,13 +8,13 @@
     $stateProvider
       .state('security.users', {
         url: '/users',
-        controller: 'SecurityUsers as users',
-        templateUrl: 'views/security/user/users.html'
+        templateUrl: 'views/security/user/default_tpl.html',
+        controller : 'RegisteredUserController as userCtrl',
       })
       .state('security.team', {
         url: '/team',
-        controller: 'SecurityUsers as users',
-        templateUrl: 'views/security/user/users.html'
+        templateUrl: 'views/security/user/default_tpl.html',
+        controller : 'TeamController as userCtrl',
       })
       .state('security.templates', {
         url: '/templates',

@@ -125,7 +125,7 @@
 
     self.logout = function () {
       SessionService.clearCredentials();
-      $location.path("/sign_in")
+      $state.go('sign_in');
     };
 
     self.openVideoModal = function () {

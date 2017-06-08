@@ -1,0 +1,48 @@
+<form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
+  <div us-spinner="" spinner-key="connectionView" spinner-start-active></div>
+  <div class="form-group">
+    <label>Provide your AWS account credentials below to access your AWS Lambda functions.<ba-tooltip tooltip-text="Backand uses an IAM policy with read and execute access to your AWS Lambda functions. Consult http://docs.backand.com/#the-backand-lambda-launcher for more details on the permissions required." tooltip-placement="left" ><i class="ti-info-alt"></i></ba-tooltip></label>
+  </div>
+  <div class="form-group">
+    <label for="aws-access-key" class="control-label">Access Key ID</label>
+    <input type="text" class="form-control" id="aws-access-key" placeholder="Access Key ID" ng-model="$ctrl.aws.AccessKeyId" required>
+  </div>
+  <div class="form-group">
+    <label for="aws-secret-key" class="control-label">Secret Access Key</label>
+    <input type="text" style=" -webkit-text-security: disc !important;" class="form-control" placeholder="Secret Access Key" id="aws-secret-key" ng-model="$ctrl.aws.EncryptedSecretAccessKey"
+      data-ng-required="!$ctrl.aws.Id">
+  </div>
+  <div class="form-group">
+    <label for="aws-region" class="control-label">AWS Regions</label>
+    <tags-input class="theme-green" placeholder="AWS Region" add-from-autocomplete-only="true" ng-model="$ctrl.aws.AwsRegion"
+      display-property="Name" min-length="0" template="regions-template.html">
+      <auto-complete source="$ctrl.loadAwsRegion($query)" load-on-focus="true" load-on-empty="true" min-length="0" load-on-down-arrow="true" template="regions-autocomplete-template.html"></auto-complete>
+    </tags-input>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary btn-success"
+            data-ng-disabled="$ctrl.awsForm.$invalid || $ctrl.aws.AwsRegion.length ==0">Connect</button>
+    <button type="button" class="btn btn-link" data-ng-click="$ctrl.modalInstance.dismiss('cancel')" data-ng-if="$ctrl.view === 'modal'">Complete later</button>
+
+    <button type="button" class="btn btn-default pull-right" data-ng-if="$ctrl.view !== 'modal' && $ctrl.aws.Id" data-ng-click="$ctrl.deleteConnection($ctrl.aws.Id)"><i class="glyphicon glyphicon-trash"></i> Remove</button>
+  </div>
+</form>
+
+<script type="text/ng-template" id="regions-template.html">
+  <div class="tag-template">
+    <div>
+      <span>{{$getDisplayText()}} - {{data.Code}}</span>
+      <a class="remove-button" ng-click="$removeTag()" ng-bind="::$$removeTagSymbol"></a>
+    </div>
+  </div>
+</script>
+
+<script type="text/ng-template" id="regions-autocomplete-template.html">
+      <div class="autocomplete-template">
+        <div class="right-panel">
+          <span ng-bind-html="$highlight($getDisplayText())"></span>
+          <span> - {{data.Code}}</span>
+        </div>
+      </div>
+    </script>

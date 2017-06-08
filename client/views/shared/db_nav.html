@@ -1,13 +1,18 @@
-<div class="nav-wrapper scroller" perfect-scrollbar>
-  <ul slim-scroll id="nav2" class="nav" collapse-nav>
-    <li class="apps-header">
-      <div class="ui-select app-headers" style="font-weight: bold;">
-        <select ng-model="nav.currentAppName"
-                ng-change="nav.goToApp()"
-                ng-options="app.Name as app.Name for app in nav.apps.list | orderBy:'Name'"
-                class="app-select">
-        </select>
-      </div>
+<div class="nav-wrapper">
+  <ul id="nav2" class="nav" collapse-nav>
+    <li class="apps-header" ng-click="showAppList = !showAppList" ng-class="{'app-list-open': showAppList}">
+      <a >
+        <span>{{nav.currentAppName}}</span>
+        <div class="down-triangle"></div>
+      </a>
+      <ul class="apps-list pre-scrollable">
+        <li ng-repeat="app in nav.apps.list"
+            ng-click="nav.goToApp(app.Name)">
+          <span>{{app.Name}}</span>
+          <div us-spinner="{color: 'black'}" spinner-key="loading-{{ ::app.Name}}" spinner-start-active
+               style="position:relative; left:50px;"></div>
+        </li>
+      </ul>
     </li>
     <li ng-class="{active: nav.state == 'app.show'}">
       <a ng-click="nav.goTo($event, 'app.show')">
@@ -23,36 +28,31 @@
            ng-class="showDocs == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
-            class="sub-objects-icons">
+        <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}">
           <a ng-click="nav.goToLocation('https://www.backand.com/app-examples')">
             <i class="ba-icon-documentation"></i>
             <span>Examples</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'docs.platform_select_kickstart'}"
-            class="sub-objects-icons">
+        <li ng-class="{active: nav.state == 'docs.platform_select_kickstart'}">
           <a ng-click="nav.goTo($event, 'docs.platform_select_kickstart')">
             <i class="ba-icon-kickstart-tutorial"></i>
             <span>Kickstart Tutorials</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'docs.platform_select_existing'}"
-            class="sub-objects-icons">
+        <li ng-class="{active: nav.state == 'docs.platform_select_existing'}">
           <a ng-click="nav.goTo($event, 'docs.platform_select_existing')">
             <i class="ba-icon-kickstart-tutorial"></i>
             <span>Existing App</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'docs.realtime'}"
-            class="sub-objects-icons">
+        <li ng-class="{active: nav.state == 'docs.realtime'}">
           <a ng-click="nav.goTo($event, 'docs.realtime')">
             <i class="ba-icon-documentation"></i>
-            <span>Realtime Database</span>
+            <span >Realtime Database</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}"
-            class="sub-objects-icons">
+        <li ng-class="{active: nav.state == 'docs.api-desc', disabled: nav.DatabaseStatus != 1}">
           <a ng-click="nav.goToLocation('http://docs.backand.com')">
             <i class="ba-icon-documentation"></i>
             <span>Documentation</span>
@@ -62,7 +62,7 @@
             class="sub-objects-icons">
           <a ng-click="nav.goTo($event, 'playground.show')">
             <i class="ba-icon-rest-api-playground"></i>
-            <span>REST API Playground</span>
+            <span style="padding-left: 19px">REST API Playground</span>
           </a>
         </li>
       </ul>
@@ -90,15 +90,16 @@
            ng-class="showObjects == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul class="ex4" id="ex4" href="">
-        <li ng-if="nav.app.connectionSource === 'local'" href="">
+        <li ng-if="nav.app.connectionSource === 'local'" class="sub-objects-icons new-function-selection" href="">
           <a ng-click="nav.newObject($event)" href="">
-            <i class="ba-icon-new-query objects"></i>
+            <i class="ti-plus"></i>
             <span>New Object</span>
           </a>
+          <div class="menu-border"></div>
         </li>
-        <li  ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"">
+        <li  ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"
+            class="crop ">
           <a ng-click="nav.showTable($event, table)">
-            <i class="ba-icon-todo objects"></i>
             <span>{{table.name}}</span>
           </a>
         </li>
@@ -115,18 +116,18 @@
       <ul>
         <li ng-class="{active: nav.state == 'dbQueries.newQuery' }"
             ng-if="nav.DatabaseStatus == 1"
-            class="sub-objects-icons">
+            class="sub-objects-icons new-function-selection">
           <a ng-click="nav.newDbQuery($event)">
-            <i class="ba-icon-new-query"></i>
+            <i class="ti-plus"></i>
             <span>New Query</span>
           </a>
+          <div class="menu-border"></div>
         </li>
 
         <ul>
           <li ng-class="{active: query.iD == nav.stateparam.queryId}" ng-repeat="query in nav.queries"
-              class="sub-objects-icons">
+              class="sub-objects-icons crop">
             <a ng-click="nav.showDbQuery($event, query)">
-              <i class="ti-write"></i>
               <span>{{query.name}}</span>
             </a>
           </li>

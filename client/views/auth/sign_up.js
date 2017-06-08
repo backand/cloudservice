@@ -1,9 +1,9 @@
 (function () {
 
   angular.module('backand')
-    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', 'NotificationService','$rootScope', SignUpController]);
+    .controller('SignUpController', ['AuthService', '$state', 'SessionService', '$timeout', 'NotificationService', '$rootScope', 'AppsService', 'ModelService', 'AnalyticsService', 'DatabaseService', SignUpController]);
 
-  function SignUpController(AuthService, $state, SessionService, $timeout, NotificationService, $rootScope) {
+  function SignUpController(AuthService, $state, SessionService, $timeout, NotificationService, $rootScope, AppsService, ModelService, AnalyticsService, DatabaseService) {
 
     var self = this;
 
@@ -26,10 +26,10 @@
         }, 100);
       }
     }());
-    
-    self.emailChanged = function (email){
+
+    self.emailChanged = function (email) {
       self.twitterMissingEmail = false;
-      if(email.$valid){
+      if (email.$valid) {
         $rootScope.$emit('email:changed', email.$viewValue);
       }
     };
@@ -38,12 +38,29 @@
       self.twitterMissingEmail = true;
     });
 
+    /**
+     * @ngdoc function
+     * @name signUp
+     * @description Register new user
+     * - check if signup url carried `launcher= 1` param in URL
+     * - Create a default app
+     * @see createNewApp anf Helper function used to handle application creation process
+     * @public
+     * 
+     * @modifiedby Mohan Singh<mslogicmaster@gmail.com>
+     * @return void
+     */
     self.signUp = function () {
       self.flags.authenticating = true;
       self.loading = true;
-
       AuthService.signUp(self.fullName, self.email, self.password)
         .then(function (response) {
+          //if signUp URl carries `launcher=1` query param then create a app
+          if (isLauncher()) {
+            AnalyticsService.track('SignupLauncher');
+            createNewApp();
+            return;
+          }
           var requestedState = SessionService.getRequestedState();
           $state.go(requestedState.state || 'apps.index', requestedState.params);
         })
@@ -58,6 +75,52 @@
           }
         });
     };
+
+    /**
+     * @ngdoc function
+     * @name createNewApp
+     * @description Creates default app for current user
+     * 
+     * @returns void
+     */
+    function createNewApp() {
+      NotificationService.add('info', 'Creating new app...');
+      AppsService.add()
+        .then(function (data) {
+          //get appName from response
+          var appName = data.__metadata.appName;
+          //track event that app is created
+          AnalyticsService.track('CreatedApp', { appName: appName });
+          //create App database with defaultSchema
+          DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema(),2)
+            .success(function (data) {
+              AnalyticsService.track('CreatedNewDB', { schema: ModelService.defaultSchema() });
+              AnalyticsService.track('create app', { app: appName });
+              AppsService.resetCurrentApp();
+              AppsService
+                .getApp(appName)
+                .then(function () {
+                  var stateParams = { new: 1, appName: appName };
+                  if (isLauncher()) {
+                    stateParams['source'] = 'launcher';
+                  }
+                  $state.go('functions.externalFunctions', stateParams, { reload: true });
+                });
+            });
+        });
+    }
+
+    /**
+     * @ngdoc function
+     * @name isLauncher
+     * @description checks if launcher = 1 param exists in URL
+     * 
+     * @returns {boolean}
+     */
+    function isLauncher() {
+      var launcher = $state.params.launcher;
+      return (typeof launcher !== 'undefined') && (launcher == 1);
+    }
 
   }
 

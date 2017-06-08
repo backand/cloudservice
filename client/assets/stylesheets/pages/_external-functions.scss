@@ -1,0 +1,37 @@
+.page-external-functions {
+  .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    border: 0 none !important;
+  }
+    .tab-content {
+      padding: 0;
+        .list-group {
+            &.list-group-with-tabs {
+                >.list-group-item {
+                    &:first-child {
+                        border-top-right-radius: 0;
+                        border-top-left-radius: 0;
+                        border-top: 0 none;
+                    }
+                }
+            }
+        }
+    }
+    .row {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+}
+
+.list-group-item {
+    .meta-text {
+        display: inline-block;
+    }
+    .meta-actions {
+        margin-bottom: 15px;
+        clear: right;
+        float: none !important;
+        position: absolute;
+        right: 15px;
+        top: 8px;
+    }
+}

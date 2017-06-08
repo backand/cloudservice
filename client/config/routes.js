@@ -18,7 +18,7 @@ angular.module('backand.routes', []).
       })
       .state('sign_up', {
         parent: 'auth',
-        url: '/sign_up?username&name&i&token',
+        url: '/sign_up?username&name&i&token&launcher',
         templateUrl: 'views/auth/sign_up.html',
         controller : 'SignUpController as signup'
       })
@@ -179,7 +179,6 @@ function run($rootScope, $state, SessionService, AuthService, CONSTS, $window) {
   }
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-
     if (toParams.data || toParams.error) {
       event.preventDefault();
 
