@@ -1,11 +1,4 @@
-<div class="actions-bar row" data-ng-if="$ctrl.view === 'launcher'">
-  <div class="col-md-8">
-    <h3 class="page-name">Lambda Launcher Configuration</h3>
-  </div>
-  <div class="col-md-4 text-right">
-    <a data-ng-href="{{$ctrl.appConst.LAUNCHER_APP_URL}}/#/dash/app?appName={{$ctrl.appName}}&anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}" target="_blank" class="btn btn-primary">Open Launcher</a>
-  </div>
-</div>
+
 
 <!-- /admin mode -->
 <div class="row" ng-if="$ctrl.adminMode">
@@ -30,14 +23,6 @@
     If "Public App" is Off then this is the only way to add users to the app
     <ba-help-link key="registeredUsers"></ba-help-link></label>
 
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-12">
-      <blockquote>
-        <a data-ng-href="{{$ctrl.appConst.LAUNCHER_APP_URL}}/#/dash/app?anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}" target="_blank"> {{$ctrl.appConst.LAUNCHER_APP_URL}}?anonymousToken={{$ctrl.decodeToken($ctrl.tokens.anonymous)}}</a>
-      </blockquote>
-    </div>
   </div>
   <div class="form-group">
     <div class="col-sm-7">

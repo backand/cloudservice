@@ -107,10 +107,35 @@
           </tab-heading>
           <div class="list-group list-group-with-tabs m-b-0">
             <div class="list-group-item">
-              <div class="list-group-item-body">
-                <users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users>
+              <div class="list-group-item-header">
+                <div class="list-group-item-heading">Lambda Launcher Configuration</div>
+              </div>
+              <div class="list-group-item">
+                <div class="list-group-item-body">
+                  <div class="row col-sm-12">
+                    <a data-ng-href="{{$ctrl.launcherAppUrl}}" target="_blank" class="btn btn-primary">Open Lambda
+                      Launcher Application</a>
+                  </div>
+                </div>
+                <div class="list-group-item-body">
+                  <div class="row col-sm-12">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="launcherapp"
+                             ng-readonly="true"
+                             ng-model="$ctrl.launcherAppUrl">
+                      <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" clip-copy="$ctrl.launcherAppUrl">Copy</button>
+                    </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            <!--<div class="list-group-item">-->
+              <!--<div class="list-group-item-body">-->
+                <!--<users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users>-->
+              <!--</div>-->
+            <!--</div>-->
           </div>
         </tab>
         <!-- ./Lambda Launcher -->

@@ -28,7 +28,9 @@
           'modalService',
           'NotificationService',
           '$rootScope',
-          function ($log, usSpinnerService, CloudService, $modal, $state, modalService, NotificationService, $rootScope) {
+          'APP_CONSTS',
+          'AppsService',
+          function ($log, usSpinnerService, CloudService, $modal, $state, modalService, NotificationService, $rootScope, APP_CONSTS, AppsService) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
             /**
@@ -60,6 +62,8 @@
                 source: $state.params.source,
                 title: 'Registered Users'
               };
+              $ctrl.appName = $state.params.appName;
+              $ctrl.appConst = APP_CONSTS;
               //set first tab as activeTab
               $ctrl.activeTab = 0;
               //set collapsible panels
@@ -74,6 +78,7 @@
               } else {
                 getLambdaFunctions();
               }
+              setCurrentAppTokens();
               usSpinnerService.stop('loading');
             }
 
@@ -217,6 +222,23 @@
               if(!$ctrl.activeConnection.Id){
                 $ctrl.sections.awsConnection = false;
               }
+            }
+
+
+            function setCurrentAppTokens(){
+              AppsService.appKeys($ctrl.appName).then(function(response){
+                $ctrl.tokens = response.data;
+                $log.info('Current App', response.data);
+
+                if($ctrl.tokens.anonymous){
+                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/functions?t=' + $base64.encode($ctrl.tokens.anonymous);
+                } else {
+                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/login';
+                }
+
+              },function(err){
+                $log.error('Error while setting up current APP', err);
+              });
             }
 
             //end of controller
