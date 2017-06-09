@@ -148,7 +148,7 @@
           }
         };
 
-        $scope.location = locations[$scope.key].url || 'http://docs.backand.com';
+        $scope.location = locations[$scope.key] ?  locations[$scope.key].url : 'http://docs.backand.com';
 
         if($scope.withText != 'false'){
           $scope.readMore = '- read more';

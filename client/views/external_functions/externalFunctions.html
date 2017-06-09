@@ -67,9 +67,7 @@
             <!-- /lambda functions -->
             <div class="list-group-item">
               <div class="list-group-item-header" data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions">
-                <h4 class="list-group-item-heading">Lambda Functions
-                  <ba-tooltip tooltip-text="Refer to http://docs.backand.com for more information on this feature." tooltip-placement="top"><i class="ti-info-alt"></i></ba-tooltip>
-                </h4>
+                <h4 class="list-group-item-heading">Lambda Functions <ba-help-link with-text="true"></ba-help-link></h4>
                 <div class="list-group-item-toolbar">
                   <span d tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.lambdaFunctions, 'fa fa-plus': $ctrl.sections.lambdaFunctions}"></i>
