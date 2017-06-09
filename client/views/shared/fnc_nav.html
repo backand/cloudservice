@@ -87,7 +87,7 @@
       <li ng-repeat="func in nav.functions track by func.name"
           ng-class="{active: func.iD == nav.stateparam.functionId}"
           class="sub-functions-icons function-list crop">
-        <a ng-click="nav.showFunction($event, func)">
+        <a ng-click="nav.showFunction($event, func)"  tooltip="{{func.name}}" tooltip-placement="right" tooltip-append-to-body="true">
           <span>{{func.name}}</span>
         </a>
            <i ng-class="{'fontello-icon-functions': (func.fileName || func.workflowAction == 'Lambda')}"></i>
@@ -123,7 +123,7 @@
     <li ng-class="{active: cronJob.iD == nav.stateparam.jobId}"
         ng-repeat="cronJob in nav.cronJobs track by cronJob.name"
         class="sub-objects-icons crop">
-      <a ng-click="nav.showCronJob($event, cronJob)">
+      <a ng-click="nav.showCronJob($event, cronJob)" tooltip="{{cronJob.name}}" tooltip-placement="right" tooltip-append-to-body="true">
         <span class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>
         <span style="margin-left: 14px;">{{cronJob.name}}</span>
       </a>

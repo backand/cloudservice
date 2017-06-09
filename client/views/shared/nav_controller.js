@@ -396,6 +396,7 @@
         $state.go(state, params).then(function () {
           self.backandstorage.currentState = $state.current.name;
           self.stateparam = $state.params;
+          self.backandstorage.Id = self.stateparam.functionId || self.stateparam.queryId || self.stateparam.jobId || self.stateparam.tableId
         });
       }
     }
