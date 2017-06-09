@@ -57,6 +57,7 @@
         .then(function (response) {
           //if signUp URl carries `launcher=1` query param then create a app
           if (isLauncher()) {
+            AnalyticsService.track('SignupLauncher');
             createNewApp();
             return;
           }
@@ -91,7 +92,7 @@
           //track event that app is created
           AnalyticsService.track('CreatedApp', { appName: appName });
           //create App database with defaultSchema
-          DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema())
+          DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema(),2)
             .success(function (data) {
               AnalyticsService.track('CreatedNewDB', { schema: ModelService.defaultSchema() });
               AnalyticsService.track('create app', { app: appName });

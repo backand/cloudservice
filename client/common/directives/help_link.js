@@ -141,10 +141,14 @@
           "crons":{
             "page":"cron",
             "url":"http://docs.backand.com/#background-jobs"
+          },
+          "LambdaLauncher": {
+            "page": "external_function/externalFunctions",
+            "url": "http://docs.backand.com/#the-backand-lambda-launcher"
           }
-        }
+        };
 
-        $scope.location = locations[$scope.key].url || 'http://docs.backand.com';
+        $scope.location = locations[$scope.key] ?  locations[$scope.key].url : 'http://docs.backand.com';
 
         if($scope.withText != 'false'){
           $scope.readMore = '- read more';

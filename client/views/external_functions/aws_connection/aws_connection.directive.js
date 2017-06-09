@@ -32,7 +32,8 @@
           '$q',
           'ConfirmationPopup',
           '$state',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup,$state) {
+          'AnalyticsService',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               connectionModel = {
@@ -180,6 +181,7 @@
                 .then(function (response) {
                   $log.info('Connection details are saved', response);
                   NotificationService.add('success', 'Connection details are saved successfully.');
+                  AnalyticsService.track('AWSConnectionSaved');
                   handler(response, request, $ctrl.aws);
                 })
                 .catch(function (error) {

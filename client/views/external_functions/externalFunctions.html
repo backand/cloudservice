@@ -3,7 +3,7 @@
     <div class="panel-heading p-l-0">
       <strong> External Functions </strong>
     </div>
-    <div class="panel-body p-a-0">
+    <div class="panel-body p-a-0 ui-tab-container ui-tab-horizontal">
       <div us-spinner="" spinner-key="loading" spinner-start-active></div>
       <tabset active="$ctrl.activeTab">
         <!-- /External Functions -->
@@ -12,33 +12,34 @@
             External Functions
           </tab-heading>
 
-          <div class="list-group list-group-with-tabs m-b-0">
+          <div class="list-group list-group-with-tabs m-b-0  p-a-0" style="border:0 none;">
             <!-- /guideline -->
             <div class="list-group-item">
-              <div class="list-group-item-header">
-                <div class="list-group-item-heading">How it works</div>
+              <div class="list-group-item-header" data-ng-click="$ctrl.sections.guideline = !$ctrl.sections.guideline">
+                <h4 class="list-group-item-heading">How it works</h4>
                 <div class="list-group-item-toolbar">
-                  <span data-ng-click="$ctrl.sections.guideline = !$ctrl.sections.guideline" tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}"
-                    tooltip-placement="top" tooltip-trigger="mouseenter">
+                  <span tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.guideline, 'fa fa-plus': $ctrl.sections.guideline}"></i>
                   </span>
                 </div>
 
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.guideline">
-                Lorem ipsum is a placeholder text (filler text) in publishing and graphic design. It is used to demonstrate the graphics
-                elements of a document, such as font, typography, and layout. ... Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Backand integrates with your AWS Lambda account using an IAM user with read and execute permissions for your Lambda functions.
+                Once you provide the credentials, we will retrieve a list of Lambda functions from your AWS account, and
+                allow you to import your AWS Lambda functions into Backand. These functions then work like any other custom
+                function in Backand, allowing you to fully integrate your AWS Lambda functionality suite with your application's
+                business logic. Consult the <a href="http://docs.backand.com/#the-backand-lambda-launcher"
+                  target="_blank">documentation</a> for more info
               </div>
             </div>
             <!-- ./guideline -->
             <!-- /aws connection -->
             <div class="list-group-item">
-              <div class="list-group-item-header">
-                <div class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Connection Details</div>
+              <div class="list-group-item-header" data-ng-click="$ctrl.sections.awsConnection = !$ctrl.sections.awsConnection">
+                <h4 class="list-group-item-heading">Connection Details</h4>
                 <div class="list-group-item-toolbar">
-                  <span data-ng-click="$ctrl.sections.awsConnection = !$ctrl.sections.awsConnection" tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}"
-                    tooltip-placement="top" tooltip-trigger="mouseenter">
+                  <span tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.awsConnection, 'fa fa-plus': $ctrl.sections.awsConnection}"></i>
                   </span>
                 </div>
@@ -51,9 +52,9 @@
                   <div class="col-md-5 col-md-offset-2">
                     <div class="social-provider-container">
                       <div class="social-provider-help">
-                        <div class="social-provider-help-title ng-binding">Configuring Your AWS App</div>
-                        To get started with AWS authentication, you need to first create a new AWS app
-                        <ba-help-link key="socialAndKeysFacebook" class="ng-isolate-scope"><a data-ng-href="" target="bkhelp" style="text-decoration: none;">- read more&nbsp;<i class="ba-icon-external-link"></i></a></ba-help-link>
+                        <div class="social-provider-help-title ng-binding">Configuring AWS Lambda Security</div>
+                        To get started, you'll need to create an IAM Policy and User that Backand can use to connect with your AWS account
+                        <ba-help-link key="LambdaLauncher"></ba-help-link>
                       </div>
                     </div>
                   </div>
@@ -65,36 +66,42 @@
 
             <!-- /lambda functions -->
             <div class="list-group-item">
-              <div class="list-group-item-header">
-                <div class="list-group-item-heading"><i class="fa social-provider-icon fa-windows"></i> Lambda Functions</div>
+              <div class="list-group-item-header" data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions">
+                <h4 class="list-group-item-heading">Lambda Functions <ba-help-link with-text="true"></ba-help-link></h4>
                 <div class="list-group-item-toolbar">
-                  <span data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions" tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}"
-                    tooltip-placement="top" tooltip-trigger="mouseenter">
+                  <span d tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.lambdaFunctions, 'fa fa-plus': $ctrl.sections.lambdaFunctions}"></i>
                   </span>
                 </div>
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.lambdaFunctions">
-                <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There is no lambda function. </div>
-                      <ul class="list-group" data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index">
-                        <li class="list-group-item active brand" data-ng-bind="key"></li>
-                        <li class="list-group-item" data-ng-repeat="function in zone track by $index">
-                          <div  style="display: inline-block">
-                            <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
-                            <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
-                          </div>
-                          <div class="pull-right">
-                            <button type="button" class="btn btn-xs btn-default" data-ng-class="{'btn-success' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
-                            <button type="button" class="btn btn-xs btn-primary btn-success">Excecute</button>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </form>
+                <p data-ng-if="$ctrl.hasFunctions">Below are the Lambda functions available in your AWS account. You can execute these functions by pressing
+                  "Execute", or import them into your Backand application using the "Link" button. Imported functions can
+                  be called using the same functions endpoint in the Backand API as your other custom functions, and are
+                  subject to Backand Security.</p>
+                <div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There is no lambda function. </div>
+                <div class="slimScrollDiv panel-body panel-body-custom ui-tab-container ui-tab-vertical lambda-functions-tab" data-ng-show="$ctrl.hasFunctions">
+                  <tabset class="ui-tab">
+                    <tab data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index" heading="{{key}}">
+                      <div style="min-height: 250px" class="clearfix">
+                        <div class="alert alert-info" role="alert" data-ng-show="zone.length ===0"> There is no lambda function. </div>
+                        <ul class="list-group">
+                          <li class="list-group-item" data-ng-repeat="function in zone track by $index">
+                            <div class="meta-text">
+                              <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
+                              <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
+                            </div>
+                            <div class="meta-actions">
+                              <button type="button" class="btn" data-ng-class="{'btn-warning' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
+                              <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success"
+                                data-ng-if="function.selected" target="_blank">Test</a>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </tab>
+                  </tabset>
+                </div>
               </div>
             </div>
             <!-- ./lambda functions -->
@@ -107,9 +114,34 @@
             Lambda Launcher
           </tab-heading>
           <div class="list-group list-group-with-tabs m-b-0">
-            <div class="list-group-item">
-              <div class="list-group-item-body">
-                <users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users>
+            <div class="list-group-item" style="border:0 none;">
+              <div class="list-group-item-body p-t-0">
+                <!-- /static content, @todo will be removed when invite is ready -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <h4>How it Works</h4>
+                    <p>The Lambda Launcher gives you an easy-to-use interface for executing AWS Lambda functions that have been
+                      linked to your application. Invite users to register for the Launcher below, then adjust the security
+                      settings in <a ui-sref="security.auth"> your application's security settings.</a> When a
+                      user logs in, they will be able to execute the Lambda functions to which they have access by pressing
+                      the "Execute" button.</p>
+                    <p>
+                      <a data-ng-href="{{$ctrl.launcherAppUrl}}" target="_blank" class="btn btn-success m-b-md">Open</a></p>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-12 col-sm-8 col-lg-8">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="launcherapp" ng-readonly="true" ng-model="$ctrl.launcherAppUrl">
+                      <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" clip-copy="$ctrl.launcherAppUrl">Copy</button>
+                    </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- ./static content, @todo will be removed when invite is ready -->
+                <!-- users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users -->
               </div>
             </div>
           </div>

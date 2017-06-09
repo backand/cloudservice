@@ -33,7 +33,7 @@
       self.frequency = {
         base: 1
       };
-      self.types = [{id: 'Action',   label:"Action - On Demand"}
+      self.types = [{id: 'Action',   label:"Function / Action"}
                    ,{id: 'Query',    label:"Query"}];
                    //,{id: 'External', label:'External HTTP request'}];
       //self.namePattern = /^\w+$/;
