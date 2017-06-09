@@ -82,7 +82,7 @@
                   be called using the same functions endpoint in the Backand API as your other custom functions, and are
                   subject to Backand Security.</p>
                 <div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There is no lambda function. </div>
-                <div class="slimScrollDiv panel-body panel-body-custom ui-tab-container ui-tab-vertical" data-ng-show="$ctrl.hasFunctions">
+                <div class="slimScrollDiv panel-body panel-body-custom ui-tab-container ui-tab-vertical lambda-functions-tab" data-ng-show="$ctrl.hasFunctions">
                   <tabset class="ui-tab">
                     <tab data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index" heading="{{key}}">
                       <div style="min-height: 250px" class="clearfix">
