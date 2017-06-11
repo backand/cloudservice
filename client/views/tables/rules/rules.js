@@ -1549,7 +1549,7 @@
       return self.test.result;
     }
 
-    self.namePattern = /^\w+[\w-]*$/;
+    self.namePattern = /^[\w\d_\-]*$/;
     // list of parameters:
     // each parameter starts with letter or '_' and may contain also numbers
     // the list should start and end with parameters, delimited by ',', allowing spaces (not within a parameter)

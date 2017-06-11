@@ -99,7 +99,7 @@
         </li>
         <li  ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"
             class="crop ">
-          <a ng-click="nav.showTable($event, table)" tooltip="{{table.name}}" tooltip-placement="right" tooltip-append-to-body="true">
+          <a ng-click="nav.showTable($event, table)" tooltip="{{table.name}}"  tooltip-popup-delay="500" tooltip-placement="right" tooltip-append-to-body="true">
             <span>{{table.name}}</span>
           </a>
         </li>
@@ -127,7 +127,7 @@
         <ul>
           <li ng-class="{active: query.iD == nav.stateparam.queryId}" ng-repeat="query in nav.queries"
               class="sub-objects-icons crop">
-            <a ng-click="nav.showDbQuery($event, query)" tooltip="{{query.name}}" tooltip-placement="right" tooltip-append-to-body="true">
+            <a ng-click="nav.showDbQuery($event, query)" tooltip="{{query.name}}" tooltip-popup-delay="500" tooltip-placement="right" tooltip-append-to-body="true">
               <span>{{query.name}}</span>
             </a>
           </li>

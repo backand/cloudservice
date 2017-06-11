@@ -284,7 +284,7 @@
       else
         return 'error';
     };
-
+    $('.tooltip').tooltip({})
     self.getDBStatus = function () {
       if (_.isEmpty(self.app)) {
         return 'unknown';
@@ -303,7 +303,7 @@
 
     self.goTo = function ($event, state) {
 
-      //track events
+      //track events`
       if (state == "app.billing") {
         AnalyticsService.track('BillingLeftMenuBillingPortal', {appName: $state.params.appName});
       }

@@ -30,6 +30,7 @@
                          ng-model="rules.action.name"
                          required
                          ng-pattern="rules.namePattern"
+                         ng-trim="false"
                          placeholder="Name your {{modal.title.toLowerCase()}}"
                          ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
                   <ba-tooltip tooltip-text="Use the name in the request URL query string of the REST API"
