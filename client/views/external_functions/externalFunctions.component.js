@@ -118,7 +118,7 @@
             * @returns void
             */
             function onSaveConnection(connection) {
-              $log.info('AWS connection is updated with -', connection);
+              $log.info('onSaveConnection - AWS connection is updated with -', connection);
             }
 
             /**
@@ -178,7 +178,6 @@
                 $ctrl.sections.awsConnection = false;
               } 
               getLambdaFunctions();
-
             }
 
             function setCurrentAppTokens() {

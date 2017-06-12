@@ -33,7 +33,8 @@
           'ConfirmationPopup',
           '$state',
           'AnalyticsService',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService) {
+          '$rootScope',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, $rootScope ) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               connectionModel = {
@@ -123,6 +124,8 @@
                     awsConnection.EncryptedSecretAccessKey = defaultSecretKeyHas;
                   }
 
+                  awsConnection.isNew = $ctrl.isNewConnection;
+
                   $ctrl.aws = awsConnection;
                   //trigger bindings
                   if (typeof $ctrl.onLoadConnection === 'function') {
@@ -190,9 +193,15 @@
                   $log.info('Connection details are saved', response);
                   CloudService
                     .getLambdaFunctions()
-                    .then(function () {
+                    .then(function (functions) {
                       NotificationService.add('success', 'Connection details are saved successfully.');
                       AnalyticsService.track('AWSConnectionSaved');
+                      if (!request.id) {
+                        $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
+                          functions: functions,
+                          metaDataId : response.data.__metadata.id
+                        });
+                      }
                       handler(response, request, $ctrl.aws);
                     }, function () {
                       NotificationService.add('error', 'Provided AWS credentials are not valid.');
@@ -207,6 +216,7 @@
             }
 
             function handler(response, request, model) {
+              $ctrl.isNewConnection = !request.id ? true : false;
               getAwsConnection();
               //get lambda functions when connection is saved
               if ($ctrl.view === 'modal') {
