@@ -188,9 +188,17 @@
                 .saveAwsConnection(request)
                 .then(function (response) {
                   $log.info('Connection details are saved', response);
-                  NotificationService.add('success', 'Connection details are saved successfully.');
-                  AnalyticsService.track('AWSConnectionSaved');
-                  handler(response, request, $ctrl.aws);
+                  CloudService
+                    .getLambdaFunctions()
+                    .then(function () {
+                      NotificationService.add('success', 'Connection details are saved successfully.');
+                      AnalyticsService.track('AWSConnectionSaved');
+                      handler(response, request, $ctrl.aws);
+                    }, function () {
+                      NotificationService.add('error', 'Provided AWS credentials are not valid.');
+                      handler({}, request, $ctrl.aws);
+                    })
+
                 })
                 .catch(function (error) {
                   $log.error('Error while saving conncetions detail', error);
@@ -202,7 +210,7 @@
               getAwsConnection();
               //get lambda functions when connection is saved
               if ($ctrl.view === 'modal') {
-                if (typeof $ctrl.modalInstance.close === 'function') {
+                if (typeof $ctrl.modalInstance.close === 'function' && !_.isEmpty(response)) {
                   $ctrl.modalInstance.close({ connection: model });
                 }
               }
@@ -212,7 +220,6 @@
               }
               usSpinnerService.stop('connectionView');
             }
-
             //end of controller
           }]
       };
