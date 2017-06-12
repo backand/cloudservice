@@ -25,12 +25,11 @@
 
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.guideline">
-                Backand integrates with your AWS Lambda account using an IAM user with read and execute permissions for your Lambda functions.
-                Once you provide the credentials, we will retrieve a list of Lambda functions from your AWS account, and
-                allow you to import your AWS Lambda functions into Backand. These functions then work like any other custom
-                function in Backand, allowing you to fully integrate your AWS Lambda functionality suite with your application's
-                business logic. Consult the <a href="http://docs.backand.com/#the-backand-lambda-launcher"
-                  target="_blank">documentation</a> for more info
+                External Functions are AWS Lambda functions stored in your account. By linking your Lambda functions with Backand, you'll
+                be able to invoke your AWS Lambda functions from within your application's security infrastructure, giving
+                you the capability to secure your functions using tools like Azure Active Directory. Once you provide credentials,
+                we will retrieve a list of Lambda functions from your AWS account, and allow you to execute your AWS Lambda
+                functions from Backand. These functions then work like any other custom function in Backand  <ba-help-link key="LambdaLauncher"></ba-help-link>
               </div>
             </div>
             <!-- ./guideline -->
@@ -67,7 +66,9 @@
             <!-- /lambda functions -->
             <div class="list-group-item">
               <div class="list-group-item-header" data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions">
-                <h4 class="list-group-item-heading">Lambda Functions <ba-help-link with-text="true"></ba-help-link></h4>
+                <h4 class="list-group-item-heading">Lambda Functions
+                  <ba-help-link with-text="true"></ba-help-link>
+                </h4>
                 <div class="list-group-item-toolbar">
                   <span d tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
                     <i  ng-class="{'fa fa-minus': !$ctrl.sections.lambdaFunctions, 'fa fa-plus': $ctrl.sections.lambdaFunctions}"></i>
@@ -75,7 +76,7 @@
                 </div>
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.lambdaFunctions">
-               <lambda-functions data-active-connection="$ctrl.activeConnection" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)"></lambda-functions>
+                <lambda-functions data-active-connection="$ctrl.activeConnection" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)"></lambda-functions>
               </div>
             </div>
             <!-- ./lambda functions -->
@@ -96,9 +97,9 @@
                     <h4>How it Works</h4>
                     <p>The Lambda Launcher gives you an easy-to-use interface for executing AWS Lambda functions that have been
                       linked to your application. Invite users to register for the Launcher below, then adjust the security
-                      settings in <a ui-sref="security.auth"> your application's security settings.</a> When a
-                      user logs in, they will be able to execute the Lambda functions to which they have access by pressing
-                      the "Execute" button.</p>
+                      settings in <a ui-sref="security.auth"> your application's security settings.</a> When a user logs
+                      in, they will be able to execute the Lambda functions to which they have access by pressing the "Execute"
+                      button.</p>
                     <p>
                       <a data-ng-href="{{$ctrl.launcherAppUrl}}" target="_blank" class="btn btn-success m-b-md">Open</a></p>
                   </div>
