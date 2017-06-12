@@ -43,7 +43,8 @@
                 Name: 'Main',
                 CloudVendor: 'AWS',
                 EncryptedSecretAccessKey: ''
-              };
+              },
+              defaultSecretKeyHas = '************';
             /**
             * call initialization to initialize controllers properties 
             */
@@ -113,12 +114,15 @@
                 .getAwsConnection()
                 .then(function (response) {
                   var awsConnection = response.data.data[0] || angular.copy(connectionModel),
-                  regionsCode = _.words(awsConnection.AwsRegion, /[^,]+/g);
+                    regionsCode = _.words(awsConnection.AwsRegion, /[^,]+/g);
 
-                  awsConnection.AwsRegion = _.filter($ctrl.regions, function(r){
+                  awsConnection.AwsRegion = _.filter($ctrl.regions, function (r) {
                     return _.indexOf(regionsCode, r.Code) >= 0;
                   });
-                 
+                  if (!_.isEmpty(awsConnection.AccessKeyId)) {
+                    awsConnection.EncryptedSecretAccessKey = defaultSecretKeyHas;
+                  }
+
                   $ctrl.aws = awsConnection;
                   //trigger bindings
                   if (typeof $ctrl.onLoadConnection === 'function') {
@@ -134,23 +138,23 @@
                 });
             }
 
-            function deleteConnection(id){
-                ConfirmationPopup.confirm('Are sure you want to delete AWS connection?')
+            function deleteConnection(id) {
+              ConfirmationPopup.confirm('Are sure you want to delete AWS connection?')
                 .then(function (result) {
                   if (result) {
                     usSpinnerService.spin('connectionView');
-                      CloudService
-                        .deleteAwsConnection(id)
-                        .then(function (response) {
-                          NotificationService.add('success', 'Connection has been deleted successfully.');
-                          $log.info('Connection has been deleted', response);
-                          $state.reload();
-                          usSpinnerService.stop('connectionView');
-                        }).catch(function (error) {
-                          $log.error('Error while deleting a connection', error);
-                          usSpinnerService.stop('connectionView');
-                        });
-                    }
+                    CloudService
+                      .deleteAwsConnection(id)
+                      .then(function (response) {
+                        NotificationService.add('success', 'Connection has been deleted successfully.');
+                        $log.info('Connection has been deleted', response);
+                        $state.reload();
+                        usSpinnerService.stop('connectionView');
+                      }).catch(function (error) {
+                        $log.error('Error while deleting a connection', error);
+                        usSpinnerService.stop('connectionView');
+                      });
+                  }
                 });
             }
 
@@ -174,6 +178,10 @@
                   return v ? true : false;
                 })
                 .value();
+
+              if (request.EncryptedSecretAccessKey === defaultSecretKeyHas) {
+                delete request.EncryptedSecretAccessKey;
+              }
               request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
               $log.warn('Connection request', request);
               CloudService
