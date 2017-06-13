@@ -18,6 +18,7 @@
         scope: {
           onLoad: '&', // optional
           activeConnection: '=', //required
+          launcherAppUrl: '=' //required
         },
         templateUrl: 'views/external_functions/lambda_functions/lambda_functions.html',
         controllerAs: '$ctrl',

@@ -25,11 +25,9 @@
 
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.guideline">
-                External Functions are AWS Lambda functions stored in your account. By linking your Lambda functions with Backand, you'll
-                be able to invoke your AWS Lambda functions from within your application's security infrastructure, giving
-                you the capability to secure your functions using tools like Azure Active Directory. Once you provide credentials,
-                we will retrieve a list of Lambda functions from your AWS account, and allow you to execute your AWS Lambda
-                functions from Backand. These functions then work like any other custom function in Backand  <ba-help-link key="LambdaLauncher"></ba-help-link>
+                Once you provide AWS credentials, Lambda Launcher will retrieve your Lambda functions under External
+                Functions.<br/><br/>
+                External Functions are AWS Lambda functions stored in your account. By linking your Lambda functions, you'll be able to invoke them from within your application's security infrastructure.<br/>This allows you to secure your functions using tools like Active Directory <ba-help-link key="LambdaLauncher"></ba-help-link>
               </div>
             </div>
             <!-- ./guideline -->
@@ -76,7 +74,7 @@
                 </div>
               </div>
               <div class="list-group-item-body" collapse="$ctrl.sections.lambdaFunctions">
-                <lambda-functions data-active-connection="$ctrl.activeConnection" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)"></lambda-functions>
+                <lambda-functions data-active-connection="$ctrl.activeConnection" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)" launcher-app-url="$ctrl.launcherAppUrl"></lambda-functions>
               </div>
             </div>
             <!-- ./lambda functions -->
