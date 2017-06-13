@@ -28,7 +28,8 @@
           '$rootScope',
           'APP_CONSTS',
           'AppsService',
-          function ($log, usSpinnerService, $modal, $state, modalService, $rootScope, APP_CONSTS, AppsService) {
+          'ConfirmationPopup',
+          function ($log, usSpinnerService, $modal, $state, modalService, $rootScope, APP_CONSTS, AppsService, ConfirmationPopup) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
             /**
@@ -142,12 +143,13 @@
                   });
                 }, function () {
                   $log.info('Cancelled AWS credentials to enter.');
-                  modalService.demoApp().then(function () {
-                  }, function () {
-                    $state.transitionTo($state.current.name, stateParams, {
-                      notify: false
-                    });
-                  });
+                  //msg, okText, cancelText, showOk, showCancel, title, size
+                  ConfirmationPopup.confirm('<p>Connect your AWS account to easily launch Lambda functions.In the meantime, see a demo of the tool in action with example functions.</p> <p class="m-b-0"><a href = "https://lambda.backand.io/#/lambdademo/functions?t=OGQ5ZGFlYTgtMzQzMi00NWMxLTk3MGItOGVhODE4MGZmMTBk" class="btn btn-success" target="_blank">See Live Demo</a></p>','Close','',true,false,'','md')
+                    .then(function (result) {
+                      $state.transitionTo($state.current.name, stateParams, {
+                        notify: false
+                      });
+                    })
                 });
             }
 
@@ -176,7 +178,7 @@
               //Expand AWS connection panel if there is no active connection
               if (!$ctrl.activeConnection.Id) {
                 $ctrl.sections.awsConnection = false;
-              } 
+              }
               getLambdaFunctions();
             }
 
