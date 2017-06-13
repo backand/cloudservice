@@ -70,6 +70,7 @@
                 awsConnection: true,
                 lambdaFunctions: true
               };
+              getApp();
               //opens modal for AWS credentials
               if (isNew()) {
                 awsConnectionModal();
@@ -181,7 +182,14 @@
               }
               getLambdaFunctions();
             }
-
+            function getApp(){
+              AppsService
+              .getApp($ctrl.appName)
+              .then(function(response){
+                $log.info('getApp',response);
+                $ctrl.isAnonymous = _.get(response, 'settings.secureLevel') == "AllUsers";
+              });
+            }
             function setCurrentAppTokens() {
               AppsService.appKeys($ctrl.appName).then(function (response) {
                 $ctrl.tokens = response.data;

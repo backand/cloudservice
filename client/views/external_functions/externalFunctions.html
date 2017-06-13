@@ -113,6 +113,14 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="row m-t-md" data-ng-if="$ctrl.isAnonymous">
+                  <div class="col-xs-12 col-sm-8 col-lg-8">
+                    <div class="alert alert-warning">
+                      Anonymous access is enabled allowing any user with above URL to run your linked Lambda. You can turn it off in the Security <a data-ui-sref="security.auth({appName: $ctrl.appName})">Configuration page</a> 
+                    </div>
+                  </div>
+                </div>
                 <!-- ./static content, @todo will be removed when invite is ready -->
                 <!-- users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users -->
               </div>
