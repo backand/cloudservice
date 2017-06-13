@@ -75,28 +75,10 @@
      */
     function createNewApp() {
       NotificationService.add('info', 'Creating new app...');
-      AppsService.add()
-        .then(function (data) {
-          //get appName from response
-          var appName = data.__metadata.appName;
-          //track event that app is created
-          AnalyticsService.track('CreatedApp', { appName: appName });
-          //create App database with defaultSchema
-          DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema(), 2)
-            .success(function (data) {
-              AnalyticsService.track('CreatedNewDB', { schema: ModelService.defaultSchema() });
-              AnalyticsService.track('create app', { app: appName });
-              AppsService.resetCurrentApp();
-              AppsService
-                .getApp(appName)
-                .then(function () {
-                  var stateParams = { new: 1, appName: appName };
-                  if (isLauncher()) {
-                    stateParams['source'] = 'launcher';
-                  }
-                  $state.go('functions.externalFunctions', stateParams, { reload: true });
-                });
-            });
+      AppsService.createNewAppLambdaLauncher()
+        .then(function(stateParams){
+          stateParams.source = 'launcher';
+          $state.go('functions.externalFunctions', stateParams, { reload: true });
         });
     }
 
