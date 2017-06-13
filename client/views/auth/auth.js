@@ -11,14 +11,12 @@
     self.flags.authenticating = false;
     self.email = '';
 
-    self.template = AuthLayoutService.flags.landing && $state.is('sign_up') ? 'views/auth/auth_landing.html' : 'views/auth/auth_regular.html';
-
     if (AuthLayoutService.flags.landing && $state.is('sign_up') && !$state.params.launcher) {
       self.template = 'views/auth/auth_landing.html';
     } else if ($state.is('sign_up') && $state.params.launcher == 1) {
       self.template = 'views/auth/auth_launcher.html';
     } else {
-      self.template = 'views/auth/auth_landing.html';
+      self.template = 'views/auth/auth_regular.html';
     }
 
     SessionService.clearCredentials();
