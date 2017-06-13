@@ -1,8 +1,8 @@
 
-(function  () {
+(function () {
 
   angular.module('backand')
-    .controller('AuthController', ['AuthService', 'SessionService', 'HttpBufferService', 'NotificationService', '$state', 'usSpinnerService', 'AuthLayoutService','$rootScope','AppsService','DatabaseService','AnalyticsService','ModelService', AuthController]);
+    .controller('AuthController', ['AuthService', 'SessionService', 'HttpBufferService', 'NotificationService', '$state', 'usSpinnerService', 'AuthLayoutService', '$rootScope', 'AppsService', 'DatabaseService', 'AnalyticsService', 'ModelService', AuthController]);
 
   function AuthController(AuthService, SessionService, HttpBufferService, NotificationService, $state, usSpinnerService, AuthLayoutService, $rootScope, AppsService, DatabaseService, AnalyticsService, ModelService) {
     var self = this;
@@ -12,6 +12,14 @@
     self.email = '';
 
     self.template = AuthLayoutService.flags.landing && $state.is('sign_up') ? 'views/auth/auth_landing.html' : 'views/auth/auth_regular.html';
+
+    if (AuthLayoutService.flags.landing && $state.is('sign_up') && !$state.params.launcher) {
+      self.template = 'views/auth/auth_landing.html';
+    } else if ($state.is('sign_up') && $state.params.launcher == 1) {
+      self.template = 'views/auth/auth_launcher.html';
+    } else {
+      self.template = 'views/auth/auth_landing.html';
+    }
 
     SessionService.clearCredentials();
     // when entering login page, reject all pending http requests which were rejected with 401
@@ -31,12 +39,12 @@
       self.flags.authenticating = true;
       var isSignup = false;
 
-      if(social.requireEmail && self.email === '' && $state.current.name === 'sign_up'){
+      if (social.requireEmail && self.email === '' && $state.current.name === 'sign_up') {
         $rootScope.$emit('no-required-email');
         self.flags.authenticating = false;
         return;
       }
-      if(social.requireEmail && self.email !== '' && $state.current.name === 'sign_up') {
+      if (social.requireEmail && self.email !== '' && $state.current.name === 'sign_up') {
         isSignup = true;
       }
 
@@ -44,7 +52,7 @@
       AuthService.socialLogin(social, isSignup, self.email, isSignup)
         .then(function (response) {
           var requestedState = SessionService.getRequestedState();
-          if(isSignup && isLauncher()){
+          if (isSignup && isLauncher()) {
             AnalyticsService.track('SignupLauncher');
             createNewApp();
           } else {
@@ -70,28 +78,28 @@
     function createNewApp() {
       NotificationService.add('info', 'Creating new app...');
       AppsService.add()
-          .then(function (data) {
-            //get appName from response
-            var appName = data.__metadata.appName;
-            //track event that app is created
-            AnalyticsService.track('CreatedApp', { appName: appName });
-            //create App database with defaultSchema
-            DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema(),2)
-                .success(function (data) {
-                  AnalyticsService.track('CreatedNewDB', { schema: ModelService.defaultSchema() });
-                  AnalyticsService.track('create app', { app: appName });
-                  AppsService.resetCurrentApp();
-                  AppsService
-                      .getApp(appName)
-                      .then(function () {
-                        var stateParams = { new: 1, appName: appName };
-                        if (isLauncher()) {
-                          stateParams['source'] = 'launcher';
-                        }
-                        $state.go('functions.externalFunctions', stateParams, { reload: true });
-                      });
+        .then(function (data) {
+          //get appName from response
+          var appName = data.__metadata.appName;
+          //track event that app is created
+          AnalyticsService.track('CreatedApp', { appName: appName });
+          //create App database with defaultSchema
+          DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema(), 2)
+            .success(function (data) {
+              AnalyticsService.track('CreatedNewDB', { schema: ModelService.defaultSchema() });
+              AnalyticsService.track('create app', { app: appName });
+              AppsService.resetCurrentApp();
+              AppsService
+                .getApp(appName)
+                .then(function () {
+                  var stateParams = { new: 1, appName: appName };
+                  if (isLauncher()) {
+                    stateParams['source'] = 'launcher';
+                  }
+                  $state.go('functions.externalFunctions', stateParams, { reload: true });
                 });
-          });
+            });
+        });
     }
 
     /**
