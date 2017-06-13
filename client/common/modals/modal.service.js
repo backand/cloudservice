@@ -47,7 +47,9 @@
             size: options.size || 'md',
             controller: 'DemoAppModalController',
             bindToController: true,
-            controllerAs: '$ctrl'
+            controllerAs: '$ctrl',
+            backdrop: 'static',
+            backdropClass: 'dark'
           }).result;
         }
 
@@ -66,7 +68,9 @@
             size: options.size || 'md',
             controller: 'AwsModalController',
             bindToController: true,
-            controllerAs: '$ctrl'
+            controllerAs: '$ctrl',
+            backdrop: 'static',
+            backdropClass: 'dark'
           }).result;
         }
 
