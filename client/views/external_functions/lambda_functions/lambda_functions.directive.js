@@ -158,7 +158,7 @@
                   }
                 })
               } else {
-                func.selected = flag;
+                func.selected = response[0]['select'];
                 func.functionId = response[0]['functionId'];
               }
             }
