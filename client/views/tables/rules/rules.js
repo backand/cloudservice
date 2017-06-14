@@ -85,20 +85,21 @@
         self.showHowItWorks = $localStorage.backand[self.appName].nodeJsShowHowItWorks;
       }
 
-      if($stateParams.functionId > 0){
-
-        RulesService.getRule($stateParams.functionId)
-          .then(function(data){
-            loadAction(data);
-            self.ruleData = data;
-          });
-      }
       if ($localStorage.backand[self.appName] && $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation === undefined) {
         $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation = false;
       }
 
       if($localStorage.backand[self.appName]){
         self.showFirstTimeInstallation = $localStorage.backand[self.appName].nodeJsShowFirstTimeInstallation;
+      }
+
+      if($stateParams.functionId > 0){
+
+        RulesService.getRule($stateParams.functionId)
+            .then(function(data){
+              loadAction(data);
+              self.ruleData = data;
+            });
       }
 
 

@@ -14,11 +14,9 @@
               <div class="form-inline" name="rules.newRuleForm">
                 <div class="form-group" ng-class="{'has-error': rules.newRuleForm.ruleName.$invalid}">
                   <label for="ruleName"><h3 class="title">{{rules.mode.title}} - </h3></label>
-                  <input type="text" id="ruleName" name="ruleName" class="rule-name form-control" ng-model="rules.action.name" required ng-pattern="rules.namePattern"
-                    ng-trim="false" placeholder="Name your {{modal.title.toLowerCase()}}" ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)">
+                  <input type="text" id="ruleName" name="ruleName" class="rule-name form-control" ng-model="rules.action.name" required ng-pattern="rules.namePattern" ng-trim="false" placeholder="Name your {{modal.title.toLowerCase()}}" ng-disabled="!rules.editMode || rules.isConstName(rules.action.name)"/>
                   <ba-tooltip tooltip-text="Use the name in the request URL query string of the REST API" tooltip-placement="right" class=""></ba-tooltip>
-                  <a ng-if="rules.action" href="" id="action-refresh" title="Refresh {{rules.mode.title}}" class="btn btn-sm" ng-click="rules.refresh()"><i
-                    class="glyphicon glyphicon-refresh"></i></a>
+                  <a ng-if="rules.action" href="" id="action-refresh" title="Refresh {{rules.mode.title}}" class="btn btn-sm" ng-click="rules.refresh()"><i class="glyphicon glyphicon-refresh"></i></a>
                   <span ng-show="rules.editMode && rules.isConstName(rules.action.name)">The name
                     cannot be modified.</span>
                   <div ng-messages="rules.newRuleForm.ruleName.$error">
@@ -26,9 +24,8 @@
                   </div>
                 </div>
               </div>
-
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-5 text-right">
+            <div class="col-lg-4 col-md-4 col-sm-5 text-right" style="padding-right: 0px;">
               <button type="button" name="testCode" ng-show="!rules.isNewAction && !rules.requestTestForm" class="btn btn-edit btn-xs"
                 ng-click="rules.toggleTestForm()">{{'Test ' + rules.mode.title}}</button>
               <button type="button" ng-show="rules.allowEditAction()" ng-click="rules.editAction()" class="btn btn-primary btn-validate m-t-0">Edit {{rules.mode.title}}</button>
@@ -37,7 +34,8 @@
                 <button type="button" ng-if="!rules.mode.name.includes('function')" ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
                   style="padding-left: 35px !important;" class="btn btn-edit btn-default">{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel' }}</button>
 
-                <button ng-disabled="rules.newRuleForm.$invalid" class="btn btn-validate m-t-0" ladda="rules.saving" data-style="expand-right"
+                <button ng-disabled="rules.newRuleForm.$invalid" class="btn btn-validate m-t-0"
+                        ladda="rules.saving" data-style="expand-right"
                   ng-if="rules.currentState !== 'functions.newlambdafunctions'">
                   Save
                 </button>
@@ -46,106 +44,140 @@
 
               </div>
             </div>
-            <br/>
-
           </div>
         </div>
 
         <div class="clearfix">
 
           <fieldset>
-            <br/>
-            <div class="form-group col-lg-12 col-md-12 col-sm-12 rule-no-right-padding" ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}"
-              ng-if="!rules.mode.name.includes('function')">
-              <label>Event Trigger</label>
-              <ba-tooltip tooltip-text="Select the event that will trigger the {{rules.mode.title}}: on-demand via REST API or by CRUD request"
-                tooltip-placement="right" class=""></ba-tooltip>
-              <select class="form-control" ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions" ng-model="rules.action.dataAction"
-                required ng-disabled="!rules.editMode" ng-change="rules.onDataActionChange()">
-                <option value="">Select trigger...</option>
-              </select>
+            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+              <a class="node-js-show-hide" style="font-size:18px;" href=""
+                 ng-click="rules.showAdvancedProperties = !rules.showAdvancedProperties"
+                 ng-if="rules.mode.name.includes('function') && rules.action.workflowAction ==='JavaScript'">Function Properties <i class="ti-arrow-circle-down"></i></a>
             </div>
-
-            <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{'has-error': rules.newRuleForm.action.$invalid}">
-
-              <label for="workflowAction">Type</label>
-              <ba-tooltip tooltip-text="Select if you would like to run JavaScipt code, send email or execute database transaction script"
-                tooltip-placement="right" class=""></ba-tooltip>
-              <select class="form-control" name="action" id="workflowAction" required ng-options="workflowAction.value as workflowAction.label for workflowAction in rules.workflowActions"
-                ng-model="rules.action.workflowAction" ng-init="rules.action.workflowAction = rules.action.workflowAction || 'JavaScript'; rules.onDataActionChange();"
-                ng-model-options="{debounce: 0}" ng-change="rules.onTypeChange()" ng-disabled="!rules.editMode || !rules.isNewAction">
-                <option value="">Select what to do...</option>
-              </select>
-            </div>
-
-            <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction" ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
-              <label>Input Parameters</label>
-              <ba-tooltip tooltip-text="Use this to send additional parameters to the {{rules.mode.name.includes('function') ? 'function' : 'action'}}"
-                tooltip-placement="right" class=""></ba-tooltip>
-              <input type="text" ng-change="modal.buildParameters()" name="inputParameters" class="form-control" ng-model="rules.action.inputParameters"
-                ng-pattern="rules.paramsPattern" placeholder="input1,input2,...." ng-disabled="!rules.editMode && !rules.isNodeJS">
-              <div ng-messages="rules.newRuleForm.inputParameters.$error">
-                <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.
-                </div>
+            <div ng-show="!rules.mode.name.includes('function') || rules.showAdvancedProperties || rules.action.workflowAction !=='JavaScript'">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{'has-error': rules.newRuleForm.friendlyName.$invalid}"
+                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS)">
+                <label>Friendly Name</label>
+                <input type="text" name="friendlyName" class="form-control" ng-model="rules.action.friendlyName"
+                       placeholder="Your friendly name" ng-disabled="!rules.editMode">
               </div>
-            </div>
-            <div class="form-group" ng-if="rules.editMode && (rules.mode.name.includes('function') && rules.currentState !== 'functions.newlambdafunctions')">
-              <div class="row security-header">
-                <div class="col-lg-4">
-                  <label class="strong">Security Template</label>
-                  <select class="form-control" ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in rules.workspaces"
-                    ng-model="rules.currentST" required ng-change="rules.changePermissions()" ng-disabled="rules.precedent">
-                  </select>
-                </div>
-                <div class="col-lg-4">
-                  <div class="override-template"><label> override</label>
-                    <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
-                      <input id="override-checkbox" type="checkbox" ng-model="rules.precedent"/><i></i>
-                    </label>
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-class="{'has-error': rules.newRuleForm.description.$invalid}"
+                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS)">
+                <label>Description</label>
+                <textarea
+                        class="form-control"
+                        name="description"
+                        id="description"
+                        ng-disabled="!rules.editMode"
+                        ng-model="rules.action.description"
+                        style="resize: vertical; height: 90px;">
+                </textarea>
+                <!--<bknd-ace-features editor="rules.ace.editor">-->
+                  <!--<div-->
+                          <!--ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'html', rendererOptions: { fontSize: 15 } }"-->
+                          <!--class="form-control ace-db-template"-->
+                          <!--name="description"-->
+                          <!--id="description"-->
+                          <!--ng-readonly="!rules.editMode"-->
+                          <!--ng-model="rules.action.description"-->
+                          <!--style="resize: vertical; height: 100px;">-->
+                  <!--</div>-->
+                <!--</bknd-ace-features>-->
+              </div>
+              <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}"
+                ng-if="!rules.mode.name.includes('function')">
+                <label>Event Trigger</label>
+                <ba-tooltip tooltip-text="Select the event that will trigger the {{rules.mode.title}}: on-demand via REST API or by CRUD request"
+                  tooltip-placement="right" class=""></ba-tooltip>
+                <select class="form-control" ng-options="dataAction.value as dataAction.label for dataAction in modal.dataActions" ng-model="rules.action.dataAction"
+                  required ng-disabled="!rules.editMode" ng-change="rules.onDataActionChange()">
+                  <option value="">Select trigger...</option>
+                </select>
+              </div>
+              <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{'has-error': rules.newRuleForm.action.$invalid}" ng-show="!rules.mode.name.includes('function')">
+                <label for="workflowAction">Type</label>
+                <ba-tooltip tooltip-text="Select if you would like to run JavaScipt code, send email or execute database transaction script"
+                  tooltip-placement="right" class=""></ba-tooltip>
+                <select class="form-control" name="action" id="workflowAction" required ng-options="workflowAction.value as workflowAction.label for workflowAction in rules.workflowActions"
+                  ng-model="rules.action.workflowAction" ng-init="rules.action.workflowAction = rules.action.workflowAction || 'JavaScript'; rules.onDataActionChange();"
+                  ng-model-options="{debounce: 0}" ng-change="rules.onTypeChange()" ng-disabled="!rules.editMode || !rules.isNewAction">
+                  <option value="">Select what to do...</option>
+                </select>
+              </div>
+              <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction && (!rules.isNewAction || !rules.isNodeJS)" ng-class="{'has-error': rules.newRuleForm.inputParameters.$invalid}">
+                <label>Input Parameters</label>
+                <ba-tooltip tooltip-text="Use this to send additional parameters to the {{rules.mode.name.includes('function') ? 'function' : 'action'}}"
+                  tooltip-placement="right" class=""></ba-tooltip>
+                <input type="text" ng-change="modal.buildParameters()" name="inputParameters" class="form-control" ng-model="rules.action.inputParameters"
+                  ng-pattern="rules.paramsPattern" placeholder="input1,input2,...." ng-disabled="!rules.editMode">
+                <div ng-messages="rules.newRuleForm.inputParameters.$error">
+                  <div ng-message="pattern" class="text-danger">Use only letters, numbers and underscore for the parameters. Use commas as delimiters.
                   </div>
                 </div>
               </div>
-              <div ng-if="rules.precedent" style="padding-left: 15px;">
-                <label>Read Permissions</label>
-                <ul class="list-style-none">
-                  <li ng-repeat="role in rules.roles">
-                    <input type="checkbox" ng-model="rules.allowSelectRolesObject[role.Name]" id="permissions-checkbox-{{role.Name}}" ng-disabled="!rules.precedent">
-                    </input>
-                    <label for="permissions-checkbox-{{role.Name}}">
-                      {{ role.Name }}
-                    </label>
-                  </li>
-                </ul>
+              <div class="form-group"
+                   ng-if="(rules.mode.name.includes('function') && rules.currentState !== 'functions.newlambdafunctions')">
+                <div class="row security-header">
+                  <div class="col-lg-4">
+                    <label>Security Template</label>
+                    <select class="form-control" ng-options="workspace.__metadata.id as workspace.workspaceName for workspace in rules.workspaces"
+                      ng-model="rules.currentST" required ng-change="rules.changePermissions()"
+                            ng-disabled="rules.precedent || !rules.editMode">
+                    </select>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="override-template"><label> override</label>
+                      <label class="ui-switch ui-switch-success ui-switch-sm" for="override-checkbox">
+                        <input id="override-checkbox" type="checkbox" ng-disabled="!rules.editMode" ng-model="rules.precedent"/><i></i>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="rules.precedent" style="padding-left: 15px;">
+                  <label>Read Permissions</label>
+                  <ul class="list-style-none">
+                    <li ng-repeat="role in rules.roles">
+                      <input type="checkbox" ng-model="rules.allowSelectRolesObject[role.Name]" id="permissions-checkbox-{{role.Name}}" ng-disabled="!rules.precedent">
+                      </input>
+                      <label for="permissions-checkbox-{{role.Name}}">
+                        {{ role.Name }}
+                      </label>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
             <!-- /how it works -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="list-group list-group-with-tabs">
-                <div class="list-group-item">
-                  <div class="list-group-item-header" data-ng-click="guideline = !guideline">
-                    <h4 class="list-group-item-heading">How it works</h4>
-                    <div class="list-group-item-toolbar">
-                      <span tooltip="{{!guideline ? 'Hide' : 'Show'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
-                    <i ng-class="{'fa fa-minus': !guideline, 'fa fa-plus': guideline}" class="fa fa-minus"></i>
-                  </span>
+            <div class="row" data-ng-if="rules.action.workflowAction ==='Lambda'">
+              <div class="col-md-12">
+                <div class="list-group list-group-with-tabs">
+                  <div class="list-group-item">
+                    <div class="list-group-item-header" data-ng-click="guideline = !guideline">
+                      <h4 class="list-group-item-heading">How it works</h4>
+                      <div class="list-group-item-toolbar">
+                        <span tooltip="{{!guideline ? 'Hide' : 'Show'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
+                      <i ng-class="{'fa fa-minus': !guideline, 'fa fa-plus': guideline}" class="fa fa-minus"></i>
+                    </span>
+                      </div>
+
                     </div>
+                    <div class="list-group-item-body in" collapse="guideline" style="height: auto;">
+                      <p>Backand uses your provided AWS Credentials to invoke Lambda functions hosted in your AWS Account. You can do this using our SDK, or from the command line using the Backand CLI. This integrates with your app's Backand security schema, giving your users full access to vital AWS Lambda functions without needing to create another log-in for the AWS Console.</p>
+                      <p>To invoke the function using our SDK, use the following code:</p>
+                      <pre>backand.fn.get("function_name",{"parameter_1":"value_1"}).then(...).catch(...);</pre>
+                      <p>To invoke the function from our CLI: You will need to call "backand signin" to authenticate with your app first</p>
+                      <pre>backand function run --name "function_name"</pre>
 
-                  </div>
-                  <div class="list-group-item-body in" collapse="guideline" style="height: auto;">
-                    <p>Backand uses your provided AWS Credentials to invoke Lambda functions hosted in your AWS Account. You can do this using our SDK, or from the command line using the Backand CLI. This integrates with your app's Backand security schema, giving your users full access to vital AWS Lambda functions without needing to create another log-in for the AWS Console.</p>
-                    <p>To invoke the function using our SDK, use the following code:</p>
-                    <pre>backand.fn.get("function_name",{"parameter_1":"value_1"}).then(...).catch(...);</pre>
-                    <p>To invoke the function from our CLI: You will need to call "backand signin" to authenticate with your app first</p>
-                    <pre>backand function get --name "function_name"</pre>
-
-                    <p><i>Note: Backand can only run external functions</i> - you will not be able to deploy external function code using this technique. You'll need to continue to deploy new versions of your external functions in the AWS Console via the AWS Lambda editor, AWS S3, or zip-file upload</p>
+                      <p><i>Note: Backand can only run external functions</i> - you will not be able to deploy external function code using this technique. You'll need to continue to deploy new versions of your external functions in the AWS Console via the AWS Lambda editor, AWS S3, or zip-file upload</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- ./how it works -->
+            <!-- ./how it works -->
             <div ng-switch="rules.action.workflowAction">
 
               <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction">
@@ -209,8 +241,8 @@
                 <!-- ./code -->
                 <!-- end switch -->
               </div>
-
-              <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction && !rules.isNodeJS" ng-class="{'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty}">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12"
+                   ng-show="rules.action.workflowAction && !rules.isNodeJS && rules.action.workflowAction !=='Lambda'" ng-class="{'has-error': rules.newRuleForm.whereCondition.$invalid && rules.newRuleForm.whereCondition.$dirty}">
                 <label for="whereCondition">Where Condition</label>
                 <ba-tooltip tooltip-text="SQL where clause that determines if the {{rules.mode.name.includes('function') ? 'function' : 'action'}} will be performed"
                   tooltip-placement="right" class=""></ba-tooltip>
@@ -224,120 +256,109 @@
                 <span ng-show="rules.editMode">** Enter 'true' to ensure the {{rules.mode.name.includes('function') ? 'function' : 'action'}} always executes, or use the anchor icon to build a condition governing the execution</span>
               </div>
 
-              <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.isNodeJS">
-                <div class="panel-body docs">
-                  <div ng-show="rules.allowEditAction()">
-                    <section class="panel panel-default">
-                      <div class="panel-heading">
-                        <strong>Hosted node.js Files</strong>
-                        <a href="" title="Refresh tree" class="btn btn-sm" ng-click="rules.refreshTree()"><i
-                          class="glyphicon glyphicon-refresh"></i></a>
-                      </div>
-                      <div class="panel-body">
-                        <bknd-tree-control refresh-tree="rules.refreshTree"></bknd-tree-control>
-                      </div>
-                    </section>
-                  </div>
-                  <div>
-                    <h3>Documentation</h3>
-                    <br/>
-                    <p>Documentation on Backand's AWS Lambda Node.JS server-side functions is available
-                      <A href="http://docs.backand.com/#server-side-node-js-lambda-actions" target="_blank">here</a>. </p>
-                    <br/>
-                    <h3>First Time Installation <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href="" ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation
-                      ? "Hide": "Show"}}</a></h3>
-                    <br/>
-                    <div ng-if="rules.showFirstTimeInstallation || !rules.allowEditAction()">
-                      <p>The Backand CLI (command-line interface), which is used to control deployment, requires Node.js and
-                        npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/"
-                          target="_blank">https://nodejs.org/</a>.<br/><br/> Run the following command to install Backand CLI
-                        tool:
-                      </p>
-                      <pre><code class="bash">
+              <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-if="rules.isNodeJS && !rules.isNewAction">
+                <hr/>
+                <h4>Hosted node.js Files
+                <a href="" title="Refresh tree" class="btn btn-sm" ng-click="rules.refreshTree()"><i
+                        class="glyphicon glyphicon-refresh"></i></a></h4>
+                <bknd-tree-control refresh-tree="rules.refreshTree"></bknd-tree-control>
+                <hr/>
+              </div>
+              <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-show="rules.action.workflowAction == 'NodeJS'">
+                <h3>Documentation<br/></h3>
+                <p ng-if="rules.isNewAction">Documentation on Backand's AWS Lambda Node.JS server-side functions is available
+                  <A href="http://docs.backand.com/#server-side-node-js-lambda-actions" target="_blank">here</a>.<br/></p>
+
+                <h4>First Time Installation <a class="node-js-show-hide" ng-if="rules.allowEditAction()" href="" ng-click="rules.showFirstTimeInstallation = !rules.showFirstTimeInstallation">{{rules.showFirstTimeInstallation
+                  ? "Hide": "Show"}}</a></h4>
+                <br/>
+                <div ng-if="rules.showFirstTimeInstallation || !rules.allowEditAction()">
+                  <p>The Backand CLI (command-line interface), which is used to control deployment, requires Node.js and
+                    npm to be installed. Both can be installed by following the instructions at <a href="https://nodejs.org/"
+                      target="_blank">https://nodejs.org/</a>.<br/><br/> Run the following command to install Backand CLI
+                    tool:
+                  </p>
+                  <pre><code class="bash">
   $ npm install -g backand
 
   # or use sudo (with caution) if required by your system permissions
   # sudo npm install -g backand
 
-                    </code></pre>
-                      <p>
-                        To <b>update</b> a previously-installed version of Backand CLI - <a href="" ng-click="rules.showUpdate = !rules.showUpdate">{{rules.showUpdate
-                        ? "Hide": "Show"}}</a>
-                      </p>
-                      <pre ng-if="rules.showUpdate"><code class="bash">
+                </code></pre>
+                  <p>
+                    To <b>update</b> a previously-installed version of Backand CLI - <a href="" ng-click="rules.showUpdate = !rules.showUpdate">{{rules.showUpdate
+                    ? "Hide": "Show"}}</a>
+                  </p>
+                  <pre ng-if="rules.showUpdate"><code class="bash">
   $ npm update -g backand
 
   # or use sudo (with caution) if required by your system permissions
   # sudo npm update -g backand
 
-                  </code></pre>
-                      <br/>
-                    </div>
+              </code></pre>
+                  <br/>
+                </div>
 
-                    <h3 ng-if="!rules.allowEditAction()">Initialize your {{modal.title.toLowerCase()}}</h3>
-                    <h3 ng-if="rules.allowEditAction()">Deploy your {{modal.title.toLowerCase()}}</h3>
-                    <br/>
-                    <p ng-if="rules.allowEditAction()">To deploy your local node.js code to Back&, use the following command on the command line:</p>
-                    <p ng-if="!rules.allowEditAction()">To initiate on your local folder the node.js code for the {{rules.mode.name.includes('function') ? 'function' : 'action'}},
-                      use the following command on the command line:</p>
-                    <div ng-show="!rules.allowEditAction()">
-                      <pre><code>
+                <h4 ng-if="!rules.allowEditAction()">Initialize your {{modal.title.toLowerCase()}}</h4>
+                <h4 ng-if="rules.allowEditAction()">Deploy your {{modal.title.toLowerCase()}}</h4>
+                <br/>
+                <p ng-if="rules.allowEditAction()">To deploy your local node.js code to Back&, use the following command on the command line:</p>
+                <p ng-if="!rules.allowEditAction()">To initiate on your local folder the node.js code for the {{rules.mode.name.includes('function') ? 'function' : 'action'}},
+                  use the following command on the command line:</p>
+                <div ng-show="!rules.allowEditAction()">
+                  <pre><code>
   {{rules.getNodeInitCommand()}}
-                      </code></pre>
-                      <button class="btn btn-default copy-cli-command" type="button" clip-copy="rules.getNodeInitCommand()" ng-click="rules.initCopied = true"
-                        ng-class="{'btn-success': rules.initCopied === true}">Copy
-                      </button>
-                    </div>
+                  </code></pre>
+                  <button class="btn btn-default copy-cli-command" type="button" clip-copy="rules.getNodeInitCommand()" ng-click="rules.initCopied = true"
+                    ng-class="{'btn-success': rules.initCopied === true}">Copy
+                  </button>
+                </div>
 
-                    <div ng-if="rules.allowEditAction()">
-                      <pre><code>
+                <div ng-if="rules.allowEditAction()">
+                  <pre><code>
   {{rules.getNodeDeployCommand()}}
 
-</code></pre>
-                      <button class="btn btn-default copy-cli-command" type="button" clip-copy="rules.getNodeDeployCommand()" ng-click="rules.deployCopied = true"
-                        ng-class="{'btn-success': rules.deployCopied === true}">Copy
-                      </button>
-                    </div>
-                    <p>
-                      <b>--app</b>: The current app name
-                      <div ng-if="!rules.mode.name.includes('function')">
-                        <b>--object</b>: The object that the action belongs to<br/>
-                        <b>--action</b>: The action name<br/>
-                      </div>
-                      <div ng-if="rules.mode.name.includes('function')">
-                        <b>--name</b>: The function name
-                      </div>
-                      <b>--master</b>: The master token of the app (get it from <a href="" ui-sref="security.keys">Social
-                    & Keys</a>)<br/>
-                      <b>--user</b>: The token of the current user (get it from <a href="" ui-sref="security.team">Team</a>                      and click on key icon)<br/>
-                      <span ng-if="rules.allowEditAction()"><b>--folder</b>: Optional, By default the deployment is from the current folder, specify for other location</span>
-                      <br/>
-                    </p>
-                    <h3 ng-if="rules.allowEditAction()">Add Backand SDK to node.js</h3>
-                    <p>** In order to work with other actions in Backand, or to retrieve and modify other Backand objects, you'll
-                      need to install the Back& SDK for Node.js. An example of how to do this is included in the comments
-                      in the provided index.js file</p>
-                    <pre ng-if="rules.allowEditAction()"><code>
+  </code></pre>
+                  <button class="btn btn-default copy-cli-command" type="button" clip-copy="rules.getNodeDeployCommand()" ng-click="rules.deployCopied = true"
+                    ng-class="{'btn-success': rules.deployCopied === true}">Copy
+                  </button>
+                </div>
+                <p>
+                  <b>--app</b>: The current app name
+                  <div ng-if="!rules.mode.name.includes('function')">
+                    <b>--object</b>: The object that the action belongs to<br/>
+                    <b>--action</b>: The action name<br/>
+                  </div>
+                  <div ng-if="rules.mode.name.includes('function')">
+                    <b>--name</b>: The function name
+                  </div>
+                  <b>--master</b>: The master token of the app (get it from <a href="" ui-sref="security.keys">Social
+                & Keys</a>)<br/>
+                  <b>--user</b>: The token of the current user (get it from <a href="" ui-sref="security.team">Team</a>                      and click on key icon)<br/>
+                  <span ng-if="rules.allowEditAction()"><b>--folder</b>: Optional, By default the deployment is from the current folder, specify for other location</span>
+                  <br/>
+                </p>
+                <br/>
+                <h4 ng-if="rules.allowEditAction()">Add Backand SDK to node.js</h4>
+                <p>** In order to work with other actions in Backand, or to retrieve and modify other Backand objects, you'll
+                  need to install the Back& SDK for Node.js. An example of how to do this is included in the comments
+                  in the provided index.js file</p>
+                <pre ng-if="rules.allowEditAction()"><code>
   $ npm install @backand/nodejs-sdk --save
 
-</code></pre>
-                  </div>
-                </div>
-              </div>
-
-              <div class="modal-footer" ng-show="rules.action && (rules.editMode || rules.isNodeJS) ">
-                <button class="btn btn-validate" ng-disabled="rules.newRuleForm.$invalid" ladda="rules.saving" style="margin-top: 0;" data-style="expand-right"
-                  ng-show="!rules.isNodeJS">Save
-                </button>
-                <input type="button" class="btn btn-danger pull-left" ng-click="rules.deleteAction()" ng-if="rules.action.__metadata" value="Delete">
-                </input>
-                <input type="button" ng-hide="rules.isNodeJS" style="padding-left: 35px;" class="btn btn-edit" ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
-                  value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">
-                </input>
-              </div>
-            </div>
+  </code></pre>
+              </div></div>
+            <div class="modal-footer" ng-show="rules.action && (rules.editMode || rules.isNodeJS) ">
+              <button class="btn btn-validate" ng-disabled="rules.newRuleForm.$invalid" ladda="rules.saving" style="margin-top: 0;" data-style="expand-right"
+                ng-show="!rules.isNodeJS">Save
+              </button>
+              <input type="button" class="btn btn-danger pull-left" ng-click="rules.deleteAction()" ng-if="rules.action.__metadata" value="Delete">
+              </input>
+              <input type="button" ng-hide="rules.isNodeJS" style="padding-left: 35px;" class="btn btn-edit" ng-click="rules.newRuleForm.$pristine ? rules.doneEdit() : rules.cancelEdit()"
+                value="{{ rules.newRuleForm.$pristine ? 'Done' : 'Cancel'}}">
+              </input>
+          </div>
           </fieldset>
-
         </div>
       </form>
     </div>
@@ -345,5 +366,4 @@
       ng-include="'views/tables/rules/test_code_window.html'">
     </div>
   </div>
-
 </div>
