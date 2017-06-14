@@ -91,7 +91,12 @@
                   usSpinnerService.stop('loading');
                 });
             }
-
+            /**
+             * @name extractAllFunctions
+             * @description extract functions from all regions
+             * sets all functions in $ctrl.allFunctions
+             * @param {object} response 
+             */
             function extractAllFunctions(response) {
               var functions = response.data.data[0] ? response.data.data[0].functions : [];
               var flatA = _.flattenDeep(_.map(functions, function (a) {
