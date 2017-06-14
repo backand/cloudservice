@@ -72,7 +72,7 @@
                   $ctrl.lambdaFunctions = response.data.data[0] ? response.data.data[0].functions : [];
                   //Expand collapsible if lambdaFunctions > 0
                   $ctrl.hasFunctions = _.keys($ctrl.lambdaFunctions).length > 0;
-
+                  extractAllFunctions(response);
                   //invoke callback
                   if (typeof $ctrl.onLoad === 'function') {
                     $ctrl.onLoad({
@@ -90,6 +90,15 @@
                   $log.error('Error while fetching Lambda functions', error);
                   usSpinnerService.stop('loading');
                 });
+            }
+
+            function extractAllFunctions(response) {
+              var functions = response.data.data[0] ? response.data.data[0].functions : [];
+              var flatA = _.flattenDeep(_.map(functions, function (a) {
+                return a;
+              }));
+
+              $ctrl.allFunctions = flatA;
             }
 
             /**
@@ -147,7 +156,14 @@
                   $log.error('Error while updating function\'s status', error);
                 });
             }
-
+            /**
+             * @name updateFunctionIds
+             * @description updates selected and functionId in function Object
+             * 
+             * @param {object} func 
+             * @param {boolean} flag 
+             * @param {object} response 
+             */
             function updateFunctionIds(func, flag, response) {
               if (_.isArray(func)) {
                 _.forEach(func, function (f) {
@@ -162,9 +178,16 @@
                 func.functionId = response[0]['functionId'];
               }
             }
-
+            /**
+             * @name selectThreeFunctions
+             * @description An helper function which calls updateFunctionIds to update functions
+             * 
+             * @param {object} response 
+             * @param {boolean} flag 
+             * @param {integer} metaId 
+             */
             function selectThreeFunctions(response, flag, metaId) {
-              var functions =response.data.data[0] ? response.data.data[0].functions : [];
+              var functions = response.data.data[0] ? response.data.data[0].functions : [];
               var flatA = _.flattenDeep(_.map(functions, function (a) {
                 return a;
               }));
