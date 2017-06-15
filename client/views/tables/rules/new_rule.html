@@ -58,14 +58,14 @@
             <div ng-show="!rules.mode.name.includes('function') || rules.showAdvancedProperties || rules.action.workflowAction !=='JavaScript'">
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
                    ng-class="{'has-error': rules.newRuleForm.friendlyName.$invalid}"
-                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS)">
+                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS) && false">
                 <label>Friendly Name</label>
                 <input type="text" name="friendlyName" class="form-control" ng-model="rules.action.friendlyName"
                        placeholder="Your friendly name" ng-disabled="!rules.editMode">
               </div>
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
                    ng-class="{'has-error': rules.newRuleForm.description.$invalid}"
-                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS)">
+                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS) && false">
                 <label>Description</label>
                 <textarea
                         class="form-control"
@@ -75,17 +75,6 @@
                         ng-model="rules.action.description"
                         style="resize: vertical; height: 90px;">
                 </textarea>
-                <!--<bknd-ace-features editor="rules.ace.editor">-->
-                  <!--<div-->
-                          <!--ui-ace="{onLoad : rules.ace.onLoad, theme:'dawn', mode: 'html', rendererOptions: { fontSize: 15 } }"-->
-                          <!--class="form-control ace-db-template"-->
-                          <!--name="description"-->
-                          <!--id="description"-->
-                          <!--ng-readonly="!rules.editMode"-->
-                          <!--ng-model="rules.action.description"-->
-                          <!--style="resize: vertical; height: 100px;">-->
-                  <!--</div>-->
-                <!--</bknd-ace-features>-->
               </div>
               <div class="form-group col-lg-12 col-md-12 col-sm-12" ng-class="{'has-error': rules.newRuleForm.eventTrigger.$invalid}"
                 ng-if="!rules.mode.name.includes('function')">
