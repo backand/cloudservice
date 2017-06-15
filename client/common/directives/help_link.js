@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   function baHelpLink() {
@@ -28,15 +28,15 @@
             "section": "Public App",
             "url": "http://docs.backand.com/#security-configuration"
           },
-          "customPages":{
-            "page":"security/auth",
-            "section":"Custom Registration Page URL",
-            "url":"http://docs.backand.com/#security-configuration"
+          "customPages": {
+            "page": "security/auth",
+            "section": "Custom Registration Page URL",
+            "url": "http://docs.backand.com/#security-configuration"
           },
-          "emailVerification":{
-            "page":"security/auth",
+          "emailVerification": {
+            "page": "security/auth",
             "section": "Sign-up Email Verification",
-            "url":"http://docs.backand.com/#email-verification-process"
+            "url": "http://docs.backand.com/#email-verification-process"
           },
           "socialAndKeysGeneral": {
             "page": "security/social_and_keys",
@@ -77,9 +77,9 @@
             "section": "Google",
             "url": "http://docs.backand.com/#social-keys"
           },
-          "refreshToken":{
+          "refreshToken": {
             "page": "security/social_and_keys",
-            "url":"http://docs.backand.com/#authentication-with-oauth-2-0"
+            "url": "http://docs.backand.com/#authentication-with-oauth-2-0"
           },
           "socialAndKeysGithub": {
             "page": "security/social_and_keys",
@@ -90,68 +90,73 @@
             "page": "objects/model",
             "url": "http://docs.backand.com/#objects"
           },
-          "preDefinedFilter":{
-            "page":"objects/security",
-            "url":"http://docs.backand.com/#objects"
+          "preDefinedFilter": {
+            "page": "objects/security",
+            "url": "http://docs.backand.com/#objects"
           },
-          "objectSecurityTemplate":{
-            "page":"objects/security",
-            "url":"http://docs.backand.com/#roles-security-templates"
+          "objectSecurityTemplate": {
+            "page": "objects/security",
+            "url": "http://docs.backand.com/#roles-security-templates"
           },
-          "registeredUsers":{
-            "page":"security/users",
-            "url":"http://docs.backand.com/#link-your-apps-users-with-backands-registered-users"
+          "registeredUsers": {
+            "page": "security/users",
+            "url": "http://docs.backand.com/#link-your-apps-users-with-backands-registered-users"
           },
-          "adminUsers":{
-            "page":"security/team",
-            "url":"http://docs.backand.com/#team"
+          "adminUsers": {
+            "page": "security/team",
+            "url": "http://docs.backand.com/#team"
           },
-          "securityActions":{
-            "page":"security/actions",
-            "url":"http://docs.backand.com/#security-actions"
+          "securityActions": {
+            "page": "security/actions",
+            "url": "http://docs.backand.com/#security-actions"
           },
-          "securityTemplates":{
-            "page":"security/actions",
-            "url":"http://docs.backand.com/#security-templates"
+          "securityTemplates": {
+            "page": "security/actions",
+            "url": "http://docs.backand.com/#security-templates"
           },
-          "logConfiguration":{
-            "page":"log/config",
-            "url":"http://docs.backand.com/#configuration91"
+          "logConfiguration": {
+            "page": "log/config",
+            "url": "http://docs.backand.com/#configuration91"
           },
-          "dataHistory":{
-            "page":"log/config",
-            "url":"http://docs.backand.com/#data-history"
+          "dataHistory": {
+            "page": "log/config",
+            "url": "http://docs.backand.com/#data-history"
           },
-          "appException":{
-            "page":"log/exception",
-            "url":"http://docs.backand.com/#server-side-exceptions"
+          "appException": {
+            "page": "log/exception",
+            "url": "http://docs.backand.com/#server-side-exceptions"
           },
-          "nosqlQuery":{
-            "url":"http://docs.backand.com/#nosql-query-language",
-            "page":"queries"
+          "nosqlQuery": {
+            "url": "http://docs.backand.com/#nosql-query-language",
+            "page": "queries"
           },
-          "realtime":{
-            "url":"http://docs.backand.com/#realtime-database-communications",
-            "page":"actoinhelp"
+          "realtime": {
+            "url": "http://docs.backand.com/#realtime-database-communications",
+            "page": "actoinhelp"
           },
-          "ContinuousDeployment":{
-            "page":"configuration",
-            "url":"http://docs.backand.com/#continuous-deployment-and-versioning"
+          "ContinuousDeployment": {
+            "page": "configuration",
+            "url": "http://docs.backand.com/#continuous-deployment-and-versioning"
           },
-          "crons":{
-            "page":"cron",
-            "url":"http://docs.backand.com/#background-jobs"
+          "crons": {
+            "page": "cron",
+            "url": "http://docs.backand.com/#background-jobs"
           },
           "LambdaLauncher": {
             "page": "external_function/externalFunctions",
             "url": "http://docs.backand.com/#the-backand-lambda-launcher"
+          },
+          "learnHow": {
+            "page": "learn_how",
+            "url": "http://docs.backand.com/#configuration459"
           }
         };
 
-        $scope.location = locations[$scope.key].url || 'http://docs.backand.com';
+        $scope.location = locations[$scope.key] ? locations[$scope.key].url : 'http://docs.backand.com';
+        var text = $scope.withText ? String($scope.withText).toLowerCase() : 'false';
 
-        if($scope.withText != 'false'){
-          $scope.readMore = '- read more';
+        if (text != 'false') {
+          $scope.readMore = (text != 'true') ? $scope.withText : '- read more';
           $scope.iconClass = 'ba-icon-external-link';
         }
         else {

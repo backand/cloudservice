@@ -66,9 +66,9 @@
         <i class="ti-share"></i>
         <span>External Functions</span>
       </a>
-     
+
     </li>
-    
+
     <li ng-class="{active: nav.state == 'functions.newlambdafunctions' }" ng-if="nav.DatabaseStatus == 1"
         class="sub-functions-icons new-function-selection">
       <a ng-click="nav.newLambdaFunction($event)">
@@ -89,7 +89,7 @@
       <li ng-repeat="func in nav.functions track by func.name"
           ng-class="{active: func.iD == nav.stateparam.functionId}"
           class="sub-functions-icons function-list crop">
-        <a ng-click="nav.showFunction($event, func)">
+        <a ng-click="nav.showFunction($event, func)"  tooltip="{{func.name}}" tooltip-popup-delay="500" tooltip-placement="right" tooltip-append-to-body="true">
           <span>{{func.name}}</span>
         </a>
            <i ng-class="{'fontello-icon-functions': (func.fileName || func.workflowAction == 'Lambda')}"></i>
@@ -125,7 +125,7 @@
     <li ng-class="{active: cronJob.iD == nav.stateparam.jobId}"
         ng-repeat="cronJob in nav.cronJobs track by cronJob.name"
         class="sub-objects-icons crop">
-      <a ng-click="nav.showCronJob($event, cronJob)">
+      <a ng-click="nav.showCronJob($event, cronJob)" tooltip="{{cronJob.name}}" tooltip-popup-delay="500" tooltip-placement="right" tooltip-append-to-body="true">
         <span class="status status-{{nav.getCronStatus(cronJob.active)}} pull-left"></span>
         <span style="margin-left: 14px;">{{cronJob.name}}</span>
       </a>

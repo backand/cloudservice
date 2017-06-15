@@ -33,7 +33,8 @@
           'ConfirmationPopup',
           '$state',
           'AnalyticsService',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService) {
+          '$rootScope',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, $rootScope ) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               connectionModel = {
@@ -43,7 +44,8 @@
                 Name: 'Main',
                 CloudVendor: 'AWS',
                 EncryptedSecretAccessKey: ''
-              };
+              },
+              defaultSecretKeyHas = '************';
             /**
             * call initialization to initialize controllers properties 
             */
@@ -113,12 +115,17 @@
                 .getAwsConnection()
                 .then(function (response) {
                   var awsConnection = response.data.data[0] || angular.copy(connectionModel),
-                  regionsCode = _.words(awsConnection.AwsRegion, /[^,]+/g);
+                    regionsCode = _.words(awsConnection.AwsRegion, /[^,]+/g);
 
-                  awsConnection.AwsRegion = _.filter($ctrl.regions, function(r){
+                  awsConnection.AwsRegion = _.filter($ctrl.regions, function (r) {
                     return _.indexOf(regionsCode, r.Code) >= 0;
                   });
-                 
+                  if (!_.isEmpty(awsConnection.AccessKeyId)) {
+                    awsConnection.EncryptedSecretAccessKey = defaultSecretKeyHas;
+                  }
+
+                  awsConnection.isNew = $ctrl.isNewConnection;
+
                   $ctrl.aws = awsConnection;
                   //trigger bindings
                   if (typeof $ctrl.onLoadConnection === 'function') {
@@ -134,23 +141,23 @@
                 });
             }
 
-            function deleteConnection(id){
-                ConfirmationPopup.confirm('Are sure you want to delete AWS connection?')
+            function deleteConnection(id) {
+              ConfirmationPopup.confirm('Are sure you want to delete AWS connection?')
                 .then(function (result) {
                   if (result) {
                     usSpinnerService.spin('connectionView');
-                      CloudService
-                        .deleteAwsConnection(id)
-                        .then(function (response) {
-                          NotificationService.add('success', 'Connection has been deleted successfully.');
-                          $log.info('Connection has been deleted', response);
-                          $state.reload();
-                          usSpinnerService.stop('connectionView');
-                        }).catch(function (error) {
-                          $log.error('Error while deleting a connection', error);
-                          usSpinnerService.stop('connectionView');
-                        });
-                    }
+                    CloudService
+                      .deleteAwsConnection(id)
+                      .then(function (response) {
+                        NotificationService.add('success', 'Connection has been deleted successfully.');
+                        $log.info('Connection has been deleted', response);
+                        $state.reload();
+                        usSpinnerService.stop('connectionView');
+                      }).catch(function (error) {
+                        $log.error('Error while deleting a connection', error);
+                        usSpinnerService.stop('connectionView');
+                      });
+                  }
                 });
             }
 
@@ -174,15 +181,33 @@
                   return v ? true : false;
                 })
                 .value();
+
+              if (request.EncryptedSecretAccessKey === defaultSecretKeyHas) {
+                delete request.EncryptedSecretAccessKey;
+              }
               request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
               $log.warn('Connection request', request);
               CloudService
                 .saveAwsConnection(request)
                 .then(function (response) {
                   $log.info('Connection details are saved', response);
-                  NotificationService.add('success', 'Connection details are saved successfully.');
-                  AnalyticsService.track('AWSConnectionSaved');
-                  handler(response, request, $ctrl.aws);
+                  CloudService
+                    .getLambdaFunctions()
+                    .then(function (functions) {
+                      NotificationService.add('success', 'Connection details are saved successfully.');
+                      AnalyticsService.track('AWSConnectionSaved');
+                      if (!request.id) {
+                        $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
+                          functions: functions,
+                          metaDataId : response.data.__metadata.id
+                        });
+                      }
+                      handler(response, request, $ctrl.aws);
+                    }, function () {
+                      NotificationService.add('error', 'Provided AWS credentials are not valid.');
+                      handler({}, request, $ctrl.aws);
+                    })
+
                 })
                 .catch(function (error) {
                   $log.error('Error while saving conncetions detail', error);
@@ -191,10 +216,11 @@
             }
 
             function handler(response, request, model) {
+              $ctrl.isNewConnection = !request.id ? true : false;
               getAwsConnection();
               //get lambda functions when connection is saved
               if ($ctrl.view === 'modal') {
-                if (typeof $ctrl.modalInstance.close === 'function') {
+                if (typeof $ctrl.modalInstance.close === 'function' && !_.isEmpty(response)) {
                   $ctrl.modalInstance.close({ connection: model });
                 }
               }
@@ -204,7 +230,6 @@
               }
               usSpinnerService.stop('connectionView');
             }
-
             //end of controller
           }]
       };

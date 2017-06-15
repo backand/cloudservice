@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('common.services')
-    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', '$interval', '$rootScope', 'SessionService', AppsService]);
+    .service('AppsService', ['$http', '$q', 'CONSTS', 'DatabaseNamesService', '$interval', '$rootScope', 'SessionService','AnalyticsService','DatabaseService','ModelService', AppsService]);
 
-  function AppsService($http, $q, CONSTS, DatabaseNamesService, $interval, $rootScope, SessionService) {
+  function AppsService($http, $q, CONSTS, DatabaseNamesService, $interval, $rootScope, SessionService, AnalyticsService, DatabaseService, ModelService) {
 
     var self = this;
 
@@ -85,6 +85,47 @@
         })
         .error(function (err) {
           deferred.reject(err);
+        });
+
+      return deferred.promise;
+    };
+
+    self.createNewAppLambdaLauncher = function (){
+      var deferred = $q.defer();
+      self.add()
+        .then(function (data) {
+          //get appName from response
+          var appName = data.__metadata.appName;
+          //track event that app is created
+          AnalyticsService.track('CreatedApp', { appName: appName });
+          //create App database with defaultSchema
+          DatabaseService.createDB(appName, 10, '', ModelService.defaultSchema(),2)
+            .success(function (data) {
+              AnalyticsService.track('CreatedNewDB', { schema: ModelService.defaultSchema() });
+              AnalyticsService.track('create app', { app: appName });
+              self.resetCurrentApp();
+              self.getApp(appName)
+                .then(function () {
+                  //make the app private
+                  try{
+                    var data = {};
+                    angular.copy(self.currentApp, data);
+                    data.settings.enableUserRegistration = false;
+
+                    //disabled Twitter and adfs social
+                    data.settings.enableTwitter = false;
+                    data.settings.enableAdfs = false;
+                    self.update(appName, data);
+
+                  } catch(e){
+                    console.log(e);
+                    //ignore the error
+                  }
+
+                  var stateParams = { new: 1, appName: appName };
+                  deferred.resolve(stateParams);
+                });
+            });
         });
 
       return deferred.promise;

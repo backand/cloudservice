@@ -2,16 +2,16 @@
   <div id="content" class="content-container auth-body">
 
     <div class="page-signin">
-     <a id="page-logo" href="https://www.backand.com" class="ng-binding">
-            <img src="assets/images/logo-white.png"></a>
 
       <div class="signin-header">
         <section class="logo text-center">
-            <h1>Create Your Back& Account, it's FREE!</h1>
+          <a href="https://www.backand.com">
+            <img src="assets/images/aws-lambda-launcher/aws-lambda-launcher-logo.png"></a>
+          <h1 style="font-size:30px;margin-bottom:0">Create a Lambda Launcher Account</h1>
         </section>
       </div>
 
-      <div class="signin-body first-signup-block">
+      <div class="signin-body">
         <div class="container">
           <div class="form-container signup-container">
 
@@ -25,10 +25,8 @@
                 </div>
                 <form class="signup-social">
 
-                  <a class="btn btn-block btn-social"
-                     ng-repeat="social in Auth.socials | filter:{ useForSignin : true }"
-                     ng-class="'btn-' + social.css"
-                     ng-click="Auth.socialLogin(social)" ng-disabled="Auth.flags.authenticating">
+                  <a class="btn btn-block btn-social" ng-repeat="social in Auth.socials | filter:{ useForSignin : true }" ng-class="'btn-' + social.css"
+                    ng-click="Auth.socialLogin(social)" ng-disabled="Auth.flags.authenticating">
                     <i class="fa" ng-class="'fa-' + social.css"></i> {{social.label}}
                   </a>
                 </form>
@@ -38,13 +36,12 @@
               </div>
 
               <div class="col-sm-7">
-                <div ng-include="'views/auth/sign_up_landing.html'" ng-controller="SignUpController as signup"></div>
+                <div ng-include="'views/auth/sign_up_launcher.html'" ng-controller="SignUpController as signup"></div>
               </div>
-
             </div>
           </div>
         </div>
       </div>
-  </div>
+    </div>
   </div>
 </div>

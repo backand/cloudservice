@@ -214,8 +214,22 @@
           if($localStorage.backand[app.Name].currentState !== 'apps.index') {
             var currentstate = $localStorage.backand[app.Name].currentState;
             $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
-              if(currentstate){
-                $state.go(currentstate);
+              switch (currentstate){
+                case "functions.function":
+                  $state.go(currentstate, {functionId: $localStorage.backand[app.Name].Id});
+                  break;
+                case "cronJobs.job":
+                  $state.go(currentstate, {jobId: $localStorage.backand[app.Name].Id});
+                  break;
+                case "dbQueries.query":
+                  $state.go(currentstate, {queryId: $localStorage.backand[app.Name].Id});
+                  break;
+                case "object_fields":
+                  $state.go(currentstate, {tableId: $localStorage.backand[app.Name].Id});
+                  break;
+                default:
+                  $state.go(currentstate);
+                  break;
               }
             });
           }

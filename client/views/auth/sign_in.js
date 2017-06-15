@@ -9,6 +9,7 @@
 
     self.flags = AuthService.flags;
     self.loading = false;
+    self.launcher = $state.params.launcher;
 
     self.signIn = function () {
       self.flags.authenticating = true;

@@ -1,334 +1,338 @@
 ﻿<!doctype html>
 <html lang="en" ng-cloak>
 
-<head>
-  <meta charset="utf-8" />
-  <title>Backand</title>
-  <meta name="description" content="Backand - backend as as service for Angular">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title ng-bind="title"></title>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="keywords" content="Backand, AngularJS, BAAS, Backend, gulp, bower, vesparny" />
+  <head>
+    <meta charset="utf-8" />
+    <title>Backand</title>
+    <meta name="description" content="Backand - backend as as service for Angular">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title ng-bind="title"></title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="keywords" content="Backand, AngularJS, BAAS, Backend, gulp, bower, vesparny" />
 
-  <!-- build:css assets/css/main.css -->
-  <link rel="stylesheet" type="text/css" href="assets/stylesheets/themify-icons.min.css" />
-  <link rel="stylesheet" type='text/css' href="assets/stylesheets/font-awesome.min.css">
-  <link rel="stylesheet" type='text/css' href="assets/stylesheets/menu-fonts.css">
-  <link rel="stylesheet" type="text/css" href="assets/stylesheets/fontello.css">
-  <link rel="stylesheet" type="text/css" href="vendor/AngularJS-Toaster/toaster.css" />
-  <link rel="stylesheet" type="text/css" href="vendor/angular-xeditable/dist/css/xeditable.css" >
-  <link rel="stylesheet" type="text/css" href="vendor/ladda/dist/ladda-themeless.min.css">
-  <link rel="stylesheet" type="text/css" href="vendor/angular-ui-grid/ui-grid.min.css" />
-  <link rel="stylesheet" type="text/css" href="vendor/angular-ui-tree/dist/angular-ui-tree.min.css"/>
-  <link rel="stylesheet" type="text/css" href="vendor/angular-tree-control/css/tree-control.css">
-  <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/min/perfect-scrollbar.min.css" />
-  <link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.min.css" />
-  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans'>
-  <link rel="stylesheet" type="text/css" href="tmp/main.css" />
-  <!-- endbuild -->
+    <!-- build:css assets/css/main.css -->
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/themify-icons.min.css" />
+    <link rel="stylesheet" type='text/css' href="assets/stylesheets/font-awesome.min.css">
+    <link rel="stylesheet" type='text/css' href="assets/stylesheets/menu-fonts.css">
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/fontello.css">
+    <link rel="stylesheet" type="text/css" href="vendor/AngularJS-Toaster/toaster.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/angular-xeditable/dist/css/xeditable.css">
+    <link rel="stylesheet" type="text/css" href="vendor/ladda/dist/ladda-themeless.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/angular-ui-grid/ui-grid.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/angular-ui-tree/dist/angular-ui-tree.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/angular-tree-control/css/tree-control.css">
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/min/perfect-scrollbar.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/ng-tags-input/ng-tags-input.min.css" />
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans'>
+    <link rel="stylesheet" type="text/css" href="tmp/main.css" />
+    <!-- endbuild -->
 
-  <!--<script type="text/javascript">-->
+    <!--<script type="text/javascript">-->
     <!--(function(e, t) {-->
-      <!--function r(e, t) {-->
-        <!--e[t] = function() {-->
-          <!--e.push([ t ].concat(Array.prototype.slice.call(arguments, 0)));-->
-        <!--};-->
-      <!--}-->
-      <!--var n = "JacoRecorder";-->
-      <!--(function(e, t, i, s) {-->
-        <!--if (!i.__VERSION) {-->
-          <!--e[n] = i;-->
-          <!--var o = [ "init", "identify", "startRecording", "stopRecording", "removeUserTracking", "setUserInfo" ];-->
-          <!--for (var u = 0; u < o.length; u++) r(i, o[u]);-->
-          <!--i.__VERSION = .9, i.__INIT_TIME = 1 * new Date;-->
-          <!--var a = t.createElement("script");-->
-          <!--a.async = !0, a.setAttribute("crossorigin", "anonymous"), a.src = s;-->
-          <!--var f = t.getElementsByTagName("head")[0];-->
-          <!--f.appendChild(a);-->
-        <!--}-->
-      <!--})(e, t, e[n] || [], "//recorder-assets.getjaco.com/recorder.js");-->
+    <!--function r(e, t) {-->
+    <!--e[t] = function() {-->
+    <!--e.push([ t ].concat(Array.prototype.slice.call(arguments, 0)));-->
+    <!--};-->
+    <!--}-->
+    <!--var n = "JacoRecorder";-->
+    <!--(function(e, t, i, s) {-->
+    <!--if (!i.__VERSION) {-->
+    <!--e[n] = i;-->
+    <!--var o = [ "init", "identify", "startRecording", "stopRecording", "removeUserTracking", "setUserInfo" ];-->
+    <!--for (var u = 0; u < o.length; u++) r(i, o[u]);-->
+    <!--i.__VERSION = .9, i.__INIT_TIME = 1 * new Date;-->
+    <!--var a = t.createElement("script");-->
+    <!--a.async = !0, a.setAttribute("crossorigin", "anonymous"), a.src = s;-->
+    <!--var f = t.getElementsByTagName("head")[0];-->
+    <!--f.appendChild(a);-->
+    <!--}-->
+    <!--})(e, t, e[n] || [], "//recorder-assets.getjaco.com/recorder.js");-->
     <!--}).call(window, window, document), window.JacoRecorder.push([ "init", "6656e2be-5e88-42cc-a5d3-8881595f29fe", {} ]);-->
-  <!--</script>-->
-</head>
+    <!--</script>-->
+  </head>
 
-<body>
-<div id="ab-test" ba-landing="true"></div>
-<toaster-container></toaster-container>
-<ui-view></ui-view>
+  <body>
+    <div id="ab-test" ba-landing="true"></div>
+    <toaster-container></toaster-container>
+    <ui-view></ui-view>
 
-<!---->
-  <!-- build:js assets/js/vendor.js -->
-  <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="common/plugins/insertAtCaret_plugin.js"></script>
-  <script type="text/javascript" src="vendor/angular/angular.js"></script>
-  <script type="text/javascript" src="vendor/angular-messages/angular-messages.js"></script>
-  <script type="text/javascript" src="vendor/angular-sanitize/angular-sanitize.js"></script>
-  <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script type="text/javascript" src="vendor/angular-cookies/angular-cookies.js"></script>
-  <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
-  <script type="text/javascript" src="vendor/spin.js/spin.js"></script>
-  <script type="text/javascript" src="vendor/angular-spinner/angular-spinner.js"></script>
-  <script type="text/javascript" src="vendor/AngularJS-Toaster/toaster.js"></script>
-  <script type="text/javascript" src="vendor/angular-animate/angular-animate.js"></script>
-  <script type="text/javascript" src="vendor/angular-xeditable/dist/js/xeditable.js"></script>
-  <script type="text/javascript" src="vendor/ladda/js/spin.js"></script>
-  <script type="text/javascript" src="vendor/ladda/js/ladda.js"></script>
-  <script type="text/javascript" src="vendor/angular-ladda/dist/angular-ladda.min.js"></script>
-  <script type="text/javascript" src="vendor/moment/moment.js"></script>
-  <script type="text/javascript" src="vendor/angular-moment/angular-moment.js"></script>
-  <script type="text/javascript" src="vendor/angular-ui-grid/ui-grid.min.js"></script>
-  <script type="text/javascript" src="vendor/jquery-ui/jquery-ui.js"></script>
-  <script type="text/javascript" src="vendor/angular-ui-tree/dist/angular-ui-tree.js"></script>
-  <script type="text/javascript" src="vendor/lodash/lodash.min.js"></script>
-  <script type="text/javascript" src="vendor/zeroclipboard/dist/ZeroClipboard.min.js"></script>
-  <script type="text/javascript" src="vendor/ng-clip/dest/ng-clip.min.js"></script>
-  <script type="text/javascript" src="vendor/angular-translate/angular-translate.js"></script>
-  <script type="text/javascript" src="common/plugins/ace/ace.js"></script>
-  <script type="text/javascript" src="common/plugins/ace/theme-monokai.js"></script>
-  <script type="text/javascript" src="common/plugins/ace/mode-javascript.js"></script>
-  <script type="text/javascript" src="vendor/angular-ui-ace/ui-ace.js"></script>
-  <script type="text/javascript" src="vendor/ace-diff/dist/ace-diff.js"></script>
-  <script type="text/javascript" src="vendor/angular-ui-router-tabs/src/ui-router-tabs.js"></script>
-  <script type="text/javascript" src="vendor/ngstorage/ngStorage.js"></script>
-  <script type="text/javascript" src="vendor/angulartics/dist/angulartics.min.js"></script>
-  <script type="text/javascript" src="vendor/angulartics/dist/angulartics-segmentio.min.js"></script>
-  <script type="text/javascript" src="vendor/ace-diff/libs/diff_match_patch.js"></script>
-  <script type="text/javascript" src="vendor/angular-tree-control/angular-tree-control.js"></script>
-  <script type="text/javascript" src="vendor/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
-  <script type="text/javascript" src="vendor/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
-  <script type="text/javascript" src="vendor/ng-file-upload/ng-file-upload-all.js"></script>
-  <script type="text/javascript" src="vendor/socket.io-client/dist/socket.io.js"></script>
-  <script type="text/javascript" src="vendor/ng-tags-input/ng-tags-input.js"></script>
-  <!-- endbuild -->
+    <!---->
+    <!-- build:js assets/js/vendor.js -->
+    <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="common/plugins/insertAtCaret_plugin.js"></script>
+    <script type="text/javascript" src="vendor/angular/angular.js"></script>
+    <script type="text/javascript" src="vendor/angular-messages/angular-messages.js"></script>
+    <script type="text/javascript" src="vendor/angular-sanitize/angular-sanitize.js"></script>
+    <script type="text/javascript" src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="vendor/angular-cookies/angular-cookies.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+    <script type="text/javascript" src="vendor/spin.js/spin.js"></script>
+    <script type="text/javascript" src="vendor/angular-spinner/angular-spinner.js"></script>
+    <script type="text/javascript" src="vendor/AngularJS-Toaster/toaster.js"></script>
+    <script type="text/javascript" src="vendor/angular-animate/angular-animate.js"></script>
+    <script type="text/javascript" src="vendor/angular-xeditable/dist/js/xeditable.js"></script>
+    <script type="text/javascript" src="vendor/ladda/js/spin.js"></script>
+    <script type="text/javascript" src="vendor/ladda/js/ladda.js"></script>
+    <script type="text/javascript" src="vendor/angular-ladda/dist/angular-ladda.min.js"></script>
+    <script type="text/javascript" src="vendor/moment/moment.js"></script>
+    <script type="text/javascript" src="vendor/angular-moment/angular-moment.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-grid/ui-grid.min.js"></script>
+    <script type="text/javascript" src="vendor/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-tree/dist/angular-ui-tree.js"></script>
+    <script type="text/javascript" src="vendor/lodash/lodash.min.js"></script>
+    <script type="text/javascript" src="vendor/zeroclipboard/dist/ZeroClipboard.min.js"></script>
+    <script type="text/javascript" src="vendor/ng-clip/dest/ng-clip.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-translate/angular-translate.js"></script>
+    <script type="text/javascript" src="common/plugins/ace/ace.js"></script>
+    <script type="text/javascript" src="common/plugins/ace/theme-monokai.js"></script>
+    <script type="text/javascript" src="common/plugins/ace/mode-javascript.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-ace/ui-ace.js"></script>
+    <script type="text/javascript" src="vendor/ace-diff/dist/ace-diff.js"></script>
+    <script type="text/javascript" src="vendor/angular-ui-router-tabs/src/ui-router-tabs.js"></script>
+    <script type="text/javascript" src="vendor/ngstorage/ngStorage.js"></script>
+    <script type="text/javascript" src="vendor/angulartics/dist/angulartics.min.js"></script>
+    <script type="text/javascript" src="vendor/angulartics/dist/angulartics-segmentio.min.js"></script>
+    <script type="text/javascript" src="vendor/ace-diff/libs/diff_match_patch.js"></script>
+    <script type="text/javascript" src="vendor/angular-tree-control/angular-tree-control.js"></script>
+    <script type="text/javascript" src="vendor/perfect-scrollbar/min/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="vendor/angular-perfect-scrollbar/src/angular-perfect-scrollbar.js"></script>
+    <script type="text/javascript" src="vendor/ng-file-upload/ng-file-upload-all.js"></script>
+    <script type="text/javascript" src="vendor/socket.io-client/dist/socket.io.js"></script>
+    <script type="text/javascript" src="vendor/ng-tags-input/ng-tags-input.js"></script>
+    <!-- endbuild -->
 
-  <!-- build:js assets/js/main.js -->
-  <script type="text/javascript" src="common/plugins/base64.js"></script>
-  <script type="text/javascript" src="app.js"></script>
-  <script type="text/javascript" src="common/services/config.js"></script>
-  <script type="text/javascript" src="common/services/auth_layout_service.js"></script>
-  <script type="text/javascript" src="common/services/session.service.js"></script>
-  <script type="text/javascript" src="common/services/http_buffer_service.js"></script>
-  <script type="text/javascript" src="common/services/auth_service.js"></script>
-  <script type="text/javascript" src="common/services/analytics_service.js"></script>
-  <script type="text/javascript" src="common/services/social_providers_service.js"></script>
-  <script type="text/javascript" src="common/services/notification_service.js"></script>
-  <script type="text/javascript" src="common/services/apps_service.js"></script>
-  <script type="text/javascript" src="common/services/database_service.js"></script>
-  <script type="text/javascript" src="common/services/database_names_service.js"></script>
-  <script type="text/javascript" src="common/services/app_log_service.js"></script>
-  <script type="text/javascript" src="common/services/tables_service.js"></script>
-  <script type="text/javascript" src="common/services/columns_service.js"></script>
-  <script type="text/javascript" src="common/services/data_service.js"></script>
-  <script type="text/javascript" src="common/services/objects_service.js"></script>
-  <script type="text/javascript" src="common/services/rules_service.js"></script>
-  <script type="text/javascript" src="common/services/security_service.js"></script>
-  <script type="text/javascript" src="common/services/dictionary_service.js"></script>
-  <script type="text/javascript" src="common/services/security_matrix_service.js"></script>
-  <script type="text/javascript" src="common/services/confirm_popup_service.js"></script>
-  <script type="text/javascript" src="common/services/db_queries_service.js"></script>
-  <script type="text/javascript" src="common/services/layout_service.js"></script>
-  <script type="text/javascript" src="common/services/example_app_service.js"></script>
-  <script type="text/javascript" src="common/services/model.js"></script>
-  <script type="text/javascript" src="common/services/fields_service.js"></script>
-  <script type="text/javascript" src="common/services/hosting_service.js"></script>
-  <script type="text/javascript" src="common/services/files_service.js"></script>
-  <script type="text/javascript" src="common/services/nodejs_service.js"></script>
-  <script type="text/javascript" src="common/services/parse_service.js"></script>
-  <script type="text/javascript" src="common/services/socket_service.js"></script>
-  <script type="text/javascript" src="common/services/billing_service.js"></script>
-  <script type="text/javascript" src="common/services/account_service.js"></script>
-  <script type="text/javascript" src="common/services/report_service.js"></script>
-  <script type="text/javascript" src="common/services/cron_service.js"></script>
-  <script type="text/javascript" src="common/services/limits_service.js"></script>
-  <script type="text/javascript" src="common/services/local_storage_service.js"></script>
-  <script type="text/javascript" src="common/services/code_generators/angular_generator_service.js"></script>
-  <script type="text/javascript" src="common/services/code_generators/vanilla_generator_service.js"></script>
-  <script type="text/javascript" src="common/services/code_generators/redux_generator_service.js"></script>
-  <script type="text/javascript" src="common/services/search_service.js"></script>
-  <script type="text/javascript" src="common/services/platforms_service.js"></script>
-  <script type="text/javascript" src="common/services/starter_app_service.js"></script>
-  <script type="text/javascript" src="common/services/kickstart_service.js"></script>
-  <script type="text/javascript" src="common/services/cloud_service.js"></script>
+    <!-- build:js assets/js/main.js -->
+    <script type="text/javascript" src="common/plugins/base64.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="common/services/config.js"></script>
+    <script type="text/javascript" src="common/services/auth_layout_service.js"></script>
+    <script type="text/javascript" src="common/services/session.service.js"></script>
+    <script type="text/javascript" src="common/services/http_buffer_service.js"></script>
+    <script type="text/javascript" src="common/services/auth_service.js"></script>
+    <script type="text/javascript" src="common/services/analytics_service.js"></script>
+    <script type="text/javascript" src="common/services/social_providers_service.js"></script>
+    <script type="text/javascript" src="common/services/notification_service.js"></script>
+    <script type="text/javascript" src="common/services/apps_service.js"></script>
+    <script type="text/javascript" src="common/services/database_service.js"></script>
+    <script type="text/javascript" src="common/services/database_names_service.js"></script>
+    <script type="text/javascript" src="common/services/app_log_service.js"></script>
+    <script type="text/javascript" src="common/services/tables_service.js"></script>
+    <script type="text/javascript" src="common/services/columns_service.js"></script>
+    <script type="text/javascript" src="common/services/data_service.js"></script>
+    <script type="text/javascript" src="common/services/objects_service.js"></script>
+    <script type="text/javascript" src="common/services/rules_service.js"></script>
+    <script type="text/javascript" src="common/services/security_service.js"></script>
+    <script type="text/javascript" src="common/services/dictionary_service.js"></script>
+    <script type="text/javascript" src="common/services/security_matrix_service.js"></script>
+    <script type="text/javascript" src="common/services/confirm_popup_service.js"></script>
+    <script type="text/javascript" src="common/services/db_queries_service.js"></script>
+    <script type="text/javascript" src="common/services/layout_service.js"></script>
+    <script type="text/javascript" src="common/services/example_app_service.js"></script>
+    <script type="text/javascript" src="common/services/model.js"></script>
+    <script type="text/javascript" src="common/services/fields_service.js"></script>
+    <script type="text/javascript" src="common/services/hosting_service.js"></script>
+    <script type="text/javascript" src="common/services/files_service.js"></script>
+    <script type="text/javascript" src="common/services/nodejs_service.js"></script>
+    <script type="text/javascript" src="common/services/parse_service.js"></script>
+    <script type="text/javascript" src="common/services/socket_service.js"></script>
+    <script type="text/javascript" src="common/services/billing_service.js"></script>
+    <script type="text/javascript" src="common/services/account_service.js"></script>
+    <script type="text/javascript" src="common/services/report_service.js"></script>
+    <script type="text/javascript" src="common/services/cron_service.js"></script>
+    <script type="text/javascript" src="common/services/limits_service.js"></script>
+    <script type="text/javascript" src="common/services/local_storage_service.js"></script>
+    <script type="text/javascript" src="common/services/code_generators/angular_generator_service.js"></script>
+    <script type="text/javascript" src="common/services/code_generators/vanilla_generator_service.js"></script>
+    <script type="text/javascript" src="common/services/code_generators/redux_generator_service.js"></script>
+    <script type="text/javascript" src="common/services/search_service.js"></script>
+    <script type="text/javascript" src="common/services/platforms_service.js"></script>
+    <script type="text/javascript" src="common/services/starter_app_service.js"></script>
+    <script type="text/javascript" src="common/services/kickstart_service.js"></script>
+    <script type="text/javascript" src="common/services/cloud_service.js"></script>
 
-  <script type="text/javascript" src="common/data_models/config.js"></script>
-  <script type="text/javascript" src="common/data_models/db_data_model.js"></script>
+    <script type="text/javascript" src="common/data_models/config.js"></script>
+    <script type="text/javascript" src="common/data_models/db_data_model.js"></script>
 
-  <script type="text/javascript" src="common/functions/escape_special_chars.js"></script>
-  <script type="text/javascript" src="common/functions/stringify_http.js"></script>
+    <script type="text/javascript" src="common/functions/escape_special_chars.js"></script>
+    <script type="text/javascript" src="common/functions/stringify_http.js"></script>
 
-  <script type="text/javascript" src="common/modals/config.js"></script>
-  <script type="text/javascript" src="common/modals/modal.service.js"></script>
-  <script type="text/javascript" src="common/modals/confirm_update/confirm_update.js"></script>
-  <script type="text/javascript" src="common/modals/demo_app/demo_app.js"></script>
-  <script type="text/javascript" src="common/modals/aws_modal/aws_modal.js"></script>
-  
-  <script type="text/javascript" src="common/constants/config.js"></script>
-  <script type="text/javascript" src="common/constants/constants.js"></script>
+    <script type="text/javascript" src="common/modals/config.js"></script>
+    <script type="text/javascript" src="common/modals/modal.service.js"></script>
+    <script type="text/javascript" src="common/modals/confirm_update/confirm_update.js"></script>
+    <script type="text/javascript" src="common/modals/aws_modal/aws_modal.js"></script>
 
-  <script type="text/javascript" src="config/routes.js"></script>
-  <script type="text/javascript" src="config/consts.js"></script>
-  <script type="text/javascript" src="config/tooltips.js"></script>
+    <script type="text/javascript" src="common/constants/config.js"></script>
+    <script type="text/javascript" src="common/constants/constants.js"></script>
 
-  <script type="text/javascript" src="views/shared/main_controller.js"></script>
-  <script type="text/javascript" src="views/shared/nav_controller.js"></script>
-  <script type="text/javascript" src="views/shared/header.controller.js"></script>
-  <script type="text/javascript" src="views/shared/parse_migration.js"></script>
-  <script type="text/javascript" src="views/shared/parse_migration_success.js"></script>
+    <script type="text/javascript" src="config/routes.js"></script>
+    <script type="text/javascript" src="config/consts.js"></script>
+    <script type="text/javascript" src="config/tooltips.js"></script>
 
-  <script type="text/javascript" src="views/auth/auth.js"></script>
-  <script type="text/javascript" src="views/auth/sign_in.js"></script>
-  <script type="text/javascript" src="views/auth/sign_up.js"></script>
-  <script type="text/javascript" src="views/auth/forgot_modal.js"></script>
-  <script type="text/javascript" src="views/auth/change_password.js"></script>
-  <script type="text/javascript" src="views/auth/reset_password.js"></script>
-  <script type="text/javascript" src="views/auth/link_email.js"></script>
-  <script type="text/javascript" src="views/auth/delete_account.js"></script>
+    <script type="text/javascript" src="views/shared/main_controller.js"></script>
+    <script type="text/javascript" src="views/shared/nav_controller.js"></script>
+    <script type="text/javascript" src="views/shared/header.controller.js"></script>
+    <script type="text/javascript" src="views/shared/parse_migration.js"></script>
+    <script type="text/javascript" src="views/shared/parse_migration_success.js"></script>
 
-  <script type="text/javascript" src="views/tables/config.js"></script>
-  <script type="text/javascript" src="views/tables/show.js"></script>
-  <script type="text/javascript" src="views/tables/show_single_table.js"></script>
-  <script type="text/javascript" src="views/tables/restapi/restapi.js"></script>
-  <script type="text/javascript" src="views/tables/fields/fields.js"></script>
-  <script type="text/javascript" src="views/tables/rules/rules.js"></script>
-  <script type="text/javascript" src="views/tables/rules/action_template.js"></script>
-  <script type="text/javascript" src="views/tables/security/security.js"></script>
-  <script type="text/javascript" src="views/tables/data/data.js"></script>
-  <script type="text/javascript" src="views/tables/data/edit_row.js"></script>
-  <script type="text/javascript" src="views/tables/log/log.js"></script>
-  <script type="text/javascript" src="views/tables/data/upload_json.js"></script>
+    <script type="text/javascript" src="views/auth/auth.js"></script>
+    <script type="text/javascript" src="views/auth/sign_in.js"></script>
+    <script type="text/javascript" src="views/auth/sign_up.js"></script>
+    <script type="text/javascript" src="views/auth/forgot_modal.js"></script>
+    <script type="text/javascript" src="views/auth/change_password.js"></script>
+    <script type="text/javascript" src="views/auth/reset_password.js"></script>
+    <script type="text/javascript" src="views/auth/link_email.js"></script>
+    <script type="text/javascript" src="views/auth/delete_account.js"></script>
 
-  <script type="text/javascript" src="views/tables/model/config.js"></script>
-  <script type="text/javascript" src="views/tables/model/model.js"></script>
-  <script type="text/javascript" src="views/tables/model/json_model/json_model.js"></script>
-  <script type="text/javascript" src="views/tables/model/erd_model/erd_model.js"></script>
-  <script type="text/javascript" src="views/tables/model/erd_model/edit_field.js"></script>
-  <script type="text/javascript" src="views/tables/model/erd_model/edit_object.js"></script>
-  <script type="text/javascript" src="views/tables/model/db_model/db_model.js"></script>
+    <script type="text/javascript" src="views/tables/config.js"></script>
+    <script type="text/javascript" src="views/tables/show.js"></script>
+    <script type="text/javascript" src="views/tables/show_single_table.js"></script>
+    <script type="text/javascript" src="views/tables/restapi/restapi.js"></script>
+    <script type="text/javascript" src="views/tables/fields/fields.js"></script>
+    <script type="text/javascript" src="views/tables/rules/rules.js"></script>
+    <script type="text/javascript" src="views/tables/rules/action_template.js"></script>
+    <script type="text/javascript" src="views/tables/security/security.js"></script>
+    <script type="text/javascript" src="views/tables/data/data.js"></script>
+    <script type="text/javascript" src="views/tables/data/edit_row.js"></script>
+    <script type="text/javascript" src="views/tables/log/log.js"></script>
+    <script type="text/javascript" src="views/tables/data/upload_json.js"></script>
 
-  <script type="text/javascript" src="views/apps/config.js"></script>
-  <script type="text/javascript" src="views/apps/index.js"></script>
-  <script type="text/javascript" src="views/apps/show.js"></script>
-  <script type="text/javascript" src="views/apps/settings.js"></script>
-  <script type="text/javascript" src="views/apps/configuration.js"></script>
-  <script type="text/javascript" src="views/apps/confirm_delete_app.js"></script>
-  <script type="text/javascript" src="views/apps/billing_portal.js"></script>
+    <script type="text/javascript" src="views/tables/model/config.js"></script>
+    <script type="text/javascript" src="views/tables/model/model.js"></script>
+    <script type="text/javascript" src="views/tables/model/json_model/json_model.js"></script>
+    <script type="text/javascript" src="views/tables/model/erd_model/erd_model.js"></script>
+    <script type="text/javascript" src="views/tables/model/erd_model/edit_field.js"></script>
+    <script type="text/javascript" src="views/tables/model/erd_model/edit_object.js"></script>
+    <script type="text/javascript" src="views/tables/model/db_model/db_model.js"></script>
 
-  <script type="text/javascript" src="views/reports/config.js"></script>
-  <script type="text/javascript" src="views/reports/report.js"></script>
+    <script type="text/javascript" src="views/apps/config.js"></script>
+    <script type="text/javascript" src="views/apps/index.js"></script>
+    <script type="text/javascript" src="views/apps/show.js"></script>
+    <script type="text/javascript" src="views/apps/settings.js"></script>
+    <script type="text/javascript" src="views/apps/configuration.js"></script>
+    <script type="text/javascript" src="views/apps/confirm_delete_app.js"></script>
+    <script type="text/javascript" src="views/apps/billing_portal.js"></script>
 
-  <script type="text/javascript" src="views/backoffice/config.js"></script>
-  <script type="text/javascript" src="views/backoffice/template.js"></script>
+    <script type="text/javascript" src="views/reports/config.js"></script>
+    <script type="text/javascript" src="views/reports/report.js"></script>
 
-  <script type="text/javascript" src="views/api_playground/config.js"></script>
-  <script type="text/javascript" src="views/api_playground/show.js"></script>
-  <script type="text/javascript" src="views/api_playground/todo.js"></script>
+    <script type="text/javascript" src="views/backoffice/config.js"></script>
+    <script type="text/javascript" src="views/backoffice/template.js"></script>
 
-  <script type="text/javascript" src="views/docs/config.js"></script>
-  <script type="text/javascript" src="views/docs/docs.js"></script>
-  <script type="text/javascript" src="views/docs/api_desc.js"></script>
-  <script type="text/javascript" src="views/docs/video.js"></script>
-  <script type="text/javascript" src="views/docs/new_app_modal.js"></script>
-  <script type="text/javascript" src="views/docs/kickstarts/platform_select.js"></script>
-  <script type="text/javascript" src="views/docs/kickstarts/starter_app_select.js"></script>
-  <script type="text/javascript" src="views/docs/kickstarts/kickstart.js"></script>
+    <script type="text/javascript" src="views/api_playground/config.js"></script>
+    <script type="text/javascript" src="views/api_playground/show.js"></script>
+    <script type="text/javascript" src="views/api_playground/todo.js"></script>
 
-  <script type="text/javascript" src="views/log/config.js"></script>
-  <script type="text/javascript" src="views/log/log.js"></script>
-  <script type="text/javascript" src="views/log/activity.js"></script>
-  <script type="text/javascript" src="views/log/requests.js"></script>
+    <script type="text/javascript" src="views/docs/config.js"></script>
+    <script type="text/javascript" src="views/docs/docs.js"></script>
+    <script type="text/javascript" src="views/docs/api_desc.js"></script>
+    <script type="text/javascript" src="views/docs/video.js"></script>
+    <script type="text/javascript" src="views/docs/new_app_modal.js"></script>
+    <script type="text/javascript" src="views/docs/kickstarts/platform_select.js"></script>
+    <script type="text/javascript" src="views/docs/kickstarts/starter_app_select.js"></script>
+    <script type="text/javascript" src="views/docs/kickstarts/kickstart.js"></script>
 
-  <script type="text/javascript" src="views/functions/config.js"></script>
-  <script type="text/javascript" src="views/functions/functions.js"></script>
+    <script type="text/javascript" src="views/log/config.js"></script>
+    <script type="text/javascript" src="views/log/log.js"></script>
+    <script type="text/javascript" src="views/log/activity.js"></script>
+    <script type="text/javascript" src="views/log/requests.js"></script>
 
-  <script type="text/javascript" src="views/security/config.js"></script>
-  <script type="text/javascript" src="views/security/user/users.js"></script>
-  <script type="text/javascript" src="views/security/user/change_user_password.js"></script>
-  <script type="text/javascript" src="views/security/user/get_user_token.js"></script>
-  <script type="text/javascript" src="views/security/user/registered-users.controller.js"></script>
-  <script type="text/javascript" src="views/security/user/team.controller.js"></script>
-  <script type="text/javascript" src="views/security/workspace/workspace.js"></script>
-  <script type="text/javascript" src="views/security/auth/auth.js"></script>
-  <script type="text/javascript" src="views/security/actions/actions.js"></script>
-  <script type="text/javascript" src="views/security/social_and_keys/social_and_keys.js"></script>
+    <script type="text/javascript" src="views/functions/config.js"></script>
+    <script type="text/javascript" src="views/functions/functions.js"></script>
 
-  <script type="text/javascript" src="views/database/config.js"></script>
-  <script type="text/javascript" src="views/database/show.js"></script>
-  <script type="text/javascript" src="views/database/edit.js"></script>
-  <script type="text/javascript" src="views/database/todo_example.js"></script>
+    <script type="text/javascript" src="views/security/config.js"></script>
+    <script type="text/javascript" src="views/security/user/users.js"></script>
+    <script type="text/javascript" src="views/security/user/change_user_password.js"></script>
+    <script type="text/javascript" src="views/security/user/get_user_token.js"></script>
+    <script type="text/javascript" src="views/security/user/registered-users.controller.js"></script>
+    <script type="text/javascript" src="views/security/user/team.controller.js"></script>
+    <script type="text/javascript" src="views/security/workspace/workspace.js"></script>
+    <script type="text/javascript" src="views/security/auth/auth.js"></script>
+    <script type="text/javascript" src="views/security/actions/actions.js"></script>
+    <script type="text/javascript" src="views/security/social_and_keys/social_and_keys.js"></script>
 
-  <script type="text/javascript" src="views/db_queries/config.js"></script>
-  <script type="text/javascript" src="views/db_queries/query.js"></script>
+    <script type="text/javascript" src="views/database/config.js"></script>
+    <script type="text/javascript" src="views/database/show.js"></script>
+    <script type="text/javascript" src="views/database/edit.js"></script>
+    <script type="text/javascript" src="views/database/todo_example.js"></script>
 
-  <script type="text/javascript" src="views/hosting/config.js"></script>
-  <script type="text/javascript" src="views/hosting/hosting_tree/hosting_tree.js"></script>
-  <script type="text/javascript" src="views/hosting/files_tree/files_tree.js"></script>
-  <script type="text/javascript" src="views/hosting/upload_files.js"></script>
+    <script type="text/javascript" src="views/db_queries/config.js"></script>
+    <script type="text/javascript" src="views/db_queries/query.js"></script>
 
-  <script type="text/javascript" src="views/cron_jobs/config.js"></script>
-  <script type="text/javascript" src="views/cron_jobs/job.js"></script>
+    <script type="text/javascript" src="views/hosting/config.js"></script>
+    <script type="text/javascript" src="views/hosting/hosting_tree/hosting_tree.js"></script>
+    <script type="text/javascript" src="views/hosting/files_tree/files_tree.js"></script>
+    <script type="text/javascript" src="views/hosting/upload_files.js"></script>
 
-  <script type="text/javascript" src="views/external_functions/config.js"></script>
-  <script type="text/javascript" src="views/external_functions/externalFunctions.component.js"></script>
-  <script type="text/javascript" src="views/external_functions/aws_connection/aws_connection.directive.js"></script>
+    <script type="text/javascript" src="views/cron_jobs/config.js"></script>
+    <script type="text/javascript" src="views/cron_jobs/job.js"></script>
 
-  <script type="text/javascript" src="common/directives/config.js"></script>
-  <script type="text/javascript" src="common/directives/auth_landing.js"></script>
-  <script type="text/javascript" src="common/directives/theme.js"></script>
-  <script type="text/javascript" src="common/directives/log_list/log_list.js"></script>
-  <script type="text/javascript" src="common/directives/match.js"></script>
-  <script type="text/javascript" src="common/directives/place_at_char.js"></script>
-  <script type="text/javascript" src="common/directives/custom_validator.js"></script>
-  <script type="text/javascript" src="common/directives/tooltip.js"></script>
-  <script type="text/javascript" src="common/directives/help_link.js"></script>
-  <script type="text/javascript" src="common/directives/nested.js"></script>
-  <script type="text/javascript" src="common/directives/security_matrix/security_matrix.js"></script>
-  <script type="text/javascript" src="common/directives/angled/Services/angled-dragndrop.js"></script>
-  <script type="text/javascript" src="common/directives/angled/Services/angled-filters.js"></script>
-  <script type="text/javascript" src="common/directives/angled/Services/angled-helper.js"></script>
-  <script type="text/javascript" src="common/directives/angled/angled-windows.js"></script>
-  <script type="text/javascript" src="common/directives/video_modal/video_modal.js"></script>
-  <script type="text/javascript" src="common/directives/anchor/anchor.js"></script>
-  <script type="text/javascript" src="common/directives/copy_box/copy_box.js"></script>
-  <script type="text/javascript" src="common/directives/copy_url/copy_url.js"></script>
-  <script type="text/javascript" src="common/directives/ace-diff/ace-diff.js"></script>
-  <script type="text/javascript" src="common/directives/filter_form/filter_form.js"></script>
-  <script type="text/javascript" src="common/directives/single_select_typeahead/single_select_typeahead.js"></script>
-  <script type="text/javascript" src="common/directives/find_in_ace/find_in_ace.js"></script>
-  <script type="text/javascript" src="common/directives/ace-features/ace-features.js"></script>
-  <script type="text/javascript" src="common/directives/flowchart/svg_class.js"></script>
-  <script type="text/javascript" src="common/directives/flowchart/mouse_capture_service.js"></script>
-  <script type="text/javascript" src="common/directives/flowchart/dragging_service.js"></script>
-  <script type="text/javascript" src="common/directives/flowchart/flowchart_viewmodel.js"></script>
-  <script type="text/javascript" src="common/directives/flowchart/flowchart_directive.js"></script>
-  <script type="text/javascript" src="common/directives/flowchart/flowchart.js"></script>
-  <script type="text/javascript" src="common/directives/draggable_modal.js"></script>
-  <script type="text/javascript" src="common/directives/unsaved_changes/unsaved_changes.js"></script>
-  <script type="text/javascript" src="common/directives/tree_control/tree_control.js"></script>
-  <script type="text/javascript" src="common/directives/new_app/new_app.js"></script>
-  <script type="text/javascript" src="common/directives/analytics_link_wrapper.js"></script>
-  <script type="text/javascript" src="common/directives/cron_selector/angular-cron-jobs.js"></script>
-  <script type="text/javascript" src="common/directives/search/search.js"></script>
-  <script type="text/javascript" src="common/directives/code_generator/code_generator.js"></script>
+    <script type="text/javascript" src="views/external_functions/config.js"></script>
+    <script type="text/javascript" src="views/external_functions/externalFunctions.component.js"></script>
+    <script type="text/javascript" src="views/external_functions/aws_connection/aws_connection.directive.js"></script>
+    <script type="text/javascript" src="views/external_functions/lambda_functions/lambda_functions.directive.js"></script>
 
-  <script type="text/javascript" src="common/interceptors/httpInterceptor.js"></script>
-  <script type="text/javascript" src="common/filters/uppercase.js"></script>
-  <script type="text/javascript" src="common/filters/newTerminology.js"></script>
+    <script type="text/javascript" src="common/directives/config.js"></script>
+    <script type="text/javascript" src="common/directives/auth_landing.js"></script>
+    <script type="text/javascript" src="common/directives/theme.js"></script>
+    <script type="text/javascript" src="common/directives/log_list/log_list.js"></script>
+    <script type="text/javascript" src="common/directives/match.js"></script>
+    <script type="text/javascript" src="common/directives/place_at_char.js"></script>
+    <script type="text/javascript" src="common/directives/custom_validator.js"></script>
+    <script type="text/javascript" src="common/directives/tooltip.js"></script>
+    <script type="text/javascript" src="common/directives/help_link.js"></script>
+    <script type="text/javascript" src="common/directives/nested.js"></script>
+    <script type="text/javascript" src="common/directives/security_matrix/security_matrix.js"></script>
+    <script type="text/javascript" src="common/directives/angled/Services/angled-dragndrop.js"></script>
+    <script type="text/javascript" src="common/directives/angled/Services/angled-filters.js"></script>
+    <script type="text/javascript" src="common/directives/angled/Services/angled-helper.js"></script>
+    <script type="text/javascript" src="common/directives/angled/angled-windows.js"></script>
+    <script type="text/javascript" src="common/directives/video_modal/video_modal.js"></script>
+    <script type="text/javascript" src="common/directives/anchor/anchor.js"></script>
+    <script type="text/javascript" src="common/directives/copy_box/copy_box.js"></script>
+    <script type="text/javascript" src="common/directives/copy_url/copy_url.js"></script>
+    <script type="text/javascript" src="common/directives/ace-diff/ace-diff.js"></script>
+    <script type="text/javascript" src="common/directives/filter_form/filter_form.js"></script>
+    <script type="text/javascript" src="common/directives/single_select_typeahead/single_select_typeahead.js"></script>
+    <script type="text/javascript" src="common/directives/find_in_ace/find_in_ace.js"></script>
+    <script type="text/javascript" src="common/directives/ace-features/ace-features.js"></script>
+    <script type="text/javascript" src="common/directives/flowchart/svg_class.js"></script>
+    <script type="text/javascript" src="common/directives/flowchart/mouse_capture_service.js"></script>
+    <script type="text/javascript" src="common/directives/flowchart/dragging_service.js"></script>
+    <script type="text/javascript" src="common/directives/flowchart/flowchart_viewmodel.js"></script>
+    <script type="text/javascript" src="common/directives/flowchart/flowchart_directive.js"></script>
+    <script type="text/javascript" src="common/directives/flowchart/flowchart.js"></script>
+    <script type="text/javascript" src="common/directives/draggable_modal.js"></script>
+    <script type="text/javascript" src="common/directives/unsaved_changes/unsaved_changes.js"></script>
+    <script type="text/javascript" src="common/directives/tree_control/tree_control.js"></script>
+    <script type="text/javascript" src="common/directives/new_app/new_app.js"></script>
+    <script type="text/javascript" src="common/directives/analytics_link_wrapper.js"></script>
+    <script type="text/javascript" src="common/directives/cron_selector/angular-cron-jobs.js"></script>
+    <script type="text/javascript" src="common/directives/search/search.js"></script>
+    <script type="text/javascript" src="common/directives/code_generator/code_generator.js"></script>
 
-  <script type="text/javascript" src="tmp/templates.js"></script>
-  <!-- endbuild -->
+    <script type="text/javascript" src="common/interceptors/httpInterceptor.js"></script>
+    <script type="text/javascript" src="common/filters/uppercase.js"></script>
+    <script type="text/javascript" src="common/filters/newTerminology.js"></script>
 
-  <script type="text/javascript">
-    !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
-      if(this.window.location.hostname != 'localhost' && this.window.location.hostname +
-              this.window.location.pathname != 'hosting.backand.net/qa1/') {
-        analytics.load("B9HnYlGFEZGQ99PkivFxE4kK4M8PKk3B");
-        analytics.page();
-      }
-    }}();
-  </script>
-</body>
+    <script type="text/javascript" src="tmp/templates.js"></script>
+    <!-- endbuild -->
+
+    <script type="text/javascript">
+      !function () {
+        var analytics = window.analytics = window.analytics || []; if (!analytics.initialize) if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice."); else {        
+analytics.invoked = !0; analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "group", "track", "ready", "alias", "page", "once", "off", "on"]; analytics.factory = function (t) { return function () { var e = Array.prototype.slice.call(arguments); e.unshift(t); analytics.push(e); return analytics } }; for (var t = 0; t < analytics.methods.length; t++) { var e = analytics.methods[t]; analytics[e] = analytics.factory(e) } analytics.load = function (t) { var e = document.createElement("script"); e.type = "text/javascript"; e.async = !0; e.src = ("https:" === document.location.protocol ? "https://" : "http://") + "cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js"; var n = document.getElementsByTagName("script")[0]; n.parentNode.insertBefore(e, n) }; analytics.SNIPPET_VERSION = "3.0.1";
+          if (this.window.location.hostname != 'localhost' && this.window.location.hostname +
+            this.window.location.pathname != 'hosting.backand.net/qa1/') {
+            analytics.load("B9HnYlGFEZGQ99PkivFxE4kK4M8PKk3B");
+            analytics.page();
+          }
+        }
+      }();
+    </script>
+  </body>
+
 </html>

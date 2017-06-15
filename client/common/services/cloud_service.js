@@ -190,7 +190,7 @@
         return $http({
           method: 'POST',
           url: CONSTS.appUrl + '/1/lambda/select',
-          data: [data],
+          data: data,
           params: params,
           headers: setHeaders()
         });

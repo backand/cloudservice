@@ -22,16 +22,14 @@
         controller: [
           '$log',
           'usSpinnerService',
-          'CloudService',
           '$modal',
           '$state',
           'modalService',
-          'NotificationService',
           '$rootScope',
           'APP_CONSTS',
           'AppsService',
-          'AnalyticsService',
-          function ($log, usSpinnerService, CloudService, $modal, $state, modalService, NotificationService, $rootScope, APP_CONSTS, AppsService, AnalyticsService) {
+          'ConfirmationPopup',
+          function ($log, usSpinnerService, $modal, $state, modalService, $rootScope, APP_CONSTS, AppsService, ConfirmationPopup) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
             /**
@@ -44,13 +42,12 @@
              * public methods
              */
             $ctrl.onSaveConnection = onSaveConnection;
-            $ctrl.updateFunction = updateFunction;
             $ctrl.onLoadConnection = onLoadConnection;
+            $ctrl.onLoadLambdaFunctions = onLoadLambdaFunctions;
             /**
              * public properties
              */
             $ctrl.activeConnection = {};
-            $ctrl.hasFunctions = false;
             /**
              * @name initialization
              * @description
@@ -73,11 +70,10 @@
                 awsConnection: true,
                 lambdaFunctions: true
               };
+              getApp();
               //opens modal for AWS credentials
               if (isNew()) {
                 awsConnectionModal();
-              } else {
-                getLambdaFunctions();
               }
               setCurrentAppTokens();
               usSpinnerService.stop('loading');
@@ -85,31 +81,36 @@
 
             /**
              * @name getLambdaFunctions
-             * @description  function to get lambda function by app
-             * 
-             * @returns void
+             * @description An helper function which $emit an event to notifify `lambdaFunctions` Component
+             * @see `lambdaFunctions` Component
              */
             function getLambdaFunctions() {
-              usSpinnerService.spin('loading');
-              CloudService
-                .getLambdaFunctions()
-                .then(function (response) {
-                  $log.info(response.data);
-                  $ctrl.lambdaFunctions = response.data.data[0] ? response.data.data[0].functions : [];
-                  //Expand collapsible if lambdaFunctions > 0
-                  if (_.keys($ctrl.lambdaFunctions).length > 0) {
-                    $ctrl.sections.lambdaFunctions = false;
-                    $ctrl.hasFunctions = true;
-                  }
-                  $log.info('Lambda functions loaded', response);
-                  usSpinnerService.stop('loading');
-                }).catch(function (error) {
-                  $ctrl.lambdaFunctions = {};
-                  $ctrl.hasFunctions = false;
-                  $log.error('Error while fetching Lambda functions', error);
-                  usSpinnerService.stop('loading');
-                });
+              /**
+              * @event EVENT:EXTERNAL_FUNCTION:LOAD_LAMBDA_FUNCTIONS
+              * @param activeConnection
+              * @see awsConnection Component
+              */
+              $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:LOAD_LAMBDA_FUNCTIONS', {
+                activeConnection: $ctrl.activeConnection
+              });
+              $log.info('$emit EVENT:EXTERNAL_FUNCTION:LOAD_LAMBDA_FUNCTIONS', $ctrl.activeConnection);
             }
+
+            /**
+             * @name onLoadLambdaFunctions
+             * @description A callback handler which is called when lambda functions are loaded in `lambdaFunctions` Component
+             * 
+             * @param {array} A list of lambda functions
+             * @param {boolean} hasFunctions
+             * @see `lambdaFunctions` Component
+             */
+            function onLoadLambdaFunctions(functions, hasFunctions) {
+              $log.info('onLoadLambdaFunctions is called with -', functions, hasFunctions);
+              if (hasFunctions) {
+                $ctrl.sections.lambdaFunctions = false;
+              }
+            }
+
             /**
             * @name onSaveConnection
             * @description  function is called when AWS connection is saved/updated
@@ -119,8 +120,7 @@
             * @returns void
             */
             function onSaveConnection(connection) {
-              $log.info('AWS connection is updated with -', connection);
-              getLambdaFunctions();
+              $log.info('onSaveConnection - AWS connection is updated with -', connection);
             }
 
             /**
@@ -131,27 +131,26 @@
              */
             function awsConnectionModal() {
               var stateParams = $state.params;
-                  angular.extend(stateParams, {
-                    new: undefined
-                  });
+              angular.extend(stateParams, {
+                new: undefined
+              });
 
               modalService
                 .awsCredentials()
                 .then(function (data) {
                   $log.info('connection with - ', data);
-                  
-
                   $state.transitionTo($state.current.name, stateParams, {
-                      reload: true
-                    });
+                    reload: true
+                  });
                 }, function () {
                   $log.info('Cancelled AWS credentials to enter.');
-                  modalService.demoApp().then(function () {
-                  }, function () {
-                    $state.transitionTo($state.current.name, stateParams, {
+                  //msg, okText, cancelText, showOk, showCancel, title, size
+                  ConfirmationPopup.confirm('<p>Connect your AWS account to easily launch Lambda functions.In the meantime, see a demo of the tool in action with example functions.</p> <p class="m-b-0"><a href = "https://lambda.backand.io/#/lambdademo/functions?t=OGQ5ZGFlYTgtMzQzMi00NWMxLTk3MGItOGVhODE4MGZmMTBk" class="btn btn-success" target="_blank">See Live Demo</a></p>','Close','',true,false,'','md')
+                    .then(function (result) {
+                      $state.transitionTo($state.current.name, stateParams, {
                         notify: false
                       });
-                  });
+                    })
                 });
             }
 
@@ -167,52 +166,6 @@
             }
 
             /**
-             * @name updateFunction
-             * @description updates function with selected:true|false
-             * Link/unkink function 
-             * link - {
-             *  selected : true
-             * }
-             * 
-             * unlink - {
-             *  selected : false
-             * }
-             * 
-             * @param {string} func A function to be updated
-             * @param {boolean} flag A flag true|false 
-             * 
-             * @returns void
-             */
-            function updateFunction(func, flag) {
-              $log.info('Selected function - ', func, $ctrl.activeConnection);
-              usSpinnerService.spin('loading');
-              var requestBody = {
-                name: func.FunctionName,
-                cloudId: $ctrl.activeConnection.__metadata.id,
-                select: flag,
-                arn: func.FunctionArn
-              };
-              CloudService
-                .updateFunction(requestBody)
-                .then(function (response) {
-                  func.selected = flag;
-                  func.functionId = response.data[0]['functionId'];
-                  $log.info('Lambda function is selected with -', response);
-                  usSpinnerService.stop('loading');
-                  NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
-
-                  if(flag){
-                    AnalyticsService.track('LambdaFunctionSelected',{function: func.FunctionName});
-                  }
-                  $rootScope.$broadcast('fetchTables');
-                  getLambdaFunctions();
-                }).catch(function (error) {
-                  usSpinnerService.spin('loading');
-                  $log.error('Error while updating function\'s status', error);
-                });
-            }
-
-            /**
              * @name onLoadConnection
              * @description A handler which is called when connects are loaded from API
              * 
@@ -224,24 +177,31 @@
             function onLoadConnection(activeConnection) {
               angular.extend($ctrl.activeConnection, activeConnection);
               //Expand AWS connection panel if there is no active connection
-              if(!$ctrl.activeConnection.Id){
+              if (!$ctrl.activeConnection.Id) {
                 $ctrl.sections.awsConnection = false;
               }
+              getLambdaFunctions();
             }
-
-
-            function setCurrentAppTokens(){
-              AppsService.appKeys($ctrl.appName).then(function(response){
+            function getApp(){
+              AppsService
+              .getApp($ctrl.appName)
+              .then(function(response){
+                $log.info('getApp',response);
+                $ctrl.isAnonymous = _.get(response, 'settings.secureLevel') == "AllUsers";
+              });
+            }
+            function setCurrentAppTokens() {
+              AppsService.appKeys($ctrl.appName).then(function (response) {
                 $ctrl.tokens = response.data;
                 $log.info('Current App', response.data);
 
-                if($ctrl.tokens.anonymous){
+                if ($ctrl.tokens.anonymous) {
                   $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/functions?t=' + $base64.encode($ctrl.tokens.anonymous);
                 } else {
                   $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/login';
                 }
 
-              },function(err){
+              }, function (err) {
                 $log.error('Error while setting up current APP', err);
               });
             }
