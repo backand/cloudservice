@@ -58,14 +58,14 @@
             <div ng-show="!rules.mode.name.includes('function') || rules.showAdvancedProperties || rules.action.workflowAction !=='JavaScript'">
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
                    ng-class="{'has-error': rules.newRuleForm.friendlyName.$invalid}"
-                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS) && false">
+                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS)">
                 <label>Friendly Name</label>
                 <input type="text" name="friendlyName" class="form-control" ng-model="rules.action.friendlyName"
                        placeholder="Your friendly name" ng-disabled="!rules.editMode">
               </div>
               <div class="form-group col-lg-12 col-md-12 col-sm-12"
                    ng-class="{'has-error': rules.newRuleForm.description.$invalid}"
-                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS) && false">
+                   ng-if="rules.mode.name.includes('function') && (!rules.isNewAction || !rules.isNodeJS)">
                 <label>Description</label>
                 <textarea
                         class="form-control"
