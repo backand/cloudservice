@@ -50,9 +50,16 @@
       AuthService.socialLogin(social, isSignup, self.email, isSignup)
         .then(function (response) {
           var requestedState = SessionService.getRequestedState();
-          if (isSignup && isLauncher()) {
-            AnalyticsService.track('SignupLauncher');
-            createNewApp();
+          if (isLauncher()) {
+            //we don't know if this is signin or signup so create app only if this is the first one
+            AppsService.appCount().then(function(response){
+              if(response == 0){
+                AnalyticsService.track('SignupLauncher');
+                createNewApp();
+              } else {
+                $state.go(requestedState.state || 'apps.index', requestedState.params);
+              }
+            });
           } else {
             $state.go(requestedState.state || 'apps.index', requestedState.params);
           }
@@ -64,7 +71,7 @@
             NotificationService.add('error', error.data.error_description || error.data);
           }
         });
-    }
+    };
 
     /**
      * @ngdoc function

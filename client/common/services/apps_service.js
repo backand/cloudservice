@@ -281,6 +281,18 @@
       });
     };
 
+    self.appCount = function() {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: CONSTS.appUrl + '/admin/myApps?pageSize=1'
+      }).then(function(response){
+        deferred.resolve(response.data.totalRows);
+      });
+
+      return deferred.promise;
+    };
+
     function getAllApps () {
       return $http({
         method: 'GET',
