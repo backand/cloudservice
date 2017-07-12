@@ -213,6 +213,9 @@
 
           if($localStorage.backand[app.Name].currentState !== 'apps.index') {
             var currentstate = $localStorage.backand[app.Name].currentState;
+            if(isLauncher()){
+              currentstate = "functions.externalFunctions";
+            }
             $state.go('app', {appName: app.Name}, {reload: true}).then(function(){
               switch (currentstate){
                 case "functions.function":
@@ -234,7 +237,11 @@
             });
           }
           else {
-            $state.go('app', {appName: app.Name}, {reload: true});
+            var currentstate = "app";
+            if(isLauncher()){
+              currentstate = "functions.externalFunctions";
+            }
+            $state.go(currentstate, {appName: app.Name}, {reload: true});
           }
         }
       }
@@ -363,6 +370,18 @@
       LayoutService.openJumbo();
       self.showJumbo = true;
     };
+
+        /**
+     * @ngdoc function
+     * @name isLauncher
+     * @description checks if launcher = 1 param exists in URL
+     *
+     * @returns {boolean}
+     */
+    function isLauncher() {
+      var launcher = $state.params.launcher;
+      return (typeof launcher !== 'undefined') && (launcher == 1);
+    }
 
   }
 }());

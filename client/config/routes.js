@@ -45,7 +45,7 @@ angular.module('backand.routes', []).
         templateUrl: 'views/account/billing_portal.html'
       })
       .state('session', {
-        url: '/',
+        url: '/?:launcher',
         abstract: true,
         controller: 'MainController as main',
         templateUrl: 'views/shared/main_view.html',
