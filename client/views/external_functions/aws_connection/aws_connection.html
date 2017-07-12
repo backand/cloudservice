@@ -1,10 +1,11 @@
 <form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
   <div us-spinner="" spinner-key="connectionView" spinner-start-active></div>
   <div class="form-group">
-    <label>To connect Lambda Launcher to your Lambda functions list you can use <b>AWS CloudFormation</b> to create a safe IAM user.<br/><br/>
-    Simply run this command using <a href="https://aws.amazon.com/cli" target="_blank">AWS CLI</a> to crete IAM user with ONLY 'GetFunction', 'InvokeFunction' and 'ListFunctions' policies:<br/></label>
-<pre><code>aws cloudformation create-stack --template-url https://cdn.backand.net/cf/1/backand-rc --stack-name createbackanduser --capabilities CAPABILITY_IAM</code></pre>
-    <label>To obtain the user's access and secret keys run this command and copy the result from the terminal:
+    <label>Connect the Lambda Launcher to your Lambda functions list using <b>AWS CloudFormation</b> to create a restricted IAM user.<br/><br/>
+
+    Run this command using the <a href="https://aws.amazon.com/cli" target="_blank">AWS CLI</a> and we create an IAM user that only has the 'GetFunction', 'InvokeFunction' and 'ListFunctions' policies:<br/></label>
+<pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-rc --stack-name createbackanduser --capabilities CAPABILITY_IAM</code></pre>
+    <label>Once the IAM user has been created, use this command to obtain the user's access and secret keys, then copy these values into the fields below:
 <pre><code>aws cloudformation describe-stacks --stack-name createbackanduser</code></pre>  
     <label>You can also use other AWS tools to create the connection - 
        <ba-help-link key="LLSettingIAM" with-text="learn more"></ba-help-link>
@@ -32,7 +33,7 @@
   <hr/>
   <div class="form-group">
     <div class="alert alert-warning">
-        Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than executing your Lambda functions. You can always delete the credentials which will permantly remove them. If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact" target="_blank">please contact us</a>. 
+        Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than executing your Lambda functions. You can permanently revoke our access at any time by deleting the IAM credentials. If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact" target="_blank">please contact us</a>. 
     </div>
   </div>
 
