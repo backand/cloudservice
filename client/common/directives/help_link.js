@@ -146,9 +146,9 @@
             "page": "external_function/externalFunctions",
             "url": "http://docs.backand.com/#the-backand-lambda-launcher"
           },
-          "learnHow": {
-            "page": "learn_how",
-            "url": "http://docs.backand.com/#configuration459"
+          "LLSettingIAM": {
+            "page": "LL Dialog Connection",
+            "url": "http://docs.backand.com/#setting-up-iam-access-for-the-lambda-launcher"
           }
         };
 

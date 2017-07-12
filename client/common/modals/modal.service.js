@@ -65,7 +65,7 @@
           return $modal.open({
             templateUrl: options.templateUrl || 'common/modals/aws_modal/aws_modal.html',
             keyboard: false,
-            size: options.size || 'md',
+            size: options.size || 'lg',
             controller: 'AwsModalController',
             bindToController: true,
             controllerAs: '$ctrl',
