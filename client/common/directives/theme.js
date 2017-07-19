@@ -26,7 +26,7 @@
       return {
         restrict: 'A',
         link: function($scope, ele, attrs, $state) {
-          var $a, $aRest, $app, $lists, $listsRest, $nav, $window, Timer, prevWidth, updateClass;
+          var $a, $aRest, $app, $lists, $listsRest, $nav, $window, Timer, prevWidth, updateClass, $activeParent, $active;
           $window = $(window);
           $lists = ele.find('ul').parent('li');
           $lists.append('');
@@ -35,6 +35,17 @@
           $aRest = $listsRest.children('a');
           $app = $('#app');
           $nav = $('#nav-container');
+
+          $(document).ready(function(){
+            setTimeout(function(){
+              if($lists.find('.active').length !== 0){
+                $active = $lists.find('.active');
+                $activeParent = $($active[0]).parents('li');
+                $activeParent.toggleClass('open').find('ul').stop().slideDown();
+                $activeParent.find('.glyphicon-chevron-right').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
+              }
+            },100)
+          });
           $a.on('click', function(event) {
             var $parent, $this;
             if ($app.hasClass('nav-collapsed-min') || ($nav.hasClass('nav-horizontal') && $window.width() >= 768)) {
@@ -61,7 +72,6 @@
             }
             event.preventDefault();
           });
-
           $aRest.on('click', function(event) {
             $lists.removeClass('open').find('ul').slideUp();
           });
@@ -74,7 +84,6 @@
           });
           Timer = void 0;
           prevWidth = $window.width();
-
           updateClass = function() {
             var currentWidth;
             currentWidth = $window.width();

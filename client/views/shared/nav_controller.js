@@ -28,7 +28,10 @@
       if (self.backandstorage) {
         self.showSecondaryAppNav = self.backandstorage.showSecondaryAppNav;
         if (self.backandstorage.secondAppNavChoice === undefined) {
-          checkState();
+          if($state.currentState){
+            checkState();
+          }
+
         }
       }
 
