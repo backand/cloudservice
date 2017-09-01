@@ -16,7 +16,7 @@ var proxy = require('proxy-middleware');
 var filelog = require('gulp-filelog');
 var replace = require('gulp-replace-task');
 var minifyCSS = require('gulp-minify-css');
-var rsync  = require('gulp-rsync');
+var rsync = require('gulp-rsync');
 var confirm = require('gulp-confirm');
 var _ = require('lodash');
 var backandSync = require('./node_modules/backand/lib/api/backand-sync-s3');
@@ -31,12 +31,12 @@ var currEnv = 'dev';
 gulp.task('webdriver:update', webdriverUpdate);
 
 // run unit tests and watch files
-gulp.task('tdd', function() {
+gulp.task('tdd', function () {
   karma.start(karmaConfig);
 });
 
 // run unit tests with travis CI
-gulp.task('travis', ['build'], function(cb) {
+gulp.task('travis', ['build'], function (cb) {
   karma.start(_.assign({}, karmaConfig, {
     singleRun: true,
     browsers: ['PhantomJS']
@@ -44,7 +44,7 @@ gulp.task('travis', ['build'], function(cb) {
 });
 
 // optimize images and put them in the dist folder
-gulp.task('images', function() {
+gulp.task('images', function () {
   return gulp.src(config.images)
     .pipe($.imagemin({
       progressive: true,
@@ -57,15 +57,15 @@ gulp.task('images', function() {
 });
 
 //generate angular templates using html2js
-gulp.task('templates', function() {
+gulp.task('templates', function () {
   return gulp.src(config.tpl)
     .pipe($.changed(config.tmp))
-    .pipe($.html2js({
-      outputModuleName: 'templates',
+    .pipe($.html2js('templates.js', {
+      adapter: 'angular',
+      name: 'templates',
       base: 'client',
       useStrict: true
     }))
-    .pipe($.concat('templates.js'))
     .pipe(filelog())
     .pipe(gulp.dest(config.tmp))
     .pipe($.size({
@@ -74,7 +74,7 @@ gulp.task('templates', function() {
 });
 
 //generate css files from scss sources
-gulp.task('sass', function() {
+gulp.task('sass', function () {
   return gulp.src(config.mainScss)
     .pipe($.sass({
       includePaths: [
@@ -96,17 +96,17 @@ gulp.task('sass', function() {
 });
 
 //build files for creating a dist release
-gulp.task('build:dist', ['clean'], function(cb) {
+gulp.task('build:dist', ['clean'], function (cb) {
   runSequence(['build', 'copy', 'copy:assets', 'images'], 'html', cb);
 });
 
 //build files for development
-gulp.task('build', ['clean'], function(cb) {
+gulp.task('build', ['clean'], function (cb) {
   runSequence(['sass', 'templates'], cb);
 });
 
 //generate a minified css files, 2 js file, change theirs name to be unique, and generate sourcemaps
-gulp.task('html', function() {
+gulp.task('html', function () {
   var assets = $.useref.assets({
     searchPath: '{build,client}'
   });
@@ -139,43 +139,43 @@ gulp.task('html', function() {
 });
 
 //copy assets in dist folder
-gulp.task('copy:assets', function() {
+gulp.task('copy:assets', function () {
   return gulp.src(config.assets, {
-      dot: true
-    }).pipe(gulp.dest(config.dist + '/assets'))
-      .pipe(gulp.dest(config.dist + '/assets/assets')) //bug in the views that need /assets/assets
+    dot: true
+  }).pipe(gulp.dest(config.dist + '/assets'))
+    .pipe(gulp.dest(config.dist + '/assets/assets')) //bug in the views that need /assets/assets
     .pipe($.size({
       title: 'copy:assets'
     }));
 });
 
 //copy assets in dist folder
-gulp.task('copy',['copy:extra'], function() {
+gulp.task('copy', ['copy:extra'], function () {
   return gulp.src([
-      config.base + '/*',
-      '!' + config.base + '/*.html',
-      '!' + config.base + '/src',
-      '!' + config.base + '/test'
-    ]).pipe(gulp.dest(config.dist))
+    config.base + '/*',
+    '!' + config.base + '/*.html',
+    '!' + config.base + '/src',
+    '!' + config.base + '/test'
+  ]).pipe(gulp.dest(config.dist))
     .pipe($.size({
       title: 'copy'
     }));
 });
 
-gulp.task('copy:extra', function() {
+gulp.task('copy:extra', function () {
   gulp.src([
-      config.base + '/views/database/db_templates/*',
-      config.base + '/vendor/zeroclipboard/dist/*',
-      config.base + '/examples/todo/*'
-    ],{ base: config.base })
-      .pipe(gulp.dest(config.dist));
+    config.base + '/views/database/db_templates/*',
+    config.base + '/vendor/zeroclipboard/dist/*',
+    config.base + '/examples/todo/*'
+  ], { base: config.base })
+    .pipe(gulp.dest(config.dist));
 });
 
 //clean temporary directories
 gulp.task('clean', del.bind(null, [config.dist, config.tmp]));
 
 //lint files
-gulp.task('jshint', function() {
+gulp.task('jshint', function () {
   return gulp.src(config.js)
     .pipe(reload({
       stream: true,
@@ -193,30 +193,30 @@ gulp.task('jshint', function() {
 gulp.task('default', ['serve']); //
 
 //run unit tests and exit
-gulp.task('test:unit', ['build'], function(cb) {
+gulp.task('test:unit', ['build'], function (cb) {
   karma.start(_.assign({}, karmaConfig, {
     singleRun: true
   }), cb);
 });
 
 // Run e2e tests using protractor, make sure serve task is running.
-gulp.task('test:e2e', ['webdriver:update'], function() {
+gulp.task('test:e2e', ['webdriver:update'], function () {
   return gulp.src(protractorConfig.config.specs)
     .pipe($.protractor.protractor({
       configFile: 'build/protractor.config.js'
     }))
-    .on('error', function(e) {
+    .on('error', function (e) {
       throw e;
     });
 });
 
 //run the server,  watch for file changes and redo tests.
-gulp.task('serve:tdd', function(cb) {
+gulp.task('serve:tdd', function (cb) {
   runSequence(['serve', 'tdd']);
 });
 
 //run the server after having built generated files, and watch for changes
-gulp.task('serve', ['env:dev', 'build'], function() {
+gulp.task('serve', ['env:dev', 'build'], function () {
   //var proxyOptions = url.parse('http://api.backand.info:8099');
   var proxyOptions = url.parse('https://api.backand.co');
   proxyOptions.route = '/api';
@@ -240,7 +240,7 @@ gulp.task('serve', ['env:dev', 'build'], function() {
 });
 
 //run the server after having built generated files, and watch for changes
-gulp.task('serve:prod', ['env:prod', 'build'], function() {
+gulp.task('serve:prod', ['env:prod', 'build'], function () {
   //var proxyOptions = url.parse('http://api.backand.info:8099');
   var proxyOptions = url.parse('https://api.backand.com');
   proxyOptions.route = '/api';
@@ -264,7 +264,7 @@ gulp.task('serve:prod', ['env:prod', 'build'], function() {
 });
 
 //run the app packed in the dist folder
-gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
+gulp.task('serve:dist', ['env:prod', 'build:dist'], function () {
   browserSync({
     notify: false,
     server: [config.dist]
@@ -272,7 +272,7 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function() {
 });
 
 //run the dev in the dist folder
-gulp.task('dev:dist', ['env:dev', 'build:dist'], function() {
+gulp.task('dev:dist', ['env:dev', 'build:dist'], function () {
   browserSync({
     notify: false,
     server: [config.dist]
@@ -280,7 +280,7 @@ gulp.task('dev:dist', ['env:dev', 'build:dist'], function() {
 });
 
 //run the local in the dist folder
-gulp.task('local:dist', ['env:local', 'build:dist'], function() {
+gulp.task('local:dist', ['env:local', 'build:dist'], function () {
   // browserSync({
   //   notify: false,
   //   server: [config.dist]
@@ -291,7 +291,7 @@ gulp.task('local:dist', ['env:local', 'build:dist'], function() {
   //backand sync --app bklocal --master 2021e4b3-50e1-4e24-8ff0-f512e13b6e51 --user ff46366b-840f-11e6-8eff-0e00ae4d21e3 --folder /Users/itay/dev/cloudservice-baas/build/dist
 });
 
-gulp.task('local', [], function() {
+gulp.task('local', [], function () {
 
   return backandSync.dist(config.dist, 'bklocal');
 
@@ -299,7 +299,7 @@ gulp.task('local', [], function() {
 });
 
 //run the Blue in the dist folder
-gulp.task('blue:dist', ['env:blue', 'build:dist'], function() {
+gulp.task('blue:dist', ['env:blue', 'build:dist'], function () {
   browserSync({
     notify: false,
     server: [config.dist]
@@ -309,17 +309,17 @@ gulp.task('blue:dist', ['env:blue', 'build:dist'], function() {
 });
 
 //deploy the code into production
-gulp.task('qa:deploy',['sts'], function() {
+gulp.task('qa:deploy', ['sts'], function () {
   //backand sync --app qa1 --master 9b37748c-0646-40da-9100-59a86d4c7da4 --user d94c5b9e-9f2a-11e5-be83-0ed7053426cb --folder /Users/itay/dev/cloudservice-baas/build/dist
   return backandSync.dist(config.dist, 'qa1');
 });
 
 //deploy the code into production
-gulp.task('qa:dist',['sts','env:dev', 'build:dist'], function() {
+gulp.task('qa:dist', ['sts', 'env:dev', 'build:dist'], function () {
   return backandSync.dist(config.dist, 'qa1');
 });
 
-gulp.task('sts', function(){
+gulp.task('sts', function () {
   var username = "9b37748c-0646-40da-9100-59a86d4c7da4";
   var password = "d94c5b9e-9f2a-11e5-be83-0ed7053426cb";
   return backandSync.sts(username, password);
