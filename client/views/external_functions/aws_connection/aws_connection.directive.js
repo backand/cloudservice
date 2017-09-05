@@ -202,10 +202,10 @@
                           metaDataId : response.data.__metadata.id
                         });
                       }
-                      handler(response, request, $ctrl.aws);
+                      handler(response, request, $ctrl.aws, true);
                     }, function () {
                       NotificationService.add('error', 'Provided AWS credentials are not valid.');
-                      handler({}, request, $ctrl.aws);
+                      handler({}, request, $ctrl.aws, false);
                     })
 
                 })
@@ -215,7 +215,7 @@
                 });
             }
 
-            function handler(response, request, model) {
+            function handler(response, request, model, status) {
               $ctrl.isNewConnection = !request.id ? true : false;
               getAwsConnection();
               //get lambda functions when connection is saved
@@ -226,7 +226,7 @@
               }
 
               if (typeof $ctrl.onSave === 'function') {
-                $ctrl.onSave({ connection: request });
+                $ctrl.onSave({ connection: request , status : status});
               }
               usSpinnerService.stop('connectionView');
             }

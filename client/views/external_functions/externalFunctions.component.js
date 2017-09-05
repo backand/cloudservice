@@ -44,6 +44,7 @@
             $ctrl.onSaveConnection = onSaveConnection;
             $ctrl.onLoadConnection = onLoadConnection;
             $ctrl.onLoadLambdaFunctions = onLoadLambdaFunctions;
+            $ctrl.editConnection = false;
             /**
              * public properties
              */
@@ -66,7 +67,6 @@
               $ctrl.activeTab = 0;
               //set collapsible panels
               $ctrl.sections = {
-                guideline: false,
                 awsConnection: true,
                 lambdaFunctions: true
               };
@@ -119,8 +119,9 @@
             * @param {object} connection An object of connection details
             * @returns void
             */
-            function onSaveConnection(connection) {
-              $log.info('onSaveConnection - AWS connection is updated with -', connection);
+            function onSaveConnection(connection, status) {
+              $log.info('onSaveConnection - AWS connection is updated with -', connection, status);
+              $ctrl.editConnection = status ? false : true;
             }
 
             /**
@@ -145,7 +146,7 @@
                 }, function () {
                   $log.info('Cancelled AWS credentials to enter.');
                   //msg, okText, cancelText, showOk, showCancel, title, size
-                  ConfirmationPopup.confirm('<p>Connect your AWS account to easily launch Lambda functions.In the meantime, see a demo of the tool in action with example functions.</p> <p class="m-b-0"><a href = "https://lambda.backand.io/#/lambdademo/functions?t=OGQ5ZGFlYTgtMzQzMi00NWMxLTk3MGItOGVhODE4MGZmMTBk" class="btn btn-success" target="_blank">See Live Demo</a></p>','Close','',true,false,'','md')
+                  ConfirmationPopup.confirm('<p>Connect your AWS account to easily launch Lambda functions.In the meantime, see a demo of the tool in action with example functions.</p> <p class="m-b-0"><a href = "https://lambda.backand.io/#/lambdademo/functions?t=OGQ5ZGFlYTgtMzQzMi00NWMxLTk3MGItOGVhODE4MGZmMTBk" class="btn btn-success" target="_blank">See Live Demo</a></p>', 'Close', '', true, false, '', 'md')
                     .then(function (result) {
                       $state.transitionTo($state.current.name, stateParams, {
                         notify: false
@@ -177,18 +178,17 @@
             function onLoadConnection(activeConnection) {
               angular.extend($ctrl.activeConnection, activeConnection);
               //Expand AWS connection panel if there is no active connection
-              if (!$ctrl.activeConnection.Id) {
-                $ctrl.sections.awsConnection = false;
-              }
+              $ctrl.sections.awsConnection = !$ctrl.activeConnection.Id ? false : true;
+              $ctrl.editConnection = !$ctrl.activeConnection.Id ? true : false;
               getLambdaFunctions();
             }
-            function getApp(){
+            function getApp() {
               AppsService
-              .getApp($ctrl.appName)
-              .then(function(response){
-                $log.info('getApp',response);
-                $ctrl.isAnonymous = _.get(response, 'settings.secureLevel') == "AllUsers";
-              });
+                .getApp($ctrl.appName)
+                .then(function (response) {
+                  $log.info('getApp', response);
+                  $ctrl.isAnonymous = _.get(response, 'settings.secureLevel') == "AllUsers";
+                });
             }
             function setCurrentAppTokens() {
               AppsService.appKeys($ctrl.appName).then(function (response) {
