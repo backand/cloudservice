@@ -26,7 +26,7 @@
          * Exposed bindable methods
          */
         self.demoApp = demoApp;
-        self.awsCredentials = awsCredentials;
+        self.cloudProvider = cloudProvider;
 
         /**
          * Exposed bindable properties
@@ -54,19 +54,19 @@
         }
 
         /**
-       * @name awsCredentials
-       * @description show demo app modal
+       * @name cloudProvider
+       * @description launch modal for cloud provder
        * 
        * @param {object} options Options to be used in modal configuration
        * @returns promise
        */
-        function awsCredentials(options) {
+        function cloudProvider(options) {
           options = options || {};
           return $modal.open({
-            templateUrl: options.templateUrl || 'common/modals/aws_modal/aws_modal.html',
+            templateUrl: options.templateUrl || 'common/modals/cloud_provider_modal/cloud_provider_modal.html',
             keyboard: false,
             size: options.size || 'lg',
-            controller: 'AwsModalController',
+            controller: 'CloudProviderModalController',
             bindToController: true,
             controllerAs: '$ctrl',
             backdrop: 'static',

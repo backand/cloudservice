@@ -1,0 +1,16 @@
+<div class="providers-list">
+  <div us-spinner="" spinner-key="providersList" spinner-start-active></div>
+  <accordion close-others="true">
+    <accordion-group heading="{{group.title}}" ng-repeat="provider in $ctrl.providers track by $index">
+      <accordion-heading>
+        <div class="row-col">
+          <div class="row-row">
+            <div class="row-cell v-m"><i class="fa fa-fw" ng-class="{'fa-chevron-down': status.open, 'fa-chevron-right': !status.open}"></i> <img src="assets/images/icons/lambda-icon.png" alt="{{provider.CloudVendor}}" class="provider-logo">{{provider.CloudVendor}}</div>
+            <div class="row-cell v-m"><button class="btn btn-backand-outline pull-right" type="button">Edit</button></div>
+          </div>
+        </div>
+      </accordion-heading>
+      <lambda-functions data-active-connection="provider" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)" launcher-app-url="$ctrl.launcherAppUrl"></lambda-functions>
+    </accordion-group>
+  </accordion>
+</div>

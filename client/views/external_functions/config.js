@@ -30,5 +30,6 @@
           url: '/external-functions?new&source',
           template: '<external-functions></external-functions>'
         });
-    }])
+    }]);
+
 })();

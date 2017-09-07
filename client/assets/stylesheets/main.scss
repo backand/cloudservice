@@ -66,6 +66,7 @@ $icon-font-path:          "/assets/fonts/bootstrap/" !default;
 ;
 
 // custom
+@import  "ui.col";
 @import "custom";
 @import "dashboard";
 @import "angled-windows";

@@ -55,6 +55,7 @@
              */
             function initialization() {
               $log.warn('Active connection - ', $ctrl.activeConnection);
+              getLambdaFunctions();
             }
 
             /**

@@ -1,6 +1,6 @@
 /**
  * @ngdoc directive
- * @name backand.externalFunctions.directive.awsConnection
+ * @name backand.externalFunctions.directive.newProvider
  * @module backand.externalFunctions
  *
  * @description
@@ -12,16 +12,17 @@
   'use strict';
   angular
     .module('backand.externalFunctions')
-    .directive('awsConnection', [function () {
+    .directive('newProvider', [function () {
       return {
         restrict: 'E',
         scope: {
           onSave: '&', // optional
           view: '@', //optional,
           modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
-          onLoadConnection: '&?' //optional
+          onLoadConnection: '&?', //optional
+          isNew : '=?'
         },
-        templateUrl: 'views/external_functions/aws_connection/aws_connection.html',
+        templateUrl: 'views/external_functions/providers/new/new-provider.html',
         controllerAs: '$ctrl',
         bindToController: true,
         controller: [
@@ -197,6 +198,7 @@
                       NotificationService.add('success', 'Connection details are saved successfully.');
                       AnalyticsService.track('AWSConnectionSaved');
                       if (!request.id) {
+                        console.log('Is new Event ---', $ctrl.isNew);
                         $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
                           functions: functions,
                           metaDataId : response.data.__metadata.id

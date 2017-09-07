@@ -44,6 +44,7 @@
             $ctrl.onSaveConnection = onSaveConnection;
             $ctrl.onLoadConnection = onLoadConnection;
             $ctrl.onLoadLambdaFunctions = onLoadLambdaFunctions;
+            $ctrl.isNew = isNew;
             $ctrl.editConnection = false;
             /**
              * public properties
@@ -73,7 +74,7 @@
               getApp();
               //opens modal for AWS credentials
               if (isNew()) {
-                awsConnectionModal();
+                providerModal();
               }
               setCurrentAppTokens();
               usSpinnerService.stop('loading');
@@ -125,19 +126,19 @@
             }
 
             /**
-             * @name awsConnectionModal
+             * @name providerModal
              * @description opens modal/popup to configure AWS credentials
              * 
              * @returns void
              */
-            function awsConnectionModal() {
+            function providerModal() {
               var stateParams = $state.params;
               angular.extend(stateParams, {
                 new: undefined
               });
 
               modalService
-                .awsCredentials()
+                .cloudProvider()
                 .then(function (data) {
                   $log.info('connection with - ', data);
                   $state.transitionTo($state.current.name, stateParams, {

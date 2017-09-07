@@ -42,6 +42,7 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "gulp-useref": "~2.1.0",
+    "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",

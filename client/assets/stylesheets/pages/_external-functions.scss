@@ -1,5 +1,18 @@
 .page-external-functions {
-    padding: 25px;
+    .page-title {
+        margin: 0;
+        padding: 0;
+    }
+    .panel {
+        border: 1px solid #bfbfbf;
+        &,
+        .panel-heading {
+            border-radius: 0;
+        }
+        .panel-body {
+            padding: 0;
+        }
+    }
     .content-wrapper {
         border-left: 1px solid #ccc;
         padding: 15px 30px;
@@ -41,13 +54,60 @@
             }
         }
     }
-    .panel {
-        box-shadow: none;
-    }
-    .panel-body {
-        &.ui-tab-container {
-            border: 0 none;
-            box-shadow: none;
+    .providers-list {
+        .panel-group {
+            margin-bottom: 0;
+            .panel,
+            .panel-default {
+                border: 0 none;
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                .panel-heading {
+                    .provider-logo {
+                        width: 38px;
+                        height: 38px;
+                        margin: 0 15px 0 10px;
+                    }
+                    .panel-title>a {
+                        &:active,
+                        &:focus,
+                        &:hover {
+                            outline: none;
+                            text-decoration: none;
+                        }
+                        color: #000000;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+                    border: 0 none;
+                }
+                .panel-body {
+                    border-top: solid 1px #bfbfbf;
+                }
+                &:last-child {
+                    .panel-heading {
+                        border: 0 none !important;
+                    }
+                }
+                .nav {
+                    &.nav-tabs {
+                        border-radius: 0;
+                        border-left: 0 none;
+                        border-right: 0 none;
+                    }
+                }
+                .tab-content {
+                    .list-group {
+                        .list-group-item {
+                            border-radius: 0;
+                            border: 0 none;
+                            margin: 0;
+                            border-bottom: solid 1px #ddd;
+                        }
+                    }
+                }
+            }
         }
     }
 }

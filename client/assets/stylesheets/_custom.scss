@@ -656,6 +656,15 @@ hr.narrow-top-margin {
 }
 
 .btn {
+    &.btn-backand {
+        @include button-variant(#ffffff, #f66731, #f66731);
+    }
+    &.btn-backand-outline {
+        @include button-variant(#f66731, #ffffff, #f66731);
+        &:hover{
+          @include button-variant(#ffffff, #f66731, #f66731);
+        }
+    }
     &.btn-amazon {
         -moz-box-shadow: inset 0px 1px 0px 0px #f9eacf;
         -webkit-box-shadow: inset 0px 1px 0px 0px #f9eacf;
@@ -696,15 +705,32 @@ hr.narrow-top-margin {
     }
 }
 
-ba-help-link{
-  > a{
-    color: #f66731;
-  }
+ba-help-link {
+    >a {
+        color: #f66731;
+    }
 }
 
-.inline-block{
-  display: inline-block;
+.inline-block {
+    display: inline-block;
 }
-.relative{
-  position: relative;
+
+.relative {
+    position: relative;
+}
+
+.row {
+    .no-gutters {
+        margin-right: 0;
+        margin-left: 0;
+        >[class^="col-"],
+        >[class*=" col-"] {
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+}
+
+.p-a{
+  padding: 15px;
 }

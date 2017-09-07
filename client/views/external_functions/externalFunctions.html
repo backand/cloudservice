@@ -1,11 +1,17 @@
+<div us-spinner="" spinner-key="loading" spinner-start-active></div>
 <section class="page-form-ele page page-external-functions">
-  <section class="panel panel-default">
-    <div class="panel-heading p-l-0">
-      <strong> External Functions </strong>
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <h2 class="page-title"> External Functions </h2>
     </div>
-    <div class="panel-body p-a-0 ui-tab-container ui-tab-horizontal">
-      <div us-spinner="" spinner-key="loading" spinner-start-active></div>
-      <tabset active="$ctrl.activeTab">
+    <div class="col-md-4 text-right">
+      <button class="pull-right btn btn-backand"> Add Provider</button>
+    </div>
+  </div>
+  <section class="panel m-t-md">
+    <div class="panel-body">
+      <providers-list></providers-list>
+      <tabset active="$ctrl.activeTab" data-ng-if="false">
         <!-- /External Functions -->
         <tab index="0" data-select="$ctrl.activeTab = 0">
           <tab-heading>
@@ -20,7 +26,8 @@
                 <div data-ng-show="$ctrl.editConnection || !$ctrl.sections.awsConnection">
                   <!-- /aws connection -->
                   <h4>Connection Details</h4>
-                  <aws-connection data-on-save="$ctrl.onSaveConnection(connection, status)" data-on-load-connection="$ctrl.onLoadConnection(connection)"></aws-connection>
+                  <aws-connection data-on-save="$ctrl.onSaveConnection(connection, status)" data-on-load-connection="$ctrl.onLoadConnection(connection)"
+                    data-is-new="$ctrl.isNew()"></aws-connection>
                   <!-- ./aws connection -->
                 </div>
                 <!-- /lambda functions -->
