@@ -16,11 +16,9 @@
       return {
         restrict: 'E',
         scope: {
-          onSave: '&', // optional
-          view: '@', //optional,
+          onSelectProvider: '&',
           modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
-          onLoadConnection: '&?', //optional
-          isNew : '=?'
+          options: '=?'
         },
         templateUrl: 'views/external_functions/providers/new/new-provider.html',
         controllerAs: '$ctrl',
@@ -35,10 +33,11 @@
           '$state',
           'AnalyticsService',
           '$rootScope',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, $rootScope ) {
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, $rootScope) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
-              connectionModel = {
+              regions,
+              cloudProviderModel = {
                 AccessKeyId: '',
                 AwsRegion: [],
                 accountId: '',
@@ -46,133 +45,106 @@
                 CloudVendor: 'AWS',
                 EncryptedSecretAccessKey: ''
               },
+              cloudProviderTypes = [{
+                name: 'AWS',
+                key: 'aws',
+                description: 'AWS Lambda'
+              }, {
+                name: 'Azure',
+                key: 'azure',
+                description: 'Azure Functions'
+              }, {
+                name: 'Google',
+                key: 'google',
+                description: 'Google Functions'
+              }, {
+                name: 'IBM',
+                key: 'ibm',
+                description: 'IBM OpenWisk'
+              }],
               defaultSecretKeyHas = '************';
-            /**
-            * call initialization to initialize controllers properties 
-            */
-            initialization();
 
             /**
              *
              * public methods
              */
-            $ctrl.saveConnection = saveConnection;
-            $ctrl.loadAwsRegion = loadAwsRegion;
-            $ctrl.deleteConnection = deleteConnection;
-
+            $ctrl.saveProvider = saveProvider;
+            $ctrl.loadRegion = loadRegion;
+            $ctrl.deleteProvider = deleteProvider;
+            $ctrl.selectProvider = selectProvider;
             /**
              * public properties
              */
-            $ctrl.aws = angular.copy(connectionModel);
+            $ctrl.cloudProvider = angular.copy(cloudProviderModel);
+            $ctrl.cloudProviderTypes = angular.copy(cloudProviderTypes);
+
+            /**
+           * call initialization to initialize controllers properties 
+           */
+            initialization();
+
             /**
              * @name initialization
              * @description
              * function to initialize properties and call function at very first.
              */
             function initialization() {
-              $ctrl.view = $ctrl.view || 'default';
-              $ctrl.modalInstance = $ctrl.modalInstance || {};
+              regions = _.get($ctrl.options, 'regions') || [];
+              $ctrl.isNew = $ctrl.options.isNew;
 
-              $log.info('awsConnection was render with ' + $ctrl.view + ' view');
-              $ctrl.sections = {
-                guideline: true,
-                awsConnection: true,
-                lambdaFunctions: false
-              };
-              usSpinnerService.stop('connectionView');
-              loadAwsRegion();
-              getAwsConnection();
+              var p = _.get($ctrl.options, 'provider');
+              if (p && p.Id) {
+                setProvider(p);
+                var pType = _.find($ctrl.cloudProviderTypes, function (pt) {
+                  return pt.name.toLowerCase() === p.CloudVendor.toLowerCase();
+                });
+                selectProvider(pType);
+              } else if ($ctrl.isNew) {
+                selectProvider($ctrl.cloudProviderTypes[0]);
+              }
+              $ctrl.modalInstance = $ctrl.modalInstance || {};
             }
 
             /**
-             * @name loadAwsRegion
+             * @name loadRegion
              * @description gets aws regions
              * stores to $ctrl.regions
              * 
              * @returns void
              */
-            function loadAwsRegion() {
+            function loadRegion() {
               var deferred = $q.defer();
-              CloudService
-                .loadAwsRegion()
-                .then(function (response) {
-                  $log.info('All regions', response.data);
-                  $ctrl.regions = response.data;
-                  deferred.resolve(response.data);
-                });
+              deferred.resolve(regions);
               return deferred.promise;
             }
 
             /**
-             * @name getAwsConnection
-             * @description fetchs AWS connection details for a application
-             * store connection details in $ctrl.aws
+             * @name setProvider
+             * @description update provider model
+             * store connection details in $ctrl.cloudProvider
              * 
+             * @param {any} provider
              * @returns void
              */
-            function getAwsConnection() {
-              usSpinnerService.spin('connectionView');
-              CloudService
-                .getAwsConnection()
-                .then(function (response) {
-                  var awsConnection = response.data.data[0] || angular.copy(connectionModel),
-                    regionsCode = _.words(awsConnection.AwsRegion, /[^,]+/g);
-
-                  awsConnection.AwsRegion = _.filter($ctrl.regions, function (r) {
-                    return _.indexOf(regionsCode, r.Code) >= 0;
-                  });
-                  if (!_.isEmpty(awsConnection.AccessKeyId)) {
-                    awsConnection.EncryptedSecretAccessKey = defaultSecretKeyHas;
-                  }
-
-                  awsConnection.isNew = $ctrl.isNewConnection;
-
-                  $ctrl.aws = awsConnection;
-                  //trigger bindings
-                  if (typeof $ctrl.onLoadConnection === 'function') {
-                    $ctrl.onLoadConnection({
-                      connection: awsConnection
-                    });
-                  }
-                  $log.info('Connections credentials loaded', response);
-                  usSpinnerService.stop('connectionView');
-                }).catch(function (error) {
-                  $log.error('Error while fetching connection details', error);
-                  usSpinnerService.stop('connectionView');
-                });
-            }
-
-            function deleteConnection(id) {
-              ConfirmationPopup.confirm('Are sure you want to delete AWS connection?')
-                .then(function (result) {
-                  if (result) {
-                    usSpinnerService.spin('connectionView');
-                    CloudService
-                      .deleteAwsConnection(id)
-                      .then(function (response) {
-                        NotificationService.add('success', 'Connection has been deleted successfully.');
-                        $log.info('Connection has been deleted', response);
-                        $state.reload();
-                        usSpinnerService.stop('connectionView');
-                      }).catch(function (error) {
-                        $log.error('Error while deleting a connection', error);
-                        usSpinnerService.stop('connectionView');
-                      });
-                  }
-                });
+            function setProvider(provider) {
+              var clp = provider || angular.copy(cloudProviderModel);
+              if (!_.isEmpty(clp.AccessKeyId)) {
+                clp.EncryptedSecretAccessKey = defaultSecretKeyHas;
+              }
+              $ctrl.cloudProvider = clp;
             }
 
             /**
-             * @name saveConnection
+             * @name saveProvider
              * @description  function to save connection details
              * validate credentials on client side before send to API
              * 
              * @returns void
              */
-            function saveConnection() {
+            function saveProvider() {
               usSpinnerService.spin('connectionView');
-              $log.info('saveConnection is called with :', $ctrl.aws);
-              var request = angular.copy($ctrl.aws);
+              $log.info('saveProvider is called with :', $ctrl.cloudProvider);
+              var request = angular.copy($ctrl.cloudProvider);
               if (request.__metadata) {
                 request.id = request.__metadata.id;
               }
@@ -186,10 +158,11 @@
               if (request.EncryptedSecretAccessKey === defaultSecretKeyHas) {
                 delete request.EncryptedSecretAccessKey;
               }
+              request.CloudVendor = $ctrl.selectedProvider.name;
               request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
               $log.warn('Connection request', request);
               CloudService
-                .saveAwsConnection(request)
+                .saveProvider(request)
                 .then(function (response) {
                   $log.info('Connection details are saved', response);
                   CloudService
@@ -201,36 +174,53 @@
                         console.log('Is new Event ---', $ctrl.isNew);
                         $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
                           functions: functions,
-                          metaDataId : response.data.__metadata.id
+                          metaDataId: response.data.__metadata.id
                         });
                       }
-                      handler(response, request, $ctrl.aws, true);
+                      handler(response, request, $ctrl.cloudProvider, true);
                     }, function () {
                       NotificationService.add('error', 'Provided AWS credentials are not valid.');
-                      handler({}, request, $ctrl.aws, false);
+                      handler({}, request, $ctrl.cloudProvider, false);
                     })
 
                 })
                 .catch(function (error) {
                   $log.error('Error while saving conncetions detail', error);
-                  handler({}, request, $ctrl.aws);
+                  handler({}, request, $ctrl.cloudProvider);
                 });
             }
 
             function handler(response, request, model, status) {
               $ctrl.isNewConnection = !request.id ? true : false;
-              getAwsConnection();
               //get lambda functions when connection is saved
-              if ($ctrl.view === 'modal') {
-                if (typeof $ctrl.modalInstance.close === 'function' && !_.isEmpty(response)) {
-                  $ctrl.modalInstance.close({ connection: model });
-                }
-              }
-
-              if (typeof $ctrl.onSave === 'function') {
-                $ctrl.onSave({ connection: request , status : status});
+              if (typeof $ctrl.modalInstance.close === 'function' && !_.isEmpty(response)) {
+                $ctrl.modalInstance.close({ connection: model });
               }
               usSpinnerService.stop('connectionView');
+            }
+
+            /**
+             * @function
+             * @name selectProvider
+             * @description Select Cloud Provider type
+             * @param {any} provider 
+             */
+            function selectProvider(provider) {
+              $ctrl.selectedProvider = angular.copy(provider);
+              if (typeof $ctrl.onSelectProvider === 'function') {
+                $ctrl.onSelectProvider({
+                  provider: $ctrl.selectedProvider
+                });
+              }
+            }
+            /**
+             * @description An helper function, trigger event which is captured in providersList component
+             * @param {any} provider 
+             */
+            function deleteProvider(provider) {
+              $rootScope.$emit('EVENT:DELETE_PROVIDER', {
+                provider: $ctrl.cloudProvider
+              });
             }
             //end of controller
           }]

@@ -1,10 +1,27 @@
-<form name="$ctrl.awsForm" novalidate data-ng-submit="$ctrl.saveConnection()">
+<div class="box-bk-group">
+  <div class="box-bk" data-ng-repeat="providerType in $ctrl.cloudProviderTypes track by $index" data-ng-click="$ctrl.selectProvider(providerType)">
+    <div class="box-bk-content">
+      <div class="circle" data-ng-class="{'active' : providerType.key === $ctrl.selectedProvider.key}">
+        <div class="circle__inner">
+          <div class="circle__wrapper">
+            <div class="circle__content"><img src="assets/images/icons/{{providerType.key}}-icon.png"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box-bk-footer">
+      <h5 data-ng-bind="providerType.description"></h5>
+    </div>
+  </div>
+</div>
+
+<form name="$ctrl.cloudProviderForm" novalidate data-ng-submit="$ctrl.saveProvider()">
   <div us-spinner="" spinner-key="connectionView" spinner-start-active></div>
   <div class="form-group">
     <label>Connect the Lambda Launcher to your Lambda functions list using <b>AWS CloudFormation</b> to create a restricted IAM user.<br/><br/>
 
     Run this command using the <a href="https://aws.amazon.com/cli" target="_blank">AWS CLI</a> and we create an IAM user that only has the 'GetFunction', 'InvokeFunction' and 'ListFunctions' policies:<br/></label>
-<pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-rc --stack-name createbackanduser --capabilities CAPABILITY_IAM</code></pre>
+    <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-rc --stack-name createbackanduser --capabilities CAPABILITY_IAM</code></pre>
     <label>Once the IAM user has been created, use this command to obtain the user's access and secret keys, then copy these values into the fields below:
 <pre><code>aws cloudformation describe-stacks --stack-name createbackanduser</code></pre>  
     <label>You can also use other AWS tools to create the connection - 
@@ -13,36 +30,50 @@
   </div>
   <hr/>
   <div class="form-group">
+    <label for="name" class="control-label">Connection Name</label>
+    <input type="text" class="form-control" id="name" placeholder="Enter Connection Name" ng-model="$ctrl.cloudProvider.Name"
+      required>
+  </div>
+  <div class="form-group">
     <label for="aws-access-key" class="control-label">Access Key ID</label>
-    <input type="text" class="form-control" id="aws-access-key" placeholder="Access Key ID" ng-model="$ctrl.aws.AccessKeyId"
+    <input type="text" class="form-control" id="aws-access-key" placeholder="Access Key ID" ng-model="$ctrl.cloudProvider.AccessKeyId"
       required>
   </div>
   <div class="form-group">
     <label for="aws-secret-key" class="control-label">Secret Access Key</label>
     <input type="text" style=" -webkit-text-security: disc !important;" class="form-control" placeholder="Secret Access Key"
-      id="aws-secret-key" ng-model="$ctrl.aws.EncryptedSecretAccessKey" data-ng-required="!$ctrl.aws.Id">
+      id="aws-secret-key" ng-model="$ctrl.cloudProvider.EncryptedSecretAccessKey" data-ng-required="!$ctrl.cloudProvider.Id">
   </div>
   <div class="form-group">
     <label for="aws-region" class="control-label">AWS Regions</label>
-    <tags-input class="theme-brand" placeholder="AWS Region" add-from-autocomplete-only="true" ng-model="$ctrl.aws.AwsRegion"
+    <tags-input class="theme-brand" placeholder="AWS Region" add-from-autocomplete-only="true" ng-model="$ctrl.cloudProvider.AwsRegion"
       display-property="Name" min-length="0" template="regions-template.html">
-      <auto-complete source="$ctrl.loadAwsRegion($query)" load-on-focus="true" load-on-empty="true" min-length="0" load-on-down-arrow="true"
+      <auto-complete source="$ctrl.loadRegion($query)" load-on-focus="true" load-on-empty="true" min-length="0" load-on-down-arrow="true"
         template="regions-autocomplete-template.html"></auto-complete>
     </tags-input>
   </div>
   <hr/>
   <div class="form-group">
     <div class="alert alert-warning">
-        Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than executing your Lambda functions. You can permanently revoke our access at any time by deleting the IAM credentials. If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact" target="_blank">please contact us</a>. 
+      Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
+      executing your Lambda functions. You can permanently revoke our access at any time by deleting the IAM credentials.
+      If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
+        target="_blank">please contact us</a>.
     </div>
   </div>
 
-  <div class="form-group">
-    <button type="submit" class="btn btn-amazon btn-lg m-b-md" data-ng-disabled="$ctrl.awsForm.$invalid || $ctrl.aws.AwsRegion.length ==0">Connect with AWS</button>
-    <button type="button" class="btn btn-link" data-ng-click="$ctrl.modalInstance.dismiss('cancel')" data-ng-if="$ctrl.view === 'modal'">Complete later</button>
-
-    <button type="button" class="btn btn-default pull-right" data-ng-if="$ctrl.view !== 'modal' && $ctrl.aws.Id" data-ng-click="$ctrl.deleteConnection($ctrl.aws.Id)"><i class="glyphicon glyphicon-trash"></i> Remove</button>
+  <div class="row-col">
+    <div class="row-row">
+      <div class="row-cell v-m text-left">
+        <button type="submit" class="btn btn-amazon btn-lg" data-ng-disabled="$ctrl.cloudProviderForm.$invalid || $ctrl.cloudProvider.AwsRegion.length ==0">Connect with AWS</button>
+        <button type="button" class="btn btn-link" data-ng-click="$ctrl.modalInstance.dismiss('cancel')" data-ng-if="$ctrl.isNew">Complete later</button>
+      </div>
+      <div class="row-cell v-m text-right">
+        <button type="button" class="btn btn-default" data-ng-if="!$ctrl.isNew && $ctrl.cloudProvider.Id" data-ng-click="$ctrl.deleteProvider($ctrl.cloudProvider)"><i class="glyphicon glyphicon-trash"></i> Remove</button>
+      </div>
+    </div>
   </div>
+
 </form>
 
 <script type="text/ng-template" id="regions-template.html">

@@ -13,9 +13,19 @@
   angular
     .module('common.modals')
     .controller('CloudProviderModalController', [
-      '$modalInstance',
-      function ($modalInstance) {
+      '$modalInstance', 'options',
+      function ($modalInstance, options) {
         var $ctrl = this;
         $ctrl.$modalInstance = $modalInstance;
+        $ctrl.options = options;
+        $ctrl.onSelectProvider = onSelectProvider;
+      
+        console.log('Modal $modalInstance', $modalInstance);
+        console.log('options', options);
+
+
+        function onSelectProvider(provider){
+          $ctrl.provider = provider;
+        }
       }]);
 })();

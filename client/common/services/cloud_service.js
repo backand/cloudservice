@@ -14,7 +14,7 @@
 
   angular
     .module('common.services')
-    .service('CloudService', ['$http', 'CONSTS', 'AppsService','$q', function ($http, CONSTS, AppsService, $q) {
+    .service('CloudService', ['$http', 'CONSTS', 'AppsService', '$q', function ($http, CONSTS, AppsService, $q) {
       var self = this;
 
       /**
@@ -130,13 +130,13 @@
         });
       }
 
-       /**
-       * @name deleteProvider
-       * @description delete provider connection
-       * 
-       * @param {object} id connection ID
-       * @returns promise
-       */
+      /**
+      * @name deleteProvider
+      * @description delete provider connection
+      * 
+      * @param {object} id connection ID
+      * @returns promise
+      */
       function deleteProvider(id) {
         return $http({
           method: 'DELETE',

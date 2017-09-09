@@ -11,7 +11,7 @@
     <tab heading="All Functions">
       <div style="min-height: 250px" class="clearfix">
         <div class="alert alert-info" role="alert" data-ng-show="$ctrl.allFunctions.length ===0"> There is no lambda function. </div>
-        <ul class="list-group">
+        <ul class="list-group m-b-0">
           <li class="list-group-item" data-ng-repeat="function in $ctrl.allFunctions track by $index">
             <div class="meta-text">
               <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
@@ -29,7 +29,7 @@
     <tab data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index" heading="{{key}}">
       <div style="min-height: 250px" class="clearfix">
         <div class="alert alert-info" role="alert" data-ng-show="zone.length ===0"> There is no lambda function. </div>
-        <ul class="list-group">
+        <ul class="list-group m-b-0">
           <li class="list-group-item" data-ng-repeat="function in zone track by $index">
             <div class="meta-text">
               <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>

@@ -46,6 +46,7 @@
             $ctrl.onLoadLambdaFunctions = onLoadLambdaFunctions;
             $ctrl.isNew = isNew;
             $ctrl.editConnection = false;
+            $ctrl.addNewProvider = addNewProvider;
             /**
              * public properties
              */
@@ -205,6 +206,16 @@
               }, function (err) {
                 $log.error('Error while setting up current APP', err);
               });
+            }
+
+            /**
+             * @function
+             * @name addNewProvider
+             * @description trgger event to launch addNewProvider
+             * @see newProvider Component
+             */
+            function addNewProvider() {
+              $rootScope.$emit('EVENT:ADD_PROVIDER');
             }
 
             //end of controller

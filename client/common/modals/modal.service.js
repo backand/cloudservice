@@ -62,6 +62,13 @@
        */
         function cloudProvider(options) {
           options = options || {};
+          options.resolve = options.resolve || {
+            options: function () {
+              return {
+                isNew: true
+              };
+            }
+          };
           return $modal.open({
             templateUrl: options.templateUrl || 'common/modals/cloud_provider_modal/cloud_provider_modal.html',
             keyboard: false,
@@ -70,7 +77,9 @@
             bindToController: true,
             controllerAs: '$ctrl',
             backdrop: 'static',
-            backdropClass: 'dark'
+            backdropClass: 'dark',
+            windowClass: 'modal-backand',
+            resolve: options.resolve
           }).result;
         }
 
