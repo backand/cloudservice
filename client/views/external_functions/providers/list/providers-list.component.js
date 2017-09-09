@@ -186,10 +186,14 @@
               var deleteProviderEvent = $rootScope.$on('EVENT:DELETE_PROVIDER', function (event, data) {
                 deleteProvider(data.provider);
               });
+              var reloadProvidersEvent = $rootScope.$on('EVENT:RELOAD_PROVIDER', function (event, data) {
+                getProviders();
+              });
               $scope.$on('$destroy', function () {
                 //unregistered event when component is destroyed
                 addProviderEvent();
                 deleteProviderEvent();
+                reloadProvidersEvent();
               });
             }
             //end of controller

@@ -196,6 +196,7 @@
               if (typeof $ctrl.modalInstance.close === 'function' && !_.isEmpty(response)) {
                 $ctrl.modalInstance.close({ connection: model });
               }
+              $rootScope.$emit('EVENT:RELOAD_PROVIDER');
               usSpinnerService.stop('connectionView');
             }
 
