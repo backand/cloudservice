@@ -1,26 +1,27 @@
 <div class="providers-list">
   <div us-spinner="" spinner-key="providersList" spinner-start-active></div>
   <accordion close-others="true">
-    <accordion-group heading="{{group.title}}" ng-repeat="provider in $ctrl.providers track by $index">
+    <accordion-group heading="{{group.title}}" ng-repeat="provider in $ctrl.providers track by $index" is-open="accordions[$index]">
       <accordion-heading>
         <div class="row-col">
           <div class="row-row">
-            <div class="row-cell v-m"><i class="fa fa-fw" ng-class="{'fa-chevron-down': status.open, 'fa-chevron-right': !status.open}"></i> <img src="assets/images/icons/{{provider.CloudVendor.toLowerCase()}}-icon.png"
-                alt="{{provider.CloudVendor}}" class="provider-logo">{{provider.Name}}</div>
+            <div class="row-cell v-m">
+              <i class="fa fa-fw" ng-class="{'fa-chevron-down': accordions[$index], 'fa-chevron-right': !provider.open}"></i>
+              <img src="assets/images/icons/{{provider.CloudVendor.toLowerCase()}}-icon.png" alt="{{provider.CloudVendor}}" class="provider-logo">{{provider.Name}}
+            </div>
             <div class="row-cell v-m text-right">
               <button class="btn btn-backand-outline" type="button" data-ng-click="$ctrl.showProviderModal(provider, $event)"><i class="fa fa-pencil fa-fw"></i> Edit</button>
-              <button type="button" class="btn btn-backand-outline" data-ng-click="$ctrl.deleteProvider(provider, $event)"><i class="fa fa-trash fa-fw"></i> Remove</button></div>
+              <button type="button" class="btn btn-backand-outline" data-ng-click="$ctrl.deleteProvider(provider, $event)"><i class="fa fa-trash fa-fw"></i> Remove</button>
+            </div>
           </div>
         </div>
       </accordion-heading>
       <lambda-functions data-active-connection="provider" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)" launcher-app-url="$ctrl.launcherAppUrl"></lambda-functions>
     </accordion-group>
   </accordion>
-
   <div class="p-a" data-ng-if="$ctrl.providers && $ctrl.providers.length ===0">
-    <div  class="alert alert-info">
+    <div class="alert alert-info">
       <p>No provider</p>
     </div>
   </div>
-
 </div>
