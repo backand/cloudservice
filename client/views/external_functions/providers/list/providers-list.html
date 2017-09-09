@@ -16,4 +16,11 @@
       <lambda-functions data-active-connection="provider" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)" launcher-app-url="$ctrl.launcherAppUrl"></lambda-functions>
     </accordion-group>
   </accordion>
+
+  <div class="p-a" data-ng-if="$ctrl.providers && $ctrl.providers.length ===0">
+    <div  class="alert alert-info">
+      <p>No provider</p>
+    </div>
+  </div>
+
 </div>
