@@ -86,7 +86,7 @@
        <div class="menu-border"></div>
     </li>
     <ul>
-      <li ng-repeat="func in nav.functions track by func.name"
+      <li ng-repeat="func in nav.functions track by $index"
           ng-class="{active: func.iD == nav.stateparam.functionId}"
           class="sub-functions-icons function-list crop">
         <a ng-click="nav.showFunction($event, func)"  tooltip="{{func.name}}" tooltip-popup-delay="500" tooltip-placement="right" tooltip-append-to-body="true">

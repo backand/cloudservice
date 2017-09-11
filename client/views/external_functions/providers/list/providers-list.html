@@ -1,5 +1,4 @@
 <div class="providers-list">
-  <div us-spinner="" spinner-key="providersList" spinner-start-active></div>
   <accordion close-others="true">
     <accordion-group heading="{{group.title}}" ng-repeat="provider in $ctrl.providers track by $index" is-open="accordions[$index]">
       <accordion-heading>
@@ -7,7 +6,7 @@
           <div class="row-row">
             <div class="row-cell v-m">
               <i class="fa fa-fw" ng-class="{'fa-chevron-down': accordions[$index], 'fa-chevron-right': !provider.open}"></i>
-              <img src="assets/images/icons/{{provider.CloudVendor.toLowerCase()}}-icon.png" alt="{{provider.CloudVendor}}" class="provider-logo">{{provider.Name}}
+              <img src="assets/images/icons/{{provider.CloudVendor.toLowerCase()}}-icon.png" alt="{{provider.CloudVendor}}" class="provider-logo">{{provider.name}}
             </div>
             <div class="row-cell v-m text-right">
               <button class="btn btn-backand-outline" type="button" data-ng-click="$ctrl.showProviderModal(provider, $event)"><i class="fa fa-pencil fa-fw"></i> Edit</button>
@@ -16,7 +15,7 @@
           </div>
         </div>
       </accordion-heading>
-      <lambda-functions data-active-connection="provider" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)" launcher-app-url="$ctrl.launcherAppUrl"></lambda-functions>
+      <lambda-functions launcher-app-url="$ctrl.launcherAppUrl" data-lambda-functions="provider.functions" data-ng-if="provider.functions"></lambda-functions>
     </accordion-group>
   </accordion>
   <div class="p-a" data-ng-if="$ctrl.providers && $ctrl.providers.length ===0">

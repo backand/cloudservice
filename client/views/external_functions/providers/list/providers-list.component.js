@@ -63,10 +63,33 @@
              */
             function initialization() {
               $log.info('ProviderList component');
+              getLambdaFunctions();
               listenEvents();
               spinner(true);
-              getProviders();
               loadRegions();
+            }
+            /**
+            * @name getLambdaFunctions
+            * @description  function to get lambda function by app
+            * 
+            * @returns void
+            */
+            function getLambdaFunctions() {
+              spinner(true);
+              CloudService
+                .getLambdaFunctions()
+                .then(function (response) {
+                  $log.info(response.data);
+                  $ctrl.providers = _.get(response, 'data.data') || [];
+                  $log.warn('Lambda functions loaded', response);
+                  spinner(false);
+                  if ($ctrl.providers.length === 0) {
+                    showProviderModal();
+                  }
+                }).catch(function (error) {
+                  $log.error('Error while fetching Lambda functions', error);
+                  spinner(false);
+                });
             }
 
             function loadRegions() {
@@ -79,35 +102,6 @@
             }
 
             /**
-             * @name getProviders
-             * @description fetchs AWS connection details for a application
-             * store connection details in $ctrl.aws
-             * 
-             * @returns void
-             */
-            function getProviders() {
-              CloudService
-                .getProviders()
-                .then(function (response) {
-                  var providers = _.get(response, 'data.data') || [];
-                  $ctrl.providers = _.map(providers, function (p) {
-                    var regionsCode = _.words(p.AwsRegion, /[^,]+/g);
-                    p.AwsRegion = _.filter(regions, function (r) {
-                      return _.indexOf(regionsCode, r.Code) >= 0;
-                    });
-                    return p;
-                  });
-                  $log.info('providers loaded', response);
-                  spinner(false);
-                  if (providers.length === 0) {
-                    showProviderModal();
-                  }
-                }).catch(function (error) {
-                  $log.error('Error while fetching providers', error);
-                  spinner(false);
-                });
-            }
-            /**
              * @description 
              * @param {any} provider 
              * @param {any} $event 
@@ -116,16 +110,16 @@
               if ($event) {
                 $event.stopImmediatePropagation();
               }
-              ConfirmationPopup.confirm('Are sure you want to delete <strong>' + provider.Name + '</strong> provider?')
+              ConfirmationPopup.confirm('Are sure you want to delete <strong>' + provider.name + '</strong> provider?')
                 .then(function (result) {
                   if (result) {
                     spinner(true);
                     CloudService
-                      .deleteProvider(provider.Id)
+                      .deleteProvider(provider.id)
                       .then(function (response) {
                         NotificationService.add('success', 'Provider has been deleted successfully.');
-                        $log.info(provider.Name + ' - provider has been deleted', response);
-                        $state.reload();
+                        $log.info(provider.id + ' - provider has been deleted', response);
+                        $rootScope.$emit('EVENT:RELOAD_PROVIDER');
                         spinner(false);
                       }).catch(function (error) {
                         $log.error('Error while deleting a provider', error);
@@ -143,10 +137,32 @@
              * @param {any} $event 
              */
             function showProviderModal(provider, $event) {
+              $log.info('Provider connection - ', provider);
               if ($event) {
                 $event.stopImmediatePropagation();
               }
-              $log.info('Provider connection - ', provider);
+
+              if (provider) {
+                spinner(true);
+                CloudService.getProvider({
+                  id: provider.id
+                }).then(function (response) {
+                  var p = _.get(response, 'data');
+                  var regionsCode = _.words(p.AwsRegion, /[^,]+/g);
+                  p.AwsRegion = _.filter(regions, function (r) {
+                    return _.indexOf(regionsCode, r.Code) >= 0;
+                  });
+                  openModal(p);
+                  spinner(false);
+                }).catch(function () {
+                  spinner(false);
+                });
+                return;
+              }
+              openModal(provider);
+            }
+
+            function openModal(provider) {
               modalService
                 .cloudProvider({
                   resolve: {
@@ -171,7 +187,7 @@
              * @param {any} flag 
              */
             function spinner(flag) {
-              flag ? usSpinnerService.spin('providersList') : usSpinnerService.stop('providersList');
+              flag ? usSpinnerService.spin('loading') : usSpinnerService.stop('loading');
             }
 
             /**
@@ -187,7 +203,7 @@
                 deleteProvider(data.provider);
               });
               var reloadProvidersEvent = $rootScope.$on('EVENT:RELOAD_PROVIDER', function (event, data) {
-                getProviders();
+                getLambdaFunctions();
               });
               $scope.$on('$destroy', function () {
                 //unregistered event when component is destroyed

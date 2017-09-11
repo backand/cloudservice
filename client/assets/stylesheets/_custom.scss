@@ -500,6 +500,9 @@ ul.tables-list {
                         .host {
                             outline: none;
                         }
+                        .remove-button {
+                            color: #ffffff;
+                        }
                     }
                     tags-input .tags .input {
                         background-color: #f6f6f6;
@@ -848,4 +851,7 @@ ba-help-link {
 
 .p-a {
     padding: 15px;
+}
+.spinner{
+  position: fixed !important;
 }

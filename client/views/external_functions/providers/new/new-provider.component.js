@@ -181,7 +181,7 @@
                     }, function () {
                       NotificationService.add('error', 'Provided AWS credentials are not valid.');
                       handler({}, request, $ctrl.cloudProvider, false);
-                    })
+                    });
 
                 })
                 .catch(function (error) {
@@ -206,7 +206,10 @@
              * @description Select Cloud Provider type
              * @param {any} provider 
              */
-            function selectProvider(provider) {
+            function selectProvider(provider, flag) {
+              if (!$ctrl.isNew && flag) {
+                return;
+              }
               $ctrl.selectedProvider = angular.copy(provider);
               if (typeof $ctrl.onSelectProvider === 'function') {
                 $ctrl.onSelectProvider({

@@ -22,6 +22,7 @@
        */
       self.saveProvider = saveProvider;
       self.getProviders = getProviders;
+      self.getProvider = getProvider;
       self.getLambdaFunctions = getLambdaFunctions;
       self.loadRegion = loadRegion;
       self.updateFunction = updateFunction;
@@ -125,6 +126,25 @@
           method: id ? 'PUT' : 'POST',
           url: CONSTS.appUrl + '/1/objects/cloudServiceProvider' + (id ? '/' + id : ''),
           data: data,
+          params: params,
+          headers: setHeaders()
+        });
+      }
+
+      /**
+       * @name getProvider
+       * @description get provider connection credentials
+       * 
+       * @param {object} params Addtional Query parameters
+       * @returns promise
+       */
+      function getProvider(params) {
+        var id;
+        params = params || {};
+        id = params.id || '';
+        return $http({
+          method: 'GET',
+          url: CONSTS.appUrl + '/1/objects/cloudServiceProvider' + (id ? '/' + id : ''),
           params: params,
           headers: setHeaders()
         });

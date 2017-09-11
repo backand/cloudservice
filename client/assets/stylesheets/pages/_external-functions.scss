@@ -130,6 +130,11 @@
                         }
                     }
                 }
+                &:last-child {
+                    .panel-body {
+                        border-bottom: 0 none;
+                    }
+                }
             }
         }
     }
@@ -164,6 +169,18 @@
             >h5 {
                 color: #000;
                 font-weight: bold;
+            }
+        }
+        &.disabled {
+            opacity: .4;
+            .circle {
+                cursor: default;
+                &:hover,
+                &.active {
+                    &:after {
+                        border-color: #e1e1e1 !important;
+                    }
+                }
             }
         }
     }
