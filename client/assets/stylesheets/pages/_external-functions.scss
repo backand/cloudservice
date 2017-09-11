@@ -71,6 +71,7 @@
                     }
                     .tab-content {
                         border-bottom: 0 none !important;
+                        border-right: 0 none;
                     }
                 }
             }
@@ -159,13 +160,17 @@
         display: table-cell;
         >.box-bk-footer {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
             >h5 {
                 color: #000;
                 font-weight: bold;
             }
         }
     }
+}
+
+.provider-form {
+    margin-top: 20px;
 }
 
 .circle {
@@ -210,11 +215,10 @@
             height: 100%;
             .circle__content {
                 display: table-cell;
-                padding: 1em;
+                padding: 1.2em;
                 vertical-align: middle;
                 >img {
-                    width: 80px;
-                    height: 80px;
+                    max-width: 100%;
                 }
             }
         }

@@ -405,24 +405,109 @@ ul.tables-list {
 .modal-backand {
     .modal-dialog {
         &.modal-lg {
-            max-width: 750px;
+            @media (min-width: $screen-sm-min) {
+                width: $container-sm;
+            }
+            @media (min-width: $screen-md-min) {
+                width: $container-md;
+            }
+            @media (min-width: $screen-lg-min) {
+                width: $container-lg;
+            }
+            @media screen and (min-width: 1300px) {
+                width: 1250px;
+            }
         }
         >.modal-content {
+            position: relative;
+            .close {
+                position: absolute;
+                top: 7px;
+                right: 10px;
+                >i {
+                    font-size: 30px;
+                }
+            }
             @include border-left-radius(0);
             @include border-right-radius(0);
-            .modal-header {
-                padding: 30px 40px 0;
-                border: 0 none;
+            .provider-modal {
+                a {
+                    color: #f66731;
+                }
+                pre {
+                    padding: 17px;
+                    font-size: 12px;
+                    color: #000000;
+                }
+                .provider-modal-left,
+                .provider-modal-right {
+                    padding: 25px;
+                }
+                .provider-modal-right {
+                    width: 450px;
+                    background: rgba(247, 247, 247, 0.42);
+                    position: relative;
+                    &:before {
+                        position: absolute;
+                        content: "";
+                        left: 5px;
+                        width: 15px;
+                        top: 6px;
+                        bottom: 5px;
+                        -webkit-box-shadow: inset 25px 2px 213px -104px rgba(222, 222, 222, 1);
+                        -moz-box-shadow: inset 25px 2px 213px -104px rgba(222, 222, 222, 1);
+                        box-shadow: inset 25px 2px 213px -104px rgba(222, 222, 222, 1);
+                    }
+                }
                 .header-title {
                     font-size: 20px;
                     font-weight: bold;
                     text-align: left;
                     color: #1c2b36;
                 }
+                .text,
                 .header-txt {
                     color: #000000;
-                    font-weight: 600;
                 }
+                .header-txt {
+                    font-size: 15px;
+                }
+                .text {
+                    margin-bottom: 30px;
+                    &.first {
+                        margin-top: 30px;
+                    }
+                }
+                .form-group {
+                    margin-bottom: 25px;
+                    .control-label {
+                        font-size: 15px;
+                        color: #1a1a1a;
+                    }
+                    .form-control,
+                    tags-input .tags {
+                        border-radius: 5px;
+                        background-color: #f6f6f6;
+                        border: solid 1px #e1e1e1;
+                        &:hover,
+                        &:active,
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                    tags-input {
+                        .host {
+                            outline: none;
+                        }
+                    }
+                    tags-input .tags .input {
+                        background-color: #f6f6f6;
+                    }
+                }
+            }
+            .modal-header {
+                padding: 30px 40px 0;
+                border: 0 none;
             }
             .modal-body {
                 padding: 30px 40px;
