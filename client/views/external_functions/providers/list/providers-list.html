@@ -15,7 +15,7 @@
           </div>
         </div>
       </accordion-heading>
-      <lambda-functions launcher-app-url="$ctrl.launcherAppUrl" data-lambda-functions="provider.functions" data-ng-if="provider.functions"></lambda-functions>
+      <lambda-functions launcher-app-url="$ctrl.launcherAppUrl" data-provider="provider" data-ng-if="provider.functions"></lambda-functions>
     </accordion-group>
   </accordion>
   <div class="p-a" data-ng-if="$ctrl.providers && $ctrl.providers.length ===0">

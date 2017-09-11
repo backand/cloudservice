@@ -17,7 +17,7 @@
         restrict: 'E',
         scope: {
           launcherAppUrl: '=', //required,
-          lambdaFunctions: '=' //required
+          provider: '=' //required
         },
         templateUrl: 'views/external_functions/lambda_functions/lambda_functions.html',
         controllerAs: '$ctrl',
@@ -53,6 +53,7 @@
              * function to initialize properties and call function at very first.
              */
             function initialization() {
+              $ctrl.lambdaFunctions = $ctrl.provider.functions;
               if (_.keys($ctrl.lambdaFunctions).length > 0) {
                 //Expand collapsible if lambdaFunctions > 0
                 $ctrl.hasFunctions = _.keys($ctrl.lambdaFunctions).length > 0;
@@ -95,9 +96,9 @@
              * @returns void
              */
             function updateFunction(func, flag, metaId) {
-              $log.info('Selected function - ', func, $ctrl.activeConnection);
+              $log.info('Selected function - ', func, $ctrl.provider);
               usSpinnerService.spin('loading');
-              var cloudId = metaId || _.get($ctrl.activeConnection, '__metadata.id');
+              var cloudId = metaId || _.get($ctrl.provider, 'id');
               var requestBody;
               if (_.isArray(func)) {
                 requestBody = _.map(func, function (f) {
