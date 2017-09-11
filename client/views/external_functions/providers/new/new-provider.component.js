@@ -172,10 +172,12 @@
                       AnalyticsService.track('AWSConnectionSaved');
                       if (!request.id) {
                         console.log('Is new Event ---', $ctrl.isNew);
-                        $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
-                          functions: functions,
-                          metaDataId: response.data.__metadata.id
-                        });
+                        if ($ctrl.isNew) {
+                          $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
+                            functions: functions,
+                            metaDataId: response.data.__metadata.id
+                          });
+                        }
                       }
                       handler(response, request, $ctrl.cloudProvider, true);
                     }, function () {
