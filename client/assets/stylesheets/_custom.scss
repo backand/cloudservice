@@ -453,11 +453,11 @@ ul.tables-list {
                         content: "";
                         left: 5px;
                         width: 15px;
-                        top: 6px;
-                        bottom: 5px;
-                        -webkit-box-shadow: inset 25px 2px 213px -104px rgba(222, 222, 222, 1);
-                        -moz-box-shadow: inset 25px 2px 213px -104px rgba(222, 222, 222, 1);
-                        box-shadow: inset 25px 2px 213px -104px rgba(222, 222, 222, 1);
+                        top: 0;
+                        bottom: 0;
+                        -webkit-box-shadow: -5px 0 5px -5px rgba(222, 222, 222, 1);
+                        -moz-box-shadow: -5px 0 5px -5px rgba(222, 222, 222, 1);
+                        box-shadow: -5px 0 5px -5px rgba(222, 222, 222, 1);
                     }
                 }
                 .header-title {
@@ -852,6 +852,7 @@ ba-help-link {
 .p-a {
     padding: 15px;
 }
-.spinner{
-  position: fixed !important;
+
+.spinner {
+    position: fixed !important;
 }
