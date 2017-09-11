@@ -1,6 +1,7 @@
 <div class="box-bk-group">
+  <!-- data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key) && !$ctrl.isNew}" -->
   <div class="box-bk" data-ng-repeat="providerType in $ctrl.cloudProviderTypes track by $index" data-ng-click="$ctrl.selectProvider(providerType, true)"
-    data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key) && !$ctrl.isNew}">
+    data-ng-class="{'disabled' : !providerType.enable}">
     <div class="box-bk-content">
       <div class="circle" data-ng-class="{'active' : providerType.key === $ctrl.selectedProvider.key}">
         <div class="circle__inner">

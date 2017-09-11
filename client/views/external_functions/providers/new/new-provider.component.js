@@ -48,19 +48,23 @@
               cloudProviderTypes = [{
                 name: 'AWS',
                 key: 'aws',
-                description: 'AWS Lambda'
+                description: 'AWS Lambda',
+                enable : true
               }, {
                 name: 'Azure',
                 key: 'azure',
-                description: 'Azure Functions'
+                description: 'Azure Functions',
+                enable : false
               }, {
                 name: 'Google',
                 key: 'google',
-                description: 'Google Functions'
+                description: 'Google Functions',
+                enable : false
               }, {
                 name: 'IBM',
                 key: 'ibm',
-                description: 'IBM OpenWisk'
+                description: 'IBM OpenWisk',
+                enable : false
               }],
               defaultSecretKeyHas = '************';
 
@@ -209,9 +213,13 @@
              * @param {any} provider 
              */
             function selectProvider(provider, flag) {
-              if (!$ctrl.isNew && flag) {
+              /*if (!$ctrl.isNew && flag) {
+                return;
+              }*/
+              if(!provider.enable){
                 return;
               }
+
               $ctrl.selectedProvider = angular.copy(provider);
               if (typeof $ctrl.onSelectProvider === 'function') {
                 $ctrl.onSelectProvider({
