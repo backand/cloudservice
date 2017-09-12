@@ -1,7 +1,7 @@
 <div class="box-bk-group">
   <!-- data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key) && !$ctrl.isNew}" -->
   <div class="box-bk" data-ng-repeat="providerType in $ctrl.cloudProviderTypes track by $index" data-ng-click="$ctrl.selectProvider(providerType, true)"
-    data-ng-class="{'disabled' : !providerType.enable}">
+    data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key) && !$ctrl.isNew }" data-ng-if="providerType.enable">
     <div class="box-bk-content">
       <div class="circle" data-ng-class="{'active' : providerType.key === $ctrl.selectedProvider.key}">
         <div class="circle__inner">
@@ -19,31 +19,7 @@
 
 <form name="$ctrl.cloudProviderForm" class="provider-form" novalidate data-ng-submit="$ctrl.saveProvider()">
   <div us-spinner="" spinner-key="connectionView" spinner-start-active></div>
-
-  <div class="form-group">
-    <label for="name" class="control-label">Connection Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Enter Connection Name" ng-model="$ctrl.cloudProvider.Name"
-      required>
-  </div>
-  <div class="form-group">
-    <label for="aws-access-key" class="control-label">Access Key ID</label>
-    <input type="text" class="form-control" id="aws-access-key" placeholder="Access Key ID" ng-model="$ctrl.cloudProvider.AccessKeyId"
-      required>
-  </div>
-  <div class="form-group">
-    <label for="aws-secret-key" class="control-label">Secret Access Key</label>
-    <input type="text" style=" -webkit-text-security: disc !important;" class="form-control" placeholder="Secret Access Key"
-      id="aws-secret-key" ng-model="$ctrl.cloudProvider.EncryptedSecretAccessKey" data-ng-required="!$ctrl.cloudProvider.Id">
-  </div>
-  <div class="form-group">
-    <label for="aws-region" class="control-label">AWS Regions</label>
-    <tags-input class="theme-brand" placeholder="AWS Region" add-from-autocomplete-only="true" ng-model="$ctrl.cloudProvider.AwsRegion"
-      display-property="Name" min-length="0" template="regions-template.html">
-      <auto-complete source="$ctrl.loadRegion($query)" load-on-focus="true" load-on-empty="true" min-length="0" load-on-down-arrow="true"
-        template="regions-autocomplete-template.html"></auto-complete>
-    </tags-input>
-  </div>
-
+  <render-fields data-provider="{{$ctrl.selectedProvider.key}}"></render-fields>
   <div class="row-col">
     <div class="row-row">
       <div class="row-cell v-m text-left">
@@ -55,23 +31,4 @@
       </div>
     </div>
   </div>
-
 </form>
-
-<script type="text/ng-template" id="regions-template.html">
-  <div class="tag-template">
-    <div>
-      <span>{{$getDisplayText()}} - {{data.Code}}</span>
-      <a class="remove-button" ng-click="$removeTag()" ng-bind="::$$removeTagSymbol"></a>
-    </div>
-  </div>
-</script>
-
-<script type="text/ng-template" id="regions-autocomplete-template.html">
-  <div class="autocomplete-template">
-    <div class="right-panel">
-      <span ng-bind-html="$highlight($getDisplayText())"></span>
-      <span> - {{data.Code}}</span>
-    </div>
-  </div>
-</script>

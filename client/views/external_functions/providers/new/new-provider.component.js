@@ -33,39 +33,11 @@
           '$state',
           'AnalyticsService',
           '$rootScope',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, $rootScope) {
+          'ProviderService',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, $rootScope, ProviderService) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               regions,
-              cloudProviderModel = {
-                AccessKeyId: '',
-                AwsRegion: [],
-                accountId: '',
-                Name: 'Main',
-                CloudVendor: 'AWS',
-                EncryptedSecretAccessKey: ''
-              },
-              cloudProviderTypes = [{
-                name: 'AWS',
-                key: 'aws',
-                description: 'AWS Lambda',
-                enable : true
-              }, {
-                name: 'Azure',
-                key: 'azure',
-                description: 'Azure Functions',
-                enable : false
-              }, {
-                name: 'Google',
-                key: 'google',
-                description: 'Google Functions',
-                enable : false
-              }, {
-                name: 'IBM',
-                key: 'ibm',
-                description: 'IBM OpenWisk',
-                enable : false
-              }],
               defaultSecretKeyHas = '************';
 
             /**
@@ -79,8 +51,8 @@
             /**
              * public properties
              */
-            $ctrl.cloudProvider = angular.copy(cloudProviderModel);
-            $ctrl.cloudProviderTypes = angular.copy(cloudProviderTypes);
+            $ctrl.cloudProvider = angular.copy(ProviderService.getModel('aws'));
+            $ctrl.cloudProviderTypes = angular.copy(ProviderService.getProviders());
 
             /**
            * call initialization to initialize controllers properties 
@@ -213,12 +185,12 @@
              * @param {any} provider 
              */
             function selectProvider(provider, flag) {
-              /*if (!$ctrl.isNew && flag) {
+              if (!provider.enable) {
                 return;
-              }*/
-              if(!provider.enable){
+              } else if (!$ctrl.isNew && flag) {
                 return;
               }
+
 
               $ctrl.selectedProvider = angular.copy(provider);
               if (typeof $ctrl.onSelectProvider === 'function') {

@@ -139,7 +139,9 @@
               });
 
               modalService
-                .cloudProvider()
+                .cloudProvider({
+                  type: 'aws'
+                })
                 .then(function (data) {
                   $log.info('connection with - ', data);
                   $state.transitionTo($state.current.name, stateParams, {

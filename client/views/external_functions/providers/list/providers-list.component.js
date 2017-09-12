@@ -165,6 +165,7 @@
             function openModal(provider) {
               modalService
                 .cloudProvider({
+                  type: provider ? (provider.CloudVendor || provider.cloudVendor) : 'aws',
                   resolve: {
                     options: function () {
                       return {
