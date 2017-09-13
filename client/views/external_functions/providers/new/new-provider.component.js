@@ -12,7 +12,7 @@
   'use strict';
   angular
     .module('backand.externalFunctions')
-    .directive('newProvider', [function () {
+    .directive('newProvider', ['SessionService', function (SessionService) {
       return {
         restrict: 'E',
         scope: {
@@ -48,10 +48,10 @@
             $ctrl.loadRegion = loadRegion;
             $ctrl.deleteProvider = deleteProvider;
             $ctrl.selectProvider = selectProvider;
+            $ctrl.selectAwsType = selectAwsType;
             /**
              * public properties
              */
-            $ctrl.cloudProvider = angular.copy(ProviderService.getModel('aws'));
             $ctrl.cloudProviderTypes = angular.copy(ProviderService.getProviders());
 
             /**
@@ -65,6 +65,7 @@
              * function to initialize properties and call function at very first.
              */
             function initialization() {
+              $ctrl.tokens = ProviderService.getTokens();
               regions = _.get($ctrl.options, 'regions') || [];
               $ctrl.isNew = $ctrl.options.isNew;
 
@@ -103,11 +104,18 @@
              * @returns void
              */
             function setProvider(provider) {
-              var clp = provider || angular.copy(cloudProviderModel);
+              var dp = ProviderService.getModel(provider.CloudVendor.toLowerCase());
+              var clp = angular.extend({}, dp, provider);
               if (!_.isEmpty(clp.AccessKeyId)) {
                 clp.EncryptedSecretAccessKey = defaultSecretKeyHas;
               }
+              if (clp.hasOwnProperty('password')) {
+                clp.password = defaultSecretKeyHas;
+              }
               $ctrl.cloudProvider = clp;
+              if (provider.AccessKeyId && provider.CloudVendor === 'AWS') {
+                $ctrl.awsType = _.startsWith(provider.AccessKeyId, 'bknd_') ? 'CROSS_ACCOUNT_ACCESS' : 'ACCESS_KEY';
+              }
             }
 
             /**
@@ -124,19 +132,21 @@
               if (request.__metadata) {
                 request.id = request.__metadata.id;
               }
-              request = _.chain(request)
-                .pick(['AccessKeyId', 'AwsRegion', 'CloudVendor', 'EncryptedSecretAccessKey', 'id', 'Name'])
-                .pick(function (v, k) {
-                  return v ? true : false;
-                })
-                .value();
+
+              request = ProviderService.prepareRequest($ctrl.selectedProvider.name, request);
+              if ($ctrl.selectedProvider.key === 'aws' && $ctrl.selectedProvider.awsType === 'CROSS_ACCOUNT_ACCESS' && !request.id) {
+                request.AccessKeyId = 'bknd_' + $ctrl.tokens.general;
+              }
 
               if (request.EncryptedSecretAccessKey === defaultSecretKeyHas) {
                 delete request.EncryptedSecretAccessKey;
               }
+              if (request.password === defaultSecretKeyHas) {
+                delete request.password;
+              }
               request.CloudVendor = $ctrl.selectedProvider.name;
               request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
-              $log.warn('Connection request', request);
+              $log.warn('Provider Request Payload - ', request);
               CloudService
                 .saveProvider(request)
                 .then(function (response) {
@@ -146,14 +156,18 @@
                     .then(function (functions) {
                       NotificationService.add('success', 'Connection details are saved successfully.');
                       AnalyticsService.track('AWSConnectionSaved');
+                      var metaDataId = _.get(response, 'data.__metadata.id');
                       if (!request.id) {
                         console.log('Is new Event ---', $ctrl.isNew);
-                        if ($ctrl.isNew) {
+                        if ($ctrl.isNew && metaDataId) {
                           $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
                             functions: functions,
-                            metaDataId: response.data.__metadata.id
+                            metaDataId: metaDataId
                           });
                         }
+                      }
+                      if (!metaDataId) {
+                        console.log('No function is linked to provider.');
                       }
                       handler(response, request, $ctrl.cloudProvider, true);
                     }, function () {
@@ -190,15 +204,44 @@
               } else if (!$ctrl.isNew && flag) {
                 return;
               }
-
-
               $ctrl.selectedProvider = angular.copy(provider);
+              angular.extend($ctrl.selectedProvider, {
+                awsType: $ctrl.awsType || 'CROSS_ACCOUNT_ACCESS'
+              });
               if (typeof $ctrl.onSelectProvider === 'function') {
                 $ctrl.onSelectProvider({
                   provider: $ctrl.selectedProvider
                 });
               }
+              if ($ctrl.isNew) {
+                $ctrl.cloudProvider = angular.copy(ProviderService.getModel($ctrl.selectedProvider.name.toLowerCase()));
+              }
             }
+            /**
+             * @description set AWS type [CROSS_ACCOUNT_ACCESS | ACCESS_KEY]
+             * @param {any} awsType 
+             * @returns 
+             */
+            function selectAwsType(awsType) {
+              if (!$ctrl.isNew) {
+                return;
+              }
+              setAwsType(awsType);
+              $ctrl.onSelectProvider({
+                provider: $ctrl.selectedProvider
+              });
+            }
+            /**
+             * @description update selectedProvider with AWS type [CROSS_ACCOUNT_ACCESS | ACCESS_KEY]
+             * @param {any} awsType 
+             */
+            function setAwsType(awsType) {
+              if ($ctrl.selectedProvider.key === 'aws') {
+                angular.extend($ctrl.selectedProvider, { awsType: awsType || 'CROSS_ACCOUNT_ACCESS' });
+              }
+            }
+
+
             /**
              * @description An helper function, trigger event which is captured in providersList component
              * @param {any} provider 
@@ -208,6 +251,7 @@
                 provider: $ctrl.cloudProvider
               });
             }
+
             //end of controller
           }]
       };

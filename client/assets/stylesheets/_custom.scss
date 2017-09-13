@@ -856,3 +856,35 @@ ba-help-link {
 .spinner {
     position: fixed !important;
 }
+
+.btn-group {
+    &.switch-btn-backand {
+        border-radius: 4px;
+        background-color: #f6f6f6;
+        border: solid 1px #dadada;
+        padding: 5px 6px;
+        display: inline-block;
+        >.btn {
+            padding: 8px 34px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            &:hover,
+            &:active,
+            &:focus {
+                box-shadow: none !important;
+                outline: none;
+            }
+            &:not(.active) {
+                border: 0 none;
+                background-color: transparent;
+            }
+            &.active {
+              border-top-left-radius: 4px !important;
+              border-bottom-left-radius: 4px !important;
+              border-top-right-radius: 4px !important;
+              border-bottom-right-radius: 4px !important;
+            }
+        }
+    }
+}

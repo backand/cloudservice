@@ -15,7 +15,9 @@
     .directive('externalFunctions', [function () {
       return {
         restrict: 'E',
-        scope: true,
+        scope: {
+          appKeys: '='
+        },
         templateUrl: 'views/external_functions/externalFunctions.html',
         controllerAs: '$ctrl',
         bindToController: true,
@@ -29,14 +31,10 @@
           'APP_CONSTS',
           'AppsService',
           'ConfirmationPopup',
-          function ($log, usSpinnerService, $modal, $state, modalService, $rootScope, APP_CONSTS, AppsService, ConfirmationPopup) {
+          'ProviderService',
+          function ($log, usSpinnerService, $modal, $state, modalService, $rootScope, APP_CONSTS, AppsService, ConfirmationPopup, ProviderService) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
-            /**
-            * call initialization to initialize controllers properties 
-            */
-            initialization();
-
             /**
              *
              * public methods
@@ -51,6 +49,10 @@
              * public properties
              */
             $ctrl.activeConnection = {};
+            /**
+           * call initialization to initialize controllers properties 
+           */
+            initialization();
             /**
              * @name initialization
              * @description
@@ -72,12 +74,21 @@
                 awsConnection: true,
                 lambdaFunctions: true
               };
+              if (_.get($ctrl.appKeys, 'data')) {
+                $ctrl.tokens = $ctrl.appKeys.data;
+                $log.info('Current App tokens', $ctrl.tokens);
+                ProviderService.setTokens($ctrl.tokens);
+                if ($ctrl.tokens.anonymous) {
+                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/functions?t=' + $base64.encode($ctrl.tokens.anonymous);
+                } else {
+                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/login';
+                }
+              }
               getApp();
               //opens modal for AWS credentials
               if (isNew()) {
                 providerModal();
               }
-              setCurrentAppTokens();
               usSpinnerService.stop('loading');
             }
 
@@ -194,21 +205,7 @@
                   $ctrl.isAnonymous = _.get(response, 'settings.secureLevel') == "AllUsers";
                 });
             }
-            function setCurrentAppTokens() {
-              AppsService.appKeys($ctrl.appName).then(function (response) {
-                $ctrl.tokens = response.data;
-                $log.info('Current App', response.data);
 
-                if ($ctrl.tokens.anonymous) {
-                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/functions?t=' + $base64.encode($ctrl.tokens.anonymous);
-                } else {
-                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/login';
-                }
-
-              }, function (err) {
-                $log.error('Error while setting up current APP', err);
-              });
-            }
 
             /**
              * @function

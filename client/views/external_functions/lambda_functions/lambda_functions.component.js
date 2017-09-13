@@ -33,7 +33,7 @@
           function ($log, usSpinnerService, CloudService, NotificationService, $rootScope, $scope, AnalyticsService) {
             var $ctrl = this;
             $log.warn('Component awsConnection has initialized', $ctrl.lambdaFunctions);
-            
+
             /**
              *
              * public methods
@@ -75,7 +75,7 @@
                 return a;
               }));
 
-              $ctrl.allFunctions =  flatA;
+              $ctrl.allFunctions = flatA;
             }
 
             /**
@@ -106,7 +106,8 @@
                     name: f.FunctionName,
                     cloudId: cloudId,
                     select: flag,
-                    arn: f.FunctionArn
+                    arn: f.FunctionArn,
+                    lambdaProperties: angular.copy(f)
                   }
                 })
               } else {
@@ -114,9 +115,11 @@
                   name: func.FunctionName,
                   cloudId: cloudId,
                   select: flag,
-                  arn: func.FunctionArn
+                  arn: func.FunctionArn,
+                  lambdaProperties: angular.copy(func)
                 }];
               }
+
               CloudService
                 .updateFunction(requestBody)
                 .then(function (response) {

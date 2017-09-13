@@ -80,7 +80,7 @@
             backdropClass: 'dark',
             windowClass: 'modal-backand',
             resolve: options.resolve
-          }).result;
+          });
         }
 
         //end of service  

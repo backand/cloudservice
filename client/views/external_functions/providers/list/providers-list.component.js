@@ -110,16 +110,20 @@
               if ($event) {
                 $event.stopImmediatePropagation();
               }
-              ConfirmationPopup.confirm('Are sure you want to delete <strong>' + provider.name + '</strong> provider?')
+              var id = provider.id || provider.Id;
+              ConfirmationPopup.confirm('Are sure you want to delete <strong>' + (provider.name || provider.Name) + '</strong> provider?')
                 .then(function (result) {
                   if (result) {
                     spinner(true);
                     CloudService
-                      .deleteProvider(provider.id)
+                      .deleteProvider(id)
                       .then(function (response) {
                         NotificationService.add('success', 'Provider has been deleted successfully.');
-                        $log.info(provider.id + ' - provider has been deleted', response);
+                        $log.info(id + ' - provider has been deleted', response);
                         $rootScope.$emit('EVENT:RELOAD_PROVIDER');
+                        if ($ctrl.modal && $ctrl.modal.hasOwnProperty('close')) {
+                          $ctrl.modal.close();
+                        }
                         spinner(false);
                       }).catch(function (error) {
                         $log.error('Error while deleting a provider', error);
@@ -163,7 +167,7 @@
             }
 
             function openModal(provider) {
-              modalService
+              $ctrl.modal = modalService
                 .cloudProvider({
                   type: provider ? (provider.CloudVendor || provider.cloudVendor) : 'aws',
                   resolve: {
@@ -175,11 +179,13 @@
                       }
                     }
                   }
-                }).then(function (response) {
-                  $log.info('Component-ProviderList: addProvider -', response);
-                }).catch(function (error) {
-                  $log.info('Component-ProviderList: addProvider - Cancel', error);
                 });
+
+              $ctrl.modal.result.then(function (response) {
+                $log.info('Component-ProviderList: addProvider -', response);
+              }).catch(function (error) {
+                $log.info('Component-ProviderList: addProvider - Cancel', error);
+              });
             }
 
             /**

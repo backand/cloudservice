@@ -1,6 +1,5 @@
 <div class="provider-modal">
-    <button type="button" class="close" data-ng-click="$ctrl.$modalInstance.dismiss()"
-    data-dismiss="modal" aria-label="Close"><i class="fa fa-times fa-2"></i></button>
+  <button type="button" class="close" data-ng-click="$ctrl.$modalInstance.dismiss()" data-dismiss="modal" aria-label="Close"><i class="fa fa-times fa-2"></i></button>
   <div class="row-col">
     <div class="row-row">
       <div class="row-cell v-t provider-modal-left">
@@ -15,33 +14,78 @@
         <new-provider data-modal-instance="$ctrl.$modalInstance" on-select-provider="$ctrl.onSelectProvider(provider)" data-options="$ctrl.options"></new-provider>
       </div>
       <div class="row-cell v-t provider-modal-right">
-        <div class="provider-modal-header">
-          <h3 class="m-t-0 header-title">Obtaining your Access and Secret Keys</h3>
-        </div>
-        <div class="form-group">
-          <p class="text first">Connect the Lambda Launcher to your Lambda functions list using AWS CloudFormation to create a restricted IAM user.</p>
 
-          <p class="text"> Run this command using the <a href="https://aws.amazon.com/cli" target="_blank">AWS CLI</a> and we create an IAM
-            user that only has the 'GetFunction', 'InvokeFunction' and 'ListFunctions' policies:</p>
 
-          <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-rc --stack-name createbackanduser --capabilities CAPABILITY_IAM</code></pre>
+        <div id="aws-access-key" data-ng-if="$ctrl.provider.awsType === 'ACCESS_KEY'">
+          <div class="provider-modal-header">
+            <h3 class="m-t-0 header-title">Obtaining your Access and Secret Keys</h3>
+          </div>
+          <div class="form-group">
+            <p class="text first">Connect the Lambda Launcher to your Lambda functions list using AWS CloudFormation to create a restricted IAM
+              user.
+            </p>
 
-          <p class="text">Once the IAM user has been created, use this command to obtain the user's access and secret keys, then copy these
-            values into the fields below:
-            <pre><code>aws cloudformation describe-stacks --stack-name createbackanduser</code></pre>
-          </p>
-          <p class="text">You can also use other AWS tools to create the connection -
-            <ba-help-link key="LLSettingIAM" with-text="learn more"></ba-help-link>
-          </p>
-        </div>
-        <div class="form-group">
-          <div class="alert alert-warning">
-            Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
-            executing your Lambda functions. You can permanently revoke our access at any time by deleting the IAM credentials.
-            If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
-              target="_blank">please contact us</a>.
+            <p class="text"> Run this command using the <a href="https://aws.amazon.com/cli" target="_blank">AWS CLI</a> and we create an
+              IAM user that only has the 'GetFunction', 'InvokeFunction' and 'ListFunctions' policies:</p>
+
+            <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-rc --stack-name createbackanduser --capabilities CAPABILITY_IAM</code></pre>
+
+            <p class="text">Once the IAM user has been created, use this command to obtain the user's access and secret keys, then copy these
+              values into the fields below:
+              <pre><code>aws cloudformation describe-stacks --stack-name createbackanduser</code></pre>
+            </p>
+            <p class="text">You can also use other AWS tools to create the connection -
+              <ba-help-link key="LLSettingIAM" with-text="learn more"></ba-help-link>
+            </p>
+          </div>
+          <div class="form-group">
+            <div class="alert alert-warning">
+              Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
+              executing your Lambda functions. You can permanently revoke our access at any time by deleting the IAM credentials.
+              If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
+                target="_blank">please contact us</a>.
+            </div>
           </div>
         </div>
+
+        <div id="aws-cross-account" data-ng-if="$ctrl.provider.awsType === 'CROSS_ACCOUNT_ACCESS'">
+          <div class="provider-modal-header">
+            <h3 class="m-t-0 header-title">Obtaining the AWS Account ID</h3>
+          </div>
+          <div class="form-group">
+            <p class="text first">This approach relies upon obtaining your AWS Account ID. To do this:</p>
+            <div class="text p-x-md">
+              <ul>
+                <li>Navigate to the AWS Console for your region.</li>
+                <li>In the top navigation bar, select <strong>Support</strong>, then <strong>Support Center</strong>.</li>
+                <li>Your AWS Account ID is located in the upper-right-hand corner, immediately below the <strong>Support</strong>                  menu. It is a 12-digit number.</li>
+              </ul>
+            </div>
+            <p class="text">Save this ID for use in later configuration steps.</p>
+
+            <h4 id="aws-cli">AWS CLI</h4>
+            <p class="text">Using CloudFormation, we'll create a stack that we'll use to drive cross-account integration with Backand. Use
+              the following AWS CLI command to get started:</p>
+            <div class="text">
+              <div class="alert alert-info">
+                You'll need to replace the value <code><span>appMasterToken</span></code> in this command with your application's
+                <ba-help-link key="socialAmpKeys" with-text="master token"></ba-help-link>.
+              </div>
+            </div>
+
+            <div class="text">
+              <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-cc --parameters  ParameterKey=ExternalId,ParameterValue=bknd_{{$ctrl.tokens.general}} --stack-name createBkndCrossAccess --capabilities CAPABILITY_NAMED_IAM</code></pre>
+            </div>
+            <h4 id="aws-management-console">AWS Management Console</h4>
+
+            <p class="text">Instead of achieving the above via CLI, you can perform the same actions in the AWS Management console. To get
+              started, open the AWS Management Console as an account administrator, and pull up the IAM console. Before you
+              create the role, you'll need to create a managed policy that defines the permissions required by the IAM role
+              to be created. You will attach this policy to the new role in a later step.</p>
+          </div>
+        </div>
+
+
       </div>
     </div>
   </div>

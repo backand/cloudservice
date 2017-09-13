@@ -1,7 +1,7 @@
 <div class="box-bk-group">
   <!-- data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key) && !$ctrl.isNew}" -->
   <div class="box-bk" data-ng-repeat="providerType in $ctrl.cloudProviderTypes track by $index" data-ng-click="$ctrl.selectProvider(providerType, true)"
-    data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key) && !$ctrl.isNew }" data-ng-if="providerType.enable">
+    data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key && !$ctrl.isNew) || !providerType.enable }">
     <div class="box-bk-content">
       <div class="circle" data-ng-class="{'active' : providerType.key === $ctrl.selectedProvider.key}">
         <div class="circle__inner">
@@ -23,7 +23,7 @@
   <div class="row-col">
     <div class="row-row">
       <div class="row-cell v-m text-left">
-        <button type="submit" class="btn btn-amazon btn-lg" data-ng-disabled="$ctrl.cloudProviderForm.$invalid || $ctrl.cloudProvider.AwsRegion.length ==0">Connect with AWS</button>
+        <button type="submit" class="btn btn-amazon btn-lg" data-ng-disabled="$ctrl.cloudProviderForm.$invalid || ($ctrl.cloudProvider.AwsRegion.length ==0 && $ctrl.selectedProvider.key === 'aws')">Connect with AWS</button>
         <button type="button" class="btn btn-link" data-ng-click="$ctrl.modalInstance.dismiss('cancel')" data-ng-if="$ctrl.isNew">Complete later</button>
       </div>
       <div class="row-cell v-m text-right">

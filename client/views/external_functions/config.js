@@ -28,7 +28,16 @@
       $stateProvider
         .state('functions.externalFunctions', {
           url: '/external-functions?new&source',
-          template: '<external-functions></external-functions>'
+          template: '<external-functions data-app-keys="appKeys"></external-functions>',
+          controller: ['$scope', 'appKeys', function ($scope, appKeys) {
+            $scope.appKeys = appKeys;
+          }],
+          resolve: {
+            appKeys: ['$stateParams','AppsService', function ($stateParams, AppsService) {
+              var appName = $stateParams.appName;
+              return AppsService.appKeys(appName);
+            }]
+          },
         });
     }]);
 

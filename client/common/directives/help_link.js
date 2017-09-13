@@ -149,6 +149,10 @@
           "LLSettingIAM": {
             "page": "LL Dialog Connection",
             "url": "http://docs.backand.com/#setting-up-iam-access-for-the-lambda-launcher"
+          },
+          "socialAmpKeys": {
+            "page": "Social & Keys",
+            "url": "http://docs.backand.com/#social-amp-keys"
           }
         };
 

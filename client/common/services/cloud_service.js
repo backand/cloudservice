@@ -121,7 +121,7 @@
       function saveProvider(data, params) {
         var id;
         params = params || {};
-        id = data.id || '';
+        id = (data.Id || data.id) || '';
         return $http({
           method: id ? 'PUT' : 'POST',
           url: CONSTS.appUrl + '/1/objects/cloudServiceProvider' + (id ? '/' + id : ''),
