@@ -1,10 +1,10 @@
 /**
  * @ngdoc directive
- * @name backand.externalFunctions.directive.renderFields
+ * @name backand.externalFunctions.directive.renderPartial
  * @module backand.externalFunctions
  *
  * @description
- * renderFields
+ * renderPartial
  * 
  * @author Mohan Singh ( gmail::mslogicmaster@gmail.com, skype :: mohan.singh42 )
  */
@@ -13,18 +13,25 @@
 
   angular
     .module('backand.externalFunctions')
-    .directive("renderFields", [function () {
+    .directive("renderPartial", [function () {
       return {
-        restrict: 'AE',
+        restrict: 'E',
+        scope : true,
         template: '<ng-include src="url"></ng-include>',
         link: function link(scope, el, attr) {
+          if (!attr.path) {
+            console.error('Directive: renderPartial - path attribute is missing');
+            return;
+          }
+          var path = attr.path || '',
+            postfix = attr.postfix || '';
           scope.$watch(function () {
-            return attr.provider;
+            return attr.view;
           }, function (n, o) {
             if (!n) {
               return;
             }
-            scope.url = 'views/external_functions/providers/new/partials/' + n + '-provider.html';
+            scope.url = attr.path + n + postfix + '.html';
           })
         }
       };

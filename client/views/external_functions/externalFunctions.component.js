@@ -149,25 +149,26 @@
                 new: undefined
               });
 
-              modalService
+              $ctrl.modal = modalService
                 .cloudProvider({
                   type: 'aws'
-                })
-                .then(function (data) {
-                  $log.info('connection with - ', data);
-                  $state.transitionTo($state.current.name, stateParams, {
-                    reload: true
-                  });
-                }, function () {
-                  $log.info('Cancelled AWS credentials to enter.');
-                  //msg, okText, cancelText, showOk, showCancel, title, size
-                  ConfirmationPopup.confirm('<p>Connect your AWS account to easily launch Lambda functions.In the meantime, see a demo of the tool in action with example functions.</p> <p class="m-b-0"><a href = "https://lambda.backand.io/#/lambdademo/functions?t=OGQ5ZGFlYTgtMzQzMi00NWMxLTk3MGItOGVhODE4MGZmMTBk" class="btn btn-success" target="_blank">See Live Demo</a></p>', 'Close', '', true, false, '', 'md')
-                    .then(function (result) {
-                      $state.transitionTo($state.current.name, stateParams, {
-                        notify: false
-                      });
-                    })
                 });
+
+              $ctrl.modal.result.then(function (data) {
+                $log.info('connection with - ', data);
+                $state.transitionTo($state.current.name, stateParams, {
+                  reload: true
+                });
+              }, function () {
+                $log.info('Cancelled AWS credentials to enter.');
+                //msg, okText, cancelText, showOk, showCancel, title, size
+                ConfirmationPopup.confirm('<p>Connect your AWS account to easily launch Lambda functions.In the meantime, see a demo of the tool in action with example functions.</p> <p class="m-b-0"><a href = "https://lambda.backand.io/#/lambdademo/functions?t=OGQ5ZGFlYTgtMzQzMi00NWMxLTk3MGItOGVhODE4MGZmMTBk" class="btn btn-success" target="_blank">See Live Demo</a></p>', 'Close', '', true, false, '', 'md')
+                  .then(function (result) {
+                    $state.transitionTo($state.current.name, stateParams, {
+                      notify: false
+                    });
+                  })
+              });
             }
 
             /**

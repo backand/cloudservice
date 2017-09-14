@@ -20,7 +20,6 @@
           aws: {
             AccessKeyId: '',
             AwsRegion: [],
-            accountId: '',
             Name: 'Aws',
             CloudVendor: 'AWS',
             EncryptedSecretAccessKey: '',
@@ -29,8 +28,7 @@
           ibm: {
             AccessKeyId: '',
             AwsRegion: [],
-            accountId: '',
-            Name: 'Ibm',
+            Name: 'Ibm',    
             CloudVendor: 'IBM',
             EncryptedSecretAccessKey: '',
             Id: ''

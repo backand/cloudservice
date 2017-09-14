@@ -34,7 +34,8 @@
           'AnalyticsService',
           '$rootScope',
           'ProviderService',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, $rootScope, ProviderService) {
+          '$stateParams',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, $rootScope, ProviderService, $stateParams) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               regions,
@@ -53,6 +54,9 @@
              * public properties
              */
             $ctrl.cloudProviderTypes = angular.copy(ProviderService.getProviders());
+            $ctrl.crossAccount = {
+              AccessKeyId: ''
+            };
 
             /**
            * call initialization to initialize controllers properties 
@@ -114,8 +118,16 @@
               }
               $ctrl.cloudProvider = clp;
               if (provider.AccessKeyId && provider.CloudVendor === 'AWS') {
-                $ctrl.awsType = _.startsWith(provider.AccessKeyId, 'bknd_') ? 'CROSS_ACCOUNT_ACCESS' : 'ACCESS_KEY';
+                $ctrl.awsType = isValidNumber(provider.AccessKeyId) ? 'CROSS_ACCOUNT_ACCESS' : 'ACCESS_KEY';
+                if ($ctrl.awsType === 'CROSS_ACCOUNT_ACCESS') {
+                  $ctrl.crossAccount.AccessKeyId = clp.AccessKeyId;
+                }
               }
+            }
+
+            function isValidNumber(str) {
+              var n = Math.floor(Number(str));
+              return String(n) === str && n >= 0;
             }
 
             /**
@@ -135,7 +147,8 @@
 
               request = ProviderService.prepareRequest($ctrl.selectedProvider.name, request);
               if ($ctrl.selectedProvider.key === 'aws' && $ctrl.selectedProvider.awsType === 'CROSS_ACCOUNT_ACCESS' && !request.id) {
-                request.AccessKeyId = 'bknd_' + $ctrl.tokens.general;
+                request.EncryptedSecretAccessKey = 'bknd_' + $ctrl.tokens.general;
+                request.AccessKeyId = $ctrl.crossAccount.AccessKeyId;
               }
 
               if (request.EncryptedSecretAccessKey === defaultSecretKeyHas) {
@@ -159,7 +172,7 @@
                       var metaDataId = _.get(response, 'data.__metadata.id');
                       if (!request.id) {
                         console.log('Is new Event ---', $ctrl.isNew);
-                        if ($ctrl.isNew && metaDataId) {
+                        if ($stateParams.new == 1 && metaDataId) {
                           $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
                             functions: functions,
                             metaDataId: metaDataId

@@ -19,7 +19,7 @@
 
 <form name="$ctrl.cloudProviderForm" class="provider-form" novalidate data-ng-submit="$ctrl.saveProvider()">
   <div us-spinner="" spinner-key="connectionView" spinner-start-active></div>
-  <render-fields data-provider="{{$ctrl.selectedProvider.key}}"></render-fields>
+  <render-partial data-view="{{$ctrl.selectedProvider.key}}" data-postfix="-provider" data-path="views/external_functions/providers/new/partials/"></render-partial>
   <div class="row-col">
     <div class="row-row">
       <div class="row-cell v-m text-left">

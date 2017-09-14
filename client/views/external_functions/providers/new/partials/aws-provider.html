@@ -14,10 +14,11 @@
 <div data-ng-if="$ctrl.selectedProvider.awsType === 'CROSS_ACCOUNT_ACCESS'">
   <div class="form-group">
     <label for="AWS Account ID" class="control-label">AWS Account ID</label>
-    <input type="text" class="form-control" placeholder="AWS Account ID" id="AWS Account ID" ng-model="$ctrl.cloudProvider.accountId"
+    <input type="text" class="form-control" placeholder="AWS Account ID" id="AWS Account ID" ng-model="$ctrl.crossAccount.AccessKeyId"
       required>
   </div>
 </div>
+
 <div data-ng-if="$ctrl.selectedProvider.awsType === 'ACCESS_KEY'">
   <div class="form-group">
     <label for="aws-access-key" class="control-label">Access Key ID</label>
