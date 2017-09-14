@@ -150,6 +150,10 @@
             "page": "LL Dialog Connection",
             "url": "http://docs.backand.com/#setting-up-iam-access-for-the-lambda-launcher"
           },
+          "LLSettingCrossAccount": {
+            "page": "LL Dialog Connection",
+            "url": "http://docs.backand.com/#creating-cross-account-access-for-aws-lambda"
+          },
           "socialAmpKeys": {
             "page": "Social & Keys",
             "url": "http://docs.backand.com/#social-amp-keys"

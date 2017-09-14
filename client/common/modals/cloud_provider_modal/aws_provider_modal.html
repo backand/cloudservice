@@ -4,24 +4,21 @@
     <div class="row-row">
       <div class="row-cell v-t provider-modal-left">
         <div class="provider-modal-header">
-          <h3 class="m-t-0 header-title">{{ $ctrl.options.isNew ? 'Add new connection' : 'Edit Connection Details'}}</h3>
+          <h3 class="m-t-0 header-title">{{ $ctrl.options.isNew ? 'Add new ' + $ctrl.provider.name + ' account' : 'Edit ' + $ctrl.provider.name + ' account details'}}</h3>
           <div class="header-txt">
             External Functions are {{$ctrl.provider.name}} functions stored in your account. By linking your {{$ctrl.provider.description}},
-            you'll be able to invoke them from within your application's security infrastructure. This allows you to secure
-            your functions using tools like Active Directory - read more
+            you'll be able to invoke and consume them from within your application's infrastructure.
           </div>
         </div>
         <new-provider data-modal-instance="$ctrl.$modalInstance" on-select-provider="$ctrl.onSelectProvider(provider)" data-options="$ctrl.options"></new-provider>
       </div>
       <div class="row-cell v-t provider-modal-right">
-
-
         <div id="aws-access-key" data-ng-if="$ctrl.provider.awsType === 'ACCESS_KEY'">
           <div class="provider-modal-header">
             <h3 class="m-t-0 header-title">Obtaining your Access and Secret Keys</h3>
           </div>
           <div class="form-group">
-            <p class="text first">Connect the Lambda Launcher to your Lambda functions list using AWS CloudFormation to create a restricted IAM
+            <p class="text first">Connect Back& to your Lambda functions list using AWS CloudFormation to create a restricted IAM
               user.
             </p>
 
@@ -50,38 +47,36 @@
 
         <div id="aws-cross-account" data-ng-if="$ctrl.provider.awsType === 'CROSS_ACCOUNT_ACCESS'">
           <div class="provider-modal-header">
-            <h3 class="m-t-0 header-title">Obtaining the AWS Account ID</h3>
+            <h3 class="m-t-0 header-title">Creating Cross-Account Access</h3>
           </div>
           <div class="form-group">
-            <p class="text first">This approach relies upon obtaining your AWS Account ID. To do this:</p>
+            <p class="text first">To get your AWS Account ID do this:</p>
             <div class="text p-x-md">
               <ul>
                 <li>Navigate to the AWS Console for your region.</li>
                 <li>In the top navigation bar, select <strong>Support</strong>, then <strong>Support Center</strong>.</li>
-                <li>Your AWS Account ID is located in the upper-right-hand corner, immediately below the <strong>Support</strong>                  menu. It is a 12-digit number.</li>
+                <li>Your AWS Account ID is located in the upper-right-hand corner, immediately below the <strong>Support</strong> menu. It is a 12-digit number.</li>
               </ul>
             </div>
-            <p class="text">Save this ID for use in later configuration steps.</p>
-
             <h4 id="aws-cli">AWS CLI</h4>
-            <p class="text">Using CloudFormation, we'll create a stack that we'll use to drive cross-account integration with Backand. Use
+            <p class="text">Using CloudFormation, we'll create a stack that we'll use to drive cross-account integration with Back&. Use
               the following AWS CLI command to get started:</p>
-            <div class="text">
-              <div class="alert alert-info">
-                You'll need to replace the value <code><span>appMasterToken</span></code> in this command with your application's
-                <ba-help-link key="socialAmpKeys" with-text="master token"></ba-help-link>.
-              </div>
-            </div>
-
             <div class="text">
               <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-cc --parameters  ParameterKey=ExternalId,ParameterValue=bknd_{{$ctrl.tokens.general}} --stack-name createBkndCrossAccess --capabilities CAPABILITY_NAMED_IAM</code></pre>
             </div>
             <h4 id="aws-management-console">AWS Management Console</h4>
 
-            <p class="text">Instead of achieving the above via CLI, you can perform the same actions in the AWS Management console. To get
-              started, open the AWS Management Console as an account administrator, and pull up the IAM console. Before you
-              create the role, you'll need to create a managed policy that defines the permissions required by the IAM role
-              to be created. You will attach this policy to the new role in a later step.</p>
+            <p class="text">You can also use other AWS tools to create the connection -
+              <ba-help-link key="LLSettingCrossAccount" with-text="learn more"></ba-help-link>
+            </p>
+          </div>
+          <div class="form-group">
+            <div class="alert alert-warning">
+              Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
+              executing your Lambda functions. You can permanently revoke our access at any time by deleting the Role credentials.
+              If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
+                target="_blank">please contact us</a>.
+            </div>
           </div>
         </div>
 
