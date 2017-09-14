@@ -23,12 +23,13 @@
             Name: 'Aws',
             CloudVendor: 'AWS',
             EncryptedSecretAccessKey: '',
-            Id: ''
+            Id: '',
+            description: ''
           },
           ibm: {
             AccessKeyId: '',
             AwsRegion: [],
-            Name: 'Ibm',    
+            Name: 'Ibm',
             CloudVendor: 'IBM',
             EncryptedSecretAccessKey: '',
             Id: ''

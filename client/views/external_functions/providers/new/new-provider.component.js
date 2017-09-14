@@ -159,6 +159,11 @@
               }
               request.CloudVendor = $ctrl.selectedProvider.name;
               request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
+
+              if (!request.id) {
+                delete request.id;
+                delete request.Id;
+              }
               $log.warn('Provider Request Payload - ', request);
               CloudService
                 .saveProvider(request)
