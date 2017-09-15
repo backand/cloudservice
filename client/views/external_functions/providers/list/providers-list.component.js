@@ -20,7 +20,8 @@
           view: '@', //optional,
           modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
           onLoadConnection: '&?', //optional
-          isNew: '=?'
+          isNew: '=?',
+          launcherAppUrl : '='
         },
         require: '^externalFunctions',
         templateUrl: 'views/external_functions/providers/list/providers-list.html',
