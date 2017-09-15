@@ -37,11 +37,13 @@
           google: {
             AccessKeyId: '',
             AwsRegion: [],
-            accountId: '',
             Name: 'Google',
-            CloudVendor: 'Google',
+            CloudVendor: 'GCP',
             EncryptedSecretAccessKey: '',
-            Id: ''
+            Id: '',
+            PrivateKey: '',
+            ClientEmail: '',
+            ProjectName: ''
           },
           azure: {
             AccessKeyId: '',
@@ -85,7 +87,7 @@
           name: 'Google',
           key: 'google',
           description: 'Google Functions',
-          enable: false
+          enable: true
         }, {
           name: 'IBM',
           key: 'ibm',

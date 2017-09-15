@@ -1,16 +1,14 @@
 <div class="provider-modal-header">
-  <h3 class="m-t-0 header-title">Obtaining your Access and Secret Keys</h3>
+  <h3 class="m-t-0 header-title">IBM Doc header</h3>
 </div>
 <div class="form-group">
-  <p class="text first">Connect the Lambda Launcher to your Lambda functions list using AWS CloudFormation to create a restricted IAM user.</p>
+  <p class="text first">First Text paragraph</p>
 
-  <p class="text"> Run this command using the <a href="https://aws.amazon.com/cli" target="_blank">AWS CLI</a> and we create an IAM user that
-    only has the 'GetFunction', 'InvokeFunction' and 'ListFunctions' policies:</p>
+  <p class="text">Second Text paragraph</p>
 
-  <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-rc --stack-name createbackanduser --capabilities CAPABILITY_IAM</code></pre>
+  <pre><code>code - command goes here</code></pre>
 
-  <p class="text">Once the IAM user has been created, use this command to obtain the user's access and secret keys, then copy these values
-    into the fields below:
+  <p class="text">Third Text paragraph
     <pre><code>aws cloudformation describe-stacks --stack-name createbackanduser</code></pre>
   </p>
   <p class="text">You can also use other AWS tools to create the connection -
@@ -19,8 +17,6 @@
 </div>
 <div class="form-group">
   <div class="alert alert-warning">
-    Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
-    executing your Lambda functions. You can permanently revoke our access at any time by deleting the IAM credentials. If
-    you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact" target="_blank">please contact us</a>.
+    Info block <a href="https://www.backand.com/contact" target="_blank">please contact us</a>.
   </div>
 </div>
