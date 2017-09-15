@@ -56,6 +56,7 @@
             /**
              * public properties
              */
+            $ctrl.accordions = [];
             /**
              * @name initialization
              * @description
@@ -81,10 +82,14 @@
                 .then(function (response) {
                   $log.info(response.data);
                   $ctrl.providers = _.get(response, 'data.data') || [];
+                  $ctrl.accordions.length = $ctrl.providers.length;
                   $log.warn('Lambda functions loaded', response);
                   spinner(false);
                   if ($ctrl.providers.length === 0) {
                     showProviderModal();
+                  }
+                  if ($ctrl.providers.length === 1) {
+                    $ctrl.accordions[0] = true;
                   }
                 }).catch(function (error) {
                   $log.error('Error while fetching Lambda functions', error);
