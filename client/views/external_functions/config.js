@@ -33,7 +33,19 @@
             $scope.appKeys = appKeys;
           }],
           resolve: {
-            appKeys: ['$stateParams','AppsService', function ($stateParams, AppsService) {
+            appKeys: ['$stateParams', 'AppsService', function ($stateParams, AppsService) {
+              var appName = $stateParams.appName;
+              return AppsService.appKeys(appName);
+            }]
+          },
+        }).state('functions.lambda_launcher', {
+          url: '/lambda-launcher',
+          template: '<lambda-launcher data-app-keys="appKeys"></lambda-launcher>',
+          controller: ['$scope', 'appKeys', function ($scope, appKeys) {
+            $scope.appKeys = appKeys;
+          }],
+          resolve: {
+            appKeys: ['$stateParams', 'AppsService', function ($stateParams, AppsService) {
               var appName = $stateParams.appName;
               return AppsService.appKeys(appName);
             }]

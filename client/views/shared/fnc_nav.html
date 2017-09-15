@@ -97,6 +97,12 @@
     </ul>
   </ul>
 </li>
+<li ng-class="{active: nav.state == 'functions.lambda_launcher'}">
+  <a ng-click="nav.goTo($event, 'functions.lambda_launcher')">
+    <i class="fontello-icon-api-log_2 front-icons"></i>
+    <span>Lambda Launcher</span>
+  </a>
+</li>
 <!-- <li ng-class="{active: nav.backandstorage.currentState == 'integrations'}">
      ng-click="nav.goTo($event, )"
      <img src="assets/images/menu/icon-integrations/icon-integrations.png"

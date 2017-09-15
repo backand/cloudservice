@@ -880,11 +880,15 @@ ba-help-link {
                 background-color: transparent;
             }
             &.active {
-              border-top-left-radius: 4px !important;
-              border-bottom-left-radius: 4px !important;
-              border-top-right-radius: 4px !important;
-              border-bottom-right-radius: 4px !important;
+                border-top-left-radius: 4px !important;
+                border-bottom-left-radius: 4px !important;
+                border-top-right-radius: 4px !important;
+                border-bottom-right-radius: 4px !important;
             }
         }
     }
+}
+
+.no-shadow {
+    box-shadow: none !important;
 }

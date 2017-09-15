@@ -1,0 +1,46 @@
+<section class="page-form-ele">
+  <div class="row no-gutters">
+    <div class="col-md-12">
+      <h2 class="page-title"> Lambda Launcher </h2>
+    </div>
+  </div>
+  <section class="panel m-t-md no-border no-shadow">
+    <div class="panel-body p-a-0">
+      <!-- /static content, @todo will be removed when invite is ready -->
+      <div class="row">
+        <div class="col-md-12">
+          <h4>How it Works</h4>
+          <p>The Lambda Launcher gives you an easy-to-use interface for executing AWS Lambda functions that have been linked
+            to your application. Invite users to register for the Launcher below, then adjust the security settings in
+            <a ui-sref="security.auth"> your application's security settings.</a> When a user logs in, they will be able
+            to execute the Lambda functions to which they have access by pressing the "Execute" button.
+          </p>
+          <p>
+            <a data-ng-href="{{$ctrl.launcherAppUrl}}" target="_blank" class="btn btn-success m-b-md">Open</a></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-lg-8">
+          <div class="input-group">
+            <input type="text" class="form-control" id="launcherapp" ng-readonly="true" ng-model="$ctrl.launcherAppUrl">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="button" clip-copy="$ctrl.launcherAppUrl">Copy</button>
+          </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row m-t-md" data-ng-if="$ctrl.isAnonymous">
+        <div class="col-xs-12 col-sm-8 col-lg-8">
+          <div class="alert alert-warning">
+            Anonymous access is enabled allowing any user with above URL to run your linked Lambda. You can turn it off in the Security
+            <a data-ui-sref="security.auth({appName: $ctrl.appName})">Configuration page</a>
+          </div>
+        </div>
+      </div>
+      <!-- ./static content, @todo will be removed when invite is ready -->
+      <!-- users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users -->
+    </div>
+  </section>
+</section>
