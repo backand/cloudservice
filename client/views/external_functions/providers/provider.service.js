@@ -34,10 +34,10 @@
             EncryptedSecretAccessKey: '',
             Id: ''
           },
-          google: {
+          gcp: {
             AccessKeyId: '',
             AwsRegion: [],
-            Name: 'Google',
+            Name: 'GCP',
             CloudVendor: 'GCP',
             EncryptedSecretAccessKey: '',
             Id: '',
@@ -84,8 +84,8 @@
           description: 'Azure Functions',
           enable: true
         }, {
-          name: 'Google',
-          key: 'google',
+          name: 'GCP',
+          key: 'gcp',
           description: 'Google Functions',
           enable: true
         }, {

@@ -7,4 +7,3 @@ cp -a $dir/build/dist/assets/css/* /Users/itay/dev/website/backand/apps/assets/c
 
 cp $dir/build/dist/app.js /Users/itay/dev/website/backand/apps/
 cp $dir/build/dist/index.html /Users/itay/dev/website/backand/apps/
-
