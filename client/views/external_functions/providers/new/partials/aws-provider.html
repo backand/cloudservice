@@ -1,7 +1,7 @@
 <div class="form-group">
   <div class="btn-group switch-btn-backand">
-    <button class="btn" type="button" data-ng-click="$ctrl.selectAwsType('ACCESS_KEY')" data-ng-class="{'btn-backand active' : $ctrl.selectedProvider.awsType === 'ACCESS_KEY', 'disabled' : !$ctrl.isNew && $ctrl.selectedProvider.awsType !== 'ACCESS_KEY'}">IAM Access Keys</button>
     <button class="btn" type="button" data-ng-click="$ctrl.selectAwsType('CROSS_ACCOUNT_ACCESS')" data-ng-class="{'btn-backand active' : $ctrl.selectedProvider.awsType === 'CROSS_ACCOUNT_ACCESS', 'disabled' : !$ctrl.isNew && $ctrl.selectedProvider.awsType !== 'CROSS_ACCOUNT_ACCESS'}">Cross-Account Access</button>
+    <button class="btn" type="button" data-ng-click="$ctrl.selectAwsType('ACCESS_KEY')" data-ng-class="{'btn-backand active' : $ctrl.selectedProvider.awsType === 'ACCESS_KEY', 'disabled' : !$ctrl.isNew && $ctrl.selectedProvider.awsType !== 'ACCESS_KEY'}">IAM Access Keys</button>
   </div>
 </div>
 

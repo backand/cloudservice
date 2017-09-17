@@ -154,9 +154,13 @@
             "page": "LL Dialog Connection",
             "url": "http://docs.backand.com/#creating-cross-account-access-for-aws-lambda"
           },
+          "LLSettingGLP": {
+            "page": "LL Dialog Connection",
+            "url": "https://cloud.google.com/iam/docs/granting-changing-revoking-access"
+          },
           "LLSettingAzure": {
             "page": "LL Dialog Connection",
-            "url": "http://docs.backand.com/#setting-up-iam-access-for-the-lambda-launcher"
+            "url": "https://github.com/Azure/azure-sdk-for-node/blob/master/Documentation/Authentication.md#2-azure-cli"
           },
           "socialAmpKeys": {
             "page": "Social & Keys",

@@ -1,22 +1,37 @@
 <div class="provider-modal-header">
-  <h3 class="m-t-0 header-title">Google Doc header</h3>
+  <h3 class="m-t-0 header-title">Get Google Credentials</h3>
 </div>
 <div class="form-group">
-  <p class="text first">First Text paragraph</p>
+  <h4>Enable the necessary APIs</h4>
+  <p class="text">You need to enable 'Google Cloud Functions' API so that Back& can link and execute the Functions.</p>
+  <p class="text">Go to the <a href="https://console.cloud.google.com/apis/dashboard" target="_blank"> API dashboard</a>, select your project and enable 'Google Cloud Functions'</p>
 
-  <p class="text">Second Text paragraph</p>
-
-  <pre><code>code - command goes here</code></pre>
-
-  <p class="text">Third Text paragraph
-    <pre><code>aws cloudformation describe-stacks --stack-name createbackanduser</code></pre>
+  <h4>Get 'Private Key' and 'Client Email'</h4>
+  <p class="text">
+  <ol>
+    <li>Go to the Google Cloud API Manager and select "Credentials" on the left.</li>
+    <li>Click on "Create credentials" and select "Service account key".</li>
+    <li>Select "New service account" in the "Service account" dropdown.</li>
+    <li>Enter a name for your "Service account name" (e.g. "backand-platform").</li>
+    <li>Select "Project" --> "Owner" as the "Role".</li>
+    <li>The "Key type" should be "JSON".</li>
+    <li>Click on "Create" to create your private key.</li>
+    <li>That's your so called keyfile which should be downloaded on your machine.</li>
+    <li>Open the JSON file and copy the 'Private Key' and 'Client Email'</li>
+  </ol>
   </p>
-  <p class="text">You can also use other AWS tools to create the connection -
-    <ba-help-link key="LLSettingIAM" with-text="learn more"></ba-help-link>
+
+  <h4 id="aws-management-console">Google CloudPlatform</h4>
+
+  <p class="text">You can also use other GCP tools to create the connection -
+    <ba-help-link key="LLSettingGLP" with-text="learn more"></ba-help-link>
   </p>
 </div>
 <div class="form-group">
   <div class="alert alert-warning">
-    Info block <a href="https://www.backand.com/contact" target="_blank">please contact us</a>.
-  </div>
+      Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
+      executing your functions. You can permanently revoke our access at any time by deleting the IAM credentials.
+      If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
+        target="_blank">please contact us</a>.
+    </div>
 </div>
