@@ -77,7 +77,7 @@
               if (p && p.Id) {
                 setProvider(p);
                 var pType = _.find($ctrl.cloudProviderTypes, function (pt) {
-                  return pt.name.toLowerCase() === p.CloudVendor.toLowerCase();
+                  return pt.key.toLowerCase() === p.CloudVendor.toLowerCase();
                 });
                 selectProvider(pType);
               } else if ($ctrl.isNew) {
