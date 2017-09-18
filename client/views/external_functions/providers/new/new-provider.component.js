@@ -204,9 +204,11 @@
               $ctrl.isNewConnection = !request.id ? true : false;
               //get lambda functions when connection is saved
               if (typeof $ctrl.modalInstance.close === 'function' && !_.isEmpty(response)) {
-                $ctrl.modalInstance.close({ connection: model });
+                $ctrl.modalInstance.close({ connection: response });
               }
-              $rootScope.$emit('EVENT:RELOAD_PROVIDER');
+              $rootScope.$emit('EVENT:RELOAD_PROVIDER',{
+                  provider : _.get(response, 'data.__metadata.id')
+              });
               usSpinnerService.stop('connectionView');
             }
 

@@ -21,7 +21,7 @@
           modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
           onLoadConnection: '&?', //optional
           isNew: '=?',
-          launcherAppUrl : '='
+          launcherAppUrl: '='
         },
         require: '^externalFunctions',
         templateUrl: 'views/external_functions/providers/list/providers-list.html',
@@ -73,10 +73,10 @@
             /**
             * @name getLambdaFunctions
             * @description  function to get lambda function by app
-            * 
+            * @param {any} provider
             * @returns void
             */
-            function getLambdaFunctions() {
+            function getLambdaFunctions(provider) {
               spinner(true);
               CloudService
                 .getLambdaFunctions()
@@ -91,6 +91,13 @@
                   }
                   if ($ctrl.providers.length === 1) {
                     $ctrl.accordions[0] = true;
+                  } else if ($ctrl.providers.length > 1 && provider) {
+                    _.forEach($ctrl.providers, function (p, idx) {
+                      if (p.id == provider) {
+                        $ctrl.accordions[idx] = true;
+                        return false;
+                      }
+                    });
                   }
                 }).catch(function (error) {
                   $log.error('Error while fetching Lambda functions', error);
@@ -189,6 +196,10 @@
 
               $ctrl.modal.result.then(function (response) {
                 $log.info('Component-ProviderList: addProvider -', response);
+                var providerId = _.get(response, 'data.__metadata.id');
+                if (providerId) {
+                  $ctrl.accordions[$ctrl.accordions.length + 1] = true;
+                }
               }).catch(function (error) {
                 $log.info('Component-ProviderList: addProvider - Cancel', error);
               });
@@ -216,7 +227,8 @@
                 deleteProvider(data.provider);
               });
               var reloadProvidersEvent = $rootScope.$on('EVENT:RELOAD_PROVIDER', function (event, data) {
-                getLambdaFunctions();
+                var provider = _.get(data, 'provider');
+                getLambdaFunctions(provider);
               });
               $scope.$on('$destroy', function () {
                 //unregistered event when component is destroyed
