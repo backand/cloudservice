@@ -87,7 +87,7 @@
                   $ctrl.accordions.length = $ctrl.providers.length;
                   $log.warn('Lambda functions loaded', response);
                   spinner(false);
-                  if ($ctrl.providers.length === 0 && !$localStorage.backand['skipModal']) {
+                  if ($ctrl.providers.length === 0 && !$localStorage.backand['skipModal'] && !isNew) {
                     $localStorage.backand['skipModal'] = true;
                     showProviderModal();
                   }
