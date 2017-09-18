@@ -39,7 +39,8 @@
           'modalService',
           '$rootScope',
           '$scope',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, modalService, $rootScope, $scope) {
+          '$localStorage',
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, modalService, $rootScope, $scope, $localStorage) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this, regions;
             /**
@@ -86,7 +87,8 @@
                   $ctrl.accordions.length = $ctrl.providers.length;
                   $log.warn('Lambda functions loaded', response);
                   spinner(false);
-                  if ($ctrl.providers.length === 0) {
+                  if ($ctrl.providers.length === 0 && !$localStorage.backand['skipModal']) {
+                    $localStorage.backand['skipModal'] = true;
                     showProviderModal();
                   }
                   if ($ctrl.providers.length === 1) {

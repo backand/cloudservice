@@ -71,3 +71,21 @@
 .fontello-icon-security-actions:before { content: '\e816'; } /* '' */
 .fontello-icon-social-keys:before { content: '\e818'; } /* '' */
 .fontello-icon-storage:before { content: '\e819'; } /* '' */
+
+.icon{
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  height: 2em;
+  width: 2em; 
+}
+.icon-azure { 
+  background-image: url('/assets/images/icons/azure-function.svg'); /* the ellipsis is where the icon’s data would go */
+} /* '' */
+.icon-ibm { 
+  background-image: url('/assets/images/icons/ibm functions.svg'); /* the ellipsis is where the icon’s data would go */
+} /* '' */
+.icon-gcp { 
+  background-image: url('/assets/images/icons/google-functions.svg'); /* the ellipsis is where the icon’s data would go */
+} /* '' */
+
+
