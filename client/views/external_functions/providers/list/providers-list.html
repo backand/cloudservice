@@ -6,7 +6,7 @@
           <div class="row-row">
             <div class="row-cell v-m">
               <i class="fa fa-fw" ng-class="{'fa-chevron-down': $ctrl.accordions[$index], 'fa-chevron-right': !provider.open}"></i>
-              <img ng-src="assets/images/icons/{{provider.cloudVendor ? provider.cloudVendor : 'aws'}}-icon.png" class="provider-logo">{{provider.Name || provider.name}}
+              <img ng-src="assets/images/icons/{{provider.cloudVendor ? provider.cloudVendor.toLowerCase() : 'aws'}}-icon.png" class="provider-logo">{{provider.Name || provider.name}}
               {{provider.cloudVendor}}
             </div>
             <div class="row-cell v-m text-right">
