@@ -35,21 +35,17 @@
             Id: ''
           },
           gcp: {
-            AccessKeyId: '',
             AwsRegion: [],
             Name: 'GCP',
             CloudVendor: 'GCP',
-            EncryptedSecretAccessKey: '',
             Id: '',
             EncryptedPrivateKey: '',
             ClientEmail: '',
             ProjectName: ''
           },
           azure: {
-            AccessKeyId: '',
             AwsRegion: '',
             CloudVendor: 'Azure',
-            EncryptedSecretAccessKey: '',
             Name: 'Azure',
             subscriptionId: '',
             appId: '',
