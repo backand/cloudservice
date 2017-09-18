@@ -172,7 +172,7 @@
                   CloudService
                     .getLambdaFunctions()
                     .then(function (functions) {
-                      NotificationService.add('success', 'Connection details are saved successfully.');
+                      NotificationService.add('success', 'The account was connected.');
                       AnalyticsService.track('AWSConnectionSaved');
                       var metaDataId = _.get(response, 'data.__metadata.id');
                       if (!request.id) {
@@ -189,7 +189,7 @@
                       }
                       handler(response, request, $ctrl.cloudProvider, true);
                     }, function () {
-                      NotificationService.add('error', 'Provided AWS credentials are not valid.');
+                      NotificationService.add('error', 'Invalid credentials');
                       handler({}, request, $ctrl.cloudProvider, false);
                     });
 

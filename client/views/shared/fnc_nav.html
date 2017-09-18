@@ -84,7 +84,7 @@
           <span>{{func.name}}</span>
         </a>
             <i data-ng-show="func.cloudProvider == 'AWS'" ng-class="{'fontello-icon-functions': func.cloudProvider == 'AWS' }"></i>
-            <img data-ng-show="func.cloudProvider !== 'AWS'" ng-src="/assets/images/icons/{{func.cloudProvider.toLowerCase()}}-function.svg"
+            <img data-ng-if="func.cloudProvider != 'AWS'" ng-src="/assets/images/icons/{{func.cloudProvider.toLowerCase()}}-function.svg"
               width="16px" height="16px" style="margin: 0;padding: 0" />
           </li>
         </ul>

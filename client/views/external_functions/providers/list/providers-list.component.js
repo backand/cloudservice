@@ -140,6 +140,7 @@
                           $ctrl.modal.close();
                         }
                         spinner(false);
+                        $localStorage.backand['skipModal'] = false;
                       }).catch(function (error) {
                         $log.error('Error while deleting a provider', error);
                         spinner(false);

@@ -126,7 +126,7 @@
                   updateFunctionIds(func, flag, response.data);
                   $log.info('Lambda function is selected with -', response);
                   usSpinnerService.stop('loading');
-                  NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
+                  NotificationService.add('success', 'Function was ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
                   if (flag) {
                     AnalyticsService.track('LambdaFunctionSelected', { function: func.FunctionName });
                   }
