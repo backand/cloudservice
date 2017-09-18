@@ -41,7 +41,7 @@
             CloudVendor: 'GCP',
             EncryptedSecretAccessKey: '',
             Id: '',
-            PrivateKey: '',
+            EncryptedPrivateKey: '',
             ClientEmail: '',
             ProjectName: ''
           },

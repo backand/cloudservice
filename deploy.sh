@@ -1,5 +1,8 @@
 dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # dest=$(/Users/itay/dev/website/backand/apps)
+printf "Build Prod folder\n"
+gulp serve:deploy
+
 printf "Copy fiels into backand website\n"
 cp -a $dir/build/dist/assets/js/* /Users/itay/dev/website/backand/apps/assets/js/
 cp -a $dir/build/dist/assets/css/* /Users/itay/dev/website/backand/apps/assets/css/

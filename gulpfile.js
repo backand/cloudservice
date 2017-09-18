@@ -271,6 +271,10 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function () {
   });
 });
 
+gulp.task('serve:deploy', ['env:prod', 'build:dist'], function () {
+  
+});
+
 //run the dev in the dist folder
 gulp.task('dev:dist', ['env:dev', 'build:dist'], function () {
   browserSync({
