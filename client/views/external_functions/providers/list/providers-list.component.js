@@ -39,10 +39,9 @@
           'modalService',
           '$rootScope',
           '$scope',
-          '$localStorage',
-          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, modalService, $rootScope, $scope, $localStorage) {
+          function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, modalService, $rootScope, $scope) {
             $log.info('Component awsConnection has initialized');
-            var $ctrl = this, regions;
+            var $ctrl = this, regions, skipModal = false;
             /**
             * call initialization to initialize controllers properties 
             */
@@ -87,8 +86,8 @@
                   $ctrl.accordions.length = $ctrl.providers.length;
                   $log.warn('Lambda functions loaded', response);
                   spinner(false);
-                  if ($ctrl.providers.length === 0 && !$localStorage.backand['skipModal'] && !isNew) {
-                    $localStorage.backand['skipModal'] = true;
+                  if ($ctrl.providers.length === 0 && !skipModal && !$ctrl.isNew) {
+                    skipModal = true;
                     showProviderModal();
                   }
                   if ($ctrl.providers.length === 1) {
@@ -140,7 +139,7 @@
                           $ctrl.modal.close();
                         }
                         spinner(false);
-                        $localStorage.backand['skipModal'] = false;
+                        skipModal = false;
                       }).catch(function (error) {
                         $log.error('Error while deleting a provider', error);
                         spinner(false);
