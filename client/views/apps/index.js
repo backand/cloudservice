@@ -110,7 +110,7 @@
               $state.go('docs.platform_select_kickstart', {appName: appName, newApp: true});
               break;
             case 2:
-              $state.go('functions.newlambdafunctions', {appName: appName}, {reload: true}).then(function(){
+              $state.go('functions.externalFunctions', {appName: appName}, {reload: true}).then(function(){
                 self.backandstorage.currentState = $state.current.name;
                 self.stateparam = $state.params;
               });
