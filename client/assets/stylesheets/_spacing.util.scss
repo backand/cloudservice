@@ -30,9 +30,17 @@
     padding-left: 0 !important;
 }
 
+.p-x-md {
+  padding-right: 15px !important;
+  padding-left: 15px !important;
+}
+
 
 /** margin */
 
+.m-t-30{
+  margin-top: 30px;
+}
 .m-a-0 {
     margin: 0 !important;
 }
@@ -65,4 +73,12 @@
 
 .m-t-md {
     margin-top: 15px !important;
+}
+.m-b-md {
+  margin-bottom: 15px !important;
+}
+
+.m-y-md{
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
 }

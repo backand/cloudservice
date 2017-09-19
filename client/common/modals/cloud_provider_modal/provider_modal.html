@@ -1,0 +1,16 @@
+<div class="provider-modal">
+  <button type="button" class="close" data-ng-click="$ctrl.$modalInstance.dismiss()" data-dismiss="modal" aria-label="Close"><i class="fa fa-times fa-2"></i></button>
+  <div class="row-col">
+    <div class="row-row">
+      <div class="row-cell v-t provider-modal-left">
+        <div class="provider-modal-header">
+          <render-partial data-path="common/modals/cloud_provider_modal/headers/" data-view="header_{{$ctrl.provider.key}}"></render-partial>
+        </div>
+        <new-provider data-modal-instance="$ctrl.$modalInstance" on-select-provider="$ctrl.onSelectProvider(provider)" data-options="$ctrl.options"></new-provider>
+      </div>
+      <div class="row-cell v-t provider-modal-right">
+        <render-partial data-path="common/modals/cloud_provider_modal/docs/" data-view="doc_{{$ctrl.provider.key}}"></render-partial>
+      </div>
+    </div>
+  </div>
+</div>

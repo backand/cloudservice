@@ -15,7 +15,9 @@
     .directive('externalFunctions', [function () {
       return {
         restrict: 'E',
-        scope: true,
+        scope: {
+          appKeys: '='
+        },
         templateUrl: 'views/external_functions/externalFunctions.html',
         controllerAs: '$ctrl',
         bindToController: true,
@@ -29,14 +31,10 @@
           'APP_CONSTS',
           'AppsService',
           'ConfirmationPopup',
-          function ($log, usSpinnerService, $modal, $state, modalService, $rootScope, APP_CONSTS, AppsService, ConfirmationPopup) {
+          'ProviderService',
+          function ($log, usSpinnerService, $modal, $state, modalService, $rootScope, APP_CONSTS, AppsService, ConfirmationPopup, ProviderService) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
-            /**
-            * call initialization to initialize controllers properties 
-            */
-            initialization();
-
             /**
              *
              * public methods
@@ -44,10 +42,17 @@
             $ctrl.onSaveConnection = onSaveConnection;
             $ctrl.onLoadConnection = onLoadConnection;
             $ctrl.onLoadLambdaFunctions = onLoadLambdaFunctions;
+            $ctrl.isNew = isNew;
+            $ctrl.editConnection = false;
+            $ctrl.addNewProvider = addNewProvider;
             /**
              * public properties
              */
             $ctrl.activeConnection = {};
+            /**
+           * call initialization to initialize controllers properties 
+           */
+            initialization();
             /**
              * @name initialization
              * @description
@@ -66,16 +71,24 @@
               $ctrl.activeTab = 0;
               //set collapsible panels
               $ctrl.sections = {
-                guideline: false,
                 awsConnection: true,
                 lambdaFunctions: true
               };
+              if (_.get($ctrl.appKeys, 'data')) {
+                $ctrl.tokens = $ctrl.appKeys.data;
+                $log.info('Current App tokens', $ctrl.tokens);
+                ProviderService.setTokens($ctrl.tokens);
+                if ($ctrl.tokens.anonymous) {
+                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/functions?t=' + $base64.encode($ctrl.tokens.anonymous);
+                } else {
+                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/login';
+                }
+              }
               getApp();
               //opens modal for AWS credentials
               if (isNew()) {
-                awsConnectionModal();
+                providerModal();
               }
-              setCurrentAppTokens();
               usSpinnerService.stop('loading');
             }
 
@@ -119,39 +132,43 @@
             * @param {object} connection An object of connection details
             * @returns void
             */
-            function onSaveConnection(connection) {
-              $log.info('onSaveConnection - AWS connection is updated with -', connection);
+            function onSaveConnection(connection, status) {
+              $log.info('onSaveConnection - AWS connection is updated with -', connection, status);
+              $ctrl.editConnection = status ? false : true;
             }
 
             /**
-             * @name awsConnectionModal
+             * @name providerModal
              * @description opens modal/popup to configure AWS credentials
              * 
              * @returns void
              */
-            function awsConnectionModal() {
+            function providerModal() {
               var stateParams = $state.params;
               angular.extend(stateParams, {
                 new: undefined
               });
 
-              modalService
-                .awsCredentials()
-                .then(function (data) {
-                  $log.info('connection with - ', data);
-                  $state.transitionTo($state.current.name, stateParams, {
-                    reload: true
-                  });
-                }, function () {
-                  $log.info('Cancelled AWS credentials to enter.');
-                  //msg, okText, cancelText, showOk, showCancel, title, size
-                  ConfirmationPopup.confirm('<p>Connect your AWS account to easily launch Lambda functions.In the meantime, see a demo of the tool in action with example functions.</p> <p class="m-b-0"><a href = "https://lambda.backand.io/#/lambdademo/functions?t=OGQ5ZGFlYTgtMzQzMi00NWMxLTk3MGItOGVhODE4MGZmMTBk" class="btn btn-success" target="_blank">See Live Demo</a></p>','Close','',true,false,'','md')
-                    .then(function (result) {
-                      $state.transitionTo($state.current.name, stateParams, {
-                        notify: false
-                      });
-                    })
+              $ctrl.modal = modalService
+                .cloudProvider({
+                  type: 'aws'
                 });
+
+              $ctrl.modal.result.then(function (data) {
+                $log.info('connection with - ', data);
+                $state.transitionTo($state.current.name, stateParams, {
+                  reload: true
+                });
+              }, function () {
+                $log.info('Cancelled AWS credentials to enter.');
+                //msg, okText, cancelText, showOk, showCancel, title, size
+                ConfirmationPopup.confirm('<p>Connect your AWS account to easily launch Lambda functions.In the meantime, see a demo of the tool in action with example functions.</p> <p class="m-b-0"><a href = "https://lambda.backand.io/#/lambdademo/functions?t=OGQ5ZGFlYTgtMzQzMi00NWMxLTk3MGItOGVhODE4MGZmMTBk" class="btn btn-success" target="_blank">See Live Demo</a></p>', 'Close', '', true, false, '', 'md')
+                  .then(function (result) {
+                    $state.transitionTo($state.current.name, stateParams, {
+                      notify: false
+                    });
+                  })
+              });
             }
 
             /**
@@ -177,33 +194,28 @@
             function onLoadConnection(activeConnection) {
               angular.extend($ctrl.activeConnection, activeConnection);
               //Expand AWS connection panel if there is no active connection
-              if (!$ctrl.activeConnection.Id) {
-                $ctrl.sections.awsConnection = false;
-              }
+              $ctrl.sections.awsConnection = !$ctrl.activeConnection.Id ? false : true;
+              $ctrl.editConnection = !$ctrl.activeConnection.Id ? true : false;
               getLambdaFunctions();
             }
-            function getApp(){
+            function getApp() {
               AppsService
-              .getApp($ctrl.appName)
-              .then(function(response){
-                $log.info('getApp',response);
-                $ctrl.isAnonymous = _.get(response, 'settings.secureLevel') == "AllUsers";
-              });
+                .getApp($ctrl.appName)
+                .then(function (response) {
+                  $log.info('getApp', response);
+                  $ctrl.isAnonymous = _.get(response, 'settings.secureLevel') == "AllUsers";
+                });
             }
-            function setCurrentAppTokens() {
-              AppsService.appKeys($ctrl.appName).then(function (response) {
-                $ctrl.tokens = response.data;
-                $log.info('Current App', response.data);
 
-                if ($ctrl.tokens.anonymous) {
-                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/functions?t=' + $base64.encode($ctrl.tokens.anonymous);
-                } else {
-                  $ctrl.launcherAppUrl = $ctrl.appConst.LAUNCHER_APP_URL + '/#/' + $ctrl.appName + '/login';
-                }
 
-              }, function (err) {
-                $log.error('Error while setting up current APP', err);
-              });
+            /**
+             * @function
+             * @name addNewProvider
+             * @description trgger event to launch addNewProvider
+             * @see newProvider Component
+             */
+            function addNewProvider() {
+              $rootScope.$emit('EVENT:ADD_PROVIDER');
             }
 
             //end of controller

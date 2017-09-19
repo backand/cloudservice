@@ -6,8 +6,8 @@
  * @description
  * manage lambda functions by provided credentials
  *
-  * @author Mohan Singh ( gmail::mslogicmaster@gmail.com, skype :: mohan.singh42 )
- */
+* @author Mohan Singh ( gmail::mslogicmaster@gmail.com, skype :: mohan.singh42 )
+*/
 (function () {
   'use strict';
   angular
@@ -16,9 +16,8 @@
       return {
         restrict: 'E',
         scope: {
-          onLoad: '&', // optional
-          activeConnection: '=', //required
-          launcherAppUrl: '=' //required
+          launcherAppUrl: '=', //required,
+          provider: '=' //required
         },
         templateUrl: 'views/external_functions/lambda_functions/lambda_functions.html',
         controllerAs: '$ctrl',
@@ -32,12 +31,8 @@
           '$scope',
           'AnalyticsService',
           function ($log, usSpinnerService, CloudService, NotificationService, $rootScope, $scope, AnalyticsService) {
-            $log.info('Component awsConnection has initialized');
             var $ctrl = this;
-            /**
-            * call initialization to initialize controllers properties 
-            */
-            initialization();
+            $log.warn('Component awsConnection has initialized', $ctrl.lambdaFunctions);
 
             /**
              *
@@ -49,47 +44,24 @@
              */
             $ctrl.hasFunctions = false;
             /**
+            * call initialization to initialize controllers properties 
+            */
+            initialization();
+            /**
              * @name initialization
              * @description
              * function to initialize properties and call function at very first.
              */
             function initialization() {
-              $log.warn('Active connection - ', $ctrl.activeConnection);
-            }
-
-            /**
-             * @name getLambdaFunctions
-             * @description  function to get lambda function by app
-             * 
-             * @returns void
-             */
-            function getLambdaFunctions() {
-              usSpinnerService.spin('loading');
-              CloudService
-                .getLambdaFunctions()
-                .then(function (response) {
-                  $log.info(response.data);
-                  $ctrl.lambdaFunctions = response.data.data[0] ? response.data.data[0].functions : [];
-                  //Expand collapsible if lambdaFunctions > 0
-                  $ctrl.hasFunctions = _.keys($ctrl.lambdaFunctions).length > 0;
-                  extractAllFunctions(response);
-                  //invoke callback
-                  if (typeof $ctrl.onLoad === 'function') {
-                    $ctrl.onLoad({
-                      functions: angular.copy($ctrl.lambdaFunctions),
-                      hasFunctions: $ctrl.hasFunctions
-                    });
-                  }
-
-                  $log.warn('Active connection - ', $ctrl.activeConnection);
-                  $log.info('Lambda functions loaded', response);
-                  usSpinnerService.stop('loading');
-                }).catch(function (error) {
-                  $ctrl.lambdaFunctions = {};
-                  $ctrl.hasFunctions = false;
-                  $log.error('Error while fetching Lambda functions', error);
-                  usSpinnerService.stop('loading');
-                });
+              $ctrl.lambdaFunctions = $ctrl.provider.functions;
+              if (_.keys($ctrl.lambdaFunctions).length > 0) {
+                //Expand collapsible if lambdaFunctions > 0
+                $ctrl.hasFunctions = _.keys($ctrl.lambdaFunctions).length > 0;
+                extractAllFunctions($ctrl.lambdaFunctions);
+              } else {
+                $ctrl.lambdaFunctions = {};
+                $ctrl.hasFunctions = false;
+              }
             }
             /**
              * @name extractAllFunctions
@@ -97,8 +69,8 @@
              * sets all functions in $ctrl.allFunctions
              * @param {object} response 
              */
-            function extractAllFunctions(response) {
-              var functions = response.data.data[0] ? response.data.data[0].functions : [];
+            function extractAllFunctions(fns) {
+              var functions = fns || [];
               var flatA = _.flattenDeep(_.map(functions, function (a) {
                 return a;
               }));
@@ -124,9 +96,9 @@
              * @returns void
              */
             function updateFunction(func, flag, metaId) {
-              $log.info('Selected function - ', func, $ctrl.activeConnection);
+              $log.info('Selected function - ', func, $ctrl.provider);
               usSpinnerService.spin('loading');
-              var cloudId = metaId || _.get($ctrl.activeConnection, '__metadata.id');
+              var cloudId = metaId || _.get($ctrl.provider, 'id');
               var requestBody;
               if (_.isArray(func)) {
                 requestBody = _.map(func, function (f) {
@@ -134,7 +106,8 @@
                     name: f.FunctionName,
                     cloudId: cloudId,
                     select: flag,
-                    arn: f.FunctionArn
+                    arn: f.FunctionArn,
+                    lambdaProperties: angular.copy(f)
                   }
                 })
               } else {
@@ -142,22 +115,24 @@
                   name: func.FunctionName,
                   cloudId: cloudId,
                   select: flag,
-                  arn: func.FunctionArn
+                  arn: func.FunctionArn,
+                  lambdaProperties: angular.copy(func)
                 }];
               }
+
               CloudService
                 .updateFunction(requestBody)
                 .then(function (response) {
                   updateFunctionIds(func, flag, response.data);
                   $log.info('Lambda function is selected with -', response);
                   usSpinnerService.stop('loading');
-                  NotificationService.add('success', 'Function is ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
+                  NotificationService.add('success', 'Function was ' + (flag ? 'linked' : 'Unlinked') + ' successfully');
                   if (flag) {
                     AnalyticsService.track('LambdaFunctionSelected', { function: func.FunctionName });
                   }
                   $rootScope.$broadcast('fetchTables');
                 }).catch(function (error) {
-                  usSpinnerService.spin('loading');
+                  usSpinnerService.stop('loading');
                   $log.error('Error while updating function\'s status', error);
                 });
             }

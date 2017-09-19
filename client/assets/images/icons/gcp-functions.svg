@@ -1,0 +1,35 @@
+<svg width="164" height="170" viewBox="0 0 164 170" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>cloud-fiuntions</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(128 96)">
+<g id="cloud-fiuntions">
+<g id="Polygon">
+<use xlink:href="#path0_fill" transform="matrix(0.866025 0.5 -0.5 0.866025 -70.2487 -101.497)" fill="#4486F9"/>
+</g>
+<g id="Intersect">
+<use xlink:href="#path1_fill" transform="translate(-71.5 -33)" fill="#407CE0"/>
+</g>
+<g id="Vector 3">
+<use xlink:href="#path2_stroke" transform="translate(-72 -34)" fill="#FFFFFF"/>
+</g>
+<g id="Vector 3">
+<use xlink:href="#path2_stroke" transform="matrix(-1 0 0 1 -20 -34)" fill="#FFFFFF"/>
+</g>
+<g id="Ellipse">
+<use xlink:href="#path3_fill" transform="translate(-61 -15)" fill="#FFFFFF"/>
+</g>
+<g id="Ellipse">
+<use xlink:href="#path3_fill" transform="translate(-50 -15)" fill="#FFFFFF"/>
+</g>
+<g id="Ellipse">
+<use xlink:href="#path3_fill" transform="translate(-39 -15)" fill="#FFFFFF"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 59.7487 3.75278C 63.7709 1.43055 68.7265 1.43055 72.7487 3.75278L 117.122 29.3716C 121.144 31.6938 123.622 35.9855 123.622 40.6299L 123.622 91.8675C 123.622 96.512 121.144 100.804 117.122 103.126L 72.7487 128.745C 68.7265 131.067 63.7709 131.067 59.7487 128.745L 15.3756 103.126C 11.3534 100.804 8.87564 96.512 8.87564 91.8675L 8.87564 40.6299C 8.87564 35.9855 11.3534 31.6938 15.3756 29.3716L 59.7487 3.75278Z"/>
+<path id="path1_fill" fill-rule="evenodd" d="M 84.1289 35.1979L 62.3771 72.8731C 60.0549 76.8953 55.7633 79.3731 51.1188 79.3731L 37.2272 79.3731L 5 47.5L 0 37.5L 0 8.5L 9.5 0L 33 23.5L 39 19.5L 47.5 28L 49 11L 51.5 2.5L 83 34.5L 84.1289 35.1979Z"/>
+<path id="path2_stroke" d="M 0 9L -2.82843 6.17157L -4 7.34315L -4 9L 0 9ZM 0 37L -4 37L -4 38.6569L -2.82843 39.8284L 0 37ZM 6.17157 -2.82843L -2.82843 6.17157L 2.82843 11.8284L 11.8284 2.82843L 6.17157 -2.82843ZM -4 9L -4 37L 4 37L 4 9L -4 9ZM -2.82843 39.8284L 6.17157 48.8284L 11.8284 43.1716L 2.82843 34.1716L -2.82843 39.8284Z"/>
+<path id="path3_fill" d="M 8 4C 8 6.20914 6.20914 8 4 8C 1.79086 8 0 6.20914 0 4C 0 1.79086 1.79086 0 4 0C 6.20914 0 8 1.79086 8 4Z"/>
+</defs>
+</svg>

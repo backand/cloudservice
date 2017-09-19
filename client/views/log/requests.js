@@ -83,7 +83,7 @@
           {name: 'Type',
             filter: {
               type: uiGridConstants.filter.SELECT,
-              selectOptions: [{value: 'object', label: 'Object'}, {value: 'query', label: 'Query'}, {value: 'action',label: 'Action'}]
+              selectOptions: [{value: 'object', label: 'Object'}, {value: 'query', label: 'Query'}, {value: 'action',label: 'Action'}, {value: 'function',label: 'Function'}]
             },
             minWidth: 100
           },

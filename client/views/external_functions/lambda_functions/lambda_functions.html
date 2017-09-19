@@ -1,21 +1,23 @@
-<p data-ng-if="$ctrl.hasFunctions">Below are the Lambda functions available in your AWS account. You can execute these functions by pressing "Execute", or import
-  them into your Backand application using the "Link" button. Imported functions can be called using the same functions endpoint
-  in the Backand API as your other custom functions, and are subject to Backand Security.</p>
-<div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There is no lambda function. </div>
-<p><a data-ng-show="$ctrl.hasFunctions" data-ng-href="{{$ctrl.launcherAppUrl}}" target="_blank" class="btn btn-success m-b-md">View Launcher App</a></p>
-<div class="slimScrollDiv panel-body panel-body-custom ui-tab-container ui-tab-vertical lambda-functions-tab" data-ng-show="$ctrl.hasFunctions">
+<div class="p-a">
+  <p data-ng-if="$ctrl.hasFunctions">Below are the Lambda functions available in your AWS account. You can execute these functions by pressing "Execute", or
+    import them into your Backand application using the "Link" button. Imported functions can be called using the same functions
+    endpoint in the Backand API as your other custom functions, and are subject to Backand Security.</p>
+  <div class="alert alert-info" role="alert" data-ng-show="!$ctrl.hasFunctions"> There is no lambda function. </div>
+</div>
+
+<div class="slimScrollDiv ui-tab-container ui-tab-vertical lambda-functions-tab" data-ng-show="$ctrl.hasFunctions">
   <tabset class="ui-tab">
     <tab heading="All Functions">
       <div style="min-height: 250px" class="clearfix">
         <div class="alert alert-info" role="alert" data-ng-show="$ctrl.allFunctions.length ===0"> There is no lambda function. </div>
-        <ul class="list-group">
+        <ul class="list-group m-b-0">
           <li class="list-group-item" data-ng-repeat="function in $ctrl.allFunctions track by $index">
             <div class="meta-text">
               <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
               <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
             </div>
             <div class="meta-actions">
-              <button type="button" class="btn" data-ng-class="{'btn-warning' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
+              <button type="button" class="btn" data-ng-class="{'btn-backand' : !function.selected, 'btn-backand-outline' : function.selected }" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
               <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success"
                 data-ng-if="function.selected" target="_blank">Test</a>
             </div>
@@ -26,14 +28,14 @@
     <tab data-ng-repeat="(key,zone) in $ctrl.lambdaFunctions track by $index" heading="{{key}}">
       <div style="min-height: 250px" class="clearfix">
         <div class="alert alert-info" role="alert" data-ng-show="zone.length ===0"> There is no lambda function. </div>
-        <ul class="list-group">
+        <ul class="list-group m-b-0">
           <li class="list-group-item" data-ng-repeat="function in zone track by $index">
             <div class="meta-text">
               <span data-ng-bind="function.FunctionName" data-ng-show="!function.selected"></span>
               <a data-ng-show="function.selected" data-ui-sref="functions.function({functionId : function.functionId})" data-ng-bind="function.FunctionName"></a>
             </div>
             <div class="meta-actions">
-              <button type="button" class="btn" data-ng-class="{'btn-warning' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
+              <button type="button" class="btn" data-ng-class="{'btn-backand' : !function.selected}" data-ng-click="$ctrl.updateFunction(function, !function.selected)">{{function.selected ? 'Unlink' : 'Link'}}</button>
               <a data-ui-sref="functions.function({functionId : function.functionId, test : true})" class="btn btn-primary btn-success"
                 data-ng-if="function.selected" target="_blank">Test</a>
             </div>

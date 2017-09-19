@@ -26,7 +26,7 @@
          * Exposed bindable methods
          */
         self.demoApp = demoApp;
-        self.awsCredentials = awsCredentials;
+        self.cloudProvider = cloudProvider;
 
         /**
          * Exposed bindable properties
@@ -54,24 +54,33 @@
         }
 
         /**
-       * @name awsCredentials
-       * @description show demo app modal
+       * @name cloudProvider
+       * @description launch modal for cloud provder
        * 
        * @param {object} options Options to be used in modal configuration
        * @returns promise
        */
-        function awsCredentials(options) {
+        function cloudProvider(options) {
           options = options || {};
+          options.resolve = options.resolve || {
+            options: function () {
+              return {
+                isNew: true
+              };
+            }
+          };
           return $modal.open({
-            templateUrl: options.templateUrl || 'common/modals/aws_modal/aws_modal.html',
+            templateUrl: options.templateUrl || 'common/modals/cloud_provider_modal/provider_modal.html',
             keyboard: false,
             size: options.size || 'lg',
-            controller: 'AwsModalController',
+            controller: 'CloudProviderModalController',
             bindToController: true,
             controllerAs: '$ctrl',
             backdrop: 'static',
-            backdropClass: 'dark'
-          }).result;
+            backdropClass: 'dark',
+            windowClass: 'modal-backand',
+            resolve: options.resolve
+          });
         }
 
         //end of service  

@@ -1,4 +1,39 @@
 .page-external-functions {
+    .page-title {
+        margin: 0;
+        padding: 0;
+    }
+    .panel {
+        border: 1px solid #bfbfbf;
+        &,
+        .panel-heading {
+            border-radius: 0;
+        }
+        .panel-body {
+            padding: 0;
+        }
+    }
+    .content-wrapper {
+        border-left: 1px solid #ccc;
+        padding: 15px 30px;
+        .txt {
+            margin-bottom: 30px;
+            h4 {
+                margin-bottom: 25px;
+            }
+            &:last-child {
+                margin-bottom: 0;
+            }
+            &:first-child {
+                h4 {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+    .nav-tabs {
+        border: 1px solid #ddd;
+    }
     .nav-tabs>li.active>a,
     .nav-tabs>li.active>a:hover,
     .nav-tabs>li.active>a:focus {
@@ -6,17 +41,6 @@
     }
     .tab-content {
         padding: 0;
-        .list-group {
-            &.list-group-with-tabs {
-                >.list-group-item {
-                    &:first-child {
-                        border-top-right-radius: 0;
-                        border-top-left-radius: 0;
-                        border-top: 0 none;
-                    }
-                }
-            }
-        }
     }
     .row {
         margin-left: -15px;
@@ -27,6 +51,90 @@
             padding: 0 0 0 15%;
             .nav-tabs {
                 width: 15%;
+            }
+        }
+    }
+    .providers-list {
+        .panel-group {
+            margin-bottom: 0;
+            .panel-collapse {
+                &.in {
+                    .panel-body {
+                        border-bottom: solid 1px #bfbfbf;
+                        .list-group {
+                            .list-group-item {
+                                &:last-child {
+                                    border-bottom: 0 none;
+                                }
+                            }
+                        }
+                    }
+                    .tab-content {
+                        border-bottom: 0 none !important;
+                        border-right: 0 none;
+                    }
+                }
+            }
+            .panel,
+            .panel-default {
+                border: 0 none;
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                .panel-heading {
+                    .provider-logo {
+                        width: 38px;
+                        height: 38px;
+                        margin: 0 15px 0 10px;
+                    }
+                    .panel-title>a {
+                        &:active,
+                        &:focus,
+                        &:hover {
+                            outline: none;
+                            text-decoration: none;
+                        }
+                        color: #000000;
+                        font-size: 15px;
+                        font-weight: bold;
+                    }
+                    border-bottom: solid 1px #bfbfbf;
+                }
+                .panel-body {
+                    border: 0 none;
+                }
+                &:first-child {
+                    .panel-heading {
+                        border-top: 0 none !important;
+                    }
+                }
+                &:last-child {
+                    .panel-heading {
+                        border-bottom: 0 none !important;
+                    }
+                }
+                .nav {
+                    &.nav-tabs {
+                        border-radius: 0;
+                        border-left: 0 none;
+                        border-right: 0 none;
+                    }
+                }
+                .tab-content {
+                    .list-group {
+                        .list-group-item {
+                            border-radius: 0;
+                            border: 0 none;
+                            margin: 0;
+                            border-bottom: solid 1px #ddd;
+                        }
+                    }
+                }
+                &:last-child {
+                    .panel-body {
+                        border-bottom: 0 none;
+                    }
+                }
             }
         }
     }
@@ -43,5 +151,93 @@
         position: absolute;
         right: 15px;
         top: 8px;
+    }
+}
+
+.box-bk-group {
+    margin: 0 auto;
+    display: table;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    >.box-bk {
+        width: 155px;
+        padding-right: 30px;
+        display: table-cell;
+        >.box-bk-footer {
+            text-align: center;
+            margin-top: 15px;
+            >h5 {
+                color: #000;
+                font-weight: bold;
+            }
+        }
+        &.disabled {
+            opacity: .4;
+            .circle {
+                cursor: default;
+                &:hover,
+                &.active {
+                    &:after {
+                        border-color: #e1e1e1 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.provider-form {
+    margin-top: 20px;
+}
+
+.circle {
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    color: #222;
+    text-align: center;
+    width: 100%;
+    &:after {
+        -webkit-transition: all .1s ease-out .1s;
+        -moz-transition: all .1s ease-out .1s;
+        -o-transition: all .1s ease-out .1s;
+        transition: all .1s ease-out .1s;
+        display: block;
+        padding-bottom: 100%;
+        width: 100%;
+        height: 0;
+        border-radius: 50%;
+        background-color: #ffffff;
+        box-shadow: 0px 11px 13px 0 #efefef;
+        border: solid 1px #e1e1e1;
+        content: "";
+    }
+    &:hover,
+    &.active {
+        &:after {
+            border-color: #f26724;
+        }
+    }
+    .circle__inner {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        .circle__wrapper {
+            display: table;
+            width: 100%;
+            height: 100%;
+            .circle__content {
+                display: table-cell;
+                padding: 1.2em;
+                vertical-align: middle;
+                >img {
+                    max-width: 100%;
+                }
+            }
+        }
     }
 }

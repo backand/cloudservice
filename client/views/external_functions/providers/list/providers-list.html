@@ -1,0 +1,27 @@
+<div class="providers-list">
+  <accordion close-others="true">
+    <accordion-group heading="{{group.title}}" ng-repeat="provider in $ctrl.providers track by $index" is-open="$ctrl.accordions[$index]">
+      <accordion-heading>
+        <div class="row-col">
+          <div class="row-row">
+            <div class="row-cell v-m">
+              <i class="fa fa-fw" ng-class="{'fa-chevron-down': $ctrl.accordions[$index], 'fa-chevron-right': !provider.open}"></i>
+              <img ng-src="assets/images/icons/{{provider.cloudVendor ? provider.cloudVendor.toLowerCase() : 'aws'}}-icon.png" class="provider-logo">{{provider.Name || provider.name}}
+              {{provider.cloudVendor}}
+            </div>
+            <div class="row-cell v-m text-right">
+              <button class="btn btn-backand-outline" type="button" data-ng-click="$ctrl.showProviderModal(provider, $event)"><i class="fa fa-pencil fa-fw"></i> Edit</button>
+              <button type="button" class="btn btn-backand-outline" data-ng-click="$ctrl.deleteProvider(provider, $event)"><i class="fa fa-trash fa-fw"></i> Remove</button>
+            </div>
+          </div>
+        </div>
+      </accordion-heading>
+      <lambda-functions launcher-app-url="$ctrl.launcherAppUrl" data-provider="provider" data-ng-if="provider.functions"></lambda-functions>
+    </accordion-group>
+  </accordion>
+  <div class="p-a" data-ng-if="$ctrl.providers && $ctrl.providers.length ===0">
+    <div class="alert alert-info">
+      <p>No provider</p>
+    </div>
+  </div>
+</div>

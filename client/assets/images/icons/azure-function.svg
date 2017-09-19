@@ -1,0 +1,25 @@
+<svg width="223" height="206" viewBox="0 0 223 206" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>azure-function</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(280 310)">
+<g id="azure-function">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="translate(-218.5 -310)" fill="#FCD116"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path1_stroke" transform="translate(-274 -267)" fill="#3999C6"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path1_stroke" transform="matrix(-1 0 0 1 -63 -267)" fill="#3999C6"/>
+</g>
+<g id="Intersect">
+<use xlink:href="#path2_fill" transform="translate(-207.492 -310)" fill="#FCBC0F"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 36.5 0L 104 0L 58.5 70.5L 105.5 70.5L 10 206L 44.5 103.5L 0 103.5L 36.5 0Z"/>
+<path id="path1_stroke" d="M 62.2426 4.24264C 64.5858 1.89949 64.5858 -1.89949 62.2426 -4.24264C 59.8995 -6.58579 56.1005 -6.58579 53.7574 -4.24264L 62.2426 4.24264ZM 0 58L -4.24264 53.7574C -6.57164 56.0864 -6.58775 59.8574 -4.27875 62.2062L 0 58ZM 53.7213 121.206C 56.0443 123.569 59.8431 123.602 62.2062 121.279C 64.5693 118.956 64.6018 115.157 62.2787 112.794L 53.7213 121.206ZM 53.7574 -4.24264L -4.24264 53.7574L 4.24264 62.2426L 62.2426 4.24264L 53.7574 -4.24264ZM -4.27875 62.2062L 53.7213 121.206L 62.2787 112.794L 4.27875 53.7938L -4.27875 62.2062Z"/>
+<path id="path2_fill" fill-rule="evenodd" d="M 57.4916 0.5L 20.9916 85.5L 64.4916 86.5L 0 204.569L 94.4916 70.5L 47.4916 70.5L 92.9916 0L 57.6583 0L 57.4916 0.5Z"/>
+</defs>
+</svg>

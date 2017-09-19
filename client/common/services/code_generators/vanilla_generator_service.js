@@ -80,7 +80,7 @@
       },
       object: function(splitUrl, httpObject) {
         var param = splitUrl.pop();
-        return param.slice(0, param.indexOf('?'));
+        return param.indexOf('?') >= 0 ? param.slice(0, param.indexOf('?')) : param;
       },
       action: function(splitUrl, httpObject) {
         var param = splitUrl.pop();
@@ -88,7 +88,7 @@
       },
       id: function(splitUrl, httpObject) {
         var param = splitUrl.pop();
-        return param.slice(0, param.indexOf('?'));
+        return param.indexOf('?') >= 0 ? param.slice(0, param.indexOf('?')) : param;
       },
       data: function(splitUrl, httpObject) {
         return httpObject.data;

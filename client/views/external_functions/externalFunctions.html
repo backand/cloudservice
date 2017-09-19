@@ -1,134 +1,16 @@
+<div us-spinner="" spinner-key="loading" spinner-start-active="true"></div>
 <section class="page-form-ele page page-external-functions">
-  <section class="panel panel-default">
-    <div class="panel-heading p-l-0">
-      <strong> External Functions </strong>
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <h2 class="page-title"> External Functions </h2>
     </div>
-    <div class="panel-body p-a-0 ui-tab-container ui-tab-horizontal">
-      <div us-spinner="" spinner-key="loading" spinner-start-active></div>
-      <tabset active="$ctrl.activeTab">
-        <!-- /External Functions -->
-        <tab index="0" data-select="$ctrl.activeTab = 0">
-          <tab-heading>
-            External Functions
-          </tab-heading>
-
-          <div class="list-group list-group-with-tabs m-b-0  p-a-0" style="border:0 none;">
-            <!-- /guideline -->
-            <div class="list-group-item">
-              <div class="list-group-item-header" data-ng-click="$ctrl.sections.guideline = !$ctrl.sections.guideline">
-                <h4 class="list-group-item-heading">How it works</h4>
-                <div class="list-group-item-toolbar">
-                  <span tooltip="{{$ctrl.sections.guideline ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
-                    <i  ng-class="{'fa fa-minus': !$ctrl.sections.guideline, 'fa fa-plus': $ctrl.sections.guideline}"></i>
-                  </span>
-                </div>
-
-              </div>
-              <div class="list-group-item-body" collapse="$ctrl.sections.guideline">
-                Once you provide AWS credentials, Lambda Launcher will retrieve your Lambda functions under External
-                Functions.<br/><br/>
-                External Functions are AWS Lambda functions stored in your account. By linking your Lambda functions, you'll be able to invoke them from within your application's security infrastructure.<br/>This allows you to secure your functions using tools like Active Directory <ba-help-link key="LambdaLauncher"></ba-help-link>
-              </div>
-            </div>
-            <!-- ./guideline -->
-            <!-- /aws connection -->
-            <div class="list-group-item">
-              <div class="list-group-item-header" data-ng-click="$ctrl.sections.awsConnection = !$ctrl.sections.awsConnection">
-                <h4 class="list-group-item-heading">Connection Details</h4>
-                <div class="list-group-item-toolbar">
-                  <span tooltip="{{$ctrl.sections.awsConnection ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
-                    <i  ng-class="{'fa fa-minus': !$ctrl.sections.awsConnection, 'fa fa-plus': $ctrl.sections.awsConnection}"></i>
-                  </span>
-                </div>
-              </div>
-              <div class="list-group-item-body" collapse="$ctrl.sections.awsConnection">
-                <div class="row">
-                  <div class="col-md-5">
-                    <aws-connection data-on-save="$ctrl.onSaveConnection(connection, action)" data-on-load-connection="$ctrl.onLoadConnection(connection)"></aws-connection>
-                  </div>
-                  <div class="col-md-5 col-md-offset-2">
-                    <div class="social-provider-container">
-                      <div class="social-provider-help">
-                        <div class="social-provider-help-title ng-binding">Configuring AWS Lambda Security</div>
-                        To get started, you'll need to create an IAM Policy and AWS User that can connect
-                        with your AWS account
-                        <ba-help-link key="LambdaLauncher"></ba-help-link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- ./aws connection -->
-
-            <!-- /lambda functions -->
-            <div class="list-group-item">
-              <div class="list-group-item-header" data-ng-click="$ctrl.sections.lambdaFunctions = !$ctrl.sections.lambdaFunctions">
-                <h4 class="list-group-item-heading">Lambda Functions
-                  <ba-help-link with-text="true"></ba-help-link>
-                </h4>
-                <div class="list-group-item-toolbar">
-                  <span d tooltip="{{$ctrl.sections.lambdaFunctions ? 'Show' : 'Hide'}}" tooltip-placement="top" tooltip-trigger="mouseenter">
-                    <i  ng-class="{'fa fa-minus': !$ctrl.sections.lambdaFunctions, 'fa fa-plus': $ctrl.sections.lambdaFunctions}"></i>
-                  </span>
-                </div>
-              </div>
-              <div class="list-group-item-body" collapse="$ctrl.sections.lambdaFunctions">
-                <lambda-functions data-active-connection="$ctrl.activeConnection" data-on-load="$ctrl.onLoadLambdaFunctions(functions, hasFunctions)" launcher-app-url="$ctrl.launcherAppUrl"></lambda-functions>
-              </div>
-            </div>
-            <!-- ./lambda functions -->
-          </div>
-        </tab>
-        <!-- ./External Functions -->
-        <!-- /Lambda Launcher -->
-        <tab index="1" data-select="$ctrl.activeTab = 1">
-          <tab-heading>
-            Lambda Launcher
-          </tab-heading>
-          <div class="list-group list-group-with-tabs m-b-0">
-            <div class="list-group-item" style="border:0 none;">
-              <div class="list-group-item-body p-t-0">
-                <!-- /static content, @todo will be removed when invite is ready -->
-                <div class="row">
-                  <div class="col-md-12">
-                    <h4>How it Works</h4>
-                    <p>The Lambda Launcher gives you an easy-to-use interface for executing AWS Lambda functions that have been
-                      linked to your application. Invite users to register for the Launcher below, then adjust the security
-                      settings in <a ui-sref="security.auth"> your application's security settings.</a> When a user logs
-                      in, they will be able to execute the Lambda functions to which they have access by pressing the "Execute"
-                      button.</p>
-                    <p>
-                      <a data-ng-href="{{$ctrl.launcherAppUrl}}" target="_blank" class="btn btn-success m-b-md">Open</a></p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-xs-12 col-sm-8 col-lg-8">
-                    <div class="input-group">
-                      <input type="text" class="form-control" id="launcherapp" ng-readonly="true" ng-model="$ctrl.launcherAppUrl">
-                      <span class="input-group-btn">
-                      <button class="btn btn-default" type="button" clip-copy="$ctrl.launcherAppUrl">Copy</button>
-                    </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row m-t-md" data-ng-if="$ctrl.isAnonymous">
-                  <div class="col-xs-12 col-sm-8 col-lg-8">
-                    <div class="alert alert-warning">
-                      Anonymous access is enabled allowing any user with above URL to run your linked Lambda. You can turn it off in the Security <a data-ui-sref="security.auth({appName: $ctrl.appName})">Configuration page</a> 
-                    </div>
-                  </div>
-                </div>
-                <!-- ./static content, @todo will be removed when invite is ready -->
-                <!-- users data-options="$ctrl.options" data-ng-if="$ctrl.activeTab"></users -->
-              </div>
-            </div>
-          </div>
-        </tab>
-        <!-- ./Lambda Launcher -->
-      </tabset>
+    <div class="col-md-4 text-right">
+      <button class="pull-right btn btn-backand" data-ng-click="$ctrl.addNewProvider()"> Add Provider's Account</button>
+    </div>
+  </div>
+  <section class="panel m-t-md">
+    <div class="panel-body">
+      <providers-list launcher-app-url="$ctrl.launcherAppUrl"></providers-list>
     </div>
   </section>
 </section>

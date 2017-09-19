@@ -14,21 +14,22 @@
 
   angular
     .module('common.services')
-    .service('CloudService', ['$http', 'CONSTS', 'AppsService','$q', function ($http, CONSTS, AppsService, $q) {
+    .service('CloudService', ['$http', 'CONSTS', 'AppsService', '$q', function ($http, CONSTS, AppsService, $q) {
       var self = this;
 
       /**
        * Exposed bindable methods
        */
-      self.saveAwsConnection = saveAwsConnection;
-      self.getAwsConnection = getAwsConnection;
+      self.saveProvider = saveProvider;
+      self.getProviders = getProviders;
+      self.getProvider = getProvider;
       self.getLambdaFunctions = getLambdaFunctions;
-      self.loadAwsRegion = loadAwsRegion;
+      self.loadRegion = loadRegion;
       self.updateFunction = updateFunction;
-      self.deleteAwsConnection = deleteAwsConnection;
+      self.deleteProvider = deleteProvider;
 
-      function loadAwsRegion() {
-        var awsRegions = {
+      function loadRegion() {
+        var regions = {
           "data": [
             {
               "Code": "us-east-1",
@@ -90,17 +91,17 @@
         };
 
         var defer = $q.defer();
-        defer.resolve(awsRegions);
+        defer.resolve(regions);
         return defer.promise;
       }
       /**
-       * @name getAwsConnection
-       * @description get connection details by user
+       * @name getProviders
+       * @description get list of providers
        * 
        * @param {object} params Addtional Query parameters
        * @returns promise
        */
-      function getAwsConnection(params) {
+      function getProviders(params) {
         params = params || {};
         return $http({
           method: 'GET',
@@ -111,16 +112,16 @@
       }
 
       /**
-       * @name saveAwsConnection
-       * @description save aws connection credentials
+       * @name saveProvider
+       * @description save provider connection credentials
        * 
        * @param {object} params Addtional Query parameters
        * @returns promise
        */
-      function saveAwsConnection(data, params) {
+      function saveProvider(data, params) {
         var id;
         params = params || {};
-        id = data.id || '';
+        id = (data.Id || data.id) || '';
         return $http({
           method: id ? 'PUT' : 'POST',
           url: CONSTS.appUrl + '/1/objects/cloudServiceProvider' + (id ? '/' + id : ''),
@@ -130,14 +131,33 @@
         });
       }
 
-       /**
-       * @name deleteAwsConnection
-       * @description delete aws connect
+      /**
+       * @name getProvider
+       * @description get provider connection credentials
        * 
-       * @param {object} id connection ID
+       * @param {object} params Addtional Query parameters
        * @returns promise
        */
-      function deleteAwsConnection(id) {
+      function getProvider(params) {
+        var id;
+        params = params || {};
+        id = params.id || '';
+        return $http({
+          method: 'GET',
+          url: CONSTS.appUrl + '/1/objects/cloudServiceProvider' + (id ? '/' + id : ''),
+          params: params,
+          headers: setHeaders()
+        });
+      }
+
+      /**
+      * @name deleteProvider
+      * @description delete provider connection
+      * 
+      * @param {object} id connection ID
+      * @returns promise
+      */
+      function deleteProvider(id) {
         return $http({
           method: 'DELETE',
           url: CONSTS.appUrl + '/1/objects/cloudServiceProvider/' + id,
