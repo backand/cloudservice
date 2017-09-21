@@ -20,7 +20,7 @@
 <form name="$ctrl.cloudProviderForm" class="provider-form" novalidate data-ng-submit="$ctrl.saveProvider()">
   <div us-spinner="" spinner-key="connectionView" spinner-start-active></div>
   <render-partial data-view="{{$ctrl.selectedProvider.key}}" data-postfix="-provider" data-path="views/external_functions/providers/new/partials/"></render-partial>
-  <json-parser></json-parser>
+  <json-parser data-provider="$ctrl.selectedProvider" data-on-json-parsed="$ctrl.updateFormFields(credentials)" data-ng-if=" ( ($ctrl.selectedProvider.key ==='aws' &&$ctrl.selectedProvider.awsType !== 'CROSS_ACCOUNT_ACCESS') ||  $ctrl.selectedProvider.key !=='aws' ) && $ctrl.isNew"></json-parser>
   <div class="row-col">
     <div class="row-row">
       <div class="row-cell v-m text-left">

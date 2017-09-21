@@ -50,6 +50,7 @@
             $ctrl.deleteProvider = deleteProvider;
             $ctrl.selectProvider = selectProvider;
             $ctrl.selectAwsType = selectAwsType;
+            $ctrl.updateFormFields = updateFormFields;
             /**
              * public properties
              */
@@ -206,8 +207,8 @@
               if (typeof $ctrl.modalInstance.close === 'function' && !_.isEmpty(response)) {
                 $ctrl.modalInstance.close({ connection: response });
               }
-              $rootScope.$emit('EVENT:RELOAD_PROVIDER',{
-                  provider : _.get(response, 'data.__metadata.id')
+              $rootScope.$emit('EVENT:RELOAD_PROVIDER', {
+                provider: _.get(response, 'data.__metadata.id')
               });
               usSpinnerService.stop('connectionView');
             }
@@ -270,6 +271,18 @@
               $rootScope.$emit('EVENT:DELETE_PROVIDER', {
                 provider: $ctrl.cloudProvider
               });
+            }
+            /**
+             * @description 
+             * @param {any} credentials 
+             */
+            function updateFormFields(credentials) {
+              $log.info('Component newProvider - credentials from json -', credentials);
+              for (var key in credentials) {
+                if (credentials.hasOwnProperty(key)) {
+                  $ctrl.cloudProvider[key] = credentials[key];
+                }
+              }
             }
 
             //end of controller

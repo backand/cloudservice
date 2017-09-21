@@ -892,3 +892,40 @@ ba-help-link {
 .no-shadow {
     box-shadow: none !important;
 }
+
+.json-parser {
+    width: 100%;
+    display: block;
+    margin: 15px 0;
+    .browse-btn-holder {
+        text-align: right;
+        .btn {
+            &:active,
+            &:focus {
+                outline: none;
+            }
+        }
+        margin-bottom: 8px;
+    }
+    .form-holder {
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        color: #000;
+        padding: 15px;
+        margin-bottom: 15px;
+        .json-content,
+        .drop-box {
+            background-color: #ffffff !important;
+        }
+        .drop-box{
+          cursor: pointer;
+        }
+        .json-content {
+            height: 100px;
+        }
+        .or {
+            margin: 0 0 15px 0;
+        }
+    }
+}
