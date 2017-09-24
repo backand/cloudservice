@@ -168,10 +168,6 @@
                 request.EncryptedPrivateKey = escape($ctrl.cloudProvider.EncryptedPrivateKey);
               }
 
-              if (!request.id) {
-                delete request.id;
-                delete request.Id;
-              }
               $log.warn('Provider Request Payload - ', request);
               CloudService
                 .saveProvider(request)

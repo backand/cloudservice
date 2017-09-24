@@ -23,7 +23,7 @@
             Name: 'Aws',
             CloudVendor: 'AWS',
             EncryptedSecretAccessKey: '',
-            Id: '',
+            id: '',
             description: ''
           },
           ibm: {
@@ -32,13 +32,13 @@
             Name: 'Ibm',
             CloudVendor: 'IBM',
             EncryptedSecretAccessKey: '',
-            Id: ''
+            id: ''
           },
           gcp: {
             AwsRegion: [],
             Name: 'GCP',
             CloudVendor: 'GCP',
-            Id: '',
+            id: '',
             EncryptedPrivateKey: '',
             ClientEmail: '',
             ProjectName: ''
@@ -52,7 +52,7 @@
             tenant: '',
             password: '',
             description: '',
-            Id: ''
+            id: ''
           }
         };
 
