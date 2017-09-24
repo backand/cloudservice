@@ -36,20 +36,16 @@
                 },
                 azure: {
                   "subscription_id": "subscriptionId",
-                  "app_id": "appId",
+                  "appId": "appId",
                   "tenant": "tenant",
-                  "password": "password",
-                  "description": "description"
+                  "password": "password"
                 },
                 aws: {
-                  "encrypted_secret_access_key": "EncryptedSecretAccessKey",
-                  "access_key_id": "AccessKeyId",
-                  "description": "description"
+                  "accessKeyId": "EncryptedSecretAccessKey",
+                  "secretAccessKey": "AccessKeyId"
                 },
                 ibm: {
-                  "encrypted_secret_access_key": "EncryptedSecretAccessKey",
-                  "access_key_id": "AccessKeyId",
-                  "description": "description"
+                  
                 }
               };
             /**
@@ -118,6 +114,8 @@
               }
               $log.info('json content- ', ob, pMap);
               $log.info('Destination map - ', dMap);
+              initialization();
+              $scope.$apply();
             }
 
             $scope.$watch(function () {
