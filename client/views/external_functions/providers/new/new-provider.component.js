@@ -146,6 +146,7 @@
                 request.id = request.__metadata.id;
               }
 
+              //support AWS cross domain access using the sane api keys
               request = ProviderService.prepareRequest($ctrl.selectedProvider.name, request);
               if ($ctrl.selectedProvider.key === 'aws' && $ctrl.selectedProvider.awsType === 'CROSS_ACCOUNT_ACCESS' && !request.id) {
                 request.EncryptedSecretAccessKey = 'bknd_' + $ctrl.tokens.general;
@@ -158,8 +159,14 @@
               if (request.password === defaultSecretKeyHas) {
                 delete request.password;
               }
+
               request.CloudVendor = $ctrl.selectedProvider.name;
               request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
+
+              //escape the GCP private key
+              if($ctrl.selectedProvider.key === 'gcp' && $ctrl.cloudProvider.EncryptedPrivateKey){
+                request.EncryptedPrivateKey = escape($ctrl.cloudProvider.EncryptedPrivateKey);
+              }
 
               if (!request.id) {
                 delete request.id;

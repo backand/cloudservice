@@ -1564,6 +1564,7 @@
       '  socket - Send realtime database communication\n' +
       '  files - file handler, performs upload and delete of files\n' +
       '  request - the current http request\n' +
+      '  backand - lite version of Backands SDK\n' +
       '\*/\n' +
       '\'use strict\';\n' +
       'function backandCallback(userInput, dbRow, parameters, userProfile) {',

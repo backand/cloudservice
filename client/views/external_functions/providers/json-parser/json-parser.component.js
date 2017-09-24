@@ -41,8 +41,8 @@
                   "password": "password"
                 },
                 aws: {
-                  "accessKeyId": "EncryptedSecretAccessKey",
-                  "secretAccessKey": "AccessKeyId"
+                  "secretAccessKey": "EncryptedSecretAccessKey",
+                  "accessKeyId": "AccessKeyId"
                 },
                 ibm: {
                   
