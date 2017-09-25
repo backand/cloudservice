@@ -7,9 +7,8 @@
       </a>
       <ul class="apps-list pre-scrollable">
         <li ng-repeat="app in nav.apps.list" ng-click="nav.goToApp(app.Name)">
-            <span>{{app.Name}}</span>
-          <div us-spinner="{color: 'black'}" spinner-key="loading-{{ ::app.Name}}" spinner-start-active
-               style="position:relative; left:50px;"></div>
+          <span>{{app.Name}}</span>
+          <div us-spinner="{color: 'black'}" spinner-key="loading-{{ ::app.Name}}" spinner-start-active style="position:relative; left:50px;"></div>
         </li>
       </ul>
     </li>
@@ -25,8 +24,7 @@
         <span style="padding-left: 18px;">Team</span>
       </a>
     </li>
-    <li ng-class="{active: nav.state == 'hosting.hosting_tree'}"
-        class="open-structure">
+    <li ng-class="{active: nav.state == 'hosting.hosting_tree'}" class="open-structure">
       <a href="">
         <i class="fontello-icon-hosting front-icons"></i>
         <span>Hosting</span>
@@ -41,17 +39,35 @@
           </a>
         </li>
         <li ng-class="{active: nav.state == 'hosting.hosting_tree', disabled: nav.DatabaseStatus != 1}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'hosting.hosting_tree')" href="">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'hosting.hosting_tree')" href="">
             <i class="ba-icon-icon-hosting"></i>
             <span>Hosting Files</span>
           </a>
         </li>
+        <!-- /storage nav -->
+        <!-- ng-class="{open: nav.$state.includes('hosting.storage')}" -->
         <li ng-class="{active: nav.state == 'hosting.files_tree'}">
           <a ng-click="nav.goTo($event, 'hosting.files_tree')">
-            <i class="fontello-icon-storage front-icons"></i>
-            <span>Storage</span>
-          </a>
+              <i class="fontello-icon-storage front-icons"></i>
+              <span>Storage</span>
+            </a>
+          <!-- div class="menu-border"></div>
+          <ul>
+            <li ng-class="{active: nav.state == 'hosting.files_tree'}">
+              <a ng-click="nav.goTo($event, 'hosting.files_tree')">
+                  <i class="fa fa-database" aria-hidden="true"></i>
+                    <span>Back& Storage</span>
+                  </a>
+            </li>
+            <li ng-class="{active: nav.state == 'app.billingupgrade'}">
+              <a data-ng-href="">
+                  <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    <span>External Storage</span>
+                  </a>
+            </li>
+          </ul -->
         </li>
+        <!-- ./storage nav -->
       </ul>
     </li>
     <li ng-class="{active: nav.state == 'app.configuration'}">

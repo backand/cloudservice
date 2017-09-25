@@ -19,7 +19,6 @@
         }
     }
     li {
-        height: 56px;
         a {
             //The importants are there to override the nav classes in place, this is for the new UI
             padding: 0 !important;
@@ -394,7 +393,6 @@
 }
 
 .new-function-selection {
-    height: 45px;
     span {
         font-weight: normal;
     }
