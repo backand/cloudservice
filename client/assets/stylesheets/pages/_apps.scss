@@ -64,7 +64,6 @@
         a {
             display: inline-table !important;
             span {
-                padding-left: 20px !important;
                 font-size: 13px;
                 line-height: 3;
             }
@@ -206,11 +205,10 @@
                             padding: 0 !important;
                         }
                     }
-
-                    &.crop{
-                      >span{
-                        padding-left: 22px !important;
-                      }
+                    &.crop {
+                        >span {
+                            padding-left: 22px !important;
+                        }
                     }
                 }
             }
