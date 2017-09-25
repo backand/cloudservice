@@ -1,0 +1,18 @@
+<div class="json-parser">
+  <div class="text-right browse-btn-holder"><button class="btn btn-link" type="button" data-ng-click="$ctrl.showForm = !$ctrl.showForm">Copy settings</button></div>
+  <div data-ng-if="$ctrl.showForm" class="form-holder">
+    <form>
+      <div class="form-group">
+        <textarea name="json_content" id="json-content" class="form-control json-content" data-ng-model="$ctrl.jsonContent" placeholder="Enter json content"
+          ng-model-options="{debounce: 400}" ng-change="$ctrl.extractProviderInfo($ctrl.jsonContent)"></textarea>
+      </div>
+      <p class="text-center or">OR</p>
+      <div class="form-group text-center">
+        <div ngf-drop="$ctrl.onfileSelect($files)" ngf-select="$ctrl.onfileSelect($files)" ng-model="$ctrl.file" class="drop-box"
+          ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false" ngf-pattern="'application/json'" ngf-run-all-validations="true">
+          Drop files here or click to browse
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

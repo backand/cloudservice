@@ -1,81 +1,83 @@
 .database-query-section {
-
-  .database-query-panel {
-    & > .row {
-      max-width: 100%;
-      margin: 0 auto;
-    }
-    .left-col {
-      width: 65%;
-      padding-right: 3%;
-      padding-left: 2%;
-      border-right: 1px solid #ccc;
-      float: left;
-      @media screen and (max-width: 900px) {
-        width: 100%;
-        padding: 0;
-        clear: both;
-        border-right: none;
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-      }
-    }
-    .right-col {
-      width: 35%;
-      padding-left: 3%;
-      float: left;
-      .request-title {
-        padding-top: 10px;
-        float: right;
-      }
-
-      @media only screen and (min-width: 1449px) {
-        .lang-table {
-          max-width: none !important;
-          width: 64%;
-          float: right;
-          margin-bottom: 40px;
-          margin-left: 9px;
+    .database-query-panel {
+        &>.row {
+            max-width: 100%;
+            margin: 0 auto;
         }
-        .lang-dropdown {
-          display: flex;
-          width: 100%;
-          label {
-            padding-right: 11.5px;
-            padding-top: 15px;
-            width: 33%;
+        .left-col {
+            width: 65%;
+            padding-right: 3%;
+            padding-left: 2%;
+            border-right: 1px solid #ccc;
             float: left;
-          }
+            @media screen and (max-width: 900px) {
+                width: 100%;
+                padding: 0;
+                clear: both;
+                border-right: none;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
         }
-      }
+        .right-col {
+            width: 35%;
+            padding-left: 3%;
+            float: left;
+            .request-title {
+                padding-top: 10px;
+                float: right;
+            }
+            @media only screen and (min-width: 1449px) {
+                .lang-table {
+                    max-width: none !important;
+                    width: 64%;
+                    float: right;
+                    margin-bottom: 40px;
+                    margin-left: 9px;
+                }
+                .lang-dropdown {
+                    display: flex;
+                    width: 100%;
+                    label {
+                        padding-right: 11.5px;
+                        padding-top: 15px;
+                        width: 33%;
+                        float: left;
+                    }
+                }
+            }
+        }
     }
-  }
-  .save-buttons{
-    display:flex;
-  }
-  @media screen and (max-width: 900px) {
-    width: 100%;
-    clear: both;
-    padding: 0;
-    padding-bottom: 20px;
-  }
+    .save-buttons {
+        display: flex;
+    }
+    @media screen and (max-width: 900px) {
+        width: 100%;
+        clear: both;
+        padding: 0;
+        padding-bottom: 20px;
+    }
 }
 
 .not-allowed .ace_scroller {
-  cursor: not-allowed !important;
+    cursor: not-allowed !important;
 }
 
 .db-query-anchor {
-  margin: 14px;
-
-  span {
-    vertical-align: middle;
-  }
+    margin: 14px;
+    span {
+        vertical-align: middle;
+    }
 }
 
-
-
-
-
-
+.select-params {
+    ul {
+        >li {
+            padding: 5px;
+            &:hover {
+                background: #ececec;
+            }
+        }
+    }
+}
