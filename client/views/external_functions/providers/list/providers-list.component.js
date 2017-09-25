@@ -58,6 +58,7 @@
              * public properties
              */
             $ctrl.accordions = [];
+            $ctrl._ = _;
             /**
              * @name initialization
              * @description

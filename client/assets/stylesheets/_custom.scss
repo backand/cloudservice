@@ -849,10 +849,6 @@ ba-help-link {
     }
 }
 
-.p-a {
-    padding: 15px !important;
-}
-
 .spinner {
     position: fixed !important;
 }
@@ -918,8 +914,8 @@ ba-help-link {
         .drop-box {
             background-color: #ffffff !important;
         }
-        .drop-box{
-          cursor: pointer;
+        .drop-box {
+            cursor: pointer;
         }
         .json-content {
             height: 100px;
@@ -928,4 +924,8 @@ ba-help-link {
             margin: 0 0 15px 0;
         }
     }
+}
+
+.text-danger {
+    color: #FE4A00;
 }

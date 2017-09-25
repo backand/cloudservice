@@ -4,6 +4,10 @@
     padding: 0 !important;
 }
 
+.p-a{
+  padding: 1rem;
+}
+
 .p-b-0 {
     padding-bottom: 0 !important;
 }
@@ -69,6 +73,11 @@
 .m-x-0 {
     margin-right: 0 !important;
     margin-left: 0 !important;
+}
+
+.m-x-sm {
+  margin-right: .5rem !important;
+  margin-left: .5rem !important;
 }
 
 .m-t-md {

@@ -40,6 +40,12 @@
             <span>Configuration</span>
           </a>
         </li>
+        <li ng-class="{active: nav.state == 'hosting.hosting_tree', disabled: nav.DatabaseStatus != 1}">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'hosting.hosting_tree')" href="">
+            <i class="ba-icon-icon-hosting"></i>
+            <span>Hosting Files</span>
+          </a>
+        </li>
         <li ng-class="{active: nav.state == 'hosting.files_tree'}">
           <a ng-click="nav.goTo($event, 'hosting.files_tree')">
             <i class="fontello-icon-storage front-icons"></i>
