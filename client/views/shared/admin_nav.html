@@ -24,7 +24,7 @@
         <span style="padding-left: 18px;">Team</span>
       </a>
     </li>
-    <li ng-class="{active: nav.state == 'hosting.hosting_tree'}" class="open-structure">
+    <li ng-class="{active: nav.$state.includes('hosting') }">
       <a href="">
         <i class="fontello-icon-hosting front-icons"></i>
         <span>Hosting</span>
@@ -46,26 +46,26 @@
         </li>
         <!-- /storage nav -->
         <!-- ng-class="{open: nav.$state.includes('hosting.storage')}" -->
-        <li ng-class="{active: nav.state == 'hosting.files_tree'}">
-          <a ng-click="nav.goTo($event, 'hosting.files_tree')">
+        <li ng-class="{open: nav.$state.includes('hosting.storage')}">
+          <a data-ng-href="">
               <i class="fontello-icon-storage front-icons"></i>
               <span>Storage</span>
             </a>
-          <!-- div class="menu-border"></div>
+          <div class="menu-border"></div>
           <ul>
-            <li ng-class="{active: nav.state == 'hosting.files_tree'}">
-              <a ng-click="nav.goTo($event, 'hosting.files_tree')">
+            <li ng-class="{active: nav.$state.includes('hosting.storage.backand_storage')}">
+              <a ng-click="nav.goTo($event, 'hosting.storage.backand_storage')">
                   <i class="fa fa-database" aria-hidden="true"></i>
                     <span>Back& Storage</span>
                   </a>
             </li>
-            <li ng-class="{active: nav.state == 'app.billingupgrade'}">
-              <a data-ng-href="">
+            <li ng-class="{active: nav.$state.includes('hosting.storage.external_storage')}">
+              <a ng-click="nav.goTo($event, 'hosting.storage.external_storage')">
                   <i class="fa fa-cloud-upload" aria-hidden="true"></i>
                     <span>External Storage</span>
                   </a>
             </li>
-          </ul -->
+          </ul>
         </li>
         <!-- ./storage nav -->
       </ul>

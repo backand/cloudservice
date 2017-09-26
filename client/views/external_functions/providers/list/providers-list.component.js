@@ -21,7 +21,8 @@
           modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
           onLoadConnection: '&?', //optional
           isNew: '=?',
-          launcherAppUrl: '='
+          launcherAppUrl: '=',
+          type: '=?'
         },
         require: '^externalFunctions',
         templateUrl: 'views/external_functions/providers/list/providers-list.html',
@@ -66,45 +67,53 @@
              */
             function initialization() {
               $log.info('ProviderList component');
-              getLambdaFunctions();
+              getProviders();
               listenEvents();
               spinner(true);
               loadRegions();
             }
             /**
-            * @name getLambdaFunctions
+            * @name getProviders
             * @description  function to get lambda function by app
             * @param {any} provider
             * @returns void
             */
-            function getLambdaFunctions(provider) {
+            function getProviders(provider) {
               spinner(true);
-              CloudService
-                .getLambdaFunctions()
-                .then(function (response) {
-                  $log.info(response.data);
-                  $ctrl.providers = _.get(response, 'data.data') || [];
-                  $ctrl.accordions.length = $ctrl.providers.length;
-                  $log.warn('Lambda functions loaded', response);
-                  spinner(false);
-                  if ($ctrl.providers.length === 0 && !skipModal && !$ctrl.isNew) {
-                    skipModal = true;
-                    showProviderModal();
-                  }
-                  if ($ctrl.providers.length === 1) {
-                    $ctrl.accordions[0] = true;
-                  } else if ($ctrl.providers.length > 1 && provider) {
-                    _.forEach($ctrl.providers, function (p, idx) {
-                      if (p.id == provider) {
-                        $ctrl.accordions[idx] = true;
-                        return false;
-                      }
-                    });
-                  }
-                }).catch(function (error) {
-                  $log.error('Error while fetching Lambda functions', error);
-                  spinner(false);
-                });
+              var resource;
+              if ($ctrl.type && $ctrl.type.toLowerCase() === 'storage') {
+                resource = CloudService
+                  .getProviders({
+                    filter: [{ fieldName: 'Type', operator: 'equals', value: "Storage" }]
+                  })
+              } else {
+                resource = CloudService.getLambdaFunctions();
+              }
+              resource.then(function (response) {
+                $log.info(response.data);
+                $ctrl.providers = _.get(response, 'data.data') || [];
+                $ctrl.accordions.length = $ctrl.providers.length;
+                $log.warn('Lambda functions loaded', response);
+                spinner(false);
+                if ($ctrl.providers.length === 0 && !skipModal && !$ctrl.isNew) {
+                  skipModal = true;
+                  showProviderModal();
+                }
+                if ($ctrl.providers.length === 1) {
+                  $ctrl.accordions[0] = true;
+                } else if ($ctrl.providers.length > 1 && provider) {
+                  _.forEach($ctrl.providers, function (p, idx) {
+                    if (p.id == provider) {
+                      $ctrl.accordions[idx] = true;
+                      return false;
+                    }
+                  });
+                }
+              }).catch(function (error) {
+                $ctrl.providers = [];
+                $log.error('Error while fetching Lambda functions', error);
+                spinner(false);
+              });
             }
 
             function loadRegions() {
@@ -231,7 +240,7 @@
               });
               var reloadProvidersEvent = $rootScope.$on('EVENT:RELOAD_PROVIDER', function (event, data) {
                 var provider = _.get(data, 'provider');
-                getLambdaFunctions(provider);
+                getProviders(provider);
               });
               $scope.$on('$destroy', function () {
                 //unregistered event when component is destroyed

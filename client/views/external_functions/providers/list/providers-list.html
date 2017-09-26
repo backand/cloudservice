@@ -6,7 +6,9 @@
           <div class="row-row">
             <div class="row-cell v-m">
               <i class="fa fa-fw" ng-class="{'fa-chevron-down': $ctrl.accordions[$index], 'fa-chevron-right': !provider.open}"></i>
-              <img ng-src="assets/images/icons/{{provider.cloudVendor ? provider.cloudVendor.toLowerCase() : 'aws'}}-icon.png" class="provider-logo">{{provider.name || provider.cloudVendor}} <span class="m-x-sm text-danger" data-ng-if="$ctrl._.get(provider, 'error.message')" tooltip="{{$ctrl._.get(provider, 'error.message')}}" tooltip-append-to-body="true"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
+              <img ng-src="assets/images/icons/{{provider.cloudVendor ? provider.cloudVendor.toLowerCase() : 'aws'}}-icon.png" class="provider-logo">{{provider.name || provider.cloudVendor}}
+              <span class="m-x-sm text-danger" data-ng-if="$ctrl._.get(provider, 'error.message')" tooltip="{{$ctrl._.get(provider, 'error.message')}}"
+                tooltip-append-to-body="true"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
             </div>
             <div class="row-cell v-m text-right">
               <button class="btn btn-backand-outline" type="button" data-ng-click="$ctrl.showProviderModal(provider, $event)"><i class="fa fa-pencil fa-fw"></i> Edit</button>
@@ -25,7 +27,7 @@
   </accordion>
   <div class="p-a" data-ng-if="$ctrl.providers && $ctrl.providers.length ===0">
     <div class="alert alert-info">
-      <p>No provider</p>
+      <p>{{ $ctrl.type.toLowerCase() === 'storage' ? 'No storage provider' : 'No provider'}}</p>
     </div>
   </div>
 </div>
