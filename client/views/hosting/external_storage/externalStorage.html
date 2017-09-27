@@ -4,13 +4,13 @@
     <div class="col-md-8">
       <h2 class="page-title"> External Storage </h2>
     </div>
-    <div class="col-md-4 text-right">
+    <div class="col-md-4 text-right" data-ng-if="$ctrl.providers.length < 1">
       <button class="pull-right btn btn-backand" data-ng-click="$ctrl.addNewStorageProvider()"> Add Provider's Account</button>
     </div>
   </div>
   <section class="panel m-t-md">
     <div class="panel-body">
-      <providers-list data-type="'Storage'"></providers-list>
+      <providers-list data-type="'Storage'" on-load="$ctrl.onLoadProviders(providers)"></providers-list>
     </div>
   </section>
 </section>

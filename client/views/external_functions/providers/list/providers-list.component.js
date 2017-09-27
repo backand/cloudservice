@@ -19,7 +19,7 @@
           onSave: '&', // optional
           view: '@', //optional,
           modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
-          onLoadConnection: '&?', //optional
+          onLoad: '&?', //optional
           isNew: '=?',
           launcherAppUrl: '=',
           type: '=?'
@@ -121,6 +121,11 @@
                       }
                     });
                   }
+                }
+                if(_.isFunction($ctrl.onLoad)){
+                  $ctrl.onLoad({
+                    providers : angular.copy($ctrl.providers)
+                  });
                 }
               }).catch(function (error) {
                 $ctrl.providers = [];

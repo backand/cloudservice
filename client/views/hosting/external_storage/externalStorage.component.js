@@ -33,6 +33,7 @@
              * public methods
              */
             $ctrl.addNewStorageProvider = addNewStorageProvider;
+            $ctrl.onLoadProviders = onLoadProviders;
             /**
              * public properties
              */
@@ -58,6 +59,14 @@
               $rootScope.$emit('EVENT:ADD_PROVIDER', {
                 type: 'STORAGE'
               });
+            }
+            /**
+            * @function
+            * @name onLoadProviders
+            * @description handler is called when providers list loaded.
+            */
+            function onLoadProviders(providers) {
+              $ctrl.providers = providers;
             }
 
             //end of controller
