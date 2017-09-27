@@ -42,7 +42,7 @@
           '$scope',
           function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, modalService, $rootScope, $scope) {
             $log.info('Component awsConnection has initialized');
-            var $ctrl = this, regions, skipModal = false;
+            var $ctrl = this, regions, skipModal = false, STORAGE = 'storage';
             /**
             * call initialization to initialize controllers properties 
             */
@@ -60,6 +60,7 @@
              */
             $ctrl.accordions = [];
             $ctrl._ = _;
+            $ctrl.isStorage = isStorage();
             /**
              * @name initialization
              * @description
@@ -81,33 +82,45 @@
             function getProviders(provider) {
               spinner(true);
               var resource;
-              if ($ctrl.type && $ctrl.type.toLowerCase() === 'storage') {
+              if (isStorage()) {
                 resource = CloudService
                   .getProviders({
                     filter: [{ fieldName: 'Type', operator: 'equals', value: "Storage" }]
-                  })
+                  });
               } else {
                 resource = CloudService.getLambdaFunctions();
               }
               resource.then(function (response) {
                 $log.info(response.data);
-                $ctrl.providers = _.get(response, 'data.data') || [];
-                $ctrl.accordions.length = $ctrl.providers.length;
-                $log.warn('Lambda functions loaded', response);
                 spinner(false);
-                if ($ctrl.providers.length === 0 && !skipModal && !$ctrl.isNew) {
-                  skipModal = true;
-                  showProviderModal();
-                }
-                if ($ctrl.providers.length === 1) {
-                  $ctrl.accordions[0] = true;
-                } else if ($ctrl.providers.length > 1 && provider) {
-                  _.forEach($ctrl.providers, function (p, idx) {
-                    if (p.id == provider) {
-                      $ctrl.accordions[idx] = true;
-                      return false;
-                    }
+                if (isStorage()) {
+                  var ps = _.get(response, 'data.data') || [];
+                  ps = _.map(ps, function (p) {
+                    p.name = p.Name;
+                    p.id = p.Id;
+                    delete p.Id;
+                    delete p.Name;
+                    return p;
                   });
+                  $ctrl.providers = ps;
+                } else {
+                  $ctrl.providers = _.get(response, 'data.data') || [];
+                  $ctrl.accordions.length = $ctrl.providers.length;
+                  $log.warn('Lambda functions loaded', response);
+                  if ($ctrl.providers.length === 0 && !skipModal && !$ctrl.isNew) {
+                    skipModal = true;
+                    showProviderModal();
+                  }
+                  if ($ctrl.providers.length === 1) {
+                    $ctrl.accordions[0] = true;
+                  } else if ($ctrl.providers.length > 1 && provider) {
+                    _.forEach($ctrl.providers, function (p, idx) {
+                      if (p.id == provider) {
+                        $ctrl.accordions[idx] = true;
+                        return false;
+                      }
+                    });
+                  }
                 }
               }).catch(function (error) {
                 $ctrl.providers = [];
@@ -172,10 +185,14 @@
               }
 
               if (provider) {
-                spinner(true);
-                CloudService.getProvider({
+                var params = {
                   id: provider.id
-                }).then(function (response) {
+                };
+                if (isStorage()) {
+                  params['filter'] = [{ fieldName: 'Type', operator: 'equals', value: "Storage" }];
+                }
+                spinner(true);
+                CloudService.getProvider(params).then(function (response) {
                   var p = _.get(response, 'data');
                   var regionsCode = _.words(p.AwsRegion, /[^,]+/g);
                   p.AwsRegion = _.filter(regions, function (r) {
@@ -200,7 +217,8 @@
                       return {
                         isNew: provider ? false : true,
                         provider: provider,
-                        regions: regions
+                        regions: regions,
+                        type: $ctrl.type
                       }
                     }
                   }
@@ -225,7 +243,13 @@
             function spinner(flag) {
               flag ? usSpinnerService.spin('loading') : usSpinnerService.stop('loading');
             }
-
+            /**
+            * @description An helper function which checks if provider type is Storage
+            * @returns {boolean}
+            */
+            function isStorage() {
+              return $ctrl.type && $ctrl.type.toLowerCase() === STORAGE;
+            }
             /**
              * @function
              * @name listenEvents

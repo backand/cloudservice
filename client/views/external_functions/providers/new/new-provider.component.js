@@ -39,7 +39,8 @@
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               regions,
-              defaultSecretKeyHas = '************';
+              defaultSecretKeyHas = '************',
+              STORAGE = 'storage';
 
             /**
              *
@@ -73,6 +74,7 @@
               $ctrl.tokens = ProviderService.getTokens();
               regions = _.get($ctrl.options, 'regions') || [];
               $ctrl.isNew = $ctrl.options.isNew;
+              $ctrl.type = $ctrl.options.type || '';
 
               var p = _.get($ctrl.options, 'provider');
               if (p && p.Id) {
@@ -164,8 +166,12 @@
               request.AwsRegion = _.map(request.AwsRegion, 'Code').join(',');
 
               //escape the GCP private key
-              if($ctrl.selectedProvider.key === 'gcp' && $ctrl.cloudProvider.EncryptedPrivateKey){
+              if ($ctrl.selectedProvider.key === 'gcp' && $ctrl.cloudProvider.EncryptedPrivateKey) {
                 request.EncryptedPrivateKey = escape($ctrl.cloudProvider.EncryptedPrivateKey);
+              }
+
+              if (isStorage()) {
+                request['type'] = $ctrl.type;
               }
 
               $log.warn('Provider Request Payload - ', request);
@@ -173,34 +179,41 @@
                 .saveProvider(request)
                 .then(function (response) {
                   $log.info('Connection details are saved', response);
-                  CloudService
-                    .getLambdaFunctions()
-                    .then(function (functions) {
-                      NotificationService.add('success', 'The account was connected.');
-                      AnalyticsService.track('AWSConnectionSaved');
-                      var metaDataId = _.get(response, 'data.__metadata.id');
-                      if (!request.id) {
-                        console.log('Is new Event ---', $ctrl.isNew);
-                        if ($stateParams.new == 1 && metaDataId) {
-                          $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
-                            functions: functions,
-                            metaDataId: metaDataId
-                          });
-                        }
-                      }
-                      if (!metaDataId) {
-                        console.log('No function is linked to provider.');
-                      }
-                      handler(response, request, $ctrl.cloudProvider, true);
-                    }, function () {
-                      NotificationService.add('error', 'Invalid credentials');
-                      handler({}, request, $ctrl.cloudProvider, false);
-                    });
-
+                  if (isStorage()) {
+                    handler(response, request, $ctrl.cloudProvider, true);
+                    return;
+                  }
+                  isValidConnection(request, response);
                 })
                 .catch(function (error) {
                   $log.error('Error while saving conncetions detail', error);
                   handler({}, request, $ctrl.cloudProvider);
+                });
+            }
+
+            function isValidConnection(request, response) {
+              CloudService
+                .getLambdaFunctions()
+                .then(function (functions) {
+                  NotificationService.add('success', 'The account was connected.');
+                  AnalyticsService.track('AWSConnectionSaved');
+                  var metaDataId = _.get(response, 'data.__metadata.id');
+                  if (!request.id) {
+                    console.log('Is new Event ---', $ctrl.isNew);
+                    if ($stateParams.new == 1 && metaDataId) {
+                      $rootScope.$emit('EVENT:EXTERNAL_FUNCTION:SELECT_FUNCTIONS', {
+                        functions: functions,
+                        metaDataId: metaDataId
+                      });
+                    }
+                  }
+                  if (!metaDataId) {
+                    console.log('No function is linked to provider.');
+                  }
+                  handler(response, request, $ctrl.cloudProvider, true);
+                }, function () {
+                  NotificationService.add('error', 'Invalid credentials');
+                  handler({}, request, $ctrl.cloudProvider, false);
                 });
             }
 
@@ -276,7 +289,7 @@
               });
             }
             /**
-             * @description 
+             * @description An helper function which is used to update cloudProvider keys
              * @param {any} credentials 
              */
             function updateFormFields(credentials) {
@@ -286,6 +299,13 @@
                   $ctrl.cloudProvider[key] = credentials[key];
                 }
               }
+            }
+            /**
+             * @description An helper function which checks if provider type is Storage
+             * @returns {boolean}
+             */
+            function isStorage() {
+              return $ctrl.type.toLowerCase() === STORAGE;
             }
 
             //end of controller
