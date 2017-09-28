@@ -35,6 +35,7 @@
           function ($log, usSpinnerService, $modal, $state, modalService, $rootScope, APP_CONSTS, AppsService, ConfirmationPopup, ProviderService) {
             $log.info('Component externalFunctions has initialized');
             var $ctrl = this;
+            ProviderService.setPsType('function');
             /**
              *
              * public methods

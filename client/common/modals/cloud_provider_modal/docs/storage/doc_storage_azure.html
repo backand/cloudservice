@@ -1,0 +1,22 @@
+<div class="provider-modal-header">
+  <h3 class="m-t-0 header-title">Creating an Azure Service Principal</h3>
+</div>
+<div class="form-group">
+  <p class="text first">Create a Service Principal using the Python Azure CLI v2.0</p>
+
+  <p class="text"> Run this command using the <a href="https://github.com/Azure/azure-xplat-cli" target="_blank">Azure CLI 2.0</a></p>
+
+  <pre><code>az ad sp create-for-rbac</code></pre>
+
+  <p class="text">You can also use other Azure methods to create the Service Principal security -
+    <ba-help-link key="LLSettingAzure" with-text="learn more"></ba-help-link>
+  </p>
+</div>
+<div class="form-group">
+  <div class="alert alert-warning">
+    Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
+    executing your Lambda functions. You can permanently revoke our access at any time by deleting the Principal credentials.
+    If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
+      target="_blank">please contact us</a>.
+  </div>
+</div>

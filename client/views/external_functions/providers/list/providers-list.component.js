@@ -67,7 +67,7 @@
              * function to initialize properties and call function at very first.
              */
             function initialization() {
-              $log.info('ProviderList component');
+              $log.info('ProviderList component', $ctrl.type);
               getProviders();
               listenEvents();
               spinner(true);

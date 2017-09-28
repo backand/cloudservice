@@ -28,7 +28,7 @@
       $stateProvider
         .state('functions.externalFunctions', {
           url: '/external-functions?new&source',
-          template: '<external-functions data-app-keys="appKeys"></external-functions>',
+          template: '<external-functions data-app-keys="appKeys" data-type="cloud"></external-functions>',
           controller: ['$scope', 'appKeys', function ($scope, appKeys) {
             $scope.appKeys = appKeys;
           }],

@@ -22,6 +22,7 @@
         $ctrl.tokens = ProviderService.getTokens();
         console.log('Modal $modalInstance', $modalInstance);
         console.log('options', options);
+        $ctrl.type = $ctrl.options.type.toLowerCase();
         function onSelectProvider(provider) {
           $ctrl.provider = provider;
           console.log($ctrl.provider);

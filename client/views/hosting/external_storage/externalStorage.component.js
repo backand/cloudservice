@@ -25,9 +25,11 @@
           '$log',
           'usSpinnerService',
           '$rootScope',
-          function ($log, usSpinnerService, $rootScope) {
+          'ProviderService',
+          function ($log, usSpinnerService, $rootScope, ProviderService) {
             $log.info('Component externalStorage has initialized');
             var $ctrl = this;
+            ProviderService.setPsType('storage');
             /**
              *
              * public methods

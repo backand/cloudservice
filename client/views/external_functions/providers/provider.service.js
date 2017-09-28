@@ -16,43 +16,91 @@
     .service('ProviderService', [function () {
       var self = this,
         appTokens = {},
+        psType = '',
         models = {
-          aws: {
-            AccessKeyId: '',
-            AwsRegion: [],
-            Name: 'Aws',
-            CloudVendor: 'AWS',
-            EncryptedSecretAccessKey: '',
-            id: '',
-            description: ''
+          /**
+           * function provider's model
+           */
+          function: {
+            aws: {
+              AccessKeyId: '',
+              AwsRegion: [],
+              Name: 'Aws',
+              CloudVendor: 'AWS',
+              EncryptedSecretAccessKey: '',
+              id: '',
+              description: ''
+            },
+            ibm: {
+              AccessKeyId: '',
+              AwsRegion: [],
+              Name: 'Ibm',
+              CloudVendor: 'IBM',
+              EncryptedSecretAccessKey: '',
+              id: ''
+            },
+            gcp: {
+              AwsRegion: [],
+              Name: 'GCP',
+              CloudVendor: 'GCP',
+              id: '',
+              EncryptedPrivateKey: '',
+              ClientEmail: '',
+              ProjectName: ''
+            },
+            azure: {
+              AwsRegion: '',
+              CloudVendor: 'Azure',
+              Name: 'Azure',
+              subscriptionId: '',
+              appId: '',
+              tenant: '',
+              password: '',
+              description: '',
+              id: ''
+            }
           },
-          ibm: {
-            AccessKeyId: '',
-            AwsRegion: [],
-            Name: 'Ibm',
-            CloudVendor: 'IBM',
-            EncryptedSecretAccessKey: '',
-            id: ''
-          },
-          gcp: {
-            AwsRegion: [],
-            Name: 'GCP',
-            CloudVendor: 'GCP',
-            id: '',
-            EncryptedPrivateKey: '',
-            ClientEmail: '',
-            ProjectName: ''
-          },
-          azure: {
-            AwsRegion: '',
-            CloudVendor: 'Azure',
-            Name: 'Azure',
-            subscriptionId: '',
-            appId: '',
-            tenant: '',
-            password: '',
-            description: '',
-            id: ''
+          /**
+          * storage provider's model
+          */
+          storage: {
+            aws: {
+              AccessKeyId: '',
+              AwsRegion: [],
+              Name: 'Aws',
+              CloudVendor: 'AWS',
+              EncryptedSecretAccessKey: '',
+              id: '',
+              description: ''
+            },
+            ibm: {
+              AccessKeyId: '',
+              AwsRegion: [],
+              Name: 'Ibm',
+              CloudVendor: 'IBM',
+              EncryptedSecretAccessKey: '',
+              id: ''
+            },
+            gcp: {
+              AwsRegion: [],
+              Name: 'GCP',
+              CloudVendor: 'GCP',
+              id: '',
+              EncryptedPrivateKey: '',
+              ClientEmail: '',
+              ProjectName: ''
+            },
+            azure: {
+              AwsRegion: '',
+              CloudVendor: 'Azure',
+              Name: 'Azure',
+              subscriptionId: '',
+              appId: '',
+              tenant: '',
+              password: '',
+              description: '',
+              id: ''
+            }
           }
         };
 
@@ -64,6 +112,9 @@
       self.prepareRequest = prepareRequest;
       self.setTokens = setTokens;
       self.getTokens = getTokens;
+      self.setPsType = setPsType;
+      self.getPsType = getPsType;
+      self.isPsType = isPsType;
       /**
        * @description 
        * @returns 
@@ -98,8 +149,10 @@
        * @param {any} pType 
        */
       function getModel(pType) {
-        console.log(models[pType]);
-        return models[pType];
+        if (!psType) {
+          throw Error('Provider Service Type is not set in service. Please set one of these [function | storage]')
+        }
+        return models[psType][pType];
       }
 
       /**
@@ -135,6 +188,44 @@
       */
       function getTokens() {
         return appTokens;
+      }
+      /**
+      * @function
+      * @name setPsType - Provider service Type (storage, function)
+      * @description store psType in service
+      * @param {any} p 
+      */
+      function setPsType(p) {
+        psType = p;
+      }
+      /**
+      * @function
+      * @name setPsType - Provider service Type (storage, function)
+      * @description store psType in service
+      * @param {any} p 
+      */
+      function getPsType() {
+        return psType ? psType.toLowerCase() : '';
+      }
+
+      /**
+       * @function
+       * @name isPsType
+       * @description check for Provider Service type
+       * @param {any} types 
+       * @returns {boolean}
+       */
+      function isPsType(types) {
+        if (typeof types === 'string') {
+          return types.toLocaleLowerCase() === getPsType();
+        } else if (_.isArray(types)) {
+          var ts = _.map(types, function (t) {
+            return typeof t === 'string' ? psType.toLowerCase() : psType
+          });
+          return _.indexOf(ts, getPsType()) >= 0;
+        } else {
+          return types === getPsType();
+        }
       }
       //end of service  
     }]);
