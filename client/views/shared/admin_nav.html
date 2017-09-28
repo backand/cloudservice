@@ -18,6 +18,12 @@
         <span>General</span>
       </a>
     </li>
+    <li ng-class="{active: nav.state == 'app.configuration'}">
+      <a ng-click="nav.goTo($event, 'app.configuration')">
+        <i class="fontello-icon-configuration_2 front-icons"></i>
+        <span style="padding-left: 11px;">App Configuration</span>
+      </a>
+    </li>
     <li ng-class="{active: nav.state == 'security.team', disabled: nav.DatabaseStatus != 1}">
       <a ng-click="nav.goTo($event, 'security.team')">
         <i class="ba-icon-admins front-icons"></i>
@@ -44,37 +50,29 @@
             <span>Hosting Files</span>
           </a>
         </li>
-        <!-- /storage nav -->
-        <!-- ng-class="{open: nav.$state.includes('hosting.storage')}" -->
-        <li ng-class="{open: nav.$state.includes('hosting.storage')}">
-          <a data-ng-href="">
-              <i class="fontello-icon-storage front-icons"></i>
-              <span>Storage</span>
-            </a>
-          <div class="menu-border"></div>
-          <ul>
-            <li ng-class="{active: nav.$state.includes('hosting.storage.backand_storage')}">
-              <a ng-click="nav.goTo($event, 'hosting.storage.backand_storage')">
-                  <i class="fa fa-database" aria-hidden="true"></i>
-                    <span>Back& Storage</span>
-                  </a>
-            </li>
-            <li ng-class="{active: nav.$state.includes('hosting.storage.external_storage')}">
-              <a ng-click="nav.goTo($event, 'hosting.storage.external_storage')">
-                  <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                    <span>External Storage</span>
-                  </a>
-            </li>
-          </ul>
-        </li>
-        <!-- ./storage nav -->
       </ul>
     </li>
-    <li ng-class="{active: nav.state == 'app.configuration'}">
-      <a ng-click="nav.goTo($event, 'app.configuration')">
-        <i class="fontello-icon-configuration_2 front-icons"></i>
-        <span style="padding-left: 11px;">App Configuration</span>
+    <li ng-class="{open: nav.$state.includes('hosting.storage')}">
+      <a data-ng-href="">
+          <i class="fontello-icon-storage front-icons"></i>
+          <span>Storage</span>
+          <i class="glyphicon glyphicon-hosting"
+           ng-class="showHosting == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
+      <ul>
+        <li ng-class="{active: nav.$state.includes('hosting.storage.backand_storage')}">
+          <a ng-click="nav.goTo($event, 'hosting.storage.backand_storage')">
+              <i class="fa fa-database" aria-hidden="true"></i>
+                <span>Back& Storage</span>
+              </a>
+        </li>
+        <li ng-class="{active: nav.$state.includes('hosting.storage.external_storage')}">
+          <a ng-click="nav.goTo($event, 'hosting.storage.external_storage')">
+              <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                <span>External Storage</span>
+              </a>
+        </li>
+      </ul>
     </li>
     <!--	TODO <li>
                ng-click="nav.goTo($event, )"
