@@ -17,7 +17,8 @@
         restrict: 'E',
         scope: {
           provider: '=',
-          onJsonParsed: '&'
+          onJsonParsed: '&',
+          type : '='
         },
         templateUrl: 'views/external_functions/providers/json-parser/json-parser.html',
         controllerAs: '$ctrl',
@@ -29,23 +30,45 @@
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
               jsonMapping = {
-                gcp: {
-                  "private_key": "EncryptedPrivateKey",
-                  "client_email": "ClientEmail",
-                  "project_id": "ProjectName"
+                function: {
+                  gcp: {
+                    "private_key": "EncryptedPrivateKey",
+                    "client_email": "ClientEmail",
+                    "project_id": "ProjectName"
+                  },
+                  azure: {
+                    "subscription_id": "subscriptionId",
+                    "appId": "appId",
+                    "tenant": "tenant",
+                    "password": "password"
+                  },
+                  aws: {
+                    "secretAccessKey": "EncryptedSecretAccessKey",
+                    "accessKeyId": "AccessKeyId"
+                  },
+                  ibm: {
+
+                  }
                 },
-                azure: {
-                  "subscription_id": "subscriptionId",
-                  "appId": "appId",
-                  "tenant": "tenant",
-                  "password": "password"
-                },
-                aws: {
-                  "secretAccessKey": "EncryptedSecretAccessKey",
-                  "accessKeyId": "AccessKeyId"
-                },
-                ibm: {
-                  
+                storage: {
+                  gcp: {
+                    "private_key": "EncryptedPrivateKey",
+                    "client_email": "ClientEmail",
+                    "project_id": "ProjectName"
+                  },
+                  azure: {
+                    "subscription_id": "subscriptionId",
+                    "appId": "appId",
+                    "tenant": "tenant",
+                    "password": "password"
+                  },
+                  aws: {
+                    "secretAccessKey": "EncryptedSecretAccessKey",
+                    "accessKeyId": "AccessKeyId"
+                  },
+                  ibm: {
+
+                  }
                 }
               };
             /**
@@ -97,9 +120,9 @@
             function extractProviderInfo(content) {
               var ob, pMap, dMap = {};
 
-              ob = isJSON(content) ? ob = JSON.parse(content, true) : {};  
+              ob = isJSON(content) ? ob = JSON.parse(content, true) : {};
 
-              pMap = jsonMapping[$ctrl.provider.key];
+              pMap = jsonMapping[$ctrl.type][$ctrl.provider.key];
               for (var skey in pMap) {
                 if (pMap.hasOwnProperty(skey)) {
                   var dkey = pMap[skey];
