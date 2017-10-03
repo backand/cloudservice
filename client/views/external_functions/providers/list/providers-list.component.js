@@ -42,7 +42,7 @@
           '$scope',
           function ($log, usSpinnerService, CloudService, NotificationService, $q, ConfirmationPopup, $state, AnalyticsService, modalService, $rootScope, $scope) {
             $log.info('Component awsConnection has initialized');
-            var $ctrl = this, regions, skipModal = false, STORAGE = 'storage';
+            var $ctrl = this, regions, skipModal = false, STORAGE = 'storage', DEFALT_ICON_TYPE = 'aws';
             /**
             * call initialization to initialize controllers properties 
             */
@@ -54,6 +54,7 @@
              */
             $ctrl.deleteProvider = deleteProvider;
             $ctrl.showProviderModal = showProviderModal;
+            $ctrl.getProviderIcon = getProviderIcon;
 
             /**
              * public properties
@@ -122,9 +123,9 @@
                     });
                   }
                 }
-                if(_.isFunction($ctrl.onLoad)){
+                if (_.isFunction($ctrl.onLoad)) {
                   $ctrl.onLoad({
-                    providers : angular.copy($ctrl.providers)
+                    providers: angular.copy($ctrl.providers)
                   });
                 }
               }).catch(function (error) {
@@ -254,6 +255,24 @@
             */
             function isStorage() {
               return $ctrl.type && $ctrl.type.toLowerCase() === STORAGE;
+            }
+            /**
+             * @function
+             * @name getProviderIcon
+             * @description An helper function which returns icon path based on provider type[aws|google|amazon|azure]
+             * @param {any} provider
+             * @returns {string} 
+             */
+            function getProviderIcon(provider) {
+              var iconType;
+              if (provider.hasOwnProperty('cloudVendor')) {
+                iconType = typeof provider.cloudVendor === 'string' ? provider.cloudVendor.toLowerCase() : DEFALT_ICON_TYPE;
+              } else if (provider.hasOwnProperty('CloudVendor')) {
+                iconType = typeof provider.CloudVendor === 'string' ? provider.CloudVendor.toLowerCase() : DEFALT_ICON_TYPE;
+              } else {
+                iconType = DEFALT_ICON_TYPE;
+              }
+              return 'assets/images/icons/' + iconType + '-icon.png';
             }
             /**
              * @function

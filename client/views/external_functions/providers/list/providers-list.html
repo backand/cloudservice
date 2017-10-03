@@ -6,7 +6,7 @@
           <div class="row-row">
             <div class="row-cell v-m">
               <i data-ng-if="!$ctrl.isStorage" class="fa fa-fw" ng-class="{'fa-chevron-down': $ctrl.accordions[$index], 'fa-chevron-right': !provider.open}"></i>
-              <img ng-src="assets/images/icons/{{provider.cloudVendor ? provider.cloudVendor.toLowerCase() : 'aws'}}-icon.png" class="provider-logo">{{provider.name || provider.cloudVendor}}
+              <img ng-src="{{$ctrl.getProviderIcon(provider)}}" class="provider-logo">{{provider.name || provider.cloudVendor}}
               <span class="m-x-sm text-danger" data-ng-if="$ctrl._.get(provider, 'error.message')" tooltip="{{$ctrl._.get(provider, 'error.message')}}"
                 tooltip-append-to-body="true"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span>
             </div>
