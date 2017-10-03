@@ -67,7 +67,7 @@
             aws: {
               AccessKeyId: '',
               AwsRegion: [],
-              Name: 'AwsStorage',
+              Name: 'Aws Storage',
               CloudVendor: 'AWS',
               EncryptedSecretAccessKey: '',
               id: '',
@@ -76,14 +76,14 @@
             ibm: {
               AccessKeyId: '',
               AwsRegion: [],
-              Name: 'IBMStorage',
+              Name: 'IBM Storage',
               CloudVendor: 'IBM',
               EncryptedSecretAccessKey: '',
               id: ''
             },
             gcp: {
               AwsRegion: [],
-              Name: 'GCPStorage',
+              Name: 'GCP Storage',
               CloudVendor: 'GCP',
               id: '',
               EncryptedPrivateKey: '',
@@ -92,8 +92,8 @@
             },
             azure: {
               AwsRegion: '',
-              CloudVendor: 'AzureStorage',
-              Name: 'Azure',
+              CloudVendor: 'Azure',
+              Name: 'Azure Storage',
               subscriptionId: '',
               appId: '',
               tenant: '',
