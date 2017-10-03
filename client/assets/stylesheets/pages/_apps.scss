@@ -215,24 +215,22 @@
     }
 }
 
-.admin-menu{
-  ul{
-    > li{
-      i{
-        &:before{
-          margin-right: 0;
+.admin-menu {
+    ul {
+        >li {
+            i {
+                &:before {
+                    margin-right: 0;
+                }
+                &.fontello-icon-storage {
+                    margin-left: 17px;
+                }
+            }
+            >ul {
+                >li {}
+            }
         }
-        &.fontello-icon-storage{
-          margin-left: 17px;
-        }
-      }
-      >ul{
-        >li{
-
-        }
-      }
     }
-  }
 }
 
 .primary-navbar {
