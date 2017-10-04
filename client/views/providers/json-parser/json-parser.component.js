@@ -20,7 +20,7 @@
           onJsonParsed: '&',
           type : '='
         },
-        templateUrl: 'views/external_functions/providers/json-parser/json-parser.html',
+        templateUrl: 'views/providers/json-parser/json-parser.html',
         controllerAs: '$ctrl',
         bindToController: true,
         controller: [
@@ -29,6 +29,11 @@
           function ($log, $scope) {
             $log.info('Component awsConnection has initialized');
             var $ctrl = this,
+              /**
+               * {json_field : model_field}
+               * json_field - A key in json file
+               * model_field - A key in model - Request payload
+               */
               jsonMapping = {
                 function: {
                   gcp: {
@@ -48,7 +53,11 @@
                   },
                   ibm: {
 
-                  }
+                  },
+                  opensource: {
+                    "gateway": "gateway",
+                    "accessKey": "accessKey"
+                  },
                 },
                 storage: {
                   gcp: {

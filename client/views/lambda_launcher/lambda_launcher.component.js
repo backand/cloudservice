@@ -18,7 +18,7 @@
         scope: {
           appKeys: '='
         },
-        templateUrl: 'views/external_functions/lambda_launcher/lambda_launcher.html',
+        templateUrl: 'views/lambda_launcher/lambda_launcher.html',
         controllerAs: '$ctrl',
         bindToController: true,
         controller: [

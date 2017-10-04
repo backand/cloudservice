@@ -58,6 +58,14 @@
               password: '',
               description: '',
               id: ''
+            },
+            opensource: {
+              AwsRegion: '',
+              CloudVendor: 'opensource',
+              Name: 'opensource',
+              accessKey: '',
+              gateway: '',
+              id: ''
             }
           },
           /**
@@ -140,6 +148,11 @@
           key: 'ibm',
           description: 'IBM OpenWisk',
           enable: false
+        }, {
+          name: 'opensource',
+          key: 'opensource',
+          description: 'Open Source',
+          enable: true
         }];
         return providers;
       }

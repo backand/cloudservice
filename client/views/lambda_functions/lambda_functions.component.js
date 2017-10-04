@@ -19,7 +19,7 @@
           launcherAppUrl: '=', //required,
           provider: '=' //required
         },
-        templateUrl: 'views/external_functions/lambda_functions/lambda_functions.html',
+        templateUrl: 'views/lambda_functions/lambda_functions.html',
         controllerAs: '$ctrl',
         bindToController: true,
         controller: [

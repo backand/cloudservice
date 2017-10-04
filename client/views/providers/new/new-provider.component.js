@@ -20,7 +20,7 @@
           modalInstance: '=?', //required if view is modal -in other words - required if this component is opened up in modal,
           options: '=?'
         },
-        templateUrl: 'views/external_functions/providers/new/new-provider.html',
+        templateUrl: 'views/providers/new/new-provider.html',
         controllerAs: '$ctrl',
         bindToController: true,
         controller: [

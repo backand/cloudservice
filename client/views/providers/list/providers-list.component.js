@@ -25,7 +25,7 @@
           type: '=?'
         },
         require: '^externalFunctions',
-        templateUrl: 'views/external_functions/providers/list/providers-list.html',
+        templateUrl: 'views/providers/list/providers-list.html',
         controllerAs: '$ctrl',
         bindToController: true,
         controller: [
