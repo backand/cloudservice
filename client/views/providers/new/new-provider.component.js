@@ -174,7 +174,6 @@
               if (isStorage()) {
                 request['type'] = $ctrl.type;
               }
-
               $log.warn('Provider Request Payload - ', request);
               CloudService
                 .saveProvider(request)
