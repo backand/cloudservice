@@ -70,7 +70,7 @@
             }
           };
           return $modal.open({
-            templateUrl: options.templateUrl || 'common/modals/cloud_provider_modal/provider_modal.html',
+            templateUrl: options.templateUrl || 'views/providers/cloud_provider_modal/provider_modal.html',
             keyboard: false,
             size: options.size || 'lg',
             controller: 'CloudProviderModalController',
