@@ -54,9 +54,9 @@
                   ibm: {
 
                   },
-                  opensource: {
+                  fnproject: {
                     "gateway": "gateway",
-                    "accessKey": "accessKey"
+                    "connectionString": "connectionString"
                   },
                 },
                 storage: {

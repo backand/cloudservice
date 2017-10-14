@@ -49,7 +49,7 @@
               ProjectName: ''
             },
             azure: {
-              AwsRegion: '',
+              AwsRegion: [],
               CloudVendor: 'Azure',
               Name: 'Azure',
               subscriptionId: '',
@@ -59,11 +59,11 @@
               description: '',
               id: ''
             },
-            opensource: {
-              AwsRegion: '',
-              CloudVendor: 'opensource',
-              Name: 'opensource',
-              accessKey: '',
+            fnproject: {
+              AwsRegion: [],
+              CloudVendor: 'fnproject',
+              Name: 'fnProject',
+              connectionString: '',
               gateway: '',
               id: ''
             }
@@ -149,9 +149,9 @@
           description: 'IBM OpenWisk',
           enable: false
         }, {
-          name: 'opensource',
-          key: 'opensource',
-          description: 'Open Source',
+          name: 'FnProject',
+          key: 'fnproject',
+          description: 'Oracle fn Project',
           enable: true
         }];
         return providers;
