@@ -264,6 +264,7 @@
              * @returns {string} 
              */
             function getProviderIcon(provider) {
+              var type =  $ctrl.type && $ctrl.type.toLowerCase() === 'storage' ? 'storage' : '' ;
               var iconType;
               if (provider.hasOwnProperty('cloudVendor')) {
                 iconType = typeof provider.cloudVendor === 'string' ? provider.cloudVendor.toLowerCase() : DEFALT_ICON_TYPE;
@@ -272,7 +273,7 @@
               } else {
                 iconType = DEFALT_ICON_TYPE;
               }
-              return 'assets/images/icons/' + iconType + '-icon.png';
+              return 'assets/images/icons/' + iconType + '-'+ (type ? type+'-' : '') +'icon.png';
             }
             /**
              * @function
