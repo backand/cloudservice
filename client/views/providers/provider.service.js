@@ -95,18 +95,13 @@
               CloudVendor: 'GCP',
               id: '',
               EncryptedPrivateKey: '',
-              ClientEmail: '',
-              ProjectName: ''
+              ClientEmail: ''
             },
             azure: {
-              AwsRegion: '',
+              AwsRegion: [],
               CloudVendor: 'Azure',
               Name: 'Azure Storage',
-              subscriptionId: '',
-              appId: '',
-              tenant: '',
-              password: '',
-              description: '',
+              connectionString: '',
               id: ''
             }
           }

@@ -1,16 +1,18 @@
 <div class="provider-modal-header">
-  <h3 class="m-t-0 header-title">Creating an Azure Service Principal</h3>
+  <h3 class="m-t-0 header-title">Azure Storage account access</h3>
 </div>
 <div class="form-group">
-  <p class="text first">Create a Service Principal using the Python Azure CLI v2.0</p>
-
-  <p class="text"> Run this command using the <a href="https://github.com/Azure/azure-xplat-cli" target="_blank">Azure CLI 2.0</a></p>
-
-  <pre><code>az ad sp create-for-rbac</code></pre>
-
-  <p class="text">You can also use other Azure methods to create the Service Principal security -
-    <ba-help-link key="LLSettingAzure" with-text="learn more"></ba-help-link>
-  </p>
+  <p class="text first">To get your Azure Storage 'Connection String' do this:</p>
+    <div class="text p-x-md">
+      <ul>
+        <li>Sign in to the <a href="https://portal.azure.com/" target="_blank">Azure portal</a>.</li>
+        <li>In the Azure portal, expand the menu on the left side to open the menu of services, and choose <strong>More Services</strong>. Then, scroll down to <strong>Storage</strong>, and choose <strong>Storage accounts</strong>.</li>
+        <li>Navigate to your storage account, scroll down to <strong>Settings</strong> and then click <strong>Access keys</strong> to copy the <strong>CONNECTION STRING</strong>.</li>
+      </ul>
+    </div>
+    <p class="text">Access keys to authenticate when making requests to your Azure storage account -
+      <ba-help-link key="AzureExternalStorage" with-text="learn more"></ba-help-link>
+    </p>
 </div>
 <div class="form-group">
   <div class="alert alert-warning">

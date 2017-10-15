@@ -62,14 +62,10 @@
                 storage: {
                   gcp: {
                     "private_key": "EncryptedPrivateKey",
-                    "client_email": "ClientEmail",
-                    "project_id": "ProjectName"
+                    "client_email": "ClientEmail"
                   },
                   azure: {
-                    "subscription_id": "subscriptionId",
-                    "appId": "appId",
-                    "tenant": "tenant",
-                    "password": "password"
+                    "connectionString": "connectionString"
                   },
                   aws: {
                     "secretAccessKey": "EncryptedSecretAccessKey",
