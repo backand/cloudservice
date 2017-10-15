@@ -6,7 +6,7 @@
       <div class="circle" data-ng-class="{'active' : providerType.key === $ctrl.selectedProvider.key}">
         <div class="circle__inner">
           <div class="circle__wrapper">
-            <div class="circle__content"><img ng-src="assets/images/icons/{{providerType.key}}-icon.png"></div>
+            <div class="circle__content"><img ng-src="assets/images/icons/{{providerType.key}}-{{$ctrl.isStorage() ? 'storage-':'' }}icon.png"></div>
           </div>
         </div>
       </div>

@@ -53,6 +53,7 @@
             $ctrl.selectProvider = selectProvider;
             $ctrl.selectAwsType = selectAwsType;
             $ctrl.updateFormFields = updateFormFields;
+            $ctrl.isStorage = isStorage;
             /**
              * public properties
              */

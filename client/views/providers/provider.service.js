@@ -159,7 +159,7 @@
        * @returns 
        */
       function getStorageProviders() {
-        var providers = [{
+        var storageProvider = [{
           name: 'AWS',
           key: 'aws',
           description: 'AWS S3',
@@ -174,13 +174,8 @@
           key: 'gcp',
           description: 'Google Storage',
           enable: true
-        }, {
-          name: 'FnProject',
-          key: 'fnproject',
-          description: 'Oracle fn Project',
-          enable: true
         }];
-        return providers;
+        return storageProvider;
       }
 
       /**
