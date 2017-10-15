@@ -98,7 +98,7 @@
               $ctrl.showForm = false;
               $log.info('jsonParser component');
               $log.info('Selected provider', $ctrl.provider.key);
-              $ctrl.type = $ctrl.type ? $ctrl.type.toLowerCase() : '';
+              $ctrl.type = $ctrl.type ? $ctrl.type.toLowerCase() : 'function';
             }
 
             function onfileSelect($files) {
