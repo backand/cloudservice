@@ -111,6 +111,7 @@
        * Exposed bindable methods
        */
       self.getProviders = getProviders;
+      self.getStorageProviders = getStorageProviders;
       self.getModel = getModel;
       self.prepareRequest = prepareRequest;
       self.setTokens = setTokens;
@@ -143,6 +144,36 @@
           key: 'ibm',
           description: 'IBM OpenWisk',
           enable: false
+        }, {
+          name: 'FnProject',
+          key: 'fnproject',
+          description: 'Oracle fn Project',
+          enable: true
+        }];
+        return providers;
+      }
+
+      /**
+       * @method getStorageProviders
+       * @description 
+       * @returns 
+       */
+      function getStorageProviders() {
+        var providers = [{
+          name: 'AWS',
+          key: 'aws',
+          description: 'AWS S3',
+          enable: true
+        }, {
+          name: 'Azure',
+          key: 'azure',
+          description: 'Azure Storage',
+          enable: true
+        }, {
+          name: 'GCP',
+          key: 'gcp',
+          description: 'Google Storage',
+          enable: true
         }, {
           name: 'FnProject',
           key: 'fnproject',

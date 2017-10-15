@@ -56,7 +56,6 @@
             /**
              * public properties
              */
-            $ctrl.cloudProviderTypes = angular.copy(ProviderService.getProviders());
             $ctrl.crossAccount = {
               AccessKeyId: ''
             };
@@ -76,6 +75,8 @@
               regions = _.get($ctrl.options, 'regions') || [];
               $ctrl.isNew = $ctrl.options.isNew;
               $ctrl.type = $ctrl.options.type || '';
+              $ctrl.cloudProviderTypes = ($ctrl.type && $ctrl.type.toLowerCase() === 'storage') ? angular.copy(ProviderService.getStorageProviders()) : angular.copy(ProviderService.getProviders());
+
 
               var p = _.get($ctrl.options, 'provider');
               if (p && p.Id) {
