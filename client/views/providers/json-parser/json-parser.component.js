@@ -70,9 +70,6 @@
                   aws: {
                     "secretAccessKey": "EncryptedSecretAccessKey",
                     "accessKeyId": "AccessKeyId"
-                  },
-                  ibm: {
-
                   }
                 }
               };
@@ -101,6 +98,7 @@
               $ctrl.showForm = false;
               $log.info('jsonParser component');
               $log.info('Selected provider', $ctrl.provider.key);
+              $ctrl.type = $ctrl.type ? $ctrl.type.toLowerCase() : '';
             }
 
             function onfileSelect($files) {
