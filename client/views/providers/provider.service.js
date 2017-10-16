@@ -63,8 +63,8 @@
               AwsRegion: [],
               CloudVendor: 'fnproject',
               Name: 'fnProject',
-              connectionString: '',
-              gateway: '',
+              ConnectionString: '',
+              Gateway: '',
               id: ''
             }
           },

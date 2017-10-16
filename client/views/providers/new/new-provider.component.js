@@ -40,7 +40,7 @@
             var $ctrl = this,
               regions,
               defaultSecretKeyHas = '************',
-              STORAGE = 'storage',
+              STORAGE = 'Storage',
               CLOUD = 'cloud';
 
             /**
@@ -174,7 +174,7 @@
               }
 
               if (isStorage()) {
-                request['type'] = $ctrl.type;
+                request['type'] = "Storage";
               }
               $log.warn('Provider Request Payload - ', request);
               CloudService
@@ -307,7 +307,7 @@
              * @returns {boolean}
              */
             function isStorage() {
-              return $ctrl.type.toLowerCase() === STORAGE;
+              return $ctrl.type.toLowerCase() === STORAGE.toLowerCase();
             }
 
             //end of controller

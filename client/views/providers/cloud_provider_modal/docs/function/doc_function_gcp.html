@@ -1,12 +1,12 @@
 <div class="provider-modal-header">
-  <h3 class="m-t-0 header-title">Get Google Credentials</h3>
+  <h3 class="m-t-0 header-title">Obtaining Google Credentials</h3>
 </div>
 <div class="form-group">
   <h4>Enable the necessary APIs</h4>
-  <p class="text">You need to enable 'Google Cloud Functions' API so that Back& can link and execute the Functions.<br/>
-  Go to the <a href="https://console.cloud.google.com/apis/dashboard" target="_blank"> API dashboard</a>, select your project and enable 'Google Cloud Functions'.</p>
+  <p class="text">To execute your functions on the Backand platform, you'll need to enable the Google Cloud Functions API.<br/>
+  This allows Backand to link with Google Cloud and execute your functions. To get started, go to the <a href="https://console.cloud.google.com/apis/dashboard" target="_blank"> API dashboard</a>, select your project, and enable 'Google Cloud Functions'.</p>
 
-  <h4>Get 'Private Key' and 'Client Email'</h4>
+  <h4>To obtain your 'private key' and 'client email' entries, follow these steps</h4>
   <div class="text p-x-md">
     <ol>
       <li>Go to the Google <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Cloud API Manager<a> and select "Credentials" on the left.</li>
@@ -15,9 +15,8 @@
       <li>Enter a name for your "Service account name" (e.g. "backand-platform").</li>
       <li>Select "Project" --> "Owner" as the "Role".</li>
       <li>The "Key type" should be "JSON".</li>
-      <li>Click on "Create" to create your private key.</li>
-      <li>That's your so called keyfile which should be downloaded on your machine.</li>
-      <li>Open the JSON file and copy the 'Private Key' and 'Client Email' or upload the JSON using 'Copy Settings'</li>
+      <li>Click on "Create" to create your private key. This provides you with your keyfile, which you should download to your local machine.</li>
+      <li>Open the JSON file is ready, copy the 'Private Key' and 'Client Email' fields. Alternatively, you can simply upload the JSON using the 'Copy Settings' link.</li>
     </ol>
   </div>
 
