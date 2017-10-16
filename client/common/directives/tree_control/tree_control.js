@@ -27,10 +27,13 @@
 
     if ($state.current.name == 'object_actions' || $state.current.name == 'functions.function') {
       self.service = 'nodejs';
-    } else if ($state.current.name == 'hosting.files_tree') {
+    } else if ($state.current.name == 'hosting.storage.backand_storage') {
       self.service = 'file';
-    } else {
+    } else if ($state.current.name == 'hosting.hosting_tree') {
       self.service = 'hosting';
+    } else {
+      self.service = '';
+      console.error('can not load tree due to wrong state name');
     }
 
     var app = AppsService.currentApp;
