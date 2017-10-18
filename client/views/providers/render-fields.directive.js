@@ -31,7 +31,7 @@
             if (!n) {
               return;
             }
-            scope.url = attr.path + n + postfix + '.html';
+            scope.url = (attr.path + n + postfix + '.html').toLowerCase();
           })
         }
       };
