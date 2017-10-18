@@ -10,11 +10,11 @@
     <p class="text"> Run this command using the <a href="https://aws.amazon.com/cli" target="_blank">AWS CLI</a> and we create an
       IAM user that has access to your S3:</p>
 
-    <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-rc --stack-name createbackanduser --capabilities CAPABILITY_IAM</code></pre>
+    <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-s3-ak --stack-name createbackandS3user --capabilities CAPABILITY_IAM</code></pre>
 
     <p class="text">Once the IAM user has been created, use this command to obtain the user's access and secret keys, then copy these
       values into the fields below:
-      <pre><code>aws cloudformation describe-stacks --stack-name createbackanduser</code></pre>
+      <pre><code>aws cloudformation describe-stacks --stack-name createbackandS3user</code></pre>
     </p>
     <p class="text">You can also use other AWS tools to create the connection -
       <ba-help-link key="LLSettingIAM" with-text="learn more"></ba-help-link>
@@ -47,7 +47,7 @@
     <p class="text">Using CloudFormation, we'll create a stack that we'll use to drive cross-account integration with Back&. Use
       the following AWS CLI command to get started:</p>
     <div class="text">
-      <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-cc --parameters  ParameterKey=ExternalId,ParameterValue=bknd_{{$ctrl.tokens.general}} --stack-name createBkndCrossAccess --capabilities CAPABILITY_NAMED_IAM</code></pre>
+      <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-s3-ca --parameters ParameterKey=ExternalId,ParameterValue=bknd_{{$ctrl.tokens.general}} --stack-name createBkndCrossAccessS3 --capabilities CAPABILITY_NAMED_IAM</code></pre>
     </div>
     <h4 id="aws-management-console">AWS Management Console</h4>
 
