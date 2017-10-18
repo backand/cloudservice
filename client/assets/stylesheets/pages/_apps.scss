@@ -19,7 +19,6 @@
         }
     }
     li {
-        height: 56px;
         a {
             //The importants are there to override the nav classes in place, this is for the new UI
             padding: 0 !important;
@@ -216,6 +215,24 @@
     }
 }
 
+.admin-menu {
+    ul {
+        >li {
+            i {
+                &:before {
+                    margin-right: 0;
+                }
+                &.fontello-icon-storage {
+                    margin-left: 17px;
+                }
+            }
+            >ul {
+                >li {}
+            }
+        }
+    }
+}
+
 .primary-navbar {
     height: 100vw;
     .database {
@@ -394,7 +411,6 @@
 }
 
 .new-function-selection {
-    height: 45px;
     span {
         font-weight: normal;
     }

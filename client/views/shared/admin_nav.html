@@ -1,4 +1,4 @@
-<div class="nav-wrapper">
+<div class="nav-wrapper admin-menu">
   <ul id="nav2" class="nav" collapse-nav>
     <li class="apps-header" ng-click="showAppList = !showAppList" ng-class="{'app-list-open': showAppList}">
       <a>
@@ -7,9 +7,8 @@
       </a>
       <ul class="apps-list pre-scrollable">
         <li ng-repeat="app in nav.apps.list" ng-click="nav.goToApp(app.Name)">
-            <span>{{app.Name}}</span>
-          <div us-spinner="{color: 'black'}" spinner-key="loading-{{ ::app.Name}}" spinner-start-active
-               style="position:relative; left:50px;"></div>
+          <span>{{app.Name}}</span>
+          <div us-spinner="{color: 'black'}" spinner-key="loading-{{ ::app.Name}}" spinner-start-active style="position:relative; left:50px;"></div>
         </li>
       </ul>
     </li>
@@ -19,16 +18,21 @@
         <span>General</span>
       </a>
     </li>
+    <li ng-class="{active: nav.state == 'app.configuration'}">
+      <a ng-click="nav.goTo($event, 'app.configuration')">
+        <i class="fontello-icon-configuration_2 front-icons"></i>
+        <span style="padding-left: 11px;">App Configuration</span>
+      </a>
+    </li>
     <li ng-class="{active: nav.state == 'security.team', disabled: nav.DatabaseStatus != 1}">
       <a ng-click="nav.goTo($event, 'security.team')">
         <i class="ba-icon-admins front-icons"></i>
         <span style="padding-left: 18px;">Team</span>
       </a>
     </li>
-    <li ng-class="{active: nav.state == 'hosting.hosting_tree'}"
-        class="open-structure">
+    <li ng-class="{active: nav.$state.includes('.hosting') }">
       <a href="">
-        <i class="fontello-icon-hosting front-icons"></i>
+        <i class="fa fa-cloud front-icons"></i>
         <span>Hosting</span>
         <i class="glyphicon glyphicon-hosting"
            ng-class="showHosting == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
@@ -41,24 +45,33 @@
           </a>
         </li>
         <li ng-class="{active: nav.state == 'hosting.hosting_tree', disabled: nav.DatabaseStatus != 1}">
-          <a ng-class="{disabled: nav.DatabaseStatus != 1}"  ng-click="nav.goTo($event, 'hosting.hosting_tree')" href="">
+          <a ng-class="{disabled: nav.DatabaseStatus != 1}" ng-click="nav.goTo($event, 'hosting.hosting_tree')" href="">
             <i class="ba-icon-icon-hosting"></i>
             <span>Hosting Files</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'hosting.files_tree'}">
-          <a ng-click="nav.goTo($event, 'hosting.files_tree')">
-            <i class="fontello-icon-storage front-icons"></i>
-            <span>Storage</span>
-          </a>
-        </li>
       </ul>
     </li>
-    <li ng-class="{active: nav.state == 'app.configuration'}">
-      <a ng-click="nav.goTo($event, 'app.configuration')">
-        <i class="fontello-icon-configuration_2 front-icons"></i>
-        <span style="padding-left: 11px;">App Configuration</span>
+    <li ng-class="{open: nav.$state.includes('_storage')}">
+      <a data-ng-href="">
+          <i class="fontello-icon-storage front-icons"></i>
+          <span>Storage</span>
+          <i class="glyphicon glyphicon-hosting"
+           ng-class="showHosting == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
+      <ul>
+        <li ng-class="{active: nav.$state.includes('hosting.storage.backand_storage')}">
+          <a ng-click="nav.goTo($event, 'hosting.storage.backand_storage')">
+              <i class="fa fa-database" aria-hidden="true"></i>
+                <span>Back& Storage</span>
+              </a>
+        </li>
+        <li ng-class="{active: nav.$state.includes('hosting.storage.external_storage')}">
+          <a ng-click="nav.goTo($event, 'hosting.storage.external_storage')">
+              <i class="fa fa-cloud-upload" aria-hidden="true"></i><span>External Storage</span>
+              </a>
+        </li>
+      </ul>
     </li>
     <!--	TODO <li>
                ng-click="nav.goTo($event, )"

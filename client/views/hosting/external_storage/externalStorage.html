@@ -2,15 +2,15 @@
 <section class="page-form-ele page page-external-functions">
   <div class="row no-gutters">
     <div class="col-md-8">
-      <h2 class="page-title"> External Functions </h2>
+      <h2 class="page-title"> External Storage </h2>
     </div>
     <div class="col-md-4 text-right">
-      <button class="pull-right btn btn-backand" data-ng-click="$ctrl.addNewProvider()"> Add Provider's Account</button>
+      <button class="pull-right btn btn-backand" data-ng-click="$ctrl.addNewStorageProvider()"> Add Provider's Account</button>
     </div>
   </div>
   <section class="panel m-t-md">
     <div class="panel-body">
-      <providers-list launcher-app-url="$ctrl.launcherAppUrl" data-type="'function'"></providers-list>
+      <providers-list data-type="'Storage'" on-load="$ctrl.onLoadProviders(providers)"></providers-list>
     </div>
   </section>
 </section>

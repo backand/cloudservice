@@ -1,0 +1,35 @@
+<div class="box-bk-group">
+  <!-- data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key) && !$ctrl.isNew}" -->
+  <div class="box-bk" data-ng-repeat="providerType in $ctrl.cloudProviderTypes track by $index" data-ng-click="$ctrl.selectProvider(providerType, true)"
+    data-ng-class="{'disabled' : (providerType.key !== $ctrl.selectedProvider.key && !$ctrl.isNew) || !providerType.enable }">
+    <div class="box-bk-content">
+      <div class="circle" data-ng-class="{'active' : providerType.key === $ctrl.selectedProvider.key}">
+        <div class="circle__inner">
+          <div class="circle__wrapper">
+            <div class="circle__content"><img ng-src="assets/images/icons/{{providerType.key}}-{{$ctrl.isStorage() ? 'storage-':'' }}icon.png"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box-bk-footer">
+      <h5 data-ng-bind="providerType.description"></h5>
+    </div>
+  </div>
+</div>
+
+<form name="$ctrl.cloudProviderForm" class="provider-form" novalidate data-ng-submit="$ctrl.saveProvider()">
+  <div us-spinner="" spinner-key="connectionView" spinner-start-active></div>
+  <render-partial data-view="{{$ctrl.selectedProvider.key}}" data-postfix="-{{$ctrl.type}}" data-path="views/providers/new/partials/{{$ctrl.type}}/"></render-partial>
+  <json-parser data-provider="$ctrl.selectedProvider" data-type="$ctrl.type" data-on-json-parsed="$ctrl.updateFormFields(credentials)" data-ng-if=" ( ($ctrl.selectedProvider.key ==='aws' &&$ctrl.selectedProvider.awsType !== 'CROSS_ACCOUNT_ACCESS') ||  $ctrl.selectedProvider.key !=='aws' ) && $ctrl.isNew"></json-parser>
+  <div class="row-col">
+    <div class="row-row">
+      <div class="row-cell v-m text-left">
+        <button type="submit" class="btn-success btn-lg" data-ng-disabled="$ctrl.cloudProviderForm.$invalid || ($ctrl.cloudProvider.AwsRegion.length ==0 && $ctrl.selectedProvider.key === 'aws')">Connect to {{$ctrl.selectedProvider.name}}</button>
+        <button type="button" class="btn btn-link" data-ng-click="$ctrl.modalInstance.dismiss('cancel')" data-ng-if="$ctrl.isNew">Complete later</button>
+      </div>
+      <div class="row-cell v-m text-right">
+        <button type="button" class="btn btn-default" data-ng-if="!$ctrl.isNew && $ctrl.cloudProvider.Id" data-ng-click="$ctrl.deleteProvider($ctrl.cloudProvider)"><i class="glyphicon glyphicon-trash"></i> Remove</button>
+      </div>
+    </div>
+  </div>
+</form>

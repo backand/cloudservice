@@ -154,6 +154,10 @@
             "page": "LL Dialog Connection",
             "url": "http://docs.backand.com/#creating-cross-account-access-for-aws-lambda"
           },
+          "AzureExternalStorage": {
+            "page": "External Storage",
+            "url": "https://docs.microsoft.com/en-us/azure/storage/common/storage-create-storage-account#regenerate-storage-access-keys"
+          },
           "LLSettingGLP": {
             "page": "LL Dialog Connection",
             "url": "https://cloud.google.com/iam/docs/granting-changing-revoking-access"

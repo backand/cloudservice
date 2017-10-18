@@ -23,6 +23,7 @@
       }
       self.currentAppName = AppsService.currentApp.Name;
       self.currentState = $state.current.name;
+      self.$state = $state;
 
       self.secondAppNavChoice = '';
       if (self.backandstorage) {

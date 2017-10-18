@@ -1,0 +1,14 @@
+<div class="form-group">
+  <label for="name" class="control-label">Connection Name</label>
+  <input type="text" class="form-control" id="name" placeholder="Enter Connection Name" ng-model="$ctrl.cloudProvider.Name"
+    required>
+</div>
+<div class="form-group">
+  <label for="gate-way" class="control-label">Fn Server URL</label>
+  <input type="text" class="form-control" id="gate-way" placeholder="http://functions.backand.com:8080" ng-model="$ctrl.cloudProvider.Gateway"
+    required>
+</div>
+<div class="form-group">
+  <label for="connection-string" class="control-label">Connection String (optional)</label>
+  <input type="text" class="form-control" id="connection-string" placeholder="Enter Connection string" ng-model="$ctrl.cloudProvider.ConnectionString">
+</div>
