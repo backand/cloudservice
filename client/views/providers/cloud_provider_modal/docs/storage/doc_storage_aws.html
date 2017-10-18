@@ -35,7 +35,7 @@
     <h3 class="m-t-0 header-title">Creating Cross-Account Access</h3>
   </div>
   <div class="form-group">
-    <p class="text first">To get your AWS Account ID do this:</p>
+    <p class="text first">Follow these steps to get your AWS Account ID:</p>
     <div class="text p-x-md">
       <ul>
         <li>Navigate to the AWS Console for your region.</li>
@@ -44,8 +44,7 @@
       </ul>
     </div>
     <h4 id="aws-cli">AWS CLI</h4>
-    <p class="text">Using CloudFormation, we'll create a stack that we'll use to drive cross-account integration with Back&. Use
-      the following AWS CLI command to get started:</p>
+    <p class="text">Using CloudFormation, we'll create a stack that we'll use to drive cross-account integration with Back&. Use the following AWS CLI command to get started:</p>
     <div class="text">
       <pre><code>aws cloudformation create-stack --template-url https://s3.amazonaws.com/cdn.backand.net/cf/1/backand-s3-ca --parameters ParameterKey=ExternalId,ParameterValue=bknd_{{$ctrl.tokens.general}} --stack-name createBkndCrossAccessS3 --capabilities CAPABILITY_NAMED_IAM</code></pre>
     </div>
@@ -57,10 +56,7 @@
   </div>
   <div class="form-group">
     <div class="alert alert-warning">
-      Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
-      executing your Lambda functions. You can permanently revoke our access at any time by deleting the Role credentials.
-      If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
-        target="_blank">please contact us</a>.
+            Back& takes your security very seriously - all credentials entered are encrypted, and never used for any purpose other than using the resources to which you have granted Back& access. You can permanently revoke our access at any time by deleting the principal credentials. If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact" target="_blank">please contact us</a>.
     </div>
   </div>
 </div>

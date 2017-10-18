@@ -1,8 +1,8 @@
 <div class="provider-modal-header">
-  <h3 class="m-t-0 header-title">Get Google Credentials</h3>
+  <h3 class="m-t-0 header-title">Connect to Google Storage</h3>
 </div>
 <div class="form-group">
-  <h4>Get 'Private Key' and 'Client Email'</h4>
+  <p class="text first">Finding Your 'Private Key' and 'Client Email':</p>
   <div class="text p-x-md">
     <ol>
       <li>Go to the Google <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Cloud API Manager</a> and select "Credentials" on the left.</li>
@@ -11,9 +11,8 @@
       <li>Enter a name for your "Service account name" (e.g. "backand-storage").</li>
       <li>Select "Storage" --> "Storage Object Admin".</li>
       <li>The "Key type" should be "JSON".</li>
-      <li>Click on "Create" to create your private key.</li>
-      <li>That's your so called keyfile which should be downloaded on your machine.</li>
-      <li>Open the JSON file and copy the 'Private Key' and 'Client Email' or upload the JSON using 'Copy Settings'</li>
+      <li>Click on "Create" to create your private key. This creates a keyfile, which should be downloaded to your machine.</li>
+      <li>Open the key file and copy the 'Private Key' and 'Client Email' fields. Alternatively, you can upload the JSON using Backand's 'Copy Settings' link</li>
     </ol>
   </div>
 
@@ -25,9 +24,7 @@
 </div>
 <div class="form-group">
   <div class="alert alert-warning">
-      Backand takes security very seriously - all credentials entered are encrypted, and never used for any purpose other than
-      executing your functions. You can permanently revoke our access at any time by deleting the IAM credentials.
-      If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
+      Back& takes your security very seriously - all credentials entered are encrypted, and never used for any purpose other than using the resources to which you have granted Back& access. You can permanently revoke our access at any time by deleting the principal credentials. If you would like further assistance in setting up the security policy, <a href="https://www.backand.com/contact"
         target="_blank">please contact us</a>.
     </div>
 </div>
