@@ -147,7 +147,7 @@
         }, {
           name: 'FnProject',
           key: 'fnproject',
-          description: 'Oracle fn Project',
+          description: 'Fn project',
           enable: true
         }];
         return providers;
