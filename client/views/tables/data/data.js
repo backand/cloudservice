@@ -244,6 +244,9 @@
     }
 
     function successDataHandler(response) {
+      if(!response){
+        return;
+      }
       self.gridOptions.totalItems = response.data.totalRows;
 
       self.gridOptions.data = response.data.data;
