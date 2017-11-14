@@ -29,6 +29,7 @@
       '$localStorage',
       '$state',
       'TablesService',
+      '$rootScope',
       RulesController]);
 
   function RulesController($scope,
@@ -55,7 +56,8 @@
                            stringifyHttp,
                            $localStorage,
                            $state,
-                           TablesService) {
+                           TablesService,
+                           $rootScope) {
 
     var self = this;
     /**
@@ -946,7 +948,11 @@
      * @param rule
      */
     function updateRule(rule) {
-      return RulesService.update(rule);
+      return RulesService
+      .update(rule)
+      .then(function(){
+        $rootScope.$broadcast('fetchTables');
+      });
     }
 
     function getDefaultValue(type) {
