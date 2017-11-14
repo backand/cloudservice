@@ -169,6 +169,7 @@
                         }
                         spinner(false);
                         skipModal = false;
+                        $rootScope.$broadcast('fetchTables');
                       }).catch(function (error) {
                         $log.error('Error while deleting a provider', error);
                         spinner(false);
