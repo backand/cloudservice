@@ -70,7 +70,7 @@
           self.storage.favoriteLanguage = 1;
           break;
       }
-      var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
+      var state = ($state.current.parent == "apps" ? "docs.starter_app_select_open" : "docs.starter_app_select");
       $state.go(state, {starterAppId: starterAppId, mode:$state.params.mode, newApp: $state.params.newApp});
       AnalyticsService.track('PlatformSelected', {starterApp: starterAppId, mode:$state.params.mode});
     };
@@ -88,7 +88,7 @@
         options[6] = 'reactNative';
         options[7] = 'jquery';
         options[8] = 'vuejs';
-        var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
+        var state = ($state.current.parent == "apps" ? "docs.starter_app_select_open" : "docs.starter_app_select");
         $state.go(state, {starterAppId: options[self.storage.docLanguage], mode:$state.params.mode, newApp: $state.params.newApp});
 
       }

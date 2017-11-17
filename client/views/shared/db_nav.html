@@ -1,16 +1,14 @@
 <div class="nav-wrapper">
   <ul id="nav2" class="nav" collapse-nav>
     <li class="apps-header" ng-click="showAppList = !showAppList" ng-class="{'app-list-open': showAppList}">
-      <a >
+      <a>
         <span>{{nav.currentAppName}}</span>
         <div class="down-triangle"></div>
       </a>
       <ul class="apps-list pre-scrollable">
-        <li ng-repeat="app in nav.apps.list"
-            ng-click="nav.goToApp(app.Name)">
+        <li ng-repeat="app in nav.apps.list" ng-click="nav.goToApp(app.Name)">
           <span>{{app.Name}}</span>
-          <div us-spinner="{color: 'black'}" spinner-key="loading-{{ ::app.Name}}" spinner-start-active
-               style="position:relative; left:50px;"></div>
+          <div us-spinner="{color: 'black'}" spinner-key="loading-{{ ::app.Name}}" spinner-start-active style="position:relative; left:50px;"></div>
         </li>
       </ul>
     </li>
@@ -20,7 +18,7 @@
         <span>Dashboard</span>
       </a>
     </li>
-    <li ng-class="{active: nav.state == 'playground.orm'}" class="open-structure">
+    <li ng-class="{active: nav.state == 'playground.orm'}" class="open-structure" open-menu="{{(nav.$state.params.mode == 'existing') || (nav.$state.params.mode == 'kickstart') || nav.$state.includes('playground.show') || nav.$state.includes('docs.realtime')}}">
       <a href="">
         <i class="ba-icon-docs-and-api front-icons"></i>
         <span style="padding-left: 15px">Docs & API</span>
@@ -34,13 +32,13 @@
             <span>Examples</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'docs.platform_select_kickstart'}">
+        <li ng-class="{active: nav.$state.params.mode == 'kickstart'}">
           <a ng-click="nav.goTo($event, 'docs.platform_select_kickstart')">
             <i class="ba-icon-kickstart-tutorial"></i>
             <span>Kickstart Tutorials</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'docs.platform_select_existing'}">
+        <li ng-class="{active: nav.$state.params.mode == 'existing'}">
           <a ng-click="nav.goTo($event, 'docs.platform_select_existing')">
             <i class="ba-icon-kickstart-tutorial"></i>
             <span>Existing App</span>
@@ -58,8 +56,7 @@
             <span>Documentation</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}"
-            class="sub-objects-icons">
+        <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}" class="sub-objects-icons">
           <a ng-click="nav.goTo($event, 'playground.show')">
             <i class="ba-icon-rest-api-playground"></i>
             <span style="padding-left: 19px">REST API Playground</span>
@@ -67,22 +64,19 @@
         </li>
       </ul>
     </li>
-    <li ng-if="nav.app.connectionSource === 'local'"
-        ng-class="{active: nav.state == 'erd_model'}" href="">
+    <li ng-if="nav.app.connectionSource === 'local'" ng-class="{active: nav.state == 'erd_model'}" href="">
       <a href="" ng-click="nav.goToModel($event)">
         <i class="fontello-icon-model front-icons"></i>
         <span>Model</span>
       </a>
     </li>
-    <li ng-if="nav.app.connectionSource !== 'local'"
-        ng-class="{active: nav.state == 'tables.notables'}"  href="">
+    <li ng-if="nav.app.connectionSource !== 'local'" ng-class="{active: nav.state == 'tables.notables'}" href="">
       <a ui-sref="tables.notables">
         <i class="ba-icon-model front-icons"></i>
         <span>Sync with Database</span>
       </a>
     </li>
-    <li class="open-structure"
-        ng-class="{disabled: nav.DatabaseStatus != 1 }">
+    <li class="open-structure" ng-class="{disabled: nav.DatabaseStatus != 1 }">
       <a href="">
         <i class="fontello-icon-object front-icons"></i>
         <span>Objects</span>
@@ -97,16 +91,15 @@
           </a>
           <div class="menu-border"></div>
         </li>
-        <li  ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"
-            class="crop ">
-          <a ng-click="nav.showTable($event, table)" tooltip="{{table.name}}"  tooltip-popup-delay="500" tooltip-placement="right" tooltip-append-to-body="true">
+        <li ng-repeat="table in nav.tables track by table.name" ng-class="{active: nav.stateparam.tableId == table.__metadata.id}"
+          class="crop ">
+          <a ng-click="nav.showTable($event, table)" tooltip="{{table.name}}" tooltip-popup-delay="500" tooltip-placement="right" tooltip-append-to-body="true">
             <span>{{table.name}}</span>
           </a>
         </li>
       </ul>
     </li>
-    <li ng-class="{disabled: nav.DatabaseStatus != 1}"
-        class="open-structure">
+    <li ng-class="{disabled: nav.DatabaseStatus != 1}" class="open-structure">
       <a href="">
         <i class="ba-icon-quries front-icons"></i>
         <span>Queries</span>
@@ -114,9 +107,7 @@
            ng-class="showQueries == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
       <ul>
-        <li ng-class="{active: nav.state == 'dbQueries.newQuery' }"
-            ng-if="nav.DatabaseStatus == 1"
-            class="sub-objects-icons new-function-selection">
+        <li ng-class="{active: nav.state == 'dbQueries.newQuery' }" ng-if="nav.DatabaseStatus == 1" class="sub-objects-icons new-function-selection">
           <a ng-click="nav.newDbQuery($event)">
             <i class="ti-plus"></i>
             <span>New Query</span>
@@ -125,9 +116,9 @@
         </li>
 
         <ul>
-          <li ng-class="{active: query.iD == nav.stateparam.queryId}" ng-repeat="query in nav.queries"
-              class="sub-objects-icons crop">
-            <a ng-click="nav.showDbQuery($event, query)" tooltip="{{query.name}}" tooltip-popup-delay="500" tooltip-placement="right" tooltip-append-to-body="true">
+          <li ng-class="{active: query.iD == nav.stateparam.queryId}" ng-repeat="query in nav.queries" class="sub-objects-icons crop">
+            <a ng-click="nav.showDbQuery($event, query)" tooltip="{{query.name}}" tooltip-popup-delay="500" tooltip-placement="right"
+              tooltip-append-to-body="true">
               <span>{{query.name}}</span>
             </a>
           </li>
@@ -182,8 +173,7 @@
         </li>
       </ul>
     </li>
-    <li ng-if="nav.DatabaseStatus == 1"
-        ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
+    <li ng-if="nav.DatabaseStatus == 1" ng-class="{active: nav.state == 'database.show' || nav.state == 'database.edit'}">
       <a ng-click="nav.goTo($event, 'database.show')">
         <i class="ba-icon-database front-icons"></i>
         <span>Database Settings</span>

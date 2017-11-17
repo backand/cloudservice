@@ -833,6 +833,10 @@ ba-help-link {
     display: inline-block;
 }
 
+.display-block {
+    display: block;
+}
+
 .relative {
     position: relative;
 }
@@ -928,4 +932,14 @@ ba-help-link {
 
 .text-danger {
     color: #FE4A00;
+}
+
+.nav-container {
+    .nav {
+        ul {
+            &.display-block {
+                @extend .display-block;
+            }
+        }
+    }
 }

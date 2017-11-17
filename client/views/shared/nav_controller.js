@@ -8,6 +8,9 @@
     var self = this;
 
     (function init() {
+      console.warn('function State', $state.current.name, $state.includes('docs'));
+      console.warn('Parent State', $state.includes('cronJobs.new'));
+
       self.isTablesClicked = false;
       self.apps = AppsService.apps;
       self.app = AppsService.currentApp;
@@ -77,14 +80,14 @@
 
       if ($localStorage.backand[self.currentAppName] && $localStorage.backand[self.currentAppName].currentState !== 'apps.index') {
         var currentState = $localStorage.backand[self.currentAppName].currentState;
-        $state.go('app', {appName: self.currentAppName}, {reload: true}).then(function () {
+        $state.go('app', { appName: self.currentAppName }, { reload: true }).then(function () {
           if (currentState) {
             $state.go(currentState);
           }
         });
       }
       else {
-        $state.go('app', {appName: self.currentAppName}, {reload: true});
+        $state.go('app', { appName: self.currentAppName }, { reload: true });
       }
     };
     function clearTables() {
@@ -232,8 +235,8 @@
     function fetchCronJobs() {
       CronService.appName = self.appName;
       CronService.getAll().then(function (response) {
-          self.cronJobs = response.data.data;
-        },
+        self.cronJobs = response.data.data;
+      },
         function (error) {
           $log.debug("Error fetching cron jobs", error);
         }
@@ -306,15 +309,15 @@
 
       //track events`
       if (state == "app.billing") {
-        AnalyticsService.track('BillingLeftMenuBillingPortal', {appName: $state.params.appName});
+        AnalyticsService.track('BillingLeftMenuBillingPortal', { appName: $state.params.appName });
       }
       //track events
       if (state == "app.billingupgrade") {
-        AnalyticsService.track('BillingLeftMenuBillingUpgrade', {appName: $state.params.appName});
+        AnalyticsService.track('BillingLeftMenuBillingUpgrade', { appName: $state.params.appName });
       }
       //track events
       if (state == "app.billingpayment") {
-        AnalyticsService.track('BillingLeftMenuBillingPayment', {appName: $state.params.appName});
+        AnalyticsService.track('BillingLeftMenuBillingPayment', { appName: $state.params.appName });
       }
 
 
@@ -360,7 +363,7 @@
       goToState($event, 'functions.newlambdafunctions');
     };
     // goes to the external functions state from the sub-menu functions
-    self.showExternalFunction = function($event){
+    self.showExternalFunction = function ($event) {
       goToState($event, 'functions.externalFunctions');
     };
     self.showFunction = function ($event, func) {
@@ -378,14 +381,14 @@
     };
 
     self.newObject = function ($event) {
-      var params = {isNewObject: true};
+      var params = { isNewObject: true };
       goToState($event, 'erd_model', params);
     };
 
     // Used to support opening links in new tab
     function goToState($event, state, params) {
       if ($event.which === 2 || ($event.which === 1 && ($event.metaKey || $event.ctrlKey))) {
-        var url = $state.href(state, params, {absolute: true});
+        var url = $state.href(state, params, { absolute: true });
         window.open(url, '_blank');
       }
       // for the state to be saved when pressing the logo homepage button then any redirect will not be saved by

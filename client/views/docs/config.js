@@ -92,7 +92,7 @@
         templateUrl: 'views/docs/hosting.html',
         controller: 'Docs as docs'
       })
-      .state('docs.platform_select_kickstart-open', {
+      .state('docs.platform_select_kickstart_open', {
         parent: 'apps',
         url: 'kickstart',
         controller: 'PlatformSelectController as vm',
@@ -112,7 +112,7 @@
           newApp: false
         }
       })
-      .state('docs.platform_select_existing-open', {
+      .state('docs.platform_select_existing_open', {
         parent: 'apps',
         url: 'start',
         controller: 'PlatformSelectController as vm',
@@ -142,7 +142,7 @@
           newApp: false
         }
       })
-      .state('docs.starter_app_select-open', {
+      .state('docs.starter_app_select_open', {
         parent: 'apps',
         url: 'starter_app/:mode',
         controller: 'StarterAppSelectController as vm',

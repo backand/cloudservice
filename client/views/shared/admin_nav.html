@@ -30,7 +30,7 @@
         <span style="padding-left: 18px;">Team</span>
       </a>
     </li>
-    <li ng-class="{active: nav.$state.includes('.hosting') }">
+    <li ng-class="{active: nav.$state.includes('.hosting') }" open-menu="{{ nav.$state.includes('docs.hosting') || nav.$state.includes('hosting.hosting_tree')}}">
       <a href="">
         <i class="fa fa-cloud front-icons"></i>
         <span>Hosting</span>
@@ -52,7 +52,7 @@
         </li>
       </ul>
     </li>
-    <li ng-class="{open: nav.$state.includes('_storage')}">
+    <li ng-class="{open: nav.$state.includes('_storage')}" open-menu="{{ nav.$state.includes('hosting.storage')}}">
       <a data-ng-href="">
           <i class="fontello-icon-storage front-icons"></i>
           <span>Storage</span>
@@ -81,7 +81,7 @@
              class="icon-constants">
                 <span>Enviroment Variables</span>
         </li>-->
-    <li class="open-structure">
+    <li class="open-structure" open-menu="{{ nav.$state.includes('app.billing') || nav.$state.includes('app.billingupgrade') || nav.$state.includes('app.billingpayment')}}">
       <a href="">
         <i class="ti-money front-icons"></i>
         <span>Billing</span>
@@ -116,7 +116,7 @@
         <span>Reports</span>
       </a>
     </li>
-    <li class="open-structure">
+    <li class="open-structure" open-menu="{{ nav.$state.includes('log')}}">
       <a href="">
         <i class="fontello-icon-data-history-log front-icons"></i>
         <span>All Logs</span>

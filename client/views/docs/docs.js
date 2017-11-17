@@ -49,7 +49,7 @@
 
     self.goToQuickstart = function () {
       if (_.isEmpty(AppsService.currentApp)) {
-        $state.go('docs.platform_select_kickstart-open');
+        $state.go('docs.platform_select_kickstart_open');
       }
       else {
         $state.go('docs.platform_select_kickstart');

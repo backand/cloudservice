@@ -109,7 +109,7 @@
         options[7] = 'jquery';
         options[8] = 'vuejs';
         self.selectedPlatform = options[self.storage.docLanguage];
-        var state = ($state.current.parent == "apps" ? "docs.starter_app_select-open" : "docs.starter_app_select");
+        var state = ($state.current.parent == "apps" ? "docs.starter_app_select_open" : "docs.starter_app_select");
         $state.go(state, {starterAppId: self.selectedPlatform, mode:$state.params.mode, newApp: $state.params.newApp});
       }
     };
