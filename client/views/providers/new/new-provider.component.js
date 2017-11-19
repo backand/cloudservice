@@ -40,7 +40,7 @@
             var $ctrl = this,
               regions,
               defaultSecretKeyHas = '************',
-              STORAGE = 'Storage',
+              STORAGE = 'storage',
               CLOUD = 'cloud';
 
             /**

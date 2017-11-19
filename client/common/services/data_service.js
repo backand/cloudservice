@@ -20,7 +20,7 @@
           // END
         };
 
-        self.log.push(logItem);
+        self.log.unshift(logItem);
         self.logIndex.last = self.log.length - 1;
       }
       return $http(http)

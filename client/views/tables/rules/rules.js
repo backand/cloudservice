@@ -29,6 +29,7 @@
       '$localStorage',
       '$state',
       'TablesService',
+      '$rootScope',
       RulesController]);
 
   function RulesController($scope,
@@ -55,7 +56,8 @@
                            stringifyHttp,
                            $localStorage,
                            $state,
-                           TablesService) {
+                           TablesService,
+                           $rootScope) {
 
     var self = this;
     /**
@@ -72,6 +74,18 @@
       self.debugMode = 'debug';
       self.editMode = $stateParams.editMode || false;
       //self.test.method = 'GET';
+
+      if(self.mode.name === 'action'){
+        self.namePattern = /^[\w\d_\- ]*$/;
+      } else {
+        self.namePattern = /^[\w\d_\-]*$/;
+      }
+      
+      // list of parameters:
+      // each parameter starts with letter or '_' and may contain also numbers
+      // the list should start and end with parameters, delimited by ',', allowing spaces (not within a parameter)
+      self.paramsPattern = /^\s*(?:(?:[A-Za-z_]\w*)(?:\s*,\s*)?)*$/;
+      self.codePattern = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
 
       self.showTemplatesForm = !Number($stateParams.actionId)>0; //check if there is an action
       if($stateParams.test === 'true'){
@@ -946,7 +960,11 @@
      * @param rule
      */
     function updateRule(rule) {
-      return RulesService.update(rule);
+      return RulesService
+      .update(rule)
+      .then(function(){
+        $rootScope.$broadcast('fetchTables');
+      });
     }
 
     function getDefaultValue(type) {
@@ -1549,13 +1567,6 @@
     function getResultUrl() {
       return self.test.result;
     }
-
-    self.namePattern = /^[\w\d_\-]*$/;
-    // list of parameters:
-    // each parameter starts with letter or '_' and may contain also numbers
-    // the list should start and end with parameters, delimited by ',', allowing spaces (not within a parameter)
-    self.paramsPattern = /^\s*(?:(?:[A-Za-z_]\w*)(?:\s*,\s*)?)*$/;
-    self.codePattern = /\s*function\s+backandCallback\s*\(\s*userInput\s*,\s*dbRow\s*,\s*parameters\s*,\s*userProfile\s*\)\s*{(.|[\r\n])*}\s*$/;
 
     var backandCallbackConstCode = {
       start: '/* globals\n\  $http - Service for AJAX calls \n' +

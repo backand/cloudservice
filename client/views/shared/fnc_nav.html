@@ -47,7 +47,8 @@
         </li>
       </ul>
     </li>
-    <li ng-class="{disabled: nav.DatabaseStatus != 1}" class="open-structure">
+
+    <li ng-class="{disabled: nav.DatabaseStatus != 1}" class="open-structure" open-menu="{{nav.$state.includes('functions')}}">
       <a href="">
     <i class="fontello-icon-functions front-icons"></i>
     <span style="padding-left: 11px">Functions</span>
@@ -76,7 +77,7 @@
 
       </a>
           <div class="menu-border"></div>
-          <ul>
+          <ul ng-class="{'display-block': nav.$state.includes('functions')}">
             <li ng-repeat="func in nav.functions track by $index" ng-class="{active: func.iD == nav.stateparam.functionId}" class="sub-functions-icons function-list crop">
               <a ng-click="nav.showFunction($event, func)" tooltip="{{func.name}}" tooltip-popup-delay="500" tooltip-placement="right"
                 tooltip-append-to-body="true">
@@ -88,7 +89,7 @@
             </li>
           </ul>
         </li>
-   
+
       </ul>
     </li>
     <li ng-class="{active: nav.state == 'functions.lambda_launcher'}">
@@ -105,7 +106,7 @@
           class="icon-integrations">
      <span>Integrations</span>
  </li> -->
-    <li ng-class="{disabled: nav.DatabaseStatus != 1}" class="open-structure">
+    <li ng-class="{disabled: nav.DatabaseStatus != 1}" class="open-structure" open-menu="{{nav.$state.includes('cronJobs')}}">
       <a href="">
     <i class="fontello-icon-cron front-icons"></i>
     <span style="padding-left:12px;">Cron Jobs</span>
