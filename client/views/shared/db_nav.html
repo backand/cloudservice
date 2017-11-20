@@ -76,7 +76,7 @@
         <span>Sync with Database</span>
       </a>
     </li>
-    <li class="open-structure" ng-class="{disabled: nav.DatabaseStatus != 1 }">
+    <li class="open-structure" ng-class="{disabled: nav.DatabaseStatus != 1 }" open-menu="{{nav.$state.includes('erd_model') || nav.$state.includes('object_data')}}">
       <a href="">
         <i class="fontello-icon-object front-icons"></i>
         <span>Objects</span>
@@ -99,14 +99,14 @@
         </li>
       </ul>
     </li>
-    <li ng-class="{disabled: nav.DatabaseStatus != 1}" class="open-structure">
+    <li ng-class="{disabled: nav.DatabaseStatus != 1}" class="open-structure" open-menu="{{nav.$state.includes('dbQueries')}}">
       <a href="">
         <i class="ba-icon-quries front-icons"></i>
         <span>Queries</span>
         <i class="glyphicon glyphicon-query"
            ng-class="showQueries == true ? 'glyphicon-chevron-right' : 'glyphicon-chevron-right'"></i>
       </a>
-      <ul>
+      <ul class="ex4" id="ex4" href="">
         <li ng-class="{active: nav.state == 'dbQueries.newQuery' }" ng-if="nav.DatabaseStatus == 1" class="sub-objects-icons new-function-selection">
           <a ng-click="nav.newDbQuery($event)">
             <i class="ti-plus"></i>
@@ -114,15 +114,12 @@
           </a>
           <div class="menu-border"></div>
         </li>
-
-        <ul>
           <li ng-class="{active: query.iD == nav.stateparam.queryId}" ng-repeat="query in nav.queries" class="sub-objects-icons crop">
             <a ng-click="nav.showDbQuery($event, query)" tooltip="{{query.name}}" tooltip-popup-delay="500" tooltip-placement="right"
               tooltip-append-to-body="true">
               <span>{{query.name}}</span>
             </a>
           </li>
-        </ul>
       </ul>
     </li>
     <!--<li ng-class="{active: nav.backandstorage.currentState == 'db_model'}"
