@@ -79,13 +79,17 @@
           <div class="menu-border"></div>
           <ul ng-class="{'display-block': nav.$state.includes('functions')}">
             <li ng-repeat="func in nav.functions track by $index" ng-class="{active: func.iD == nav.stateparam.functionId}" class="sub-functions-icons function-list crop">
-              <a ng-click="nav.showFunction($event, func)" tooltip="{{func.name}}" tooltip-popup-delay="500" tooltip-placement="right"
-                tooltip-append-to-body="true">
-            <span>{{func.name}}</span>
-          </a>
-              <i data-ng-show="func.cloudProvider == 'AWS'" ng-class="{'fontello-icon-functions': func.cloudProvider == 'AWS' }"></i>
-              <img data-ng-if="func.cloudProvider != 'AWS'" ng-src="/assets/images/icons/{{func.cloudProvider.toLowerCase()}}-function.svg"
-                width="16px" height="16px" style="margin: 0;padding: 0" />
+              <div style="float: left">
+                <a ng-click="nav.showFunction($event, func)" tooltip="{{func.name}}" tooltip-popup-delay="500" tooltip-placement="right"
+                  tooltip-append-to-body="true" style="padding-left: 20px !important;">
+              <span>{{func.name}}</span>
+            </a>
+              </div>
+              <div style="float: right;margin: 8px 6px">
+                  <i data-ng-show="func.cloudProvider == 'AWS'" ng-class="{'fontello-icon-functions': func.cloudProvider == 'AWS' }"></i>
+                  <img data-ng-if="func.cloudProvider != 'AWS'" ng-src="/assets/images/icons/{{func.cloudProvider.toLowerCase()}}-function.svg"
+                    width="16px" height="16px" style="margin: 0;padding: 0" />
+              </div>
             </li>
           </ul>
         </li>
