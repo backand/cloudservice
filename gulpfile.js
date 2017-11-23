@@ -97,7 +97,7 @@ gulp.task('sass', function () {
 
 //build files for creating a dist release
 gulp.task('build:dist', ['clean'], function (cb) {
-  runSequence(['build', 'copy', 'copy:assets', 'images'], 'html', cb);
+  runSequence(['build', 'copy', 'images'], 'html', cb);
 });
 
 //build files for development
@@ -138,19 +138,18 @@ gulp.task('html', function () {
     }));
 });
 
-//copy assets in dist folder
-gulp.task('copy:assets', function () {
-  return gulp.src(config.assets, {
+//copy fonts
+gulp.task('copy:fonts', function () {
+  return gulp.src([config.assets + '/fonts/**'], {
     dot: true
-  }).pipe(gulp.dest(config.dist + '/assets'))
-    .pipe(gulp.dest(config.dist + '/assets/assets')) //bug in the views that need /assets/assets
+  }).pipe(gulp.dest(config.dist + '/assets/fonts'))
     .pipe($.size({
-      title: 'copy:assets'
+      title: 'copy:fonts'
     }));
 });
 
 //copy assets in dist folder
-gulp.task('copy', ['copy:extra'], function () {
+gulp.task('copy', ['copy:fonts', 'copy:extra'], function () {
   return gulp.src([
     config.base + '/*',
     '!' + config.base + '/*.html',
@@ -272,7 +271,7 @@ gulp.task('serve:dist', ['env:prod', 'build:dist'], function () {
 });
 
 gulp.task('serve:deploy', ['env:prod', 'build:dist'], function () {
-  
+
 });
 
 //run the dev in the dist folder

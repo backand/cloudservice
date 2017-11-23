@@ -22,7 +22,7 @@ module.exports = {
     'client/test/e2e/**/*.js'
   ],
   index: 'client/index.html',
-  assets: 'client/assets/**',
+  assets: 'client/assets',
   images: 'client/assets/images/**/*',
   banner: ['/**',
     ' * <%= pkg.name %> - <%= pkg.description %>',
