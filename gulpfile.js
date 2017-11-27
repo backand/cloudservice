@@ -164,8 +164,7 @@ gulp.task('copy', ['copy:fonts', 'copy:extra'], function () {
 gulp.task('copy:extra', function () {
   gulp.src([
     config.base + '/views/database/db_templates/*',
-    config.base + '/vendor/zeroclipboard/dist/*',
-    config.base + '/examples/todo/*'
+    config.base + '/vendor/zeroclipboard/dist/*'
   ], { base: config.base })
     .pipe(gulp.dest(config.dist));
 });
