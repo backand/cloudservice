@@ -1,7 +1,7 @@
 (function () {
 
 angular.module('common.directives')
-  .directive('bkndFlowChart', function () {
+  .directive('bkndFlowChart', ['$rootScope', function ($rootScope) {
     return {
       restrict: 'E',
       templateUrl: "common/directives/flowchart/flowchart.html",
@@ -21,6 +21,7 @@ angular.module('common.directives')
       controllerAs: 'flowchartCtrl',
       bindToController: true,
       link: function (scope) {
+        console.info('Console from bkndFlowChart - ', typeof $rootScope.assets_path);
         if (scope.flowchartCtrl.selectedNode) {
           var node = scope.flowchartCtrl.chartViewModel.findNode(scope.flowchartCtrl.selectedNode);
           if (node) {
@@ -29,7 +30,7 @@ angular.module('common.directives')
         }
       }
     };
-  });
+  }]);
 
 FlowchartCtrl.$inject = ['FieldsService'];
 function FlowchartCtrl (FieldsService) {

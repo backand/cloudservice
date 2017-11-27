@@ -20,12 +20,18 @@ var rsync = require('gulp-rsync');
 var confirm = require('gulp-confirm');
 var _ = require('lodash');
 var backandSync = require('./node_modules/backand/lib/api/backand-sync-s3');
+var sassVariables = require('gulp-sass-variables');
+var ngConstant = require('gulp-ng-constant');
+var argv = require('yargs').argv;
 
 
 /* jshint camelcase:false*/
 var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
 var webdriverUpdate = require('gulp-protractor').webdriver_update;
 var currEnv = 'dev';
+
+var gtask = 'serve';
+var assets_path;
 
 //update webdriver if necessary, this task will be used by e2e task
 gulp.task('webdriver:update', webdriverUpdate);
@@ -76,6 +82,9 @@ gulp.task('templates', function () {
 //generate css files from scss sources
 gulp.task('sass', function () {
   return gulp.src(config.mainScss)
+    .pipe(sassVariables({
+      $assets_path: assets_path
+    }))
     .pipe($.sass({
       includePaths: [
         process.cwd() + '/client/vendor/bootstrap-sass-official/assets/stylesheets'
@@ -102,7 +111,7 @@ gulp.task('build:dist', ['clean'], function (cb) {
 
 //build files for development
 gulp.task('build', ['clean'], function (cb) {
-  runSequence(['sass', 'templates'], cb);
+  runSequence(['configAssetsPath', 'sass', 'templates'], cb);
 });
 
 //generate a minified css files, 2 js file, change theirs name to be unique, and generate sourcemaps
@@ -210,11 +219,13 @@ gulp.task('test:e2e', ['webdriver:update'], function () {
 
 //run the server,  watch for file changes and redo tests.
 gulp.task('serve:tdd', function (cb) {
+  gtask = 'serve';
   runSequence(['serve', 'tdd']);
 });
 
 //run the server after having built generated files, and watch for changes
 gulp.task('serve', ['env:dev', 'build'], function () {
+  gtask = 'serve';
   //var proxyOptions = url.parse('http://api.backand.info:8099');
   var proxyOptions = url.parse('https://api.backand.co');
   proxyOptions.route = '/api';
@@ -238,7 +249,7 @@ gulp.task('serve', ['env:dev', 'build'], function () {
 });
 
 //run the server after having built generated files, and watch for changes
-gulp.task('serve:prod', ['env:prod', 'build'], function () {
+gulp.task('serve:prod', ['env:prod', 'configAssetsPath', 'build'], function () {
   //var proxyOptions = url.parse('http://api.backand.info:8099');
   var proxyOptions = url.parse('https://api.backand.com');
   proxyOptions.route = '/api';
@@ -262,7 +273,7 @@ gulp.task('serve:prod', ['env:prod', 'build'], function () {
 });
 
 //run the app packed in the dist folder
-gulp.task('serve:dist', ['env:prod', 'build:dist'], function () {
+gulp.task('serve:dist', ['env:prod', 'configAssetsPath', 'build:dist'], function () {
   browserSync({
     notify: false,
     server: [config.dist]
@@ -274,7 +285,7 @@ gulp.task('serve:deploy', ['env:prod', 'build:dist'], function () {
 });
 
 //run the dev in the dist folder
-gulp.task('dev:dist', ['env:dev', 'build:dist'], function () {
+gulp.task('dev:dist', ['configAssetsPath', 'env:dev', 'build:dist'], function () {
   browserSync({
     notify: false,
     server: [config.dist]
@@ -293,7 +304,7 @@ gulp.task('local:dist', ['env:local', 'build:dist'], function () {
   //backand sync --app bklocal --master 2021e4b3-50e1-4e24-8ff0-f512e13b6e51 --user ff46366b-840f-11e6-8eff-0e00ae4d21e3 --folder /Users/itay/dev/cloudservice-baas/build/dist
 });
 
-gulp.task('local', [], function () {
+gulp.task('local', ['configAssetsPath'], function () {
 
   return backandSync.dist(config.dist, 'bklocal');
 
@@ -301,7 +312,7 @@ gulp.task('local', [], function () {
 });
 
 //run the Blue in the dist folder
-gulp.task('blue:dist', ['env:blue', 'build:dist'], function () {
+gulp.task('blue:dist', ['configAssetsPath', 'env:blue', 'build:dist'], function () {
   // browserSync({
   //   notify: false,
   //   server: [config.dist]
@@ -317,7 +328,7 @@ gulp.task('qa:deploy', ['sts'], function () {
 });
 
 //deploy the code into production
-gulp.task('qa:dist', ['env:dev', 'build:dist'], function () {
+gulp.task('qa:dist', ['setAssetsPath', 'env:dev', 'build:dist'], function () {
   return backandSync.dist(config.dist, 'qa1');
 });
 
@@ -338,6 +349,28 @@ function setEnv(env) {
 
   currEnv = env;
 }
+
+
+function setAssetsPath() {
+  var gtask = argv._[0];
+  console.log('Running Task - ' + gtask);
+  assets_path = _.startsWith(gtask, 'serve') ? '/assets/' : '../';
+  var constants = { assets_path: assets_path };
+  return ngConstant({
+    name: 'backand.consts',
+    constants: constants,
+    deps: ['ngAnimate'],
+    template: config.constantTemplate,
+    stream: true,
+    wrap: false
+  })
+    //.rename('app.constants.js'),
+    .pipe(gulp.dest(config.consts));
+}
+
+gulp.task('configAssetsPath', function () {
+  setAssetsPath();
+});
 
 gulp.task('env:dev', function () {
   setEnv('dev');

@@ -51,5 +51,19 @@ module.exports = {
       exclude: ['.DS_Store'],
       include: []
     }
-  }
+  },
+ constantTemplate: '/**\n' +
+  ' * @ngdoc overview\n' +
+  ' *\n' +
+  ' * @description\n' +
+  ' * Application constants created by gulp task\n' +
+  ' *\n' +
+  ' * @author Mohan Singh ( gmail::singhmohancs@gmail.com, skype :: mohan.singh42 )\n' +
+  ' */\n' +
+  '(function () {\n' +
+  '  \'use strict\';\n' +
+  '  angular\n' +
+  '    .module(\'<%- moduleName %>\')\n' +
+  '<% constants.forEach(function(constant) { %>    .constant(\'<%- constant.name %>\', <%= constant.value %>)\n<% }) %>;\n' +
+  '})();\n'
 };
