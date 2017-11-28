@@ -35,6 +35,7 @@
     'ngClipboard',
     'backand.routes',
     'backand.consts',
+    'backand.ENV_CONFIG',
     'angularSpinner',
     'ngAnimate',
     'toaster',
@@ -79,11 +80,5 @@
     }])
     .run(['$log', 'editableOptions', '$localStorage', 'assets_path', '$rootScope', run])
     .value('version', '1.9.4');
-
-
-  angular.element(document).ready(function () {
-    angular.bootstrap(document, ['backand']);
-  });
-
 
 })();

@@ -9,7 +9,8 @@
 (function () {
   'use strict';
   angular
-    .module('backand.consts')
+    .module('backand.ENV_CONFIG', [])
     .constant('assets_path', "../")
+    .constant('env', "prod")
 ;
 })();

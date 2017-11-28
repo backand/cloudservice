@@ -29,8 +29,6 @@ var argv = require('yargs').argv;
 var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
 var webdriverUpdate = require('gulp-protractor').webdriver_update;
 var currEnv = 'dev';
-
-var gtask = 'serve';
 var assets_path;
 
 //update webdriver if necessary, this task will be used by e2e task
@@ -158,7 +156,7 @@ gulp.task('copy:fonts', function () {
 });
 
 //copy assets in dist folder
-gulp.task('copy', ['copy:fonts', 'copy:extra'], function () {
+gulp.task('copy', ['copy:fonts', 'copy:extra', 'copy:envConfig'], function () {
   return gulp.src([
     config.base + '/*',
     '!' + config.base + '/*.html',
@@ -175,6 +173,20 @@ gulp.task('copy:extra', function () {
     config.base + '/views/database/db_templates/*',
     config.base + '/vendor/zeroclipboard/dist/*'
   ], { base: config.base })
+    .pipe(gulp.dest(config.dist));
+});
+
+/**
+ * copy env configuration file in /dist
+ * configuration can be changed in this file
+ * Purpose to do this is to make configuration dynamic and use can change config after build
+ */
+gulp.task('copy:envConfig', function () {
+  gulp.src([
+    config.base + '/config/env/' + currEnv + '.json'
+  ], {
+      base: config.base, dot: true
+    })
     .pipe(gulp.dest(config.dist));
 });
 
@@ -219,13 +231,11 @@ gulp.task('test:e2e', ['webdriver:update'], function () {
 
 //run the server,  watch for file changes and redo tests.
 gulp.task('serve:tdd', function (cb) {
-  gtask = 'serve';
   runSequence(['serve', 'tdd']);
 });
 
 //run the server after having built generated files, and watch for changes
 gulp.task('serve', ['env:dev', 'build'], function () {
-  gtask = 'serve';
   //var proxyOptions = url.parse('http://api.backand.info:8099');
   var proxyOptions = url.parse('https://api.backand.co');
   proxyOptions.route = '/api';
@@ -332,6 +342,8 @@ gulp.task('qa:dist', ['setAssetsPath', 'env:dev', 'build:dist'], function () {
   return backandSync.dist(config.dist, 'qa1');
 });
 
+gulp.task('prod:dist', ['env:prod', 'build:dist']);
+
 gulp.task('sts', function () {
   var username = "9b37748c-0646-40da-9100-59a86d4c7da4";
   var password = "d94c5b9e-9f2a-11e5-be83-0ed7053426cb";
@@ -339,27 +351,17 @@ gulp.task('sts', function () {
 });
 
 function setEnv(env) {
-  // Read the settings from the right file
-  var settings = JSON.parse(fs.readFileSync('./client/config/env/' + env + '.json', 'utf8'));
-
-  // Replace each placeholder with the correct value for the variable.
-  gulp.src('./client/config/env/consts.js')
-    .pipe(replace({ patterns: [{ match: 'consts', replacement: settings }] }))
-    .pipe(gulp.dest(config.consts));
-
   currEnv = env;
 }
 
-
 function setAssetsPath() {
-  var gtask = argv._[0];
-  console.log('Running Task - ' + gtask);
+  var gtask = argv._[0],
+    constants;
   assets_path = _.startsWith(gtask, 'serve') ? '/assets/' : '../';
-  var constants = { assets_path: assets_path };
+  constants = { assets_path: assets_path, env: currEnv };
   return ngConstant({
-    name: 'backand.consts',
+    name: 'backand.ENV_CONFIG',
     constants: constants,
-    deps: ['ngAnimate'],
     template: config.constantTemplate,
     stream: true,
     wrap: false

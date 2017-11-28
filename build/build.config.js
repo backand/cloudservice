@@ -63,7 +63,7 @@ module.exports = {
   '(function () {\n' +
   '  \'use strict\';\n' +
   '  angular\n' +
-  '    .module(\'<%- moduleName %>\')\n' +
+  '    .module(\'<%- moduleName %>\', [])\n' +
   '<% constants.forEach(function(constant) { %>    .constant(\'<%- constant.name %>\', <%= constant.value %>)\n<% }) %>;\n' +
   '})();\n'
 };
