@@ -11,6 +11,9 @@
     self.socket = {on: function(){}};
 
     self.login = function(appName){
+      if(!CONSTS.socketUrl){
+        return;
+      }
       var url = CONSTS.socketUrl;
       var token = 'bearer ' + SessionService.getToken();
 

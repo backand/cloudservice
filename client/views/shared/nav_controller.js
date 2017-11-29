@@ -1,16 +1,17 @@
 (function () {
   'use strict';
   angular.module('controllers')
-    .controller('NavCtrl', ['$scope', '$state', '$rootScope', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage', 'RulesService', 'usSpinnerService', NavCtrl]);
+    .controller('NavCtrl', ['$scope', '$state', '$rootScope', 'AppsService', '$log', 'TablesService', 'DbQueriesService', '$stateParams', 'AnalyticsService', 'CronService', '$localStorage', 'RulesService', 'usSpinnerService', 'CONSTS', NavCtrl]);
 
-  function NavCtrl($scope, $state, $rootScope, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage, RulesService, usSpinnerService) {
+  function NavCtrl($scope, $state, $rootScope, AppsService, $log, TablesService, DbQueriesService, $stateParams, AnalyticsService, CronService, $localStorage, RulesService, usSpinnerService, CONSTS) {
 
     var self = this;
 
     (function init() {
+      console.info('CONSTS', CONSTS);
       console.warn('function State', $state.current.name, $state.includes('docs'));
       console.warn('Parent State', $state.includes('cronJobs.new'));
-
+      self.consts = CONSTS;
       self.isTablesClicked = false;
       self.apps = AppsService.apps;
       self.app = AppsService.currentApp;

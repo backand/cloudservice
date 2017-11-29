@@ -10,7 +10,7 @@
   'use strict';
   angular
     .module('backand.ENV_CONFIG', [])
-    .constant('assets_path', "../")
+    .constant('assets_path', "/assets/")
     .constant('env', "prod")
 ;
 })();
