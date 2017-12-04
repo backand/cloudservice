@@ -56,7 +56,7 @@
             <span>Documentation</span>
           </a>
         </li>
-        <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}" class="sub-objects-icons">
+        <li ng-class="{active: nav.state == 'playground.show', disabled: nav.DatabaseStatus != 1}" class="sub-objects-icons" data-ng-show="nav.consts.playgroundUrl">
           <a ng-click="nav.goTo($event, 'playground.show')">
             <i class="ba-icon-rest-api-playground"></i>
             <span style="padding-left: 19px">REST API Playground</span>
