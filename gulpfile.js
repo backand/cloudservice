@@ -283,14 +283,14 @@ gulp.task('serve:prod', ['env:prod', 'configAssetsPath', 'build'], function () {
 });
 
 //run the app packed in the dist folder
-gulp.task('serve:dist', ['env:prod', 'configAssetsPath', 'build:dist'], function () {
+gulp.task('serve:dist', ['serve:deploy'], function () {
   browserSync({
     notify: false,
     server: [config.dist]
   });
 });
 
-gulp.task('serve:deploy', ['env:prod', 'build:dist'], function () {
+gulp.task('serve:deploy', ['env:prod', 'configAssetsPath', 'build:dist'], function () {
 
 });
 
