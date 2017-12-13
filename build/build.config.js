@@ -6,6 +6,7 @@ module.exports = {
   tmp: 'build/tmp',
   dist: 'build/dist',
   base: 'client',
+  vendor : 'client/vendor/',
   tpl: [
     'client/views/**/*.html',
     'client/common/**/*.html',

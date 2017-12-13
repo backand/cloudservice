@@ -23,6 +23,7 @@ var backandSync = require('./node_modules/backand/lib/api/backand-sync-s3');
 var sassVariables = require('gulp-sass-variables');
 var ngConstant = require('gulp-ng-constant');
 var argv = require('yargs').argv;
+var es = require('event-stream');
 
 
 /* jshint camelcase:false*/
@@ -147,17 +148,23 @@ gulp.task('html', function () {
 
 //copy fonts
 gulp.task('copy:fonts', function () {
-  return gulp.src([config.assets + '/fonts/**'], {
-    dot: true
-  }).pipe(gulp.dest(config.dist + '/assets/fonts'))
-    .pipe($.size({
-      title: 'copy:fonts'
-    }));
+  return es.merge(
+    gulp.src([config.assets + '/fonts/**'], {
+      dot: true
+    }).pipe(gulp.dest(config.dist + '/assets/fonts'))
+      .pipe($.size({
+        title: 'copy:fonts'
+      })),
+    gulp.src([config.vendor + 'angular-ui-grid/*.{woff,woff2,svg,ttf,eot,otf}'], {
+      dot: true
+    })
+      .pipe(gulp.dest(config.dist + '/assets/css')),
+  );
 });
 
 //copy assets in dist folder
 gulp.task('copy', ['copy:fonts', 'copy:extra', 'copy:envConfig'], function () {
-  return gulp.src([
+  return es.merge(gulp.src([
     config.base + '/*',
     '!' + config.base + '/*.html',
     '!' + config.base + '/src',
@@ -165,7 +172,14 @@ gulp.task('copy', ['copy:fonts', 'copy:extra', 'copy:envConfig'], function () {
   ]).pipe(gulp.dest(config.dist))
     .pipe($.size({
       title: 'copy'
-    }));
+    })),
+    gulp.src([
+      config.base + '/common/plugins/ace/*.{js,json}',
+      '!' + config.base + '/common/plugins/ace/{ace.js, theme-monokai.js, mode-javascript.js}'
+    ]).pipe(gulp.dest(config.dist))
+      .pipe($.size({
+        title: 'copy editor files'
+      })));
 });
 
 gulp.task('copy:extra', function () {

@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "backandsdk": "^0.1.7",
+    "event-stream": "^3.3.4",
     "gulp-filelog": "^0.4.1",
     "gulp-gzip": "1.4.0",
     "gulp-install": "^1.1.0",
