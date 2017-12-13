@@ -85,7 +85,6 @@ angular.module('flowChart', ['dragging', 'common.services'])
 // (which is possible, just not ideal).
 //
   .controller('FlowChartController', ['$scope', 'dragging', '$element', 'DbDataModel', 'ConfirmationPopup', 'FieldsService', 'AppsService', '$rootScope', function FlowChartController($scope, dragging, $element, DbDataModel, ConfirmationPopup, FieldsService, AppsService, $rootScope) {
-    console.info('Console from FlowChartController - ', typeof $rootScope.assets_path);
 
     var controller = this;
 
