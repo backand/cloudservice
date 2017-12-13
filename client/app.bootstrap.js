@@ -15,9 +15,9 @@
   'use strict';
   angular
     .module('backand.appInitializer', ['backand.ENV_CONFIG'])
-    .run(['$http','env', function run($http, env) {
+    .run(['$http','env','assets_path', function run($http, env, assets_path) {
       env = env || 'dev';
-      $http.get('/config/env/' + env + '.json').then(function (data) {
+      $http.get('config/env/' + env + '.json').then(function (data) {
         angular.module('backand.consts').constant('CONSTS', data.data);
         /**
          * Bootstrap application
