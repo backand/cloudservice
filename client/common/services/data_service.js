@@ -21,7 +21,7 @@
         };
 
         self.log.unshift(logItem);
-        self.logIndex.last = self.log.length - 1;
+        self.logIndex.last = 0;
       }
       return $http(http)
         .then(function (response) {

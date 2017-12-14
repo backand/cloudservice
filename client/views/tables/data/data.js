@@ -24,22 +24,22 @@
     ]);
 
   function ObjectDataController(NotificationService,
-                                ColumnsService,
-                                DataService,
-                                $scope,
-                                $modal,
-                                usSpinnerService,
-                                tableName,
-                                ConfirmationPopup,
-                                LocalStorageService,
-                                $filter,
-                                $state,
-                                TablesService,
-                                $stateParams,
-                                $rootScope,
-                                AppsService,
-                                $localStorage,
-                                $window) {
+    ColumnsService,
+    DataService,
+    $scope,
+    $modal,
+    usSpinnerService,
+    tableName,
+    ConfirmationPopup,
+    LocalStorageService,
+    $filter,
+    $state,
+    TablesService,
+    $stateParams,
+    $rootScope,
+    AppsService,
+    $localStorage,
+    $window) {
 
     var self = this;
     self.currentApp = AppsService.currentApp;
@@ -62,6 +62,9 @@
     };
 
     (function init() {
+      if (!self.logIndex.hasOwnProperty('last')) {
+        self.logIndex.last = 0;
+      }
       initDefaultFilter();
       if (self.defaultFilter) {
         ColumnsService.get(true)
@@ -72,79 +75,78 @@
     }());
 
     //Function to set and show which index is chosen
-    self.getLogIndex = function(a){
-        if (a !== -1) {
-          self.logIndex.last = a;
-          self.backandstorage.httpLogIndex = a;
-        }
-        if(self.pinme == false){
+    self.getLogIndex = function (a) {
+      if (a !== -1) {
+        self.logIndex.last = a;
+        self.backandstorage.httpLogIndex = a;
+      }
+      if (self.pinme == false) {
         self.showMe();
       }
     }
     self.toggleSearch = function () {
 
-            if (self.showme) {
-                
-            } 
-        };
-   
-   function closeSearchWhenClickingElsewhere(event) {
+      if (self.showme) {
 
-            var clickedElement = event.target;
-            if (!clickedElement) return;
+      }
+    };
 
-            var clickedOnDropDown = (clickedElement.parentElement.classList.contains('table'));
-            var clickedOnButton = (clickedElement.classList.contains('http-dropdownbutn'));
-            if (!clickedOnDropDown && !clickedOnButton) {
-                self.showme = false;
-            }
+    function closeSearchWhenClickingElsewhere(event) {
 
-        }
-//         $window.onclick = function (event) {
-//                    closeSearchWhenClickingElsewhere(event);
-//                };
-   
-   //Function to receive pin status, if no pin default is pinned.
-    self.getPinToLocalStorage = function() {
-        if (self.backandstorage.pinned !== false && self.backandstorage.pinned !== true) {
-            self.backandstorage.pinned = true;
-           }
-          return(self.backandstorage.pinned)
-        }
-    self.getHttpLogLocalStorage = function(){
-      if(!self.backandstorage.httpLogIndex)
-      {
+      var clickedElement = event.target;
+      if (!clickedElement) return;
+
+      var clickedOnDropDown = (clickedElement.parentElement.classList.contains('table'));
+      var clickedOnButton = (clickedElement.classList.contains('http-dropdownbutn'));
+      if (!clickedOnDropDown && !clickedOnButton) {
+        self.showme = false;
+      }
+
+    }
+    //         $window.onclick = function (event) {
+    //                    closeSearchWhenClickingElsewhere(event);
+    //                };
+
+    //Function to receive pin status, if no pin default is pinned.
+    self.getPinToLocalStorage = function () {
+      if (self.backandstorage.pinned !== false && self.backandstorage.pinned !== true) {
+        self.backandstorage.pinned = true;
+      }
+      return (self.backandstorage.pinned)
+    }
+    self.getHttpLogLocalStorage = function () {
+      if (!self.backandstorage.httpLogIndex) {
         self.backandstorage.httpLogIndex = 0;
       }
-      return(self.backandstorage.httpLogIndex)
+      return (self.backandstorage.httpLogIndex)
     }
     self.showme = false;
     self.pinme = self.getPinToLocalStorage();
     self.logIndex.last = self.getHttpLogLocalStorage();
     //Show drop down http log
-    self.showMe = function(){
-      if(self.showme == false){
-        self.showme = true  
+    self.showMe = function () {
+      if (self.showme == false) {
+        self.showme = true
       }
-      else{
+      else {
         self.showme = false
       }
     }
     //Pin http log to the right or dropdown.
-    self.pinMe = function(){
-       if(self.pinme == false){
+    self.pinMe = function () {
+      if (self.pinme == false) {
         self.pinme = true;
         self.backandstorage.pinned = true;
-        self.showme = false;  
+        self.showme = false;
       }
-      else{
+      else {
         self.pinme = false;
         self.backandstorage.pinned = false;
       };
     }
     self.toggleShowLog = function () {
       self.showLog = !self.showLog;
-      $state.go('.', {showLog: self.showLog}, {notify: false});
+      $state.go('.', { showLog: self.showLog }, { notify: false });
       resizeGrid();
     };
 
@@ -203,11 +205,11 @@
       }
     };
     self.selectedOption = {
-      $$hashKey : "object:111"
+      $$hashKey: "object:111"
     }
     $scope.$watchGroup([
-        'ObjectData.paginationOptions.pageNumber',
-        'ObjectData.paginationOptions.pageSize']
+      'ObjectData.paginationOptions.pageNumber',
+      'ObjectData.paginationOptions.pageSize']
       , getPageData);
 
     function getPageData(newVal, oldVal) {
@@ -244,7 +246,7 @@
     }
 
     function successDataHandler(response) {
-      if(!response){
+      if (!response) {
         return;
       }
       self.gridOptions.totalItems = response.data.totalRows;
@@ -260,7 +262,7 @@
       fixDatesInData();
 
       self.gridOptions.columnDefs = columns.map(function (column) {
-        var columnInfo = _.find(self.columnDefs, {name: column});
+        var columnInfo = _.find(self.columnDefs, { name: column });
 
         return {
           minWidth: 80,
@@ -386,11 +388,11 @@
 
       _.forEach(row, function (value, key) {
         if (key !== '__metadata' && key !== descriptive && !_.isEmpty(value)) {
-          fields.push({key: key, value: value});
+          fields.push({ key: key, value: value });
         }
       });
 
-      return {descriptiveLabel: descriptiveLabel, fields: fields};
+      return { descriptiveLabel: descriptiveLabel, fields: fields };
     };
 
     self.onUpdateRowCell = function (row, col, newValue) {
@@ -460,7 +462,7 @@
     };
 
     self.editRow = function (event, rowItem) {
-      DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true).then(function(results){
+      DataService.getItem(self.tableName, rowItem.entity.__metadata.id, true).then(function (results) {
         var row = {};
         row.entity = results.data;
         getEditRowEntity(row);
@@ -630,10 +632,10 @@
         return fieldData;
       });
 
-      _.remove(fields, {type: null});
+      _.remove(fields, { type: null });
 
       if (self.defaultFilter) {
-        _.remove(fields, {name: self.defaultFilter.field.name})
+        _.remove(fields, { name: self.defaultFilter.field.name })
       }
       return fields;
     }
@@ -682,13 +684,13 @@
     self.goToCollection = function (row, col) {
       var id = row.entity.__metadata.id;
 
-      var currentField = _.where(self.columnDefs, {name: col.name})[0];
+      var currentField = _.where(self.columnDefs, { name: col.name })[0];
       var relatedFieldName = currentField.relatedParentFieldName;
       var relatedObject = currentField.relatedViewName;
       var relatedObjectId = TablesService.getTableByName(relatedObject).__metadata.id;
 
       ColumnsService.getColumns(relatedObject).then(function (data) {
-        var relatedField = _.where(data.data.fields, {name: relatedFieldName})[0];
+        var relatedField = _.where(data.data.fields, { name: relatedFieldName })[0];
         var filter = {
           field: relatedField,
           operator: 'in',
@@ -698,13 +700,13 @@
 
         var collection = true;
         $state.go('object_data', {
-            tableName: relatedObject,
-            tableId: relatedObjectId,
-            defaultFilter: filter,
-            collection: collection
-          }).then(function () {
-            usSpinnerService.stop('loading');
-          });
+          tableName: relatedObject,
+          tableId: relatedObjectId,
+          defaultFilter: filter,
+          collection: collection
+        }).then(function () {
+          usSpinnerService.stop('loading');
+        });
       });
 
     };

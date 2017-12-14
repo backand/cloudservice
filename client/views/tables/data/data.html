@@ -162,7 +162,7 @@
               <tbody class="http-body">
                 <tr ng-class="{'tr-hovering' : hovering}" ng-mouseenter="hovering=true" class="cursorp"
                 ng-mouseleave="hovering=false" ng-repeat="option in ObjectData.httpRequestsLog" ng-click="ObjectData.getLogIndex($index)">
-                  <td class="request-titl"> <span ng-if="0 === $index" class="glyphicon glyphicon-play btn-xs play-butn"></span><span>{{option.requestTitle}}</span>
+                  <td class="request-titl"> <span ng-if="ObjectData.logIndex.last === $index" class="glyphicon glyphicon-play btn-xs play-butn"></span><span>{{option.requestTitle}}</span>
                   </td>
                   <td class="request-method">
                     <b>{{option.requestMethod}}<b>
