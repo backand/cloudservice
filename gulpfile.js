@@ -158,7 +158,7 @@ gulp.task('copy:fonts', function () {
     gulp.src([config.vendor + 'angular-ui-grid/*.{woff,woff2,svg,ttf,eot,otf}'], {
       dot: true
     })
-      .pipe(gulp.dest(config.dist + '/assets/css')),
+      .pipe(gulp.dest(config.dist + '/assets/css'))
   );
 });
 
