@@ -84,7 +84,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
 // it is painful to unit test a directive without instantiating the DOM
 // (which is possible, just not ideal).
 //
-  .controller('FlowChartController', ['$scope', 'dragging', '$element', 'DbDataModel', 'ConfirmationPopup', 'FieldsService', 'AppsService', function FlowChartController($scope, dragging, $element, DbDataModel, ConfirmationPopup, FieldsService, AppsService) {
+  .controller('FlowChartController', ['$scope', 'dragging', '$element', 'DbDataModel', 'ConfirmationPopup', 'FieldsService', 'AppsService', '$rootScope', function FlowChartController($scope, dragging, $element, DbDataModel, ConfirmationPopup, FieldsService, AppsService, $rootScope) {
 
     var controller = this;
 
@@ -102,7 +102,7 @@ angular.module('flowChart', ['dragging', 'common.services'])
 
     //
     // Init data-model variables.
-    //
+    $scope.assets_path =  $rootScope.assets_path;
     $scope.draggingConnection = false;
     $scope.connectorSize = 10;
     $scope.dragSelecting = false;

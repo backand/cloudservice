@@ -6,6 +6,7 @@ module.exports = {
   tmp: 'build/tmp',
   dist: 'build/dist',
   base: 'client',
+  vendor : 'client/vendor/',
   tpl: [
     'client/views/**/*.html',
     'client/common/**/*.html',
@@ -22,7 +23,7 @@ module.exports = {
     'client/test/e2e/**/*.js'
   ],
   index: 'client/index.html',
-  assets: 'client/assets/**',
+  assets: 'client/assets',
   images: 'client/assets/images/**/*',
   banner: ['/**',
     ' * <%= pkg.name %> - <%= pkg.description %>',
@@ -51,5 +52,19 @@ module.exports = {
       exclude: ['.DS_Store'],
       include: []
     }
-  }
+  },
+ constantTemplate: '/**\n' +
+  ' * @ngdoc overview\n' +
+  ' *\n' +
+  ' * @description\n' +
+  ' * Application constants created by gulp task\n' +
+  ' *\n' +
+  ' * @author Mohan Singh ( gmail::singhmohancs@gmail.com, skype :: mohan.singh42 )\n' +
+  ' */\n' +
+  '(function () {\n' +
+  '  \'use strict\';\n' +
+  '  angular\n' +
+  '    .module(\'<%- moduleName %>\', [])\n' +
+  '<% constants.forEach(function(constant) { %>    .constant(\'<%- constant.name %>\', <%= constant.value %>)\n<% }) %>;\n' +
+  '})();\n'
 };

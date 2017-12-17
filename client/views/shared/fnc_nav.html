@@ -64,7 +64,7 @@
 
         </li>
 
-        <li ng-class="{active: nav.state == 'functions.newlambdafunctions' }" ng-if="nav.DatabaseStatus == 1" class="sub-functions-icons new-function-selection">
+        <li data-ng-show="nav.consts.nodejsUrl" ng-class="{active: nav.state == 'functions.newlambdafunctions' }" ng-if="nav.DatabaseStatus == 1" class="sub-functions-icons new-function-selection">
           <a ng-click="nav.newLambdaFunction($event)">
         <i class="ti-plus"></i>
         <span>Add Lambda Function</span>

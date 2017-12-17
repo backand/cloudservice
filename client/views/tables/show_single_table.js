@@ -13,11 +13,12 @@
       '$rootScope',
       'tableName',
       'AppsService',
+      'CONSTS',
       SingleTableShow
     ]);
 
   function SingleTableShow($stateParams, ColumnsService, $scope, RulesService, DictionaryService, SecurityService,
-                           NotificationService, $rootScope, tableName, AppsService) {
+    NotificationService, $rootScope, tableName, AppsService, CONSTS) {
 
     var self = this;
 
@@ -50,16 +51,19 @@
         {
           heading: 'Settings',
           route: 'object_settings'
-        },
-        {
-          heading: 'REST API',
-          route: 'object_restapi'
-        }/*
+        }
+        /*
         {
           heading: 'Config Log',
           route: 'object_tables.columns.log'
         }*/
       ];
+      if (CONSTS.playgroundUrl) {
+        self.tabs.push({
+          heading: 'REST API',
+          route: 'object_restapi'
+        });
+      }
       RulesService.appName = DictionaryService.appName = SecurityService.appName = self.appName;
       RulesService.tableId = self.tableId;
       $scope.$on('appname:updated', updateAppName);
@@ -75,14 +79,13 @@
      * Need to get first the tables before loading the page
      * @param tables
      */
-    function loadColumns()
-    {
+    function loadColumns() {
       ColumnsService.get().then(null, errorHandler); //populate the view configuration data
     }
 
-    function updateAppName(event, data){
+    function updateAppName(event, data) {
       self.tableName = data;
-      ColumnsService.tableName = DictionaryService.tableName  = self.tableName;
+      ColumnsService.tableName = DictionaryService.tableName = self.tableName;
     }
 
     /**
@@ -120,7 +123,7 @@
         }, function (err) {
           self.syncing = false;
           NotificationService.add('error', 'Synchronizing with the database was failed, please review the log for' +
-              ' details');
+            ' details');
         });
     };
 

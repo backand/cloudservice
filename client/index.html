@@ -4,11 +4,9 @@
   <head>
     <meta charset="utf-8" />
     <title>Backand</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <meta name="description" content="Backand - backend as as service for Angular">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title ng-bind="title"></title>
-    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="keywords" content="Backand, AngularJS, BAAS, Backend, gulp, bower, vesparny" />
@@ -60,7 +58,7 @@
     <toaster-container></toaster-container>
     <ui-view></ui-view>
 
-    <!---->
+    <div id="appConfig"></div>
     <!-- build:js assets/js/vendor.js -->
     <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="common/plugins/insertAtCaret_plugin.js"></script>
@@ -107,7 +105,13 @@
 
     <!-- build:js assets/js/main.js -->
     <script type="text/javascript" src="common/plugins/base64.js"></script>
+
+    <script type="text/javascript" src="config/env/consts.js"></script>
+    <script type="text/javascript" src="config/ngConstants.js"></script>
+    <script type="text/javascript" src="app.bootstrap.js"></script>
     <script type="text/javascript" src="app.js"></script>
+
+
     <script type="text/javascript" src="common/services/config.js"></script>
     <script type="text/javascript" src="common/services/auth_layout_service.js"></script>
     <script type="text/javascript" src="common/services/session.service.js"></script>
@@ -168,8 +172,8 @@
     <script type="text/javascript" src="common/constants/constants.js"></script>
 
     <script type="text/javascript" src="config/routes.js"></script>
-    <script type="text/javascript" src="config/consts.js"></script>
     <script type="text/javascript" src="config/tooltips.js"></script>
+
 
     <script type="text/javascript" src="views/shared/main_controller.js"></script>
     <script type="text/javascript" src="views/shared/nav_controller.js"></script>

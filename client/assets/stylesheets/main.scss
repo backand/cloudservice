@@ -1,4 +1,5 @@
-$icon-font-path:          "/assets/fonts/bootstrap/" !default;
+$assets_path : '/assets/fonts/bootstrap/' !default;
+$icon-font-path:  '#{$assets_path}fonts/bootstrap/' !default;
 
 @import "bootstrap";
 @import "ui/ui";
@@ -74,3 +75,8 @@ $icon-font-path:          "/assets/fonts/bootstrap/" !default;
 @import "rules";
 @import "tables";
 @import "bootstrap-social";
+
+body{
+  icon-path : $icon-font-path; 
+  assets-path: $assets_path
+}

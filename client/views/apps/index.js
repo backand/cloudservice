@@ -231,7 +231,7 @@
                   $state.go(currentstate, {tableId: $localStorage.backand[app.Name].Id});
                   break;
                 default:
-                  $state.go(currentstate);
+                currentstate ? $state.go(currentstate) :  $state.go('app.index');
                   break;
               }
             });
