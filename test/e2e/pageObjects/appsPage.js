@@ -7,6 +7,7 @@ function AppsPage() {
   };
 
   self.hooks = {
+    newAppBtn :  element(by.testHook('apps.newApp')),
     nameInput: element(by.testHook('apps.new-app.name')),
     titleInput: element(by.testHook('apps.new-app.title')),
     createButton: element(by.testHook('apps.new-app.create')),
@@ -39,6 +40,7 @@ function AppsPage() {
         if (app.title) helpers.fillInput(self.hooks.titleInput, app.title);
       },
       create: function(app) {
+        self.hooks.newAppBtn.click();
         this.fillIn(app);
         self.hooks.createButton.click();
       }

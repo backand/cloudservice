@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('backand.routes', []).
-  config(function($stateProvider, $urlRouterProvider, $uiViewScrollProvider, $logProvider, $httpProvider) {
+  config(function ($stateProvider, $urlRouterProvider, $uiViewScrollProvider, $logProvider, $httpProvider) {
     $urlRouterProvider.otherwise('/');
     $uiViewScrollProvider.useAnchorScroll();
 
@@ -14,30 +14,37 @@ angular.module('backand.routes', []).
         url: '?data&error&email',
         templateUrl: 'views/auth/auth.html',
         abstract: true,
-        controller : 'AuthController as Auth'
+        controller: 'AuthController as Auth'
       })
       .state('sign_up', {
         parent: 'auth',
         url: '/sign_up?username&name&i&token&launcher',
         templateUrl: 'views/auth/sign_up.html',
-        controller : 'SignUpController as signup'
+        controller: 'SignUpController as signup'
       })
       .state('sign_in', {
         parent: 'auth',
         url: '/sign_in?launcher',
         templateUrl: 'views/auth/sign_in.html',
-        controller : 'SignInController as signin'
+        controller: 'SignInController as signin'
+      })
+      .state('logout', {
+        url: '/logout',
+        controller: ['SessionService', '$state', function (SessionService, $state) {
+          SessionService.clearCredentials();
+          $state.go('sign_in');
+        }]
       })
       .state('link_email', {
         parent: 'auth',
         url: '/link_email',
         templateUrl: 'views/auth/link_email.html',
-        controller : 'LinkEmailController as linkEmail'
+        controller: 'LinkEmailController as linkEmail'
       })
       .state('change_password', {
         url: '/change_password',
         templateUrl: 'views/auth/reset_password.html',
-        controller : 'resetPasswordController as change'
+        controller: 'resetPasswordController as change'
       })
       .state('account.billing', {
         url: '/billing',
@@ -70,10 +77,10 @@ angular.module('backand.routes', []).
         template: '<ui-view autoscroll="true"/>',
         resolve: {
           appItem: ['AppsService', '$stateParams', '$state', function (AppsService, $stateParams, $state) {
-              return AppsService.getApp($stateParams.appName)
-                .catch(function (error) {
-                  $state.go('apps.index');
-                });
+            return AppsService.getApp($stateParams.appName)
+              .catch(function (error) {
+                $state.go('apps.index');
+              });
           }]
         },
         controller: function ($state, appItem, AppsService, usSpinnerService) {
@@ -166,7 +173,7 @@ angular.module('backand.routes', []).
         template: '<div ui-view></div>'
       });
   })
-  .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS','$window', run]);
+  .run(['$rootScope', '$state', 'SessionService', 'AuthService', 'CONSTS', '$window', run]);
 
 function isStateForSignedOutUser(state) {
   return (state.name === 'sign_in' || state.name === 'sign_up' || state.name === 'change_password');
@@ -195,10 +202,10 @@ function run($rootScope, $state, SessionService, AuthService, CONSTS, $window) {
           //build better error message
           var err = errorData.message;
 
-          if(err.indexOf('NO_EMAIL_SOCIAL') > -1)
-              err = "Sign up with social requires a valid email";
+          if (err.indexOf('NO_EMAIL_SOCIAL') > -1)
+            err = "Sign up with social requires a valid email";
           else if (err.indexOf('The user already signed up') > -1)
-              err = "The email is already been used";
+            err = "The email is already been used";
 
           $window.opener.alert(err);
         }

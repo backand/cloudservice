@@ -3,7 +3,7 @@
 </div>
 
 <div class="signup-email">
-<div ng-show="signin.error" class="alert alert-danger auth-alert">
+<div ng-show="signin.error" class="alert alert-danger auth-alert"  test-hook="signin.errorPlaceholder">
   <img src="assets/images/auth_pages/warning.png">{{signin.error}}</div>
   <form class="form-horizontal" name="form" ng-submit="signin.signIn()" novalidate>
     <fieldset>
@@ -23,7 +23,7 @@
                  ng-blur="emailInput.focus = false"
                  required>
         </div>
-        <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false">
+        <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false" test-hook="signin.invalidEmail">
           This is not a valid email.
         </div>
 

@@ -2,8 +2,8 @@
 
 function Helpers() {
   var self = this;
-  browser.getCapabilities().then(function (cap) {
-    self.browserName = cap.caps_.browserName;
+  browser.getCapabilities().then(function (capabilities) {
+    self.browserName = capabilities.get('browserName');
   });
 }
 
@@ -110,18 +110,22 @@ Helpers.prototype.createMessage = function (context, message) {
   };
 };
 
+Helpers.prototype.logout = function () {
+  browser.get(browser.baseUrl + '/#/logout');
+}
+
 module.exports = new Helpers();
 
 'use strict';
 
 (function () {
   by.addLocator('testHook', function (hook, optParentElement, optRootSelector) {
-    var using = optParentElement || document.querySelector(optRootSelector) || document;
+    var using = document;
     return using.querySelector('[test-hook=\'' + hook + '\']');
   });
 
   by.addLocator('testHookAll', function (hook, optParentElement, optRootSelector) {
-    var using = optParentElement || document.querySelector(optRootSelector) || document;
+    var using = document;
     return using.querySelectorAll('[test-hook=\'' + hook + '\']');
   });
 })();
@@ -131,65 +135,86 @@ module.exports = new Helpers();
   var helpers = new Helpers();
 
   beforeEach(function () {
-    this.addMatchers({
+    jasmine.addMatchers({
       toBePresent: function () {
-        helpers.createMessage(this, 'Expected {{locator}}{{not}}to Be Present');
-        return this.actual.isPresent();
+        return {
+          compare: function (actual, expected) {
+            var _this = {};
+            _this.pass = actual.isPresent();
+            _this.message = 'Expected element' + (_this.pass ? '' : ' not') + ' to Be Present ';
+            return _this;
+          }
+        }
       },
       toBeDisplayed: function () {
-        helpers.createMessage(this, 'Expected {{locator}}{{not}}to Be Displayed');
-        return this.actual.isDisplayed();
+        return {
+          compare: function (actual, expected) {
+            if (expected === undefined) {
+              expected = '';
+            }
+            var _this = {};
+            _this.pass = actual.isDisplayed();
+            _this.message = 'Expected element' + (_this.pass ? '' : ' not') + ' to Be Displayed ' + expected;
+            return _this;
+          }
+        }
       },
-      toHaveLengthOf: function (expectedLength) {
-        helpers.createMessage(this, 'Expected request{{not}}to have length of ' + expectedLength + ' but was {{actual}}');
-        return this.actual === expectedLength;
+      toHaveLengthOf: function (actual, expected) {
+        var _this = {};
+        _this.pass = actual === expected;
+        _this.message = 'Expected ' + actual + (_this.pass ? '' : ' not') + ' to have length of ' + expected;
+        return _this;
       },
-      toHaveText: function (expectedText) {
-        var _this = this;
+      toHaveText: function () {
+        return {
+          compare: function (actual, expected) {
+            var _this = {};
+            _this.pass = actual.getText() === expected;
+            _this.message = 'Expected ' + actual.getText() + ' ' + (_this.pass ? '' : ' not') + ' to have text ' + expected;
+            return _this;
+          }
+        }
+
+      },
+      toMatchRegex: function (actual, expected) {
+        var _this = {};
+        var re = new RegExp(expected);
         return this.actual.getText().then(function (text) {
-          helpers.createMessage(_this, 'Expected {{locator}}{{not}}to have text ' + expectedText + ' but was ' + text);
-          return text === expectedText;
-        });
-      },
-      toMatchRegex: function (expectedPattern) {
-        var _this = this;
-        var re = new RegExp(expectedPattern);
-        return this.actual.getText().then(function (text) {
-          helpers.createMessage(_this, 'Expected {{locator}} with text ' + text + '{{not}}to match pattern ' + expectedPattern);
-          return re.test(text);
+          _this.pass = re.test(text);
+          _this.message = 'Expected ' + actual + (_this.pass ? '' : ' not') + ' to match pattern ' + expected;
+          return _this;
         });
       },
       toMatchMoney: function (expectedValue, currencySymbol) {
-        var _this = this;
+        var _this = {};
         var regexExpectedValue = createMoneyRegexp(this.actual, expectedValue, currencySymbol, false);
         helpers.createMessage(_this, 'Expected ' + this.actual + '{{not}}to match money pattern ' + regexExpectedValue);
-        return regexExpectedValue.test(this.actual);
+        return
+
+        _this.pass = regexExpectedValue.test(this.actual);
+        _this.message = 'Expected ' + actual + (_this.pass ? '' : ' not') + ' to match pattern ' + expected;
+        return _this;
+
       },
       toMatchMoneyWithFraction: function (expectedValue, currencySymbol) {
-        var _this = this;
+        var _this = {};
         var regexExpectedValue = createMoneyRegexp(this.actual, expectedValue, currencySymbol, true);
         helpers.createMessage(_this, 'Expected ' + this.actual + '{{not}}to match money pattern ' + regexExpectedValue);
         return regexExpectedValue.test(this.actual);
       },
       toHaveValue: function (expectedValue) {
-        var _this = this;
+        var _this = {};
         return this.actual.getAttribute('value').then(function (value) {
           helpers.createMessage(_this, 'Expected {{locator}}{{not}} to have value ' + expectedValue + ' but was ' + value);
           return value === expectedValue;
         });
       },
       toHaveClass: function (className) {
-        var _this = this;
+        var _this = {};
         return this.actual.getAttribute('class').then(function (classes) {
           helpers.createMessage(_this, 'Expected ' + classes + '{{not}}to have class ' + className);
 
           return classes.split(' ').indexOf(className) !== -1;
-        });
-      },
-      toBeDisabled: function () {
-        helpers.createMessage(this, 'Expected {{locator}}{{not}} to be Disabled');
-        return this.actual.getAttribute('disabled').then(function (value) {
-          return value === 'true';
         });
       },
       toBeChecked: function () {
@@ -199,7 +224,7 @@ module.exports = new Helpers();
         });
       },
       toHaveFocus: function () {
-        var _this = this;
+        var _this = {};
         var activeElement = browser.driver.switchTo().activeElement();
         return this.actual.getOuterHtml().then(function (html1) {
           return activeElement.getOuterHtml().then(function (html2) {
