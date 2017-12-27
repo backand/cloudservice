@@ -7,7 +7,7 @@ var app;
 var invalidApp = apps.invalidApp;
 var existingApp = apps.existingApp;
 
-describe('create app scenario', function () {
+xdescribe('create app scenario', function () {
   beforeEach(function () {
     helpers.logout();
     signInPage.ensureSignedIn();

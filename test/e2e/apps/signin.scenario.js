@@ -5,7 +5,7 @@ var signInPage = require('../pageObjects/signInPage'),
   invalidUser = require('../../mocks/users').invalidUser;
 
 describe('SignIn app scenario', function () {
-  beforeEach(function () {
+  beforeAll(function () {
     helpers.logout();
     browser.get(browser.baseUrl + '/#/sign_in');
   });

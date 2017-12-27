@@ -3,25 +3,18 @@
 </div>
 
 <div class="signup-email">
-<div ng-show="signin.error" class="alert alert-danger auth-alert"  test-hook="signin.errorPlaceholder">
-  <img src="assets/images/auth_pages/warning.png">{{signin.error}}</div>
+  <div ng-show="signin.error" class="alert alert-danger auth-alert" test-hook="signin.errorPlaceholder">
+    <img src="assets/images/auth_pages/warning.png">{{signin.error}}</div>
   <form class="form-horizontal" name="form" ng-submit="signin.signIn()" novalidate>
     <fieldset>
       <div class="form-group">
         <div class="input-group input-group-first">
-                <span class="input-group-addon">
+          <span class="input-group-addon">
                   <span class="ti-email"></span>
-                </span>
-          <input type="email"
-                 class="form-control input-lg"
-                 name="uEmail"
-                 placeholder="Email (Username)"
-                 test-hook="signin.username"
-                 ng-model="signin.userName"
-                 ng-model-options="{updateOn: 'blur'}"
-                 ng-focus="emailInput.focus = true"
-                 ng-blur="emailInput.focus = false"
-                 required>
+          </span>
+          <input type="email" class="form-control input-lg" name="uEmail" placeholder="Email (Username)" test-hook="signin.username"
+            ng-model="signin.userName" ng-model-options="{updateOn: 'blur'}" ng-focus="emailInput.focus = true" ng-blur="emailInput.focus = false"
+            required>
         </div>
         <div class="text-danger" ng-show="form.uEmail.$error.email && emailInput.focus === false" test-hook="signin.invalidEmail">
           This is not a valid email.
@@ -30,17 +23,11 @@
       </div>
       <div class="form-group">
         <div class="input-group">
-                <span class="input-group-addon">
+          <span class="input-group-addon">
                   <span class="ti-lock"></span>
-                </span>
-          <input type="password"
-                 class="form-control input-lg"
-                 placeholder="Password"
-                 test-hook="signin.password"
-                 name="uPassword"
-                 ng-model="signin.userPassword"
-                 ng-model-options="{debounce: 500}"
-                 required>
+          </span>
+          <input type="password" class="form-control input-lg" placeholder="Password" test-hook="signin.password" name="uPassword"
+            ng-model="signin.userPassword" ng-model-options="{debounce: 500}" required>
         </div>
         <div class="text-danger" ng-show="form.uPassword.$error.email">
           This is not a valid Password.
@@ -53,11 +40,8 @@
       </div>
       <div class="divider divider-xl"></div>
       <div class="form-group">
-        <button type="submit"
-                class="auth-button btn btn-lg"
-                test-hook="signin.login"
-                ng-disabled="signin.flags.authenticating"
-                ladda="signin.loading" data-style="expand-right">
+        <button type="submit" class="auth-button btn btn-lg" test-hook="signin.login" ng-disabled="signin.flags.authenticating" ladda="signin.loading"
+          data-style="expand-right">
           Sign in
         </button>
       </div>

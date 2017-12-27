@@ -1,28 +1,45 @@
 'use strict';
 var users = require('../../mocks/users');
-var user = users.getRandomUser();
 
 function SignUpPage() {
   var self = this;
 
   self.hooks = {
-    nameInput: element(by.testHook('signup.name')),
-    emailInput: element(by.testHook('signup.email')),
-    passwordInput: element(by.testHook('signup.password')),
-    passwordConfirmInput: element(by.testHook('signup.password-confirm')),
-    signupButton: element(by.testHook('signup.signup'))
+    fields: {
+      fullName: element(by.testHook('signup.name')),
+      email: element(by.testHook('signup.email')),
+      password: element(by.testHook('signup.password')),
+      passwordConfirm: element(by.testHook('signup.password-confirm'))
+    },
+    errors: {
+      email: {
+        invalid: element(by.testHook('signup.invalidEmail'))
+      },
+      password: {
+        mismatch: element(by.testHook('signup.mismatchPassword'))
+      },
+      global: {
+        server: element(by.testHook('signup.error'))
+      }
+    },
+    buttons: {
+      signupButton: element(by.testHook('signup.signup'))
+    }
   };
 
-  self.signUp = function() {
-    browser.get('/#/sign_up');
-    if (user.name) helpers.fillInput(self.hooks.nameInput, user.name);
-    if (user.username) helpers.fillInput(self.hooks.emailInput, user.username);
-    if (user.password) {
-      helpers.fillInput(self.hooks.passwordInput, user.password);
-      helpers.fillInput(self.hooks.passwordConfirmInput, user.password);
-    }
-    self.hooks.signupButton.click();
+  self.signUp = function () {
+    self.hooks.buttons.signupButton.click();
   };
+
+  self.setUser = function (u) {
+    if (u.name) helpers.fillInput(self.hooks.fields.fullName, u.name);
+    if (u.username) helpers.fillInput(self.hooks.fields.email, u.username);
+    if (u.password) {
+      helpers.fillInput(self.hooks.fields.password, u.password);
+      helpers.fillInput(self.hooks.fields.passwordConfirm, u.password);
+    }
+  };
+
 
 }
 

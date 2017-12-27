@@ -41,7 +41,7 @@
                  required>
 
         </div>
-        <div class="text-danger" ng-show="(form.uEmail.$error.email || form.uEmail.$error.pattern) && emailInput.focus === false">
+        <div class="text-danger" test-hook="signup.invalidEmail" ng-show="(form.uEmail.$error.email || form.uEmail.$error.pattern) && emailInput.focus === false">
           This is not a valid email
         </div>
       </div>
@@ -88,7 +88,7 @@
                  required>
         </div>
 
-        <div class="text-danger" ng-show="form.confirm_password.$error.match">
+        <div class="text-danger" ng-show="form.confirm_password.$error.match" test-hook="signup.mismatchPassword">
           Please re-enter the same password as above
         </div>
       </div>
@@ -110,7 +110,7 @@
                 ladda="signup.loading" data-style="expand-right">Sign up
         </button>
       </div>
-      <div ng-show="signup.error" class="alert alert-danger">{{signup.error}}</div>
+      <div ng-show="signup.error" test-hook="signup.error" class="alert alert-danger">{{signup.error}}</div>
     </fieldset>
   </form>
 

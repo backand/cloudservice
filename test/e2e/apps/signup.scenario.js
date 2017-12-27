@@ -1,30 +1,26 @@
-var signUpPage = require('../pageObjects/signUpPage');
-var appsPage = require('../pageObjects/appsPage');
-var exampleDatabasePage = require('../pageObjects/exampleDatabasePage');
-var examplePlaygroundPage = require('../pageObjects/examplePlaygroundPage');
+var signUpPage = require('../pageObjects/signUpPage'),
+  appsPage = require('../pageObjects/appsPage'),
+  exampleDatabasePage = require('../pageObjects/exampleDatabasePage'),
+  examplePlaygroundPage = require('../pageObjects/examplePlaygroundPage'),
+  users = require('../../mocks/users'),
+  validUser = users.getRandomUser(),
+  invalidUser = users.invalidUser;;
 
 describe('signup', function () {
-  beforeEach(function () {
+  beforeAll(function () {
     helpers.logout();
-    browser.get(browser.baseUrl + '/#/sign_up');
+    browser.get('/#/sign_up');
   });
 
   it('should not allow to signup with invalid details', function () {
-    signInPage.signIn(invalidUser);
-    expect(signInPage.invalidEmail).toBePresent();
-    expect(signInPage.errorPlaceholder).toBePresent();
+    signUpPage.setUser(invalidUser);
+    expect(signUpPage.hooks.buttons.signupButton.isEnabled()).toBe(false);
   });
 
 
   it('should sign up a new user', function () {
+    signUpPage.setUser(validUser);
     signUpPage.signUp();
-    expect(appsPage.hooks.nameInput).toBeDisplayed();
+    expect(browser.getCurrentUrl()).toBe( browser.baseUrl+'/#/');
   });
-
-  it('should connect the example app', function () {
-    /* expect(appsPage.hooks.getFirstPanelRibbon().getText()).toBe('Example');
-     appsPage.actions.clickFirstPanelManageButton();
-     expect(exampleDatabasePage.hooks.title).toBeDisplayed();*/
-  });
-
 });
