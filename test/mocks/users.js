@@ -1,8 +1,8 @@
 var faker = require("faker");
 var users = {
-  registeredUser: { username: 'singhmohancs@gmail.com', password: 'mohan@123' },
-  unRegisteredUser: { username: 'unRegisteredUser@gmail.com', password: 'mohan@123' },
-  invalidUser: { username: 'unRegisteredUser', password: 'mohan@123', name : 'Test User' },
+  registeredUser: { username: 'mohan@backand.io', password: 'mohan@123' },
+  unRegisteredUser: { username: 'mohan986@gmail.com', password: 'mohan@123' },
+  invalidUser: { username: 'mohan', password: 'mohan@123', name : 'Test User' },
   getRandomUser: function () {
     return {
       name: 'Test User',
