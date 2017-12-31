@@ -6,7 +6,7 @@ var signUpPage = require('../pageObjects/signUpPage'),
   validUser = users.getRandomUser(),
   invalidUser = users.invalidUser;;
 
-describe('signup', function () {
+xdescribe('signup', function () {
   beforeAll(function () {
     helpers.logout();
     browser.get('/#/sign_up');

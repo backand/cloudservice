@@ -133,7 +133,7 @@
     </form>
   </div>
 
-  <div class="row body justify-content-between" ng-repeat="app in index.apps track by app.__metadata.id"
+  <div class="row body justify-content-between apps-item" ng-repeat="app in index.apps track by app.__metadata.id"
        test-hook="apps.app-panel">
     <div class="col-md-5 app-details">
       <i class="sprite-main-page sprite-{{::app.ProductType}}"></i>

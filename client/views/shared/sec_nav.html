@@ -26,7 +26,7 @@
         <span>Social and Keys</span>
       </a>
     </li>
-    <li ng-class="{active: nav.state == 'security.users'}">
+    <li ng-class="{active: nav.state == 'security.users'}" test-hook="linkRegisteredUsers">
       <a ng-click="nav.goTo($event, 'security.users')">
         <i class="fontello-icon-registreed-users front-icons"></i>
         <span>Registered Users</span>

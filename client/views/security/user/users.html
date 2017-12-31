@@ -1,6 +1,6 @@
 
 <!-- /admin mode -->
-<div class="row" ng-if="$ctrl.adminMode">
+<div class="row invite-admin-container" ng-if="$ctrl.adminMode">
   <div class=" form-group col-sm-7">
     <label for="inviteAdminEmails">Invite team members to access the application with administrative role
     <ba-help-link key="adminUsers"></ba-help-link></label>
@@ -16,7 +16,7 @@
 <!-- ./admin mode -->
 
 <!-- /user mode -->
-<div class="row" ng-if="!$ctrl.adminMode">
+<div class="row invite-user-container" ng-if="!$ctrl.adminMode">
   <div class=" form-group col-sm-7">
     <p for="inviteUsersEmails">Invite users to access the application with role '{{$ctrl.defaultUserRole}}'. If "Public App" is Off then this is the
       only way to add users to the app
@@ -30,7 +30,7 @@
       <span class="help-text">Email Address -  Use comma for multiple users</span>
     </div>
     <div class="col-sm-3">
-      <button type="button" ng-disabled="$ctrl.invitedUsers.length ===0" id="addUserInvites" class="btn btn-success" ng-click="$ctrl.inviteUsers()">Invite User(s)
+      <button type="button" ng-disabled="$ctrl.invitedUsers.length ===0" id="addUserInvites" class="btn btn-success" ng-click="$ctrl.inviteUsers()" test-hook="btnInviteUser">Invite User(s)
           </button>
     </div>
   </div>
