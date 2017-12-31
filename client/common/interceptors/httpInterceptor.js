@@ -65,6 +65,7 @@
           state.transitionTo('sign_in');
         }
 
+        if (rejection && rejection.config && rejection.config.config && rejection.config.config.ignoreError) return true;
         if (rejection.data == null) {
           NotificationService.add("error", "An error occurred while communicating with the server, please refresh the page in few seconds");
         } else if (!avoidInterception('responseError', rejection)) {
