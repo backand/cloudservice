@@ -40,7 +40,9 @@ describe('Invite user:', function () {
         helpers.fillInput(registeredUsersPage.hooks.elements.inviteUserContainer.$('tags-input input'), 'singhmohancs');
         expect(registeredUsersPage.hooks.buttons.btnInviteUser.isEnabled()).toBeFalsy();
         helpers.fillInput(registeredUsersPage.hooks.elements.inviteUserContainer.$('tags-input input'), 'singhmohancs@gmail.com');
+        registeredUsersPage.hooks.elements.inviteUserContainer.$('tags-input input').sendKeys(protractor.Key.ENTER);
         expect(registeredUsersPage.hooks.buttons.btnInviteUser.isEnabled()).toBeTruthy();
+        registeredUsersPage.hooks.buttons.btnInviteUser.click();
       }
     })
   });
