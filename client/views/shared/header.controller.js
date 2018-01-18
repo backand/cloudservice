@@ -216,8 +216,14 @@
       var maxStatusDescription = "";
       var sc = "";
       var sd = "";
-
-      $http.get(statusAPI).then(function(results){
+        $http({
+          method: 'GET',
+          config: {ignoreError: true},
+          url: statusAPI
+        }).then(function(results){
+        if(!results.data){
+          return;
+        }
         var data = results.data;
         angular.forEach(data.result.status, function(s){
           angular.forEach(s.containers, function(c){
@@ -258,6 +264,8 @@
         }
 
 
+      }, function(err){
+        console.log(err);
       })
 
     }
