@@ -7,43 +7,21 @@
 
       <div class="signin-header">
         <section class="logo text-center">
-            <h1>Create Your Back& Account, it's FREE!</h1>
+            <h1>Sign up is no longer possible</h1>
+            </br>
+            <h1>Back& is closing its service on February 28 2018</h1>
+            </br>
+            <img class="logo" src="assets/images/shutdown.png"/>
+            </br>
+            <section class="additional-info">
+              <p>
+                <span style="color: white">Already have a Back& account?</span>
+                <strong><a style="color: white; text-decoration: underline" ui-sref="sign_in" ui-sref-opts="{reload:true}">Log in here</a></strong>
+              </p>
+            </section>
         </section>
       </div>
 
-      <div class="signin-body first-signup-block">
-        <div class="container">
-          <div class="form-container signup-container">
-
-            <img class="dragon" src="assets/images/auth_pages/dragon-signup.png">
-
-            <div class="row">
-              <div class="col-sm-5">
-                <div class="signup-options">
-                  Sign in With
-                  <span class="social-signin-spinner" us-spinner spinner-key="socialSignin"></span>
-                </div>
-                <form class="signup-social">
-
-                  <a class="btn btn-block btn-social"
-                     ng-repeat="social in Auth.socials | filter:{ useForSignin : true }"
-                     ng-class="'btn-' + social.css"
-                     ng-click="Auth.socialLogin(social)" ng-disabled="Auth.flags.authenticating">
-                    <i class="fa" ng-class="'fa-' + social.css"></i> {{social.label}}
-                  </a>
-                </form>
-                <section class="logo text-center" style="margin-top:80px;">
-                  <img src="https://d0.awsstatic.com/logos/aws/AWS_Logo_PoweredBy_127px.png">
-                </section>
-              </div>
-
-              <div class="col-sm-7">
-                <div ng-include="'views/auth/sign_up_landing.html'" ng-controller="SignUpController as signup"></div>
-              </div>
-
-            </div>
-          </div>
-        </div>
       </div>
   </div>
   </div>
