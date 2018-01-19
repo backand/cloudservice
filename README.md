@@ -34,21 +34,10 @@ You are now ready to go, your application is available at **http://127.0.0.1:300
 
 When you are ready to build a production release there is a task for that:
 
-    $ gulp serve:dist
+    $ gulp prod:dist
 
-This task will lint your code, optimize css js and images files, run unit tests. After the task has successfully finished, you can find an optimized version of your project inside the  `/build/dist` folder.
+This task will lint your code, optimize css js and images files, run unit tests. After the task has successfully finished, you can find an optimized version of your project inside the  `/build/dist` folder
 
-### Features
-
-* 5 simple task: `gulp serve`,`gulp serve:dist`, `gulp serve:tdd`, `gulp test:unit`, `gulp test:e2e`
-* JavaScript file continuous linting with `jshint`.
-* SASS continuous compiling.
-* `Unit` and `e2e` testing support. (for `e2e` testing you need to have a java runtine installed, take a look at [selenium JavaScript api ](http://selenium.googlecode.com/git/docs/api/javascript/index.html) and [protractor](https://github.com/angular/protractor) for more informations.
-* HTML templates converted into strings and attached to a single javascript file (to avoid one http call for each template).
-* Livereload provided by [browsersync](http://www.browsersync.io/).
-* angular module dependencies automatically injected using [ng-annotate](https://github.com/olov/ng-annotate).
-* Static resources minification and optimization for production.*
-* sourcemaps generated and embedded in JavaScript and css files during the production optimization.
 
 ### Directory Structure
 
@@ -70,26 +59,11 @@ A description of every available task:
 You just need to add new JavaScript and css files in the `client/index.html` file.
 * **gulp serve:dist** - This task will run jshint and unit tests under the `client/test/unit` folder (thanks to `karma runner`), and create a fully-optimized version of your application under the `build/dist/` folder. The optimization consists of concatenate, minify and compress js and css files, optimize images, and put every template into a js file loaded by the application.
 A code coverage report will be available inside the `client/test/unit-results`.
-* **gulp serve:tdd** - Just like `gulp serve` but in continuous unit testing environment.
-* **gulp test:unit** - For running unit tests one time then exit.
 * **gulp test:e2e** - Run end-to-end tests inside the `client/test/e2e` folder with `protractor`. If a test fails, you should find a screenshot of the page inside the `client/test/screenshots` folder.
 **Note that you need to have the application running in order to run e2e tests. You can launch this task from another terminal instance.**
-
-### Contributing
-
-PR and issues reporting are always welcome :)
 
 ### License
 
 See LICENSE file
 
-### Changelog
 
-See CHANGELOG.md file
-
-### Thank you, community!
-
-All this wouldn't have been possible without these great contributors and everybody who comes with new ideas and suggestions.
-
-* [Mitch Pirtle](https://github.com/spacemonkey)
-* [Peter Renström](https://github.com/renstrom)
