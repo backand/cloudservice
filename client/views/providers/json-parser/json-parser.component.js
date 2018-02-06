@@ -51,8 +51,9 @@
                     "secretAccessKey": "EncryptedSecretAccessKey",
                     "accessKeyId": "AccessKeyId"
                   },
-                  ibm: {
-
+                  openfaas: {
+                    "gateway": "gateway",
+                    "connectionString": "connectionString"
                   },
                   fnproject: {
                     "gateway": "gateway",

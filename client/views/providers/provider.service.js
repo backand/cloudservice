@@ -31,12 +31,12 @@
               id: '',
               description: ''
             },
-            ibm: {
-              AccessKeyId: '',
+            openfaas: {
               AwsRegion: [],
-              Name: 'Ibm',
-              CloudVendor: 'IBM',
-              EncryptedSecretAccessKey: '',
+              CloudVendor: 'OpenFaas',
+              Name: 'OpenFaas',
+              ConnectionString: '',
+              Gateway: '',
               id: ''
             },
             gcp: {
@@ -140,10 +140,10 @@
           description: 'Google Functions',
           enable: true
         }, {
-          name: 'IBM',
-          key: 'ibm',
-          description: 'IBM OpenWisk',
-          enable: false
+          name: 'OpenFaas',
+          key: 'openfaas',
+          description: 'OpenFaas Project',
+          enable: true
         }, {
           name: 'FnProject',
           key: 'fnproject',
