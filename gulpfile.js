@@ -318,10 +318,10 @@ gulp.task('dev:dist', ['configAssetsPath', 'env:dev', 'build:dist'], function ()
 
 //run the local in the dist folder
 gulp.task('local:dist', ['env:local', 'build:dist'], function () {
-  // browserSync({
-  //   notify: false,
-  //   server: [config.dist]
-  // });
+  browserSync({
+    notify: false,
+    server: [config.dist]
+  });
 
   //return backandSync.dist(config.dist, 'bklocal');
 

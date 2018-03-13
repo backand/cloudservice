@@ -27,3 +27,4 @@ client/test/screenshots/*
 client/test/unit-results/*
 !client/test/unit-results/README.md
 client/config/ngConstants.js
+client/config/env/*
